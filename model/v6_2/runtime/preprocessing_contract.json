@@ -1,0 +1,183 @@
+{
+  "model_version": "v6.2",
+  "status": "historical_preprocessing_recovered",
+  "inference_ready": false,
+  "categorical_feature_order": [
+    "event_type",
+    "interaction_type",
+    "element_tag",
+    "api_method"
+  ],
+  "numeric_feature_order": [
+    "log1p_delta_sec",
+    "log1p_step_duration_ms",
+    "log1p_api_latency_ms",
+    "api_status_code_div_600"
+  ],
+  "numeric_expressions": [
+    "np.log1p(frame['delta_sec'].values)",
+    "np.log1p(frame['step_duration_ms'].values)",
+    "np.log1p(frame['api_latency_ms'].values)",
+    "frame['api_status_code'].values / 600.0"
+  ],
+  "structural_fields": [
+    "struct_api_family",
+    "struct_page_path",
+    "struct_page_title"
+  ],
+  "text_fields": [
+    [
+      "EVT",
+      "event_type"
+    ],
+    [
+      "INT",
+      "interaction_type"
+    ],
+    [
+      "TAG",
+      "element_tag"
+    ],
+    [
+      "TEXT",
+      "element_text"
+    ],
+    [
+      "LABEL",
+      "associated_label"
+    ],
+    [
+      "API",
+      "api_path"
+    ],
+    [
+      "PAGE",
+      "page_title"
+    ],
+    [
+      "PATH",
+      "url_path(page_url)"
+    ],
+    [
+      "TESTID",
+      "data_testid"
+    ]
+  ],
+  "text_construction": "nonempty [TAG] value fields joined by one space; first 1200 characters",
+  "max_text_bytes": 192,
+  "byte_policy": "UTF-8 errors=ignore; truncate bytes; uint8 + 1; zero padding; int64",
+  "event_window": 128,
+  "event_stride": 64,
+  "segment_window": 32,
+  "segment_stride": 16,
+  "semantic_model_name": "intfloat/multilingual-e5-small",
+  "semantic_weight": 0.2,
+  "semantic_dim": 384,
+  "semantic_input_construction": {
+    "fields": [
+      [
+        "PAGE",
+        "page_title"
+      ],
+      [
+        "LABEL",
+        "associated_label"
+      ],
+      [
+        "TEXT",
+        "element_text"
+      ]
+    ],
+    "format": "TAG: value",
+    "separator": " | ",
+    "truncate_characters": 700,
+    "prefix": "passage: ",
+    "normalize_embeddings": true,
+    "empty_text": "zero vector; encoder not called"
+  },
+  "semantic_revision_status": "unresolved",
+  "semantic_revision": null,
+  "tokenizer_revision": null,
+  "PAD_policy": {
+    "token": "<PAD>",
+    "id": 0
+  },
+  "UNK_policy": {
+    "token": "<UNK>",
+    "id": 1,
+    "behavior": "unknown and empty categorical values map to UNK; never extend vocabulary"
+  },
+  "null_handling_policy": {
+    "strings": "strip whitespace; None/NaN and case-insensitive nan,none,null,nat,[null] become empty",
+    "numeric": "missing column or pd.to_numeric(errors=coerce) missing value becomes 0",
+    "timestamps_observed": "pd.to_datetime(errors=coerce); invalid becomes NaT",
+    "validator": "reject missing/invalid required timestamps; report numeric parse errors; allow nullable category values"
+  },
+  "timestamp_sorting_policy": {
+    "initial": [
+      "event_time_parsed",
+      "id if present"
+    ],
+    "kind": "stable",
+    "global_event_idx": "0..N-1 after sort",
+    "within_stream_split": [
+      "event_time_parsed",
+      "global_event_idx"
+    ],
+    "timezone_policy": {
+      "status": "unresolved",
+      "reason": "reference code does not explicitly normalize timezone"
+    }
+  },
+  "delta_sec_policy": "per-stream timestamp diff; clip lower=0; fillna=0 before training split",
+  "training_split": {
+    "ratio": 0.8,
+    "groupby_sort": false,
+    "cut": "max(1,min(n-1,int(n*0.8))) for n>=2; otherwise n",
+    "usage": "historical recovery only"
+  },
+  "session_stream_identity_policy": {
+    "status": "unresolved",
+    "observed_priority": [
+      "actor_key",
+      "login_id",
+      "user_id",
+      "worker_id",
+      "employee_id",
+      "workflow_key.split('#W')[0]",
+      "session:<session_id>",
+      "worker_0"
+    ],
+    "historical_events_user_id_present": false,
+    "required_future_policy": "user_id only for higher-level trajectory; no local feature or stream identity",
+    "session_mapping_observed": "session_id preferred over id; empty keys/users removed; duplicate key keep=last"
+  },
+  "input_data_policy": "evidence/enrichment/export only; excluded from model features",
+  "ground_truth_policy": "evaluation only; excluded from all model inputs and recovery",
+  "boundary_policy": {
+    "status": "unresolved"
+  },
+  "new_consensus_assignment_policy": {
+    "status": "unresolved"
+  },
+  "schema_validation_policy": {
+    "events_required": [
+      "event_id",
+      "session_id",
+      "event_time",
+      "event_type",
+      "interaction_type",
+      "element_tag",
+      "api_method",
+      "element_text",
+      "associated_label",
+      "api_path"
+    ],
+    "sessions_required": "user_id and either session_id or id",
+    "tasks": "optional; no model features",
+    "identity_nulls": "reject",
+    "duplicate_event_id": "reject",
+    "category_oov": "report only; map to UNK later",
+    "note": "New input validation is stricter than the historical notebook for IDs and timestamps."
+  }
+}

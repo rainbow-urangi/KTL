@@ -1,0 +1,18 @@
+﻿metric,v1_1,v1_2
+Boundary F1,0.9743589743589743,0.9827586206896551
+R3 F1,0.918918918918919,0.9444444444444444
+Predicted workflows,61,60
+Exact segmentation /60,55,56
+Over-segmented execution,3,2
+Under-segmented execution,4,4
+Under-segmented predicted workflow,2,2
+Cluster count,22.0,21
+Silhouette,0.8525707125663757,0.8667799234390259
+DBI,0.40699428013769995,0.41682099205349793
+BU consistency,19.0,19
+Cluster purity,0.9965357967667436,0.9965357967667436
+Merged BU pairs,2.0,2
+Fragmented BUs,4.0,3
+Mixed-risk process models,2.0,2
+Cross-BU GET/write mixed nodes,1.0,0
+All GET/write mixed nodes,7.0,0

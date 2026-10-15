@@ -1,0 +1,16 @@
+﻿report_rank,model_id,workflow_prototype,customer_display_name,step_order,step_label
+1,poc_full:WP03,WP03,조회되었습니다. · 이전년,1,SP02
+2,poc_full:WP06,WP06,국제교류학년도학기 · 외부부서조회팝업,1,SP00
+3,poc_full:WP04,WP04,국제교류학년도학기 · 교류프로그램구분,1,SP00
+4,poc_full:WP09,WP09,국제교류학년도학기 · 학생검색,1,SP09
+5,poc_full:WP05,WP05,기초관리 · 로그인,1,SP16
+6,poc_full:WP11,WP11,부서검색팝업 · 국적,1,예산요구구분
+6,poc_full:WP11,WP11,부서검색팝업 · 국적,2,사업계획입력
+6,poc_full:WP11,WP11,부서검색팝업 · 국적,3,시작일
+6,poc_full:WP11,WP11,부서검색팝업 · 국적,4,종료일
+6,poc_full:WP11,WP11,부서검색팝업 · 국적,5,SP08
+6,poc_full:WP11,WP11,부서검색팝업 · 국적,6,"12월, 2025"
+7,poc_full:WP00,WP00,학생검색 · 부서검색팝업,1,학생검색
+8,poc_full:WP08,WP08,학생검색 · 예산년도,1,학과
+9,poc_full:WP02,WP02,교류기관조회팝업 · 학생검색,1,교류프로그램구분
+9,poc_full:WP02,WP02,교류기관조회팝업 · 학생검색,2,조회

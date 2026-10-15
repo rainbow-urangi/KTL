@@ -1,0 +1,172 @@
+{
+  "holdout_notice": "INTERNAL DEVELOPMENT HOLDOUT; NOT INDEPENDENT UNSEEN VALIDATION",
+  "session_starts_excluded": 2,
+  "evaluation": {
+    "rule": {
+      "all_development": {
+        "exact": {
+          "precision": 0.7457627118644068,
+          "recall": 0.7586206896551724,
+          "f1": 0.752136752136752,
+          "tp": 44,
+          "fp": 15,
+          "fn": 14,
+          "predicted_boundary_count": 59,
+          "true_boundary_count": 58,
+          "tolerance_events": 0
+        },
+        "tolerant": {
+          "precision": 0.7627118644067796,
+          "recall": 0.7758620689655172,
+          "f1": 0.7692307692307694,
+          "tp": 45,
+          "fp": 14,
+          "fn": 13,
+          "predicted_boundary_count": 59,
+          "true_boundary_count": 58,
+          "tolerance_events": 1
+        }
+      },
+      "training": {
+        "exact": {
+          "precision": 0.7692307692307693,
+          "recall": 0.7894736842105263,
+          "f1": 0.7792207792207793,
+          "tp": 30,
+          "fp": 9,
+          "fn": 8,
+          "predicted_boundary_count": 39,
+          "true_boundary_count": 38,
+          "tolerance_events": 0
+        },
+        "tolerant": {
+          "precision": 0.7692307692307693,
+          "recall": 0.7894736842105263,
+          "f1": 0.7792207792207793,
+          "tp": 30,
+          "fp": 9,
+          "fn": 8,
+          "predicted_boundary_count": 39,
+          "true_boundary_count": 38,
+          "tolerance_events": 1
+        }
+      },
+      "internal_holdout": {
+        "exact": {
+          "precision": 0.6666666666666666,
+          "recall": 0.6666666666666666,
+          "f1": 0.6666666666666666,
+          "tp": 12,
+          "fp": 6,
+          "fn": 6,
+          "predicted_boundary_count": 18,
+          "true_boundary_count": 18,
+          "tolerance_events": 0
+        },
+        "tolerant": {
+          "precision": 0.7222222222222222,
+          "recall": 0.7222222222222222,
+          "f1": 0.7222222222222222,
+          "tp": 13,
+          "fp": 5,
+          "fn": 5,
+          "predicted_boundary_count": 18,
+          "true_boundary_count": 18,
+          "tolerance_events": 1
+        }
+      },
+      "segmentation": {
+        "predicted_workflow_count": 61,
+        "reference_execution_count": 60,
+        "correct_segmentation_exact": 30,
+        "over_segmented_execution_count": 6,
+        "extra_fragments": 15,
+        "under_segmented_workflow_count": 14,
+        "merged_execution_excess": 14
+      }
+    },
+    "neural": {
+      "all_development": {
+        "exact": {
+          "precision": 0.9491525423728814,
+          "recall": 0.9655172413793104,
+          "f1": 0.9572649572649573,
+          "tp": 56,
+          "fp": 3,
+          "fn": 2,
+          "predicted_boundary_count": 59,
+          "true_boundary_count": 58,
+          "tolerance_events": 0
+        },
+        "tolerant": {
+          "precision": 0.9661016949152542,
+          "recall": 0.9827586206896551,
+          "f1": 0.9743589743589743,
+          "tp": 57,
+          "fp": 2,
+          "fn": 1,
+          "predicted_boundary_count": 59,
+          "true_boundary_count": 58,
+          "tolerance_events": 1
+        }
+      },
+      "training": {
+        "exact": {
+          "precision": 1.0,
+          "recall": 1.0,
+          "f1": 1.0,
+          "tp": 38,
+          "fp": 0,
+          "fn": 0,
+          "predicted_boundary_count": 38,
+          "true_boundary_count": 38,
+          "tolerance_events": 0
+        },
+        "tolerant": {
+          "precision": 1.0,
+          "recall": 1.0,
+          "f1": 1.0,
+          "tp": 38,
+          "fp": 0,
+          "fn": 0,
+          "predicted_boundary_count": 38,
+          "true_boundary_count": 38,
+          "tolerance_events": 1
+        }
+      },
+      "internal_holdout": {
+        "exact": {
+          "precision": 0.8421052631578947,
+          "recall": 0.8888888888888888,
+          "f1": 0.8648648648648649,
+          "tp": 16,
+          "fp": 3,
+          "fn": 2,
+          "predicted_boundary_count": 19,
+          "true_boundary_count": 18,
+          "tolerance_events": 0
+        },
+        "tolerant": {
+          "precision": 0.8947368421052632,
+          "recall": 0.9444444444444444,
+          "f1": 0.918918918918919,
+          "tp": 17,
+          "fp": 2,
+          "fn": 1,
+          "predicted_boundary_count": 19,
+          "true_boundary_count": 18,
+          "tolerance_events": 1
+        }
+      },
+      "segmentation": {
+        "predicted_workflow_count": 61,
+        "reference_execution_count": 60,
+        "correct_segmentation_exact": 55,
+        "over_segmented_execution_count": 3,
+        "extra_fragments": 3,
+        "under_segmented_workflow_count": 2,
+        "merged_execution_excess": 2
+      }
+    }
+  }
+}

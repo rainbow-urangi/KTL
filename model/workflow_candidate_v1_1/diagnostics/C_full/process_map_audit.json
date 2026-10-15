@@ -1,0 +1,1846 @@
+{
+  "summary": {
+    "mixed_models": 2,
+    "A_models": 0,
+    "B_models": 2,
+    "cross_business_method_collision_nodes": 1,
+    "all_read_write_collision_nodes": 7,
+    "cross_business_unobserved_triples": 0,
+    "upstream_mixed_workflow_count": 2,
+    "official_m02_computed": false
+  },
+  "models": [
+    {
+      "process_model_id": "PM-001",
+      "business_units": [
+        "BU02"
+      ],
+      "instance_count": 3,
+      "distinct_observed_paths": 2,
+      "same_dominant_page_family": true,
+      "classification": "SINGLE_BUSINESS",
+      "all_observed_paths_reconstructable": true,
+      "cross_business_method_collision_nodes": 0,
+      "all_read_write_collision_nodes": 0,
+      "cross_business_unobserved_triples": 0,
+      "upstream_mixed_workflows": [],
+      "canonical_business_units": [
+        "BU02"
+      ],
+      "noncanonical_business_units": [],
+      "output_note": "Existing adapter exports one observed medoid path; union graph does not itself execute a hybrid. Variant selection for M02/M03 remains unverified."
+    },
+    {
+      "process_model_id": "PM-002",
+      "business_units": [
+        "BU06"
+      ],
+      "instance_count": 3,
+      "distinct_observed_paths": 2,
+      "same_dominant_page_family": true,
+      "classification": "SINGLE_BUSINESS",
+      "all_observed_paths_reconstructable": true,
+      "cross_business_method_collision_nodes": 0,
+      "all_read_write_collision_nodes": 0,
+      "cross_business_unobserved_triples": 0,
+      "upstream_mixed_workflows": [],
+      "canonical_business_units": [
+        "BU06"
+      ],
+      "noncanonical_business_units": [],
+      "output_note": "Existing adapter exports one observed medoid path; union graph does not itself execute a hybrid. Variant selection for M02/M03 remains unverified."
+    },
+    {
+      "process_model_id": "PM-003",
+      "business_units": [
+        "BU08"
+      ],
+      "instance_count": 3,
+      "distinct_observed_paths": 2,
+      "same_dominant_page_family": true,
+      "classification": "SINGLE_BUSINESS",
+      "all_observed_paths_reconstructable": true,
+      "cross_business_method_collision_nodes": 0,
+      "all_read_write_collision_nodes": 0,
+      "cross_business_unobserved_triples": 0,
+      "upstream_mixed_workflows": [],
+      "canonical_business_units": [
+        "BU08"
+      ],
+      "noncanonical_business_units": [],
+      "output_note": "Existing adapter exports one observed medoid path; union graph does not itself execute a hybrid. Variant selection for M02/M03 remains unverified."
+    },
+    {
+      "process_model_id": "PM-004",
+      "business_units": [
+        "BU12"
+      ],
+      "instance_count": 3,
+      "distinct_observed_paths": 2,
+      "same_dominant_page_family": true,
+      "classification": "SINGLE_BUSINESS",
+      "all_observed_paths_reconstructable": true,
+      "cross_business_method_collision_nodes": 0,
+      "all_read_write_collision_nodes": 0,
+      "cross_business_unobserved_triples": 0,
+      "upstream_mixed_workflows": [],
+      "canonical_business_units": [
+        "BU12"
+      ],
+      "noncanonical_business_units": [],
+      "output_note": "Existing adapter exports one observed medoid path; union graph does not itself execute a hybrid. Variant selection for M02/M03 remains unverified."
+    },
+    {
+      "process_model_id": "PM-005",
+      "business_units": [
+        "BU19"
+      ],
+      "instance_count": 3,
+      "distinct_observed_paths": 2,
+      "same_dominant_page_family": true,
+      "classification": "SINGLE_BUSINESS",
+      "all_observed_paths_reconstructable": true,
+      "cross_business_method_collision_nodes": 0,
+      "all_read_write_collision_nodes": 0,
+      "cross_business_unobserved_triples": 0,
+      "upstream_mixed_workflows": [],
+      "canonical_business_units": [
+        "BU19"
+      ],
+      "noncanonical_business_units": [],
+      "output_note": "Existing adapter exports one observed medoid path; union graph does not itself execute a hybrid. Variant selection for M02/M03 remains unverified."
+    },
+    {
+      "process_model_id": "PM-006",
+      "business_units": [
+        "BU13"
+      ],
+      "instance_count": 3,
+      "distinct_observed_paths": 2,
+      "same_dominant_page_family": true,
+      "classification": "SINGLE_BUSINESS",
+      "all_observed_paths_reconstructable": true,
+      "cross_business_method_collision_nodes": 0,
+      "all_read_write_collision_nodes": 0,
+      "cross_business_unobserved_triples": 0,
+      "upstream_mixed_workflows": [],
+      "canonical_business_units": [
+        "BU13"
+      ],
+      "noncanonical_business_units": [],
+      "output_note": "Existing adapter exports one observed medoid path; union graph does not itself execute a hybrid. Variant selection for M02/M03 remains unverified."
+    },
+    {
+      "process_model_id": "PM-007",
+      "business_units": [
+        "BU18"
+      ],
+      "instance_count": 3,
+      "distinct_observed_paths": 2,
+      "same_dominant_page_family": true,
+      "classification": "SINGLE_BUSINESS",
+      "all_observed_paths_reconstructable": true,
+      "cross_business_method_collision_nodes": 0,
+      "all_read_write_collision_nodes": 0,
+      "cross_business_unobserved_triples": 0,
+      "upstream_mixed_workflows": [],
+      "canonical_business_units": [
+        "BU18"
+      ],
+      "noncanonical_business_units": [],
+      "output_note": "Existing adapter exports one observed medoid path; union graph does not itself execute a hybrid. Variant selection for M02/M03 remains unverified."
+    },
+    {
+      "process_model_id": "PM-008",
+      "business_units": [
+        "BU15"
+      ],
+      "instance_count": 3,
+      "distinct_observed_paths": 2,
+      "same_dominant_page_family": true,
+      "classification": "SINGLE_BUSINESS",
+      "all_observed_paths_reconstructable": true,
+      "cross_business_method_collision_nodes": 0,
+      "all_read_write_collision_nodes": 0,
+      "cross_business_unobserved_triples": 0,
+      "upstream_mixed_workflows": [],
+      "canonical_business_units": [
+        "BU15"
+      ],
+      "noncanonical_business_units": [],
+      "output_note": "Existing adapter exports one observed medoid path; union graph does not itself execute a hybrid. Variant selection for M02/M03 remains unverified."
+    },
+    {
+      "process_model_id": "PM-009",
+      "business_units": [
+        "BU05"
+      ],
+      "instance_count": 3,
+      "distinct_observed_paths": 2,
+      "same_dominant_page_family": true,
+      "classification": "SINGLE_BUSINESS",
+      "all_observed_paths_reconstructable": true,
+      "cross_business_method_collision_nodes": 0,
+      "all_read_write_collision_nodes": 0,
+      "cross_business_unobserved_triples": 0,
+      "upstream_mixed_workflows": [],
+      "canonical_business_units": [
+        "BU05"
+      ],
+      "noncanonical_business_units": [],
+      "output_note": "Existing adapter exports one observed medoid path; union graph does not itself execute a hybrid. Variant selection for M02/M03 remains unverified."
+    },
+    {
+      "process_model_id": "PM-010",
+      "business_units": [
+        "BU07"
+      ],
+      "instance_count": 3,
+      "distinct_observed_paths": 2,
+      "same_dominant_page_family": true,
+      "classification": "SINGLE_BUSINESS",
+      "all_observed_paths_reconstructable": true,
+      "cross_business_method_collision_nodes": 0,
+      "all_read_write_collision_nodes": 1,
+      "cross_business_unobserved_triples": 0,
+      "upstream_mixed_workflows": [],
+      "canonical_business_units": [
+        "BU07"
+      ],
+      "noncanonical_business_units": [],
+      "output_note": "Existing adapter exports one observed medoid path; union graph does not itself execute a hybrid. Variant selection for M02/M03 remains unverified."
+    },
+    {
+      "process_model_id": "PM-011",
+      "business_units": [
+        "BU13",
+        "BU14"
+      ],
+      "instance_count": 3,
+      "distinct_observed_paths": 3,
+      "same_dominant_page_family": true,
+      "classification": "B_MIXING_RISK",
+      "all_observed_paths_reconstructable": true,
+      "cross_business_method_collision_nodes": 0,
+      "all_read_write_collision_nodes": 1,
+      "cross_business_unobserved_triples": 0,
+      "upstream_mixed_workflows": [
+        "WF-0049"
+      ],
+      "canonical_business_units": [
+        "BU14"
+      ],
+      "noncanonical_business_units": [
+        "BU13"
+      ],
+      "output_note": "Existing adapter exports one observed medoid path; union graph does not itself execute a hybrid. Variant selection for M02/M03 remains unverified."
+    },
+    {
+      "process_model_id": "PM-012",
+      "business_units": [
+        "BU02",
+        "BU03"
+      ],
+      "instance_count": 3,
+      "distinct_observed_paths": 3,
+      "same_dominant_page_family": true,
+      "classification": "B_MIXING_RISK",
+      "all_observed_paths_reconstructable": true,
+      "cross_business_method_collision_nodes": 1,
+      "all_read_write_collision_nodes": 1,
+      "cross_business_unobserved_triples": 0,
+      "upstream_mixed_workflows": [
+        "WF-0038"
+      ],
+      "canonical_business_units": [
+        "BU03"
+      ],
+      "noncanonical_business_units": [
+        "BU02"
+      ],
+      "output_note": "Existing adapter exports one observed medoid path; union graph does not itself execute a hybrid. Variant selection for M02/M03 remains unverified."
+    },
+    {
+      "process_model_id": "PM-013",
+      "business_units": [
+        "BU16"
+      ],
+      "instance_count": 3,
+      "distinct_observed_paths": 1,
+      "same_dominant_page_family": true,
+      "classification": "SINGLE_BUSINESS",
+      "all_observed_paths_reconstructable": true,
+      "cross_business_method_collision_nodes": 0,
+      "all_read_write_collision_nodes": 0,
+      "cross_business_unobserved_triples": 0,
+      "upstream_mixed_workflows": [],
+      "canonical_business_units": [
+        "BU16"
+      ],
+      "noncanonical_business_units": [],
+      "output_note": "Existing adapter exports one observed medoid path; union graph does not itself execute a hybrid. Variant selection for M02/M03 remains unverified."
+    },
+    {
+      "process_model_id": "PM-014",
+      "business_units": [
+        "BU20"
+      ],
+      "instance_count": 3,
+      "distinct_observed_paths": 3,
+      "same_dominant_page_family": true,
+      "classification": "SINGLE_BUSINESS",
+      "all_observed_paths_reconstructable": true,
+      "cross_business_method_collision_nodes": 0,
+      "all_read_write_collision_nodes": 1,
+      "cross_business_unobserved_triples": 0,
+      "upstream_mixed_workflows": [],
+      "canonical_business_units": [
+        "BU20"
+      ],
+      "noncanonical_business_units": [],
+      "output_note": "Existing adapter exports one observed medoid path; union graph does not itself execute a hybrid. Variant selection for M02/M03 remains unverified."
+    },
+    {
+      "process_model_id": "PM-015",
+      "business_units": [
+        "BU17"
+      ],
+      "instance_count": 3,
+      "distinct_observed_paths": 3,
+      "same_dominant_page_family": true,
+      "classification": "SINGLE_BUSINESS",
+      "all_observed_paths_reconstructable": true,
+      "cross_business_method_collision_nodes": 0,
+      "all_read_write_collision_nodes": 1,
+      "cross_business_unobserved_triples": 0,
+      "upstream_mixed_workflows": [],
+      "canonical_business_units": [
+        "BU17"
+      ],
+      "noncanonical_business_units": [],
+      "output_note": "Existing adapter exports one observed medoid path; union graph does not itself execute a hybrid. Variant selection for M02/M03 remains unverified."
+    },
+    {
+      "process_model_id": "PM-016",
+      "business_units": [
+        "BU20"
+      ],
+      "instance_count": 1,
+      "distinct_observed_paths": 1,
+      "same_dominant_page_family": true,
+      "classification": "SINGLE_BUSINESS",
+      "all_observed_paths_reconstructable": false,
+      "cross_business_method_collision_nodes": 0,
+      "all_read_write_collision_nodes": 0,
+      "cross_business_unobserved_triples": 0,
+      "upstream_mixed_workflows": [],
+      "canonical_business_units": [
+        "BU20"
+      ],
+      "noncanonical_business_units": [],
+      "output_note": "Existing adapter exports one observed medoid path; union graph does not itself execute a hybrid. Variant selection for M02/M03 remains unverified."
+    },
+    {
+      "process_model_id": "PM-017",
+      "business_units": [
+        "BU04"
+      ],
+      "instance_count": 3,
+      "distinct_observed_paths": 1,
+      "same_dominant_page_family": true,
+      "classification": "SINGLE_BUSINESS",
+      "all_observed_paths_reconstructable": true,
+      "cross_business_method_collision_nodes": 0,
+      "all_read_write_collision_nodes": 0,
+      "cross_business_unobserved_triples": 0,
+      "upstream_mixed_workflows": [],
+      "canonical_business_units": [
+        "BU04"
+      ],
+      "noncanonical_business_units": [],
+      "output_note": "Existing adapter exports one observed medoid path; union graph does not itself execute a hybrid. Variant selection for M02/M03 remains unverified."
+    },
+    {
+      "process_model_id": "PM-018",
+      "business_units": [
+        "BU11"
+      ],
+      "instance_count": 3,
+      "distinct_observed_paths": 2,
+      "same_dominant_page_family": true,
+      "classification": "SINGLE_BUSINESS",
+      "all_observed_paths_reconstructable": true,
+      "cross_business_method_collision_nodes": 0,
+      "all_read_write_collision_nodes": 1,
+      "cross_business_unobserved_triples": 0,
+      "upstream_mixed_workflows": [],
+      "canonical_business_units": [
+        "BU11"
+      ],
+      "noncanonical_business_units": [],
+      "output_note": "Existing adapter exports one observed medoid path; union graph does not itself execute a hybrid. Variant selection for M02/M03 remains unverified."
+    },
+    {
+      "process_model_id": "PM-019",
+      "business_units": [
+        "BU10"
+      ],
+      "instance_count": 3,
+      "distinct_observed_paths": 2,
+      "same_dominant_page_family": true,
+      "classification": "SINGLE_BUSINESS",
+      "all_observed_paths_reconstructable": true,
+      "cross_business_method_collision_nodes": 0,
+      "all_read_write_collision_nodes": 0,
+      "cross_business_unobserved_triples": 0,
+      "upstream_mixed_workflows": [],
+      "canonical_business_units": [
+        "BU10"
+      ],
+      "noncanonical_business_units": [],
+      "output_note": "Existing adapter exports one observed medoid path; union graph does not itself execute a hybrid. Variant selection for M02/M03 remains unverified."
+    },
+    {
+      "process_model_id": "PM-020",
+      "business_units": [
+        "BU09"
+      ],
+      "instance_count": 3,
+      "distinct_observed_paths": 2,
+      "same_dominant_page_family": true,
+      "classification": "SINGLE_BUSINESS",
+      "all_observed_paths_reconstructable": true,
+      "cross_business_method_collision_nodes": 0,
+      "all_read_write_collision_nodes": 1,
+      "cross_business_unobserved_triples": 0,
+      "upstream_mixed_workflows": [],
+      "canonical_business_units": [
+        "BU09"
+      ],
+      "noncanonical_business_units": [],
+      "output_note": "Existing adapter exports one observed medoid path; union graph does not itself execute a hybrid. Variant selection for M02/M03 remains unverified."
+    },
+    {
+      "process_model_id": "PM-021",
+      "business_units": [
+        "BU01"
+      ],
+      "instance_count": 2,
+      "distinct_observed_paths": 1,
+      "same_dominant_page_family": true,
+      "classification": "SINGLE_BUSINESS",
+      "all_observed_paths_reconstructable": true,
+      "cross_business_method_collision_nodes": 0,
+      "all_read_write_collision_nodes": 0,
+      "cross_business_unobserved_triples": 0,
+      "upstream_mixed_workflows": [],
+      "canonical_business_units": [
+        "BU01"
+      ],
+      "noncanonical_business_units": [],
+      "output_note": "Existing adapter exports one observed medoid path; union graph does not itself execute a hybrid. Variant selection for M02/M03 remains unverified."
+    },
+    {
+      "process_model_id": "PM-022",
+      "business_units": [
+        "BU01"
+      ],
+      "instance_count": 1,
+      "distinct_observed_paths": 1,
+      "same_dominant_page_family": true,
+      "classification": "SINGLE_BUSINESS",
+      "all_observed_paths_reconstructable": true,
+      "cross_business_method_collision_nodes": 0,
+      "all_read_write_collision_nodes": 0,
+      "cross_business_unobserved_triples": 0,
+      "upstream_mixed_workflows": [],
+      "canonical_business_units": [
+        "BU01"
+      ],
+      "noncanonical_business_units": [],
+      "output_note": "Existing adapter exports one observed medoid path; union graph does not itself execute a hybrid. Variant selection for M02/M03 remains unverified."
+    }
+  ],
+  "node_collisions": [
+    {
+      "process_model_id": "PM-010",
+      "node_id": "PM-010-N006",
+      "methods": {
+        "POST": [
+          "BU07"
+        ],
+        "GET": [
+          "BU07"
+        ]
+      },
+      "cross_business": false,
+      "source_event_evidence": [
+        "52bcc025-7cbd-48bd-abb8-cd0e028d7940",
+        "15906985-1cc2-44b1-8d45-1b02ba5b4ce0",
+        "39a3e134-7837-417a-b681-d18ad81fef53",
+        "75951729-8f68-4b5e-bd4a-533634145805",
+        "d852b3bc-cd32-4b2a-afee-3e5f4ecfcd51",
+        "e3693736-3908-4ca5-ab69-a59441f23df2"
+      ]
+    },
+    {
+      "process_model_id": "PM-011",
+      "node_id": "PM-011-N006",
+      "methods": {
+        "POST": [
+          "BU14"
+        ],
+        "GET": [
+          "BU14"
+        ]
+      },
+      "cross_business": false,
+      "source_event_evidence": [
+        "3ada46da-a641-4b91-b4df-6618c33865c6",
+        "2a6a5534-a1f6-4baa-ad10-a27ec35644df",
+        "7210e0d8-a81a-4107-a476-64e83538bba4",
+        "df881255-8216-4576-9dfa-c572c7be2910",
+        "3c899f5c-57ca-48e2-b9b5-969a1f566645",
+        "50338ef7-f294-41a3-a7bc-169a7b7b1709"
+      ]
+    },
+    {
+      "process_model_id": "PM-012",
+      "node_id": "PM-012-N005",
+      "methods": {
+        "POST": [
+          "BU03"
+        ],
+        "GET": [
+          "BU02",
+          "BU03"
+        ]
+      },
+      "cross_business": true,
+      "source_event_evidence": [
+        "b544fb2d-f222-447a-9cc1-377f9ca0db08",
+        "93ac4718-a4d8-4d5d-b87f-3b04ab50a838",
+        "7bcdd51c-6953-47da-a75c-d21ccfbc5f62",
+        "e5998e22-7679-44b2-9bb1-cee10118ac11",
+        "6284a790-b76a-46b3-80e2-963dbc62649a",
+        "289d8a05-b9db-44a6-9fcc-de06f00d8fd1",
+        "191db207-2c18-476b-b062-d1b4ee525d48"
+      ]
+    },
+    {
+      "process_model_id": "PM-014",
+      "node_id": "PM-014-N006",
+      "methods": {
+        "POST": [
+          "BU20"
+        ],
+        "GET": [
+          "BU20"
+        ]
+      },
+      "cross_business": false,
+      "source_event_evidence": [
+        "bf922ae2-c586-4e53-9690-11b9c4b9820b",
+        "98efa740-8232-4f00-b81a-841add6e6abd",
+        "28867167-5498-4a58-8f32-2015721ef2ce",
+        "7b03c331-4908-4224-9391-e597065c6cb4",
+        "7c89e989-c095-456a-a02c-c5f06e5e545d",
+        "8e4952a5-8fc3-4fad-9a12-6a2445725b14"
+      ]
+    },
+    {
+      "process_model_id": "PM-015",
+      "node_id": "PM-015-N006",
+      "methods": {
+        "POST": [
+          "BU17"
+        ],
+        "GET": [
+          "BU17"
+        ]
+      },
+      "cross_business": false,
+      "source_event_evidence": [
+        "d428149b-09b3-4a47-8ce3-0fde4fd7aa7b",
+        "fb6cd51d-3c81-474e-a7b9-13065e747325",
+        "8c32d7ff-e34e-4671-acfb-0a08d3f33fd9",
+        "4ad47ea2-374d-4c2d-a24a-714ee3f64291",
+        "0b99a8ce-aa79-472c-a087-c6c4d802fb35",
+        "2d1abad7-f8b6-4d41-a75f-47f8305cd525"
+      ]
+    },
+    {
+      "process_model_id": "PM-018",
+      "node_id": "PM-018-N008",
+      "methods": {
+        "POST": [
+          "BU11"
+        ],
+        "GET": [
+          "BU11"
+        ]
+      },
+      "cross_business": false,
+      "source_event_evidence": [
+        "8746aaf7-16f5-480d-8a9e-d4050ed7ef78",
+        "f6a9f0aa-f6c6-4581-955f-6d858a16822a",
+        "20168a6e-65df-4cb2-bbf8-eb335fb3a345",
+        "64c2a7f0-6c48-4e64-ab33-dcd0d595ab56",
+        "3ed9c511-2831-4d3c-a19a-2909c7d0b4cc",
+        "ab2fabe2-c84f-4b79-9ccb-3269c50c441b"
+      ]
+    },
+    {
+      "process_model_id": "PM-020",
+      "node_id": "PM-020-N006",
+      "methods": {
+        "POST": [
+          "BU09"
+        ],
+        "GET": [
+          "BU09"
+        ]
+      },
+      "cross_business": false,
+      "source_event_evidence": [
+        "27b66a45-ed4e-4f8a-874d-ff551a2cdb7e",
+        "8f219cec-5851-492d-ad8a-1f8f7d031155",
+        "f7e714b6-b22d-4c82-bd58-4219d889a0f1",
+        "87488824-364d-49e9-8100-362f02a378ef",
+        "85107b40-b1e4-424d-91ad-eda59eea42bb",
+        "138ae798-2296-4ebe-a3c2-2bc2b0df2605"
+      ]
+    }
+  ],
+  "unobserved_cross_business_triples": [],
+  "variants": [
+    {
+      "process_model_id": "PM-001",
+      "workflow_instance_id": "WF-0037",
+      "node_sequence": [
+        "PM-001-N001",
+        "PM-001-N002",
+        "PM-001-N003",
+        "PM-001-N004",
+        "PM-001-N005",
+        "PM-001-N006",
+        "PM-001-N007",
+        "PM-001-N008"
+      ],
+      "business_units": [
+        "BU02"
+      ],
+      "source": "post_hoc only"
+    },
+    {
+      "process_model_id": "PM-001",
+      "workflow_instance_id": "WF-0058",
+      "node_sequence": [
+        "PM-001-N009",
+        "PM-001-N002",
+        "PM-001-N003",
+        "PM-001-N004",
+        "PM-001-N005",
+        "PM-001-N006",
+        "PM-001-N007",
+        "PM-001-N008"
+      ],
+      "business_units": [
+        "BU02"
+      ],
+      "source": "post_hoc only"
+    },
+    {
+      "process_model_id": "PM-001",
+      "workflow_instance_id": "WF-0060",
+      "node_sequence": [
+        "PM-001-N001",
+        "PM-001-N002",
+        "PM-001-N003",
+        "PM-001-N004",
+        "PM-001-N005",
+        "PM-001-N006",
+        "PM-001-N007",
+        "PM-001-N008"
+      ],
+      "business_units": [
+        "BU02"
+      ],
+      "source": "post_hoc only"
+    },
+    {
+      "process_model_id": "PM-002",
+      "workflow_instance_id": "WF-0004",
+      "node_sequence": [
+        "PM-002-N001",
+        "PM-002-N002",
+        "PM-002-N003",
+        "PM-002-N004",
+        "PM-002-N005",
+        "PM-002-N006",
+        "PM-002-N007",
+        "PM-002-N008",
+        "PM-002-N009"
+      ],
+      "business_units": [
+        "BU06"
+      ],
+      "source": "post_hoc only"
+    },
+    {
+      "process_model_id": "PM-002",
+      "workflow_instance_id": "WF-0022",
+      "node_sequence": [
+        "PM-002-N001",
+        "PM-002-N002",
+        "PM-002-N004",
+        "PM-002-N003",
+        "PM-002-N005",
+        "PM-002-N006",
+        "PM-002-N007",
+        "PM-002-N008",
+        "PM-002-N009"
+      ],
+      "business_units": [
+        "BU06"
+      ],
+      "source": "post_hoc only"
+    },
+    {
+      "process_model_id": "PM-002",
+      "workflow_instance_id": "WF-0041",
+      "node_sequence": [
+        "PM-002-N001",
+        "PM-002-N002",
+        "PM-002-N003",
+        "PM-002-N004",
+        "PM-002-N005",
+        "PM-002-N006",
+        "PM-002-N007",
+        "PM-002-N008",
+        "PM-002-N009"
+      ],
+      "business_units": [
+        "BU06"
+      ],
+      "source": "post_hoc only"
+    },
+    {
+      "process_model_id": "PM-003",
+      "workflow_instance_id": "WF-0006",
+      "node_sequence": [
+        "PM-003-N001",
+        "PM-003-N002",
+        "PM-003-N003",
+        "PM-003-N004",
+        "PM-003-N005",
+        "PM-003-N006",
+        "PM-003-N007",
+        "PM-003-N008",
+        "PM-003-N009"
+      ],
+      "business_units": [
+        "BU08"
+      ],
+      "source": "post_hoc only"
+    },
+    {
+      "process_model_id": "PM-003",
+      "workflow_instance_id": "WF-0024",
+      "node_sequence": [
+        "PM-003-N001",
+        "PM-003-N002",
+        "PM-003-N003",
+        "PM-003-N004",
+        "PM-003-N005",
+        "PM-003-N006",
+        "PM-003-N007",
+        "PM-003-N008",
+        "PM-003-N009"
+      ],
+      "business_units": [
+        "BU08"
+      ],
+      "source": "post_hoc only"
+    },
+    {
+      "process_model_id": "PM-003",
+      "workflow_instance_id": "WF-0043",
+      "node_sequence": [
+        "PM-003-N001",
+        "PM-003-N002",
+        "PM-003-N004",
+        "PM-003-N003",
+        "PM-003-N005",
+        "PM-003-N007",
+        "PM-003-N006",
+        "PM-003-N008",
+        "PM-003-N009"
+      ],
+      "business_units": [
+        "BU08"
+      ],
+      "source": "post_hoc only"
+    },
+    {
+      "process_model_id": "PM-004",
+      "workflow_instance_id": "WF-0010",
+      "node_sequence": [
+        "PM-004-N001",
+        "PM-004-N002",
+        "PM-004-N003",
+        "PM-004-N004"
+      ],
+      "business_units": [
+        "BU12"
+      ],
+      "source": "post_hoc only"
+    },
+    {
+      "process_model_id": "PM-004",
+      "workflow_instance_id": "WF-0028",
+      "node_sequence": [
+        "PM-004-N001",
+        "PM-004-N002",
+        "PM-004-N004",
+        "PM-004-N003"
+      ],
+      "business_units": [
+        "BU12"
+      ],
+      "source": "post_hoc only"
+    },
+    {
+      "process_model_id": "PM-004",
+      "workflow_instance_id": "WF-0047",
+      "node_sequence": [
+        "PM-004-N001",
+        "PM-004-N002",
+        "PM-004-N004",
+        "PM-004-N003"
+      ],
+      "business_units": [
+        "BU12"
+      ],
+      "source": "post_hoc only"
+    },
+    {
+      "process_model_id": "PM-005",
+      "workflow_instance_id": "WF-0017",
+      "node_sequence": [
+        "PM-005-N001",
+        "PM-005-N002",
+        "PM-005-N003",
+        "PM-005-N004",
+        "PM-005-N005"
+      ],
+      "business_units": [
+        "BU19"
+      ],
+      "source": "post_hoc only"
+    },
+    {
+      "process_model_id": "PM-005",
+      "workflow_instance_id": "WF-0035",
+      "node_sequence": [
+        "PM-005-N001",
+        "PM-005-N003",
+        "PM-005-N002",
+        "PM-005-N003",
+        "PM-005-N005",
+        "PM-005-N004",
+        "PM-005-N005"
+      ],
+      "business_units": [
+        "BU19"
+      ],
+      "source": "post_hoc only"
+    },
+    {
+      "process_model_id": "PM-005",
+      "workflow_instance_id": "WF-0054",
+      "node_sequence": [
+        "PM-005-N001",
+        "PM-005-N003",
+        "PM-005-N002",
+        "PM-005-N003",
+        "PM-005-N005",
+        "PM-005-N004",
+        "PM-005-N005"
+      ],
+      "business_units": [
+        "BU19"
+      ],
+      "source": "post_hoc only"
+    },
+    {
+      "process_model_id": "PM-006",
+      "workflow_instance_id": "WF-0011",
+      "node_sequence": [
+        "PM-006-N001",
+        "PM-006-N002",
+        "PM-006-N003",
+        "PM-006-N002",
+        "PM-006-N004",
+        "PM-006-N005",
+        "PM-006-N004"
+      ],
+      "business_units": [
+        "BU13"
+      ],
+      "source": "post_hoc only"
+    },
+    {
+      "process_model_id": "PM-006",
+      "workflow_instance_id": "WF-0029",
+      "node_sequence": [
+        "PM-006-N001",
+        "PM-006-N002",
+        "PM-006-N003",
+        "PM-006-N002",
+        "PM-006-N004",
+        "PM-006-N005",
+        "PM-006-N004"
+      ],
+      "business_units": [
+        "BU13"
+      ],
+      "source": "post_hoc only"
+    },
+    {
+      "process_model_id": "PM-006",
+      "workflow_instance_id": "WF-0048",
+      "node_sequence": [
+        "PM-006-N001",
+        "PM-006-N003",
+        "PM-006-N002",
+        "PM-006-N005",
+        "PM-006-N004"
+      ],
+      "business_units": [
+        "BU13"
+      ],
+      "source": "post_hoc only"
+    },
+    {
+      "process_model_id": "PM-007",
+      "workflow_instance_id": "WF-0016",
+      "node_sequence": [
+        "PM-007-N001",
+        "PM-007-N002",
+        "PM-007-N003",
+        "PM-007-N004"
+      ],
+      "business_units": [
+        "BU18"
+      ],
+      "source": "post_hoc only"
+    },
+    {
+      "process_model_id": "PM-007",
+      "workflow_instance_id": "WF-0034",
+      "node_sequence": [
+        "PM-007-N001",
+        "PM-007-N002",
+        "PM-007-N003",
+        "PM-007-N004"
+      ],
+      "business_units": [
+        "BU18"
+      ],
+      "source": "post_hoc only"
+    },
+    {
+      "process_model_id": "PM-007",
+      "workflow_instance_id": "WF-0053",
+      "node_sequence": [
+        "PM-007-N001",
+        "PM-007-N002",
+        "PM-007-N004",
+        "PM-007-N003"
+      ],
+      "business_units": [
+        "BU18"
+      ],
+      "source": "post_hoc only"
+    },
+    {
+      "process_model_id": "PM-008",
+      "workflow_instance_id": "WF-0013",
+      "node_sequence": [
+        "PM-008-N001",
+        "PM-008-N002",
+        "PM-008-N003",
+        "PM-008-N004"
+      ],
+      "business_units": [
+        "BU15"
+      ],
+      "source": "post_hoc only"
+    },
+    {
+      "process_model_id": "PM-008",
+      "workflow_instance_id": "WF-0031",
+      "node_sequence": [
+        "PM-008-N001",
+        "PM-008-N002",
+        "PM-008-N003",
+        "PM-008-N004"
+      ],
+      "business_units": [
+        "BU15"
+      ],
+      "source": "post_hoc only"
+    },
+    {
+      "process_model_id": "PM-008",
+      "workflow_instance_id": "WF-0050",
+      "node_sequence": [
+        "PM-008-N001",
+        "PM-008-N002",
+        "PM-008-N004",
+        "PM-008-N003"
+      ],
+      "business_units": [
+        "BU15"
+      ],
+      "source": "post_hoc only"
+    },
+    {
+      "process_model_id": "PM-009",
+      "workflow_instance_id": "WF-0003",
+      "node_sequence": [
+        "PM-009-N001",
+        "PM-009-N002",
+        "PM-009-N003",
+        "PM-009-N004",
+        "PM-009-N005"
+      ],
+      "business_units": [
+        "BU05"
+      ],
+      "source": "post_hoc only"
+    },
+    {
+      "process_model_id": "PM-009",
+      "workflow_instance_id": "WF-0021",
+      "node_sequence": [
+        "PM-009-N001",
+        "PM-009-N003",
+        "PM-009-N002",
+        "PM-009-N004",
+        "PM-009-N005"
+      ],
+      "business_units": [
+        "BU05"
+      ],
+      "source": "post_hoc only"
+    },
+    {
+      "process_model_id": "PM-009",
+      "workflow_instance_id": "WF-0040",
+      "node_sequence": [
+        "PM-009-N001",
+        "PM-009-N002",
+        "PM-009-N003",
+        "PM-009-N004",
+        "PM-009-N005"
+      ],
+      "business_units": [
+        "BU05"
+      ],
+      "source": "post_hoc only"
+    },
+    {
+      "process_model_id": "PM-010",
+      "workflow_instance_id": "WF-0005",
+      "node_sequence": [
+        "PM-010-N001",
+        "PM-010-N002",
+        "PM-010-N003",
+        "PM-010-N004",
+        "PM-010-N003",
+        "PM-010-N004",
+        "PM-010-N005",
+        "PM-010-N006",
+        "PM-010-N002",
+        "PM-010-N007",
+        "PM-010-N006",
+        "PM-010-N005",
+        "PM-010-N007"
+      ],
+      "business_units": [
+        "BU07"
+      ],
+      "source": "post_hoc only"
+    },
+    {
+      "process_model_id": "PM-010",
+      "workflow_instance_id": "WF-0023",
+      "node_sequence": [
+        "PM-010-N001",
+        "PM-010-N002",
+        "PM-010-N003",
+        "PM-010-N004",
+        "PM-010-N003",
+        "PM-010-N004",
+        "PM-010-N005",
+        "PM-010-N006",
+        "PM-010-N002",
+        "PM-010-N007",
+        "PM-010-N006",
+        "PM-010-N005",
+        "PM-010-N007"
+      ],
+      "business_units": [
+        "BU07"
+      ],
+      "source": "post_hoc only"
+    },
+    {
+      "process_model_id": "PM-010",
+      "workflow_instance_id": "WF-0042",
+      "node_sequence": [
+        "PM-010-N001",
+        "PM-010-N002",
+        "PM-010-N003",
+        "PM-010-N004",
+        "PM-010-N003",
+        "PM-010-N004",
+        "PM-010-N005",
+        "PM-010-N004",
+        "PM-010-N005",
+        "PM-010-N003",
+        "PM-010-N004",
+        "PM-010-N005",
+        "PM-010-N006",
+        "PM-010-N002",
+        "PM-010-N007",
+        "PM-010-N006",
+        "PM-010-N005",
+        "PM-010-N007"
+      ],
+      "business_units": [
+        "BU07"
+      ],
+      "source": "post_hoc only"
+    },
+    {
+      "process_model_id": "PM-011",
+      "workflow_instance_id": "WF-0012",
+      "node_sequence": [
+        "PM-011-N001",
+        "PM-011-N002",
+        "PM-011-N003",
+        "PM-011-N004",
+        "PM-011-N003",
+        "PM-011-N004",
+        "PM-011-N003",
+        "PM-011-N004",
+        "PM-011-N003",
+        "PM-011-N004",
+        "PM-011-N005",
+        "PM-011-N003",
+        "PM-011-N004",
+        "PM-011-N003",
+        "PM-011-N004",
+        "PM-011-N003",
+        "PM-011-N004",
+        "PM-011-N003",
+        "PM-011-N004",
+        "PM-011-N005",
+        "PM-011-N006",
+        "PM-011-N007",
+        "PM-011-N006",
+        "PM-011-N002",
+        "PM-011-N005",
+        "PM-011-N007"
+      ],
+      "business_units": [
+        "BU14"
+      ],
+      "source": "post_hoc only"
+    },
+    {
+      "process_model_id": "PM-011",
+      "workflow_instance_id": "WF-0030",
+      "node_sequence": [
+        "PM-011-N001",
+        "PM-011-N002",
+        "PM-011-N003",
+        "PM-011-N004",
+        "PM-011-N003",
+        "PM-011-N004",
+        "PM-011-N003",
+        "PM-011-N004",
+        "PM-011-N003",
+        "PM-011-N004",
+        "PM-011-N003",
+        "PM-011-N004",
+        "PM-011-N003",
+        "PM-011-N004",
+        "PM-011-N005",
+        "PM-011-N006",
+        "PM-011-N007",
+        "PM-011-N006",
+        "PM-011-N002",
+        "PM-011-N005",
+        "PM-011-N007"
+      ],
+      "business_units": [
+        "BU14"
+      ],
+      "source": "post_hoc only"
+    },
+    {
+      "process_model_id": "PM-011",
+      "workflow_instance_id": "WF-0049",
+      "node_sequence": [
+        "PM-011-N008",
+        "PM-011-N001",
+        "PM-011-N002",
+        "PM-011-N003",
+        "PM-011-N004",
+        "PM-011-N003",
+        "PM-011-N004",
+        "PM-011-N003",
+        "PM-011-N004",
+        "PM-011-N003",
+        "PM-011-N004",
+        "PM-011-N003",
+        "PM-011-N004",
+        "PM-011-N003",
+        "PM-011-N004",
+        "PM-011-N003",
+        "PM-011-N004",
+        "PM-011-N003",
+        "PM-011-N004",
+        "PM-011-N003",
+        "PM-011-N004",
+        "PM-011-N003",
+        "PM-011-N004",
+        "PM-011-N005",
+        "PM-011-N006",
+        "PM-011-N007",
+        "PM-011-N006",
+        "PM-011-N002",
+        "PM-011-N005",
+        "PM-011-N007"
+      ],
+      "business_units": [
+        "BU13",
+        "BU14"
+      ],
+      "source": "post_hoc only"
+    },
+    {
+      "process_model_id": "PM-012",
+      "workflow_instance_id": "WF-0001",
+      "node_sequence": [
+        "PM-012-N001",
+        "PM-012-N002",
+        "PM-012-N001",
+        "PM-012-N003",
+        "PM-012-N001",
+        "PM-012-N003",
+        "PM-012-N001",
+        "PM-012-N004",
+        "PM-012-N005",
+        "PM-012-N006"
+      ],
+      "business_units": [
+        "BU03"
+      ],
+      "source": "post_hoc only"
+    },
+    {
+      "process_model_id": "PM-012",
+      "workflow_instance_id": "WF-0019",
+      "node_sequence": [
+        "PM-012-N001",
+        "PM-012-N002",
+        "PM-012-N001",
+        "PM-012-N004",
+        "PM-012-N007",
+        "PM-012-N008",
+        "PM-012-N001",
+        "PM-012-N003",
+        "PM-012-N001",
+        "PM-012-N003",
+        "PM-012-N001",
+        "PM-012-N004",
+        "PM-012-N005",
+        "PM-012-N006"
+      ],
+      "business_units": [
+        "BU03"
+      ],
+      "source": "post_hoc only"
+    },
+    {
+      "process_model_id": "PM-012",
+      "workflow_instance_id": "WF-0038",
+      "node_sequence": [
+        "PM-012-N009",
+        "PM-012-N005",
+        "PM-012-N001",
+        "PM-012-N002",
+        "PM-012-N001",
+        "PM-012-N003",
+        "PM-012-N001",
+        "PM-012-N003",
+        "PM-012-N010",
+        "PM-012-N004",
+        "PM-012-N005",
+        "PM-012-N006"
+      ],
+      "business_units": [
+        "BU02",
+        "BU03"
+      ],
+      "source": "post_hoc only"
+    },
+    {
+      "process_model_id": "PM-013",
+      "workflow_instance_id": "WF-0014",
+      "node_sequence": [
+        "PM-013-N001",
+        "PM-013-N002",
+        "PM-013-N003",
+        "PM-013-N002",
+        "PM-013-N004",
+        "PM-013-N005",
+        "PM-013-N004"
+      ],
+      "business_units": [
+        "BU16"
+      ],
+      "source": "post_hoc only"
+    },
+    {
+      "process_model_id": "PM-013",
+      "workflow_instance_id": "WF-0032",
+      "node_sequence": [
+        "PM-013-N001",
+        "PM-013-N002",
+        "PM-013-N003",
+        "PM-013-N002",
+        "PM-013-N004",
+        "PM-013-N005",
+        "PM-013-N004"
+      ],
+      "business_units": [
+        "BU16"
+      ],
+      "source": "post_hoc only"
+    },
+    {
+      "process_model_id": "PM-013",
+      "workflow_instance_id": "WF-0051",
+      "node_sequence": [
+        "PM-013-N001",
+        "PM-013-N002",
+        "PM-013-N003",
+        "PM-013-N002",
+        "PM-013-N004",
+        "PM-013-N005",
+        "PM-013-N004"
+      ],
+      "business_units": [
+        "BU16"
+      ],
+      "source": "post_hoc only"
+    },
+    {
+      "process_model_id": "PM-014",
+      "workflow_instance_id": "WF-0018",
+      "node_sequence": [
+        "PM-014-N001",
+        "PM-014-N002",
+        "PM-014-N003",
+        "PM-014-N004",
+        "PM-014-N003",
+        "PM-014-N004",
+        "PM-014-N003",
+        "PM-014-N004",
+        "PM-014-N003",
+        "PM-014-N004",
+        "PM-014-N005",
+        "PM-014-N003",
+        "PM-014-N004",
+        "PM-014-N005",
+        "PM-014-N006",
+        "PM-014-N002",
+        "PM-014-N007",
+        "PM-014-N005",
+        "PM-014-N007"
+      ],
+      "business_units": [
+        "BU20"
+      ],
+      "source": "post_hoc only"
+    },
+    {
+      "process_model_id": "PM-014",
+      "workflow_instance_id": "WF-0036",
+      "node_sequence": [
+        "PM-014-N001",
+        "PM-014-N002",
+        "PM-014-N003",
+        "PM-014-N004",
+        "PM-014-N003",
+        "PM-014-N004",
+        "PM-014-N003",
+        "PM-014-N004",
+        "PM-014-N003",
+        "PM-014-N004",
+        "PM-014-N003",
+        "PM-014-N004",
+        "PM-014-N003",
+        "PM-014-N004",
+        "PM-014-N005",
+        "PM-014-N006",
+        "PM-014-N002",
+        "PM-014-N007",
+        "PM-014-N005",
+        "PM-014-N007"
+      ],
+      "business_units": [
+        "BU20"
+      ],
+      "source": "post_hoc only"
+    },
+    {
+      "process_model_id": "PM-014",
+      "workflow_instance_id": "WF-0055",
+      "node_sequence": [
+        "PM-014-N001",
+        "PM-014-N002",
+        "PM-014-N003",
+        "PM-014-N004",
+        "PM-014-N003",
+        "PM-014-N004",
+        "PM-014-N003",
+        "PM-014-N004",
+        "PM-014-N003",
+        "PM-014-N004",
+        "PM-014-N003",
+        "PM-014-N004",
+        "PM-014-N005",
+        "PM-014-N006",
+        "PM-014-N007",
+        "PM-014-N006",
+        "PM-014-N002",
+        "PM-014-N005",
+        "PM-014-N007"
+      ],
+      "business_units": [
+        "BU20"
+      ],
+      "source": "post_hoc only"
+    },
+    {
+      "process_model_id": "PM-015",
+      "workflow_instance_id": "WF-0015",
+      "node_sequence": [
+        "PM-015-N001",
+        "PM-015-N002",
+        "PM-015-N003",
+        "PM-015-N004",
+        "PM-015-N003",
+        "PM-015-N004",
+        "PM-015-N003",
+        "PM-015-N004",
+        "PM-015-N005",
+        "PM-015-N003",
+        "PM-015-N004",
+        "PM-015-N003",
+        "PM-015-N004",
+        "PM-015-N003",
+        "PM-015-N004",
+        "PM-015-N003",
+        "PM-015-N004",
+        "PM-015-N005",
+        "PM-015-N006",
+        "PM-015-N007",
+        "PM-015-N006",
+        "PM-015-N002",
+        "PM-015-N005",
+        "PM-015-N007"
+      ],
+      "business_units": [
+        "BU17"
+      ],
+      "source": "post_hoc only"
+    },
+    {
+      "process_model_id": "PM-015",
+      "workflow_instance_id": "WF-0033",
+      "node_sequence": [
+        "PM-015-N001",
+        "PM-015-N002",
+        "PM-015-N003",
+        "PM-015-N004",
+        "PM-015-N003",
+        "PM-015-N004",
+        "PM-015-N003",
+        "PM-015-N004",
+        "PM-015-N003",
+        "PM-015-N004",
+        "PM-015-N003",
+        "PM-015-N004",
+        "PM-015-N005",
+        "PM-015-N006",
+        "PM-015-N007",
+        "PM-015-N006",
+        "PM-015-N002",
+        "PM-015-N005",
+        "PM-015-N007"
+      ],
+      "business_units": [
+        "BU17"
+      ],
+      "source": "post_hoc only"
+    },
+    {
+      "process_model_id": "PM-015",
+      "workflow_instance_id": "WF-0052",
+      "node_sequence": [
+        "PM-015-N001",
+        "PM-015-N002",
+        "PM-015-N003",
+        "PM-015-N004",
+        "PM-015-N003",
+        "PM-015-N004",
+        "PM-015-N003",
+        "PM-015-N004",
+        "PM-015-N003",
+        "PM-015-N004",
+        "PM-015-N005",
+        "PM-015-N003",
+        "PM-015-N004",
+        "PM-015-N003",
+        "PM-015-N004",
+        "PM-015-N005",
+        "PM-015-N006",
+        "PM-015-N002",
+        "PM-015-N007",
+        "PM-015-N005",
+        "PM-015-N007"
+      ],
+      "business_units": [
+        "BU17"
+      ],
+      "source": "post_hoc only"
+    },
+    {
+      "process_model_id": "PM-016",
+      "workflow_instance_id": "WF-0056",
+      "node_sequence": [],
+      "business_units": [
+        "BU20"
+      ],
+      "source": "post_hoc only"
+    },
+    {
+      "process_model_id": "PM-017",
+      "workflow_instance_id": "WF-0002",
+      "node_sequence": [
+        "PM-017-N001",
+        "PM-017-N002",
+        "PM-017-N003",
+        "PM-017-N004"
+      ],
+      "business_units": [
+        "BU04"
+      ],
+      "source": "post_hoc only"
+    },
+    {
+      "process_model_id": "PM-017",
+      "workflow_instance_id": "WF-0020",
+      "node_sequence": [
+        "PM-017-N001",
+        "PM-017-N002",
+        "PM-017-N003",
+        "PM-017-N004"
+      ],
+      "business_units": [
+        "BU04"
+      ],
+      "source": "post_hoc only"
+    },
+    {
+      "process_model_id": "PM-017",
+      "workflow_instance_id": "WF-0039",
+      "node_sequence": [
+        "PM-017-N001",
+        "PM-017-N002",
+        "PM-017-N003",
+        "PM-017-N004"
+      ],
+      "business_units": [
+        "BU04"
+      ],
+      "source": "post_hoc only"
+    },
+    {
+      "process_model_id": "PM-018",
+      "workflow_instance_id": "WF-0009",
+      "node_sequence": [
+        "PM-018-N001",
+        "PM-018-N002",
+        "PM-018-N003",
+        "PM-018-N002",
+        "PM-018-N004",
+        "PM-018-N003",
+        "PM-018-N005",
+        "PM-018-N006",
+        "PM-018-N007",
+        "PM-018-N006",
+        "PM-018-N007",
+        "PM-018-N006",
+        "PM-018-N007",
+        "PM-018-N006",
+        "PM-018-N007",
+        "PM-018-N003",
+        "PM-018-N008",
+        "PM-018-N002",
+        "PM-018-N005",
+        "PM-018-N008",
+        "PM-018-N003",
+        "PM-018-N005"
+      ],
+      "business_units": [
+        "BU11"
+      ],
+      "source": "post_hoc only"
+    },
+    {
+      "process_model_id": "PM-018",
+      "workflow_instance_id": "WF-0027",
+      "node_sequence": [
+        "PM-018-N001",
+        "PM-018-N002",
+        "PM-018-N003",
+        "PM-018-N002",
+        "PM-018-N004",
+        "PM-018-N003",
+        "PM-018-N005",
+        "PM-018-N006",
+        "PM-018-N007",
+        "PM-018-N006",
+        "PM-018-N007",
+        "PM-018-N006",
+        "PM-018-N007",
+        "PM-018-N003",
+        "PM-018-N008",
+        "PM-018-N002",
+        "PM-018-N005",
+        "PM-018-N008",
+        "PM-018-N003",
+        "PM-018-N005"
+      ],
+      "business_units": [
+        "BU11"
+      ],
+      "source": "post_hoc only"
+    },
+    {
+      "process_model_id": "PM-018",
+      "workflow_instance_id": "WF-0046",
+      "node_sequence": [
+        "PM-018-N001",
+        "PM-018-N002",
+        "PM-018-N003",
+        "PM-018-N002",
+        "PM-018-N004",
+        "PM-018-N003",
+        "PM-018-N005",
+        "PM-018-N006",
+        "PM-018-N007",
+        "PM-018-N006",
+        "PM-018-N007",
+        "PM-018-N006",
+        "PM-018-N007",
+        "PM-018-N003",
+        "PM-018-N008",
+        "PM-018-N002",
+        "PM-018-N005",
+        "PM-018-N008",
+        "PM-018-N003",
+        "PM-018-N005"
+      ],
+      "business_units": [
+        "BU11"
+      ],
+      "source": "post_hoc only"
+    },
+    {
+      "process_model_id": "PM-019",
+      "workflow_instance_id": "WF-0008",
+      "node_sequence": [
+        "PM-019-N001",
+        "PM-019-N002",
+        "PM-019-N003",
+        "PM-019-N004",
+        "PM-019-N005",
+        "PM-019-N006",
+        "PM-019-N007",
+        "PM-019-N008",
+        "PM-019-N009"
+      ],
+      "business_units": [
+        "BU10"
+      ],
+      "source": "post_hoc only"
+    },
+    {
+      "process_model_id": "PM-019",
+      "workflow_instance_id": "WF-0026",
+      "node_sequence": [
+        "PM-019-N001",
+        "PM-019-N002",
+        "PM-019-N003",
+        "PM-019-N004",
+        "PM-019-N005",
+        "PM-019-N007",
+        "PM-019-N006",
+        "PM-019-N008",
+        "PM-019-N009"
+      ],
+      "business_units": [
+        "BU10"
+      ],
+      "source": "post_hoc only"
+    },
+    {
+      "process_model_id": "PM-019",
+      "workflow_instance_id": "WF-0045",
+      "node_sequence": [
+        "PM-019-N001",
+        "PM-019-N002",
+        "PM-019-N003",
+        "PM-019-N004",
+        "PM-019-N005",
+        "PM-019-N007",
+        "PM-019-N006",
+        "PM-019-N008",
+        "PM-019-N009"
+      ],
+      "business_units": [
+        "BU10"
+      ],
+      "source": "post_hoc only"
+    },
+    {
+      "process_model_id": "PM-020",
+      "workflow_instance_id": "WF-0007",
+      "node_sequence": [
+        "PM-020-N001",
+        "PM-020-N002",
+        "PM-020-N003",
+        "PM-020-N004",
+        "PM-020-N003",
+        "PM-020-N004",
+        "PM-020-N005",
+        "PM-020-N006",
+        "PM-020-N002",
+        "PM-020-N007",
+        "PM-020-N006",
+        "PM-020-N005",
+        "PM-020-N007"
+      ],
+      "business_units": [
+        "BU09"
+      ],
+      "source": "post_hoc only"
+    },
+    {
+      "process_model_id": "PM-020",
+      "workflow_instance_id": "WF-0025",
+      "node_sequence": [
+        "PM-020-N001",
+        "PM-020-N002",
+        "PM-020-N003",
+        "PM-020-N004",
+        "PM-020-N003",
+        "PM-020-N004",
+        "PM-020-N005",
+        "PM-020-N006",
+        "PM-020-N002",
+        "PM-020-N007",
+        "PM-020-N006",
+        "PM-020-N005",
+        "PM-020-N007"
+      ],
+      "business_units": [
+        "BU09"
+      ],
+      "source": "post_hoc only"
+    },
+    {
+      "process_model_id": "PM-020",
+      "workflow_instance_id": "WF-0044",
+      "node_sequence": [
+        "PM-020-N001",
+        "PM-020-N002",
+        "PM-020-N003",
+        "PM-020-N004",
+        "PM-020-N003",
+        "PM-020-N004",
+        "PM-020-N003",
+        "PM-020-N004",
+        "PM-020-N005",
+        "PM-020-N006",
+        "PM-020-N002",
+        "PM-020-N007",
+        "PM-020-N006",
+        "PM-020-N005",
+        "PM-020-N007"
+      ],
+      "business_units": [
+        "BU09"
+      ],
+      "source": "post_hoc only"
+    },
+    {
+      "process_model_id": "PM-021",
+      "workflow_instance_id": "WF-0059",
+      "node_sequence": [
+        "PM-021-N001",
+        "PM-021-N002",
+        "PM-021-N003"
+      ],
+      "business_units": [
+        "BU01"
+      ],
+      "source": "post_hoc only"
+    },
+    {
+      "process_model_id": "PM-021",
+      "workflow_instance_id": "WF-0061",
+      "node_sequence": [
+        "PM-021-N001",
+        "PM-021-N002",
+        "PM-021-N003"
+      ],
+      "business_units": [
+        "BU01"
+      ],
+      "source": "post_hoc only"
+    },
+    {
+      "process_model_id": "PM-022",
+      "workflow_instance_id": "WF-0057",
+      "node_sequence": [
+        "PM-022-N001",
+        "PM-022-N002"
+      ],
+      "business_units": [
+        "BU01"
+      ],
+      "source": "post_hoc only"
+    }
+  ]
+}

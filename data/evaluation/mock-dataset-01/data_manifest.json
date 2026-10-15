@@ -1,0 +1,15 @@
+{
+  "dataset_id": "mock-dataset-01",
+  "run_mode": "REFERENCE",
+  "source_type": "REFERENCE",
+  "data_class": "SYNTHETIC_SANDBOX",
+  "official": false,
+  "synthetic": true,
+  "purpose": "External module API integration samples; not KTL performance evidence",
+  "files": [
+    {
+      "path": "mock_counts.json",
+      "sha256": "7a860762edca53a8a55f861016947c429041e1fdad9714a5c7c9bcdde5bdd8aa"
+    }
+  ]
+}

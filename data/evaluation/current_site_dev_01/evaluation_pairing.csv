@@ -1,0 +1,9 @@
+﻿execution_id,business_unit_id,business_unit_name,execution_number,pairing_source
+EXEC-001,BUS01,일정등록,1,user_confirmed
+EXEC-002,BUS01,일정등록,2,user_confirmed
+EXEC-003,BUS02,일일보고 작성,1,user_confirmed
+EXEC-004,BUS02,일일보고 작성,2,user_confirmed
+EXEC-005,BUS03,주간보고 작성,1,user_confirmed
+EXEC-006,BUS03,주간보고 작성,2,user_confirmed
+EXEC-007,BUS04,월간보고 작성,1,user_confirmed
+EXEC-008,BUS04,월간보고 작성,2,user_confirmed

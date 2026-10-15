@@ -1,0 +1,97 @@
+{
+  "dataset_id": "current_site_20x3_v2",
+  "purpose": "DEVELOPMENT",
+  "dataset_role": "WORKFLOW_MODEL_DEVELOPMENT",
+  "official": false,
+  "synthetic": false,
+  "logical_dataset": true,
+  "created_at": "2026-10-14T13:40:14.695249+00:00",
+  "sources": {
+    "current_site_20x3_v1": {
+      "directory": "data/development/current_site_20x3_v1",
+      "files": [
+        {
+          "path": "data/development/current_site_20x3_v1/events.csv",
+          "sha256": "c15c7cc51bf039eae9d9feef507fb40085675838e5d217698de46d957d56483f",
+          "row_count": 879
+        },
+        {
+          "path": "data/development/current_site_20x3_v1/sessions.csv",
+          "sha256": "b2ffacb9fdcf244402dd55b85d9bafb2c6dd42ca932ee38bcc1e8dc280b88163",
+          "row_count": 1
+        },
+        {
+          "path": "data/development/current_site_20x3_v1/tasks.csv",
+          "sha256": "8bf09da7a75a7417c485d31a3dff2ddb21982198b81a28e0230d74d687e09f2d",
+          "row_count": 645
+        }
+      ]
+    },
+    "current_site_recollection_01": {
+      "directory": "data/development/current_site_recollection_01",
+      "files": [
+        {
+          "path": "data/development/current_site_recollection_01/events.csv",
+          "sha256": "ac6d40bff9ec18e38f35aba44e58f956b3b406486e11d3890e756c6d9fb60db6",
+          "row_count": 74
+        },
+        {
+          "path": "data/development/current_site_recollection_01/sessions.csv",
+          "sha256": "15c04eccdbdc467178c23208005506a44d2de0bf285d1eb02bf06f110e55dacf",
+          "row_count": 1
+        },
+        {
+          "path": "data/development/current_site_recollection_01/tasks.csv",
+          "sha256": "faa9bf1497725fbaf5697df0edabdf830e7d6616a0add9f90705b5427b882777",
+          "row_count": 62
+        }
+      ]
+    }
+  },
+  "parent_execution_manifest": {
+    "path": "results/development/current_site_20x3_v1_profile/execution_manifest.csv",
+    "sha256": "2590f8e0aff8c75986183633fa30c604b34b8c651d819944110f49a64c456ca0"
+  },
+  "active_execution_count": 60,
+  "business_unit_count": 20,
+  "repetitions_per_business_unit": 3,
+  "replaced_execution_ids": [
+    "BU01-R1",
+    "BU01-R2",
+    "BU01-R3",
+    "BU02-R1",
+    "BU02-R2"
+  ],
+  "mapping_policy": "Chronological occurrence within each observed business: personal-info first three; schedule first two. Third schedule recollection unused, original BU02-R3 retained.",
+  "event_selection_policy": "source dataset + session + inclusive timestamp interval; endpoints must resolve to exact event IDs/times; explicit execution_event_index is authoritative membership, bound to source hashes",
+  "ordering_notice": "execution_id repetition is logical identity, not global chronological order; preserve source timestamps, do not concatenate across source sessions",
+  "inactive_policy": "Only inactive_executions.csv in this v2 overlay deactivates five v1 references; original v1 remains immutable",
+  "quality_status": "55 COMPLETED / 5 PARTIAL; recollected views still contain PATCH",
+  "model_inference_executed": false,
+  "files": [
+    {
+      "path": "execution_manifest.csv",
+      "sha256": "d0ec85be57355363ae0a94bc96db5fe9416ff5b8d20967f8b0caadfd8aae863c"
+    },
+    {
+      "path": "inactive_executions.csv",
+      "sha256": "3d472214de771c130e8b82b9335533f2b21ceb073f6c4d58697b97625dddd596"
+    },
+    {
+      "path": "unused_recollection_executions.csv",
+      "sha256": "aa0e31168ff6b433741763f08aca90f9e16a4c251aa91f03cf931c3c4c5b064c"
+    },
+    {
+      "path": "execution_event_index.csv",
+      "sha256": "82181aa82384d22b4853851d8e657ea7c86d0e2565e0386bcfb684db37bbdbdb"
+    },
+    {
+      "path": "validation_report.json",
+      "sha256": "8b51a0983d67c803189527818807f21023e22e14e0f56a6bef384ec70444779a"
+    },
+    {
+      "path": "build_logical_dataset.py",
+      "sha256": "dc4854cd68d63b9b255425d2b08b3185b5c28980d745326b743c14a4318e7e99"
+    }
+  ]
+}

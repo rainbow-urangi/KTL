@@ -1,0 +1,35 @@
+{
+  "targets": {
+    "M01": 65,
+    "M02": 75,
+    "M03": 80,
+    "M04": 90,
+    "M05": 0.79,
+    "M06": 1.0,
+    "M07": 80
+  },
+  "adapter_timeout_seconds": 120,
+  "adapters": {
+    "cleaning": []
+  },
+  "official_manifests": {
+    "M01": null,
+    "M02": null,
+    "M03": null,
+    "M04": null,
+    "M05": null,
+    "M06": null,
+    "M07": null
+  },
+  "cleaning_model_version": null,
+  "integration_datasets": {
+    "current_site_dev_01": {
+      "manifest": "data/evaluation/current_site_dev_01/data_manifest.json",
+      "run_mode": "DEVELOPMENT"
+    },
+    "mock-dataset-01": {
+      "manifest": "data/evaluation/mock-dataset-01/data_manifest.json",
+      "run_mode": "REFERENCE"
+    }
+  }
+}

@@ -1,0 +1,96 @@
+{
+  "model_version": "v6.2",
+  "runtime_format_version": 1,
+  "source_bundle_path": "model/v6_2/frozen/model_bundle.pt",
+  "source_bundle_sha256": "b08696d705cb0ea5466bab70ae2de729bae33ba5a7cfa9bc2b6bbd8b28708774",
+  "reference_notebook_path": "model/v6_2/reference/business_flow_extraction_deep_unsupervised_v6_2.ipynb",
+  "reference_notebook_sha256": "c53cc08dcab8ec5ddf758198422ecc5e3a1d5dbdda08b2d65a111af0fba7acf4",
+  "reference_dataset_path": "data/training/v6_2_source",
+  "reference_dataset_role": "historical reference only; not a future training dataset",
+  "reference_dataset_sha256": {
+    "events.csv": "1828ccf4b8ebf1b65b8e39ded66e174e7335c36b8725f44c38bc94be556f8c0f",
+    "sessions.csv": "d7e3bf8dcf425e498c3f98570832d31c362a415d6dc2150bdc549a5e26019bb2",
+    "tasks.csv": "6882983664c967021f7552adcb44195a0a880372e9e6e239e54a2a2da5719784"
+  },
+  "source_files_sha256": {
+    "model/v6_2/frozen/model_bundle.pt": "b08696d705cb0ea5466bab70ae2de729bae33ba5a7cfa9bc2b6bbd8b28708774",
+    "model/v6_2/reference/business_flow_extraction_deep_unsupervised_v6_2.ipynb": "c53cc08dcab8ec5ddf758198422ecc5e3a1d5dbdda08b2d65a111af0fba7acf4",
+    "model/v6_2/frozen/run_manifest.json": "0bce695277af80b274c462769dc7ab6c66825eba28d77e7ec038c019e7c406fb",
+    "data/training/v6_2_source/events.csv": "1828ccf4b8ebf1b65b8e39ded66e174e7335c36b8725f44c38bc94be556f8c0f",
+    "data/training/v6_2_source/sessions.csv": "d7e3bf8dcf425e498c3f98570832d31c362a415d6dc2150bdc549a5e26019bb2",
+    "data/training/v6_2_source/tasks.csv": "6882983664c967021f7552adcb44195a0a880372e9e6e239e54a2a2da5719784"
+  },
+  "generated_at": "2026-10-04T12:07:23.696728+00:00",
+  "recovery_method": "Hash-pinned notebook preprocessing definitions and original tr_num/mu/sd assignments; two independent historical CSV reads and reconstructions",
+  "statement": "This runtime metadata was reconstructed from the historical V6.2 reference dataset and reference notebook without model retraining.",
+  "validation_status": "passed_for_deterministic_preprocessing_recovery",
+  "inference_ready": false,
+  "validation": {
+    "categorical_checkpoint_shapes": {
+      "event_type": {
+        "vocabulary_size": 4,
+        "checkpoint_shape": [
+          4,
+          128
+        ],
+        "status": "passed"
+      },
+      "interaction_type": {
+        "vocabulary_size": 19,
+        "checkpoint_shape": [
+          19,
+          128
+        ],
+        "status": "passed"
+      },
+      "element_tag": {
+        "vocabulary_size": 8,
+        "checkpoint_shape": [
+          8,
+          128
+        ],
+        "status": "passed"
+      },
+      "api_method": {
+        "vocabulary_size": 3,
+        "checkpoint_shape": [
+          3,
+          128
+        ],
+        "status": "passed"
+      }
+    },
+    "structural_vocabulary_exact_match": true,
+    "two_recoveries_identical": true,
+    "numeric_feature_order_verified": true,
+    "categorical_forward_order_verified": true,
+    "historical_split": {
+      "event_count": 32273,
+      "stream_count": 32,
+      "training_count": 25808,
+      "validation_count": 6465,
+      "training_event_indices_sha256": "ae4b40f53ca9fef9e076b59fa50fc37d962df0ccfca0cc034d6bd31e25ba07c5",
+      "validation_event_indices_sha256": "acf8e4f1e9a673586ca4a22671c075c02e84b725acbc2569ced1950658ba7825"
+    },
+    "original_numeric_stats_comparison": "UNRESOLVED: original feature_stats.json was not retained",
+    "original_categorical_mapping_comparison": "UNRESOLVED: original categorical vocabulary files were not retained"
+  },
+  "environment": {
+    "python": "3.10.5",
+    "numpy": "1.23.5",
+    "pandas": "2.2.3"
+  },
+  "unresolved": [
+    "semantic revision/tokenizer/local weights",
+    "original training environment versions",
+    "new input stream identity policy",
+    "new stream boundary calibration policy",
+    "new workflow consensus assignment policy"
+  ],
+  "semantic_revision_status": "unresolved",
+  "sidecar_sha256": {
+    "categorical_vocabs.json": "60269a22f2fbcb2d5550b8dfeff1318cb5d3ca9ce9bd2a770c9d65582924d62e",
+    "feature_stats.json": "0d8ecc3ad94c57cfb36599275a5907f9f2e96200aa607fde4b83926b33becd8c",
+    "preprocessing_contract.json": "09daf706ce2e11bf131575cf6e52c6d4b23ac535d9f46571ec4e003ec7abbd14"
+  }
+}

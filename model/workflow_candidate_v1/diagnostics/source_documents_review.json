@@ -1,0 +1,18 @@
+{
+  "reviewed_files_sha256": {
+    "AGENTS.md": "2f8bf2742c8ca5ce0a563c8193d70b809f2ebdc3cfbc2c25f3171bf9ef5a30cd",
+    "R&D_COMPLIANCE.md": "0a2586c3ef32a7754d18270388e9314af449144f8dd8757a7778351d6fef6aa8",
+    "docs/compliance/source/KTL_TEST_CRITERIA_CURRENT.pdf": "88784570e568f5873bf89d3163ec7c227e442cde8fab860ba47c3ec82debeafd",
+    "model/v6_2/frozen/run_manifest.json": "0bce695277af80b274c462769dc7ab6c66825eba28d77e7ec038c019e7c406fb",
+    "model/v6_2/reference/business_flow_extraction_deep_unsupervised_v6_2.ipynb": "c53cc08dcab8ec5ddf758198422ecc5e3a1d5dbdda08b2d65a111af0fba7acf4"
+  },
+  "ktl_pages_read": [
+    6,
+    7,
+    8,
+    9,
+    10,
+    11
+  ],
+  "v62_notebook_read_scope": "EventTransformer, SegmentTransformer, WorkflowBoundary, WorkflowTransitionContrastive architecture; no model execution"
+}

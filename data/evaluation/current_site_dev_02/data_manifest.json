@@ -1,0 +1,27 @@
+{
+  "dataset_id": "current_site_dev_02",
+  "purpose": "current-site model/evaluation integration test",
+  "official": false,
+  "synthetic": false,
+  "data_class": "DEVELOPMENT",
+  "run_mode": "DEVELOPMENT",
+  "files": [
+    {
+      "path": "events.csv",
+      "sha256": "bc4c25d22db7de7ba176a14e77af2451f9b45338d1a2f3135fa70597694205d0",
+      "row_count": 320
+    },
+    {
+      "path": "sessions.csv",
+      "sha256": "e7f94181c3e110a8dd30ea220ee544c8de7989659c9e998d4e8af62a67c51948",
+      "row_count": 1
+    },
+    {
+      "path": "tasks.csv",
+      "sha256": "c402abe7af6917c126334cff675f418817b407df40426b78305b7a6feaa6e56f",
+      "row_count": 243
+    }
+  ],
+  "created_at": "2026-10-09T08:51:22.604752+00:00",
+  "note": "Actual CSV inventory only; no Ground Truth or assumed execution counts"
+}

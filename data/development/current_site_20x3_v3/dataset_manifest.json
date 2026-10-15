@@ -1,0 +1,92 @@
+{
+  "dataset_id": "current_site_20x3_v3",
+  "purpose": "DEVELOPMENT",
+  "official": false,
+  "logical_dataset": true,
+  "created_at": "2026-10-14T14:00:55.013424+00:00",
+  "parent_dataset": "current_site_20x3_v2",
+  "parent_manifest_sha256": "076d81dd885befe0035efae6b5089c9c9b43f2b5263b16f2e4f54fda9b475073",
+  "sources": {
+    "current_site_20x3_v1": {
+      "files": [
+        {
+          "path": "data/development/current_site_20x3_v1/events.csv",
+          "sha256": "c15c7cc51bf039eae9d9feef507fb40085675838e5d217698de46d957d56483f",
+          "row_count": 879
+        },
+        {
+          "path": "data/development/current_site_20x3_v1/sessions.csv",
+          "sha256": "b2ffacb9fdcf244402dd55b85d9bafb2c6dd42ca932ee38bcc1e8dc280b88163",
+          "row_count": 1
+        },
+        {
+          "path": "data/development/current_site_20x3_v1/tasks.csv",
+          "sha256": "8bf09da7a75a7417c485d31a3dff2ddb21982198b81a28e0230d74d687e09f2d",
+          "row_count": 645
+        }
+      ]
+    },
+    "current_site_recollection_02": {
+      "files": [
+        {
+          "path": "data/development/current_site_recollection_02/events.csv",
+          "sha256": "07c90862f3e714b93ddd5f8379932884184898233984c57facaf09ef90e541e9",
+          "row_count": 122
+        },
+        {
+          "path": "data/development/current_site_recollection_02/sessions.csv",
+          "sha256": "e6bf10b00fbeac2b02d305118a053bde0f6881ab2d6b66d4c58987830a1b13c3",
+          "row_count": 2
+        },
+        {
+          "path": "data/development/current_site_recollection_02/tasks.csv",
+          "sha256": "67721a1475a92b30225af17e668489cebead614d663578395b3cf3023d5c4457",
+          "row_count": 98
+        }
+      ]
+    }
+  },
+  "active_execution_count": 60,
+  "business_unit_count": 20,
+  "repetitions_per_business_unit": 3,
+  "replaced_execution_ids": [
+    "BU01-R1",
+    "BU01-R2",
+    "BU01-R3",
+    "BU02-R1",
+    "BU02-R2"
+  ],
+  "event_selection_policy": "Source hashes + session + inclusive start/end ID/time; execution_event_index.csv is explicit membership. No row-number boundaries.",
+  "mapping_policy": "새 세션 개인정보 3회, 일정 상세 2회를 각 BU 내 발생순으로 대응. 기존 BU02-R3 유지.",
+  "inactive_policy": "이 v3 overlay에서만 이전 5개 참조 비활성화; v2는 불변.",
+  "model_input_policy": "business_unit_id, repetition, status 및 업무 metadata는 모델 입력에서 제외해야 함.",
+  "model_inference_executed": false,
+  "model_training_executed": false,
+  "quality_status": "DATASET_READY_FOR_MODEL_PROTOTYPE",
+  "files": [
+    {
+      "path": "execution_manifest.csv",
+      "sha256": "3a26d85eb777c37a0fdda7c2b0f1f2d216c2c2beacce20026df36d6c5655aa89"
+    },
+    {
+      "path": "execution_event_index.csv",
+      "sha256": "cadea3c119466ee5fb30c09eb63d61c3b115b4b48c397e5c03730dbe7423d00e"
+    },
+    {
+      "path": "inactive_executions.csv",
+      "sha256": "9cb23c5816333b90390c580f392b56962d8f73bdc6f5271369b40fb03a88378c"
+    },
+    {
+      "path": "excluded_recollection_events.csv",
+      "sha256": "20a62b42bf0e6e9691b45d83af99ce75d3924e686c32e8d3c874aad5b8c2ba4d"
+    },
+    {
+      "path": "validation_report.json",
+      "sha256": "14900c4659ed7ec2da4b3f9af1e4bda54f913ef0ea70b8f14561221b73ed98b1"
+    },
+    {
+      "path": "build_logical_dataset.py",
+      "sha256": "eb908b3c010b1a82de0048f465e87b8822d2627b1b6f85852cc273955f1e1446"
+    }
+  ]
+}

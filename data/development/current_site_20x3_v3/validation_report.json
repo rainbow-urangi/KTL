@@ -1,0 +1,224 @@
+{
+  "checks": {
+    "active_execution_count_60": true,
+    "each_bu_repetitions_1_2_3": true,
+    "five_replacements_reference_recollection_02": true,
+    "remaining_55_exactly_unchanged": true,
+    "new_five_no_mutation_requests": true,
+    "new_five_completed": true,
+    "bu02_core_structure_consistent": true,
+    "no_active_event_overlap_including_cross_source_ids": true,
+    "source_id_time_count_verified": true,
+    "original_csv_and_v2_unchanged": true
+  },
+  "all_pass": true,
+  "conclusion": "DATASET_READY_FOR_MODEL_PROTOTYPE",
+  "active_count": 60,
+  "active_event_count": 866,
+  "active_status_counts": {
+    "COMPLETED": 60
+  },
+  "replacements": [
+    {
+      "execution_id": "BU01-R1",
+      "start_time": "2026-10-14 22:52:12.648",
+      "end_time": "2026-10-14 22:52:15.655",
+      "event_count": "7",
+      "status": "COMPLETED"
+    },
+    {
+      "execution_id": "BU02-R1",
+      "start_time": "2026-10-14 22:52:32.853",
+      "end_time": "2026-10-14 22:52:43.539",
+      "event_count": "11",
+      "status": "COMPLETED"
+    },
+    {
+      "execution_id": "BU01-R2",
+      "start_time": "2026-10-14 22:52:48.131",
+      "end_time": "2026-10-14 22:52:48.954",
+      "event_count": "4",
+      "status": "COMPLETED"
+    },
+    {
+      "execution_id": "BU02-R2",
+      "start_time": "2026-10-14 22:52:58.070",
+      "end_time": "2026-10-14 22:53:04.017",
+      "event_count": "11",
+      "status": "COMPLETED"
+    },
+    {
+      "execution_id": "BU01-R3",
+      "start_time": "2026-10-14 22:53:05.480",
+      "end_time": "2026-10-14 22:53:06.299",
+      "event_count": "4",
+      "status": "COMPLETED"
+    }
+  ],
+  "recollection_inventory": {
+    "total_events": 122,
+    "new_session_events": 48,
+    "prior_export_events": 74,
+    "selected_events": 37,
+    "excluded_events": 85
+  },
+  "candidate_boundaries": [
+    {
+      "candidate_id": "BU01-R1",
+      "selected": true,
+      "start_event_id": "d3b754a3-e0a6-4c55-8eee-2ef2e2c66ad5",
+      "end_event_id": "33d7e5a3-509c-490a-88c1-cba4654eeef1",
+      "event_count": 7,
+      "next_menu_event_id": "ff5ef97e-73ba-46a0-beb2-759ab909dae7"
+    },
+    {
+      "candidate_id": "BU02-R1",
+      "selected": true,
+      "start_event_id": "43b485bc-9d5e-4977-8f90-c094319e5a12",
+      "end_event_id": "afbbc88f-3886-452e-9126-a19a4de9f262",
+      "event_count": 11,
+      "next_menu_event_id": "5aa0b10c-1d37-4cdf-aa10-6b6f2320a761"
+    },
+    {
+      "candidate_id": "BU01-R2",
+      "selected": true,
+      "start_event_id": "07410e31-44a3-4dbb-a526-a1297a3e03db",
+      "end_event_id": "28219cc5-5e9f-45e6-b8c6-3bce8e4ab2cd",
+      "event_count": 4,
+      "next_menu_event_id": "145b8323-db9a-432c-934e-54fac561a191"
+    },
+    {
+      "candidate_id": "BU02-R2",
+      "selected": true,
+      "start_event_id": "145b8323-db9a-432c-934e-54fac561a191",
+      "end_event_id": "074115d1-2180-4f08-bd09-d4eebe1fcfb1",
+      "event_count": 11,
+      "next_menu_event_id": "ddf674a5-a8ee-4ac8-b646-594fce8cadac"
+    },
+    {
+      "candidate_id": "BU01-R3",
+      "selected": true,
+      "start_event_id": "ddf674a5-a8ee-4ac8-b646-594fce8cadac",
+      "end_event_id": "4cd2ed36-fdef-4e8e-9720-23f1d486fb62",
+      "event_count": 4,
+      "next_menu_event_id": "26f6c7c3-1559-4985-9108-642cf5cd987c"
+    },
+    {
+      "candidate_id": "BU02-R3",
+      "selected": false,
+      "start_event_id": "26f6c7c3-1559-4985-9108-642cf5cd987c",
+      "end_event_id": "4c883525-9f34-4713-a0c5-7018b245eb24",
+      "event_count": 6,
+      "next_menu_event_id": null
+    }
+  ],
+  "bu02_structure_comparison": {
+    "BU02-R1": {
+      "checks": {
+        "schedule_menu": true,
+        "schedule_read_200": true,
+        "detail_popup_open": true,
+        "detail_popup_close": true,
+        "no_mutation": true
+      },
+      "event_count": 11,
+      "api_method_counts": {
+        "GET": 2
+      },
+      "interaction_sequence": [
+        "click",
+        "route_change",
+        "api_transaction",
+        "api_transaction",
+        "screen_change",
+        "click",
+        "popup_open",
+        "screen_change",
+        "popup_structure",
+        "click",
+        "popup_close"
+      ],
+      "additional_next_month_click": false
+    },
+    "BU02-R2": {
+      "checks": {
+        "schedule_menu": true,
+        "schedule_read_200": true,
+        "detail_popup_open": true,
+        "detail_popup_close": true,
+        "no_mutation": true
+      },
+      "event_count": 11,
+      "api_method_counts": {
+        "GET": 2
+      },
+      "interaction_sequence": [
+        "click",
+        "route_change",
+        "api_transaction",
+        "api_transaction",
+        "screen_change",
+        "click",
+        "popup_open",
+        "screen_change",
+        "popup_structure",
+        "click",
+        "popup_close"
+      ],
+      "additional_next_month_click": false
+    },
+    "BU02-R3": {
+      "checks": {
+        "schedule_menu": true,
+        "schedule_read_200": true,
+        "detail_popup_open": true,
+        "detail_popup_close": true,
+        "no_mutation": true
+      },
+      "event_count": 13,
+      "api_method_counts": {
+        "GET": 3
+      },
+      "interaction_sequence": [
+        "click",
+        "route_change",
+        "api_transaction",
+        "api_transaction",
+        "screen_change",
+        "click",
+        "popup_open",
+        "screen_change",
+        "popup_structure",
+        "click",
+        "popup_close",
+        "click",
+        "api_transaction"
+      ],
+      "additional_next_month_click": true
+    }
+  },
+  "limitations": [
+    "판정 대상은 기록된 통신이며 미수집 통신의 부재까지 증명하지 않음.",
+    "BU01-R1 메뉴 click은 미수집. 초기 page_view와 GET 200을 표시 확인 근거로 사용.",
+    "BU02-R3만 상세를 닫은 뒤 다음 달 조회가 추가됨. 공통 조회 흐름은 일치."
+  ],
+  "source_before_after_sha256": {
+    "data/development/current_site_20x3_v2/unused_recollection_executions.csv": "aa0e31168ff6b433741763f08aca90f9e16a4c251aa91f03cf931c3c4c5b064c",
+    "data/development/current_site_20x3_v2/execution_event_index.csv": "82181aa82384d22b4853851d8e657ea7c86d0e2565e0386bcfb684db37bbdbdb",
+    "data/development/current_site_20x3_v2/inactive_executions.csv": "3d472214de771c130e8b82b9335533f2b21ceb073f6c4d58697b97625dddd596",
+    "data/development/current_site_20x3_v2/build_logical_dataset.py": "dc4854cd68d63b9b255425d2b08b3185b5c28980d745326b743c14a4318e7e99",
+    "data/development/current_site_20x3_v2/validation_report.json": "8b51a0983d67c803189527818807f21023e22e14e0f56a6bef384ec70444779a",
+    "data/development/current_site_20x3_v2/execution_manifest.csv": "d0ec85be57355363ae0a94bc96db5fe9416ff5b8d20967f8b0caadfd8aae863c",
+    "data/development/current_site_20x3_v2/dataset_manifest.json": "076d81dd885befe0035efae6b5089c9c9b43f2b5263b16f2e4f54fda9b475073",
+    "data/development/current_site_20x3_v1/tasks.csv": "8bf09da7a75a7417c485d31a3dff2ddb21982198b81a28e0230d74d687e09f2d",
+    "data/development/current_site_20x3_v1/events.csv": "c15c7cc51bf039eae9d9feef507fb40085675838e5d217698de46d957d56483f",
+    "data/development/current_site_20x3_v1/data_manifest.json": "8038d9e315bcd1f0b206a03ee5501095b4d6f1436145daf04e0f2980f78451e5",
+    "data/development/current_site_20x3_v1/sessions.csv": "b2ffacb9fdcf244402dd55b85d9bafb2c6dd42ca932ee38bcc1e8dc280b88163",
+    "data/development/current_site_recollection_01/tasks.csv": "faa9bf1497725fbaf5697df0edabdf830e7d6616a0add9f90705b5427b882777",
+    "data/development/current_site_recollection_01/events.csv": "ac6d40bff9ec18e38f35aba44e58f956b3b406486e11d3890e756c6d9fb60db6",
+    "data/development/current_site_recollection_01/sessions.csv": "15c04eccdbdc467178c23208005506a44d2de0bf285d1eb02bf06f110e55dacf",
+    "data/development/current_site_recollection_02/tasks.csv": "67721a1475a92b30225af17e668489cebead614d663578395b3cf3023d5c4457",
+    "data/development/current_site_recollection_02/events.csv": "07c90862f3e714b93ddd5f8379932884184898233984c57facaf09ef90e541e9",
+    "data/development/current_site_recollection_02/sessions.csv": "e6bf10b00fbeac2b02d305118a053bde0f6881ab2d6b66d4c58987830a1b13c3"
+  }
+}

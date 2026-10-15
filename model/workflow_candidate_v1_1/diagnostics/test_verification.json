@@ -1,0 +1,15 @@
+{
+  "candidate_tests": {
+    "count": 14,
+    "result": "PASS"
+  },
+  "existing_regression_tests": {
+    "count": 98,
+    "result": "PASS"
+  },
+  "frozen_files_unchanged": true,
+  "protected_file_count": 183,
+  "artifact_and_source_hashes_valid": true,
+  "selected_inference_reproduces_C_assignments_without_business_metadata": true,
+  "predicted_workflow_membership_unchanged": true
+}

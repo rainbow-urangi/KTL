@@ -1,0 +1,36 @@
+{
+  "seed": 20261014,
+  "hash_dim": 256,
+  "previous_hash_dim": 128,
+  "projection_dim": 64,
+  "hidden_dim": 64,
+  "layers": 1,
+  "dropout": 0.1,
+  "epochs": 80,
+  "learning_rate": 0.003,
+  "boundary_threshold": 0.5,
+  "boundary_tolerance_events": 1,
+  "inactivity_seconds": 20,
+  "density_window_seconds": 10,
+  "ngram_min": 3,
+  "ngram_max": 5,
+  "structural_embedding_dim": 256,
+  "neural_embedding_weight": 0.35,
+  "cluster_distance_thresholds": [
+    0.15,
+    0.25,
+    0.35,
+    0.45,
+    0.55,
+    0.65,
+    0.75,
+    0.85
+  ],
+  "group_cv_folds": 3,
+  "semantic_encoder": null,
+  "semantic_revision": null,
+  "safe_page_titles": [
+    "Rainbow"
+  ],
+  "mode": "DEVELOPMENT"
+}

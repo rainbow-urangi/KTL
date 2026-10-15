@@ -1,0 +1,84 @@
+{
+  "dataset_id": "mock-dataset-01",
+  "run_mode": "REFERENCE",
+  "source_type": "REFERENCE",
+  "official": false,
+  "synthetic": true,
+  "purpose": "Developer Integration Sandbox only",
+  "counts": {
+    "M01": {
+      "defined_required_event_count": 100,
+      "collected_required_event_count": 95,
+      "total_collected_event_count": 110,
+      "required_field_count": 6,
+      "missing_required_field_count": 3,
+      "defined_event_type_count": 8,
+      "collected_event_type_count": 8
+    },
+    "M04": {
+      "total_execution_count": 20,
+      "successful_execution_count": 18
+    },
+    "M07": {
+      "generation_request_count": 20,
+      "generated_code_count": 18,
+      "syntax_pass_count": 17,
+      "execution_pass_count": 16,
+      "both_pass_count": 15
+    }
+  },
+  "details": {
+    "M01": {
+      "synthetic": true,
+      "note": "연동 테스트용 mock count; 실제 수집 성능이 아닙니다."
+    },
+    "M04": {
+      "synthetic": true,
+      "note": "전체 20건 중 3건의 설명용 예시입니다.",
+      "example_cases": [
+        {
+          "case_id": "TC-001",
+          "status": "PASS"
+        },
+        {
+          "case_id": "TC-002",
+          "status": "FAIL",
+          "error_type": "ELEMENT_NOT_FOUND"
+        },
+        {
+          "case_id": "TC-003",
+          "status": "PASS"
+        }
+      ]
+    },
+    "M07": {
+      "synthetic": true,
+      "note": "20회 요청, 생성 코드 18건 중 일부 설명용 예시입니다.",
+      "example_cases": [
+        {
+          "case_id": "TC-001",
+          "generation_status": "PASS",
+          "syntax_status": "PASS",
+          "execution_status": "PASS",
+          "final_status": "PASS"
+        },
+        {
+          "case_id": "TC-002",
+          "generation_status": "PASS",
+          "syntax_status": "PASS",
+          "execution_status": "FAIL",
+          "final_status": "FAIL",
+          "error_type": "EXECUTION_ERROR"
+        },
+        {
+          "case_id": "TC-003",
+          "generation_status": "PASS",
+          "syntax_status": "FAIL",
+          "execution_status": "FAIL",
+          "final_status": "FAIL",
+          "error_type": "SYNTAX_ERROR"
+        }
+      ]
+    }
+  }
+}

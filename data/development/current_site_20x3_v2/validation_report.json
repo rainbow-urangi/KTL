@@ -1,0 +1,48 @@
+{
+  "checks": {
+    "active_execution_count_60": true,
+    "each_business_repetitions_1_2_3": true,
+    "five_replacements_reference_new_source": true,
+    "remaining_55_unchanged_v1_references": true,
+    "source_id_time_count_verified": true,
+    "no_active_event_overlap": true,
+    "original_files_unchanged": true
+  },
+  "all_pass": true,
+  "active_count": 60,
+  "inactive_v1_count": 5,
+  "unused_recollection_execution_count": 1,
+  "active_event_count": 887,
+  "active_status_counts": {
+    "PARTIAL": 5,
+    "COMPLETED": 55
+  },
+  "source_before_after_sha256": {
+    "data/development/current_site_20x3_v1/tasks.csv": "8bf09da7a75a7417c485d31a3dff2ddb21982198b81a28e0230d74d687e09f2d",
+    "data/development/current_site_20x3_v1/events.csv": "c15c7cc51bf039eae9d9feef507fb40085675838e5d217698de46d957d56483f",
+    "data/development/current_site_20x3_v1/data_manifest.json": "8038d9e315bcd1f0b206a03ee5501095b4d6f1436145daf04e0f2980f78451e5",
+    "data/development/current_site_20x3_v1/sessions.csv": "b2ffacb9fdcf244402dd55b85d9bafb2c6dd42ca932ee38bcc1e8dc280b88163",
+    "data/development/current_site_recollection_01/tasks.csv": "faa9bf1497725fbaf5697df0edabdf830e7d6616a0add9f90705b5427b882777",
+    "data/development/current_site_recollection_01/events.csv": "ac6d40bff9ec18e38f35aba44e58f956b3b406486e11d3890e756c6d9fb60db6",
+    "data/development/current_site_recollection_01/sessions.csv": "15c04eccdbdc467178c23208005506a44d2de0bf285d1eb02bf06f110e55dacf",
+    "results/development/current_site_20x3_v1_profile/summary.json": "85b01ebd47219aa5e903dd0c3a84c5ee4cb42bf8f489a24f7572e7aa9f64a8df",
+    "results/development/current_site_20x3_v1_profile/model_candidate_recommendation.md": "cf5480eef72bab33db5d3913c41c4d7dc43e4059e7e571f4bb5a951e69d76910",
+    "results/development/current_site_20x3_v1_profile/analysis_provenance.json": "c23c53e207207d3be11fea1b8647ee26a6e88978c0bb89fd4813ce616288f01a",
+    "results/development/current_site_20x3_v1_profile/data_profile_report.md": "006496ca41c87c7568d4a4e5079b9982653a03fbb642f20f076131a694f81b23",
+    "results/development/current_site_20x3_v1_profile/business_unit_statistics.csv": "f07ad109508cf5d978f6d4dcf917ab2333db17fcbf9fcd02372f4ef84ab1c442",
+    "results/development/current_site_20x3_v1_profile/legacy_structural_oov.json": "b8a3a0a963d2ad93d9a65889e0b76526229ddc28b087268cad04cf35320174fb",
+    "results/development/current_site_20x3_v1_profile/validation.json": "e1ab8b01a090fa516b042e2fd7dc8d810ef14d5642997c2accf4be63e79b5d4b",
+    "results/development/current_site_20x3_v1_profile/profile_analysis.py": "08f1bcbca83c47114a15577d31d4b61831542de8c894ebe3425fd4baf18448d1",
+    "results/development/current_site_20x3_v1_profile/feature_coverage.csv": "eb26f638cd3e46b4e43a1899166f624b4afea26d12e9db813a663361b73da836",
+    "results/development/current_site_20x3_v1_profile/confusable_business_pairs.csv": "09a507e27a11ff1d5664ba4a901130573845159d1ac36d01bacec70c4c34c1d9",
+    "results/development/current_site_20x3_v1_profile/user_confirmed_mapping.json": "6f33cf31a22e14eca3a3dfd8ef5b3cecfa8f023164759c3fad48d51805d96eac",
+    "results/development/current_site_20x3_v1_profile/outliers.json": "fabe50a50223e7e369615680e086df99fb807988859b2e7e1c4860bc34b6dbca",
+    "results/development/current_site_20x3_v1_profile/boundary_signal_analysis.csv": "8bef64b0472ded984c95e337b5a949a3d37f9321065e07a2ac7fff4e791f9f54",
+    "results/development/current_site_20x3_v1_profile/within_business_similarity_summary.csv": "7de471ec245f53789e8ac49013c88675b72d5cb35ed3033b91b38898e94ad187",
+    "results/development/current_site_20x3_v1_profile/execution_manifest.csv": "2590f8e0aff8c75986183633fa30c604b34b8c651d819944110f49a64c456ca0",
+    "results/development/current_site_20x3_v1_profile/between_business_similarity.csv": "85cdbb26c035351d4b8fe6fdb21a157906de354ed231d33eef64b395775e053f",
+    "results/development/current_site_20x3_v1_profile/feature_separation.csv": "74c6d13c0fd468d2b87ff7765c237e795f58fa20d230589fb9547a6ad0442731",
+    "results/development/current_site_20x3_v1_profile/within_business_similarity.csv": "6cd5f58cadb355f7cfd9efc61df45c979237cc45b4f920280fd2883cebcfcf01"
+  },
+  "quality_notice": "Structural replacement PASS does not mean recollection quality is corrected; five replacements remain PARTIAL"
+}

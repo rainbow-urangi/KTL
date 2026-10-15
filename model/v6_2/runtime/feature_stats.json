@@ -1,0 +1,25 @@
+{
+  "numeric_feature_order": [
+    "log1p_delta_sec",
+    "log1p_step_duration_ms",
+    "log1p_api_latency_ms",
+    "api_status_code_div_600"
+  ],
+  "mean": [
+    0.4013843536376953,
+    4.696194648742676,
+    1.1665234565734863,
+    0.085780069231987
+  ],
+  "std": [
+    0.6648135185241699,
+    2.4875926971435547,
+    2.041043996810913,
+    0.1457352489233017
+  ],
+  "dtype": "float32",
+  "ddof": 0,
+  "std_epsilon": 1e-06,
+  "normalization": "(raw_num - mean) / std",
+  "fit_scope": "historical per-stream training split only"
+}

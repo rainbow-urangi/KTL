@@ -1,0 +1,170 @@
+<!doctype html>
+<html lang="ko">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>업무 프로세스 내부 품질 리포트 v6.2</title>
+<style>
+*{box-sizing:border-box}
+body{margin:0;background:#f5f7fa;color:#20242a;font-family:-apple-system,BlinkMacSystemFont,"Segoe UI",sans-serif}
+.wrap{max-width:1550px;margin:0 auto;padding:28px}
+.hero,.panel,.card{background:#fff;border:1px solid #e2e6ec;border-radius:16px}
+.hero{padding:24px;margin-bottom:18px}
+.hero h1{margin:0 0 8px;font-size:24px}
+.hero p,.note,.footer{color:#68707c;line-height:1.65}
+.cards{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:12px;margin:18px 0}
+.card{padding:16px}
+.card-title{font-size:12px;font-weight:700;color:#747c87}
+.card-value{font-size:27px;font-weight:800;margin:7px 0}
+.card-note{font-size:12px;line-height:1.5;color:#7b838e}
+.panel{padding:20px;margin-bottom:18px}
+.panel h2{font-size:18px;margin:0 0 6px}
+.note{font-size:12px;margin-bottom:14px}
+.scroll{overflow:auto}
+table{border-collapse:collapse;width:100%;font-size:13px}
+th,td{padding:10px 9px;border-bottom:1px solid #edf0f3;text-align:left;white-space:nowrap}
+th{background:#fafbfc;font-size:12px;color:#5f6772}
+.num{text-align:right}
+.current td{font-weight:700;background:#f1f5ff}
+.badge{display:inline-block;padding:3px 7px;border-radius:999px;background:#eef3ff;color:#3757a4;font-size:11px;font-weight:700}
+.footer{font-size:12px;padding:5px 2px 20px}
+@media(max-width:800px){
+ .wrap{padding:14px}
+ .cards{grid-template-columns:1fr}
+}
+</style>
+</head>
+<body>
+<div class="wrap">
+
+<section class="hero">
+<h1>업무 프로세스 내부 품질 리포트 · v6.2</h1>
+<p>
+V6.2은 calibrated segmentation과 multi-seed consensus prototype을 사용해 고객 보고 가능한 업무 흐름을 안정적으로 추출하는 버전입니다.
+Gold 업무명은 학습과 threshold 결정에 사용하지 않습니다.
+<span class="badge">Primary evaluation: context_ge1</span>
+</p>
+</section>
+
+<section class="cards"><div class="card"><div class="card-title">추출 프로세스</div><div class="card-value">12</div><div class="card-note">calibrated threshold 적용 후 발견된 process model 수</div></div><div class="card"><div class="card-title">ARI · context_ge1</div><div class="card-value">0.040</div><div class="card-note">single-gold canonical subset의 Adjusted Rand Index</div></div><div class="card"><div class="card-title">V-measure</div><div class="card-value">0.211</div><div class="card-note">homogeneity와 completeness의 조화평균</div></div><div class="card"><div class="card-title">NMI</div><div class="card-value">0.211</div><div class="card-note">기준 업무와 추출 prototype의 normalized mutual information</div></div><div class="card"><div class="card-title">Canonical 평가 사례</div><div class="card-value">29</div><div class="card-note">gold label이 정확히 하나인 instance만 clustering 지표에 사용</div></div><div class="card"><div class="card-title">Ambiguous 사례</div><div class="card-value">1</div><div class="card-note">둘 이상의 gold anchor가 잡혀 clustering 지표에서 제외된 instance</div></div></section>
+
+<section class="panel">
+<h2>Evaluation v2 · anchor sensitivity</h2>
+<div class="note">
+ARI/NMI/V-measure는 gold label이 정확히 하나인 canonical instance에만 계산합니다.
+여러 gold가 동시에 잡힌 instance는 clustering 지표에서 제외하고 boundary/co-occurrence 진단에 남깁니다.
+현재 primary mode는 강조 표시됩니다.
+</div>
+<div class="scroll">
+<table>
+<thead><tr>
+<th>Anchor mode</th>
+<th class="num">Canonical N</th>
+<th class="num">Ambiguous N</th>
+<th class="num">ARI</th>
+<th class="num">NMI</th>
+<th class="num">Homogeneity</th>
+<th class="num">Completeness</th>
+<th class="num">V-measure</th>
+<th class="num">Purity 참고</th>
+<th class="num">Max pair 병합</th>
+</tr></thead>
+<tbody><tr><td>legacy_loose</td><td class="num">200</td><td class="num">67</td><td class="num">0.106</td><td class="num">0.225</td><td class="num">0.277</td><td class="num">0.190</td><td class="num">0.225</td><td class="num">30.3%</td><td class="num">100.0%</td></tr><tr><td>no_terminal_nav</td><td class="num">195</td><td class="num">72</td><td class="num">0.105</td><td class="num">0.232</td><td class="num">0.287</td><td class="num">0.195</td><td class="num">0.232</td><td class="num">28.7%</td><td class="num">100.0%</td></tr><tr class="current"><td>context_ge1</td><td class="num">29</td><td class="num">1</td><td class="num">0.040</td><td class="num">0.211</td><td class="num">0.446</td><td class="num">0.138</td><td class="num">0.211</td><td class="num">37.3%</td><td class="num">12.5%</td></tr><tr><td>context_ge2</td><td class="num">29</td><td class="num">1</td><td class="num">0.040</td><td class="num">0.211</td><td class="num">0.446</td><td class="num">0.138</td><td class="num">0.211</td><td class="num">37.3%</td><td class="num">12.5%</td></tr><tr><td>context_ge2_dwell3</td><td class="num">6</td><td class="num">0</td><td class="num">-0.154</td><td class="num">0.181</td><td class="num">0.294</td><td class="num">0.131</td><td class="num">0.181</td><td class="num">70.0%</td><td class="num">0.0%</td></tr></tbody>
+</table>
+</div>
+</section>
+
+<section class="panel">
+<h2>Boundary threshold calibration</h2>
+<div class="note">
+같은 boundary signal에 대해 기존 GMM midpoint와 V5.7 calibrated threshold가
+workflow 개수와 cut 위치를 어떻게 바꾸는지 비교합니다.
+</div>
+<div class="scroll">
+<table>
+<thead><tr>
+<th>Signal</th>
+<th>Threshold</th>
+<th class="num">Workflow 수</th>
+<th class="num">Cut 수</th>
+<th class="num">Score median</th>
+<th class="num">Score p90</th>
+</tr></thead>
+<tbody><tr><td>contextual</td><td>legacy</td><td class="num">1222</td><td class="num">1190</td><td class="num">0.516</td><td class="num">0.800</td></tr><tr><td>contextual</td><td>calibrated</td><td class="num">983</td><td class="num">951</td><td class="num">0.516</td><td class="num">0.800</td></tr><tr><td>transition</td><td>legacy</td><td class="num">1305</td><td class="num">1273</td><td class="num">0.500</td><td class="num">0.899</td></tr><tr><td>transition</td><td>calibrated</td><td class="num">982</td><td class="num">950</td><td class="num">0.500</td><td class="num">0.899</td></tr><tr><td>combined</td><td>legacy</td><td class="num">1305</td><td class="num">1273</td><td class="num">0.528</td><td class="num">0.761</td></tr><tr class="current"><td>combined</td><td>calibrated</td><td class="num">563</td><td class="num">531</td><td class="num">0.528</td><td class="num">0.761</td></tr></tbody>
+</table>
+</div>
+</section>
+
+<section class="panel">
+<h2>Cut location Jaccard</h2>
+<div class="note">
+workflow 개수만 보지 않고 실제 cut 위치가 얼마나 겹치는지 확인합니다.
+</div>
+<div class="scroll">
+<table>
+<thead><tr>
+<th>비교 유형</th>
+<th>Signal A</th>
+<th>Signal B</th>
+<th class="num">Cuts A</th>
+<th class="num">Cuts B</th>
+<th class="num">공유 Cut</th>
+<th class="num">Jaccard</th>
+</tr></thead>
+<tbody><tr><td>between_signals</td><td>contextual</td><td>transition</td><td class="num">1190</td><td class="num">1273</td><td class="num">320</td><td class="num">0.149</td></tr><tr><td>between_signals</td><td>contextual</td><td>combined</td><td class="num">1190</td><td class="num">1273</td><td class="num">604</td><td class="num">0.325</td></tr><tr><td>between_signals</td><td>transition</td><td>combined</td><td class="num">1273</td><td class="num">1273</td><td class="num">773</td><td class="num">0.436</td></tr><tr><td>between_signals</td><td>contextual</td><td>transition</td><td class="num">951</td><td class="num">950</td><td class="num">207</td><td class="num">0.122</td></tr><tr><td>between_signals</td><td>contextual</td><td>combined</td><td class="num">951</td><td class="num">531</td><td class="num">260</td><td class="num">0.213</td></tr><tr><td>between_signals</td><td>transition</td><td>combined</td><td class="num">950</td><td class="num">531</td><td class="num">350</td><td class="num">0.309</td></tr><tr><td>legacy_vs_calibrated</td><td>contextual_legacy</td><td>contextual_calibrated</td><td class="num">1190</td><td class="num">951</td><td class="num">870</td><td class="num">0.685</td></tr><tr><td>legacy_vs_calibrated</td><td>transition_legacy</td><td>transition_calibrated</td><td class="num">1273</td><td class="num">950</td><td class="num">825</td><td class="num">0.590</td></tr><tr><td>legacy_vs_calibrated</td><td>combined_legacy</td><td>combined_calibrated</td><td class="num">1273</td><td class="num">531</td><td class="num">396</td><td class="num">0.281</td></tr></tbody>
+</table>
+</div>
+</section>
+
+<section class="panel">
+<h2>Prototype seed stability</h2>
+<div class="note">
+Prototype은 collapse 여부가 아니라 seed에 따라 assignment가 얼마나 유지되는지,
+그리고 top1-top2 probability margin이 얼마나 확보되는지를 평가합니다.
+</div>
+<div class="scroll">
+<table>
+<thead><tr>
+<th>Level</th>
+<th class="num">Pairwise ARI mean</th>
+<th class="num">Pairwise ARI min</th>
+<th class="num">Pairwise NMI mean</th>
+<th class="num">Mean confidence</th>
+<th class="num">Mean top1-top2 margin</th>
+</tr></thead>
+<tbody><tr><td>segment</td><td class="num">0.345</td><td class="num">0.257</td><td class="num">0.490</td><td class="num">0.091</td><td class="num">0.017</td></tr><tr><td>workflow</td><td class="num">0.354</td><td class="num">0.236</td><td class="num">0.446</td><td class="num">0.150</td><td class="num">0.035</td></tr></tbody>
+</table>
+</div>
+</section>
+
+<section class="panel">
+<h2>Legacy version comparison · 참고용</h2>
+<div class="note">
+V5.3~V5.6의 기존 purity/Hungarian 지표는 Evaluation v2와 정의가 다르므로 직접적인 성능 비교값이 아닙니다.
+과거 추세 확인용으로만 남깁니다.
+</div>
+<div class="scroll">
+<table>
+<thead><tr>
+<th>버전</th>
+<th class="num">추출 프로세스</th>
+<th class="num">노드</th>
+<th class="num">대표 WP</th>
+<th class="num">평균 집중도</th>
+<th class="num">Legacy 1:1 분리</th>
+<th class="num">Legacy 최대 병합</th>
+</tr></thead>
+<tbody><tr><td>v6.0</td><td class="num">12</td><td class="num">130</td><td class="num">2</td><td class="num">42.6%</td><td class="num">25.1%</td><td class="num">94.7%</td></tr><tr class="current"><td>v6.2</td><td class="num">12</td><td class="num">91</td><td class="num">2</td><td class="num">31.0%</td><td class="num">25.5%</td><td class="num">100.0%</td></tr></tbody>
+</table>
+</div>
+</section>
+
+<div class="footer">
+Evaluation v2의 context mode는 navigation click과 현재 페이지 context를 분리합니다.
+ARI/NMI/V-measure는 canonical single-gold subset에서만 계산됩니다.
+tasks.csv는 business gold label로 사용하지 않습니다.
+</div>
+
+</div>
+</body>
+</html>

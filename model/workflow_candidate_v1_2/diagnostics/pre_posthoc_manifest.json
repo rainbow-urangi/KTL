@@ -1,0 +1,11 @@
+{
+  "business_labels_used": false,
+  "representation_weights": {
+    "existing": 0.25,
+    "page": 0.25,
+    "action": 0.25,
+    "api": 0.25
+  },
+  "cluster_assignments_sha256": "99874a0ddadd4ad7e45844dd7746580a0d62ba0c0952e120845f4760ad62ecb7",
+  "workflow_embeddings_sha256": "446d1d3e3ead5ef09c3579312faa56bad3b8d39442468e7d50ea565731d6c9da"
+}

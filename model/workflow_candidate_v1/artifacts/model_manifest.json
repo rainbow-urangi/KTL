@@ -1,0 +1,29 @@
+{
+  "model_id": "workflow_candidate_v1",
+  "mode": "DEVELOPMENT",
+  "official": false,
+  "architecture": "feature projection -> 1-layer causal GRU -> MLP",
+  "inference_contract": "raw CSV only; no execution manifests or BU features",
+  "parameter_count": 52481,
+  "embedding_dimension": 384,
+  "clustering_policy": "max cosine silhouette - 0.1 * singleton fraction; no BU metadata",
+  "canonical_schema": "workflow-canonical-1",
+  "artifact_sha256": {
+    "model.pt": "86c77fa404223f97f4cf512244405d199cb7f2f76d2bb05b8886fbcf529eb7cf",
+    "feature_config.json": "f2ff27a5f5e712a71be8cb9e86d0bdf2b37d347b9ba8716f387814247806abe0",
+    "training_manifest.json": "aad753d81146b695d77bc9a8ace40043edb1a2a81372c7c4d69e4462ebb5f6a5",
+    "preprocessing_config.json": "8130b3bcfe563a3633fa36b5164133a73d4ea2e7a7717b008648b116d47eb43a",
+    "model_config.json": "40bf3ea8701abcbd5ba1ee624d50386788c34062cdf850cba2374d9f3dddf4b3",
+    "normalization_config.json": "45ad69039db9ab0b0327c14123507a0f61f71a790a27830f4b7fb2bb639ad720"
+  },
+  "source_sha256": {
+    "src/neural.py": "ff022dc932d95d7b26727c1ac0c4b909e97f9faf3c039f6c10fde68ac0767e0a",
+    "src/analysis.py": "1882194ac567d0e772cf43cd0ebcac2ce9b6c2f813e80a468e2cdd25829e68bc",
+    "src/adapter.py": "e18a0dd071f7aafc3eb4b6ebc721890c710f8e98fc7753ea95092ce6d5efa56a",
+    "src/features.py": "6862e229d04de687a4e5640a95c704c58e00e87122fbe8fc490ab25dfe34c160",
+    "src/infer.py": "25aa82d11e9a318368c543520169af158f8b011e65ed027dfdcaeb51e1a66a35",
+    "src/data.py": "fb6c3c640b352cc7c959e8b521014de1aa1c469b9324f80b0f1767f7c6154246",
+    "training/run.py": "edf5e2c5926cfeb97b10a76e0a4f9e8faba058dd0ba7f586d91b2e4c0239ce24",
+    "config/default.json": "f88019d58fe59bd01bb15c3b8a3482117b6c0cb3fad562b3187b2976652f7f4c"
+  }
+}

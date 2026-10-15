@@ -1,0 +1,57 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$comment": "Official pairing schema only; no official pairing data is supplied.",
+  "type": "object",
+  "required": [
+    "version",
+    "fixed_at",
+    "ground_truth_independent",
+    "pairs"
+  ],
+  "properties": {
+    "version": {
+      "const": "1.0"
+    },
+    "fixed_at": {
+      "type": "string",
+      "format": "date-time"
+    },
+    "ground_truth_independent": {
+      "const": true
+    },
+    "pairs": {
+      "type": "array",
+      "minItems": 5,
+      "maxItems": 5,
+      "items": {
+        "type": "object",
+        "required": [
+          "scenario_id",
+          "execution_id",
+          "process_instance_id",
+          "selection_method"
+        ],
+        "properties": {
+          "scenario_id": {
+            "type": "string",
+            "minLength": 1
+          },
+          "execution_id": {
+            "type": "string",
+            "minLength": 1
+          },
+          "process_instance_id": {
+            "type": "string",
+            "minLength": 1
+          },
+          "selection_method": {
+            "enum": [
+              "execution_linked",
+              "predeclared"
+            ]
+          }
+        }
+      }
+    }
+  }
+}

@@ -1,0 +1,879 @@
+{
+  "version": "v6.2",
+  "dataset_name": "poc_full",
+  "output_dir": "/content/drive/MyDrive/Colab Notebooks/data/urangi/artifacts/business_flow_deep_v6_2",
+  "main_results_dir": "/content/drive/MyDrive/Colab Notebooks/data/urangi/artifacts/business_flow_deep_v6_2/main_results",
+  "events": 32273,
+  "latent_segments": 5167,
+  "latent_workflows": 563,
+  "session_safe_process_instances": 1619,
+  "process_models": 12,
+  "process_nodes": 91,
+  "process_edges": 257,
+  "process_instance_steps": 3137,
+  "process_node_inputs": 3992,
+  "representation_model": {
+    "base_pipeline": "V4.2",
+    "semantic_encoder": "intfloat/multilingual-e5-small",
+    "semantic_dim": 384,
+    "semantic_weight": 0.2,
+    "semantic_weight_candidates": [
+      0.0,
+      0.1,
+      0.2,
+      0.3,
+      0.5,
+      1.0
+    ],
+    "learned_salience_gate": false,
+    "vicreg": false,
+    "event_embedding_cosine_mean": 0.22350436449050903
+  },
+  "boundary_model": {
+    "base": "V5.3 contextual neural boundary",
+    "structural_aware": true,
+    "structural_fields": [
+      "struct_api_family",
+      "struct_page_path",
+      "struct_page_title"
+    ],
+    "struct_dim": 48,
+    "struct_target_weight": 0.35,
+    "summary": {
+      "enabled": true,
+      "fields": [
+        "struct_api_family",
+        "struct_page_path",
+        "struct_page_title"
+      ],
+      "struct_dim": 48,
+      "target_weight": 0.35,
+      "mean_structural_change_score": 0.1336703896522522,
+      "p50_structural_change_score": 0.0,
+      "p90_structural_change_score": 0.3333333432674408,
+      "mean_boundary_probability": 0.5254226326942444
+    }
+  },
+  "workflow_boundary_model": {
+    "base": "V5.4 contextual workflow boundary",
+    "transition_contrastive": true,
+    "transition_temperature": 0.1,
+    "transition_blend_weight": 0.45,
+    "workflow_representation": "V5.4 mean pooling retained",
+    "diagnostics": {
+      "enabled": true,
+      "pair_count": 5135,
+      "blend_weight": 0.45,
+      "temperature": 0.1,
+      "epochs": 8,
+      "training_final": {
+        "epoch": 8,
+        "loss": 0.727438706727255,
+        "inbatch_top1_accuracy": 0.9252232142857143
+      },
+      "mean_positive_compatibility": 0.8908298015594482,
+      "p10_positive_compatibility": 0.8294808268547058,
+      "p50_positive_compatibility": 0.9035337567329407,
+      "mean_raw_surprise": 0.10917029529809952,
+      "p90_raw_surprise": 0.17051918804645538,
+      "mean_transition_boundary_score": 0.5403794646263123,
+      "mean_contextual_boundary_score": 0.5553087592124939,
+      "mean_combined_boundary_score": 0.5485906004905701
+    }
+  },
+  "threshold_calibration": {
+    "mode": "calibrated_gmm",
+    "posterior_min": 0.8,
+    "bic_gain_min": 10.0,
+    "min_separation_sigma": 1.0,
+    "robust_z_fallback": 2.5,
+    "workflow_signal_summary": [
+      {
+        "signal": "contextual",
+        "threshold_method": "legacy",
+        "workflow_count": 1222,
+        "cut_count": 1190,
+        "score_median": 0.5155155658721924,
+        "score_mean": 0.5553087943223575,
+        "score_p90": 0.7995420932769777
+      },
+      {
+        "signal": "contextual",
+        "threshold_method": "calibrated",
+        "workflow_count": 983,
+        "cut_count": 951,
+        "score_median": 0.5155155658721924,
+        "score_mean": 0.5553087943223575,
+        "score_p90": 0.7995420932769777
+      },
+      {
+        "signal": "transition",
+        "threshold_method": "legacy",
+        "workflow_count": 1305,
+        "cut_count": 1273,
+        "score_median": 0.5,
+        "score_mean": 0.5403794777979521,
+        "score_p90": 0.8992031335830689
+      },
+      {
+        "signal": "transition",
+        "threshold_method": "calibrated",
+        "workflow_count": 982,
+        "cut_count": 950,
+        "score_median": 0.5,
+        "score_mean": 0.5403794777979521,
+        "score_p90": 0.8992031335830689
+      },
+      {
+        "signal": "combined",
+        "threshold_method": "legacy",
+        "workflow_count": 1305,
+        "cut_count": 1273,
+        "score_median": 0.5275775790214539,
+        "score_mean": 0.5485906021649557,
+        "score_p90": 0.7613513946533204
+      },
+      {
+        "signal": "combined",
+        "threshold_method": "calibrated",
+        "workflow_count": 563,
+        "cut_count": 531,
+        "score_median": 0.5275775790214539,
+        "score_mean": 0.5485906021649557,
+        "score_p90": 0.7613513946533204
+      }
+    ],
+    "workflow_cut_jaccard": [
+      {
+        "comparison_type": "between_signals",
+        "threshold_method": "legacy",
+        "signal_a": "contextual",
+        "signal_b": "transition",
+        "cuts_a": 1190,
+        "cuts_b": 1273,
+        "shared_cuts": 320,
+        "jaccard": 0.14932337844143723
+      },
+      {
+        "comparison_type": "between_signals",
+        "threshold_method": "legacy",
+        "signal_a": "contextual",
+        "signal_b": "combined",
+        "cuts_a": 1190,
+        "cuts_b": 1273,
+        "shared_cuts": 604,
+        "jaccard": 0.32490586336740185
+      },
+      {
+        "comparison_type": "between_signals",
+        "threshold_method": "legacy",
+        "signal_a": "transition",
+        "signal_b": "combined",
+        "cuts_a": 1273,
+        "cuts_b": 1273,
+        "shared_cuts": 773,
+        "jaccard": 0.43598420755781164
+      },
+      {
+        "comparison_type": "between_signals",
+        "threshold_method": "calibrated",
+        "signal_a": "contextual",
+        "signal_b": "transition",
+        "cuts_a": 951,
+        "cuts_b": 950,
+        "shared_cuts": 207,
+        "jaccard": 0.12219598583234947
+      },
+      {
+        "comparison_type": "between_signals",
+        "threshold_method": "calibrated",
+        "signal_a": "contextual",
+        "signal_b": "combined",
+        "cuts_a": 951,
+        "cuts_b": 531,
+        "shared_cuts": 260,
+        "jaccard": 0.2127659574468085
+      },
+      {
+        "comparison_type": "between_signals",
+        "threshold_method": "calibrated",
+        "signal_a": "transition",
+        "signal_b": "combined",
+        "cuts_a": 950,
+        "cuts_b": 531,
+        "shared_cuts": 350,
+        "jaccard": 0.3094606542882405
+      },
+      {
+        "comparison_type": "legacy_vs_calibrated",
+        "threshold_method": "mixed",
+        "signal_a": "contextual_legacy",
+        "signal_b": "contextual_calibrated",
+        "cuts_a": 1190,
+        "cuts_b": 951,
+        "shared_cuts": 870,
+        "jaccard": 0.6845003933910306
+      },
+      {
+        "comparison_type": "legacy_vs_calibrated",
+        "threshold_method": "mixed",
+        "signal_a": "transition_legacy",
+        "signal_b": "transition_calibrated",
+        "cuts_a": 1273,
+        "cuts_b": 950,
+        "shared_cuts": 825,
+        "jaccard": 0.5901287553648069
+      },
+      {
+        "comparison_type": "legacy_vs_calibrated",
+        "threshold_method": "mixed",
+        "signal_a": "combined_legacy",
+        "signal_b": "combined_calibrated",
+        "cuts_a": 1273,
+        "cuts_b": 531,
+        "shared_cuts": 396,
+        "jaccard": 0.28125
+      }
+    ]
+  },
+  "prototype_training": "original V4.2 objective retained; multi-seed longer optimization + consensus final assignment",
+  "prototype_diagnostics": {
+    "segment": {
+      "n": 5167,
+      "k": 18,
+      "used": 18,
+      "top1_share": 0.0971550222566286,
+      "top2_share": 0.18250435455777048,
+      "normalized_entropy": 0.9811189446237757,
+      "counts": [
+        502,
+        441,
+        413,
+        343,
+        343,
+        331,
+        323,
+        305,
+        295,
+        273,
+        256,
+        238,
+        217,
+        197,
+        183,
+        180,
+        175,
+        152
+      ]
+    },
+    "workflow": {
+      "n": 563,
+      "k": 12,
+      "used": 12,
+      "top1_share": 0.18294849023090587,
+      "top2_share": 0.3019538188277087,
+      "normalized_entropy": 0.9660980872254898,
+      "counts": [
+        103,
+        67,
+        52,
+        51,
+        47,
+        44,
+        41,
+        41,
+        38,
+        30,
+        25,
+        24
+      ]
+    }
+  },
+  "prototype_stability_diagnostics": {
+    "segment": {
+      "level": "segment",
+      "seeds": [
+        41,
+        42,
+        43,
+        44,
+        45
+      ],
+      "pairwise_ari_mean": 0.34537194695139656,
+      "pairwise_ari_min": 0.25681975858494155,
+      "pairwise_nmi_mean": 0.4899860939995905,
+      "consensus_k": 18,
+      "consensus_score": 0.7171516776972118,
+      "consensus_within_seed_agreement": 0.6954338394133934,
+      "consensus_silhouette": 0.3063279688358307,
+      "mean_consensus_confidence": 0.8176833391189575,
+      "mean_consensus_margin": 0.2128751277923584,
+      "mean_confidence_across_seeds": 0.09087428450584412,
+      "mean_prob_margin_across_seeds": 0.01717553213238716
+    },
+    "workflow": {
+      "level": "workflow",
+      "seeds": [
+        41,
+        42,
+        43,
+        44,
+        45
+      ],
+      "pairwise_ari_mean": 0.35392499761358703,
+      "pairwise_ari_min": 0.23575324824482352,
+      "pairwise_nmi_mean": 0.44621405624578453,
+      "consensus_k": 12,
+      "consensus_score": 0.7445041127295173,
+      "consensus_within_seed_agreement": 0.7464327333937589,
+      "consensus_silhouette": 0.35335177183151245,
+      "mean_consensus_confidence": 0.8475789427757263,
+      "mean_consensus_margin": 0.21703661978244781,
+      "mean_confidence_across_seeds": 0.15008071959018707,
+      "mean_prob_margin_across_seeds": 0.03488707840442658
+    }
+  },
+  "prototype_consensus": {
+    "enabled": true,
+    "seeds": [
+      41,
+      42,
+      43,
+      44,
+      45
+    ],
+    "optimization_steps": 300,
+    "segment": {
+      "k": 18,
+      "score": 0.7171516776972118,
+      "silhouette": 0.3063279688358307,
+      "within_seed_agreement": 0.6954338394133934,
+      "balance_entropy": 0.9811189446237759,
+      "small_cluster_share": 0.0
+    },
+    "workflow": {
+      "k": 12,
+      "score": 0.7445041127295173,
+      "silhouette": 0.35335177183151245,
+      "within_seed_agreement": 0.7464327333937589,
+      "balance_entropy": 0.9660980872254898,
+      "small_cluster_share": 0.0
+    }
+  },
+  "v6_2_presentation": {
+    "full_data_run": true,
+    "input_base_dir": "/content/drive/MyDrive/Colab Notebooks/data/urangi",
+    "poc_scenario_count": 7,
+    "scenario_comparison_posthoc_only": true,
+    "hide_unreadable_prototype_only_steps_in_html": true,
+    "keep_named_low_level_steps": true,
+    "user_trajectory_layer": true,
+    "user_id_used_as_embedding_feature": false,
+    "user_id_source": "sessions.session_id -> sessions.user_id, event identity fallback only when mapping absent",
+    "trajectory_gap_minutes": 180,
+    "trajectory_max_window_instances": 12
+  },
+  "user_trajectory_analysis": {
+    "enabled": true,
+    "mapped_session_count": 484,
+    "user_count": 11,
+    "trajectory_episode_count": 26,
+    "cross_session_episode_count": 25,
+    "trajectory_window_count": 16009,
+    "scenario_match_candidate_count": 14114,
+    "support_score_threshold": 0.4,
+    "user_id_as_model_feature": false,
+    "raw_user_id_exported": false,
+    "customer_user_identifier": "stable SHA1 prefix alias USER-XXXXXXXX"
+  },
+  "customer_reporting": {
+    "target_min_workflows": 7,
+    "selected_workflow_count": 9,
+    "strict_reportable_count": 9,
+    "report_file": "customer_workflow_report.html",
+    "reportability_score_threshold": 0.55
+  },
+  "gold_evaluation": {
+    "enabled": true,
+    "evaluation_only": true,
+    "used_for_training": false,
+    "method": "post-hoc exact/alias phrase matching over exported instance step + input text; counts are unique instances",
+    "gold_process_count": 6,
+    "gold_processes": [
+      {
+        "gold_id": "G01",
+        "gold_path": "학사행정>국제교류관리>기초관리>국제교류학년도 학기",
+        "leaf_name": "국제교류학년도학기"
+      },
+      {
+        "gold_id": "G02",
+        "gold_path": "학사행정>국제교류관리>기초관리>교류기관관리",
+        "leaf_name": "교류기관관리"
+      },
+      {
+        "gold_id": "G03",
+        "gold_path": "학사행정>국제교류관리>교류학생관리>교류학생관리(out)",
+        "leaf_name": "교류학생관리(OUT)"
+      },
+      {
+        "gold_id": "G04",
+        "gold_path": "학사행정>국제교류관리>교류학생관리>교류학생관리(in)",
+        "leaf_name": "교류학생관리(IN)"
+      },
+      {
+        "gold_id": "G05",
+        "gold_path": "학사행정>국제교류관리유학생기숙사관리>유학생기숙사호실관리",
+        "leaf_name": "유학생기숙사호실관리"
+      },
+      {
+        "gold_id": "G06",
+        "gold_path": "학사행정>국제교류관리유학생기숙사관리>유학생기숙사납부내역",
+        "leaf_name": "유학생기숙사납부내역"
+      }
+    ],
+    "unique_dominant_workflow_count": 2,
+    "max_unique_dominant_workflow_count": 6,
+    "dominant_collision_count": 4,
+    "mean_anchor_purity": 0.3100174176377815,
+    "hungarian_1to1_separation_score": 0.2554945054945055,
+    "hungarian_matched_anchor_assignments": 93,
+    "total_anchor_assignments": 364,
+    "hungarian_assignment_pairs": [
+      {
+        "gold_id": "G01",
+        "leaf_name": "국제교류학년도학기",
+        "workflow_prototype": "WP06",
+        "count": 22
+      },
+      {
+        "gold_id": "G02",
+        "leaf_name": "교류기관관리",
+        "workflow_prototype": "WP04",
+        "count": 13
+      },
+      {
+        "gold_id": "G03",
+        "leaf_name": "교류학생관리(OUT)",
+        "workflow_prototype": "WP01",
+        "count": 8
+      },
+      {
+        "gold_id": "G04",
+        "leaf_name": "교류학생관리(IN)",
+        "workflow_prototype": "WP00",
+        "count": 32
+      },
+      {
+        "gold_id": "G05",
+        "leaf_name": "유학생기숙사호실관리",
+        "workflow_prototype": "WP02",
+        "count": 9
+      },
+      {
+        "gold_id": "G06",
+        "leaf_name": "유학생기숙사납부내역",
+        "workflow_prototype": "WP07",
+        "count": 9
+      }
+    ],
+    "per_process": [
+      {
+        "gold_id": "G01",
+        "gold_path": "학사행정>국제교류관리>기초관리>국제교류학년도 학기",
+        "leaf_name": "국제교류학년도학기",
+        "anchor_instance_count": 82,
+        "dominant_workflow_prototype": "WP06",
+        "dominant_count": 22,
+        "purity": 0.2682926829268293,
+        "contamination": 0.7317073170731707
+      },
+      {
+        "gold_id": "G02",
+        "gold_path": "학사행정>국제교류관리>기초관리>교류기관관리",
+        "leaf_name": "교류기관관리",
+        "anchor_instance_count": 38,
+        "dominant_workflow_prototype": "WP06",
+        "dominant_count": 15,
+        "purity": 0.39473684210526316,
+        "contamination": 0.6052631578947368
+      },
+      {
+        "gold_id": "G03",
+        "gold_path": "학사행정>국제교류관리>교류학생관리>교류학생관리(out)",
+        "leaf_name": "교류학생관리(OUT)",
+        "anchor_instance_count": 61,
+        "dominant_workflow_prototype": "WP00",
+        "dominant_count": 12,
+        "purity": 0.19672131147540983,
+        "contamination": 0.8032786885245902
+      },
+      {
+        "gold_id": "G04",
+        "gold_path": "학사행정>국제교류관리>교류학생관리>교류학생관리(in)",
+        "leaf_name": "교류학생관리(IN)",
+        "anchor_instance_count": 65,
+        "dominant_workflow_prototype": "WP00",
+        "dominant_count": 32,
+        "purity": 0.49230769230769234,
+        "contamination": 0.5076923076923077
+      },
+      {
+        "gold_id": "G05",
+        "gold_path": "학사행정>국제교류관리유학생기숙사관리>유학생기숙사호실관리",
+        "leaf_name": "유학생기숙사호실관리",
+        "anchor_instance_count": 58,
+        "dominant_workflow_prototype": "WP00",
+        "dominant_count": 14,
+        "purity": 0.2413793103448276,
+        "contamination": 0.7586206896551724
+      },
+      {
+        "gold_id": "G06",
+        "gold_path": "학사행정>국제교류관리유학생기숙사관리>유학생기숙사납부내역",
+        "leaf_name": "유학생기숙사납부내역",
+        "anchor_instance_count": 60,
+        "dominant_workflow_prototype": "WP06",
+        "dominant_count": 16,
+        "purity": 0.26666666666666666,
+        "contamination": 0.7333333333333334
+      }
+    ],
+    "gold_pair_cooccurrence": [
+      {
+        "gold_id_a": "G01",
+        "leaf_name_a": "국제교류학년도학기",
+        "gold_id_b": "G02",
+        "leaf_name_b": "교류기관관리",
+        "support_a": 82,
+        "support_b": 38,
+        "same_instance_count": 38,
+        "cooccurrence_rate_min_support": 1.0,
+        "jaccard": 0.4634146341463415
+      },
+      {
+        "gold_id_a": "G01",
+        "leaf_name_a": "국제교류학년도학기",
+        "gold_id_b": "G03",
+        "leaf_name_b": "교류학생관리(OUT)",
+        "support_a": 82,
+        "support_b": 61,
+        "same_instance_count": 16,
+        "cooccurrence_rate_min_support": 0.26229508196721313,
+        "jaccard": 0.12598425196850394
+      },
+      {
+        "gold_id_a": "G01",
+        "leaf_name_a": "국제교류학년도학기",
+        "gold_id_b": "G04",
+        "leaf_name_b": "교류학생관리(IN)",
+        "support_a": 82,
+        "support_b": 65,
+        "same_instance_count": 7,
+        "cooccurrence_rate_min_support": 0.1076923076923077,
+        "jaccard": 0.05
+      },
+      {
+        "gold_id_a": "G01",
+        "leaf_name_a": "국제교류학년도학기",
+        "gold_id_b": "G05",
+        "leaf_name_b": "유학생기숙사호실관리",
+        "support_a": 82,
+        "support_b": 58,
+        "same_instance_count": 6,
+        "cooccurrence_rate_min_support": 0.10344827586206896,
+        "jaccard": 0.04477611940298507
+      },
+      {
+        "gold_id_a": "G01",
+        "leaf_name_a": "국제교류학년도학기",
+        "gold_id_b": "G06",
+        "leaf_name_b": "유학생기숙사납부내역",
+        "support_a": 82,
+        "support_b": 60,
+        "same_instance_count": 3,
+        "cooccurrence_rate_min_support": 0.05,
+        "jaccard": 0.02158273381294964
+      },
+      {
+        "gold_id_a": "G02",
+        "leaf_name_a": "교류기관관리",
+        "gold_id_b": "G03",
+        "leaf_name_b": "교류학생관리(OUT)",
+        "support_a": 38,
+        "support_b": 61,
+        "same_instance_count": 11,
+        "cooccurrence_rate_min_support": 0.2894736842105263,
+        "jaccard": 0.125
+      },
+      {
+        "gold_id_a": "G02",
+        "leaf_name_a": "교류기관관리",
+        "gold_id_b": "G04",
+        "leaf_name_b": "교류학생관리(IN)",
+        "support_a": 38,
+        "support_b": 65,
+        "same_instance_count": 5,
+        "cooccurrence_rate_min_support": 0.13157894736842105,
+        "jaccard": 0.05102040816326531
+      },
+      {
+        "gold_id_a": "G02",
+        "leaf_name_a": "교류기관관리",
+        "gold_id_b": "G05",
+        "leaf_name_b": "유학생기숙사호실관리",
+        "support_a": 38,
+        "support_b": 58,
+        "same_instance_count": 4,
+        "cooccurrence_rate_min_support": 0.10526315789473684,
+        "jaccard": 0.043478260869565216
+      },
+      {
+        "gold_id_a": "G02",
+        "leaf_name_a": "교류기관관리",
+        "gold_id_b": "G06",
+        "leaf_name_b": "유학생기숙사납부내역",
+        "support_a": 38,
+        "support_b": 60,
+        "same_instance_count": 3,
+        "cooccurrence_rate_min_support": 0.07894736842105263,
+        "jaccard": 0.031578947368421054
+      },
+      {
+        "gold_id_a": "G03",
+        "leaf_name_a": "교류학생관리(OUT)",
+        "gold_id_b": "G04",
+        "leaf_name_b": "교류학생관리(IN)",
+        "support_a": 61,
+        "support_b": 65,
+        "same_instance_count": 24,
+        "cooccurrence_rate_min_support": 0.39344262295081966,
+        "jaccard": 0.23529411764705882
+      },
+      {
+        "gold_id_a": "G03",
+        "leaf_name_a": "교류학생관리(OUT)",
+        "gold_id_b": "G05",
+        "leaf_name_b": "유학생기숙사호실관리",
+        "support_a": 61,
+        "support_b": 58,
+        "same_instance_count": 11,
+        "cooccurrence_rate_min_support": 0.1896551724137931,
+        "jaccard": 0.10185185185185185
+      },
+      {
+        "gold_id_a": "G03",
+        "leaf_name_a": "교류학생관리(OUT)",
+        "gold_id_b": "G06",
+        "leaf_name_b": "유학생기숙사납부내역",
+        "support_a": 61,
+        "support_b": 60,
+        "same_instance_count": 3,
+        "cooccurrence_rate_min_support": 0.05,
+        "jaccard": 0.025423728813559324
+      },
+      {
+        "gold_id_a": "G04",
+        "leaf_name_a": "교류학생관리(IN)",
+        "gold_id_b": "G05",
+        "leaf_name_b": "유학생기숙사호실관리",
+        "support_a": 65,
+        "support_b": 58,
+        "same_instance_count": 11,
+        "cooccurrence_rate_min_support": 0.1896551724137931,
+        "jaccard": 0.09821428571428571
+      },
+      {
+        "gold_id_a": "G04",
+        "leaf_name_a": "교류학생관리(IN)",
+        "gold_id_b": "G06",
+        "leaf_name_b": "유학생기숙사납부내역",
+        "support_a": 65,
+        "support_b": 60,
+        "same_instance_count": 3,
+        "cooccurrence_rate_min_support": 0.05,
+        "jaccard": 0.02459016393442623
+      },
+      {
+        "gold_id_a": "G05",
+        "leaf_name_a": "유학생기숙사호실관리",
+        "gold_id_b": "G06",
+        "leaf_name_b": "유학생기숙사납부내역",
+        "support_a": 58,
+        "support_b": 60,
+        "same_instance_count": 5,
+        "cooccurrence_rate_min_support": 0.08620689655172414,
+        "jaccard": 0.04424778761061947
+      }
+    ],
+    "max_pair_cooccurrence_rate_min_support": 1.0,
+    "mean_pair_cooccurrence_rate_min_support": 0.20584391251643044,
+    "interpretation_note": "Anchor-based diagnostic only. This is not event-level ground-truth accuracy because exact start/end boundaries for the six real processes are not labeled."
+  },
+  "evaluation_v2": {
+    "enabled": true,
+    "evaluation_only": true,
+    "used_for_training": false,
+    "primary_mode": "context_ge1",
+    "primary": {
+      "mode": "context_ge1",
+      "total_process_instances": 1619,
+      "labeled_instance_count": 30,
+      "canonical_single_gold_count": 29,
+      "ambiguous_multi_gold_count": 1,
+      "unlabeled_instance_count": 1589,
+      "represented_gold_processes": 2,
+      "ari": 0.04001765484772694,
+      "nmi": 0.2111203900963305,
+      "homogeneity": 0.4458676058207555,
+      "completeness": 0.1383039861789818,
+      "v_measure": 0.21112039009633046,
+      "macro_purity_reference": 0.37337662337662336,
+      "max_pair_cooccurrence": 0.125,
+      "mean_pair_cooccurrence": 0.125,
+      "median_pair_cooccurrence": 0.125,
+      "p90_pair_cooccurrence": 0.125
+    },
+    "modes": {
+      "legacy_loose": {
+        "mode": "legacy_loose",
+        "total_process_instances": 1619,
+        "labeled_instance_count": 267,
+        "canonical_single_gold_count": 200,
+        "ambiguous_multi_gold_count": 67,
+        "unlabeled_instance_count": 1352,
+        "represented_gold_processes": 5,
+        "ari": 0.1060109507195294,
+        "nmi": 0.22537586643961868,
+        "homogeneity": 0.276726904110284,
+        "completeness": 0.19009984469681304,
+        "v_measure": 0.22537586643961868,
+        "macro_purity_reference": 0.3027961512172038,
+        "max_pair_cooccurrence": 1.0,
+        "mean_pair_cooccurrence": 0.20584391251643044,
+        "median_pair_cooccurrence": 0.1076923076923077,
+        "p90_pair_cooccurrence": 0.3518550474547023
+      },
+      "no_terminal_nav": {
+        "mode": "no_terminal_nav",
+        "total_process_instances": 1619,
+        "labeled_instance_count": 267,
+        "canonical_single_gold_count": 195,
+        "ambiguous_multi_gold_count": 72,
+        "unlabeled_instance_count": 1352,
+        "represented_gold_processes": 5,
+        "ari": 0.10546385415269216,
+        "nmi": 0.23240021601476823,
+        "homogeneity": 0.2870699169541285,
+        "completeness": 0.19522205567712195,
+        "v_measure": 0.2324002160147682,
+        "macro_purity_reference": 0.28675801675801676,
+        "max_pair_cooccurrence": 1.0,
+        "mean_pair_cooccurrence": 0.21054135338345864,
+        "median_pair_cooccurrence": 0.10714285714285714,
+        "p90_pair_cooccurrence": 0.36340852130325807
+      },
+      "context_ge1": {
+        "mode": "context_ge1",
+        "total_process_instances": 1619,
+        "labeled_instance_count": 30,
+        "canonical_single_gold_count": 29,
+        "ambiguous_multi_gold_count": 1,
+        "unlabeled_instance_count": 1589,
+        "represented_gold_processes": 2,
+        "ari": 0.04001765484772694,
+        "nmi": 0.2111203900963305,
+        "homogeneity": 0.4458676058207555,
+        "completeness": 0.1383039861789818,
+        "v_measure": 0.21112039009633046,
+        "macro_purity_reference": 0.37337662337662336,
+        "max_pair_cooccurrence": 0.125,
+        "mean_pair_cooccurrence": 0.125,
+        "median_pair_cooccurrence": 0.125,
+        "p90_pair_cooccurrence": 0.125
+      },
+      "context_ge2": {
+        "mode": "context_ge2",
+        "total_process_instances": 1619,
+        "labeled_instance_count": 30,
+        "canonical_single_gold_count": 29,
+        "ambiguous_multi_gold_count": 1,
+        "unlabeled_instance_count": 1589,
+        "represented_gold_processes": 2,
+        "ari": 0.04001765484772694,
+        "nmi": 0.2111203900963305,
+        "homogeneity": 0.4458676058207555,
+        "completeness": 0.1383039861789818,
+        "v_measure": 0.21112039009633046,
+        "macro_purity_reference": 0.37337662337662336,
+        "max_pair_cooccurrence": 0.125,
+        "mean_pair_cooccurrence": 0.125,
+        "median_pair_cooccurrence": 0.125,
+        "p90_pair_cooccurrence": 0.125
+      },
+      "context_ge2_dwell3": {
+        "mode": "context_ge2_dwell3",
+        "total_process_instances": 1619,
+        "labeled_instance_count": 6,
+        "canonical_single_gold_count": 6,
+        "ambiguous_multi_gold_count": 0,
+        "unlabeled_instance_count": 1613,
+        "represented_gold_processes": 2,
+        "ari": -0.15384615384615385,
+        "nmi": 0.1809948690450144,
+        "homogeneity": 0.2936429548646672,
+        "completeness": 0.13081230654804507,
+        "v_measure": 0.1809948690450144,
+        "macro_purity_reference": 0.7,
+        "max_pair_cooccurrence": 0.0,
+        "mean_pair_cooccurrence": 0.0,
+        "median_pair_cooccurrence": 0.0,
+        "p90_pair_cooccurrence": 0.0
+      }
+    },
+    "canonical_definition": "ARI/NMI/V-measure are computed only on instances with exactly one accepted gold label under each mode. Multi-gold instances are excluded from clustering metrics and retained for boundary/co-occurrence diagnostics.",
+    "anchor_provenance": "page_title/page_url context hits are separated from navigation click hits. context modes exclude navigation anchors from canonical gold assignment."
+  },
+  "diagnostic_results": [
+    "gold_anchor_confusion.csv",
+    "gold_anchor_summary.csv",
+    "gold_pair_cooccurrence.csv",
+    "evaluation_v2_anchor_provenance.csv",
+    "evaluation_v2_summary.csv",
+    "evaluation_v2_instance_labels.csv",
+    "evaluation_v2_pair_cooccurrence.csv",
+    "event_threshold_diagnostics.csv",
+    "workflow_threshold_diagnostics.csv",
+    "workflow_threshold_signal_summary.csv",
+    "workflow_cut_jaccard.csv",
+    "prototype_ensemble_runs.csv",
+    "prototype_seed_pairwise.csv",
+    "consensus_k_search.csv",
+    "segment_consensus_assignments.csv",
+    "workflow_consensus_assignments.csv",
+    "workflow_quality_report.html",
+    "workflow_transition_training.csv",
+    "workflow_boundary_scores.csv",
+    "poc_scenario_instance_matches.csv",
+    "user_trajectory_instances.csv",
+    "user_trajectory_windows.csv",
+    "poc_scenario_user_trajectory_matches.csv"
+  ],
+  "input_policy": "QA raw input_data export; no additional masking in V6.2; sessions.user_id used only for higher-level trajectory grouping",
+  "main_results": [
+    "workflow_preview.html",
+    "customer_workflow_report.html",
+    "developer_handoff.md",
+    "process_models.csv",
+    "process_nodes.csv",
+    "process_edges.csv",
+    "process_instances.csv",
+    "process_instance_steps.csv",
+    "process_node_inputs.csv",
+    "reportable_workflows.csv",
+    "reportable_workflow_steps.csv",
+    "workflow_reportability.csv",
+    "poc_scenario_comparison.csv",
+    "user_trajectory_summary.csv"
+  ],
+  "note": "V6.2 skips V6.1 as a delivery version while inheriting its full-data and customer-view changes. The V6.0 event/segment/workflow model remains unchanged. sessions.user_id is joined only after local workflow extraction and is used to connect session-safe process instances into generic temporal user trajectory episodes. User trajectory windows provide a higher-level scenario signal across sessions. user_id is not added to event embeddings, prototype training or consensus clustering. The seven PoC Ground Truth scenarios remain post-hoc presentation/evaluation references only."
+}

@@ -1,0 +1,10 @@
+﻿comparison_type,threshold_method,signal_a,signal_b,cuts_a,cuts_b,shared_cuts,jaccard
+between_signals,legacy,contextual,transition,1190,1273,320,0.14932337844143723
+between_signals,legacy,contextual,combined,1190,1273,604,0.32490586336740185
+between_signals,legacy,transition,combined,1273,1273,773,0.43598420755781164
+between_signals,calibrated,contextual,transition,951,950,207,0.12219598583234947
+between_signals,calibrated,contextual,combined,951,531,260,0.2127659574468085
+between_signals,calibrated,transition,combined,950,531,350,0.3094606542882405
+legacy_vs_calibrated,mixed,contextual_legacy,contextual_calibrated,1190,951,870,0.6845003933910306
+legacy_vs_calibrated,mixed,transition_legacy,transition_calibrated,1273,950,825,0.5901287553648069
+legacy_vs_calibrated,mixed,combined_legacy,combined_calibrated,1273,531,396,0.28125

@@ -1,0 +1,19 @@
+{
+  "candidate": "C_full",
+  "conclusion": "CLUSTERING_NEEDS_MINOR_ADJUSTMENT",
+  "decision_scope": "Post-hoc candidate review; no weights or clustering thresholds retuned",
+  "reasons": [
+    "Relative geometry improves over v1",
+    "19/20 primary repetition consistency",
+    "14 to 2 event-level merged BU pairs; residual two inherited boundary mixtures",
+    "Cross-business graph recombination risk 76 to 0",
+    "No additional learned parameters; 1152-dimensional deterministic representation"
+  ],
+  "limitations": [
+    "BU01 first-entry pattern fragmented",
+    "All-fragment BU count increases from 1 to 4",
+    "Inherited single-BU GET/write node collapse remains",
+    "New execution generalization not validated"
+  ],
+  "official_pass": null
+}

@@ -1,0 +1,315 @@
+{
+  "manifest_version": "1.0",
+  "dataset_id": "current_site_dev_01",
+  "purpose": "current-site model/evaluation integration test",
+  "official": false,
+  "source_type": "DEV",
+  "data_class": "DEVELOPMENT",
+  "synthetic": false,
+  "business_unit_count": 4,
+  "executions_per_business_unit": 2,
+  "total_executions": 8,
+  "execution_counts_source": "user-declared collection design; not inferred from session or task row counts",
+  "generated_at": "2026-10-08T10:00:25.882115+09:00",
+  "file_paths_relative_to": "data_manifest.json directory",
+  "files": [
+    {
+      "path": "events.csv",
+      "sha256": "2a041722995ac7c8a5dbcdb324c0e9f27e8e305b7ac32c9568a143b82200b367",
+      "row_count": 273,
+      "columns": [
+        "id",
+        "event_id",
+        "session_id",
+        "task_id",
+        "workflow_index",
+        "step_duration_ms",
+        "workflow_key",
+        "workflow_outcome",
+        "event_time",
+        "event_type",
+        "page_url",
+        "target_selector",
+        "locators_json",
+        "data_testid",
+        "element_tag",
+        "selector_xpath",
+        "interaction_type",
+        "input_data",
+        "api_path",
+        "api_method",
+        "api_status_code",
+        "page_title",
+        "element_text",
+        "associated_label",
+        "api_latency_ms"
+      ]
+    },
+    {
+      "path": "sessions.csv",
+      "sha256": "d52235f885170fe200030277cb3304551110474aae4d3b642f262c77a781a507",
+      "row_count": 2,
+      "columns": [
+        "id",
+        "user_id",
+        "tenant_id",
+        "start_time",
+        "end_time",
+        "user_agent",
+        "browser_id",
+        "viewport_size",
+        "viewport_width",
+        "viewport_height",
+        "ip_address"
+      ]
+    },
+    {
+      "path": "tasks.csv",
+      "sha256": "625f246e2c7969ae01011b48c3076b30233a86d822ab7940297882e00216fe30",
+      "row_count": 190,
+      "columns": [
+        "id",
+        "session_id",
+        "task_name",
+        "status",
+        "start_time",
+        "end_time",
+        "duration_ms",
+        "step_id"
+      ]
+    }
+  ],
+  "schema_validation": {
+    "validator": "model.v6_2.inference.schema.validate_csvs",
+    "status": "PASS",
+    "valid": true,
+    "errors": [],
+    "warnings": [
+      {
+        "code": "categorical_oov",
+        "column": "interaction_type",
+        "count": 23,
+        "rate": 0.08424908424908426,
+        "future_action": "UNK"
+      },
+      {
+        "code": "categorical_oov",
+        "column": "element_tag",
+        "count": 66,
+        "rate": 0.24175824175824176,
+        "future_action": "UNK"
+      },
+      {
+        "code": "categorical_oov",
+        "column": "api_method",
+        "count": 36,
+        "rate": 0.782608695652174,
+        "future_action": "UNK"
+      },
+      {
+        "code": "tasks_not_used_by_model",
+        "count": 190
+      }
+    ],
+    "row_counts": {
+      "events": 273,
+      "sessions": 2,
+      "tasks": 190
+    },
+    "categorical_oov": {
+      "event_type": {
+        "count": 0,
+        "null_count": 0,
+        "non_null_count": 273,
+        "rate": 0.0,
+        "denominator": "non-null values"
+      },
+      "interaction_type": {
+        "count": 23,
+        "null_count": 0,
+        "non_null_count": 273,
+        "rate": 0.08424908424908426,
+        "denominator": "non-null values"
+      },
+      "element_tag": {
+        "count": 66,
+        "null_count": 0,
+        "non_null_count": 273,
+        "rate": 0.24175824175824176,
+        "denominator": "non-null values"
+      },
+      "api_method": {
+        "count": 36,
+        "null_count": 227,
+        "non_null_count": 46,
+        "rate": 0.782608695652174,
+        "denominator": "non-null values"
+      }
+    },
+    "unknown_columns": [],
+    "inference_executed": false,
+    "vocabulary_modified": false,
+    "categorical_oov_values": {
+      "event_type": {},
+      "interaction_type": {
+        "submit": 4,
+        "route_change": 19
+      },
+      "element_tag": {
+        "button": 44,
+        "form": 4,
+        "li": 12,
+        "td": 1,
+        "select": 5
+      },
+      "api_method": {
+        "GET": 36
+      }
+    },
+    "vocabulary_path": "model/v6_2/runtime/categorical_vocabs.json",
+    "vocabulary_sha256": "60269a22f2fbcb2d5550b8dfeff1318cb5d3ca9ce9bd2a770c9d65582924d62e",
+    "vocabulary_hash_verified": true,
+    "validation_scope": "events required columns, IDs, event timestamps, session identity/references, sessions optional start/end timestamps, event numeric fields and categorical OOV; tasks CSV readability/row count only",
+    "validated_at": "2026-10-08T10:07:33.256204+09:00"
+  },
+  "runtime_validation": {
+    "status": "metadata_verified",
+    "validated_at": "2026-10-08T10:07:33.256204+09:00",
+    "validator": "model.v6_2.inference.loader.load_runtime",
+    "source_and_sidecar_hashes_verified": true,
+    "restored_source_path": "data/training/v6_2_source/events.csv",
+    "restored_source_sha256": "1828ccf4b8ebf1b65b8e39ded66e174e7335c36b8725f44c38bc94be556f8c0f",
+    "inference_ready": false,
+    "inference_executed": false
+  },
+  "inference_executed": false,
+  "updated_at": "2026-10-08T10:34:51.189769+09:00",
+  "derived_artifacts": [
+    {
+      "path": "execution_manifest.csv",
+      "role": "user_confirmed_execution_boundaries",
+      "sha256": "71ca02df3e71e8856ba1e151ab54eed6a33b481c4a58a545285d93305fcba1e8",
+      "row_count": 8
+    },
+    {
+      "path": "ground_truth_candidate.csv",
+      "role": "preserved_candidate_provenance",
+      "sha256": "def637ba666f31ed4a33785986d18fdef2486aebbe62ce1121e152b073aab9d8",
+      "row_count": 24
+    },
+    {
+      "path": "ground_truth.csv",
+      "role": "final_development_ground_truth",
+      "sha256": "b954125703152e5eceae0e35ed5d0fb9677e01e8c4fb826cd02e82cd4bc2a607",
+      "row_count": 21
+    },
+    {
+      "path": "evaluation_pairing.csv",
+      "role": "user_confirmed_development_pairing",
+      "sha256": "feb5629112e0307e50467b0d0020262190f5ad62c798e3c6128ad0d09a91b60b",
+      "row_count": 8
+    }
+  ],
+  "ground_truth_metadata": {
+    "status": "FINAL",
+    "scope": "development_dataset_only",
+    "official": false,
+    "confirmation_source": "user_final_confirmation",
+    "confirmed_business_count": 4,
+    "required_step_count": 21,
+    "model_independent": true,
+    "model_input_allowed": false,
+    "candidate_preserved": true,
+    "alternative_routes": {
+      "BUS01": {
+        "canonical_step": "일정관리 화면 진입",
+        "observed_routes": [
+          "홈 오늘 일정 보기 → 일정관리",
+          "홈 일정 관리 바로가기 → 일정관리"
+        ]
+      },
+      "BUS02": {
+        "canonical_step": "일일보고 화면 진입",
+        "accepted_routes": [
+          "업무관리 → 일일보고",
+          "홈 바로가기 → 일일보고"
+        ],
+        "observed_routes": [
+          "EXEC-003: 홈 일일보고 바로가기"
+        ],
+        "no_new_entry": [
+          "EXEC-004"
+        ]
+      },
+      "BUS03": {
+        "canonical_step": "주간보고 화면 진입",
+        "accepted_routes": [
+          "업무관리 → 주간보고",
+          "홈 바로가기 → 주간보고"
+        ],
+        "observed_routes": [
+          "EXEC-005: 일일보고 화면 → 주간보고"
+        ],
+        "no_new_entry": [
+          "EXEC-006"
+        ]
+      },
+      "BUS04": {
+        "canonical_step": "월간보고 화면 진입",
+        "accepted_routes": [
+          "업무관리 → 월간보고",
+          "홈 바로가기 → 월간보고"
+        ],
+        "observed_routes": [
+          "EXEC-007: 주간보고 화면 → 월간보고",
+          "EXEC-008: 같은 월간보고 화면에서 월간보고 재선택"
+        ]
+      }
+    },
+    "route_policy": "Canonical screen entry is one business step. Accepted alternatives are user-approved; accepted routes are not claims of observed navigation. No global M02 alias registration or evaluator change.",
+    "weekly_business_rule": {
+      "source": "user_confirmed",
+      "week_anchor": "Monday",
+      "dataset_mappings": {
+        "2026-10-05": "10월 2주차",
+        "2026-09-28": "10월 1주차"
+      }
+    },
+    "monthly_business_rule": {
+      "source": "user_confirmed",
+      "dataset_mappings": {
+        "2026-09-30": "9월 월간보고",
+        "2026-08-31": "8월 월간보고"
+      }
+    },
+    "excluded_required_procedures": {
+      "BUS01": [
+        "별도 결과 확인"
+      ],
+      "BUS02": [
+        "조회 조건 설정",
+        "조회 시작일 변경",
+        "대상일 변경"
+      ]
+    },
+    "pairing_scope": "Development execution-to-business mapping only; not an OFFICIAL M02 process-instance pairing manifest."
+  },
+  "execution_boundary_validation": {
+    "status": "PASS",
+    "validated_at": "2026-10-08T10:34:51.189769+09:00",
+    "execution_count": 8,
+    "business_count": 4,
+    "each_execution_has_one_business": true,
+    "each_business_has_r1_r2": true,
+    "event_intervals_nonoverlapping": true,
+    "login_events_excluded": true,
+    "assigned_event_count": 192,
+    "unassigned_event_count": 81,
+    "raw_csv_hashes_unchanged": true,
+    "candidate_sha256_preserved": "def637ba666f31ed4a33785986d18fdef2486aebbe62ce1121e152b073aab9d8",
+    "inference_executed": false,
+    "m02_score_calculated": false,
+    "event_assignment_rule": "same session and inclusive timestamp interval; no synthetic/copied events",
+    "task_count_rule": "distinct task IDs referenced by each execution; task row counts across executions are not necessarily additive"
+  }
+}

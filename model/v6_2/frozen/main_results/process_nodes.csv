@@ -1,0 +1,92 @@
+﻿node_id,model_id,segment_prototype,display_label,support_step_count,support_segment_count,support_instance_count,avg_step_position,avg_event_count,avg_repeat_count,avg_prototype_confidence,input_count,direct_input_count,representative_evidence,sort_order
+poc_full:WP00:SP09,poc_full:WP00,SP09,교류프로그램구분,1,1,1,1.0,7.0,1.0,0.29649117588996887,1,0,교류프로그램구분 | glb-15f | 교류프로그램(OUT) | 조회 | click | popup_open | value_reflection | popup_close,1
+poc_full:WP00:SP14,poc_full:WP00,SP14,납부금액,16,18,14,1.875,6.75,1.125,0.7684396896511316,8,1,2행 2열 ㅇㅇㅇㅇ | api_transaction | 교환학생프로그램 | 프로그램명 | /cic/ExtCicStdntInMng/selCourse.do | click | grid_context_enrichment | grid_cell_click,2
+poc_full:WP00:SP06,poc_full:WP00,SP06,프로그램구분,5,6,4,2.0,14.6,1.2,0.766370102763176,2,1,api_transaction | value_reflection | /cic/ExtCicStdntInMng/listDtl.do,3
+poc_full:WP00:SP15,poc_full:WP00,SP15,대표자,1,1,1,2.0,3.0,1.0,0.638298749923706,1,1,법인번호 | 대표자 | change | click,4
+poc_full:WP00:SP17,poc_full:WP00,SP17,이전년,5,5,4,4.4,5.8,1.0,0.6515669286251068,15,0,value_reflection | glb-176 | popup_close,5
+poc_full:WP00:SP12,poc_full:WP00,SP12,프로그램구분,105,143,46,4.533333333333333,11.114285714285714,1.361904761904762,0.8833240484718292,82,32,조회 | api_transaction | /cic/ExtCicStdntInMng/list.do | /cic/ExtCicStdntInMng/selCourse.do | /cic/ExtCicStdntInMng/listDtl.do | /org.tdr.itest.collector.run.do | click,6
+poc_full:WP00:SP01,poc_full:WP00,SP01,학생검색,174,372,79,4.706896551724138,14.873563218390805,2.1379310344827585,0.9884698442686565,210,83,저장 | api_transaction | 교류학생관리(IN) | /cic/ExtCicStdntOutMng/saveDtl.do | /cic/ExtCicStdntOutMng/listDtl.do | /sys/Main/menuInfo.do | /cmn/StdCmnLatestMenu/save.do | /cmn/ExtCmnAppHeader/onLoad.do,7
+poc_full:WP00:SP04,poc_full:WP00,SP04,부서검색팝업,114,225,59,5.5964912280701755,13.464912280701755,1.9736842105263157,0.9178112149987109,117,44,시작일자 | click | grid_context_enrichment | grid_cell_click,8
+poc_full:WP00:SP08,poc_full:WP00,SP08,사업자등록번호,62,89,33,6.0,10.64516129032258,1.435483870967742,0.7856151930762754,59,20,4행 4열 교환학생프로그램 | value_reflection | 프로그램구분 | grid_context_enrichment | grid_cell_click,9
+poc_full:WP00:SP13,poc_full:WP00,SP13,소속학교학번,8,35,2,9.125,29.0,4.375,0.8556594631324212,28,18,18행 3열 호텔관광학과 | 부서검색팝업 | value_reflection | 학과 | grid_cell_click | popup_close,10
+poc_full:WP01:SP00,poc_full:WP01,SP00,교류학생관리(OUT),1,1,1,1.0,8.0,1.0,0.40302884578704834,2,0,value_reflection | 저장 | api_transaction | 교류학생관리 | 교류학생관리(OUT) | /cic/ExtCicExchgInsttMng/save.do | /cic/ExtCicExchgInsttMng/list.do | /sys/Main/menuInfo.do,1
+poc_full:WP01:SP01,poc_full:WP01,SP01,유학생기숙사호실관리,1,1,1,1.0,15.0,1.0,0.9994966387748718,4,1,국적 | 저장 | api_transaction | 교류수강신청 | 유학생기숙사관리 | 유학생기숙사호실관리 | 조회 | /cic/ExtCicStdntInMng/saveDtl.do,2
+poc_full:WP01:SP04,poc_full:WP01,SP04,SP04,1,1,1,1.0,3.0,1.0,0.7912977933883667,0,0,value_reflection | SSN_ORI | click | grid_context_enrichment,3
+poc_full:WP01:SP17,poc_full:WP01,SP17,비고,5,5,5,1.6,5.2,1.0,0.7551249980926513,2,2,exbuilder6 | col_0 | click | change,4
+poc_full:WP01:SP10,poc_full:WP01,SP10,파견국가,12,13,10,1.8333333333333333,7.5,1.0833333333333333,0.6948606347044309,7,3,api_transaction | glb-140 | /cic/ExtCicStdntOutMng/onLoad.do | click | popup_open | popup_structure,5
+poc_full:WP01:SP12,poc_full:WP01,SP12,납부금액,5,5,5,2.0,4.6,1.0,0.8844347357749939,1,0,value_reflection,6
+poc_full:WP01:SP06,poc_full:WP01,SP06,학생검색,73,174,50,2.1095890410958904,14.67123287671233,2.3835616438356166,0.8111883757224055,85,18,value_reflection | 학생검색 | popup_close,7
+poc_full:WP01:SP09,poc_full:WP01,SP09,교류학생관리(OUT),19,20,16,2.263157894736842,5.842105263157895,1.0526315789473684,0.5329568535089493,21,3,api_transaction | page_close | collector_boot | page_view | /org.tdr.itest.collector.run.do,8
+poc_full:WP01:SP14,poc_full:WP01,SP14,국제교류학년도학기,53,87,35,2.7358490566037736,10.962264150943396,1.6415094339622642,0.7972154229504507,66,16,파견국가 | click | grid_context_enrichment | grid_cell_click,9
+poc_full:WP01:SP15,poc_full:WP01,SP15,이전년,5,6,4,3.2,16.4,1.2,0.5312608629465103,7,2,30행 4열 2005년 정화예술대학 교환프로그램 | api_transaction | 2009년 정화예술대학 교환프로그램 | 프로그램구분 | /cic/ExtCicStdntOutMng/listDtl.do | click | grid_context_enrichment | grid_cell_click,10
+poc_full:WP02:SP05,poc_full:WP02,SP05,유학생기숙사납부내역,2,2,2,2.5,7.5,1.0,0.507358655333519,1,0,유학생기숙사납부내역 | api_transaction | 조회 | 12행 3열 학생38793 | 학생37048 | /sys/Main/menuInfo.do | /cmn/StdCmnLatestMenu/save.do | /cic/ExtCicDormRoomPay/onLoad.do,1
+poc_full:WP02:SP06,poc_full:WP02,SP06,학생검색,20,26,13,2.55,9.3,1.3,0.7339589486519495,14,5,page_close | collector_boot | click,2
+poc_full:WP02:SP15,poc_full:WP02,SP15,국제교류학년도학기,24,34,14,2.9583333333333335,8.416666666666666,1.4166666666666667,0.6318543325695727,41,6,조회된 내역이 없습니다. | page_close | collector_boot | grid_cell_click,3
+poc_full:WP02:SP14,poc_full:WP02,SP14,학생검색,32,52,21,3.53125,12.03125,1.625,0.7300535088094573,42,10,이수과정 | 저장 | [ORA-01400]행의 입력으로 필수 열(NOT NULL)에 값이 지정되지 않았습니다. | api_transaction | 유학생기숙사관리 | 유학생기숙사호실관리 | /cic/ExtCicStdntInMng/saveDtl.do | /sys/Main/menuInfo.do,4
+poc_full:WP02:SP09,poc_full:WP02,SP09,조회,12,12,6,3.75,4.583333333333333,1.0,0.46168382341663045,3,0,value_reflection | 외부부서조회팝업 | popup_close,5
+poc_full:WP02:SP01,poc_full:WP02,SP01,교류기관조회팝업,30,38,23,4.033333333333333,8.866666666666667,1.2666666666666666,0.9484926427404086,22,5,조회 | api_transaction | /cic/ExtCicStdntOutMng/list.do | /cic/ExtCicStdntOutMng/listDtl.do | /org.tdr.itest.collector.run.do | click,6
+poc_full:WP02:SP12,poc_full:WP02,SP12,교류기관조회팝업,42,57,28,4.166666666666667,11.095238095238095,1.3571428571428572,0.8405852207825297,38,12,click | grid_context_enrichment | grid_cell_click,7
+poc_full:WP02:SP08,poc_full:WP02,SP08,법인번호,27,34,18,4.185185185185185,7.407407407407407,1.2592592592592593,0.6731359511613846,33,6,value_reflection | 종료일 | click | grid_context_enrichment,8
+poc_full:WP02:SP04,poc_full:WP02,SP04,교류기관조회팝업,15,19,8,6.6,8.733333333333333,1.2666666666666666,0.8351826767126719,5,3,종료시간 | click | grid_context_enrichment | grid_cell_click,9
+poc_full:WP02:SP13,poc_full:WP02,SP13,납부금액,6,6,4,6.833333333333333,3.0,1.0,0.7893549601236979,1,1,SHYR | click | grid_cell_click | grid_context_enrichment,10
+poc_full:WP02:SP17,poc_full:WP02,SP17,학과,9,13,3,10.666666666666666,9.333333333333334,1.4444444444444444,0.7734472552935282,4,1,슬로바키아 | value_reflection | glb-u6 | exbuilder6 | col_0 | 24행 7열 스페인 | 스페인 | 협약시작일자,11
+poc_full:WP03:SP16,poc_full:WP03,SP16,아이디,2,2,2,1.0,7.5,1.0,0.6003196835517883,2,2,collector_boot | page_view | page_close | click,1
+poc_full:WP03:SP02,poc_full:WP03,SP02,조회되었습니다.,487,740,483,1.053388090349076,2.8521560574948666,1.5195071868583163,0.9709699810989338,160,4,page_close | api_transaction | /org.tdr.itest.collector.run.do,2
+poc_full:WP03:SP11,poc_full:WP03,SP11,이전년,173,258,160,1.2947976878612717,6.040462427745664,1.4913294797687862,0.8453547221182661,278,37,collector_boot | page_view | 아이디 | [REDACTED] | page_close | api_transaction | 학사행정 | 학적관리,3
+poc_full:WP03:SP07,poc_full:WP03,SP07,이전년,71,175,60,1.704225352112676,9.915492957746478,2.464788732394366,0.7298497320110969,173,10,page_close | api_transaction | /org.tdr.itest.collector.run.do,4
+poc_full:WP03:SP00,poc_full:WP03,SP00,아이디,5,5,4,2.0,3.4,1.0,0.7007100582122803,3,2,api_transaction | collector_boot | page_view | /sys/Login/login.do,5
+poc_full:WP03:SP09,poc_full:WP03,SP09,비고,9,12,7,2.6666666666666665,6.666666666666667,1.3333333333333333,0.7128226271382084,17,1,click,6
+poc_full:WP04:SP00,poc_full:WP04,SP00,국제교류학년도학기,97,242,81,1.731958762886598,11.8659793814433,2.4948453608247423,0.8172854890482084,138,12,page_close | collector_boot | page_view,1
+poc_full:WP04:SP10,poc_full:WP04,SP10,교류프로그램구분,64,130,34,2.859375,14.375,2.03125,0.7292131705882234,93,7,value_reflection,2
+poc_full:WP04:SP06,poc_full:WP04,SP06,비고,27,46,16,2.962962962962963,9.74074074074074,1.7037037037037037,0.7482038775343953,12,2,value_reflection,3
+poc_full:WP04:SP09,poc_full:WP04,SP09,교류수강신청,2,3,2,4.5,9.5,1.5,0.4388493597507477,5,0,api_transaction | /cic/ExtCicStdntOutMng/list.do | /org.tdr.itest.collector.run.do | click,4
+poc_full:WP05:SP16,poc_full:WP05,SP16,조회,166,294,165,1.0963855421686748,6.849397590361446,1.7710843373493976,0.9637652629530095,49,0,page_close | api_transaction | /org.tdr.itest.collector.run.do,1
+poc_full:WP05:SP11,poc_full:WP05,SP11,기초관리,70,104,55,2.1,6.614285714285714,1.4857142857142858,0.7934742572761717,150,18,api_transaction | collector_boot | page_view | /sys/Login/login.do,2
+poc_full:WP05:SP08,poc_full:WP05,SP08,국제교류학년도학기,6,48,6,2.3333333333333335,73.0,8.0,0.6940084430078666,47,15,1행 3열 비서행정과 | 학생검색 | 학번 | click | popup_close | value_reflection,3
+poc_full:WP05:SP02,poc_full:WP05,SP02,로그인,40,44,34,2.425,4.2,1.1,0.8171560391783714,54,7,page_close | api_transaction | /org.tdr.itest.collector.run.do,4
+poc_full:WP05:SP15,poc_full:WP05,SP15,국제교류학년도학기,11,15,7,2.909090909090909,7.7272727272727275,1.3636363636363635,0.6620551365794558,12,0,교과적용년도 | glb-2gi | 학위구분 | value_reflection | popup_close | click,5
+poc_full:WP05:SP09,poc_full:WP05,SP09,국제교류학년도학기,21,25,13,4.619047619047619,4.809523809523809,1.1904761904761905,0.793623845728617,17,2,로그아웃 하시겠습니까? | collector_boot | page_view | page_close | popup_close,6
+poc_full:WP05:SP14,poc_full:WP05,SP14,프로그램구분,1,2,1,5.0,11.0,2.0,0.5156953036785126,0,0,32행 7열 2015-08-21 | 교류기관조회팝업 | 43행 4열 2009년 Univ Nottingham 교환프로그램 | 취소 | api_transaction | 2015-07-05 | 2015년 정화여자단기대학 어학연수프로그램 | 프로그램구분,7
+poc_full:WP05:SP07,poc_full:WP05,SP07,아이디,47,141,20,5.8936170212765955,8.72340425531915,3.0,0.7679483598464786,74,12,page_close | api_transaction | collector_boot | page_view | /sys/Login/login.do,8
+poc_full:WP05:SP03,poc_full:WP05,SP03,조회,85,353,43,7.6,27.83529411764706,4.152941176470589,0.7247524864067207,503,42,page_close | api_transaction | collector_boot | page_view | /sys/Login/login.do,9
+poc_full:WP05:SP05,poc_full:WP05,SP05,조회,99,314,39,8.97979797979798,14.080808080808081,3.1717171717171717,0.5917494255406602,270,23,api_transaction | 조회 | /cmn/StdCmnDateTime/date.do | /cmn/StdCmnObjSch/listTrv.do | click,10
+poc_full:WP06:SP06,poc_full:WP06,SP06,납부기간,2,2,2,1.0,8.0,1.0,0.7091876268386841,5,1,api_transaction | 달력으로 날짜 선택 | glb-24s | 이전달 | 2026년 5월 12일 | 납부기간 | 조회 | /cic/ExtCicDormRoomPay/onLoad.do,1
+poc_full:WP06:SP15,poc_full:WP06,SP15,납부금액,2,2,2,1.0,3.5,1.0,0.43862560391426086,0,0,F | 납부금액 | click | grid_cell_click | grid_context_enrichment,2
+poc_full:WP06:SP00,poc_full:WP06,SP00,국제교류학년도학기,139,358,130,1.2661870503597121,11.892086330935252,2.5755395683453237,0.8168931502205222,187,9,page_close | collector_boot | page_view,3
+poc_full:WP06:SP09,poc_full:WP06,SP09,국제교류학년도학기,27,46,24,1.6666666666666667,8.185185185185185,1.7037037037037037,0.8136647692065181,32,4,api_transaction | page_close | collector_boot | page_view | /org.tdr.itest.collector.run.do,4
+poc_full:WP06:SP10,poc_full:WP06,SP10,외부부서조회팝업,14,18,13,1.7857142857142858,10.0,1.2857142857142858,0.7978548577853611,19,1,학과 | grid_cell_click | click | grid_context_enrichment,5
+poc_full:WP06:SP07,poc_full:WP06,SP07,외부부서조회팝업,10,10,8,2.1,5.0,1.0,0.6424058377742767,5,0,page_close | collector_boot,6
+poc_full:WP07:SP00,poc_full:WP07,SP00,유학생기숙사납부내역,18,20,15,2.111111111111111,6.111111111111111,1.1111111111111112,0.7570079970690939,19,3,api_transaction | page_close | collector_boot | page_view | /org.tdr.itest.collector.run.do,1
+poc_full:WP07:SP09,poc_full:WP07,SP09,국제교류학년도학기,28,47,21,2.5714285714285716,9.821428571428571,1.6785714285714286,0.562843336377825,38,5,page_view | api_transaction | /org.tdr.itest.collector.executioncollector.do | /org.tdr.encrypt.getkey.datamap.do | /cmn/StdCmnMainNotice/list.do | /cmn/StdCmnMainNotice/listProcMenu.do | /sys/Main/onLoad.do | /sys/Main/changeJob.do,2
+poc_full:WP07:SP10,poc_full:WP07,SP10,외부부서조회팝업,57,100,36,2.5964912280701755,9.052631578947368,1.7543859649122806,0.7609304017142245,47,9,exbuilder6 | col_0 | 저장 | click | change,3
+poc_full:WP07:SP06,poc_full:WP07,SP06,비고,32,45,22,2.75,9.9375,1.40625,0.7449531853199005,24,7,value_reflection,4
+poc_full:WP07:SP14,poc_full:WP07,SP14,학생검색,8,10,6,3.0,10.125,1.25,0.7501754816621542,6,2,신규 | glb-245 | F | 납부구분 | 비고 | click | grid_context_enrichment | grid_cell_click,5
+poc_full:WP07:SP15,poc_full:WP07,SP15,교류프로그램구분,3,4,3,3.3333333333333335,7.0,1.3333333333333333,0.4446268727382024,2,0,glb-247 | F | 납부금액 | click | grid_context_enrichment | grid_cell_click | popup_open,6
+poc_full:WP08:SP05,poc_full:WP08,SP05,예산년도,8,16,8,1.75,11.75,2.0,0.5373739126537527,9,0,page_close | collector_boot | click,1
+poc_full:WP08:SP09,poc_full:WP08,SP09,학생검색,5,5,4,2.0,4.4,1.0,0.45597514510154724,4,2,glb-183 | 일반 | value_reflection | popup_open | click | popup_close,2
+poc_full:WP08:SP03,poc_full:WP08,SP03,유학생기숙사납부내역,4,4,4,2.0,5.25,1.0,0.5809033587574959,2,0,에러가 발생하였습니다. 관리자에게 문의바랍니다. | api_transaction | 조회 | /aac/ExtAacBillMaster/onLoad.do | /cmn/ExtCmnEmbHeader/onLoad.do | popup_close | click,3
+poc_full:WP08:SP15,poc_full:WP08,SP15,예산년도,37,91,28,2.4324324324324325,16.89189189189189,2.4594594594594597,0.7180202629191842,79,19,page_close | collector_boot | 연락처 | grid_cell_click,4
+poc_full:WP08:SP12,poc_full:WP08,SP12,예산편성년도관리,7,7,6,3.0,5.142857142857143,1.0,0.8310504811150687,11,2,예산요구기간관리 | 예산편성년도관리 | 예산년도 | api_transaction | 예산관리>기초관리>예산요구기간관리 | 예산세목관리 | /abg/ExtAbgYear/save.do | click,5
+poc_full:WP08:SP04,poc_full:WP08,SP04,학과,4,4,4,3.25,6.25,1.0,0.9730029106140137,0,0,api_transaction | 조회 | /sys/Main/menuInfo.do | /aac/ExtAacYearUnitDivDept/impOnLoad.do | /aac/ExtAacYearUnitDivDept/changeYear.do | /aac/ExtAacYearUnitDivDept/getAcctDivList.do | /aac/ExtAacYearUnitDivDept/getDeptList.do | /cmn/StdCmnLatestMenu/save.do,6
+poc_full:WP08:SP08,poc_full:WP08,SP08,학생검색,56,119,28,3.875,14.321428571428571,2.125,0.6986019101068922,63,27,click | grid_context_enrichment | grid_cell_click,7
+poc_full:WP08:SP01,poc_full:WP08,SP01,회계단위,16,21,5,6.375,6.125,1.3125,0.9881048165261745,10,4,glb-16l | 조회 | api_transaction | 회계단위 | /abg/ExtAbgSemok/list.do | /org.tdr.itest.collector.run.do | popup_close | click,8
+poc_full:WP09:SP07,poc_full:WP09,SP07,아이디,11,14,11,1.8181818181818181,5.181818181818182,1.2727272727272727,0.6931314116174524,6,5,page_close | api_transaction | collector_boot | page_view | /sys/Login/login.do,1
+poc_full:WP09:SP10,poc_full:WP09,SP10,학과,1,1,1,2.0,11.0,1.0,0.7020766735076904,0,0,9행 4열 유아교육과 | 10행 4열 유아교육과 | 학과 | 유아교육과 | grid_context_enrichment | grid_cell_click | click,2
+poc_full:WP09:SP00,poc_full:WP09,SP00,외부부서조회팝업,3,3,2,2.6666666666666665,8.333333333333334,1.0,0.8186222116152445,2,0,신규 | api_transaction | 외부부서조회팝업 | 2행 3열 행 번호 2 | 36행 3열 김천대학 | 기관영문명 | 1 | Polytechnic University of Catalonia,3
+poc_full:WP09:SP09,poc_full:WP09,SP09,국제교류학년도학기,58,122,37,2.9655172413793105,11.413793103448276,2.103448275862069,0.6743912516874437,80,9,api_transaction | page_close | collector_boot | page_view | /org.tdr.itest.collector.run.do,4
+poc_full:WP09:SP14,poc_full:WP09,SP14,프로그램구분,9,12,8,3.111111111111111,7.666666666666667,1.3333333333333333,0.6311165679384162,5,1,api_transaction | 신규 | col_0 | 2행 7열 | No | 프로그램구분 | 국적 | 학과,5
+poc_full:WP09:SP05,poc_full:WP09,SP05,외부부서조회팝업,9,9,7,3.111111111111111,4.444444444444445,1.0,0.5918170313040415,6,0,api_transaction | page_close | collector_boot | page_view | /org.tdr.itest.collector.run.do,6
+poc_full:WP09:SP15,poc_full:WP09,SP15,학생검색,22,33,11,4.909090909090909,9.0,1.5,0.6175800467079336,25,6,glb-xj | 시작일 | popup_close | click | grid_context_enrichment | grid_cell_click,7
+poc_full:WP10:SP12,poc_full:WP10,SP12,SP12,2,3,2,1.5,6.0,1.5,0.5894447565078735,2,0,glb-1wq | 남 | value_reflection | popup_open | click | popup_close,1
+poc_full:WP10:SP10,poc_full:WP10,SP10,유학생기숙사호실관리,1,1,1,2.0,5.0,1.0,0.5537800788879395,2,0,유학생기숙사관리 | 유학생기숙사호실관리 | api_transaction | /sys/Main/menuInfo.do | /cmn/StdCmnLatestMenu/save.do | /cic/ExtCicDormRoomMng/onLoad.do | click,2
+poc_full:WP10:SP17,poc_full:WP10,SP17,납부금액,38,119,21,2.6052631578947367,34.05263157894737,3.1315789473684212,0.7632010121843742,112,44,value_reflection,3
+poc_full:WP10:SP06,poc_full:WP10,SP06,납부금액,16,26,12,2.625,9.875,1.625,0.7980047476788362,14,3,조회 | api_transaction | /cic/ExtCicDormRoomMng/list.do | /cic/ExtCicDormRoomMng/admsList.do | /cic/ExtCicDormRoomMng/payList.do | /org.tdr.itest.collector.run.do | click,4
+poc_full:WP10:SP13,poc_full:WP10,SP13,납부상태,17,18,10,3.0,8.823529411764707,1.0588235294117647,0.7797181772835114,18,7,glb-1mx | 선택됨: 2021년 12월 27일 | col_0 | glb-1n0 | 정화예술대학 | value_reflection | OUT_STUD_NO | OT_CD,5
+poc_full:WP10:SP04,poc_full:WP10,SP04,납부금액,1,1,1,4.0,5.0,1.0,0.6408534049987793,0,0,glb-1op | 납부금액 | F | grid_cell_click | grid_context_enrichment | click | popup_open,6
+poc_full:WP11:SP14,poc_full:WP11,SP14,학생검색,2,2,2,2.5,11.0,1.0,0.34666192531585693,1,1,학생검색 | value_reflection | popup_close,1
+poc_full:WP11:SP01,poc_full:WP11,SP01,학과,8,9,7,2.625,8.625,1.125,0.9767129942774773,5,2,신규 | exbuilder6 | F | 예산요구구분 | click | grid_context_enrichment | grid_cell_click,2
+poc_full:WP11:SP08,poc_full:WP11,SP08,납부금액,6,6,4,2.8333333333333335,8.0,1.0,0.8181576430797577,2,2,F | 시작일 | click | grid_cell_click | grid_context_enrichment,3
+poc_full:WP11:SP12,poc_full:WP11,SP12,이수과정,2,2,2,3.0,6.0,1.0,0.6702859401702881,3,1,col_0 | 저장 | api_transaction | 교류학생관리 | 교류학생관리(OUT) | /cic/ExtCicExchgInsttMng/save.do | /cic/ExtCicExchgInsttMng/list.do | /sys/Main/menuInfo.do,4
+poc_full:WP11:SP04,poc_full:WP11,SP04,부서검색팝업,39,93,20,4.3076923076923075,14.743589743589743,2.3846153846153846,0.8014131108883391,60,17,api_transaction | 부서검색팝업 | /cmn/StdCmnObjSch/onLoad.do | /cmn/StdCmnObjSch/list.do | popup_open,5
+poc_full:WP11:SP13,poc_full:WP11,SP13,국적,39,138,17,4.435897435897436,25.692307692307693,3.5384615384615383,0.8660040770934285,99,47,glb-1ol | 동서울대학교 | OT_CD | grid_cell_click | popup_open | click,6
+poc_full:WP11:SP17,poc_full:WP11,SP17,협약시작일자,8,10,7,6.0,8.875,1.25,0.7104761737088363,9,3,value_reflection,7

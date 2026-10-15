@@ -1,0 +1,15 @@
+{
+  "volatile_tokens": [
+    "UUID",
+    "numeric ID",
+    "date/timestamp",
+    "long hex"
+  ],
+  "query_fragment_removed": true,
+  "input_data_removed": true,
+  "element_text_removed": true,
+  "target_selector_used_only_for_generic_role": true,
+  "page_title_allowlist": [
+    "Rainbow"
+  ]
+}

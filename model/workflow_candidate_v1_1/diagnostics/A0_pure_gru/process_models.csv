@@ -1,0 +1,3 @@
+﻿process_model_id,cluster_id,instance_count,canonical_instance_id,canonical_policy,mode,canonical_node_sequence
+PM-001,0,60,WF-0060,cosine medoid observed procedure; variants retained in graph,DEVELOPMENT,"[""PM-001-N090"", ""PM-001-N091"", ""PM-001-N092"", ""PM-001-N005"", ""PM-001-N093"", ""PM-001-N002"", ""PM-001-N001"", ""PM-001-N006""]"
+PM-002,1,1,WF-0056,cosine medoid observed procedure; variants retained in graph,DEVELOPMENT,[]

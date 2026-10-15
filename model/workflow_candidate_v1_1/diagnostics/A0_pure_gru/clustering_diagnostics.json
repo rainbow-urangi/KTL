@@ -1,0 +1,113 @@
+{
+  "mode": "DEVELOPMENT",
+  "official_m06": false,
+  "selection": "max cosine silhouette - 0.1 * singleton fraction; no BU metadata",
+  "selected": {
+    "threshold": 0.15,
+    "cluster_count": 2,
+    "silhouette": 0.9306837320327759,
+    "dbi": 0.1546708838421379,
+    "singleton_fraction": 0.01639344262295082,
+    "objective": 0.9290443877704808,
+    "cluster_sizes": {
+      "0": 60,
+      "1": 1
+    }
+  },
+  "candidates": [
+    {
+      "threshold": 0.15,
+      "cluster_count": 2,
+      "silhouette": 0.9306837320327759,
+      "dbi": 0.1546708838421379,
+      "singleton_fraction": 0.01639344262295082,
+      "objective": 0.9290443877704808,
+      "cluster_sizes": {
+        "0": 60,
+        "1": 1
+      }
+    },
+    {
+      "threshold": 0.25,
+      "cluster_count": 2,
+      "silhouette": 0.9306837320327759,
+      "dbi": 0.1546708838421379,
+      "singleton_fraction": 0.01639344262295082,
+      "objective": 0.9290443877704808,
+      "cluster_sizes": {
+        "0": 60,
+        "1": 1
+      }
+    },
+    {
+      "threshold": 0.35,
+      "cluster_count": 2,
+      "silhouette": 0.9306837320327759,
+      "dbi": 0.1546708838421379,
+      "singleton_fraction": 0.01639344262295082,
+      "objective": 0.9290443877704808,
+      "cluster_sizes": {
+        "0": 60,
+        "1": 1
+      }
+    },
+    {
+      "threshold": 0.45,
+      "cluster_count": 2,
+      "silhouette": 0.9306837320327759,
+      "dbi": 0.1546708838421379,
+      "singleton_fraction": 0.01639344262295082,
+      "objective": 0.9290443877704808,
+      "cluster_sizes": {
+        "0": 60,
+        "1": 1
+      }
+    },
+    {
+      "threshold": 0.55,
+      "cluster_count": 2,
+      "silhouette": 0.9306837320327759,
+      "dbi": 0.1546708838421379,
+      "singleton_fraction": 0.01639344262295082,
+      "objective": 0.9290443877704808,
+      "cluster_sizes": {
+        "0": 60,
+        "1": 1
+      }
+    },
+    {
+      "threshold": 0.65,
+      "cluster_count": 2,
+      "silhouette": 0.9306837320327759,
+      "dbi": 0.1546708838421379,
+      "singleton_fraction": 0.01639344262295082,
+      "objective": 0.9290443877704808,
+      "cluster_sizes": {
+        "0": 60,
+        "1": 1
+      }
+    },
+    {
+      "threshold": 0.75,
+      "cluster_count": 1,
+      "silhouette": null,
+      "dbi": null,
+      "singleton_fraction": 0.0,
+      "objective": null,
+      "cluster_sizes": {
+        "0": 61
+      }
+    },
+    {
+      "threshold": 0.85,
+      "cluster_count": 1,
+      "silhouette": null,
+      "dbi": null,
+      "singleton_fraction": 0.0,
+      "objective": null,
+      "cluster_sizes": {
+        "0": 61
+      }
+    }
+  ]
+}

@@ -1,0 +1,32 @@
+{
+  "all_candidates_completed_before_posthoc": true,
+  "configuration_sha256": "4afebc4ff99debf62c6d8d16d830783275d57feed681c2c955cd35c8f0995296",
+  "inputs": [
+    "raw structural fields",
+    "frozen GRU hidden states",
+    "v1 existing embeddings"
+  ],
+  "business_labels_used": false,
+  "files": {
+    "A0_pure_gru": {
+      "cluster_assignments.csv": "b84cc0a827c3a819ae16ab4b6bbd21b799ef46e28bbe5aecd1f495242da8cb34",
+      "workflow_embeddings.csv": "60c85a7bb3bf62fd91a2b5f7021276e21d5c996f61185121b5ffdeae8ac73a98",
+      "clustering_diagnostics.json": "9175a373df896db316eb406e6879624d65f42e1636187f35921b173aa87b2548"
+    },
+    "A_existing": {
+      "cluster_assignments.csv": "5183e2f46894a301321ee46cf75ca00ab55ce6735d40b417b6f749a2768e153c",
+      "workflow_embeddings.csv": "ab2f34bd73baf74f02bccdf86807992fe578ae7c023bef0eb542b47e4bfc9bf5",
+      "clustering_diagnostics.json": "6e6aa23c3818e9dfed19ffec54aa8568d1ff36ad714fcede540f22b0d5017b5f"
+    },
+    "B_page": {
+      "cluster_assignments.csv": "b975338e58204d3c9ba989f37d03b403f6e04072f8f510ba3287e424424f0a38",
+      "workflow_embeddings.csv": "d3c3d7bb084467fadbad1125101db6059f3ac177c5bd9513af8314922e1f9bd1",
+      "clustering_diagnostics.json": "7f9b5f8ddcf46e803e6263b59d612d437c8130626f56f7bcfedfc294ca3dd0ac"
+    },
+    "C_full": {
+      "cluster_assignments.csv": "2e5ce47fc684bcb97c8656680c05fc7e18fe75f70d4995ff3257b56ffeee2a4f",
+      "workflow_embeddings.csv": "0eb3eccf70fb5451f641e2d02b0fa5775b051667e92d983e3a52c183978de87d",
+      "clustering_diagnostics.json": "faddbe1ee999014dc7f7ad916fd627d384a69419b2547a68d5ef9414d4131c6e"
+    }
+  }
+}

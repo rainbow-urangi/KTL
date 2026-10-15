@@ -1,0 +1,189 @@
+{
+  "common_required": [
+    "external_run_id",
+    "dataset_id",
+    "run_mode",
+    "source_module",
+    "source_version",
+    "submitted_at",
+    "dataset_manifest_sha256",
+    "counts",
+    "details object or evidence object/array"
+  ],
+  "success_http_status": 201,
+  "samples": [
+    {
+      "metric_id": "M01",
+      "metric_name": "Collection Accuracy · 수집 정확도",
+      "method": "POST",
+      "endpoint": "/api/integrations/m01/result",
+      "purpose": "Collector가 전달한 수집 count로 C1/C2/C3와 가중 점수를 검증합니다.",
+      "request": {
+        "external_run_id": "M01-MOCK-001",
+        "dataset_id": "mock-dataset-01",
+        "run_mode": "REFERENCE",
+        "source_module": "collector",
+        "source_version": "0.1.0",
+        "submitted_at": "2026-10-08T12:00:00+09:00",
+        "dataset_manifest_sha256": "43ff3967565db9380fb57fbb8c19abeae03ce205b927bff00f13ff1a231fcb32",
+        "counts": {
+          "defined_required_event_count": 100,
+          "collected_required_event_count": 95,
+          "total_collected_event_count": 110,
+          "required_field_count": 6,
+          "missing_required_field_count": 3,
+          "defined_event_type_count": 8,
+          "collected_event_type_count": 8
+        },
+        "details": {
+          "synthetic": true,
+          "note": "연동 테스트용 mock count; 실제 수집 성능이 아닙니다."
+        }
+      },
+      "required_counts": [
+        "defined_required_event_count",
+        "collected_required_event_count",
+        "total_collected_event_count",
+        "required_field_count",
+        "missing_required_field_count",
+        "defined_event_type_count",
+        "collected_event_type_count"
+      ],
+      "invalid_count_field": "defined_required_event_count",
+      "response_example": {
+        "metric_id": "M01",
+        "run_mode": "REFERENCE",
+        "dataset_id": "mock-dataset-01",
+        "status": "COMPLETED",
+        "score": 97.36363636363636,
+        "sample_count": 100,
+        "official_pass": null,
+        "pass": null
+      }
+    },
+    {
+      "metric_id": "M04",
+      "metric_name": "Automated Execution Success Rate · 자동 실행 성공률",
+      "method": "POST",
+      "endpoint": "/api/integrations/m04/result",
+      "purpose": "성공 실행 수 / 전체 실행 수를 계산합니다. 실패도 분모에 포함합니다.",
+      "request": {
+        "external_run_id": "M04-MOCK-001",
+        "dataset_id": "mock-dataset-01",
+        "run_mode": "REFERENCE",
+        "source_module": "selenium-runner",
+        "source_version": "0.1.0",
+        "submitted_at": "2026-10-08T12:00:00+09:00",
+        "dataset_manifest_sha256": "43ff3967565db9380fb57fbb8c19abeae03ce205b927bff00f13ff1a231fcb32",
+        "counts": {
+          "total_execution_count": 20,
+          "successful_execution_count": 18
+        },
+        "details": {
+          "synthetic": true,
+          "note": "전체 20건 중 3건의 설명용 예시입니다.",
+          "example_cases": [
+            {
+              "case_id": "TC-001",
+              "status": "PASS"
+            },
+            {
+              "case_id": "TC-002",
+              "status": "FAIL",
+              "error_type": "ELEMENT_NOT_FOUND"
+            },
+            {
+              "case_id": "TC-003",
+              "status": "PASS"
+            }
+          ]
+        }
+      },
+      "required_counts": [
+        "total_execution_count",
+        "successful_execution_count"
+      ],
+      "invalid_count_field": "total_execution_count",
+      "response_example": {
+        "metric_id": "M04",
+        "run_mode": "REFERENCE",
+        "dataset_id": "mock-dataset-01",
+        "status": "COMPLETED",
+        "score": 90.0,
+        "sample_count": 20,
+        "official_pass": null,
+        "pass": null
+      }
+    },
+    {
+      "metric_id": "M07",
+      "metric_name": "LLM Generated Code Validity and Accuracy · 생성 코드 유효성 및 정확도",
+      "method": "POST",
+      "endpoint": "/api/integrations/m07/result",
+      "purpose": "구문·실행 모두 통과한 수 / LLM이 실제 생성한 전체 코드 수를 계산합니다. 요청 수는 진단용입니다.",
+      "request": {
+        "external_run_id": "M07-MOCK-001",
+        "dataset_id": "mock-dataset-01",
+        "run_mode": "REFERENCE",
+        "source_module": "llm-code-runner",
+        "source_version": "0.1.0",
+        "submitted_at": "2026-10-08T12:00:00+09:00",
+        "dataset_manifest_sha256": "43ff3967565db9380fb57fbb8c19abeae03ce205b927bff00f13ff1a231fcb32",
+        "counts": {
+          "generation_request_count": 20,
+          "generated_code_count": 18,
+          "syntax_pass_count": 17,
+          "execution_pass_count": 16,
+          "both_pass_count": 15
+        },
+        "details": {
+          "synthetic": true,
+          "note": "20회 요청, 생성 코드 18건 중 일부 설명용 예시입니다.",
+          "example_cases": [
+            {
+              "case_id": "TC-001",
+              "generation_status": "PASS",
+              "syntax_status": "PASS",
+              "execution_status": "PASS",
+              "final_status": "PASS"
+            },
+            {
+              "case_id": "TC-002",
+              "generation_status": "PASS",
+              "syntax_status": "PASS",
+              "execution_status": "FAIL",
+              "final_status": "FAIL",
+              "error_type": "EXECUTION_ERROR"
+            },
+            {
+              "case_id": "TC-003",
+              "generation_status": "PASS",
+              "syntax_status": "FAIL",
+              "execution_status": "FAIL",
+              "final_status": "FAIL",
+              "error_type": "SYNTAX_ERROR"
+            }
+          ]
+        }
+      },
+      "required_counts": [
+        "generation_request_count",
+        "generated_code_count",
+        "syntax_pass_count",
+        "execution_pass_count",
+        "both_pass_count"
+      ],
+      "invalid_count_field": "generated_code_count",
+      "response_example": {
+        "metric_id": "M07",
+        "run_mode": "REFERENCE",
+        "dataset_id": "mock-dataset-01",
+        "status": "COMPLETED",
+        "score": 83.33333333333333,
+        "sample_count": 18,
+        "official_pass": null,
+        "pass": null
+      }
+    }
+  ]
+}

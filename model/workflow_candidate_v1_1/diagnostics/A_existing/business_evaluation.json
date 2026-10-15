@@ -1,0 +1,1759 @@
+{
+  "attribution": "event-overlap plurality per execution; ties lowest cluster ID; fragments remain in segmentation diagnostics",
+  "same_bu_three_repetitions_consistent": 20,
+  "business_count": 20,
+  "by_business": {
+    "BU01": {
+      "execution_clusters": {
+        "BU01-R1": 0,
+        "BU01-R2": 0,
+        "BU01-R3": 0
+      },
+      "all_three_same_cluster": true,
+      "pair_consistency": 1.0
+    },
+    "BU02": {
+      "execution_clusters": {
+        "BU02-R1": 4,
+        "BU02-R2": 4,
+        "BU02-R3": 4
+      },
+      "all_three_same_cluster": true,
+      "pair_consistency": 1.0
+    },
+    "BU03": {
+      "execution_clusters": {
+        "BU03-R1": 4,
+        "BU03-R2": 4,
+        "BU03-R3": 4
+      },
+      "all_three_same_cluster": true,
+      "pair_consistency": 1.0
+    },
+    "BU04": {
+      "execution_clusters": {
+        "BU04-R1": 6,
+        "BU04-R2": 6,
+        "BU04-R3": 6
+      },
+      "all_three_same_cluster": true,
+      "pair_consistency": 1.0
+    },
+    "BU05": {
+      "execution_clusters": {
+        "BU05-R1": 6,
+        "BU05-R2": 6,
+        "BU05-R3": 6
+      },
+      "all_three_same_cluster": true,
+      "pair_consistency": 1.0
+    },
+    "BU06": {
+      "execution_clusters": {
+        "BU06-R1": 5,
+        "BU06-R2": 5,
+        "BU06-R3": 5
+      },
+      "all_three_same_cluster": true,
+      "pair_consistency": 1.0
+    },
+    "BU07": {
+      "execution_clusters": {
+        "BU07-R1": 5,
+        "BU07-R2": 5,
+        "BU07-R3": 5
+      },
+      "all_three_same_cluster": true,
+      "pair_consistency": 1.0
+    },
+    "BU08": {
+      "execution_clusters": {
+        "BU08-R1": 9,
+        "BU08-R2": 9,
+        "BU08-R3": 9
+      },
+      "all_three_same_cluster": true,
+      "pair_consistency": 1.0
+    },
+    "BU09": {
+      "execution_clusters": {
+        "BU09-R1": 9,
+        "BU09-R2": 9,
+        "BU09-R3": 9
+      },
+      "all_three_same_cluster": true,
+      "pair_consistency": 1.0
+    },
+    "BU10": {
+      "execution_clusters": {
+        "BU10-R1": 8,
+        "BU10-R2": 8,
+        "BU10-R3": 8
+      },
+      "all_three_same_cluster": true,
+      "pair_consistency": 1.0
+    },
+    "BU11": {
+      "execution_clusters": {
+        "BU11-R1": 8,
+        "BU11-R2": 8,
+        "BU11-R3": 8
+      },
+      "all_three_same_cluster": true,
+      "pair_consistency": 1.0
+    },
+    "BU12": {
+      "execution_clusters": {
+        "BU12-R1": 1,
+        "BU12-R2": 1,
+        "BU12-R3": 1
+      },
+      "all_three_same_cluster": true,
+      "pair_consistency": 1.0
+    },
+    "BU13": {
+      "execution_clusters": {
+        "BU13-R1": 1,
+        "BU13-R2": 1,
+        "BU13-R3": 1
+      },
+      "all_three_same_cluster": true,
+      "pair_consistency": 1.0
+    },
+    "BU14": {
+      "execution_clusters": {
+        "BU14-R1": 1,
+        "BU14-R2": 1,
+        "BU14-R3": 1
+      },
+      "all_three_same_cluster": true,
+      "pair_consistency": 1.0
+    },
+    "BU15": {
+      "execution_clusters": {
+        "BU15-R1": 3,
+        "BU15-R2": 3,
+        "BU15-R3": 3
+      },
+      "all_three_same_cluster": true,
+      "pair_consistency": 1.0
+    },
+    "BU16": {
+      "execution_clusters": {
+        "BU16-R1": 3,
+        "BU16-R2": 3,
+        "BU16-R3": 3
+      },
+      "all_three_same_cluster": true,
+      "pair_consistency": 1.0
+    },
+    "BU17": {
+      "execution_clusters": {
+        "BU17-R1": 3,
+        "BU17-R2": 3,
+        "BU17-R3": 3
+      },
+      "all_three_same_cluster": true,
+      "pair_consistency": 1.0
+    },
+    "BU18": {
+      "execution_clusters": {
+        "BU18-R1": 2,
+        "BU18-R2": 2,
+        "BU18-R3": 2
+      },
+      "all_three_same_cluster": true,
+      "pair_consistency": 1.0
+    },
+    "BU19": {
+      "execution_clusters": {
+        "BU19-R1": 2,
+        "BU19-R2": 2,
+        "BU19-R3": 2
+      },
+      "all_three_same_cluster": true,
+      "pair_consistency": 1.0
+    },
+    "BU20": {
+      "execution_clusters": {
+        "BU20-R1": 2,
+        "BU20-R2": 2,
+        "BU20-R3": 2
+      },
+      "all_three_same_cluster": true,
+      "pair_consistency": 1.0
+    }
+  },
+  "cluster_event_weighted_purity": {
+    "4": 0.6111111111111112,
+    "6": 0.5294117647058824,
+    "5": 0.6851851851851852,
+    "9": 0.6458333333333334,
+    "8": 0.6946564885496184,
+    "1": 0.7050359712230215,
+    "3": 0.6587301587301587,
+    "2": 0.6507936507936508,
+    "7": 1.0,
+    "0": 1.0
+  },
+  "overall_event_weighted_purity": 0.6685912240184757,
+  "mixed_business_cluster_count": 8,
+  "cluster_business_event_counts": {
+    "4": {
+      "BU03": 55,
+      "BU02": 35
+    },
+    "6": {
+      "BU04": 16,
+      "BU05": 18
+    },
+    "5": {
+      "BU06": 34,
+      "BU07": 74
+    },
+    "9": {
+      "BU08": 34,
+      "BU09": 62
+    },
+    "8": {
+      "BU10": 40,
+      "BU11": 91
+    },
+    "1": {
+      "BU12": 15,
+      "BU13": 26,
+      "BU14": 98
+    },
+    "3": {
+      "BU15": 15,
+      "BU16": 28,
+      "BU17": 83
+    },
+    "2": {
+      "BU18": 15,
+      "BU19": 29,
+      "BU20": 82
+    },
+    "7": {
+      "BU20": 1
+    },
+    "0": {
+      "BU01": 15
+    }
+  },
+  "confusion_pairs": [
+    {
+      "business_a": "BU02",
+      "business_b": "BU03",
+      "same_cluster_execution_pairs": 9,
+      "total_execution_pairs": 9
+    },
+    {
+      "business_a": "BU04",
+      "business_b": "BU05",
+      "same_cluster_execution_pairs": 9,
+      "total_execution_pairs": 9
+    },
+    {
+      "business_a": "BU06",
+      "business_b": "BU07",
+      "same_cluster_execution_pairs": 9,
+      "total_execution_pairs": 9
+    },
+    {
+      "business_a": "BU08",
+      "business_b": "BU09",
+      "same_cluster_execution_pairs": 9,
+      "total_execution_pairs": 9
+    },
+    {
+      "business_a": "BU10",
+      "business_b": "BU11",
+      "same_cluster_execution_pairs": 9,
+      "total_execution_pairs": 9
+    },
+    {
+      "business_a": "BU12",
+      "business_b": "BU13",
+      "same_cluster_execution_pairs": 9,
+      "total_execution_pairs": 9
+    },
+    {
+      "business_a": "BU12",
+      "business_b": "BU14",
+      "same_cluster_execution_pairs": 9,
+      "total_execution_pairs": 9
+    },
+    {
+      "business_a": "BU13",
+      "business_b": "BU14",
+      "same_cluster_execution_pairs": 9,
+      "total_execution_pairs": 9
+    },
+    {
+      "business_a": "BU15",
+      "business_b": "BU16",
+      "same_cluster_execution_pairs": 9,
+      "total_execution_pairs": 9
+    },
+    {
+      "business_a": "BU15",
+      "business_b": "BU17",
+      "same_cluster_execution_pairs": 9,
+      "total_execution_pairs": 9
+    },
+    {
+      "business_a": "BU16",
+      "business_b": "BU17",
+      "same_cluster_execution_pairs": 9,
+      "total_execution_pairs": 9
+    },
+    {
+      "business_a": "BU18",
+      "business_b": "BU19",
+      "same_cluster_execution_pairs": 9,
+      "total_execution_pairs": 9
+    },
+    {
+      "business_a": "BU18",
+      "business_b": "BU20",
+      "same_cluster_execution_pairs": 9,
+      "total_execution_pairs": 9
+    },
+    {
+      "business_a": "BU19",
+      "business_b": "BU20",
+      "same_cluster_execution_pairs": 9,
+      "total_execution_pairs": 9
+    },
+    {
+      "business_a": "BU01",
+      "business_b": "BU02",
+      "same_cluster_execution_pairs": 0,
+      "total_execution_pairs": 9
+    },
+    {
+      "business_a": "BU01",
+      "business_b": "BU03",
+      "same_cluster_execution_pairs": 0,
+      "total_execution_pairs": 9
+    },
+    {
+      "business_a": "BU01",
+      "business_b": "BU04",
+      "same_cluster_execution_pairs": 0,
+      "total_execution_pairs": 9
+    },
+    {
+      "business_a": "BU01",
+      "business_b": "BU05",
+      "same_cluster_execution_pairs": 0,
+      "total_execution_pairs": 9
+    },
+    {
+      "business_a": "BU01",
+      "business_b": "BU06",
+      "same_cluster_execution_pairs": 0,
+      "total_execution_pairs": 9
+    },
+    {
+      "business_a": "BU01",
+      "business_b": "BU07",
+      "same_cluster_execution_pairs": 0,
+      "total_execution_pairs": 9
+    },
+    {
+      "business_a": "BU01",
+      "business_b": "BU08",
+      "same_cluster_execution_pairs": 0,
+      "total_execution_pairs": 9
+    },
+    {
+      "business_a": "BU01",
+      "business_b": "BU09",
+      "same_cluster_execution_pairs": 0,
+      "total_execution_pairs": 9
+    },
+    {
+      "business_a": "BU01",
+      "business_b": "BU10",
+      "same_cluster_execution_pairs": 0,
+      "total_execution_pairs": 9
+    },
+    {
+      "business_a": "BU01",
+      "business_b": "BU11",
+      "same_cluster_execution_pairs": 0,
+      "total_execution_pairs": 9
+    },
+    {
+      "business_a": "BU01",
+      "business_b": "BU12",
+      "same_cluster_execution_pairs": 0,
+      "total_execution_pairs": 9
+    },
+    {
+      "business_a": "BU01",
+      "business_b": "BU13",
+      "same_cluster_execution_pairs": 0,
+      "total_execution_pairs": 9
+    },
+    {
+      "business_a": "BU01",
+      "business_b": "BU14",
+      "same_cluster_execution_pairs": 0,
+      "total_execution_pairs": 9
+    },
+    {
+      "business_a": "BU01",
+      "business_b": "BU15",
+      "same_cluster_execution_pairs": 0,
+      "total_execution_pairs": 9
+    },
+    {
+      "business_a": "BU01",
+      "business_b": "BU16",
+      "same_cluster_execution_pairs": 0,
+      "total_execution_pairs": 9
+    },
+    {
+      "business_a": "BU01",
+      "business_b": "BU17",
+      "same_cluster_execution_pairs": 0,
+      "total_execution_pairs": 9
+    },
+    {
+      "business_a": "BU01",
+      "business_b": "BU18",
+      "same_cluster_execution_pairs": 0,
+      "total_execution_pairs": 9
+    },
+    {
+      "business_a": "BU01",
+      "business_b": "BU19",
+      "same_cluster_execution_pairs": 0,
+      "total_execution_pairs": 9
+    },
+    {
+      "business_a": "BU01",
+      "business_b": "BU20",
+      "same_cluster_execution_pairs": 0,
+      "total_execution_pairs": 9
+    },
+    {
+      "business_a": "BU02",
+      "business_b": "BU04",
+      "same_cluster_execution_pairs": 0,
+      "total_execution_pairs": 9
+    },
+    {
+      "business_a": "BU02",
+      "business_b": "BU05",
+      "same_cluster_execution_pairs": 0,
+      "total_execution_pairs": 9
+    },
+    {
+      "business_a": "BU02",
+      "business_b": "BU06",
+      "same_cluster_execution_pairs": 0,
+      "total_execution_pairs": 9
+    },
+    {
+      "business_a": "BU02",
+      "business_b": "BU07",
+      "same_cluster_execution_pairs": 0,
+      "total_execution_pairs": 9
+    },
+    {
+      "business_a": "BU02",
+      "business_b": "BU08",
+      "same_cluster_execution_pairs": 0,
+      "total_execution_pairs": 9
+    },
+    {
+      "business_a": "BU02",
+      "business_b": "BU09",
+      "same_cluster_execution_pairs": 0,
+      "total_execution_pairs": 9
+    },
+    {
+      "business_a": "BU02",
+      "business_b": "BU10",
+      "same_cluster_execution_pairs": 0,
+      "total_execution_pairs": 9
+    },
+    {
+      "business_a": "BU02",
+      "business_b": "BU11",
+      "same_cluster_execution_pairs": 0,
+      "total_execution_pairs": 9
+    },
+    {
+      "business_a": "BU02",
+      "business_b": "BU12",
+      "same_cluster_execution_pairs": 0,
+      "total_execution_pairs": 9
+    },
+    {
+      "business_a": "BU02",
+      "business_b": "BU13",
+      "same_cluster_execution_pairs": 0,
+      "total_execution_pairs": 9
+    },
+    {
+      "business_a": "BU02",
+      "business_b": "BU14",
+      "same_cluster_execution_pairs": 0,
+      "total_execution_pairs": 9
+    },
+    {
+      "business_a": "BU02",
+      "business_b": "BU15",
+      "same_cluster_execution_pairs": 0,
+      "total_execution_pairs": 9
+    },
+    {
+      "business_a": "BU02",
+      "business_b": "BU16",
+      "same_cluster_execution_pairs": 0,
+      "total_execution_pairs": 9
+    },
+    {
+      "business_a": "BU02",
+      "business_b": "BU17",
+      "same_cluster_execution_pairs": 0,
+      "total_execution_pairs": 9
+    },
+    {
+      "business_a": "BU02",
+      "business_b": "BU18",
+      "same_cluster_execution_pairs": 0,
+      "total_execution_pairs": 9
+    },
+    {
+      "business_a": "BU02",
+      "business_b": "BU19",
+      "same_cluster_execution_pairs": 0,
+      "total_execution_pairs": 9
+    },
+    {
+      "business_a": "BU02",
+      "business_b": "BU20",
+      "same_cluster_execution_pairs": 0,
+      "total_execution_pairs": 9
+    },
+    {
+      "business_a": "BU03",
+      "business_b": "BU04",
+      "same_cluster_execution_pairs": 0,
+      "total_execution_pairs": 9
+    },
+    {
+      "business_a": "BU03",
+      "business_b": "BU05",
+      "same_cluster_execution_pairs": 0,
+      "total_execution_pairs": 9
+    },
+    {
+      "business_a": "BU03",
+      "business_b": "BU06",
+      "same_cluster_execution_pairs": 0,
+      "total_execution_pairs": 9
+    },
+    {
+      "business_a": "BU03",
+      "business_b": "BU07",
+      "same_cluster_execution_pairs": 0,
+      "total_execution_pairs": 9
+    },
+    {
+      "business_a": "BU03",
+      "business_b": "BU08",
+      "same_cluster_execution_pairs": 0,
+      "total_execution_pairs": 9
+    },
+    {
+      "business_a": "BU03",
+      "business_b": "BU09",
+      "same_cluster_execution_pairs": 0,
+      "total_execution_pairs": 9
+    },
+    {
+      "business_a": "BU03",
+      "business_b": "BU10",
+      "same_cluster_execution_pairs": 0,
+      "total_execution_pairs": 9
+    },
+    {
+      "business_a": "BU03",
+      "business_b": "BU11",
+      "same_cluster_execution_pairs": 0,
+      "total_execution_pairs": 9
+    },
+    {
+      "business_a": "BU03",
+      "business_b": "BU12",
+      "same_cluster_execution_pairs": 0,
+      "total_execution_pairs": 9
+    },
+    {
+      "business_a": "BU03",
+      "business_b": "BU13",
+      "same_cluster_execution_pairs": 0,
+      "total_execution_pairs": 9
+    },
+    {
+      "business_a": "BU03",
+      "business_b": "BU14",
+      "same_cluster_execution_pairs": 0,
+      "total_execution_pairs": 9
+    },
+    {
+      "business_a": "BU03",
+      "business_b": "BU15",
+      "same_cluster_execution_pairs": 0,
+      "total_execution_pairs": 9
+    },
+    {
+      "business_a": "BU03",
+      "business_b": "BU16",
+      "same_cluster_execution_pairs": 0,
+      "total_execution_pairs": 9
+    },
+    {
+      "business_a": "BU03",
+      "business_b": "BU17",
+      "same_cluster_execution_pairs": 0,
+      "total_execution_pairs": 9
+    },
+    {
+      "business_a": "BU03",
+      "business_b": "BU18",
+      "same_cluster_execution_pairs": 0,
+      "total_execution_pairs": 9
+    },
+    {
+      "business_a": "BU03",
+      "business_b": "BU19",
+      "same_cluster_execution_pairs": 0,
+      "total_execution_pairs": 9
+    },
+    {
+      "business_a": "BU03",
+      "business_b": "BU20",
+      "same_cluster_execution_pairs": 0,
+      "total_execution_pairs": 9
+    },
+    {
+      "business_a": "BU04",
+      "business_b": "BU06",
+      "same_cluster_execution_pairs": 0,
+      "total_execution_pairs": 9
+    },
+    {
+      "business_a": "BU04",
+      "business_b": "BU07",
+      "same_cluster_execution_pairs": 0,
+      "total_execution_pairs": 9
+    },
+    {
+      "business_a": "BU04",
+      "business_b": "BU08",
+      "same_cluster_execution_pairs": 0,
+      "total_execution_pairs": 9
+    },
+    {
+      "business_a": "BU04",
+      "business_b": "BU09",
+      "same_cluster_execution_pairs": 0,
+      "total_execution_pairs": 9
+    },
+    {
+      "business_a": "BU04",
+      "business_b": "BU10",
+      "same_cluster_execution_pairs": 0,
+      "total_execution_pairs": 9
+    },
+    {
+      "business_a": "BU04",
+      "business_b": "BU11",
+      "same_cluster_execution_pairs": 0,
+      "total_execution_pairs": 9
+    },
+    {
+      "business_a": "BU04",
+      "business_b": "BU12",
+      "same_cluster_execution_pairs": 0,
+      "total_execution_pairs": 9
+    },
+    {
+      "business_a": "BU04",
+      "business_b": "BU13",
+      "same_cluster_execution_pairs": 0,
+      "total_execution_pairs": 9
+    },
+    {
+      "business_a": "BU04",
+      "business_b": "BU14",
+      "same_cluster_execution_pairs": 0,
+      "total_execution_pairs": 9
+    },
+    {
+      "business_a": "BU04",
+      "business_b": "BU15",
+      "same_cluster_execution_pairs": 0,
+      "total_execution_pairs": 9
+    },
+    {
+      "business_a": "BU04",
+      "business_b": "BU16",
+      "same_cluster_execution_pairs": 0,
+      "total_execution_pairs": 9
+    },
+    {
+      "business_a": "BU04",
+      "business_b": "BU17",
+      "same_cluster_execution_pairs": 0,
+      "total_execution_pairs": 9
+    },
+    {
+      "business_a": "BU04",
+      "business_b": "BU18",
+      "same_cluster_execution_pairs": 0,
+      "total_execution_pairs": 9
+    },
+    {
+      "business_a": "BU04",
+      "business_b": "BU19",
+      "same_cluster_execution_pairs": 0,
+      "total_execution_pairs": 9
+    },
+    {
+      "business_a": "BU04",
+      "business_b": "BU20",
+      "same_cluster_execution_pairs": 0,
+      "total_execution_pairs": 9
+    },
+    {
+      "business_a": "BU05",
+      "business_b": "BU06",
+      "same_cluster_execution_pairs": 0,
+      "total_execution_pairs": 9
+    },
+    {
+      "business_a": "BU05",
+      "business_b": "BU07",
+      "same_cluster_execution_pairs": 0,
+      "total_execution_pairs": 9
+    },
+    {
+      "business_a": "BU05",
+      "business_b": "BU08",
+      "same_cluster_execution_pairs": 0,
+      "total_execution_pairs": 9
+    },
+    {
+      "business_a": "BU05",
+      "business_b": "BU09",
+      "same_cluster_execution_pairs": 0,
+      "total_execution_pairs": 9
+    },
+    {
+      "business_a": "BU05",
+      "business_b": "BU10",
+      "same_cluster_execution_pairs": 0,
+      "total_execution_pairs": 9
+    },
+    {
+      "business_a": "BU05",
+      "business_b": "BU11",
+      "same_cluster_execution_pairs": 0,
+      "total_execution_pairs": 9
+    },
+    {
+      "business_a": "BU05",
+      "business_b": "BU12",
+      "same_cluster_execution_pairs": 0,
+      "total_execution_pairs": 9
+    },
+    {
+      "business_a": "BU05",
+      "business_b": "BU13",
+      "same_cluster_execution_pairs": 0,
+      "total_execution_pairs": 9
+    },
+    {
+      "business_a": "BU05",
+      "business_b": "BU14",
+      "same_cluster_execution_pairs": 0,
+      "total_execution_pairs": 9
+    },
+    {
+      "business_a": "BU05",
+      "business_b": "BU15",
+      "same_cluster_execution_pairs": 0,
+      "total_execution_pairs": 9
+    },
+    {
+      "business_a": "BU05",
+      "business_b": "BU16",
+      "same_cluster_execution_pairs": 0,
+      "total_execution_pairs": 9
+    },
+    {
+      "business_a": "BU05",
+      "business_b": "BU17",
+      "same_cluster_execution_pairs": 0,
+      "total_execution_pairs": 9
+    },
+    {
+      "business_a": "BU05",
+      "business_b": "BU18",
+      "same_cluster_execution_pairs": 0,
+      "total_execution_pairs": 9
+    },
+    {
+      "business_a": "BU05",
+      "business_b": "BU19",
+      "same_cluster_execution_pairs": 0,
+      "total_execution_pairs": 9
+    },
+    {
+      "business_a": "BU05",
+      "business_b": "BU20",
+      "same_cluster_execution_pairs": 0,
+      "total_execution_pairs": 9
+    },
+    {
+      "business_a": "BU06",
+      "business_b": "BU08",
+      "same_cluster_execution_pairs": 0,
+      "total_execution_pairs": 9
+    },
+    {
+      "business_a": "BU06",
+      "business_b": "BU09",
+      "same_cluster_execution_pairs": 0,
+      "total_execution_pairs": 9
+    },
+    {
+      "business_a": "BU06",
+      "business_b": "BU10",
+      "same_cluster_execution_pairs": 0,
+      "total_execution_pairs": 9
+    },
+    {
+      "business_a": "BU06",
+      "business_b": "BU11",
+      "same_cluster_execution_pairs": 0,
+      "total_execution_pairs": 9
+    },
+    {
+      "business_a": "BU06",
+      "business_b": "BU12",
+      "same_cluster_execution_pairs": 0,
+      "total_execution_pairs": 9
+    },
+    {
+      "business_a": "BU06",
+      "business_b": "BU13",
+      "same_cluster_execution_pairs": 0,
+      "total_execution_pairs": 9
+    },
+    {
+      "business_a": "BU06",
+      "business_b": "BU14",
+      "same_cluster_execution_pairs": 0,
+      "total_execution_pairs": 9
+    },
+    {
+      "business_a": "BU06",
+      "business_b": "BU15",
+      "same_cluster_execution_pairs": 0,
+      "total_execution_pairs": 9
+    },
+    {
+      "business_a": "BU06",
+      "business_b": "BU16",
+      "same_cluster_execution_pairs": 0,
+      "total_execution_pairs": 9
+    },
+    {
+      "business_a": "BU06",
+      "business_b": "BU17",
+      "same_cluster_execution_pairs": 0,
+      "total_execution_pairs": 9
+    },
+    {
+      "business_a": "BU06",
+      "business_b": "BU18",
+      "same_cluster_execution_pairs": 0,
+      "total_execution_pairs": 9
+    },
+    {
+      "business_a": "BU06",
+      "business_b": "BU19",
+      "same_cluster_execution_pairs": 0,
+      "total_execution_pairs": 9
+    },
+    {
+      "business_a": "BU06",
+      "business_b": "BU20",
+      "same_cluster_execution_pairs": 0,
+      "total_execution_pairs": 9
+    },
+    {
+      "business_a": "BU07",
+      "business_b": "BU08",
+      "same_cluster_execution_pairs": 0,
+      "total_execution_pairs": 9
+    },
+    {
+      "business_a": "BU07",
+      "business_b": "BU09",
+      "same_cluster_execution_pairs": 0,
+      "total_execution_pairs": 9
+    },
+    {
+      "business_a": "BU07",
+      "business_b": "BU10",
+      "same_cluster_execution_pairs": 0,
+      "total_execution_pairs": 9
+    },
+    {
+      "business_a": "BU07",
+      "business_b": "BU11",
+      "same_cluster_execution_pairs": 0,
+      "total_execution_pairs": 9
+    },
+    {
+      "business_a": "BU07",
+      "business_b": "BU12",
+      "same_cluster_execution_pairs": 0,
+      "total_execution_pairs": 9
+    },
+    {
+      "business_a": "BU07",
+      "business_b": "BU13",
+      "same_cluster_execution_pairs": 0,
+      "total_execution_pairs": 9
+    },
+    {
+      "business_a": "BU07",
+      "business_b": "BU14",
+      "same_cluster_execution_pairs": 0,
+      "total_execution_pairs": 9
+    },
+    {
+      "business_a": "BU07",
+      "business_b": "BU15",
+      "same_cluster_execution_pairs": 0,
+      "total_execution_pairs": 9
+    },
+    {
+      "business_a": "BU07",
+      "business_b": "BU16",
+      "same_cluster_execution_pairs": 0,
+      "total_execution_pairs": 9
+    },
+    {
+      "business_a": "BU07",
+      "business_b": "BU17",
+      "same_cluster_execution_pairs": 0,
+      "total_execution_pairs": 9
+    },
+    {
+      "business_a": "BU07",
+      "business_b": "BU18",
+      "same_cluster_execution_pairs": 0,
+      "total_execution_pairs": 9
+    },
+    {
+      "business_a": "BU07",
+      "business_b": "BU19",
+      "same_cluster_execution_pairs": 0,
+      "total_execution_pairs": 9
+    },
+    {
+      "business_a": "BU07",
+      "business_b": "BU20",
+      "same_cluster_execution_pairs": 0,
+      "total_execution_pairs": 9
+    },
+    {
+      "business_a": "BU08",
+      "business_b": "BU10",
+      "same_cluster_execution_pairs": 0,
+      "total_execution_pairs": 9
+    },
+    {
+      "business_a": "BU08",
+      "business_b": "BU11",
+      "same_cluster_execution_pairs": 0,
+      "total_execution_pairs": 9
+    },
+    {
+      "business_a": "BU08",
+      "business_b": "BU12",
+      "same_cluster_execution_pairs": 0,
+      "total_execution_pairs": 9
+    },
+    {
+      "business_a": "BU08",
+      "business_b": "BU13",
+      "same_cluster_execution_pairs": 0,
+      "total_execution_pairs": 9
+    },
+    {
+      "business_a": "BU08",
+      "business_b": "BU14",
+      "same_cluster_execution_pairs": 0,
+      "total_execution_pairs": 9
+    },
+    {
+      "business_a": "BU08",
+      "business_b": "BU15",
+      "same_cluster_execution_pairs": 0,
+      "total_execution_pairs": 9
+    },
+    {
+      "business_a": "BU08",
+      "business_b": "BU16",
+      "same_cluster_execution_pairs": 0,
+      "total_execution_pairs": 9
+    },
+    {
+      "business_a": "BU08",
+      "business_b": "BU17",
+      "same_cluster_execution_pairs": 0,
+      "total_execution_pairs": 9
+    },
+    {
+      "business_a": "BU08",
+      "business_b": "BU18",
+      "same_cluster_execution_pairs": 0,
+      "total_execution_pairs": 9
+    },
+    {
+      "business_a": "BU08",
+      "business_b": "BU19",
+      "same_cluster_execution_pairs": 0,
+      "total_execution_pairs": 9
+    },
+    {
+      "business_a": "BU08",
+      "business_b": "BU20",
+      "same_cluster_execution_pairs": 0,
+      "total_execution_pairs": 9
+    },
+    {
+      "business_a": "BU09",
+      "business_b": "BU10",
+      "same_cluster_execution_pairs": 0,
+      "total_execution_pairs": 9
+    },
+    {
+      "business_a": "BU09",
+      "business_b": "BU11",
+      "same_cluster_execution_pairs": 0,
+      "total_execution_pairs": 9
+    },
+    {
+      "business_a": "BU09",
+      "business_b": "BU12",
+      "same_cluster_execution_pairs": 0,
+      "total_execution_pairs": 9
+    },
+    {
+      "business_a": "BU09",
+      "business_b": "BU13",
+      "same_cluster_execution_pairs": 0,
+      "total_execution_pairs": 9
+    },
+    {
+      "business_a": "BU09",
+      "business_b": "BU14",
+      "same_cluster_execution_pairs": 0,
+      "total_execution_pairs": 9
+    },
+    {
+      "business_a": "BU09",
+      "business_b": "BU15",
+      "same_cluster_execution_pairs": 0,
+      "total_execution_pairs": 9
+    },
+    {
+      "business_a": "BU09",
+      "business_b": "BU16",
+      "same_cluster_execution_pairs": 0,
+      "total_execution_pairs": 9
+    },
+    {
+      "business_a": "BU09",
+      "business_b": "BU17",
+      "same_cluster_execution_pairs": 0,
+      "total_execution_pairs": 9
+    },
+    {
+      "business_a": "BU09",
+      "business_b": "BU18",
+      "same_cluster_execution_pairs": 0,
+      "total_execution_pairs": 9
+    },
+    {
+      "business_a": "BU09",
+      "business_b": "BU19",
+      "same_cluster_execution_pairs": 0,
+      "total_execution_pairs": 9
+    },
+    {
+      "business_a": "BU09",
+      "business_b": "BU20",
+      "same_cluster_execution_pairs": 0,
+      "total_execution_pairs": 9
+    },
+    {
+      "business_a": "BU10",
+      "business_b": "BU12",
+      "same_cluster_execution_pairs": 0,
+      "total_execution_pairs": 9
+    },
+    {
+      "business_a": "BU10",
+      "business_b": "BU13",
+      "same_cluster_execution_pairs": 0,
+      "total_execution_pairs": 9
+    },
+    {
+      "business_a": "BU10",
+      "business_b": "BU14",
+      "same_cluster_execution_pairs": 0,
+      "total_execution_pairs": 9
+    },
+    {
+      "business_a": "BU10",
+      "business_b": "BU15",
+      "same_cluster_execution_pairs": 0,
+      "total_execution_pairs": 9
+    },
+    {
+      "business_a": "BU10",
+      "business_b": "BU16",
+      "same_cluster_execution_pairs": 0,
+      "total_execution_pairs": 9
+    },
+    {
+      "business_a": "BU10",
+      "business_b": "BU17",
+      "same_cluster_execution_pairs": 0,
+      "total_execution_pairs": 9
+    },
+    {
+      "business_a": "BU10",
+      "business_b": "BU18",
+      "same_cluster_execution_pairs": 0,
+      "total_execution_pairs": 9
+    },
+    {
+      "business_a": "BU10",
+      "business_b": "BU19",
+      "same_cluster_execution_pairs": 0,
+      "total_execution_pairs": 9
+    },
+    {
+      "business_a": "BU10",
+      "business_b": "BU20",
+      "same_cluster_execution_pairs": 0,
+      "total_execution_pairs": 9
+    },
+    {
+      "business_a": "BU11",
+      "business_b": "BU12",
+      "same_cluster_execution_pairs": 0,
+      "total_execution_pairs": 9
+    },
+    {
+      "business_a": "BU11",
+      "business_b": "BU13",
+      "same_cluster_execution_pairs": 0,
+      "total_execution_pairs": 9
+    },
+    {
+      "business_a": "BU11",
+      "business_b": "BU14",
+      "same_cluster_execution_pairs": 0,
+      "total_execution_pairs": 9
+    },
+    {
+      "business_a": "BU11",
+      "business_b": "BU15",
+      "same_cluster_execution_pairs": 0,
+      "total_execution_pairs": 9
+    },
+    {
+      "business_a": "BU11",
+      "business_b": "BU16",
+      "same_cluster_execution_pairs": 0,
+      "total_execution_pairs": 9
+    },
+    {
+      "business_a": "BU11",
+      "business_b": "BU17",
+      "same_cluster_execution_pairs": 0,
+      "total_execution_pairs": 9
+    },
+    {
+      "business_a": "BU11",
+      "business_b": "BU18",
+      "same_cluster_execution_pairs": 0,
+      "total_execution_pairs": 9
+    },
+    {
+      "business_a": "BU11",
+      "business_b": "BU19",
+      "same_cluster_execution_pairs": 0,
+      "total_execution_pairs": 9
+    },
+    {
+      "business_a": "BU11",
+      "business_b": "BU20",
+      "same_cluster_execution_pairs": 0,
+      "total_execution_pairs": 9
+    },
+    {
+      "business_a": "BU12",
+      "business_b": "BU15",
+      "same_cluster_execution_pairs": 0,
+      "total_execution_pairs": 9
+    },
+    {
+      "business_a": "BU12",
+      "business_b": "BU16",
+      "same_cluster_execution_pairs": 0,
+      "total_execution_pairs": 9
+    },
+    {
+      "business_a": "BU12",
+      "business_b": "BU17",
+      "same_cluster_execution_pairs": 0,
+      "total_execution_pairs": 9
+    },
+    {
+      "business_a": "BU12",
+      "business_b": "BU18",
+      "same_cluster_execution_pairs": 0,
+      "total_execution_pairs": 9
+    },
+    {
+      "business_a": "BU12",
+      "business_b": "BU19",
+      "same_cluster_execution_pairs": 0,
+      "total_execution_pairs": 9
+    },
+    {
+      "business_a": "BU12",
+      "business_b": "BU20",
+      "same_cluster_execution_pairs": 0,
+      "total_execution_pairs": 9
+    },
+    {
+      "business_a": "BU13",
+      "business_b": "BU15",
+      "same_cluster_execution_pairs": 0,
+      "total_execution_pairs": 9
+    },
+    {
+      "business_a": "BU13",
+      "business_b": "BU16",
+      "same_cluster_execution_pairs": 0,
+      "total_execution_pairs": 9
+    },
+    {
+      "business_a": "BU13",
+      "business_b": "BU17",
+      "same_cluster_execution_pairs": 0,
+      "total_execution_pairs": 9
+    },
+    {
+      "business_a": "BU13",
+      "business_b": "BU18",
+      "same_cluster_execution_pairs": 0,
+      "total_execution_pairs": 9
+    },
+    {
+      "business_a": "BU13",
+      "business_b": "BU19",
+      "same_cluster_execution_pairs": 0,
+      "total_execution_pairs": 9
+    },
+    {
+      "business_a": "BU13",
+      "business_b": "BU20",
+      "same_cluster_execution_pairs": 0,
+      "total_execution_pairs": 9
+    },
+    {
+      "business_a": "BU14",
+      "business_b": "BU15",
+      "same_cluster_execution_pairs": 0,
+      "total_execution_pairs": 9
+    },
+    {
+      "business_a": "BU14",
+      "business_b": "BU16",
+      "same_cluster_execution_pairs": 0,
+      "total_execution_pairs": 9
+    },
+    {
+      "business_a": "BU14",
+      "business_b": "BU17",
+      "same_cluster_execution_pairs": 0,
+      "total_execution_pairs": 9
+    },
+    {
+      "business_a": "BU14",
+      "business_b": "BU18",
+      "same_cluster_execution_pairs": 0,
+      "total_execution_pairs": 9
+    },
+    {
+      "business_a": "BU14",
+      "business_b": "BU19",
+      "same_cluster_execution_pairs": 0,
+      "total_execution_pairs": 9
+    },
+    {
+      "business_a": "BU14",
+      "business_b": "BU20",
+      "same_cluster_execution_pairs": 0,
+      "total_execution_pairs": 9
+    },
+    {
+      "business_a": "BU15",
+      "business_b": "BU18",
+      "same_cluster_execution_pairs": 0,
+      "total_execution_pairs": 9
+    },
+    {
+      "business_a": "BU15",
+      "business_b": "BU19",
+      "same_cluster_execution_pairs": 0,
+      "total_execution_pairs": 9
+    },
+    {
+      "business_a": "BU15",
+      "business_b": "BU20",
+      "same_cluster_execution_pairs": 0,
+      "total_execution_pairs": 9
+    },
+    {
+      "business_a": "BU16",
+      "business_b": "BU18",
+      "same_cluster_execution_pairs": 0,
+      "total_execution_pairs": 9
+    },
+    {
+      "business_a": "BU16",
+      "business_b": "BU19",
+      "same_cluster_execution_pairs": 0,
+      "total_execution_pairs": 9
+    },
+    {
+      "business_a": "BU16",
+      "business_b": "BU20",
+      "same_cluster_execution_pairs": 0,
+      "total_execution_pairs": 9
+    },
+    {
+      "business_a": "BU17",
+      "business_b": "BU18",
+      "same_cluster_execution_pairs": 0,
+      "total_execution_pairs": 9
+    },
+    {
+      "business_a": "BU17",
+      "business_b": "BU19",
+      "same_cluster_execution_pairs": 0,
+      "total_execution_pairs": 9
+    },
+    {
+      "business_a": "BU17",
+      "business_b": "BU20",
+      "same_cluster_execution_pairs": 0,
+      "total_execution_pairs": 9
+    }
+  ],
+  "requested_pair_analysis": [
+    {
+      "business_a": "BU04",
+      "business_b": "BU05",
+      "same_cluster_execution_pairs": 9,
+      "total_execution_pairs": 9
+    },
+    {
+      "business_a": "BU12",
+      "business_b": "BU13",
+      "same_cluster_execution_pairs": 9,
+      "total_execution_pairs": 9
+    },
+    {
+      "business_a": "BU15",
+      "business_b": "BU16",
+      "same_cluster_execution_pairs": 9,
+      "total_execution_pairs": 9
+    },
+    {
+      "business_a": "BU18",
+      "business_b": "BU19",
+      "same_cluster_execution_pairs": 9,
+      "total_execution_pairs": 9
+    },
+    {
+      "business_a": "BU07",
+      "business_b": "BU09",
+      "same_cluster_execution_pairs": 0,
+      "total_execution_pairs": 9
+    },
+    {
+      "business_a": "BU07",
+      "business_b": "BU11",
+      "same_cluster_execution_pairs": 0,
+      "total_execution_pairs": 9
+    },
+    {
+      "business_a": "BU09",
+      "business_b": "BU11",
+      "same_cluster_execution_pairs": 0,
+      "total_execution_pairs": 9
+    },
+    {
+      "business_a": "BU14",
+      "business_b": "BU17",
+      "same_cluster_execution_pairs": 0,
+      "total_execution_pairs": 9
+    },
+    {
+      "business_a": "BU14",
+      "business_b": "BU20",
+      "same_cluster_execution_pairs": 0,
+      "total_execution_pairs": 9
+    },
+    {
+      "business_a": "BU17",
+      "business_b": "BU20",
+      "same_cluster_execution_pairs": 0,
+      "total_execution_pairs": 9
+    }
+  ],
+  "workflow_business_overlap": {
+    "WF-0001": {
+      "BU03": 18
+    },
+    "WF-0002": {
+      "BU04": 6
+    },
+    "WF-0003": {
+      "BU05": 6
+    },
+    "WF-0004": {
+      "BU06": 12
+    },
+    "WF-0005": {
+      "BU07": 20
+    },
+    "WF-0006": {
+      "BU08": 11
+    },
+    "WF-0007": {
+      "BU09": 20
+    },
+    "WF-0008": {
+      "BU10": 11
+    },
+    "WF-0009": {
+      "BU11": 32
+    },
+    "WF-0010": {
+      "BU12": 5
+    },
+    "WF-0011": {
+      "BU13": 8
+    },
+    "WF-0012": {
+      "BU14": 29
+    },
+    "WF-0013": {
+      "BU15": 5
+    },
+    "WF-0014": {
+      "BU16": 8
+    },
+    "WF-0015": {
+      "BU17": 28
+    },
+    "WF-0016": {
+      "BU18": 5
+    },
+    "WF-0017": {
+      "BU19": 6
+    },
+    "WF-0018": {
+      "BU20": 29
+    },
+    "WF-0019": {
+      "BU03": 20
+    },
+    "WF-0020": {
+      "BU04": 5
+    },
+    "WF-0021": {
+      "BU05": 6
+    },
+    "WF-0022": {
+      "BU06": 11
+    },
+    "WF-0023": {
+      "BU07": 20
+    },
+    "WF-0024": {
+      "BU08": 11
+    },
+    "WF-0025": {
+      "BU09": 20
+    },
+    "WF-0026": {
+      "BU10": 15
+    },
+    "WF-0027": {
+      "BU11": 29
+    },
+    "WF-0028": {
+      "BU12": 5
+    },
+    "WF-0029": {
+      "BU13": 8
+    },
+    "WF-0030": {
+      "BU14": 30
+    },
+    "WF-0031": {
+      "BU15": 5
+    },
+    "WF-0032": {
+      "BU16": 9
+    },
+    "WF-0033": {
+      "BU17": 26
+    },
+    "WF-0034": {
+      "BU18": 5
+    },
+    "WF-0035": {
+      "BU19": 12
+    },
+    "WF-0036": {
+      "BU20": 29
+    },
+    "WF-0037": {
+      "BU02": 11
+    },
+    "WF-0038": {
+      "BU02": 2,
+      "BU03": 17
+    },
+    "WF-0039": {
+      "BU04": 5
+    },
+    "WF-0040": {
+      "BU05": 6
+    },
+    "WF-0041": {
+      "BU06": 11
+    },
+    "WF-0042": {
+      "BU07": 34
+    },
+    "WF-0043": {
+      "BU08": 12
+    },
+    "WF-0044": {
+      "BU09": 22
+    },
+    "WF-0045": {
+      "BU10": 14
+    },
+    "WF-0046": {
+      "BU11": 30
+    },
+    "WF-0047": {
+      "BU12": 5
+    },
+    "WF-0048": {
+      "BU13": 9
+    },
+    "WF-0049": {
+      "BU13": 1,
+      "BU14": 39
+    },
+    "WF-0050": {
+      "BU15": 5
+    },
+    "WF-0051": {
+      "BU16": 11
+    },
+    "WF-0052": {
+      "BU17": 29
+    },
+    "WF-0053": {
+      "BU18": 5
+    },
+    "WF-0054": {
+      "BU19": 11
+    },
+    "WF-0055": {
+      "BU20": 24
+    },
+    "WF-0056": {
+      "BU20": 1
+    },
+    "WF-0057": {
+      "BU01": 7
+    },
+    "WF-0058": {
+      "BU02": 11
+    },
+    "WF-0059": {
+      "BU01": 4
+    },
+    "WF-0060": {
+      "BU02": 11
+    },
+    "WF-0061": {
+      "BU01": 4
+    }
+  },
+  "merged_bu_pairs": 14,
+  "merged_bu_pair_list": [
+    [
+      "BU02",
+      "BU03"
+    ],
+    [
+      "BU04",
+      "BU05"
+    ],
+    [
+      "BU06",
+      "BU07"
+    ],
+    [
+      "BU08",
+      "BU09"
+    ],
+    [
+      "BU10",
+      "BU11"
+    ],
+    [
+      "BU12",
+      "BU13"
+    ],
+    [
+      "BU12",
+      "BU14"
+    ],
+    [
+      "BU13",
+      "BU14"
+    ],
+    [
+      "BU15",
+      "BU16"
+    ],
+    [
+      "BU15",
+      "BU17"
+    ],
+    [
+      "BU16",
+      "BU17"
+    ],
+    [
+      "BU18",
+      "BU19"
+    ],
+    [
+      "BU18",
+      "BU20"
+    ],
+    [
+      "BU19",
+      "BU20"
+    ]
+  ],
+  "fragmented_bus": 1,
+  "bu_all_fragment_clusters": {
+    "BU01": [
+      0
+    ],
+    "BU02": [
+      4
+    ],
+    "BU03": [
+      4
+    ],
+    "BU04": [
+      6
+    ],
+    "BU05": [
+      6
+    ],
+    "BU06": [
+      5
+    ],
+    "BU07": [
+      5
+    ],
+    "BU08": [
+      9
+    ],
+    "BU09": [
+      9
+    ],
+    "BU10": [
+      8
+    ],
+    "BU11": [
+      8
+    ],
+    "BU12": [
+      1
+    ],
+    "BU13": [
+      1
+    ],
+    "BU14": [
+      1
+    ],
+    "BU15": [
+      3
+    ],
+    "BU16": [
+      3
+    ],
+    "BU17": [
+      3
+    ],
+    "BU18": [
+      2
+    ],
+    "BU19": [
+      2
+    ],
+    "BU20": [
+      2,
+      7
+    ]
+  },
+  "primary_fragmented_bus": 0
+}

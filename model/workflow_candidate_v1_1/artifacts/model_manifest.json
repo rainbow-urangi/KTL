@@ -1,0 +1,33 @@
+{
+  "model_id": "workflow_candidate_v1_1",
+  "selected_candidate": "C_full",
+  "mode": "DEVELOPMENT",
+  "official": false,
+  "trained": false,
+  "embedding_dimension": 1152,
+  "boundary_architecture": "Unchanged v1 GRU",
+  "boundary_parent": "workflow_candidate_v1",
+  "weights": {
+    "existing": 0.25,
+    "page": 0.25,
+    "action": 0.25,
+    "api": 0.25
+  },
+  "artifact_sha256": {
+    "model.pt": "86c77fa404223f97f4cf512244405d199cb7f2f76d2bb05b8886fbcf529eb7cf",
+    "representation_config.json": "4afebc4ff99debf62c6d8d16d830783275d57feed681c2c955cd35c8f0995296",
+    "experiment_manifest.json": "9b8cdcd27c447b434aa290c41ea0999f4b8b82ea4c749bbd5beb3c859cbe2044",
+    "preprocessing_config.json": "8130b3bcfe563a3633fa36b5164133a73d4ea2e7a7717b008648b116d47eb43a",
+    "selected_model.json": "afcb92eebd3bd71d4d9621c7b48738b23110fcd6549a9ecd2b0a6c0e70e5e699",
+    "model_config.json": "40bf3ea8701abcbd5ba1ee624d50386788c34062cdf850cba2374d9f3dddf4b3",
+    "normalization_config.json": "45ad69039db9ab0b0327c14123507a0f61f71a790a27830f4b7fb2bb639ad720"
+  },
+  "code_sha256": {
+    "src/run.py": "e3fc3cddf9c0b3121abcea2940e968d821ab491482bfd7534affe9b534509dec",
+    "src/audit.py": "b018eaace107945f25907523f2573333f8ede8d74cd8537039cc91280dbf9a5a",
+    "src/infer.py": "242d75eb7027da5ed3c2a11fc777f952fc7383ae8d177d3297b1d67e4a095ca3",
+    "src/representation.py": "8d72c7853f93edf0746b163951f3942a7a66c4b8454fc6fed10d58fee92db766",
+    "src/report.py": "df11d1fbc121ba4bdfaa7e7c7d285aebf09e2919b8ddea11427451c51d2ff79b",
+    "tests/test_hybrid.py": "b4033dfcf093828553c58be88b86afc1bcb5ee96edc2571cd908516d9d133a0b"
+  }
+}

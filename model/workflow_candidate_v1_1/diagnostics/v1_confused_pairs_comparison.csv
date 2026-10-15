@@ -1,0 +1,15 @@
+﻿business_a,business_b,v1_any_event_merge,v1_primary_pair_collisions,A0_pure_gru_any_event_merge,A0_pure_gru_primary_pair_collisions,A_existing_any_event_merge,A_existing_primary_pair_collisions,B_page_any_event_merge,B_page_primary_pair_collisions,C_full_any_event_merge,C_full_primary_pair_collisions
+BU02,BU03,True,9,True,9,True,9,True,0,True,0
+BU04,BU05,True,9,True,9,True,9,False,0,False,0
+BU06,BU07,True,9,True,9,True,9,False,0,False,0
+BU08,BU09,True,9,True,9,True,9,False,0,False,0
+BU10,BU11,True,9,True,9,True,9,False,0,False,0
+BU12,BU13,True,9,True,9,True,9,False,0,False,0
+BU12,BU14,True,9,True,9,True,9,False,0,False,0
+BU13,BU14,True,9,True,9,True,9,True,9,True,0
+BU15,BU16,True,9,True,9,True,9,False,0,False,0
+BU15,BU17,True,9,True,9,True,9,False,0,False,0
+BU16,BU17,True,9,True,9,True,9,True,9,False,0
+BU18,BU19,True,9,True,9,True,9,False,0,False,0
+BU18,BU20,True,9,True,9,True,9,False,0,False,0
+BU19,BU20,True,9,True,9,True,9,True,9,False,0

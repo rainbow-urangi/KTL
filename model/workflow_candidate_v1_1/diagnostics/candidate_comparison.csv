@@ -1,0 +1,6 @@
+﻿candidate,embedding_dimension,cluster_count,silhouette,dbi,threshold,bu_consistency,cluster_purity,merged_bu_pairs,fragmented_bus,primary_fragmented_bus,A_process_models,B_process_models,cross_business_method_collision_nodes,cross_business_unobserved_triples,all_read_write_collision_nodes,permutation_ari
+v1,384,10,0.8449639081954956,0.47002456140744286,0.15,20,0.6685912240184757,14,1,0,1,7,7,76,7,
+A0_pure_gru,128,2,0.9306837320327759,0.1546708838421379,0.15,20,0.11431870669745958,190,1,0,0,1,7,77,7,1.0
+A_existing,384,10,0.8449639081954956,0.47002456043177565,0.15,20,0.6685912240184757,14,1,0,1,7,7,76,7,1.0
+B_page,640,18,0.9203025698661804,0.2605503351170407,0.15,18,0.8833718244803695,6,2,2,0,4,1,11,7,1.0
+C_full,1152,22,0.8525707125663757,0.40699428013769995,0.25,19,0.9965357967667436,2,4,1,0,2,1,0,7,1.0

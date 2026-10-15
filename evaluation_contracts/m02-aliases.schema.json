@@ -1,0 +1,38 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$comment": "M02 alias structure only; no approved aliases are supplied.",
+  "type": "object",
+  "required": [
+    "version",
+    "aliases"
+  ],
+  "properties": {
+    "version": {
+      "type": "string",
+      "minLength": 1
+    },
+    "aliases": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "required": [
+          "canonical",
+          "accepted"
+        ],
+        "properties": {
+          "canonical": {
+            "type": "string",
+            "minLength": 1
+          },
+          "accepted": {
+            "type": "array",
+            "items": {
+              "type": "string",
+              "minLength": 1
+            }
+          }
+        }
+      }
+    }
+  }
+}

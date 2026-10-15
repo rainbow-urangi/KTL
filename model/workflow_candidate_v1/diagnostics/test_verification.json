@@ -1,0 +1,15 @@
+{
+  "candidate_tests": {
+    "command": "python3 -m unittest discover -s model/workflow_candidate_v1/tests -v",
+    "tests_run": 21,
+    "result": "PASS"
+  },
+  "existing_tests": {
+    "command": "python3 -m unittest discover -s tests -v",
+    "tests_run": 98,
+    "result": "PASS",
+    "environment_note": "Initial sandbox run blocked 5 localhost HTTP tests. Full rerun with local binding permission passed."
+  },
+  "protected_files_unchanged": true,
+  "artifact_and_code_hashes_valid": true
+}

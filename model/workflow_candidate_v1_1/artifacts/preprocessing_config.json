@@ -1,0 +1,8 @@
+{
+  "raw_field_allowlist": "src/data.py:RAW_FIELDS",
+  "session_order": "source_dataset/session_id, timestamp, event_id",
+  "state_reset": "source session only",
+  "causal": true,
+  "execution_metadata_removed": true,
+  "active_membership_selection_bias": true
+}

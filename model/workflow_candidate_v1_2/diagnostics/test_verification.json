@@ -1,0 +1,10 @@
+{
+  "candidate_tests": 15,
+  "existing_tests": 98,
+  "status": "PASS",
+  "protected_file_count": 261,
+  "protected_files_unchanged": true,
+  "representation_weights_config_unchanged": true,
+  "raw_label_free_inference_reproduces_saved_workflows_clusters": true,
+  "artifact_source_hashes_valid": true
+}

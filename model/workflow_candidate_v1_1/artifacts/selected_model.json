@@ -1,0 +1,5 @@
+{
+  "candidate": "C_full",
+  "boundary_weights_sha256": "86c77fa404223f97f4cf512244405d199cb7f2f76d2bb05b8886fbcf529eb7cf",
+  "selection_review": "../diagnostics/selection_review.json"
+}
