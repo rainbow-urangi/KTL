@@ -17,6 +17,7 @@ from .run_storage import save_run
 from .integration_store import ingest
 from .data_sources import V62ReferenceProvider, OfficialEvaluationDataSource
 from .contracts import cleaning_payload
+from .m01 import M01CsvStore, M01ComparisonStore, MAX_JSON_BYTES
 
 ROOT = Path(__file__).resolve().parents[1]
 
@@ -191,6 +192,65 @@ def make_handler(service):
                 return self.reply(403, {"error": "Local same-origin access required"})
             path = urlparse(self.path).path
             try:
+                if path in {"/api/development/m01/prod/status", "/api/development/m01/prod/events"}:
+                    from .m01 import get_status, query_events, M01ProdError
+                    try:
+                        if path.endswith("/status"):
+                            return self.reply(200, get_status(service.root))
+                        query = parse_qs(urlparse(self.path).query, keep_blank_values=True)
+                        require(all(len(values) == 1 for values in query.values()), "Duplicate PROD query parameters")
+                        return self.reply(200, query_events(service.root, {key: values[0] for key, values in query.items()}))
+                    except M01ProdError as exc:
+                        return self.reply(exc.http_status, {"status": "ERROR", "code": exc.code, "error": exc.message})
+                    except EvaluationError as exc:
+                        return self.reply(400, {"status": exc.status, "error": str(exc)})
+                if path == "/api/development/m01/csv":
+                    return self.reply(200, M01CsvStore(service.root).list())
+                if path == "/api/development/m01/ground-truths":
+                    return self.reply(200, M01ComparisonStore(service.root).list_truths())
+                truth_match = re.fullmatch(r"/api/development/m01/ground-truths/([0-9a-f]{32})", path)
+                if truth_match:
+                    try:
+                        return self.reply(200, M01ComparisonStore(service.root).read_truth(truth_match[1]))
+                    except EvaluationError as exc:
+                        return self.reply(404 if exc.status == "NOT_FOUND" else 422,
+                                          {"status": exc.status, "error": str(exc)})
+                    except OSError:
+                        return self.reply(500, {"status": "ERROR", "error": "Unable to read development expected events"})
+                comparison_match = re.fullmatch(r"/api/development/m01/comparisons/([0-9a-f]{32})(/evidence.csv|/verification)?", path)
+                if comparison_match:
+                    try:
+                        store = M01ComparisonStore(service.root)
+                        if comparison_match[2] == "/evidence.csv":
+                            return self.reply(200, store.evidence(comparison_match[1]), "text/csv; charset=utf-8", True)
+                        if comparison_match[2] == "/verification":
+                            return self.reply(200, store.verification(comparison_match[1]))
+                        return self.reply(200, store.read(comparison_match[1]))
+                    except EvaluationError as exc:
+                        return self.reply(404 if exc.status == "NOT_FOUND" else 422,
+                                          {"status": exc.status, "error": str(exc)})
+                    except OSError:
+                        return self.reply(500, {"status": "ERROR", "error": "Unable to read development comparison evidence"})
+                csv_match = re.fullmatch(r"/api/development/m01/csv/([0-9a-f]{32})(/evidence.csv)?", path)
+                if csv_match:
+                    query = parse_qs(urlparse(self.path).query, keep_blank_values=True)
+                    try:
+                        options = {"offset": int(query.get("offset", ["0"])[0]),
+                                   "limit": int(query.get("limit", ["100"])[0])}
+                        if "session_id" in query:
+                            options["session_id"] = query["session_id"][0]
+                        if "map_target_selector" in query:
+                            mapping = query["map_target_selector"][0]
+                            require(mapping in {"true", "false"}, "map_target_selector must be true or false")
+                            options["map_target_selector"] = mapping == "true"
+                        store = M01CsvStore(service.root)
+                        if csv_match[2]:
+                            return self.reply(200, store.evidence(csv_match[1], **options), "text/csv; charset=utf-8", True)
+                        return self.reply(200, store.read(csv_match[1], **options))
+                    except ValueError:
+                        return self.reply(422, {"status": "ERROR", "error": "Invalid CSV pagination"})
+                    except EvaluationError as exc:
+                        return self.reply(404 if exc.status == "NOT_FOUND" else 422, {"status": exc.status, "error": str(exc)})
                 if path == "/api/evaluations":
                     return self.reply(200, service.catalog(parse_qs(urlparse(self.path).query).get("mode", ["REFERENCE"])[0]))
                 match = re.fullmatch(r"/api/evaluations/(m0[1-7])/runs/((?:REF|EVAL|DEV)-M0[1-7]-[0-9]{8}T[0-9]{6}-[0-9a-f]{12})/(evidence.csv|result.json|run_manifest.json|received_payload.json)", path)
@@ -221,6 +281,45 @@ def make_handler(service):
         def do_POST(self):
             if not self.trusted_request():
                 return self.reply(403, {"error": "Local same-origin access required"})
+            comparison_path = urlparse(self.path).path
+            if comparison_path in {"/api/development/m01/ground-truths", "/api/development/m01/compare"}:
+                try:
+                    length = int(self.headers.get("Content-Length", "0"))
+                    maximum = MAX_JSON_BYTES if comparison_path.endswith("ground-truths") else 16384
+                    require(0 < length <= maximum and not self.headers.get("Transfer-Encoding"),
+                            "A JSON body within the upload limit is required")
+                    require(self.headers.get("Content-Type", "").split(";", 1)[0].strip() == "application/json",
+                            "Content-Type application/json required")
+                    payload = json.loads(self.rfile.read(length), parse_constant=lambda _: (_ for _ in ()).throw(ValueError("Non-finite JSON number")))
+                    with service.lock:
+                        store = M01ComparisonStore(service.root)
+                        result = (store.upload_truth(payload) if comparison_path.endswith("ground-truths")
+                                  else store.compare(payload, service.config()))
+                    return self.reply(201, result)
+                except (ValueError, UnicodeError):
+                    return self.reply(400, {"status": "ERROR", "error": "Invalid JSON or Content-Length"})
+                except EvaluationError as exc:
+                    return self.reply(404 if exc.status == "NOT_FOUND" else 422,
+                                      {"status": exc.status, "error": str(exc)})
+                except OSError:
+                    return self.reply(500, {"status": "ERROR", "error": "Unable to persist development comparison evidence"})
+            if urlparse(self.path).path == "/api/development/m01/csv":
+                try:
+                    length = int(self.headers.get("Content-Length", "0"))
+                    require(0 < length <= MAX_JSON_BYTES and not self.headers.get("Transfer-Encoding"),
+                            "JSON body required; maximum 16 MiB (CSV maximum 10 MiB)")
+                    require(self.headers.get("Content-Type", "").split(";", 1)[0].strip() == "application/json",
+                            "Content-Type application/json required")
+                    payload = json.loads(self.rfile.read(length))
+                    with service.lock:
+                        result = M01CsvStore(service.root).upload(payload, service.config())
+                    return self.reply(201, result)
+                except (ValueError, UnicodeError):
+                    return self.reply(400, {"status": "ERROR", "error": "Invalid JSON or Content-Length"})
+                except EvaluationError as exc:
+                    return self.reply(422, {"status": exc.status, "error": str(exc)})
+                except OSError:
+                    return self.reply(500, {"status": "ERROR", "error": "Unable to persist development CSV evidence"})
             integration = re.fullmatch(r"/api/integrations/(m01|m04|m07)/result", urlparse(self.path).path)
             if integration:
                 try:
