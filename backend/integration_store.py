@@ -12,6 +12,9 @@ from datetime import datetime
 
 
 def ingest(root,config,metric,payload):
+    received=payload
+    if metric=='M03' and isinstance(payload,dict) and 'external_run_id' not in payload and 'run_id' in payload:
+        payload=dict(payload,external_run_id=payload['run_id'])
     score,count,details,rows=calculate(metric,payload)
     mode=payload['run_mode'];dataset=payload['dataset_id']
     registered=config.get('integration_datasets',{}).get(dataset)
@@ -27,7 +30,12 @@ def ingest(root,config,metric,payload):
                 and manifest.get('approved_for_official') is True and manifest.get('metric_id')==metric
                 and manifest.get('official') is not False and manifest.get('synthetic') is not True,
                 'Approved official manifest provenance required')
-        validate_official_contract(metric,manifest,payload['counts'])
+        validate_official_contract(metric,manifest,details['raw_counts'])
+        if metric=='M03':
+            units=manifest.get('business_unit_ids')
+            require(isinstance(units,list) and len(units)==10 and all(isinstance(u,str) and u.strip() for u in units) and len(set(units))==10,'Official M03 requires ten fixed business_unit_ids')
+            require({s['business_unit_id'] for s in payload['scenarios']}==set(units),'M03 business units do not match registered manifest')
+            require(not any(s.get('synthetic') is True or s.get('generator_mode')=='MOCK' for s in payload['scenarios']),'Mock scenarios cannot be official evidence')
         if metric=='M04':
             validate_fixed_at(manifest.get('fixed_at'),datetime.fromisoformat(payload['submitted_at'].replace('Z','+00:00')),'Script set')
             require(manifest.get('scripts_manually_modified') is False and manifest.get('script_language')=='python' and manifest.get('script_framework')=='selenium','Official M04 requires unmodified generated Selenium/Python scripts')
@@ -63,8 +71,9 @@ def ingest(root,config,metric,payload):
     except FileExistsError:raise EvaluationError('Duplicate external_run_id for metric','DUPLICATE_EXTERNAL_RUN')
     with os.fdopen(fd,'w') as f:json.dump({'metric_id':metric,'external_run_id':payload['external_run_id'],'status':'RESERVED'},f)
     result={'dataset_id':dataset,'source_type':mode,'score':score,'sample_count':count,'status':'COMPLETED','details':details,
+            'evaluator_version':'external-integration-v3-ktl-20261026' if metric in {'M03','M04','M07'} else 'external-counts-v2-generated-code-denominator',
             'input_sha256':hashes,'dataset_manifest_sha256':sha,'provenance':{k:payload[k] for k in ['source_module','source_version','external_run_id','submitted_at']}}
     # A persistence failure leaves a reservation, preventing an uncertain duplicate.
-    result=save_run(root,metric,mode,config,result,rows,received=payload)
+    result=save_run(root,metric,mode,config,result,rows,received=received)
     reservation.write_text(json.dumps({'metric_id':metric,'external_run_id':payload['external_run_id'],'run_id':result['run_id'],'status':'COMPLETED'}))
     return result

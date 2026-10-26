@@ -1,0 +1,20 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "m03-scenario.schema.json",
+  "title": "M03 scenario result",
+  "type": "object",
+  "required": ["business_unit_id", "scenario_id", "steps"],
+  "properties": {
+    "business_unit_id": {"$ref": "#/$defs/text"},
+    "scenario_id": {"$ref": "#/$defs/text"},
+    "workflow_id": {"$ref": "#/$defs/text"},
+    "status": {"enum": ["SUCCESS", "FAILED"]},
+    "steps": {"type": "array", "minItems": 1, "items": {
+      "type": "object", "required": ["order", "action", "target"],
+      "properties": {"order": {"type": "integer", "minimum": 1}, "action": {"$ref": "#/$defs/text"}, "target": {"$ref": "#/$defs/text"}},
+      "additionalProperties": true
+    }}
+  },
+  "$defs": {"text": {"type": "string", "minLength": 1, "maxLength": 256, "pattern": "\\S"}},
+  "additionalProperties": true
+}

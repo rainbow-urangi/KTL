@@ -1,0 +1,199 @@
+{
+  "mode": "DEVELOPMENT",
+  "official_m06": false,
+  "selection": "max cosine silhouette - 0.1 * singleton fraction; no BU metadata",
+  "selected": {
+    "threshold": 0.25,
+    "cluster_count": 21,
+    "silhouette": 0.8667799234390259,
+    "dbi": 0.41682099205349793,
+    "singleton_fraction": 0.016666666666666666,
+    "objective": 0.8651132567723592,
+    "cluster_sizes": {
+      "4": 3,
+      "15": 3,
+      "7": 3,
+      "1": 3,
+      "12": 3,
+      "2": 3,
+      "18": 3,
+      "17": 3,
+      "16": 3,
+      "3": 3,
+      "6": 3,
+      "9": 3,
+      "14": 3,
+      "11": 3,
+      "10": 3,
+      "13": 3,
+      "8": 3,
+      "5": 3,
+      "0": 3,
+      "20": 1,
+      "19": 2
+    }
+  },
+  "candidates": [
+    {
+      "threshold": 0.15,
+      "cluster_count": 22,
+      "silhouette": 0.8628101348876953,
+      "dbi": 0.38309863008884426,
+      "singleton_fraction": 0.03333333333333333,
+      "objective": 0.859476801554362,
+      "cluster_sizes": {
+        "4": 3,
+        "15": 3,
+        "7": 3,
+        "1": 3,
+        "12": 3,
+        "0": 3,
+        "18": 3,
+        "17": 3,
+        "16": 3,
+        "3": 3,
+        "2": 3,
+        "9": 3,
+        "14": 3,
+        "11": 3,
+        "10": 3,
+        "6": 3,
+        "8": 3,
+        "5": 3,
+        "13": 2,
+        "20": 1,
+        "21": 1,
+        "19": 2
+      }
+    },
+    {
+      "threshold": 0.25,
+      "cluster_count": 21,
+      "silhouette": 0.8667799234390259,
+      "dbi": 0.41682099205349793,
+      "singleton_fraction": 0.016666666666666666,
+      "objective": 0.8651132567723592,
+      "cluster_sizes": {
+        "4": 3,
+        "15": 3,
+        "7": 3,
+        "1": 3,
+        "12": 3,
+        "2": 3,
+        "18": 3,
+        "17": 3,
+        "16": 3,
+        "3": 3,
+        "6": 3,
+        "9": 3,
+        "14": 3,
+        "11": 3,
+        "10": 3,
+        "13": 3,
+        "8": 3,
+        "5": 3,
+        "0": 3,
+        "20": 1,
+        "19": 2
+      }
+    },
+    {
+      "threshold": 0.35,
+      "cluster_count": 16,
+      "silhouette": 0.7530078887939453,
+      "dbi": 0.7149732339225296,
+      "singleton_fraction": 0.0,
+      "objective": 0.7530078887939453,
+      "cluster_sizes": {
+        "4": 3,
+        "15": 3,
+        "7": 3,
+        "2": 9,
+        "0": 9,
+        "3": 3,
+        "6": 3,
+        "9": 3,
+        "14": 3,
+        "11": 3,
+        "10": 3,
+        "13": 3,
+        "8": 3,
+        "12": 3,
+        "1": 3,
+        "5": 3
+      }
+    },
+    {
+      "threshold": 0.45,
+      "cluster_count": 9,
+      "silhouette": 0.5081383585929871,
+      "dbi": 1.1780702118850555,
+      "singleton_fraction": 0.0,
+      "objective": 0.5081383585929871,
+      "cluster_sizes": {
+        "2": 6,
+        "8": 6,
+        "7": 3,
+        "5": 9,
+        "6": 9,
+        "4": 9,
+        "0": 6,
+        "1": 6,
+        "3": 6
+      }
+    },
+    {
+      "threshold": 0.55,
+      "cluster_count": 7,
+      "silhouette": 0.46506062150001526,
+      "dbi": 1.318882301566452,
+      "singleton_fraction": 0.0,
+      "objective": 0.46506062150001526,
+      "cluster_sizes": {
+        "5": 6,
+        "2": 15,
+        "0": 12,
+        "6": 9,
+        "1": 6,
+        "4": 6,
+        "3": 6
+      }
+    },
+    {
+      "threshold": 0.65,
+      "cluster_count": 4,
+      "silhouette": 0.30621612071990967,
+      "dbi": 1.7801946110561582,
+      "singleton_fraction": 0.0,
+      "objective": 0.30621612071990967,
+      "cluster_sizes": {
+        "1": 21,
+        "2": 21,
+        "0": 12,
+        "3": 6
+      }
+    },
+    {
+      "threshold": 0.75,
+      "cluster_count": 1,
+      "silhouette": null,
+      "dbi": null,
+      "singleton_fraction": 0.0,
+      "objective": null,
+      "cluster_sizes": {
+        "0": 60
+      }
+    },
+    {
+      "threshold": 0.85,
+      "cluster_count": 1,
+      "silhouette": null,
+      "dbi": null,
+      "singleton_fraction": 0.0,
+      "objective": null,
+      "cluster_sizes": {
+        "0": 60
+      }
+    }
+  ]
+}

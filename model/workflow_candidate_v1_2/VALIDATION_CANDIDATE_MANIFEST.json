@@ -1,0 +1,276 @@
+{
+  "schema_version": 1,
+  "candidate_id": "workflow_candidate_v1_2",
+  "status": "FROZEN_FOR_UNSEEN_DEVELOPMENT_VALIDATION",
+  "final_product_freeze": false,
+  "official": false,
+  "official_pass": null,
+  "created_at": "2026-10-15T11:22:42.918485+09:00",
+  "validation_timezone": "Asia/Seoul",
+  "model_retrained": false,
+  "model_inference_executed": false,
+  "clustering_refit": false,
+  "parameters_changed": false,
+  "model_pt": {
+    "path": "model/workflow_candidate_v1_2/validation_snapshot/artifacts/model.pt",
+    "sha256": "1832314d23fa44962eb17fc85d5000477476aed7e0508ee9fd8ed93a869f741e"
+  },
+  "model_config": {
+    "path": "model/workflow_candidate_v1_2/validation_snapshot/artifacts/model_config.json",
+    "sha256": "d9f5903ed26dd5423385b701a3af408257b57e8c3dc543b9111682641edadab1"
+  },
+  "preprocessing_config": {
+    "path": "model/workflow_candidate_v1_2/validation_snapshot/artifacts/preprocessing_config.json",
+    "sha256": "c0338ce956264c4b42fd94118801b856fa6c0bfa49a0e0f73855ef0358f47f64"
+  },
+  "feature_config": {
+    "path": "model/workflow_candidate_v1_2/validation_snapshot/artifacts/feature_config.json",
+    "sha256": "3afa6136ea7620fea719be4b35308c6282bb5aa7575b0238c3920bdd6fa307f4"
+  },
+  "representation": {
+    "candidate": "C_full",
+    "dimension": 1152,
+    "config": {
+      "path": "model/workflow_candidate_v1_2/validation_snapshot/artifacts/representation_config.json",
+      "sha256": "4afebc4ff99debf62c6d8d16d830783275d57feed681c2c955cd35c8f0995296"
+    },
+    "weights": {
+      "existing": 0.25,
+      "page": 0.25,
+      "action": 0.25,
+      "api": 0.25
+    },
+    "combination": "L2 normalize each block; concatenate sqrt(weight)*block; final L2 normalization",
+    "existing_block": {
+      "dimension": 384,
+      "neural_energy_weight": 0.35,
+      "structural_energy_weight": 0.65
+    },
+    "structural_block_dimension": 256,
+    "sequence_ngram_orders": [
+      1,
+      2,
+      3
+    ],
+    "sequence_ngram_weights": [
+      1.0,
+      1.0,
+      1.0
+    ],
+    "frozen_encoder": {
+      "path": "model/workflow_candidate_v1_2/validation_snapshot/artifacts/representation_encoder.pt",
+      "sha256": "86c77fa404223f97f4cf512244405d199cb7f2f76d2bb05b8886fbcf529eb7cf"
+    },
+    "encoder_config": {
+      "path": "model/workflow_candidate_v1_2/validation_snapshot/artifacts/representation_encoder_config.json",
+      "sha256": "40bf3ea8701abcbd5ba1ee624d50386788c34062cdf850cba2374d9f3dddf4b3"
+    }
+  },
+  "boundary": {
+    "threshold": 0.5,
+    "comparison": ">=",
+    "nonstarting_events": [
+      "page_close",
+      "collector_boot",
+      "popup_structure"
+    ],
+    "session_start_policy": "forced first workflow; probability zero and excluded from transition metrics",
+    "offline_lookahead_seconds": 1.0,
+    "offline_lookahead_events": 3
+  },
+  "clustering": {
+    "implementation": "sklearn.cluster.AgglomerativeClustering",
+    "estimator_parameters": {
+      "affinity": "cosine",
+      "compute_distances": false,
+      "compute_full_tree": "auto",
+      "connectivity": null,
+      "distance_threshold": 0.25,
+      "linkage": "average",
+      "memory": null,
+      "n_clusters": null
+    },
+    "effective_compute_full_tree": true,
+    "distance_threshold_candidates": [
+      0.15,
+      0.25,
+      0.35,
+      0.45,
+      0.55,
+      0.65,
+      0.75,
+      0.85
+    ],
+    "selected_development_distance_threshold": 0.25,
+    "objective": "cosine silhouette - 0.1 * singleton_cluster_count / workflow_count",
+    "valid_candidate_cluster_count": "1 < K < workflow_count",
+    "tie_break": "first threshold in config order; strict objective > best",
+    "fallback": "one cluster if no valid objective",
+    "silhouette_metric": "cosine",
+    "dbi_metric": "Euclidean sklearn Davies-Bouldin",
+    "cluster_count_forced": false,
+    "random_state_parameter": null,
+    "unseen_assignment_policy": "Not introduced; reference summaries only. Existing inference retains transductive threshold search."
+  },
+  "random_seed": 20261014,
+  "determinism": {
+    "torch_num_threads": 1,
+    "torch_deterministic_algorithms": true,
+    "feature_hash": "SHA-256",
+    "initialization": "Python random, numpy and torch use same seed"
+  },
+  "environment": {
+    "training": {
+      "python": "3.10.5",
+      "torch": "1.13.0",
+      "numpy": "1.23.5",
+      "sklearn": "1.1.3"
+    },
+    "snapshot": {
+      "python": "3.10.5",
+      "pytorch": "1.13.0",
+      "numpy": "1.23.5",
+      "scikit_learn": "1.1.3"
+    }
+  },
+  "source_code": {
+    "commit_hash": null,
+    "commit_status": "No Git repository metadata in workspace root",
+    "source_sha256": {
+      "model/workflow_candidate_v1/src/adapter.py": "e18a0dd071f7aafc3eb4b6ebc721890c710f8e98fc7753ea95092ce6d5efa56a",
+      "model/workflow_candidate_v1/src/analysis.py": "1882194ac567d0e772cf43cd0ebcac2ce9b6c2f813e80a468e2cdd25829e68bc",
+      "model/workflow_candidate_v1/src/data.py": "fb6c3c640b352cc7c959e8b521014de1aa1c469b9324f80b0f1767f7c6154246",
+      "model/workflow_candidate_v1/src/features.py": "6862e229d04de687a4e5640a95c704c58e00e87122fbe8fc490ab25dfe34c160",
+      "model/workflow_candidate_v1/src/infer.py": "25aa82d11e9a318368c543520169af158f8b011e65ed027dfdcaeb51e1a66a35",
+      "model/workflow_candidate_v1/src/neural.py": "ff022dc932d95d7b26727c1ac0c4b909e97f9faf3c039f6c10fde68ac0767e0a",
+      "model/workflow_candidate_v1/tests/test_candidate.py": "5f97d6f859b3747f34c9e2dd2174e32c7d8da13da18d057ae9c19e8b016ee2a2",
+      "model/workflow_candidate_v1/training/run.py": "edf5e2c5926cfeb97b10a76e0a4f9e8faba058dd0ba7f586d91b2e4c0239ce24",
+      "model/workflow_candidate_v1_1/src/audit.py": "b018eaace107945f25907523f2573333f8ede8d74cd8537039cc91280dbf9a5a",
+      "model/workflow_candidate_v1_1/src/infer.py": "242d75eb7027da5ed3c2a11fc777f952fc7383ae8d177d3297b1d67e4a095ca3",
+      "model/workflow_candidate_v1_1/src/report.py": "df11d1fbc121ba4bdfaa7e7c7d285aebf09e2919b8ddea11427451c51d2ff79b",
+      "model/workflow_candidate_v1_1/src/representation.py": "8d72c7853f93edf0746b163951f3942a7a66c4b8454fc6fed10d58fee92db766",
+      "model/workflow_candidate_v1_1/src/run.py": "e3fc3cddf9c0b3121abcea2940e968d821ab491482bfd7534affe9b534509dec",
+      "model/workflow_candidate_v1_1/tests/test_hybrid.py": "b4033dfcf093828553c58be88b86afc1bcb5ee96edc2571cd908516d9d133a0b",
+      "model/workflow_candidate_v1_2/src/adapter.py": "0d6e26e95b046c98923b39934f7606ddeac41753a3e1a47ff18957a71e1dadb6",
+      "model/workflow_candidate_v1_2/src/failures.py": "19a9b0704eb05d736367b4eeeb658c730fc1fc0e1469c87ef810d10b0e56f12e",
+      "model/workflow_candidate_v1_2/src/features.py": "edd09015959f8000f134065df0dc4f3c73a05492241ebb738b4c0a3c844e426b",
+      "model/workflow_candidate_v1_2/src/infer.py": "14e0daf28f19cbd84c2b78cc4f7d19539181c917cc4570b7396959ebbc08c9ec",
+      "model/workflow_candidate_v1_2/src/neural.py": "2865d1879768b2860676a8746fc155a08e68142018edbdb576724daecbf7d132",
+      "model/workflow_candidate_v1_2/src/process_map.py": "bc1deca85a407feaf2957fbba31f82779003b93199181c3d3112d3aadf55be8f",
+      "model/workflow_candidate_v1_2/src/report.py": "28fdbb90cdc3a562fffe52b2e89b123a7a9b63ebb000e878619e268c2a372bdf",
+      "model/workflow_candidate_v1_2/src/run.py": "f90a5a03106d3b70f551d6d0515067bb20d836d757a220d4e5926f2f10d52b55",
+      "model/workflow_candidate_v1_2/tests/test_candidate.py": "a8a60fad6bd9982b91fbe9f69d62fc9391925a6de367005183b9b8cbb1d9c2de"
+    },
+    "aggregate_sha256": "ce57ca9d575e33ae858a685c9937758d9662415fcc67fd6732fdd5450fecd31f",
+    "aggregate_definition": "SHA256 of UTF-8 json.dumps(source_sha256,sort_keys=True,separators=(comma,colon))",
+    "snapshot_root": "model/workflow_candidate_v1_2/validation_snapshot/source"
+  },
+  "development_reference": {
+    "path": "model/workflow_candidate_v1_2/validation_snapshot/DEVELOPMENT_CLUSTER_REFERENCE.json",
+    "sha256": "3850e68554f33d279f559bf5b4f2ea214bc6c078ac99c47c99b76184e1f588c9"
+  },
+  "development_workflow_count": 60,
+  "development_cluster_count": 21,
+  "dataset_provenance": {
+    "dataset_id": "current_site_20x3_v3",
+    "dataset_manifest_sha256": "19cda038623ef8b1e5fd0dedbdc22099d124f4cc83b56f1a15b06837b48b1609",
+    "execution_manifest_sha256": "3a26d85eb777c37a0fdda7c2b0f1f2d216c2c2beacce20026df36d6c5655aa89",
+    "source_files": {
+      "current_site_20x3_v1": {
+        "files": [
+          {
+            "path": "data/development/current_site_20x3_v1/events.csv",
+            "sha256": "c15c7cc51bf039eae9d9feef507fb40085675838e5d217698de46d957d56483f",
+            "row_count": 879
+          },
+          {
+            "path": "data/development/current_site_20x3_v1/sessions.csv",
+            "sha256": "b2ffacb9fdcf244402dd55b85d9bafb2c6dd42ca932ee38bcc1e8dc280b88163",
+            "row_count": 1
+          },
+          {
+            "path": "data/development/current_site_20x3_v1/tasks.csv",
+            "sha256": "8bf09da7a75a7417c485d31a3dff2ddb21982198b81a28e0230d74d687e09f2d",
+            "row_count": 645
+          }
+        ]
+      },
+      "current_site_recollection_02": {
+        "files": [
+          {
+            "path": "data/development/current_site_recollection_02/events.csv",
+            "sha256": "07c90862f3e714b93ddd5f8379932884184898233984c57facaf09ef90e541e9",
+            "row_count": 122
+          },
+          {
+            "path": "data/development/current_site_recollection_02/sessions.csv",
+            "sha256": "e6bf10b00fbeac2b02d305118a053bde0f6881ab2d6b66d4c58987830a1b13c3",
+            "row_count": 2
+          },
+          {
+            "path": "data/development/current_site_recollection_02/tasks.csv",
+            "sha256": "67721a1475a92b30225af17e668489cebead614d663578395b3cf3023d5c4457",
+            "row_count": 98
+          }
+        ]
+      }
+    }
+  },
+  "validation_checks": {
+    "original_files_unchanged": true,
+    "original_file_count": 272,
+    "original_artifact_code_hashes_verified": true,
+    "all_cluster_members_accounted_once": true,
+    "medoids_match_existing_process_models": true,
+    "all_centroids_finite_1152_dimensions": true,
+    "cluster_sizes_sum_60": true
+  },
+  "freeze_policy": "Do not overwrite this validation snapshot or tune against unseen validation. New candidate/version required for changes; this is not a final product freeze.",
+  "snapshot_file_sha256": {
+    "model/workflow_candidate_v1_2/validation_snapshot/DEVELOPMENT_CLUSTER_REFERENCE.json": "3850e68554f33d279f559bf5b4f2ea214bc6c078ac99c47c99b76184e1f588c9",
+    "model/workflow_candidate_v1_2/validation_snapshot/README.md": "bf95c62b3f76e52ad5af77572f295548c92cfe697912735179898fe2604c4266",
+    "model/workflow_candidate_v1_2/validation_snapshot/artifacts/feature_config.json": "3afa6136ea7620fea719be4b35308c6282bb5aa7575b0238c3920bdd6fa307f4",
+    "model/workflow_candidate_v1_2/validation_snapshot/artifacts/model.pt": "1832314d23fa44962eb17fc85d5000477476aed7e0508ee9fd8ed93a869f741e",
+    "model/workflow_candidate_v1_2/validation_snapshot/artifacts/model_config.json": "d9f5903ed26dd5423385b701a3af408257b57e8c3dc543b9111682641edadab1",
+    "model/workflow_candidate_v1_2/validation_snapshot/artifacts/model_manifest.json": "18f85f47863aec73533ae07bf0e3bc85b7b112d7ce66dc2be91908c53c11d7fc",
+    "model/workflow_candidate_v1_2/validation_snapshot/artifacts/preprocessing_config.json": "c0338ce956264c4b42fd94118801b856fa6c0bfa49a0e0f73855ef0358f47f64",
+    "model/workflow_candidate_v1_2/validation_snapshot/artifacts/representation_config.json": "4afebc4ff99debf62c6d8d16d830783275d57feed681c2c955cd35c8f0995296",
+    "model/workflow_candidate_v1_2/validation_snapshot/artifacts/representation_encoder.pt": "86c77fa404223f97f4cf512244405d199cb7f2f76d2bb05b8886fbcf529eb7cf",
+    "model/workflow_candidate_v1_2/validation_snapshot/artifacts/representation_encoder_config.json": "40bf3ea8701abcbd5ba1ee624d50386788c34062cdf850cba2374d9f3dddf4b3",
+    "model/workflow_candidate_v1_2/validation_snapshot/artifacts/training_manifest.json": "4a60515741c355b7e973c109379090a281447718aa20911f0a088f4640156a91",
+    "model/workflow_candidate_v1_2/validation_snapshot/development_cluster_index.csv": "2c7ff2ed3a1eb7a9ed0793d2e51fbcf23ada5ee52f499a615135d3d4b0a45b33",
+    "model/workflow_candidate_v1_2/validation_snapshot/reference/boundary_evaluation.json": "e0bd9adc7254ad526740ebd1cad430c24f4da7354ee41f057fd84dcf31018d10",
+    "model/workflow_candidate_v1_2/validation_snapshot/reference/cluster_assignments.csv": "99874a0ddadd4ad7e45844dd7746580a0d62ba0c0952e120845f4760ad62ecb7",
+    "model/workflow_candidate_v1_2/validation_snapshot/reference/clustering_diagnostics.json": "34e198162eda0f18edc5ebf715db62443d3b187f41277f353ec7e2819ac5d5e3",
+    "model/workflow_candidate_v1_2/validation_snapshot/reference/development_evaluation.json": "1f8002ca7e75faa4628d9314f5814e9a02c7bb99fcf2740c143ea55b65bedb0a",
+    "model/workflow_candidate_v1_2/validation_snapshot/reference/neural_boundary_predictions.csv": "a331dd95b798244108d063012ff19f889fb8904e10ac03f168237e1058fea610",
+    "model/workflow_candidate_v1_2/validation_snapshot/reference/predicted_workflows.csv": "2d078551c83b6e449dad332486cf930e7fc98b2ea0c0e05b2f0dd7630d2324d4",
+    "model/workflow_candidate_v1_2/validation_snapshot/reference/process_models.csv": "b2d6355f819319d260fa793b1a9367fe4fbe6c63696d071c5676ea753a33bc96",
+    "model/workflow_candidate_v1_2/validation_snapshot/reference/workflow_embeddings.csv": "446d1d3e3ead5ef09c3579312faa56bad3b8d39442468e7d50ea565731d6c9da",
+    "model/workflow_candidate_v1_2/validation_snapshot/source/AGENTS.md": "2f8bf2742c8ca5ce0a563c8193d70b809f2ebdc3cfbc2c25f3171bf9ef5a30cd",
+    "model/workflow_candidate_v1_2/validation_snapshot/source/R&D_COMPLIANCE.md": "0a2586c3ef32a7754d18270388e9314af449144f8dd8757a7778351d6fef6aa8",
+    "model/workflow_candidate_v1_2/validation_snapshot/source/model/workflow_candidate_v1/src/adapter.py": "e18a0dd071f7aafc3eb4b6ebc721890c710f8e98fc7753ea95092ce6d5efa56a",
+    "model/workflow_candidate_v1_2/validation_snapshot/source/model/workflow_candidate_v1/src/analysis.py": "1882194ac567d0e772cf43cd0ebcac2ce9b6c2f813e80a468e2cdd25829e68bc",
+    "model/workflow_candidate_v1_2/validation_snapshot/source/model/workflow_candidate_v1/src/data.py": "fb6c3c640b352cc7c959e8b521014de1aa1c469b9324f80b0f1767f7c6154246",
+    "model/workflow_candidate_v1_2/validation_snapshot/source/model/workflow_candidate_v1/src/features.py": "6862e229d04de687a4e5640a95c704c58e00e87122fbe8fc490ab25dfe34c160",
+    "model/workflow_candidate_v1_2/validation_snapshot/source/model/workflow_candidate_v1/src/infer.py": "25aa82d11e9a318368c543520169af158f8b011e65ed027dfdcaeb51e1a66a35",
+    "model/workflow_candidate_v1_2/validation_snapshot/source/model/workflow_candidate_v1/src/neural.py": "ff022dc932d95d7b26727c1ac0c4b909e97f9faf3c039f6c10fde68ac0767e0a",
+    "model/workflow_candidate_v1_2/validation_snapshot/source/model/workflow_candidate_v1/tests/test_candidate.py": "5f97d6f859b3747f34c9e2dd2174e32c7d8da13da18d057ae9c19e8b016ee2a2",
+    "model/workflow_candidate_v1_2/validation_snapshot/source/model/workflow_candidate_v1/training/run.py": "edf5e2c5926cfeb97b10a76e0a4f9e8faba058dd0ba7f586d91b2e4c0239ce24",
+    "model/workflow_candidate_v1_2/validation_snapshot/source/model/workflow_candidate_v1_1/src/audit.py": "b018eaace107945f25907523f2573333f8ede8d74cd8537039cc91280dbf9a5a",
+    "model/workflow_candidate_v1_2/validation_snapshot/source/model/workflow_candidate_v1_1/src/infer.py": "242d75eb7027da5ed3c2a11fc777f952fc7383ae8d177d3297b1d67e4a095ca3",
+    "model/workflow_candidate_v1_2/validation_snapshot/source/model/workflow_candidate_v1_1/src/report.py": "df11d1fbc121ba4bdfaa7e7c7d285aebf09e2919b8ddea11427451c51d2ff79b",
+    "model/workflow_candidate_v1_2/validation_snapshot/source/model/workflow_candidate_v1_1/src/representation.py": "8d72c7853f93edf0746b163951f3942a7a66c4b8454fc6fed10d58fee92db766",
+    "model/workflow_candidate_v1_2/validation_snapshot/source/model/workflow_candidate_v1_1/src/run.py": "e3fc3cddf9c0b3121abcea2940e968d821ab491482bfd7534affe9b534509dec",
+    "model/workflow_candidate_v1_2/validation_snapshot/source/model/workflow_candidate_v1_1/tests/test_hybrid.py": "b4033dfcf093828553c58be88b86afc1bcb5ee96edc2571cd908516d9d133a0b",
+    "model/workflow_candidate_v1_2/validation_snapshot/source/model/workflow_candidate_v1_2/src/adapter.py": "0d6e26e95b046c98923b39934f7606ddeac41753a3e1a47ff18957a71e1dadb6",
+    "model/workflow_candidate_v1_2/validation_snapshot/source/model/workflow_candidate_v1_2/src/failures.py": "19a9b0704eb05d736367b4eeeb658c730fc1fc0e1469c87ef810d10b0e56f12e",
+    "model/workflow_candidate_v1_2/validation_snapshot/source/model/workflow_candidate_v1_2/src/features.py": "edd09015959f8000f134065df0dc4f3c73a05492241ebb738b4c0a3c844e426b",
+    "model/workflow_candidate_v1_2/validation_snapshot/source/model/workflow_candidate_v1_2/src/infer.py": "14e0daf28f19cbd84c2b78cc4f7d19539181c917cc4570b7396959ebbc08c9ec",
+    "model/workflow_candidate_v1_2/validation_snapshot/source/model/workflow_candidate_v1_2/src/neural.py": "2865d1879768b2860676a8746fc155a08e68142018edbdb576724daecbf7d132",
+    "model/workflow_candidate_v1_2/validation_snapshot/source/model/workflow_candidate_v1_2/src/process_map.py": "bc1deca85a407feaf2957fbba31f82779003b93199181c3d3112d3aadf55be8f",
+    "model/workflow_candidate_v1_2/validation_snapshot/source/model/workflow_candidate_v1_2/src/report.py": "28fdbb90cdc3a562fffe52b2e89b123a7a9b63ebb000e878619e268c2a372bdf",
+    "model/workflow_candidate_v1_2/validation_snapshot/source/model/workflow_candidate_v1_2/src/run.py": "f90a5a03106d3b70f551d6d0515067bb20d836d757a220d4e5926f2f10d52b55",
+    "model/workflow_candidate_v1_2/validation_snapshot/source/model/workflow_candidate_v1_2/tests/test_candidate.py": "a8a60fad6bd9982b91fbe9f69d62fc9391925a6de367005183b9b8cbb1d9c2de"
+  }
+}

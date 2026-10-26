@@ -52,6 +52,7 @@ async function copyText(text, feedback) {
 async function sendRequest(sample, editor, status, output, button) {
   button.disabled = true;
   output.textContent = '';
+  document.querySelector(`#summary-${sample.metric_id}`).textContent='평가 결과 없음';
   status.dataset.state = 'pending';
   status.textContent = '전송 중…';
   try {
@@ -63,6 +64,12 @@ async function sendRequest(sample, editor, status, output, button) {
     let body;
     try { body = JSON.parse(text); } catch (_) { body = null; }
     output.textContent = body === null ? text : pretty(body);
+    const counts=body?.details?.raw_counts || {};
+    const summary=document.querySelector(`#summary-${sample.metric_id}`);
+    if (response.ok && body && summary) {
+      const successes=body.details?.successful_scenario_count ?? body.details?.calculated_both_pass_count ?? counts.successful_execution_count ?? counts.both_pass_count;
+      summary.textContent=`성공 ${successes ?? '—'} / 전체 ${body.sample_count ?? '—'} · 비율 ${body.score ?? '—'}% · 목표 ${body.target ?? '—'}% · ${body.run_mode ?? ''}`;
+    } else if(summary) summary.textContent='평가 결과 없음';
     status.dataset.state = response.ok ? 'success' : 'error';
     status.textContent = `HTTP ${response.status}${response.statusText ? ' '+response.statusText : ''} · ${response.ok ? '응답 수신 완료' : '요청 오류'}`;
   } catch (error) {
@@ -73,15 +80,46 @@ async function sendRequest(sample, editor, status, output, button) {
   }
 }
 
+async function generateMock(sample) {
+  const output=document.querySelector('#generation-response-M03');
+  const button=document.querySelector('#generate-M03');
+  button.disabled=true;
+  try {
+    const request=JSON.parse(document.querySelector('#generation-request-M03').value);
+    if(request.run_mode!=='REFERENCE' || request.generator_mode!=='MOCK') throw new Error('Sandbox 생성은 REFERENCE / MOCK만 허용합니다.');
+    const response=await fetch(sample.generation_endpoint,{method:'POST',headers:{'Content-Type':'application/json'},body:pretty(request)});
+    const body=await response.json();
+    output.textContent=`HTTP ${response.status}\n${pretty(body)}`;
+    if(response.ok && body.status==='SUCCESS') {
+      const editor=document.querySelector('#request-M03');const evaluation=JSON.parse(editor.value);
+      const index=evaluation.scenarios.findIndex(s=>s.business_unit_id===body.business_unit_id);
+      if(index>=0) evaluation.scenarios[index]=body;
+      else if(evaluation.scenarios.length<10) evaluation.scenarios.push(body);
+      editor.value=pretty(evaluation);
+    }
+  } catch(error) { output.textContent=error.message; }
+  finally {button.disabled=false;}
+}
+
 function renderSandbox(catalog) {
   sandbox.innerHTML = catalog.samples.map(sample => `
     <section class="api-card" id="card-${sample.metric_id}" aria-labelledby="title-${sample.metric_id}">
       <div class="metric-title"><span class="metric-id">${sample.metric_id}</span><h2 id="title-${sample.metric_id}">${esc(sample.metric_name)}</h2></div>
       <p class="endpoint"><span class="method">POST</span><code>${esc(sample.endpoint)}</code></p>
       <p>${esc(sample.purpose)}</p>
+      <p class="notice">${esc(sample.criteria)} · REFERENCE / DEVELOPMENT 연동용</p>
+      ${sample.generation_endpoint ? `<div class="generation">
+        <h3>Scenario Generation · POST ${esc(sample.generation_endpoint)}</h3>
+        <label for="generation-request-M03">Generation Request JSON</label>
+        <textarea id="generation-request-M03">${esc(pretty(sample.generation_request))}</textarea>
+        <h3>Generation Response Sample · HTTP 200</h3><pre>${esc(pretty(sample.generation_response_example))}</pre>
+        <button id="generate-M03" type="button">Generate Mock</button>
+        <pre id="generation-response-M03">미생성</pre>
+        <p>생성 결과는 같은 업무 ID의 평가 요청 항목에 반영됩니다. 점수는 Submit Evaluation Result로 확인하세요.</p>
+      </div>` : ''}
       <details><summary>Required fields</summary>
         <p class="fields">${catalog.common_required.map(esc).join(' · ')}</p>
-        <p class="fields"><strong>counts:</strong> ${sample.required_counts.map(esc).join(' · ')}</p>
+        <p class="fields"><strong>${sample.metric_id==='M03'?'scenario results':'counts'}:</strong> ${(sample.required_fields || sample.required_counts).map(esc).join(' · ')}</p>
         <p class="hint">모든 count는 0 이상의 정수입니다. 분모는 양수여야 합니다. 자세한 오류는 서버 응답에서 확인하세요.</p>
       </details>
       <div class="columns"><div>
@@ -94,14 +132,14 @@ function renderSandbox(catalog) {
         <p class="hint">서버는 실제 응답에 run_id, provenance, 입력 해시, evidence_file 등을 추가합니다.</p>
       </div></div>
       <div class="buttons">
-        <button type="button" class="primary" id="send-${sample.metric_id}">Send Test Request</button>
+        <button type="button" class="primary" id="send-${sample.metric_id}">${sample.metric_id==='M03'?'Submit Evaluation Result':'Send Test Request'}</button>
         <button type="button" id="json-${sample.metric_id}">Copy Request JSON</button>
         <button type="button" id="curl-${sample.metric_id}">Copy curl</button>
         <button type="button" id="reset-${sample.metric_id}">정상 예시 불러오기</button>
         <button type="button" id="invalid-${sample.metric_id}">오류 예시 불러오기</button>
       </div>
       <div class="feedback" id="feedback-${sample.metric_id}" role="status"></div>
-      <div class="actual"><h3>실제 Response Status</h3>
+      <div class="actual"><p id="summary-${sample.metric_id}" role="status">평가 결과 없음</p><h3>실제 Response Status</h3>
         <p class="status" id="status-${sample.metric_id}" role="status">미전송</p>
         <h3>실제 Response JSON</h3><pre id="response-${sample.metric_id}">Send Test Request를 누르면 표시됩니다.</pre>
       </div>
@@ -109,6 +147,7 @@ function renderSandbox(catalog) {
   for (const sample of catalog.samples) {
     const find = prefix => document.querySelector(`#${prefix}-${sample.metric_id}`);
     const editor=find('request'), feedback=find('feedback'), send=find('send');
+    if(sample.generation_endpoint) find('generate').addEventListener('click',()=>generateMock(sample));
     send.addEventListener('click', () => sendRequest(sample,editor,find('status'),find('response'),send));
     for (const action of ['json','curl']) {
       find(action).addEventListener('click', async () => {
@@ -123,9 +162,10 @@ function renderSandbox(catalog) {
     });
     find('invalid').addEventListener('click', () => {
       const payload=JSON.parse(JSON.stringify(sample.request));
-      payload.counts[sample.invalid_count_field]=0;
+      if(sample.metric_id==='M03') payload.scenarios=[];
+      else payload.counts[sample.invalid_count_field]=0;
       editor.value=pretty(payload);
-      feedback.textContent='분모를 0으로 설정했습니다. Send Test Request로 실제 HTTP 422 검증 오류를 확인하세요.';
+      feedback.textContent='빈 시나리오 배열 또는 분모 0 예시입니다. 전송하여 실제 HTTP 422 오류를 확인하세요.';
     });
   }
   sandbox.setAttribute('aria-busy','false');

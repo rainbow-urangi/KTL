@@ -5,8 +5,9 @@ OFFICIAL_SPEC = {
     'M01': {'scenario_count':5,'executions_per_scenario':2,'independent_session_count':10,
             'required_events_per_execution':10,'defined_required_event_count':100,'required_field_count':6,'defined_event_type_count':8},
     'M02': {'business_unit_count':20,'ground_truth_process_count':5},
-    'M03': {'business_unit_count':20,'generation_attempt_per_business_unit':1,'official_denominator':20},
-    'M04': {'fixed_script_count':20,'execution_per_script':1},
+    'M03': {'business_unit_count':10,'generation_attempt_per_business_unit':1,'official_denominator':10},
+    'M04': {'fixed_script_count':10,'execution_per_script':1},
+    'M07': {'scenario_count':20,'generation_attempt_per_scenario':1,'generated_code_count':20,'official_denominator':20},
     'M05': {'official_event_count':200,'keep':100,'remove':100,'official_dataset_must_be_held_out':True},
     'M06': {'source':'approved_v6_2_measurement_bundle','workflow_count':563,'embedding_dimension':128,'cluster_count':12},
 }
@@ -26,7 +27,11 @@ def validate_official_contract(metric, manifest, counts=None):
             for key in ['defined_required_event_count','required_field_count','defined_event_type_count']:
                 require(counts.get(key)==contract[key],'Official M01 count mismatch: '+key)
     elif metric=='M04' and counts:
-        require(counts.get('total_execution_count')==20,'Official M04 requires 20 executions including failures')
+        require(counts.get('total_execution_count')==10,'Official M04 requires 10 executions including failures')
+    elif metric=='M03' and counts:
+        require(counts.get('total_business_units')==10,'Official M03 requires 10 business units')
+    elif metric=='M07' and counts:
+        require(counts.get('generation_request_count')==20 and counts.get('generated_code_count')==20,'Official M07 C2 fixed 20')
     elif metric=='M05':
         require(manifest.get('held_out') is True and manifest.get('used_for_training') is False
                 and manifest.get('used_for_development') is False,'Official M05 must be held-out from training and development')

@@ -14,6 +14,9 @@ def calculate(metric, payload):
     except ValueError:
         require(False, 'Invalid submitted_at')
     require(isinstance(payload.get('details'), dict) or isinstance(payload.get('evidence'), (dict,list)), 'details or evidence required')
+    if metric == 'M03':
+        from .m03_integration import evaluate_scenarios
+        return evaluate_scenarios(payload)
     counts = payload.get('counts'); require(isinstance(counts, dict), 'counts object required')
     def count(name, positive=False):
         value=counts.get(name)
@@ -28,7 +31,11 @@ def calculate(metric, payload):
         score=.5*c1+.3*(100-c2)+.2*c3; sample=defined
         details={'C1':c1,'C2':c2,'C3':c3,'formula':'0.5*C1 + 0.3*(100-C2) + 0.2*C3'}
     elif metric == 'M04':
-        sample=count('total_execution_count',True);success=count('successful_execution_count')
+        sample=count('total_execution_count',True)
+        success=count('successful_execution_count') if 'successful_execution_count' in counts else count('passed_execution_count')
+        if 'passed_execution_count' in counts:require(count('passed_execution_count')==success,'Conflicting success counts')
+        if 'failed_execution_count' in counts:require(count('failed_execution_count')==sample-success,'Failed count mismatch')
+        if payload['run_mode']=='OFFICIAL':require(sample==10,'Official M04 requires 10 executions including failures')
         require(success<=sample,'successful_execution_count exceeds total')
         score=100*success/sample
         details={'formula':'successful_execution_count / total_execution_count * 100',
@@ -37,9 +44,15 @@ def calculate(metric, payload):
         requests=count('generation_request_count',True);generated=count('generated_code_count',True);sample=generated;syntax=count('syntax_pass_count');execution=count('execution_pass_count');both=count('both_pass_count')
         require(generated<=requests and syntax<=generated and execution<=generated and both<=min(syntax,execution)
                 and both>=syntax+execution-generated, 'Impossible M07 counts')
+        official=payload['run_mode']=='OFFICIAL'
+        if official:
+            require(requests==20 and generated==20,'Official M07 requires 20 requests and 20 generated codes; C2 fixed 20')
+            require(isinstance(payload.get('cases'),list),'Official M07 requires individual code cases')
+            sample=20
         score=100*both/sample
-        details={'formula':'both_pass_count / generated_code_count * 100',
-                 'denominator_policy':'LLM이 실제 생성한 전체 코드; 생성된 코드의 구문/실행 실패 포함'}
+        details={'formula':'both_pass_count / 20 * 100' if official else 'both_pass_count / generated_code_count * 100',
+                 'denominator':sample,'denominator_policy':'OFFICIAL_FIXED_20' if official else 'NON_OFFICIAL_GENERATED_COUNT',
+                 'generation_request_count':requests}
     else:
         require(False,'Unsupported external metric')
     cases=payload.get('cases')
@@ -57,6 +70,10 @@ def calculate(metric, payload):
                 require(all(c.get(k) in {'PASS','FAIL','ERROR','TIMEOUT','SKIPPED'} for k in ['generation_status','syntax_status','execution_status','final_status']),'Invalid M07 case status')
                 require((c['final_status']=='PASS')==(c['generation_status']=='PASS' and c['syntax_status']=='PASS' and c['execution_status']=='PASS'),'Final status requires generation/syntax/execution PASS')
                 require(c['generation_status']=='PASS' or (c['syntax_status']!='PASS' and c['execution_status']!='PASS'),'Ungenerated code cannot pass')
+            calculated_both=sum(c['generation_status']=='PASS' and c['syntax_status']=='PASS' and c['execution_status']=='PASS' for c in cases)
+            require(calculated_both==both,'Cases/counts mismatch: both_pass_count')
+            score=100*calculated_both/sample
+            details['calculated_both_pass_count']=calculated_both
             for key,n in [('generation_status',generated),('syntax_status',syntax),('execution_status',execution),('final_status',both)]:
                 require(sum(c[key]=='PASS' for c in cases)==n,'Cases/counts mismatch: '+key)
     details.update(raw_counts=counts,external_details=payload.get('details',{}),external_evidence=payload.get('evidence',{}))
