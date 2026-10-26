@@ -14,16 +14,20 @@
       <p class="eyebrow">RAINBOW KTL · DEVELOPER TOOLS</p>
       <h1>Developer Integration Sandbox</h1>
       <p class="notice">외부 모듈 연동 테스트용이며 공식 평가 결과가 아닙니다.</p>
-      <p>REFERENCE · mock-dataset-01 · 합성 count 예시</p>
+      <p>REFERENCE · mock-dataset-01 · 합성 scenario / code result / count 예시</p>
     </header>
     <section class="intro" aria-label="사용 방법">
-      <h2>Raw counts를 보내고 실제 서버 응답을 확인하세요.</h2>
-      <p>기존 M01/M04/M07 endpoint를 호출합니다. 서버가 점수를 계산하며 성공 응답은 <strong>HTTP 201 Created</strong>입니다. official_pass는 null입니다.</p>
-      <p>요청 JSON의 counts와 details를 편집할 수 있습니다. 전송·복사 시 고유 mock ID와 제출 시각을 갱신합니다. OFFICIAL 전송은 허용하지 않습니다.</p>
+      <h2>M03 → M04 → M07 연동 결과를 확인하세요.</h2>
+      <p>M03/M04/M07 endpoint를 호출합니다. M03 Generate Mock은 HTTP 200, 평가 결과 제출은 HTTP 201입니다. 서버가 점수를 계산하며 평가 접수 응답은 <strong>HTTP 201 Created</strong>입니다. official_pass는 null입니다.</p>
+      <p>요청 JSON의 scenarios, cases, counts와 details를 편집할 수 있습니다. 전송·복사 시 고유 mock ID와 제출 시각을 갱신합니다. OFFICIAL 전송은 허용하지 않습니다.</p>
       <p>부분 사례는 details.example_cases에 넣습니다. 최상위 cases를 사용한다면 전체 분모 건수를 포함해야 합니다.</p>
       <p>실제 요청은 REFERENCE 결과 파일과 해당 지표의 latest에 저장됩니다. 화면의 Sample Response는 예시이며, 실제 응답은 전송 후 별도로 표시됩니다.</p>
     </section>
     <div id="sandbox" aria-busy="true"><p>API 예시를 불러오는 중…</p></div>
+    <section class="intro" aria-label="Legacy integration">
+      <h2>M01 · Legacy / 현재 연동 대상 아님</h2>
+      <p>M01 KTL 시험항목과 POST /api/integrations/m01/result는 유지합니다. 현재 연동 대상에는 포함하지 않습니다.</p>
+    </section>
   </main>
 </body>
 </html>

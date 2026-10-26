@@ -10,7 +10,8 @@
   },
   "adapter_timeout_seconds": 120,
   "adapters": {
-    "cleaning": []
+    "cleaning": [],
+    "scenario_generation": []
   },
   "official_manifests": {
     "M01": null,

@@ -7,11 +7,464 @@
     "source_version",
     "submitted_at",
     "dataset_manifest_sha256",
-    "counts",
     "details object or evidence object/array"
   ],
   "success_http_status": 201,
   "samples": [
+    {
+      "metric_id": "M03",
+      "metric_name": "Scenario Generation · 테스트 시나리오 자동생성",
+      "method": "POST",
+      "endpoint": "/api/integrations/m03/result",
+      "purpose": "개별 생성 결과의 schema, step order, action, target을 중앙 검증합니다.",
+      "criteria": "10 scenarios / target >= 80%",
+      "request": {
+        "external_run_id": "M03-MOCK-001",
+        "dataset_id": "mock-dataset-01",
+        "run_mode": "REFERENCE",
+        "source_module": "scenario-generator",
+        "source_version": "0.1.0",
+        "submitted_at": "2026-10-08T12:00:00+09:00",
+        "dataset_manifest_sha256": "43ff3967565db9380fb57fbb8c19abeae03ce205b927bff00f13ff1a231fcb32",
+        "details": {
+          "synthetic": true,
+          "note": "10개 중 8개 유효한 합성 시나리오; 실제 업무 근거 아님"
+        },
+        "scenarios": [
+          {
+            "business_unit_id": "BU01",
+            "workflow_id": "WF-001",
+            "scenario_id": "MOCK-SCN-001",
+            "status": "SUCCESS",
+            "synthetic": true,
+            "steps": [
+              {
+                "order": 1,
+                "action": "click",
+                "target": "mock action control"
+              }
+            ]
+          },
+          {
+            "business_unit_id": "BU02",
+            "workflow_id": "WF-002",
+            "scenario_id": "MOCK-SCN-002",
+            "status": "SUCCESS",
+            "synthetic": true,
+            "steps": [
+              {
+                "order": 1,
+                "action": "click",
+                "target": "mock action control"
+              }
+            ]
+          },
+          {
+            "business_unit_id": "BU03",
+            "workflow_id": "WF-003",
+            "scenario_id": "MOCK-SCN-003",
+            "status": "SUCCESS",
+            "synthetic": true,
+            "steps": [
+              {
+                "order": 1,
+                "action": "click",
+                "target": "mock action control"
+              }
+            ]
+          },
+          {
+            "business_unit_id": "BU04",
+            "workflow_id": "WF-004",
+            "scenario_id": "MOCK-SCN-004",
+            "status": "SUCCESS",
+            "synthetic": true,
+            "steps": [
+              {
+                "order": 1,
+                "action": "click",
+                "target": "mock action control"
+              }
+            ]
+          },
+          {
+            "business_unit_id": "BU05",
+            "workflow_id": "WF-005",
+            "scenario_id": "MOCK-SCN-005",
+            "status": "SUCCESS",
+            "synthetic": true,
+            "steps": [
+              {
+                "order": 1,
+                "action": "click",
+                "target": "mock action control"
+              }
+            ]
+          },
+          {
+            "business_unit_id": "BU06",
+            "workflow_id": "WF-006",
+            "scenario_id": "MOCK-SCN-006",
+            "status": "SUCCESS",
+            "synthetic": true,
+            "steps": [
+              {
+                "order": 1,
+                "action": "click",
+                "target": "mock action control"
+              }
+            ]
+          },
+          {
+            "business_unit_id": "BU07",
+            "workflow_id": "WF-007",
+            "scenario_id": "MOCK-SCN-007",
+            "status": "SUCCESS",
+            "synthetic": true,
+            "steps": [
+              {
+                "order": 1,
+                "action": "click",
+                "target": "mock action control"
+              }
+            ]
+          },
+          {
+            "business_unit_id": "BU08",
+            "workflow_id": "WF-008",
+            "scenario_id": "MOCK-SCN-008",
+            "status": "SUCCESS",
+            "synthetic": true,
+            "steps": [
+              {
+                "order": 1,
+                "action": "click",
+                "target": "mock action control"
+              }
+            ]
+          },
+          {
+            "business_unit_id": "BU09",
+            "workflow_id": "WF-009",
+            "scenario_id": "MOCK-SCN-009",
+            "status": "SUCCESS",
+            "synthetic": true,
+            "steps": [
+              {
+                "order": 1,
+                "action": "click"
+              }
+            ]
+          },
+          {
+            "business_unit_id": "BU10",
+            "workflow_id": "WF-010",
+            "scenario_id": "MOCK-SCN-010",
+            "status": "SUCCESS",
+            "synthetic": true,
+            "steps": [
+              {
+                "action": "click",
+                "target": "mock action control"
+              }
+            ]
+          }
+        ]
+      },
+      "required_counts": [],
+      "required_fields": [
+        "scenarios: 1..10 unique business unit results"
+      ],
+      "invalid_count_field": null,
+      "response_example": {
+        "metric_id": "M03",
+        "run_mode": "REFERENCE",
+        "dataset_id": "mock-dataset-01",
+        "status": "COMPLETED",
+        "score": 80.0,
+        "sample_count": 10,
+        "target": 80,
+        "official_pass": null,
+        "pass": null
+      },
+      "generation_endpoint": "/api/m03/generate",
+      "generation_request": {
+        "business_unit_id": "BU03",
+        "workflow_id": "WF-001",
+        "run_mode": "REFERENCE",
+        "generator_mode": "MOCK"
+      },
+      "generation_response_example": {
+        "business_unit_id": "BU03",
+        "workflow_id": "WF-001",
+        "scenario_id": "MOCK-SCN-d89f279abb2e",
+        "status": "SUCCESS",
+        "steps": [
+          {
+            "order": 1,
+            "action": "open",
+            "target": "mock workflow screen"
+          },
+          {
+            "order": 2,
+            "action": "click",
+            "target": "mock action control"
+          }
+        ],
+        "run_mode": "REFERENCE",
+        "generator_mode": "MOCK",
+        "synthetic": true,
+        "official_pass": null
+      }
+    },
+    {
+      "metric_id": "M04",
+      "metric_name": "Automated Execution Success Rate · 자동 실행 성공률",
+      "method": "POST",
+      "endpoint": "/api/integrations/m04/result",
+      "purpose": "성공 실행 수 / 전체 실행 수를 계산합니다. 실패도 분모에 포함합니다.",
+      "request": {
+        "external_run_id": "M04-MOCK-001",
+        "dataset_id": "mock-dataset-01",
+        "run_mode": "REFERENCE",
+        "source_module": "selenium-runner",
+        "source_version": "0.1.0",
+        "submitted_at": "2026-10-08T12:00:00+09:00",
+        "dataset_manifest_sha256": "43ff3967565db9380fb57fbb8c19abeae03ce205b927bff00f13ff1a231fcb32",
+        "counts": {
+          "total_execution_count": 10,
+          "successful_execution_count": 9,
+          "failed_execution_count": 1
+        },
+        "details": {
+          "synthetic": true,
+          "note": "전체 10건 중 설명용 일부 사례입니다.",
+          "example_cases": [
+            {
+              "case_id": "TC-001",
+              "status": "PASS"
+            },
+            {
+              "case_id": "TC-002",
+              "status": "FAIL",
+              "error_type": "ELEMENT_NOT_FOUND"
+            },
+            {
+              "case_id": "TC-003",
+              "status": "PASS"
+            }
+          ]
+        }
+      },
+      "required_counts": [
+        "total_execution_count",
+        "successful_execution_count"
+      ],
+      "invalid_count_field": "total_execution_count",
+      "response_example": {
+        "metric_id": "M04",
+        "run_mode": "REFERENCE",
+        "dataset_id": "mock-dataset-01",
+        "status": "COMPLETED",
+        "score": 90.0,
+        "sample_count": 10,
+        "official_pass": null,
+        "pass": null,
+        "target": 90
+      },
+      "criteria": "10 executions / target >= 90%"
+    },
+    {
+      "metric_id": "M07",
+      "metric_name": "LLM Generated Code Validity and Accuracy · 생성 코드 유효성 및 정확도",
+      "method": "POST",
+      "endpoint": "/api/integrations/m07/result",
+      "purpose": "개별 코드의 문법·실행 모두 PASS한 C1을 중앙에서 계산합니다. OFFICIAL C2는 20 고정입니다.",
+      "request": {
+        "external_run_id": "M07-MOCK-001",
+        "dataset_id": "mock-dataset-01",
+        "run_mode": "REFERENCE",
+        "source_module": "llm-code-runner",
+        "source_version": "0.1.0",
+        "submitted_at": "2026-10-08T12:00:00+09:00",
+        "dataset_manifest_sha256": "43ff3967565db9380fb57fbb8c19abeae03ce205b927bff00f13ff1a231fcb32",
+        "counts": {
+          "generation_request_count": 20,
+          "generated_code_count": 20,
+          "syntax_pass_count": 18,
+          "execution_pass_count": 17,
+          "both_pass_count": 16
+        },
+        "details": {
+          "synthetic": true,
+          "note": "20개 생성 코드 전체의 문법/실행 검사 예시입니다."
+        },
+        "cases": [
+          {
+            "case_id": "CODE-01",
+            "generation_status": "PASS",
+            "syntax_status": "PASS",
+            "execution_status": "PASS",
+            "final_status": "PASS"
+          },
+          {
+            "case_id": "CODE-02",
+            "generation_status": "PASS",
+            "syntax_status": "PASS",
+            "execution_status": "PASS",
+            "final_status": "PASS"
+          },
+          {
+            "case_id": "CODE-03",
+            "generation_status": "PASS",
+            "syntax_status": "PASS",
+            "execution_status": "PASS",
+            "final_status": "PASS"
+          },
+          {
+            "case_id": "CODE-04",
+            "generation_status": "PASS",
+            "syntax_status": "PASS",
+            "execution_status": "PASS",
+            "final_status": "PASS"
+          },
+          {
+            "case_id": "CODE-05",
+            "generation_status": "PASS",
+            "syntax_status": "PASS",
+            "execution_status": "PASS",
+            "final_status": "PASS"
+          },
+          {
+            "case_id": "CODE-06",
+            "generation_status": "PASS",
+            "syntax_status": "PASS",
+            "execution_status": "PASS",
+            "final_status": "PASS"
+          },
+          {
+            "case_id": "CODE-07",
+            "generation_status": "PASS",
+            "syntax_status": "PASS",
+            "execution_status": "PASS",
+            "final_status": "PASS"
+          },
+          {
+            "case_id": "CODE-08",
+            "generation_status": "PASS",
+            "syntax_status": "PASS",
+            "execution_status": "PASS",
+            "final_status": "PASS"
+          },
+          {
+            "case_id": "CODE-09",
+            "generation_status": "PASS",
+            "syntax_status": "PASS",
+            "execution_status": "PASS",
+            "final_status": "PASS"
+          },
+          {
+            "case_id": "CODE-10",
+            "generation_status": "PASS",
+            "syntax_status": "PASS",
+            "execution_status": "PASS",
+            "final_status": "PASS"
+          },
+          {
+            "case_id": "CODE-11",
+            "generation_status": "PASS",
+            "syntax_status": "PASS",
+            "execution_status": "PASS",
+            "final_status": "PASS"
+          },
+          {
+            "case_id": "CODE-12",
+            "generation_status": "PASS",
+            "syntax_status": "PASS",
+            "execution_status": "PASS",
+            "final_status": "PASS"
+          },
+          {
+            "case_id": "CODE-13",
+            "generation_status": "PASS",
+            "syntax_status": "PASS",
+            "execution_status": "PASS",
+            "final_status": "PASS"
+          },
+          {
+            "case_id": "CODE-14",
+            "generation_status": "PASS",
+            "syntax_status": "PASS",
+            "execution_status": "PASS",
+            "final_status": "PASS"
+          },
+          {
+            "case_id": "CODE-15",
+            "generation_status": "PASS",
+            "syntax_status": "PASS",
+            "execution_status": "PASS",
+            "final_status": "PASS"
+          },
+          {
+            "case_id": "CODE-16",
+            "generation_status": "PASS",
+            "syntax_status": "PASS",
+            "execution_status": "PASS",
+            "final_status": "PASS"
+          },
+          {
+            "case_id": "CODE-17",
+            "generation_status": "PASS",
+            "syntax_status": "PASS",
+            "execution_status": "FAIL",
+            "final_status": "FAIL"
+          },
+          {
+            "case_id": "CODE-18",
+            "generation_status": "PASS",
+            "syntax_status": "PASS",
+            "execution_status": "FAIL",
+            "final_status": "FAIL"
+          },
+          {
+            "case_id": "CODE-19",
+            "generation_status": "PASS",
+            "syntax_status": "FAIL",
+            "execution_status": "PASS",
+            "final_status": "FAIL"
+          },
+          {
+            "case_id": "CODE-20",
+            "generation_status": "PASS",
+            "syntax_status": "FAIL",
+            "execution_status": "FAIL",
+            "final_status": "FAIL"
+          }
+        ]
+      },
+      "required_counts": [
+        "generation_request_count",
+        "generated_code_count",
+        "syntax_pass_count",
+        "execution_pass_count",
+        "both_pass_count"
+      ],
+      "invalid_count_field": "generated_code_count",
+      "response_example": {
+        "metric_id": "M07",
+        "run_mode": "REFERENCE",
+        "dataset_id": "mock-dataset-01",
+        "status": "COMPLETED",
+        "score": 80.0,
+        "sample_count": 20,
+        "official_pass": null,
+        "pass": null,
+        "target": 80
+      },
+      "criteria": "20 generated codes / C2 fixed 20 / target >= 80%"
+    }
+  ],
+  "legacy_samples": [
     {
       "metric_id": "M01",
       "metric_name": "Collection Accuracy · 수집 정확도",
@@ -60,130 +513,7 @@
         "official_pass": null,
         "pass": null
       }
-    },
-    {
-      "metric_id": "M04",
-      "metric_name": "Automated Execution Success Rate · 자동 실행 성공률",
-      "method": "POST",
-      "endpoint": "/api/integrations/m04/result",
-      "purpose": "성공 실행 수 / 전체 실행 수를 계산합니다. 실패도 분모에 포함합니다.",
-      "request": {
-        "external_run_id": "M04-MOCK-001",
-        "dataset_id": "mock-dataset-01",
-        "run_mode": "REFERENCE",
-        "source_module": "selenium-runner",
-        "source_version": "0.1.0",
-        "submitted_at": "2026-10-08T12:00:00+09:00",
-        "dataset_manifest_sha256": "43ff3967565db9380fb57fbb8c19abeae03ce205b927bff00f13ff1a231fcb32",
-        "counts": {
-          "total_execution_count": 20,
-          "successful_execution_count": 18
-        },
-        "details": {
-          "synthetic": true,
-          "note": "전체 20건 중 3건의 설명용 예시입니다.",
-          "example_cases": [
-            {
-              "case_id": "TC-001",
-              "status": "PASS"
-            },
-            {
-              "case_id": "TC-002",
-              "status": "FAIL",
-              "error_type": "ELEMENT_NOT_FOUND"
-            },
-            {
-              "case_id": "TC-003",
-              "status": "PASS"
-            }
-          ]
-        }
-      },
-      "required_counts": [
-        "total_execution_count",
-        "successful_execution_count"
-      ],
-      "invalid_count_field": "total_execution_count",
-      "response_example": {
-        "metric_id": "M04",
-        "run_mode": "REFERENCE",
-        "dataset_id": "mock-dataset-01",
-        "status": "COMPLETED",
-        "score": 90.0,
-        "sample_count": 20,
-        "official_pass": null,
-        "pass": null
-      }
-    },
-    {
-      "metric_id": "M07",
-      "metric_name": "LLM Generated Code Validity and Accuracy · 생성 코드 유효성 및 정확도",
-      "method": "POST",
-      "endpoint": "/api/integrations/m07/result",
-      "purpose": "구문·실행 모두 통과한 수 / LLM이 실제 생성한 전체 코드 수를 계산합니다. 요청 수는 진단용입니다.",
-      "request": {
-        "external_run_id": "M07-MOCK-001",
-        "dataset_id": "mock-dataset-01",
-        "run_mode": "REFERENCE",
-        "source_module": "llm-code-runner",
-        "source_version": "0.1.0",
-        "submitted_at": "2026-10-08T12:00:00+09:00",
-        "dataset_manifest_sha256": "43ff3967565db9380fb57fbb8c19abeae03ce205b927bff00f13ff1a231fcb32",
-        "counts": {
-          "generation_request_count": 20,
-          "generated_code_count": 18,
-          "syntax_pass_count": 17,
-          "execution_pass_count": 16,
-          "both_pass_count": 15
-        },
-        "details": {
-          "synthetic": true,
-          "note": "20회 요청, 생성 코드 18건 중 일부 설명용 예시입니다.",
-          "example_cases": [
-            {
-              "case_id": "TC-001",
-              "generation_status": "PASS",
-              "syntax_status": "PASS",
-              "execution_status": "PASS",
-              "final_status": "PASS"
-            },
-            {
-              "case_id": "TC-002",
-              "generation_status": "PASS",
-              "syntax_status": "PASS",
-              "execution_status": "FAIL",
-              "final_status": "FAIL",
-              "error_type": "EXECUTION_ERROR"
-            },
-            {
-              "case_id": "TC-003",
-              "generation_status": "PASS",
-              "syntax_status": "FAIL",
-              "execution_status": "FAIL",
-              "final_status": "FAIL",
-              "error_type": "SYNTAX_ERROR"
-            }
-          ]
-        }
-      },
-      "required_counts": [
-        "generation_request_count",
-        "generated_code_count",
-        "syntax_pass_count",
-        "execution_pass_count",
-        "both_pass_count"
-      ],
-      "invalid_count_field": "generated_code_count",
-      "response_example": {
-        "metric_id": "M07",
-        "run_mode": "REFERENCE",
-        "dataset_id": "mock-dataset-01",
-        "status": "COMPLETED",
-        "score": 83.33333333333333,
-        "sample_count": 18,
-        "official_pass": null,
-        "pass": null
-      }
     }
-  ]
+  ],
+  "criteria_revision": "2026-10-26 user-confirmed KTL consultation"
 }

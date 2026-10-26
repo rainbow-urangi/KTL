@@ -12,7 +12,7 @@ from pathlib import Path
 from urllib.parse import urlparse, parse_qs
 
 from .evaluators import (METRICS, REFERENCE, EvaluationError, M02Evaluator, M05Evaluator, M06Evaluator, csv_evidence, read_json, require, call_adapter)
-from .registry import MODES, VERSION, EXTERNAL
+from .registry import MODES, VERSION, EXTERNAL, INTEGRATIONS
 from .run_storage import save_run
 from .integration_store import ingest
 from .data_sources import V62ReferenceProvider, OfficialEvaluationDataSource
@@ -60,7 +60,7 @@ class Service:
             source = self.source(mode, config); prepared = self.prepare(source, key)
             latest_path = self.root / "results" / mode.lower() / ("latest-" + key + ".json")
             latest = read_json(latest_path) if latest_path.exists() else None
-            if key in EXTERNAL and latest and latest.get('status') == 'COMPLETED':
+            if key in INTEGRATIONS and latest and latest.get('status') == 'COMPLETED':
                 prepared.update(status='COMPLETED',details={'external_result_received':True})
             result.append({"metric_id": key, "metric_name": name, "dataset": source.dataset_id,
                            "expected_sample_count": count, "target": config["targets"].get(key),
@@ -69,7 +69,7 @@ class Service:
         return {"run_mode": mode, "metrics": result, "model": {"version": "V6.2", "frozen": True, "reference_counts": REFERENCE}}
 
     def ingest(self, metric, payload):
-        require(metric in EXTERNAL, 'Unsupported integration metric')
+        require(metric in INTEGRATIONS, 'Unsupported integration metric')
         with self.lock:
             return ingest(self.root, self.config(), metric, payload)
 
@@ -79,7 +79,7 @@ class Service:
             raise EvaluationError("An evaluation is already running", "RUNNING")
         try:
             config = self.config(); source = self.source(mode, config)
-            if metric in EXTERNAL:
+            if metric in INTEGRATIONS:
                 latest=self.root/'results'/mode.lower()/('latest-'+metric+'.json')
                 if latest.exists() and read_json(latest).get('status')=='COMPLETED':
                     return read_json(latest)
@@ -221,17 +221,21 @@ def make_handler(service):
         def do_POST(self):
             if not self.trusted_request():
                 return self.reply(403, {"error": "Local same-origin access required"})
-            integration = re.fullmatch(r"/api/integrations/(m01|m04|m07)/result", urlparse(self.path).path)
-            if integration:
+            integration = re.fullmatch(r"/api/integrations/(m01|m03|m04|m07)/result", urlparse(self.path).path)
+            generation = urlparse(self.path).path == '/api/m03/generate'
+            if integration or generation:
                 try:
                     length=int(self.headers.get('Content-Length','0'))
                     require(0<length<=1048576 and not self.headers.get('Transfer-Encoding'),'JSON body required; maximum 1 MiB')
                     payload=json.loads(self.rfile.read(length),parse_constant=lambda _: (_ for _ in ()).throw(ValueError('Non-finite JSON number')))
+                    if generation:
+                        from .m03_integration import generate
+                        return self.reply(200,generate(service.root,service.config(),payload))
                     return self.reply(201,service.ingest(integration[1].upper(),payload))
                 except (ValueError,UnicodeError):
                     return self.reply(400,{'status':'ERROR','error':'Invalid JSON or Content-Length'})
                 except EvaluationError as exc:
-                    return self.reply(409 if exc.status=='DUPLICATE_EXTERNAL_RUN' else 422,{'status':exc.status,'error':str(exc)})
+                    return self.reply(409 if exc.status=='DUPLICATE_EXTERNAL_RUN' else 503 if generation and exc.status=='NOT_CONFIGURED' else 422,{'status':exc.status,'error':str(exc)})
                 except OSError:
                     return self.reply(500,{'status':'ERROR','error':'Unable to persist external evidence'})
             match = re.fullmatch(r"/api/evaluations/(m0[1-7])/run", urlparse(self.path).path)

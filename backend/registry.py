@@ -5,7 +5,7 @@ MODES = {"REFERENCE", "OFFICIAL", "DEVELOPMENT"}
 STATUSES = {"OFFICIAL_M06_BUNDLE_MISSING","NOT_CONFIGURED", "WAITING_FOR_DATA", "REFERENCE_READY", "READY",
             "BLOCKED", "INSUFFICIENT_DATA_FOR_CONSENSUS", "RUNNING", "COMPLETED", "REFERENCE_PARTIAL", "EXTERNAL_MODULE_PENDING", "ERROR"}
 OWNERSHIP = {
-    "M01": ("junior", "external_integration_only"),
+    "M01": ("legacy", "external_integration_only"),
     "M02": ("user", "full_evaluator"),
     "M03": ("shared", "core_generator_only"),
     "M04": ("junior", "external_integration_only"),
@@ -14,4 +14,6 @@ OWNERSHIP = {
     "M07": ("junior", "external_integration_only"),
 }
 EXTERNAL = {"M01", "M04", "M07"}
+INTEGRATIONS = EXTERNAL | {"M03"}
+JUNIOR_INTEGRATIONS = ("M03", "M04", "M07")
 VERSION = "evaluation-2.0"

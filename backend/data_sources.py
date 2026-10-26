@@ -81,7 +81,7 @@ class V62ReferenceProvider(EvaluationDataSource):
                 unit = {'id': row['model_id'], 'name': row.get('process_name') or row['model_id'],
                         'steps': [{'id': str(i), 'label': label} for i, label in enumerate(labels, 1)]}
                 units.append(validate_business_unit(unit))
-            return pending('REFERENCE_PARTIAL', ['ScenarioGeneratorAdapter', '공식 사전 정의 Business Unit 20개'],
+            return pending('REFERENCE_PARTIAL', ['ScenarioGeneratorAdapter', '공식 사전 정의 Business Unit 10개'],
                            **details, input_preview=units, preview_only=True,
                            rows=[{'model_id': u['id'], 'representative_path': ' → '.join(s['label'] for s in u['steps'])} for u in units])
         alias_path = self.root / 'evaluation_contracts/m02_aliases.json'
@@ -123,7 +123,7 @@ class OfficialEvaluationDataSource(EvaluationDataSource):
         self.config = config
 
     def prepare(self, metric):
-        if metric in EXTERNAL:
+        if metric in EXTERNAL or metric=='M03':
             return pending('EXTERNAL_MODULE_PENDING', ['외부 모듈 연동 예정'])
         manifest_path = self.config.get('official_manifests', {}).get(metric)
         if not manifest_path:
@@ -170,7 +170,7 @@ class OfficialEvaluationDataSource(EvaluationDataSource):
             require(isinstance(item, dict) and isinstance(item.get('sha256'), str) and len(item['sha256']) == 64, 'Input SHA-256 required')
             loaded[role] = verified_file(item.get('path'), item['sha256'])
         validate_official_contract(metric, manifest)
-        if metric in {'M02', 'M03'}:
+        if metric == 'M02':
             units = manifest.get('business_unit_ids', [])
             require(isinstance(units, list) and len(units) == 20 and all(isinstance(u, str) and u.strip() for u in units) and len(set(units)) == 20, 'Official TD-03 requires 20 unique business unit IDs')
             require('event_log' in loaded, 'TD-03 event_log with SHA-256 required')

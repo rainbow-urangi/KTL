@@ -13,11 +13,11 @@ REFERENCE = {"events": 32273, "latent_segments": 5167, "latent_workflows": 563,
 METRICS = {
     "M01": ("Collection Accuracy", "test-data/m01.json", 100, ">="),
     "M02": ("Process Map Accuracy and Completeness", "test-data/m02.json", 5, ">="),
-    "M03": ("Test Scenario Automatic Generation Rate", "test-data/m03.json", 20, ">="),
-    "M04": ("Automated Execution Success Rate", "TD-08 fixed Selenium/Python scripts", 20, ">="),
+    "M03": ("Test Scenario Automatic Generation Rate", "test-data/m03.json", 10, ">="),
+    "M04": ("Automated Execution Success Rate", "TD-08 fixed Selenium/Python scripts", 10, ">="),
     "M05": ("AI Data Cleaning F1 Score", "test-data/m05.json", 200, ">="),
     "M06": ("Workflow Clustering Quality", "model/v6_2/frozen/run_manifest.json", 563, "<="),
-    "M07": ("LLM Generated Code Validity and Accuracy", "results/M03/latest.json", None, ">=")
+    "M07": ("LLM Generated Code Validity and Accuracy", "20 Selenium/Python generated codes", 20, ">=")
 }
 
 

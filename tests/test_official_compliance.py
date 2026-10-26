@@ -68,7 +68,7 @@ class OfficialComplianceTests(unittest.TestCase):
         with self.assertRaises(EvaluationError):
             validate_official_contract('M01',m,dict(defined_required_event_count=99,required_field_count=6,defined_event_type_count=8))
         m={'official_contract':OFFICIAL_SPEC['M04']}
-        validate_official_contract('M04',m,{'total_execution_count':20})
+        validate_official_contract('M04',m,{'total_execution_count':10})
         with self.assertRaises(EvaluationError):validate_official_contract('M04',m,{'total_execution_count':19})
     def test_m06_cross_check_with_temporary_bundle(self):
         import importlib.util
