@@ -65,8 +65,8 @@ def call_adapter(config, name, payload, cwd):
     require(isinstance(command, list) and all(isinstance(x, str) for x in command),
             f"{name} adapter must be an argv array")
     try:
-        completed = subprocess.run(command, input=json.dumps(payload, ensure_ascii=False),
-                                   text=True, capture_output=True, cwd=cwd,
+        completed = subprocess.run(command, input=json.dumps(payload, ensure_ascii=False).encode('utf-8'),
+                                   capture_output=True, cwd=cwd,
                                    timeout=config.get("adapter_timeout_seconds", 120), check=False)
     except subprocess.TimeoutExpired as exc:
         raise EvaluationError(f"{name} adapter timed out", "ERROR") from exc
@@ -75,9 +75,9 @@ def call_adapter(config, name, payload, cwd):
     if completed.returncode:
         raise EvaluationError(f"{name} adapter exited with code {completed.returncode}", "ERROR")
     try:
-        value = json.loads(completed.stdout)
+        value = json.loads(completed.stdout.decode('utf-8'))
     except ValueError as exc:
-        raise EvaluationError(f"{name} adapter did not return JSON", "ERROR") from exc
+        raise EvaluationError(f"{name} adapter did not return UTF-8 JSON", "ERROR") from exc
     require(isinstance(value, dict), f"{name} adapter response must be an object")
     return value
 

@@ -10,3 +10,7 @@ data/development/m01_uploads/
 data/development/m01_ground_truth/
 data/development/m01_comparisons/
 /DEVELOPMENT_CHECKLIST.md
+data/evaluation/m03-mock-development-*/
+data/evaluation/m03-real-development-*/
+data/development/m03_http/
+data/development/m03_connection.json

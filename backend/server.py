@@ -52,7 +52,8 @@ class Service:
         require(isinstance(config.get('adapters'), dict) and isinstance(config.get('official_manifests'), dict), 'Adapter/manifest configuration required')
         timeout = config.get('adapter_timeout_seconds', 120)
         require(type(timeout) in (int, float) and math.isfinite(timeout) and timeout > 0, 'Positive adapter timeout required')
-        return config
+        from .m03_setup import apply_connection
+        return apply_connection(self.root, config)
 
 
     def claim_result(self, result):
@@ -109,7 +110,15 @@ class Service:
     def ingest(self, metric, payload):
         require(metric in INTEGRATIONS, 'Unsupported integration metric')
         with self.lock:
-            return self.claim_result(ingest(self.root, self.config(), metric, payload))
+            config = self.config()
+            if (metric == 'M03' and isinstance(payload, dict) and payload.get('run_mode') == 'DEVELOPMENT'
+                    and isinstance(payload.get('dataset_id'), str)
+                    and payload['dataset_id'].startswith(('m03-mock-development-', 'm03-real-development-'))):
+                from .m03_integration import development_context
+                context = development_context(self.root, config)
+                require(payload['dataset_id'] == context['dataset_id'], 'Development M03 dataset does not match current context')
+                require(payload.get('details', {}).get('synthetic') is context['synthetic'], 'M03 source mode does not match current context')
+            return self.claim_result(ingest(self.root, config, metric, payload))
 
     def run(self, metric, mode="REFERENCE"):
         require(mode in MODES and metric in METRICS, "Invalid mode or metric")
@@ -237,6 +246,40 @@ def make_handler(service):
                 return self.reply(403, {"error": "Local same-origin access required"})
             path = urlparse(self.path).path
             try:
+                if path == '/api/development/m03/connection':
+                    from .m03_setup import connection_state
+                    try:
+                        with service.lock:
+                            state = connection_state(service.root, service.config())
+                        return self.reply(200, state)
+                    except EvaluationError as exc:
+                        return self.reply(422, {'status': exc.status, 'error': str(exc)})
+                    except (OSError, ValueError):
+                        return self.reply(500, {'status': 'ERROR', 'error': 'M03 연결 설정을 읽을 수 없습니다.'})
+                if path == "/api/development/m03/context":
+                    from .m03_integration import development_context
+                    try:
+                        with service.lock:
+                            context = development_context(service.root, service.config())
+                        return self.reply(200, context)
+                    except EvaluationError as exc:
+                        return self.reply(422, {"status": exc.status, "error": str(exc)})
+                    except OSError:
+                        return self.reply(500, {"status": "ERROR", "error": "Unable to prepare development M03 mock context"})
+                m03_saved = re.fullmatch(r'/api/development/m03/runs(?:/(DEV-M03-\d{8}T\d{6}-[a-f0-9]{12})/(scenarios|executions))?', path)
+                if m03_saved:
+                    from .m03_management import list_runs, scenario_state, execution_results
+                    try:
+                        with service.lock:
+                            result = (list_runs(service.root, session=service.session) if not m03_saved[1] else
+                                      scenario_state(service.root, m03_saved[1], session=service.session) if m03_saved[2] == 'scenarios' else
+                                      execution_results(service.root, m03_saved[1], session=service.session))
+                        return self.reply(200, result)
+                    except EvaluationError as exc:
+                        return self.reply(404 if exc.status == 'NOT_FOUND' else 422,
+                                          {'status': exc.status, 'error': str(exc)})
+                    except (OSError, ValueError):
+                        return self.reply(500, {'status': 'ERROR', 'error': 'M03 저장 기록을 읽을 수 없습니다.'})
                 if path in {"/api/development/m01/prod/status", "/api/development/m01/prod/events"}:
                     from .m01 import get_status, query_events, M01ProdError
                     try:
@@ -332,6 +375,41 @@ def make_handler(service):
         def do_POST(self):
             if not self.trusted_request():
                 return self.reply(403, {"error": "Local same-origin access required"})
+            m04_path = urlparse(self.path).path
+            if m04_path == '/api/development/m03/connection':
+                from .m03_setup import save_connection
+                try:
+                    length = int(self.headers.get('Content-Length', '0'))
+                    require(0 < length <= 131072 and not self.headers.get('Transfer-Encoding'), 'M03 연결 설정은 최대 128 KiB입니다.')
+                    require(self.headers.get('Content-Type', '').split(';', 1)[0].strip() == 'application/json', 'Content-Type application/json required')
+                    payload = json.loads(self.rfile.read(length), parse_constant=lambda _: (_ for _ in ()).throw(ValueError('Non-finite JSON')))
+                    with service.lock:
+                        result = save_connection(service.root, service.config(), payload)
+                    return self.reply(201, result)
+                except (ValueError, UnicodeError):
+                    return self.reply(400, {'status': 'ERROR', 'error': 'Invalid JSON or Content-Length'})
+                except EvaluationError as exc:
+                    return self.reply(409 if exc.status == 'RUNNING' else 422, {'status': exc.status, 'error': str(exc)})
+                except OSError:
+                    return self.reply(500, {'status': 'ERROR', 'error': 'M03 연결 설정을 저장할 수 없습니다.'})
+            m03_delete = re.fullmatch(r'/api/development/m03/runs/(DEV-M03-\d{8}T\d{6}-[a-f0-9]{12})/scenarios/delete', m04_path)
+            if m03_delete:
+                from .m03_management import delete_scenario
+                try:
+                    length = int(self.headers.get('Content-Length', '0'))
+                    require(0 < length <= 16384 and not self.headers.get('Transfer-Encoding'), 'M03 JSON 요청은 최대 16 KiB입니다.')
+                    require(self.headers.get('Content-Type', '').split(';', 1)[0].strip() == 'application/json', 'Content-Type application/json required')
+                    payload = json.loads(self.rfile.read(length), parse_constant=lambda _: (_ for _ in ()).throw(ValueError('Non-finite JSON')))
+                    with service.lock:
+                        result = delete_scenario(service.root, m03_delete[1], payload, session=service.session)
+                    return self.reply(200, result)
+                except (ValueError, UnicodeError):
+                    return self.reply(400, {'status': 'ERROR', 'error': 'Invalid JSON or Content-Length'})
+                except EvaluationError as exc:
+                    return self.reply(404 if exc.status == 'NOT_FOUND' else 422,
+                                      {'status': exc.status, 'error': str(exc)})
+                except OSError:
+                    return self.reply(500, {'status': 'ERROR', 'error': 'M03 삭제 상태를 저장할 수 없습니다.'})
             comparison_path = urlparse(self.path).path
             if comparison_path in {"/api/development/m01/ground-truths", "/api/development/m01/compare"}:
                 try:
@@ -375,6 +453,7 @@ def make_handler(service):
             generation = urlparse(self.path).path == '/api/m03/generate'
             if integration or generation:
                 try:
+                    require(not generation or not self.headers.get('X-KTL-M03-Adapter'), 'M03 HTTP 생성기를 이 서버의 생성 경로로 다시 연결할 수 없습니다.')
                     length=int(self.headers.get('Content-Length','0'))
                     require(0<length<=1048576 and not self.headers.get('Transfer-Encoding'),'JSON body required; maximum 1 MiB')
                     payload=json.loads(self.rfile.read(length),parse_constant=lambda _: (_ for _ in ()).throw(ValueError('Non-finite JSON number')))

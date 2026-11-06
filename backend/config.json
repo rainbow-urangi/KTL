@@ -9,6 +9,9 @@
     "M07": 80
   },
   "adapter_timeout_seconds": 120,
+  "m03": {
+    "generator_mode": "MOCK"
+  },
   "adapters": {
     "cleaning": [],
     "scenario_generation": []
