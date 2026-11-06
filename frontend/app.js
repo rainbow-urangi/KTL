@@ -1,5 +1,5 @@
 const labels = {M01:'수집 정확도',M02:'프로세스맵 정확도 및 완전성',M03:'테스트 시나리오 자동생성률',M04:'자동 실행 성공률',M05:'AI 데이터 정제 F1 Score',M06:'워크플로우 클러스터링 품질',M07:'LLM 생성 코드 유효성 및 정확도'};
-const descriptions = {M01:'5개 시나리오 · 2회 실행 · 필수 이벤트 100건',M02:'TD-03 업무 20종 · Ground Truth 5종 사후 비교',M03:'업무 10종 · 업무당 생성 요청 1회',M04:'시험 전 고정한 Selenium/Python 20건 · 각 1회 실행',M05:'학습·개발 미사용 held-out · KEEP 100건 / REMOVE 100건',M06:'OFFICIAL: 승인 V6.2 563×128 embedding · 12개 군집 DBI',M07:'구문·실행 모두 PASS / 실제 생성 코드 수 × 100'};
+const descriptions = {M01:'5개 시나리오 · 2회 실행 · 필수 이벤트 100건',M02:'TD-03 업무 20종 · Ground Truth 5종 사후 비교',M03:'업무 10종 · 업무당 생성 요청 1회',M04:'시험 전 고정한 Selenium/Python 10건 · 각 1회 실행',M05:'학습·개발 미사용 held-out · KEEP 100건 / REMOVE 100건',M06:'OFFICIAL: 승인 V6.2 563×128 embedding · 12개 군집 DBI',M07:'구문·실행 모두 PASS / 실제 생성 코드 수 × 100'};
 const app = document.querySelector('#app');
 const requestedMode = new URLSearchParams(location.search).get('mode');
 const mode = ['OFFICIAL','DEVELOPMENT'].includes(requestedMode) ? requestedMode : 'REFERENCE';
@@ -27,6 +27,7 @@ function ktlCheckServerSession(response,data,requestedSession) {
   if(!serverSessionReloading) {
     serverSessionReloading=true;
     ++m03RequestNumber;m03View=null;
+    if(typeof m04RequestNumber!=='undefined') {++m04RequestNumber;clearTimeout(m04PollTimer);m04View=null;}
     ++csvRequestNumber;++prodRequestNumber;++csvDatasetListRequestNumber;++m01UploadRequestNumber;
     ++m01AutoRequestNumber;++m01SelectionRequestNumber;++comparisonRequestNumber;++comparisonVerificationRequestNumber;
     csvReport=null;prodReport=null;m01TruthReport=null;truthDetailBusy=false;comparisonBusy=false;
@@ -71,6 +72,7 @@ function detailView(d) {
 function renderMetric(m) {
   if (dev && m.metric_id === 'M01') return renderM01Csv(m);
   if (dev && m.metric_id === 'M03') return renderM03(m);
+  if (dev && m.metric_id === 'M04') return renderM04(m);
   const r=m.latest;
   document.title=`${mode} · ${m.metric_id} · Rainbow`;
   app.innerHTML=`${banner()}<a class="back" href="${link('/')}">← 전체 평가</a><section class="page-heading"><div><p class="eyebrow">${m.metric_id} / ${mode}</p><h1>${labels[m.metric_id]}</h1><p class="subtitle">${esc(m.metric_name)}</p></div>${badge(m)}</section><section class="evaluation-panel"><div class="panel-heading"><h2>입력 및 현재 준비 상태</h2></div><div class="dataset-grid"><div><label>테스트 데이터셋</label><code>${esc(m.dataset || '공식 평가 데이터 대기 중')}</code></div><div><label>${dev?'개발 데이터 입력 수':ref?'Reference 케이스 / 입력 수':'공식 설계 케이스 수'}</label><strong>${dev?(m.latest?.sample_count??'—'):ref?(m.details.ground_truth_count??m.details.workflow_count??m.details.process_model_count??'—'):(m.expected_sample_count??'실제 생성 코드 수')}</strong></div><div><label>${ref?'Target Reference':'Target'}</label><strong>${m.target==null?'미설정':esc(m.operator)+' '+score(m.target,m.metric_id)}</strong></div></div>${detailView(m.details)}${m.error?`<p class="notice">${esc(m.error)}</p>`:''}<div class="run-row"><p>실행 또는 준비 상태 확인 결과를 근거 파일로 저장합니다.</p><button id="run">${dev && ['M02','M06'].includes(m.metric_id)?'개발 모델 및 M02/M06 실행':['READY','REFERENCE_READY'].includes(m.status)?'평가 실행':'준비 상태 기록'} →</button></div></section><p id="run-status" role="status"></p><section class="result-panel"><div class="panel-heading"><h2>${dev?'DEVELOPMENT RESULT':ref?'Reference Result':'공식 실행 결과'}</h2>${r?`<a class="download" href="${esc(r.evidence_file)}" download>CSV 다운로드 ↓</a>`:''}</div><div class="result-grid"><div><label>${ref?'Reference Score':'Measured Score'}</label><strong class="large-score">${score(r?.score,m.metric_id)}</strong></div><div><label>실행 시 목표값</label><strong>${r?.target==null?'—':esc(r.operator)+' '+score(r.target,m.metric_id)}</strong></div><div><label>${nonofficial?'Threshold Met (비공식)':'공식 판정'}</label><strong>${nonofficial?(r?.threshold_met==null?'—':r.threshold_met?'YES':'NO'):''}</strong>${nonofficial?'':badge(r)}</div><div><label>실행 상태</label>${badge(r)}</div></div>${r?`<p class="run-meta">${esc(r.run_id)} · ${esc(r.completed_at)}</p>${r.error?`<p class="notice">${esc(r.error)}</p>`:''}${detailView(r.details)}<a class="download" href="${esc(r.manifest_file)}">Run manifest</a><details><summary>결과 및 입력 해시</summary><pre>${esc(JSON.stringify(r,null,2))}</pre></details>`:'<p class="empty">아직 이 모드의 실행 기록이 없습니다.</p>'}</section>`;
@@ -503,7 +505,7 @@ function renderM03(m) {
     </details>
     <section class="result-panel" id="m03-result"></section>
     <details class="m03-history"><summary>저장된 시나리오</summary><div id="m03-history"></div></details>
-    <section class="result-panel m03-flow-panel"><div class="panel-heading"><div><h2>시나리오 흐름</h2><p class="subtitle">업무를 선택하고 노드를 누르면 단계별 내용을 볼 수 있습니다.</p></div><div class="m03-actions"><button id="m03-download" class="m03-secondary" type="button" disabled>시나리오 JSON ↓</button><button id="m03-delete" class="m03-secondary" type="button" disabled>선택 시나리오 삭제</button></div></div>
+    <section class="result-panel m03-flow-panel"><div class="panel-heading"><div><h2>시나리오 흐름</h2><p class="subtitle">업무를 선택하고 노드를 누르면 단계별 내용을 볼 수 있습니다.</p></div><div class="m03-actions"><a id="m03-m04-handoff" class="outlined" hidden>M04에서 실행 준비 →</a><button id="m03-download" class="m03-secondary" type="button" disabled>시나리오 JSON ↓</button><button id="m03-delete" class="m03-secondary" type="button" disabled>선택 시나리오 삭제</button></div></div>
       <p id="m03-deletion-note" class="run-meta" hidden></p>
       <div class="m03-workspace"><aside class="m03-scenario-sidebar"><p class="m03-list-heading">생성된 업무</p><div id="m03-scenarios"></div></aside>
       <div class="m03-map-panel"><div class="m03-map-heading"><div><h3 id="m03-graph-title">시나리오 선택</h3><p id="m03-graph-meta"></p></div><div class="m03-zoom-controls"><button id="m03-zoom-out" type="button" aria-label="흐름도 축소">−</button><button id="m03-zoom-fit" type="button" aria-label="흐름도 화면에 맞춤">맞춤</button><span id="m03-zoom-value"></span><button id="m03-zoom-in" type="button" aria-label="흐름도 확대">＋</button></div></div>
@@ -608,7 +610,7 @@ function paintM03() {
   const validations=new Map((Array.isArray(d.rows)?d.rows:[]).map(row=>[row.business_unit_id,row]));
   if(!Number.isInteger(state.selectedScenario)||!state.scenarios[state.selectedScenario]) state.selectedScenario=0;
   const current=state.scenarios[state.selectedScenario];
-  for(const metric of []) {
+  for(const metric of ['m04']) {
     const handoff=document.querySelector(`#m03-${metric}-handoff`);
     handoff.hidden=!(state.managementReady&&r?.run_mode==='DEVELOPMENT'&&m03ResultPath(r.run_id)&&typeof current?.scenario_id==='string'&&current.scenario_id.trim()&&current.status!=='FAILED');
     if(!handoff.hidden) handoff.href=`/metrics/${metric}?${new URLSearchParams({mode:'DEVELOPMENT',m03_run_id:r.run_id,scenario_id:current.scenario_id})}`;
@@ -694,7 +696,7 @@ function paintM03Executions() {
   const row=m03View.scenarios[m03View.selectedScenario],target=document.querySelector('#m03-execution-results');
   if(!row) {target.innerHTML='';return;}
   const runs=(m03View.executions||[]).filter(item=>item.scenario_id===row.scenario_id);
-  target.innerHTML=`<h3>M04 실행 결과</h3>${m03View.executionError?`<p class="subtitle">${esc(m03View.executionError)}</p>`:runs.length?runs.map(item=>`<div class="m03-execution"><span class="badge ${item.status==='PASS'?'pass':item.status==='FAIL'||item.status==='ERROR'?'warning':'neutral'}">${esc(item.status||item.execution_status)}</span><span>${esc(item.started_at||'실행 시각 없음')}${item.duration_ms!=null?' · '+esc((item.duration_ms/1000).toFixed(2))+'초':''}${item.error?' · '+esc(item.error):''}</span></div>`).join(''):'<p class="subtitle">이 시나리오의 M04 실행 결과가 없습니다.</p>'}`;
+  target.innerHTML=`<h3>M04 실행 결과</h3>${m03View.executionError?`<p class="subtitle">${esc(m03View.executionError)}</p>`:runs.length?runs.map(item=>`<a class="m03-execution" href="/metrics/m04?${new URLSearchParams({mode:'DEVELOPMENT',execution_id:item.execution_id})}"><span class="badge ${item.status==='PASS'?'pass':item.status==='FAIL'||item.status==='ERROR'?'warning':'neutral'}">${esc(item.status||item.execution_status)}</span><span>${esc(item.started_at||'실행 시각 없음')}${item.duration_ms!=null?' · '+esc((item.duration_ms/1000).toFixed(2))+'초':''}${item.error?' · '+esc(item.error):''}</span><small>상세 결과 →</small></a>`).join(''):'<p class="subtitle">이 시나리오의 M04 실행 결과가 없습니다.</p>'}`;
 }
 async function loadM03Management(runId,token) {
   const [state,executions]=await Promise.allSettled([m03Json(m03ManagementPath(runId)),m03Json(m03ManagementPath(runId,'executions'))]);

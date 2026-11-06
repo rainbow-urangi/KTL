@@ -14,3 +14,6 @@ data/evaluation/m03-mock-development-*/
 data/evaluation/m03-real-development-*/
 data/development/m03_http/
 data/development/m03_connection.json
+data/development/m04_runner/
+data/evaluation/m04-development-*/
+data/development/execution_contexts/

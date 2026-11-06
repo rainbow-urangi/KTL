@@ -40,7 +40,15 @@ class Service:
         self.root = Path(root).resolve()
         self.lock = threading.Lock()
         self.session = RuntimeSession() if session_scoped else None
+        self._m04 = None
 
+    # M04 개발 실행 연결
+    def m04(self):
+        with self.lock:
+            if self._m04 is None:
+                from .m04 import M04Manager
+                self._m04 = M04Manager(self.root, self.config, session=self.session)
+            return self._m04
 
     def config(self):
         config = read_json(self.root / "backend/config.json")
@@ -246,6 +254,33 @@ def make_handler(service):
                 return self.reply(403, {"error": "Local same-origin access required"})
             path = urlparse(self.path).path
             try:
+                if path.startswith('/api/development/m04/'):
+                    try:
+                        manager = service.m04()
+                        if path == '/api/development/m04/scripts':
+                            return self.reply(200, manager.scripts())
+                        if path == '/api/development/m04/executions':
+                            return self.reply(200, manager.list_runs())
+                        screenshot = re.fullmatch(r'/api/development/m04/executions/(M04-RUN-[a-f0-9]{32})/screenshots/(CASE-\d{3})/(before|after)\.png', path)
+                        if screenshot:
+                            raw, mime = manager.screenshot(screenshot[1], screenshot[2], screenshot[3])
+                            return self.reply(200, raw, mime)
+                        script = re.fullmatch(r'/api/development/m04/scripts/([0-9a-f]{32})', path)
+                        if script:
+                            return self.reply(200, manager.read_script(script[1]))
+                        execution = re.fullmatch(r'/api/development/m04/executions/(M04-RUN-[0-9a-f]{32})', path)
+                        if execution:
+                            return self.reply(200, manager.read(execution[1]))
+                        artifact = re.fullmatch(r'/api/development/m04/executions/(M04-RUN-[0-9a-f]{32})/artifacts/([a-z.]+)', path)
+                        if artifact:
+                            raw, content_type = manager.artifact(artifact[1], artifact[2])
+                            return self.reply(200, raw, content_type, artifact[2])
+                        return self.reply(404, {'status': 'NOT_FOUND', 'error': 'M04 경로를 찾을 수 없습니다.'})
+                    except EvaluationError as exc:
+                        return self.reply(404 if exc.status == 'NOT_FOUND' else 409 if exc.status in {'RUNNING', 'DUPLICATE_EXECUTION'} else 422,
+                                          {'status': exc.status, 'error': str(exc)})
+                    except (OSError, ValueError):
+                        return self.reply(500, {'status': 'ERROR', 'error': 'M04 실행 기록을 읽을 수 없습니다.'})
                 if path == '/api/development/m03/connection':
                     from .m03_setup import connection_state
                     try:
@@ -355,6 +390,7 @@ def make_handler(service):
                         return self.reply(404, {"error": "Result not found"})
                     return self.reply(200, file.read_bytes(), "text/csv; charset=utf-8" if filename.endswith("csv") else "application/json; charset=utf-8", filename.endswith("csv"))
                 assets = {"/": "index.html", "/app.js": "app.js", "/style.css": "style.css",
+                          "/m04.js": "m04.js", "/m04.css": "m04.css",
                           "/developer/integration-api": "integration-sandbox.html",
                           "/developer/integration-api/": "integration-sandbox.html",
                           "/integration-sandbox.js": "integration-sandbox.js",
@@ -410,6 +446,29 @@ def make_handler(service):
                                       {'status': exc.status, 'error': str(exc)})
                 except OSError:
                     return self.reply(500, {'status': 'ERROR', 'error': 'M03 삭제 상태를 저장할 수 없습니다.'})
+            if m04_path.startswith('/api/development/m04/'):
+                try:
+                    require(self.headers.get('Content-Type', '').split(';', 1)[0].strip() == 'application/json', 'Content-Type application/json required')
+                    length = int(self.headers.get('Content-Length', '0'))
+                    require(0 < length <= 1048576 and not self.headers.get('Transfer-Encoding'), 'JSON body required; maximum 1 MiB')
+                    payload = json.loads(self.rfile.read(length), parse_constant=lambda _: (_ for _ in ()).throw(ValueError('Non-finite JSON number')))
+                    manager = service.m04()
+                    if m04_path == '/api/development/m04/scripts':
+                        return self.reply(201, manager.register(payload))
+                    if m04_path == '/api/development/m04/executions':
+                        return self.reply(202, manager.create(payload))
+                    cancel = re.fullmatch(r'/api/development/m04/executions/(M04-RUN-[0-9a-f]{32})/cancel', m04_path)
+                    if cancel:
+                        require(isinstance(payload, dict) and not payload, 'Cancel takes an empty JSON object')
+                        return self.reply(200, manager.cancel(cancel[1]))
+                    return self.reply(404, {'status': 'NOT_FOUND', 'error': 'M04 경로를 찾을 수 없습니다.'})
+                except (ValueError, UnicodeError):
+                    return self.reply(400, {'status': 'ERROR', 'error': 'Invalid JSON or Content-Length'})
+                except EvaluationError as exc:
+                    return self.reply(404 if exc.status == 'NOT_FOUND' else 409 if exc.status in {'RUNNING', 'DUPLICATE_EXECUTION'} else 422,
+                                      {'status': exc.status, 'error': str(exc)})
+                except OSError:
+                    return self.reply(500, {'status': 'ERROR', 'error': 'M04 실행 파일과 기록을 저장할 수 없습니다.'})
             comparison_path = urlparse(self.path).path
             if comparison_path in {"/api/development/m01/ground-truths", "/api/development/m01/compare"}:
                 try:
