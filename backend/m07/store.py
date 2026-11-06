@@ -1,0 +1,656 @@
+# M07 생성 원본과 문법·실행 검사 기록
+import ast
+import base64
+import csv
+import io
+import json
+import re
+import threading
+import uuid
+import zipfile
+from copy import deepcopy
+from pathlib import Path
+
+from ..evaluators import EvaluationError, require
+from .. import execution_contexts
+from ..integration_store import ingest
+from ..m03_integration import validate_scenario_result
+from ..m03_management import scenario_deleted
+from ..m04.store import M04Manager, _RunLock, _encoded, _masked, _now, _sha
+from .generator import PROMPT_VERSION, GenerationError, generate, readiness, settings
+from .prepared import read_codes
+
+
+ACTIVE = {'QUEUED', 'GENERATING', 'VALIDATING'}
+M03_ID = re.compile(r'DEV-M03-\d{8}T\d{6}-[a-f0-9]{12}')
+
+
+def _scenario_declared(tree, identity):
+    for node in ast.walk(tree):
+        if isinstance(node, (ast.Assign, ast.AnnAssign)):
+            targets = node.targets if isinstance(node, ast.Assign) else [node.target]
+            if (any(isinstance(target, ast.Name) and target.id == 'SCENARIO_ID' for target in targets)
+                    and isinstance(node.value, ast.Constant) and node.value.value == identity):
+                return True
+    return False
+
+
+class M07Manager(M04Manager):
+    _execution_pattern = re.compile(r'M07-GEN-[a-f0-9]{32}')
+    _session_kind = 'M07'
+
+    def __init__(self, root, config_provider, generator=None, session=None):
+        self.root = Path(root).resolve()
+        self.config_provider = config_provider
+        self.session = session
+        self.generator = generator or generate
+        self.directory = self._safe(self.root / 'data/development/m07_codes')
+        self.execution_directory = self._safe(self.directory / 'generations')
+        self.execution_directory.mkdir(parents=True, exist_ok=True)
+        self.lock = threading.RLock()
+        self._active = self._process = None
+        self._recover()
+
+    def _sync(self, job):
+        for case in job['cases']:
+            if job['status'] == 'VALIDATING' and case['syntax_status'] == 'PASS':
+                case['execution_status'] = case['status']
+            passed = all(case[key] == 'PASS' for key in ('generation_status', 'syntax_status', 'execution_status'))
+            case['final_status'] = 'PASS' if passed else 'PENDING' if any(case[key] in {'PENDING', 'RUNNING'}
+                                        for key in ('generation_status', 'syntax_status', 'execution_status')) else 'FAIL'
+        self._counts(job)
+
+    def _save(self, job):
+        self._sync(job)
+        super()._save(job)
+
+    @staticmethod
+    def _counts(job):
+        cases = job['cases']
+        job['counts'] = dict(generation_request_count=len(cases),
+                             generated_code_count=sum(c['generation_status'] == 'PASS' for c in cases),
+                             syntax_pass_count=sum(c['syntax_status'] == 'PASS' for c in cases),
+                             execution_pass_count=sum(c['execution_status'] == 'PASS' for c in cases),
+                             both_pass_count=sum(all(c[k] == 'PASS' for k in ('generation_status', 'syntax_status', 'execution_status')) for c in cases))
+
+    def _interrupt(self, job, reason):
+        for case in job['cases']:
+            active_execution = (job['status'] == 'VALIDATING'
+                                and (case['status'] in {'PENDING', 'RUNNING'} or case['execution_status'] == 'RUNNING')
+                                and (case.get('started_at') or case['status'] == 'RUNNING' or case['execution_status'] == 'RUNNING'))
+            if active_execution:
+                self._interrupted_case(case, reason)
+                case['execution_status'] = 'FAIL'
+            for key in ('generation_status', 'syntax_status', 'execution_status', 'status'):
+                if case[key] in {'PENDING', 'RUNNING'}:
+                    case[key] = 'SKIPPED'
+        job.update(status='INTERRUPTED', completed_at=_now(), error=reason, result=None)
+        self._log(job, None, reason)
+        self._save(job)
+
+    def _recover(self):
+        with self.lock:
+            lock = self._global_lock()
+            if not lock:
+                return
+            try:
+                for path in self.execution_directory.glob('*/execution.json'):
+                    if not self._session_has(self._session_kind, path.parent.name):
+                        continue
+                    job = self._json(path)
+                    if job.get('status') in ACTIVE:
+                        self._interrupt(job, '이전 작업이 중단되어 점수를 계산하지 않았습니다.')
+            finally:
+                lock.close()
+
+    def _source(self, run_id, scenario_id):
+        require(isinstance(run_id, str) and M03_ID.fullmatch(run_id), '저장된 DEVELOPMENT M03 실행 ID가 필요합니다.')
+        self._session_check('RESULT', run_id)
+        folder = self._safe(self.root / 'results/development' / run_id)
+        result = self._json(folder / 'result.json')
+        payload = self._json(folder / 'received_payload.json')
+        require(result.get('metric_id') == 'M03' and result.get('run_mode') == 'DEVELOPMENT'
+                and result.get('status') == 'COMPLETED', '저장된 M03 생성 결과가 필요합니다.')
+        rows = payload.get('scenarios', [])
+        matches = [row for row in rows if isinstance(row, dict) and row.get('scenario_id') == scenario_id]
+        require(len(matches) == 1 and validate_scenario_result(matches[0])['success'], '유효한 M03 시나리오가 필요합니다.')
+        source = deepcopy(matches[0])
+        details = payload.get('details', {})
+        synthetic = source.get('synthetic') is True or source.get('generator_mode') == 'MOCK' or details.get('synthetic') is True
+        return source, synthetic
+
+    def context(self):
+        config = self.config_provider()
+        ready = readiness(self.root, config)
+        ready.update(self._readiness())
+        ready['message'] = readiness(self.root, config)['message'] if not ready['configured'] else ready['message']
+        scenarios = []
+        paths = [path for path in sorted((self.root / 'results/development').glob('DEV-M03-*/received_payload.json'), reverse=True)
+                 if self._session_has('RESULT', path.parent.name)]
+        for path in paths[:200]:
+            try:
+                payload = self._json(path)
+                for row in payload.get('scenarios', []):
+                    if (isinstance(row, dict) and validate_scenario_result(row)['success']
+                            and not scenario_deleted(self.root, path.parent.name, row['scenario_id'])):
+                        source, synthetic = self._source(path.parent.name, row['scenario_id'])
+                        source_hash = _sha(_encoded(source))
+                        try:
+                            self._execution_inputs(source, path.parent.name)
+                            source.update(execution_ready=True, execution_notice='')
+                        except EvaluationError as exc:
+                            source.update(execution_ready=False, execution_notice=str(exc))
+                        source.update(m03_run_id=path.parent.name, source_synthetic=synthetic, source_scenario_sha256=source_hash)
+                        scenarios.append(source)
+            except (EvaluationError, OSError, ValueError, TypeError):
+                continue
+        return dict(run_mode='DEVELOPMENT', readiness=ready, scenarios=scenarios,
+                    target_url=settings(self.root, config)['target_url'])
+
+    def execution_context(self, m03_run_id, scenario_id):
+        source, _ = self._source(m03_run_id, scenario_id)
+        require(not scenario_deleted(self.root, m03_run_id, scenario_id), '삭제한 시나리오의 실행 조건은 편집할 수 없습니다.')
+        return {'execution_context': execution_contexts.editor(self.root, m03_run_id, source, self.config_provider())}
+
+    def save_execution_context(self, payload):
+        require(isinstance(payload, dict) and set(payload) == {'m03_run_id', 'scenario_id', 'execution_contract', 'expected_results'},
+                '시나리오 ID, 실행 계약, 단계 기대 결과가 필요합니다.')
+        run_id, scenario_id = payload['m03_run_id'], payload['scenario_id']
+        source, _ = self._source(run_id, scenario_id)
+        require(not scenario_deleted(self.root, run_id, scenario_id), '삭제한 시나리오의 실행 조건은 저장할 수 없습니다.')
+        with self.lock:
+            value = execution_contexts.save(self.root, run_id, source, self.config_provider(),
+                                            payload['execution_contract'], payload['expected_results'])
+        return {'execution_context': value}
+
+    def select_scenarios(self, payload):
+        require(isinstance(payload, dict) and set(payload) == {'items'} and isinstance(payload['items'], list)
+                and 1 <= len(payload['items']) <= 20, '저장된 시나리오 또는 원본 참조 1~20건이 필요합니다.')
+        available = self.context()['scenarios']
+        selected = []
+        for position, item in enumerate(payload['items'], 1):
+            require(isinstance(item, dict) and isinstance(item.get('scenario_id'), str),
+                    '각 입력에 scenario_id가 필요합니다.')
+            if 'm03_run_id' in item and 'steps' not in item:
+                require(set(item) == {'m03_run_id', 'scenario_id', 'source_scenario_sha256'}
+                        and isinstance(item.get('source_scenario_sha256'), str)
+                        and re.fullmatch(r'[a-f0-9]{64}', item['source_scenario_sha256']),
+                        '원본 참조에는 M03 실행 ID, 시나리오 ID와 원본 SHA-256이 필요합니다.')
+                matches = [row for row in available if row['m03_run_id'] == item['m03_run_id']
+                           and row['scenario_id'] == item['scenario_id']
+                           and row['source_scenario_sha256'] == item['source_scenario_sha256']]
+            else:
+                raw_hash = _sha(_encoded(item))
+                matches = [row for row in available if row['scenario_id'] == item['scenario_id']
+                           and row['source_scenario_sha256'] == raw_hash]
+            require(len(matches) == 1, '입력 ' + str(position) + '이 저장된 M03 원본과 일치하지 않거나 중복됩니다. 실행 ID와 원본 해시를 확인하세요.')
+            row = matches[0]
+            if row['execution_ready'] is not True:
+                raise EvaluationError('입력 ' + str(position) + '의 실행 조건을 먼저 저장하세요.', 'NOT_READY')
+            selected.append(dict(m03_run_id=row['m03_run_id'], scenario_id=row['scenario_id'],
+                                 source_scenario_sha256=row['source_scenario_sha256']))
+        require(len({row['scenario_id'] for row in selected}) == len(selected), '동일 시나리오를 여러 시험 건수로 선택할 수 없습니다.')
+        return dict(scenario_refs=selected, selected_count=len(selected))
+
+    def list_runs(self):
+        self._recover()
+        values = [self._json(p) for p in self.execution_directory.glob('*/execution.json')
+                  if self._session_has(self._session_kind, p.parent.name)]
+        values.sort(key=lambda item: item['started_at'], reverse=True)
+        return {'generations': [{k: v for k, v in job.items() if k not in {'cases', 'logs'}} for job in values]}
+
+    def read(self, execution_id):
+        self._recover()
+        return {'generation': self._job(execution_id)}
+
+    def create(self, payload):
+        require(isinstance(payload, dict) and payload.get('run_mode', 'DEVELOPMENT') == 'DEVELOPMENT', 'M07 DEVELOPMENT 요청이 필요합니다.')
+        require(set(payload) <= {'run_mode', 'scenario_refs', 'm03_run_id', 'scenario_ids', 'prepared_codes'}, '지원하지 않는 생성 요청 항목입니다.')
+        prepared_request = 'prepared_codes' in payload
+        if not prepared_request and not readiness(self.root, self.config_provider())['configured'] and self.generator is generate:
+            raise EvaluationError('OpenAI API 키와 KTL_M07_MODEL 설정이 필요합니다.', 'NOT_CONFIGURED')
+        refs = payload.get('scenario_refs')
+        if refs is None:
+            ids = payload.get('scenario_ids')
+            require(isinstance(ids, list), '시나리오 선택이 필요합니다.')
+            refs = [dict(m03_run_id=payload.get('m03_run_id'), scenario_id=value) for value in ids]
+        require(isinstance(refs, list) and 1 <= len(refs) <= 20
+                and all(isinstance(row, dict) and isinstance(row.get('scenario_id'), str) for row in refs), '서로 다른 시나리오 1~20건을 선택하세요.')
+        require(len({row['scenario_id'] for row in refs}) == len(refs), '중복 시나리오는 별도 시험 건수로 등록할 수 없습니다.')
+        for row in refs:
+            self._session_check('RESULT', row.get('m03_run_id'))
+        registered = read_codes(self.root, payload['prepared_codes'], refs) if prepared_request else {}
+        require(all(not scenario_deleted(self.root, row.get('m03_run_id'), row['scenario_id']) for row in refs),
+                '삭제한 M03 시나리오는 새 코드 생성에 사용할 수 없습니다.')
+        sources = [(row, *self._source(row.get('m03_run_id'), row['scenario_id'])) for row in refs]
+        for ref, source, _ in sources:
+            if 'source_scenario_sha256' in ref:
+                require(isinstance(ref['source_scenario_sha256'], str) and re.fullmatch(r'[a-f0-9]{64}', ref['source_scenario_sha256'])
+                        and _sha(_encoded(source)) == ref['source_scenario_sha256'],
+                        '선택한 M03 원본이 변경되었습니다. 원본을 확인하고 다시 선택하세요.')
+        prepared_inputs = [self._execution_inputs(source, ref['m03_run_id']) for ref, source, _ in sources]
+        with self.lock:
+            run_lock = self._global_lock()
+            if not run_lock:
+                raise EvaluationError('M07 작업이 실행 중입니다.', 'RUNNING')
+            try:
+                self._recover_locked()
+                identity = 'M07-GEN-' + uuid.uuid4().hex
+                self._session_claim(self._session_kind, identity)
+                folder = self._safe(self.execution_directory / identity)
+                folder.mkdir()
+                cases = []
+                for index, ((ref, source, synthetic), prepared) in enumerate(zip(sources, prepared_inputs), 1):
+                    contract = prepared['contract']
+                    case_id = 'CASE-' + str(index).zfill(3)
+                    case_dir = self._safe(folder / case_id)
+                    case_dir.mkdir()
+                    raw = _encoded(source)
+                    (case_dir / 'source_scenario.json').write_bytes(raw)
+                    execution_raw = _encoded(prepared['scenario'])
+                    (case_dir / 'execution_scenario.json').write_bytes(execution_raw)
+                    contract_raw = _encoded(contract)
+                    (case_dir / 'execution_contract.json').write_bytes(contract_raw)
+                    cases.append(dict(case_id=case_id, scenario_id=source['scenario_id'],
+                                      scenario_name=source.get('scenario_name', source['scenario_id']),
+                                      source_m03_run_id=ref['m03_run_id'], source_synthetic=synthetic,
+                                      source_scenario_sha256=_sha(raw), status='PENDING',
+                                      execution_contract_sha256=_sha(contract_raw), execution_contract_version=contract['version'],
+                                      execution_scenario_sha256=_sha(execution_raw), execution_context_revision_id=prepared['revision_id'],
+                                      business_step_required=True,
+                                      generation_status='PENDING', syntax_status='PENDING', execution_status='PENDING',
+                                      final_status='PENDING', steps=[], error=None))
+                    if prepared_request:
+                        record = registered[source['scenario_id']]
+                        metadata = dict(code_source='PREPARED', generated_by_llm=False,
+                                        scenario_id=source['scenario_id'], source_filename=record['source_filename'],
+                                        source_file_sha256=record['source_file_sha256'], registered_at=_now())
+                        origin = _encoded(metadata)
+                        for name, content in (('prepared_code.py', record['raw']), ('prepared_source.json', origin)):
+                            with (case_dir / name).open('xb') as output:
+                                output.write(content)
+                        cases[-1].update(code_source='PREPARED', generated_by_llm=False,
+                                         source_filename=record['source_filename'], source_file_sha256=record['source_file_sha256'],
+                                         prepared_source_sha256=_sha(origin))
+                job = dict(execution_id=identity, generation_id=identity, status='QUEUED', run_mode='DEVELOPMENT',
+                           started_at=_now(), completed_at=None, cases=cases, logs=[], result=None, error=None,
+                           artifacts=[dict(name=name, url=f'/api/development/m07/generations/{identity}/artifacts/{name}')
+                                      for name in ('report.json', 'log.jsonl', 'steps.csv', 'code.zip', 'screenshots.zip')])
+                if prepared_request:
+                    job.update(code_source='PREPARED', generated_by_llm=False)
+                if getattr(self, 'session', None) is not None:
+                    job['server_session_id'] = self.session.id
+                self._save(job)
+                self._launch(identity, 'generate', run_lock)
+                return {'generation': deepcopy(job)}
+            except BaseException:
+                run_lock.close()
+                raise
+
+    def _recover_locked(self):
+        for path in self.execution_directory.glob('*/execution.json'):
+            if not self._session_has(self._session_kind, path.parent.name):
+                continue
+            job = self._json(path)
+            if job.get('status') in ACTIVE:
+                self._interrupt(job, '이전 작업이 중단되어 점수를 계산하지 않았습니다.')
+
+    def _launch(self, identity, phase, run_lock, browser_lock=None):
+        self._active = identity
+        threading.Thread(target=self._work, args=(identity, phase, run_lock, browser_lock),
+                         daemon=True, name='M07-' + identity[-8:]).start()
+
+    def validate(self, identity):
+        with self.lock:
+            job = self._job(identity)
+            require(job['status'] == 'GENERATED', '생성 완료 후 한 번만 검사할 수 있습니다.')
+            # 이전 생성 기록에 없는 검증 근거를 실패 점수로 만들지 않음
+            for case in job['cases']:
+                if case.get('generation_status') == 'PASS':
+                    if (not isinstance(case.get('execution_contract_sha256'), str)
+                            or not re.fullmatch(r'[0-9a-f]{64}', case['execution_contract_sha256'])
+                            or not self._case_path(job, case, 'execution_contract.json').is_file()):
+                        raise EvaluationError('이전 생성 기록에는 독립 실행 조건이 없습니다. 원본을 보관하고 현재 조건으로 새로 생성하세요.', 'NOT_READY')
+            ready = self._readiness()
+            if not ready['selenium'] or not ready['chrome']:
+                raise EvaluationError(ready['message'], 'NOT_CONFIGURED')
+            run_lock = self._global_lock()
+            if not run_lock:
+                raise EvaluationError('M07 작업이 실행 중입니다.', 'RUNNING')
+            lock_dir = self._safe(self.root / 'data/development/m04_runner')
+            lock_dir.mkdir(parents=True, exist_ok=True)
+            browser_lock = _RunLock(self._safe(lock_dir / 'runner.lock'))
+            if not browser_lock.acquire():
+                run_lock.close()
+                raise EvaluationError('다른 Selenium 실행이 진행 중입니다.', 'RUNNING')
+            try:
+                job.update(status='VALIDATING', validation_started_at=_now())
+                self._save(job)
+                self._launch(identity, 'validate', run_lock, browser_lock)
+                return {'generation': deepcopy(job)}
+            except BaseException:
+                browser_lock.close()
+                run_lock.close()
+                raise
+
+    def cancel(self, identity):
+        with self.lock:
+            job = self._job(identity)
+            if job['status'] in ACTIVE:
+                self._safe(self._job_path(identity).parent / 'cancel.request').touch(exist_ok=True)
+                job['cancel_requested'] = True
+            return {'generation': job}
+
+    def _case_path(self, job, case, name):
+        return self._safe(self._job_path(job['execution_id']).parent / case['case_id'] / name)
+
+    def _check(self, job, case):
+        for name, key in (('source_scenario.json', 'source_scenario_sha256'), ('script.py', 'sha256'),
+                          ('response.json', 'response_sha256'), ('prompt.json', 'prompt_sha256'),
+                          ('execution_scenario.json', 'execution_scenario_sha256'),
+                          ('execution_contract.json', 'execution_contract_sha256'),
+                          ('prepared_code.py', 'source_file_sha256'),
+                          ('prepared_source.json', 'prepared_source_sha256')):
+            if key in case:
+                require(_sha(self._case_path(job, case, name).read_bytes()) == case[key], '보관 원본 SHA-256 불일치: ' + name)
+        if job.get('code_source') == 'PREPARED':
+            require(case.get('code_source') == 'PREPARED' and case.get('generated_by_llm') is False
+                    and case.get('prepared_source_sha256') and case.get('source_file_sha256'),
+                    '등록 코드의 출처 근거가 일치하지 않습니다.')
+            origin = self._json(self._case_path(job, case, 'prepared_source.json'))
+            require(origin.get('code_source') == 'PREPARED' and origin.get('generated_by_llm') is False
+                    and origin.get('scenario_id') == case['scenario_id']
+                    and origin.get('source_filename') == case.get('source_filename')
+                    and origin.get('source_file_sha256') == case.get('source_file_sha256')
+                    and ('sha256' not in case or case['sha256'] == case['source_file_sha256']),
+                    '등록 코드 원본과 표시·검사 파일이 일치하지 않습니다.')
+
+    def _generate(self, job):
+        job['status'] = 'GENERATING'
+        self._save(job)
+        config = self.config_provider()
+        for case in job['cases']:
+            if self._cancelled(job['execution_id']):
+                self._interrupt(job, '사용자 생성 중단')
+                return
+            case.update(generation_status='RUNNING', generation_started_at=_now())
+            self._save(job)
+            try:
+                self._check(job, case)
+                if job.get('code_source') == 'PREPARED':
+                    raw = self._case_path(job, case, 'prepared_code.py').read_bytes()
+                    with self._case_path(job, case, 'script.py').open('xb') as output:
+                        output.write(raw)
+                    case.update(generation_status='PASS', sha256=_sha(raw), code_sha256=_sha(raw),
+                                generated_by_llm=False, business_step_required=True)
+                    self._log(job, case['case_id'], '등록한 원본 코드 불러오기 완료')
+                    self._check(job, case)
+                    case['generation_completed_at'] = _now()
+                    self._save(job)
+                    continue
+                scenario_file = 'execution_scenario.json' if case.get('execution_scenario_sha256') else 'source_scenario.json'
+                source = self._json(self._case_path(job, case, scenario_file))
+                generation_input = dict(source, execution_contract=self._json(self._case_path(job, case, 'execution_contract.json')))
+                value = self.generator(self.root, config, generation_input)
+                code = value['code'].encode('utf-8')
+                require(0 < len(code) <= 262144 and value.get('generated_by_llm') is True, 'LLM 생성 원본 근거가 필요합니다.')
+                response = value.get('response_bytes') or _encoded(value['response'])
+                prompt = _encoded({key: value.get(key) for key in ('instructions', 'input', 'prompt_version', 'requested_model')})
+                for name, raw in (('script.py', code), ('response.json', response), ('prompt.json', prompt)):
+                    with self._case_path(job, case, name).open('xb') as output:
+                        output.write(raw)
+                case.update(generation_status='PASS', sha256=_sha(code), code_sha256=_sha(code),
+                            response_sha256=_sha(response), prompt_sha256=_sha(prompt),
+                            model=value.get('model'), request_id=value.get('request_id'),
+                            prompt_version=value.get('prompt_version'), generated_by_llm=True,
+                            business_step_required=True)
+                self._log(job, case['case_id'], '코드 생성 원본 보관 완료')
+            except Exception as exc:
+                if isinstance(exc, GenerationError):
+                    proof = exc.evidence
+                    response = proof.get('response_bytes') or _encoded(proof.get('response', {}))
+                    prompt = _encoded({key: proof.get(key) for key in ('instructions', 'input', 'prompt_version', 'requested_model')})
+                    for name, raw, key in (('response.json', response, 'response_sha256'), ('prompt.json', prompt, 'prompt_sha256')):
+                        with self._case_path(job, case, name).open('xb') as output:
+                            output.write(raw)
+                        case[key] = _sha(raw)
+                    case.update(model=proof.get('model'), request_id=proof.get('request_id'), prompt_version=proof.get('prompt_version'))
+                case.update(generation_status='ERROR', syntax_status='SKIPPED', execution_status='SKIPPED',
+                            status='SKIPPED', error=_masked(exc))
+                self._log(job, case['case_id'], case['error'])
+            case['generation_completed_at'] = _now()
+            self._save(job)
+        if self._cancelled(job['execution_id']):
+            self._interrupt(job, '사용자 생성 중단')
+            return
+        self._archive(job)
+        job.update(status='GENERATED', generated_at=_now())
+        self._save(job)
+
+    def _archive(self, job):
+        buffer = io.BytesIO()
+        with zipfile.ZipFile(buffer, 'w', zipfile.ZIP_DEFLATED) as archive:
+            archive.writestr('generation.json', _encoded(dict(generation_id=job['generation_id'], cases=job['cases'])))
+            for case in job['cases']:
+                self._check(job, case)
+                for name in ('source_scenario.json', 'execution_scenario.json', 'execution_contract.json', 'script.py',
+                             'response.json', 'prompt.json', 'prepared_code.py', 'prepared_source.json'):
+                    path = self._case_path(job, case, name)
+                    if path.exists():
+                        archive.writestr(case['case_id'] + '/' + name, path.read_bytes())
+        raw = buffer.getvalue()
+        with self._safe(self._job_path(job['execution_id']).parent / 'code.zip').open('xb') as output:
+            output.write(raw)
+        job['archive_sha256'] = _sha(raw)
+
+    def _validate(self, job):
+        archive = self._safe(self._job_path(job['execution_id']).parent / 'code.zip').read_bytes()
+        require(_sha(archive) == job['archive_sha256'], '생성 원본 묶음 SHA-256 불일치')
+        for case in job['cases']:
+            if self._cancelled(job['execution_id']):
+                self._interrupt(job, '사용자 검사 중단')
+                return
+            if case['generation_status'] != 'PASS':
+                continue
+            self._check(job, case)
+            checked_code = self._case_path(job, case, 'script.py').read_bytes()
+            case['validation_code_sha256'] = _sha(checked_code)
+            require(case['validation_code_sha256'] == case['code_sha256'], '화면 코드와 문법 검사 원본이 다릅니다.')
+            try:
+                tree = ast.parse(checked_code, filename='script.py')
+            except (SyntaxError, UnicodeError, ValueError) as exc:
+                case.update(syntax_status='FAIL', execution_status='SKIPPED', status='SKIPPED',
+                            error='Python 문법 오류' + (' (행 ' + str(exc.lineno) + ')' if isinstance(exc, SyntaxError) else ''))
+                self._save(job)
+                continue
+            case['syntax_status'] = 'PASS'
+            imports = any((isinstance(node, ast.Import) and any(a.name.split('.')[0] == 'selenium' for a in node.names))
+                          or (isinstance(node, ast.ImportFrom) and (node.module or '').split('.')[0] == 'selenium') for node in ast.walk(tree))
+            if (not imports or not any(isinstance(node, ast.Assert) for node in ast.walk(tree))
+                    or not _scenario_declared(tree, case['scenario_id'])):
+                case.update(status='SKIPPED', error='Selenium import, 일치하는 SCENARIO_ID 및 기대 결과 assert가 필요합니다.')
+                self._save(job)
+                continue
+            try:
+                self._run_case(job, case)
+                if (case.get('business_step_required') and case['status'] == 'PASS'
+                        and (case.get('business_step_complete') is not True or case.get('independent_checks_passed') is not True)):
+                    case.update(status='FAIL', execution_status='FAIL', error='필수 업무 단계와 기대 결과 검증이 완료되지 않았습니다.')
+            except Exception as exc:
+                case.update(status='ERROR', execution_status='ERROR', error=_masked(exc))
+            self._save(job)
+            self._check(job, case)
+        if self._cancelled(job['execution_id']):
+            self._interrupt(job, '사용자 검사 중단')
+            return
+        self._sync(job)
+        if job['counts']['generated_code_count']:
+            self._evaluate(job, archive)
+        else:
+            job['error'] = '생성된 코드가 없어 점수를 계산할 수 없습니다.'
+        job.update(status='COMPLETED', completed_at=_now())
+        self._save(job)
+
+    def _evaluate(self, job, archive):
+        if job.get('code_source') == 'PREPARED':
+            counts = job['counts']
+            total = counts['generated_code_count']
+            value = 100 * counts['both_pass_count'] / total
+            target = self.config_provider().get('targets', {}).get('M07', 80)
+            job['result'] = dict(run_id=job['generation_id'], metric_id='M07', run_mode='DEVELOPMENT',
+                                 status='COMPLETED', score=value, sample_count=total, target=target, operator='>=',
+                                 threshold_met=value >= target, official_pass=None, completed_at=_now(),
+                                 details=dict(code_source='PREPARED', generated_by_llm=False,
+                                              source_module='prepared-code-validator', raw_counts=deepcopy(counts),
+                                              formula='both_pass_count / registered_code_count * 100',
+                                              denominator_policy='REGISTERED_CODE_COUNT', denominator=total,
+                                              notice='등록한 원본 코드의 실제 문법·실행 검사 결과입니다. LLM 생성 성능에는 포함하지 않습니다.'))
+            job['result']['pass'] = None
+            job['result']['provenance'] = dict(code_source='PREPARED', generated_by_llm=False,
+                                              source_module='prepared-code-validator', external_run_id=job['generation_id'])
+            return
+        dataset = 'm07-development-' + job['archive_sha256'][:12]
+        folder = self._safe(self.root / 'data/evaluation' / dataset)
+        folder.mkdir(parents=True, exist_ok=True)
+        manifest = dict(dataset_id=dataset, metric_id='M07', run_mode='DEVELOPMENT', source_type='DEVELOPMENT',
+                        official=False, data_class='DEVELOPMENT', synthetic=any(c['source_synthetic'] for c in job['cases']),
+                        files=[dict(path='code.zip', sha256=_sha(archive))])
+        for name, raw in (('code.zip', archive), ('data_manifest.json', _encoded(manifest))):
+            path = self._safe(folder / name)
+            if path.exists():
+                require(path.read_bytes() == raw, '보관 평가 입력 불일치')
+            else:
+                with path.open('xb') as output:
+                    output.write(raw)
+        config = deepcopy(self.config_provider())
+        config.setdefault('integration_datasets', {})[dataset] = dict(run_mode='DEVELOPMENT', manifest=(folder / 'data_manifest.json').relative_to(self.root).as_posix())
+        payload = dict(external_run_id=job['generation_id'], dataset_id=dataset, run_mode='DEVELOPMENT',
+                       source_module='llm-selenium-validator', source_version='m07-development-v1', submitted_at=_now(),
+                       dataset_manifest_sha256=_sha(_encoded(manifest)), counts=job['counts'], cases=job['cases'],
+                       details=dict(generation_id=job['generation_id'], generated_by_llm=True,
+                                    synthetic=manifest['synthetic'], archive_sha256=job['archive_sha256']))
+        job['result'] = ingest(self.root, config, 'M07', payload)
+        job['dataset_id'] = dataset
+
+    def _work(self, identity, phase, run_lock, browser_lock):
+        job = self._job(identity)
+        try:
+            self._generate(job) if phase == 'generate' else self._validate(job)
+        except BaseException as exc:
+            job.update(status='ERROR', completed_at=_now(), error=_masked(exc), result=None)
+            self._save(job)
+        finally:
+            self._active = None
+            if browser_lock:
+                browser_lock.close()
+            run_lock.close()
+
+    def code(self, identity, case_id):
+        job = self._job(identity)
+        case = next((c for c in job['cases'] if c['case_id'] == case_id), None)
+        require(case is not None, '코드 사례를 찾을 수 없습니다.')
+        self._check(job, case)
+        path = self._case_path(job, case, 'script.py')
+        raw = path.read_bytes() if path.exists() else b''
+        result = {'case': case, 'code': raw.decode('utf-8')}
+        if job.get('code_source') == 'PREPARED':
+            digest = _sha(raw)
+            result.update(code_base64=base64.b64encode(raw).decode('ascii'),
+                          identity_verification=dict(verified=digest == case['source_file_sha256'],
+                                                     source_sha256=case['source_file_sha256'], display_sha256=digest))
+        return result
+
+    def export_m04(self, identity, payload, manager):
+        require(isinstance(payload, dict) and set(payload) == {'case_ids'}, '고정할 코드 목록이 필요합니다.')
+        ids = payload['case_ids']
+        require(isinstance(ids, list) and 1 <= len(ids) <= 10 and all(isinstance(x, str) for x in ids)
+                and len(set(ids)) == len(ids), 'M04 고정 대상은 서로 다른 코드 1~10건입니다.')
+        with self.lock:
+            run_lock = self._global_lock()
+            if not run_lock:
+                raise EvaluationError('M07 작업이 실행 중입니다.', 'RUNNING')
+            try:
+                job = self._job(identity)
+                require(job['status'] == 'GENERATED', 'M04 고정 대상은 실행 검사 전에 선택해야 합니다.')
+                cases = [c for c in job['cases'] if c['case_id'] in ids]
+                require(len(cases) == len(ids), '코드 사례를 찾을 수 없습니다.')
+                requests = []
+                for case in cases:
+                    require(case['generation_status'] == 'PASS', '생성된 원본 코드가 필요합니다.')
+                    self._check(job, case)
+                    raw = self._case_path(job, case, 'script.py').read_bytes()
+                    try:
+                        tree = ast.parse(raw)
+                    except (SyntaxError, ValueError, UnicodeError):
+                        raise EvaluationError('문법 오류 코드가 포함되어 고정할 수 없습니다.') from None
+                    selenium = any((isinstance(n, ast.Import) and any(a.name.split('.')[0] == 'selenium' for a in n.names))
+                                   or (isinstance(n, ast.ImportFrom) and (n.module or '').split('.')[0] == 'selenium') for n in ast.walk(tree))
+                    require(selenium and any(isinstance(n, ast.Assert) for n in ast.walk(tree))
+                            and _scenario_declared(tree, case['scenario_id']),
+                            'Selenium, 일치하는 SCENARIO_ID 및 assert가 포함된 코드가 필요합니다.')
+                    requests.append(dict(filename=case['case_id'].lower() + '.py', python_base64=base64.b64encode(raw).decode('ascii'),
+                                         scenario_id=case['scenario_id'], scenario_name=case['scenario_name'],
+                                         m03_run_id=case['source_m03_run_id'], source_m07_generation_id=identity, source_m07_case_id=case['case_id']))
+                scripts = [manager.register(request)['script'] for request in requests]
+                job.setdefault('m04_exports', []).append(dict(fixed_at=_now(), case_ids=ids, script_ids=[s['script_id'] for s in scripts]))
+                self._save(job)
+                return dict(scripts=scripts, m04_url='/metrics/m04?mode=DEVELOPMENT')
+            finally:
+                run_lock.close()
+
+    def artifact(self, identity, name):
+        job = self._job(identity)
+        require(name in {'report.json', 'log.jsonl', 'steps.csv', 'code.zip', 'screenshots.zip'}, '지원하지 않는 M07 파일입니다.')
+        if name == 'screenshots.zip':
+            from ..m04.store import verified_screenshots
+            buffer = io.BytesIO()
+            manifest = dict(generation_id=identity, run_mode='DEVELOPMENT', cases=[])
+            with zipfile.ZipFile(buffer, 'w', zipfile.ZIP_DEFLATED) as archive:
+                def entry(filename, raw):
+                    info = zipfile.ZipInfo(filename, date_time=(1980, 1, 1, 0, 0, 0))
+                    info.compress_type = zipfile.ZIP_DEFLATED
+                    archive.writestr(info, raw)
+                for case in job['cases']:
+                    folder = self._case_path(job, case, 'before.png').parent
+                    for metadata, raw in verified_screenshots(case, folder):
+                        entry(case['case_id'] + '/' + metadata['file'], raw)
+                    fields = ('phase', 'file', 'sha256', 'policy', 'captured_at', 'status', 'reason')
+                    manifest['cases'].append(dict(case_id=case['case_id'], scenario_id=case['scenario_id'],
+                                                 screenshots=[{key: frame.get(key) for key in fields} for frame in case.get('screenshots', [])]))
+                entry('screenshots.json', _encoded(manifest))
+            return buffer.getvalue(), 'application/zip'
+        if name == 'report.json':
+            return _encoded(job), 'application/json; charset=utf-8'
+        if name == 'log.jsonl':
+            return ''.join(json.dumps(row, ensure_ascii=False) + '\n' for row in job['logs']).encode('utf-8'), 'application/x-ndjson'
+        if name == 'steps.csv':
+            output = io.StringIO(newline='')
+            fields = ('execution_id', 'case_id', 'scenario_id', 'record_type', 'sequence', 'action', 'target',
+                      'expected_result', 'status', 'started_at', 'completed_at', 'duration_ms', 'failure_selector', 'error',
+                      'independent_checks_passed', 'check_results')
+            writer = csv.DictWriter(output, fieldnames=fields, extrasaction='ignore')
+            writer.writeheader()
+            for case in job['cases']:
+                records = [('business_step' if case.get('step_evidence_mode') == 'BUSINESS_STEPS' else 'action', step)
+                           for step in case['steps']]
+                records.extend(('action', step) for step in case.get('action_logs', []))
+                for kind, step in records:
+                    row = dict(step, execution_id=identity, case_id=case['case_id'], scenario_id=case['scenario_id'], record_type=kind)
+                    writer.writerow({key: "'" + value if isinstance(value, str) and value.lstrip().startswith(('=', '+', '-', '@')) else value for key, value in row.items()})
+            return output.getvalue().encode('utf-8-sig'), 'text/csv; charset=utf-8'
+        raw = self._safe(self._job_path(identity).parent / 'code.zip').read_bytes()
+        require(_sha(raw) == job.get('archive_sha256'), '생성 원본 묶음 SHA-256 불일치')
+        return raw, 'application/zip'
+
+    def screenshot(self, identity, case_id, phase):
+        from ..m04.store import verified_screenshots
+        require(phase in {'before', 'after'}, '지원하지 않는 화면 근거 단계입니다.')
+        job = self._job(identity)
+        case = next((value for value in job['cases'] if value['case_id'] == case_id), None)
+        require(case is not None, '화면 근거 사례를 찾을 수 없습니다.')
+        folder = self._case_path(job, case, 'before.png').parent
+        frames = verified_screenshots(case, folder)
+        for metadata, raw in frames:
+            if metadata['phase'] == phase:
+                return raw, 'image/png'
+        raise EvaluationError('이 단계의 마스킹 화면 근거가 없습니다.', 'NOT_FOUND')

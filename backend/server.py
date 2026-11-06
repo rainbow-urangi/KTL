@@ -41,6 +41,7 @@ class Service:
         self.lock = threading.Lock()
         self.session = RuntimeSession() if session_scoped else None
         self._m04 = None
+        self._m07 = None
 
     # M04 개발 실행 연결
     def m04(self):
@@ -63,6 +64,13 @@ class Service:
         from .m03_setup import apply_connection
         return apply_connection(self.root, config)
 
+    # M07 생성·검사 연결
+    def m07(self):
+        with self.lock:
+            if self._m07 is None:
+                from .m07 import M07Manager
+                self._m07 = M07Manager(self.root, self.config, session=self.session)
+            return self._m07
 
     def claim_result(self, result):
         if self.session and result.get('run_mode') == 'DEVELOPMENT':
@@ -254,6 +262,40 @@ def make_handler(service):
                 return self.reply(403, {"error": "Local same-origin access required"})
             path = urlparse(self.path).path
             try:
+                if path.startswith('/api/development/m07/'):
+                    manager = service.m07()
+                    if path == '/api/development/m07/context':
+                        return self.reply(200, manager.context())
+                    if path == '/api/development/m07/execution-contexts':
+                        try:
+                            query = parse_qs(urlparse(self.path).query, keep_blank_values=True)
+                            require(set(query) == {'m03_run_id', 'scenario_id'} and all(len(values) == 1 for values in query.values()),
+                                    'M03 실행 ID와 시나리오 ID를 각각 하나씩 지정하세요.')
+                            return self.reply(200, manager.execution_context(query['m03_run_id'][0], query['scenario_id'][0]))
+                        except EvaluationError as exc:
+                            return self.reply(404 if exc.status == 'NOT_FOUND' else 422, {'status': exc.status, 'error': str(exc)})
+                        except (OSError, ValueError):
+                            return self.reply(500, {'status': 'ERROR', 'error': '실행 조건을 읽을 수 없습니다.'})
+                    if path == '/api/development/m07/generations':
+                        return self.reply(200, manager.list_runs())
+                    screenshot = re.fullmatch(r'/api/development/m07/generations/(M07-GEN-[a-f0-9]{32})/screenshots/(CASE-\d{3})/(before|after)\.png', path)
+                    if screenshot:
+                        try:
+                            raw, mime = manager.screenshot(screenshot[1], screenshot[2], screenshot[3])
+                            return self.reply(200, raw, mime)
+                        except EvaluationError as exc:
+                            return self.reply(404 if exc.status == 'NOT_FOUND' else 422, {'status': exc.status, 'error': str(exc)})
+                        except (OSError, ValueError):
+                            return self.reply(500, {'status': 'ERROR', 'error': '실행 화면 근거를 읽을 수 없습니다.'})
+                    matched = re.fullmatch(r'/api/development/m07/generations/(M07-GEN-[a-f0-9]{32})(?:/(artifacts)/([a-z.]+)|/(codes)/(CASE-\d{3}))?', path)
+                    if matched:
+                        if matched[2]:
+                            raw, mime = manager.artifact(matched[1], matched[3])
+                            return self.reply(200, raw, mime, matched[3])
+                        if matched[4]:
+                            return self.reply(200, manager.code(matched[1], matched[5]))
+                        return self.reply(200, manager.read(matched[1]))
+                    return self.reply(404, {'error': 'Unknown M07 endpoint'})
                 if path.startswith('/api/development/m04/'):
                     try:
                         manager = service.m04()
@@ -391,6 +433,7 @@ def make_handler(service):
                     return self.reply(200, file.read_bytes(), "text/csv; charset=utf-8" if filename.endswith("csv") else "application/json; charset=utf-8", filename.endswith("csv"))
                 assets = {"/": "index.html", "/app.js": "app.js", "/style.css": "style.css",
                           "/m04.js": "m04.js", "/m04.css": "m04.css",
+                          "/m07.js": "m07.js", "/m07.css": "m07.css",
                           "/developer/integration-api": "integration-sandbox.html",
                           "/developer/integration-api/": "integration-sandbox.html",
                           "/integration-sandbox.js": "integration-sandbox.js",
@@ -446,6 +489,40 @@ def make_handler(service):
                                       {'status': exc.status, 'error': str(exc)})
                 except OSError:
                     return self.reply(500, {'status': 'ERROR', 'error': 'M03 삭제 상태를 저장할 수 없습니다.'})
+            if m04_path.startswith('/api/development/m07/'):
+                try:
+                    length = int(self.headers.get('Content-Length', '0'))
+                    context_save = m04_path == '/api/development/m07/execution-contexts'
+                    selection_save = m04_path == '/api/development/m07/scenario-selection'
+                    generation_create = m04_path == '/api/development/m07/generations'
+                    maximum = 8388608 if generation_create else 262144 if selection_save else 65536 if context_save else 16384
+                    require(0 < length <= maximum and not self.headers.get('Transfer-Encoding'),
+                            'M07 코드 등록은 최대 8 MiB, 일괄 선택은 256 KiB, 실행 조건은 64 KiB, 기타 요청은 16 KiB입니다.')
+                    if context_save or selection_save or generation_create:
+                        require(self.headers.get('Content-Type', '').split(';', 1)[0].strip() == 'application/json', 'Content-Type application/json required')
+                    payload = json.loads(self.rfile.read(length), parse_constant=lambda _: (_ for _ in ()).throw(ValueError('Non-finite JSON')))
+                    manager = service.m07()
+                    if context_save:
+                        return self.reply(201, manager.save_execution_context(payload))
+                    if selection_save:
+                        return self.reply(200, manager.select_scenarios(payload))
+                    if m04_path == '/api/development/m07/generations':
+                        return self.reply(202, manager.create(payload))
+                    matched = re.fullmatch(r'/api/development/m07/generations/(M07-GEN-[a-f0-9]{32})/(validate|cancel|export-m04)', m04_path)
+                    if matched:
+                        if matched[2] == 'export-m04':
+                            return self.reply(201, manager.export_m04(matched[1], payload, service.m04()))
+                        require(payload == {}, '이 요청의 본문은 빈 객체여야 합니다.')
+                        return self.reply(202 if matched[2] == 'validate' else 200,
+                                          manager.validate(matched[1]) if matched[2] == 'validate' else manager.cancel(matched[1]))
+                    return self.reply(404, {'error': 'Unknown M07 endpoint'})
+                except (ValueError, UnicodeError):
+                    return self.reply(400, {'status': 'ERROR', 'error': 'Invalid JSON or Content-Length'})
+                except EvaluationError as exc:
+                    return self.reply(503 if exc.status == 'NOT_CONFIGURED' else 409 if exc.status == 'RUNNING' else 422,
+                                      {'status': exc.status, 'error': str(exc)})
+                except OSError:
+                    return self.reply(500, {'status': 'ERROR', 'error': 'M07 생성 원본과 검사 기록을 저장할 수 없습니다.'})
             if m04_path.startswith('/api/development/m04/'):
                 try:
                     require(self.headers.get('Content-Type', '').split(';', 1)[0].strip() == 'application/json', 'Content-Type application/json required')

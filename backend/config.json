@@ -12,6 +12,11 @@
   "m03": {
     "generator_mode": "MOCK"
   },
+  "m07": {
+    "model": "",
+    "generation_timeout_seconds": 120,
+    "target_url": "https://rainbowlab.ai.kr/rbem"
+  },
   "adapters": {
     "cleaning": [],
     "scenario_generation": []

@@ -41,6 +41,13 @@ def calculate(metric, payload):
         details={'formula':'successful_execution_count / total_execution_count * 100',
                  'denominator_note':'KTL 확정 시험 산식; 실패도 전체 실행 분모에 포함'}
     elif metric == 'M07':
+        origin = payload.get('details') if isinstance(payload.get('details'), dict) else {}
+        submitted_cases = payload.get('cases') if isinstance(payload.get('cases'), list) else []
+        require(origin.get('generated_by_llm') is not False and origin.get('code_source') != 'PREPARED'
+                and payload.get('code_source') != 'PREPARED' and payload.get('generated_by_llm') is not False
+                and not any(isinstance(case, dict) and (case.get('generated_by_llm') is False
+                            or case.get('code_source') == 'PREPARED') for case in submitted_cases),
+                '등록 코드의 검사 결과는 LLM 생성 결과로 접수할 수 없습니다.')
         requests=count('generation_request_count',True);generated=count('generated_code_count',True);sample=generated;syntax=count('syntax_pass_count');execution=count('execution_pass_count');both=count('both_pass_count')
         require(generated<=requests and syntax<=generated and execution<=generated and both<=min(syntax,execution)
                 and both>=syntax+execution-generated, 'Impossible M07 counts')
