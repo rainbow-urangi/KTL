@@ -5,3 +5,8 @@ __pycache__/
 results/*
 !results/.gitkeep
 data/training/
+.env.local
+data/development/m01_uploads/
+data/development/m01_ground_truth/
+data/development/m01_comparisons/
+/DEVELOPMENT_CHECKLIST.md

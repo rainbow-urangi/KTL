@@ -23,6 +23,8 @@ LEGACY_MAPPING_VERSION = "collector-events-to-ktl-types-v2"
 MAPPING_VERSION = "collector-events-to-ktl-types-v3"
 TEXT_INPUT_TYPES = frozenset({"text", "search", "email", "url", "tel", "password", "number"})
 REQUIRED_FIELDS = ("session_id", "event_time", "event_type", "page_url", "page_title", "target_key")
+CAPTURE_FIELDS = ("capture_run_id", "capture_tab_id", "capture_frame_id")
+CAPTURE_TREE_FIELDS = ("capture_root_tab_id", "capture_tab_path")
 EVENT_TYPES = {
     "navigation": "화면 이동", "click": "클릭", "input": "입력",
     "select_change": "선택/변경", "submit_save": "제출/저장", "popup": "팝업",
@@ -94,6 +96,63 @@ def missing_fields(row, map_target_selector=False):
     return missing
 
 
+def capture_scope(rows, headers=None):
+    """Check declared capture provenance without treating page sessions as runs."""
+    columns = headers if headers is not None else (rows[0] if rows else ())
+    present = set(CAPTURE_FIELDS).intersection(columns)
+    require(not present or len(present) == len(CAPTURE_FIELDS),
+            "CSV capture scope requires capture_run_id, capture_tab_id and capture_frame_id together")
+    tree_columns = set(CAPTURE_TREE_FIELDS).intersection(columns)
+    require(not tree_columns or (len(tree_columns) == len(CAPTURE_TREE_FIELDS) and len(present) == len(CAPTURE_FIELDS)),
+            "CSV popup scope requires capture_root_tab_id and capture_tab_path with capture run/tab/frame evidence")
+    values = [tuple(row.get(key, "").strip() for key in CAPTURE_FIELDS) for row in rows]
+    tree_values = [tuple(row.get(key, "").strip() for key in CAPTURE_TREE_FIELDS) for row in rows]
+    if not any(any(value) for value in values):
+        require(not any(any(value) for value in tree_values), "CSV popup scope has no capture run/tab/frame evidence")
+        return {"status": "UNVERIFIED_LEGACY", "run_id": None, "tab_id": None,
+                "frame_count": None, "notice": "수집 run·탭 근거가 없는 이전 CSV입니다. 수행 범위는 확인되지 않았으며 DEVELOPMENT 평가만 제공합니다."}
+    require(all(all(value) for value in values),
+            "CSV capture scope is incomplete; scoped and legacy rows cannot be mixed")
+    require(all(re.fullmatch(r"KTL-M01-[0-9a-fA-F]{8}(?:-[0-9a-fA-F]{4}){3}-[0-9a-fA-F]{12}", run)
+                and re.fullmatch(r"0|[1-9][0-9]{0,9}", tab)
+                and re.fullmatch(r"0|[1-9][0-9]{0,9}", frame)
+                for run, tab, frame in values), "Invalid CSV capture run, tab or frame evidence")
+    runs = {value[0] for value in values}
+    tabs = {value[1] for value in values}
+    if not any(any(value) for value in tree_values):
+        require(len(runs) == 1 and len(tabs) == 1,
+                "CSV contains multiple capture runs or tabs; upload one independently recorded test run")
+        return {"status": "DECLARED_SINGLE_RUN_TAB", "run_id": values[0][0], "tab_id": int(values[0][1]),
+                "root_tab_id": int(values[0][1]), "source_tab_count": 1,
+                "frame_count": len({value[2] for value in values}),
+                "notice": "CSV에 자체 기록된 단일 수집 run·탭을 확인했습니다. 페이지 새로고침과 같은 탭의 프레임은 함께 평가하며 공식 시험 판정은 아닙니다."}
+    require(all(all(value) for value in tree_values), "CSV popup scope is incomplete; scoped and legacy rows cannot be mixed")
+    paths, roots = {}, set()
+    for (_, tab, _), (root, encoded_path) in zip(values, tree_values):
+        require(re.fullmatch(r"0|[1-9][0-9]{0,9}", root), "Invalid CSV capture root tab")
+        require(len(encoded_path) <= 1024, "CSV popup tab path is too long")
+        try:
+            path = json.loads(encoded_path)
+        except (ValueError, TypeError):
+            raise EvaluationError("Invalid CSV popup tab path JSON")
+        require(isinstance(path, list) and 0 < len(path) <= 32
+                and all(type(item) is int and 0 <= item <= 9999999999 for item in path)
+                and len(set(path)) == len(path) and path[0] == int(root) and path[-1] == int(tab),
+                "Invalid CSV popup tab path; require unique root-to-source tab IDs")
+        roots.add(root)
+        for index, item in enumerate(path):
+            prefix = path[:index + 1]
+            require(item not in paths or paths[item] == prefix, "Conflicting CSV popup opener paths")
+            paths[item] = prefix
+    require(len(runs) == 1 and len(roots) == 1,
+            "CSV contains multiple capture runs or root tabs; upload one independently recorded test run")
+    root_id = int(next(iter(roots)))
+    return {"status": "DECLARED_ROOT_TAB_TREE", "run_id": values[0][0], "tab_id": root_id,
+            "root_tab_id": root_id, "source_tab_count": len(tabs),
+            "frame_count": len({(value[1], value[2]) for value in values}),
+            "notice": "CSV에 자체 기록된 단일 수집 run·시험 탭과 opener로 연결된 팝업 범위를 확인했습니다. 공식 시험 판정은 아닙니다."}
+
+
 def timestamp(value):
     try:
         parsed = datetime.fromisoformat(value.strip().replace("Z", "+00:00"))
@@ -137,6 +196,7 @@ def diagnose(rows, headers, map_target_selector=False, session_id=None, offset=0
     require(type(map_target_selector) is bool, "map_target_selector must be a boolean")
     require(type(offset) is int and offset >= 0 and type(limit) is int and 1 <= limit <= 200,
             "offset must be nonnegative; limit must be 1..200")
+    source_scope = capture_scope(rows, headers)
     indexed = [(number, row) for number, row in enumerate(rows, start=1)
                if session_id is None or row.get("session_id", "") == session_id]
     require(indexed, "No events in the selected session")
@@ -151,6 +211,7 @@ def diagnose(rows, headers, map_target_selector=False, session_id=None, offset=0
     missing_count = sum(effective_missing.values())
     summary = {
         "source_event_count": len(rows), "event_count": len(selected), "session_count": len(session_counts),
+        "capture_scope": source_scope,
         "sessions": [{"session_id": key, "event_count": count} for key, count in sorted(session_counts.items())],
         "scope": {"session_id": session_id, "description": "whole CSV" if session_id is None else "selected session"},
         "required_fields": list(REQUIRED_FIELDS), "missing_header_fields": [name for name in REQUIRED_FIELDS if name not in headers],
@@ -178,8 +239,9 @@ def diagnose(rows, headers, map_target_selector=False, session_id=None, offset=0
 
 
 class M01CsvStore:
-    def __init__(self, root):
+    def __init__(self, root, session=None):
         self.root = root
+        self.session = session
         self.directory = root / "data/development/m01_uploads"
 
     def upload(self, payload, config):
@@ -199,6 +261,9 @@ class M01CsvStore:
         except (ValueError, binascii.Error):
             raise EvaluationError("Invalid CSV base64")
         headers, rows = parse_csv(raw)
+        # 정답 CSV의 수집 데이터 오업로드 차단
+        require("expected_event_id" not in headers,
+                "Expected-event CSV cannot be uploaded as collected events; choose the collector CSV")
         report = diagnose(rows, headers, mapping)
         dataset_id = uuid.uuid4().hex
         directory = self.directory / dataset_id
@@ -223,10 +288,15 @@ class M01CsvStore:
         }, evidence)
         manifest["run_id"] = result["run_id"]
         (directory / "manifest.json").write_text(json.dumps(manifest, ensure_ascii=False, indent=2), encoding="utf-8")
+        if self.session:
+            self.session.claim('CSV', dataset_id)
+            self.session.claim('RESULT', result['run_id'])
         return dict(report, dataset=manifest, status="DEVELOPMENT_DIAGNOSTIC", run_mode="DEVELOPMENT")
 
     def read(self, dataset_id, **options):
         require(isinstance(dataset_id, str) and re.fullmatch(r"[0-9a-f]{32}", dataset_id), "Invalid dataset ID")
+        if self.session:
+            self.session.check('CSV', dataset_id)
         directory = self.directory / dataset_id
         if not (directory / "manifest.json").is_file():
             raise EvaluationError("CSV dataset not found", "NOT_FOUND")
@@ -243,6 +313,8 @@ class M01CsvStore:
         if self.directory.exists():
             for path in self.directory.glob("*/manifest.json"):
                 if re.fullmatch(r"[0-9a-f]{32}", path.parent.name):
+                    if self.session and not self.session.has('CSV', path.parent.name):
+                        continue
                     manifests.append(json.loads(path.read_text(encoding="utf-8")))
         return {"run_mode": "DEVELOPMENT", "datasets": sorted(manifests, key=lambda m: m["uploaded_at"], reverse=True)}
 

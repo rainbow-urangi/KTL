@@ -14,9 +14,9 @@ from urllib.parse import urlsplit, urlunsplit
 
 from ..evaluators import EvaluationError, require
 from .upload import (
-    EVENT_TYPES, MAX_CSV_BYTES, category, display, display_url, parse_csv,
+    EVENT_TYPES, MAX_CSV_BYTES, category, capture_scope, display, display_url, parse_csv,
 )
-from .score import FORMAT, SUPPORTED_FORMATS, measure, measurement_evidence, verify
+from .score import FORMAT, SUPPORTED_FORMATS, measure, measurement_evidence, verify, _safe_cell, _unescape
 
 
 COMPARISON_VERSION = "m01-event-comparison-dev-v3"
@@ -217,8 +217,9 @@ def _ordered_pairs(expected, actual):
 
 
 class M01ComparisonStore:
-    def __init__(self, root):
+    def __init__(self, root, session=None):
         self.root = Path(root)
+        self.session = session
         self.truth_directory = self.root / "data/development/m01_ground_truth"
         self.directory = self.root / "data/development/m01_comparisons"
 
@@ -296,6 +297,8 @@ class M01ComparisonStore:
                 and set(payload) <= {"dataset_id", "truth_id", "session_id"},
                 "Comparison requires dataset_id, truth_id and optional session_id")
         dataset_id = _identifier(payload["dataset_id"], "dataset ID")
+        if self.session:
+            self.session.check('CSV', dataset_id)
         truth_id = _identifier(payload["truth_id"], "truth ID")
         session_id = payload.get("session_id")
         require(session_id is None or (isinstance(session_id, str) and len(session_id) <= 1000
@@ -311,7 +314,8 @@ class M01ComparisonStore:
         require(source_manifest.get("dataset_id") == dataset_id and source_manifest.get("run_mode") == "DEVELOPMENT",
                 "Stored collector metadata mismatch")
         require(_digest(source_raw) == source_manifest.get("sha256"), "Stored CSV hash mismatch")
-        _, source_rows = parse_csv(source_raw)
+        source_headers, source_rows = parse_csv(source_raw)
+        source_scope = capture_scope(source_rows, source_headers)
         truth, expected, truth_raw = self._truth(truth_id)
         # 세션 선택 전 전체 이벤트 ID 중복 충돌 검사
         seen = {}
@@ -354,6 +358,7 @@ class M01ComparisonStore:
             "scenario_name": truth["scenario_name"], "scenario_version": truth["scenario_version"],
             "run_mode": "DEVELOPMENT", "status": "DEVELOPMENT_EVENT_COMPARISON", "evaluator_version": COMPARISON_VERSION,
             "created_at": datetime.now(timezone.utc).isoformat(), "session_id": session_id,
+            "capture_scope": source_scope,
             "summary": {"expected_count": len(expected), "matched_count": matched,
                         "missing_count": len(expected) - matched, "extra_event_count": len(actual) - matched,
                         "duplicate_event_rows": duplicate_rows, "source_event_count": len(source_rows),
@@ -380,10 +385,14 @@ class M01ComparisonStore:
               "input_sha256": result["input_sha256"], "result_sha256": _digest((directory / "result.json").read_bytes()),
               "evidence_sha256": _digest(evidence), "truth_snapshot_sha256": _digest((directory / "truth_snapshot.json").read_bytes()),
               "evidence_format": FORMAT, "verification_sha256": _digest((directory / "verification.json").read_bytes())})
+        if self.session:
+            self.session.claim('COMPARISON', comparison_id)
         return result
 
     def read(self, comparison_id):
         directory = self.directory / _identifier(comparison_id, "comparison ID")
+        if self.session:
+            self.session.check('COMPARISON', comparison_id)
         if not (directory / "manifest.json").is_file():
             raise EvaluationError("Comparison not found", "NOT_FOUND")
         manifest = _read_json(directory / "manifest.json")
@@ -414,6 +423,28 @@ class M01ComparisonStore:
     def evidence(self, comparison_id):
         self.read(comparison_id)
         return (self.directory / comparison_id / "evidence.csv").read_bytes()
+
+    def event_results(self, comparison_id):
+        # 필수 이벤트별 제출용 비교 결과
+        result = self.read(comparison_id)
+        evidence = self.evidence(comparison_id)
+        verify(evidence, result)
+        rows = [{key: _unescape(value) for key, value in row.items()}
+                for row in csv.DictReader(io.StringIO(evidence.decode("utf-8-sig"), newline=""))]
+        collected = {row["csv_row"]: row for row in rows if row.get("row_kind") == "COLLECTED"}
+        output = io.StringIO(newline="")
+        writer = csv.DictWriter(output, fieldnames=("expected_event_id", "matched_event_id", "collected", "missing_fields", "event_type"))
+        writer.writeheader()
+        for row in rows:
+            if row.get("row_kind") != "EXPECTED":
+                continue
+            actual = collected.get(row.get("matched_csv_row"), {})
+            writer.writerow({key: _safe_cell(value) for key, value in {
+                "expected_event_id": row["expected_event_id"], "matched_event_id": row["matched_event_id"],
+                "collected": "true" if row["status"] == "MATCHED" else "false",
+                "missing_fields": actual.get("missing_fields", ""), "event_type": row["expected_event_type"],
+            }.items()})
+        return output.getvalue().encode("utf-8-sig")
 
     def verification(self, comparison_id):
         result = self.read(comparison_id)

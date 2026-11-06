@@ -26,10 +26,10 @@ def save_run(root, metric, mode, config, result, rows, received=None):
     result['evidence_files']=['result.json','evidence.csv','run_manifest.json']
     if received is not None:
         result['evidence_files'].append('received_payload.json')
-        (directory/'received_payload.json').write_text(json.dumps(received,ensure_ascii=False,indent=2,allow_nan=False))
+        (directory/'received_payload.json').write_text(json.dumps(received,ensure_ascii=False,indent=2,allow_nan=False), encoding='utf-8')
     (directory/'evidence.csv').write_text(csv_evidence(rows or [{'status':result['status'],'error':result.get('error')}]),encoding='utf-8')
     text=json.dumps(result,ensure_ascii=False,indent=2,allow_nan=False)
     (directory/'result.json').write_text(text,encoding='utf-8')
-    (directory/'run_manifest.json').write_text(json.dumps({k:v for k,v in result.items() if k!='details'},ensure_ascii=False,indent=2,allow_nan=False))
+    (directory/'run_manifest.json').write_text(json.dumps({k:v for k,v in result.items() if k!='details'},ensure_ascii=False,indent=2,allow_nan=False), encoding='utf-8')
     latest=directory.parent/('latest-'+metric+'.json');temp=latest.with_suffix('.tmp');temp.write_text(text,encoding='utf-8');temp.replace(latest)
     return result

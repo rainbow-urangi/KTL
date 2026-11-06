@@ -3,7 +3,9 @@ import argparse
 import json
 import math
 import mimetypes
+import os
 import re
+import socket
 import threading
 import uuid
 from datetime import datetime, timezone
@@ -18,14 +20,27 @@ from .integration_store import ingest
 from .data_sources import V62ReferenceProvider, OfficialEvaluationDataSource
 from .contracts import cleaning_payload
 from .m01 import M01CsvStore, M01ComparisonStore, MAX_JSON_BYTES
+from .session import RuntimeSession
 
 ROOT = Path(__file__).resolve().parents[1]
 
 
+class LocalHTTPServer(ThreadingHTTPServer):
+    # 같은 포트에서 이전 서버와 새 서버가 함께 응답하지 않음
+    allow_reuse_address = os.name != 'nt'
+
+    def server_bind(self):
+        if os.name == 'nt' and hasattr(socket, 'SO_EXCLUSIVEADDRUSE'):
+            self.socket.setsockopt(socket.SOL_SOCKET, socket.SO_EXCLUSIVEADDRUSE, 1)
+        super().server_bind()
+
+
 class Service:
-    def __init__(self, root=ROOT):
+    def __init__(self, root=ROOT, session_scoped=False):
         self.root = Path(root).resolve()
         self.lock = threading.Lock()
+        self.session = RuntimeSession() if session_scoped else None
+
 
     def config(self):
         config = read_json(self.root / "backend/config.json")
@@ -38,6 +53,26 @@ class Service:
         timeout = config.get('adapter_timeout_seconds', 120)
         require(type(timeout) in (int, float) and math.isfinite(timeout) and timeout > 0, 'Positive adapter timeout required')
         return config
+
+
+    def claim_result(self, result):
+        if self.session and result.get('run_mode') == 'DEVELOPMENT':
+            self.session.claim('RESULT', result.get('run_id'))
+        return result
+
+    def latest(self, metric, mode):
+        directory = self.root / 'results' / mode.lower()
+        latest_path = directory / ('latest-' + metric + '.json')
+        if not self.session or mode != 'DEVELOPMENT':
+            return read_json(latest_path) if latest_path.is_file() else None
+        rows = []
+        for identity in self.session.ids('RESULT'):
+            if not identity.startswith('DEV-' + metric + '-'):
+                continue
+            path = directory / identity / 'result.json'
+            if path.is_file():
+                rows.append(read_json(path))
+        return max(rows, key=lambda row: row.get('completed_at') or '', default=None)
 
     def source(self, mode, config):
         require(mode in MODES, "Mode must be REFERENCE or OFFICIAL")
@@ -59,20 +94,22 @@ class Service:
         result = []
         for key, (name, dataset, count, operator) in METRICS.items():
             source = self.source(mode, config); prepared = self.prepare(source, key)
-            latest_path = self.root / "results" / mode.lower() / ("latest-" + key + ".json")
-            latest = read_json(latest_path) if latest_path.exists() else None
+            latest = self.latest(key, mode)
             if key in INTEGRATIONS and latest and latest.get('status') == 'COMPLETED':
                 prepared.update(status='COMPLETED',details={'external_result_received':True})
             result.append({"metric_id": key, "metric_name": name, "dataset": source.dataset_id,
                            "expected_sample_count": count, "target": config["targets"].get(key),
                            "operator": operator, "latest": latest, "status": prepared["status"],
                            "details": prepared["details"], "error": prepared.get("error")})
-        return {"run_mode": mode, "metrics": result, "model": {"version": "V6.2", "frozen": True, "reference_counts": REFERENCE}}
+        response = {"run_mode": mode, "metrics": result, "model": {"version": "V6.2", "frozen": True, "reference_counts": REFERENCE}}
+        if self.session:
+            response.update(server_session_id=self.session.id, server_started_at=self.session.started_at)
+        return response
 
     def ingest(self, metric, payload):
         require(metric in INTEGRATIONS, 'Unsupported integration metric')
         with self.lock:
-            return ingest(self.root, self.config(), metric, payload)
+            return self.claim_result(ingest(self.root, self.config(), metric, payload))
 
     def run(self, metric, mode="REFERENCE"):
         require(mode in MODES and metric in METRICS, "Invalid mode or metric")
@@ -81,17 +118,20 @@ class Service:
         try:
             config = self.config(); source = self.source(mode, config)
             if metric in INTEGRATIONS:
-                latest=self.root/'results'/mode.lower()/('latest-'+metric+'.json')
-                if latest.exists() and read_json(latest).get('status')=='COMPLETED':
-                    return read_json(latest)
+                latest = self.latest(metric, mode)
+                if latest and latest.get('status') == 'COMPLETED':
+                    return latest
             if mode == 'DEVELOPMENT':
                 if metric in {'M02','M06'}:
                     from .model_runner import EvaluationModelRunner
                     from .model_runner.evaluation import evaluate_run
-                    return evaluate_run(self.root,config,EvaluationModelRunner(self.root).run())[metric]
+                    results = evaluate_run(self.root,config,EvaluationModelRunner(self.root).run())
+                    for result in results.values():
+                        self.claim_result(result)
+                    return results[metric]
                 prepared=self.prepare(source,metric)
-                return save_run(self.root,metric,mode,config,{'status':prepared['status'],'score':None,'sample_count':None,
-                    'dataset_id':source.dataset_id,'source_type':'DEVELOPMENT','details':prepared['details']},[])
+                return self.claim_result(save_run(self.root,metric,mode,config,{'status':prepared['status'],'score':None,'sample_count':None,
+                    'dataset_id':source.dataset_id,'source_type':'DEVELOPMENT','details':prepared['details']},[]))
             name, dataset, expected, operator = METRICS[metric]
             run_id = ("REF" if mode == "REFERENCE" else "EVAL") + "-" + metric + "-" + datetime.now(timezone.utc).strftime("%Y%m%dT%H%M%S") + "-" + uuid.uuid4().hex[:12]
             run_dir = self.root / "results" / mode.lower() / run_id
@@ -165,6 +205,8 @@ class Service:
 def make_handler(service):
     class Handler(BaseHTTPRequestHandler):
         def reply(self, status, body, content_type="application/json; charset=utf-8", attachment=False):
+            if isinstance(body, dict) and body.get('status') == 'SESSION_EXPIRED':
+                status = 404
             if isinstance(body, (dict, list)):
                 body = json.dumps(body, ensure_ascii=False, allow_nan=False).encode()
             elif isinstance(body, str):
@@ -173,10 +215,13 @@ def make_handler(service):
             self.send_header("Content-Type", content_type)
             self.send_header("Content-Length", str(len(body)))
             self.send_header("Cache-Control", "no-store")
+            if service.session:
+                self.send_header('X-KTL-Server-Session', service.session.id)
             self.send_header("X-Content-Type-Options", "nosniff")
             self.send_header("Content-Security-Policy", "default-src 'self'; style-src 'self'; script-src 'self'; frame-ancestors 'none'; base-uri 'none'")
             if attachment:
-                self.send_header("Content-Disposition", 'attachment; filename="evidence.csv"')
+                filename = attachment if isinstance(attachment, str) else 'evidence.csv'
+                self.send_header("Content-Disposition", 'attachment; filename="' + filename + '"')
             self.end_headers()
             self.wfile.write(body)
 
@@ -205,7 +250,7 @@ def make_handler(service):
                     except EvaluationError as exc:
                         return self.reply(400, {"status": exc.status, "error": str(exc)})
                 if path == "/api/development/m01/csv":
-                    return self.reply(200, M01CsvStore(service.root).list())
+                    return self.reply(200, M01CsvStore(service.root, session=service.session).list())
                 if path == "/api/development/m01/ground-truths":
                     return self.reply(200, M01ComparisonStore(service.root).list_truths())
                 truth_match = re.fullmatch(r"/api/development/m01/ground-truths/([0-9a-f]{32})", path)
@@ -217,12 +262,14 @@ def make_handler(service):
                                           {"status": exc.status, "error": str(exc)})
                     except OSError:
                         return self.reply(500, {"status": "ERROR", "error": "Unable to read development expected events"})
-                comparison_match = re.fullmatch(r"/api/development/m01/comparisons/([0-9a-f]{32})(/evidence.csv|/verification)?", path)
+                comparison_match = re.fullmatch(r"/api/development/m01/comparisons/([0-9a-f]{32})(/evidence.csv|/event-results.csv|/verification)?", path)
                 if comparison_match:
                     try:
-                        store = M01ComparisonStore(service.root)
+                        store = M01ComparisonStore(service.root, session=service.session)
                         if comparison_match[2] == "/evidence.csv":
                             return self.reply(200, store.evidence(comparison_match[1]), "text/csv; charset=utf-8", True)
+                        if comparison_match[2] == "/event-results.csv":
+                            return self.reply(200, store.event_results(comparison_match[1]), "text/csv; charset=utf-8", 'event-results.csv')
                         if comparison_match[2] == "/verification":
                             return self.reply(200, store.verification(comparison_match[1]))
                         return self.reply(200, store.read(comparison_match[1]))
@@ -243,7 +290,7 @@ def make_handler(service):
                             mapping = query["map_target_selector"][0]
                             require(mapping in {"true", "false"}, "map_target_selector must be true or false")
                             options["map_target_selector"] = mapping == "true"
-                        store = M01CsvStore(service.root)
+                        store = M01CsvStore(service.root, session=service.session)
                         if csv_match[2]:
                             return self.reply(200, store.evidence(csv_match[1], **options), "text/csv; charset=utf-8", True)
                         return self.reply(200, store.read(csv_match[1], **options))
@@ -258,6 +305,8 @@ def make_handler(service):
                     metric, run_id, filename = match.groups()
                     if run_id.split("-")[1] != metric.upper():
                         return self.reply(404, {"error": "Metric mismatch"})
+                    if service.session and run_id.startswith('DEV-'):
+                        service.session.check('RESULT', run_id)
                     file = service.root / "results" / ({"REF":"reference","EVAL":"official","DEV":"development"}[run_id.split("-")[0]]) / run_id / filename
                     if not file.is_file():
                         return self.reply(404, {"error": "Result not found"})
@@ -275,7 +324,9 @@ def make_handler(service):
                 else:
                     return self.reply(404, {"error": "Not found"})
                 return self.reply(200, file.read_bytes(), (mimetypes.guess_type(file.name)[0] or "text/plain") + "; charset=utf-8")
-            except (EvaluationError, OSError) as exc:
+            except EvaluationError as exc:
+                return self.reply(500, {"status": exc.status, "error": str(exc)})
+            except OSError as exc:
                 return self.reply(500, {"error": str(exc)})
 
         def do_POST(self):
@@ -292,7 +343,7 @@ def make_handler(service):
                             "Content-Type application/json required")
                     payload = json.loads(self.rfile.read(length), parse_constant=lambda _: (_ for _ in ()).throw(ValueError("Non-finite JSON number")))
                     with service.lock:
-                        store = M01ComparisonStore(service.root)
+                        store = M01ComparisonStore(service.root, session=service.session)
                         result = (store.upload_truth(payload) if comparison_path.endswith("ground-truths")
                                   else store.compare(payload, service.config()))
                     return self.reply(201, result)
@@ -312,7 +363,7 @@ def make_handler(service):
                             "Content-Type application/json required")
                     payload = json.loads(self.rfile.read(length))
                     with service.lock:
-                        result = M01CsvStore(service.root).upload(payload, service.config())
+                        result = M01CsvStore(service.root, session=service.session).upload(payload, service.config())
                     return self.reply(201, result)
                 except (ValueError, UnicodeError):
                     return self.reply(400, {"status": "ERROR", "error": "Invalid JSON or Content-Length"})
@@ -359,7 +410,7 @@ def main():
     parser = argparse.ArgumentParser(description="Local KTL evaluation server")
     parser.add_argument("--port", type=int, default=8000)
     args = parser.parse_args()
-    server = ThreadingHTTPServer(("127.0.0.1", args.port), make_handler(Service()))
+    server = LocalHTTPServer(("127.0.0.1", args.port), make_handler(Service(session_scoped=True)))
     print(f"Rainbow KTL: http://127.0.0.1:{args.port}", flush=True)
     try:
         server.serve_forever()
