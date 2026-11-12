@@ -326,6 +326,13 @@ def make_handler(service):
             try:
                 if path.startswith('/api/development/m07/'):
                     manager = service.m07()
+                    if path == '/api/development/m07/meeting-context':
+                        return self.reply(200, manager.meeting_context())
+                    if path == '/api/development/m07/meeting-input-draft':
+                        from .m07.meeting_draft import draft
+                        return self.reply(200, draft())
+                    if path == '/api/development/m07/workflows':
+                        return self.reply(200, manager.workflows())
                     if path == '/api/development/m07/context':
                         return self.reply(200, manager.context())
                     if path == '/api/development/m07/execution-contexts':
@@ -361,6 +368,8 @@ def make_handler(service):
                 if path.startswith('/api/development/m04/'):
                     try:
                         manager = service.m04()
+                        if path == '/api/development/m04/cu02':
+                            return self.reply(200, manager.cu02())
                         if path == '/api/development/m04/m01-source':
                             query = parse_qs(urlparse(self.path).query, keep_blank_values=True)
                             require(set(query) <= {'dataset_id', 'comparison_id', 'session_id'}
@@ -525,8 +534,11 @@ def make_handler(service):
                 return self.reject_post(403, {"error": "Local same-origin access required"})
             m04_path = urlparse(self.path).path
             starts_work = (m04_path in {'/api/m03/generate', '/api/development/m07/generations',
+                                       '/api/development/m07/workflows/prepare',
+                                       '/api/development/m07/meeting-generations',
                                        '/api/development/m04/scripts', '/api/development/m04/executions',
-                                       '/api/development/m04/import-m01'}
+                                       '/api/development/m04/import-m01', '/api/development/m04/cu02/scripts',
+                                       '/api/development/m04/cu02/evaluations'}
                            or re.fullmatch(r'/api/development/m07/generations/M07-GEN-[a-f0-9]{32}/(?:validate|export-m04)', m04_path))
             if starts_work:
                 try:
@@ -574,10 +586,12 @@ def make_handler(service):
                     plan_save = m04_path == '/api/development/m07/execution-plans'
                     selection_save = m04_path == '/api/development/m07/scenario-selection'
                     generation_create = m04_path == '/api/development/m07/generations'
-                    maximum = 8388608 if generation_create else 1048576 if plan_save else 262144 if selection_save else 65536 if context_save else 16384
+                    meeting_create = m04_path == '/api/development/m07/meeting-generations'
+                    workflow_prepare = m04_path == '/api/development/m07/workflows/prepare'
+                    maximum = 8388608 if generation_create else 1048576 if plan_save else 262144 if selection_save or meeting_create else 65536 if context_save else 16384
                     require(0 < length <= maximum and not self.headers.get('Transfer-Encoding'),
                             'M07 코드 등록은 최대 8 MiB, 실행 계획은 1 MiB, 일괄 선택은 256 KiB, 실행 조건은 64 KiB, 기타 요청은 16 KiB입니다.')
-                    if context_save or plan_save or selection_save or generation_create:
+                    if context_save or plan_save or selection_save or generation_create or workflow_prepare or meeting_create:
                         require(self.headers.get('Content-Type', '').split(';', 1)[0].strip() == 'application/json', 'Content-Type application/json required')
                     def plan_object(pairs):
                         value = {}
@@ -586,9 +600,13 @@ def make_handler(service):
                                 raise ValueError('Duplicate execution plan JSON key')
                             value[key] = item
                         return value
-                    payload = json.loads(self.rfile.read(length), object_pairs_hook=plan_object if plan_save else None,
+                    payload = json.loads(self.rfile.read(length), object_pairs_hook=plan_object if plan_save or meeting_create else None,
                                          parse_constant=lambda _: (_ for _ in ()).throw(ValueError('Non-finite JSON')))
                     manager = service.m07()
+                    if meeting_create:
+                        return self.reply(202, manager.create_meeting(payload))
+                    if workflow_prepare:
+                        return self.reply(201, manager.prepare_workflows(payload))
                     if context_save:
                         return self.reply(201, manager.save_execution_context(payload))
                     if plan_save:
@@ -625,6 +643,10 @@ def make_handler(service):
                     require(0 < length <= 1048576 and not self.headers.get('Transfer-Encoding'), 'JSON body required; maximum 1 MiB')
                     payload = json.loads(self.rfile.read(length), parse_constant=lambda _: (_ for _ in ()).throw(ValueError('Non-finite JSON number')))
                     manager = service.m04()
+                    if m04_path == '/api/development/m04/cu02/evaluations':
+                        return self.reply(201, manager.create_cu02_evaluation(payload))
+                    if m04_path == '/api/development/m04/cu02/scripts':
+                        return self.reply(201, manager.prepare_cu02(payload))
                     if m04_path == '/api/development/m04/import-m01':
                         return self.reply(201, manager.import_m01(payload))
                     if m04_path == '/api/development/m04/scripts':

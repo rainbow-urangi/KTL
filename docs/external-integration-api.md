@@ -71,6 +71,16 @@ OFFICIAL은 manifest에 고유 `business_unit_ids`10개를 사전 고정하며 `
 
 ## M04 자동 실행
 
+DEVELOPMENT 화면의 **CU02 일정 등록**은 `디딤돌_업무흐름_10.pdf`의 일정관리 → 날짜 선택 → 일정 입력 → 등록 → 종료를 실행합니다. `GET /api/development/m04/cu02`는 입력 기본값과 로그인 준비 여부만 조회합니다. `POST /api/development/m04/cu02/scripts`에 `date`(YYYY-MM-DD), `title`(1~120자), `description`(0~2000자), 선택 `browser`(`chrome`/`edge`)를 보내면 고정 스크립트를 준비하고 201을 반환합니다. 준비만으로 로그인·등록·브라우저 실행을 시작하지 않으며 실제 실행은 기존 `POST /api/development/m04/executions`를 사용합니다.
+
+CU02는 창을 열기 전에 실행 환경의 시험 계정으로 로그인 API에 인증합니다. 성공한 경우에만 브라우저를 만들고 대상 origin의 `localStorage.token`을 런타임에서 초기화하여 일정관리 화면부터 표시합니다. 인증값과 응답 토큰은 고정 코드·입력·증빙에 저장하지 않으며, 인증 실패 시 브라우저를 시작하지 않습니다. 날짜 숫자를 native click하여 **신규** 등록 창인지 확인하고, 대상 날짜에 같은 시험 제목이 이미 있으면 중단합니다. 제목·내용이 모두 비어 있는지 실제 입력 전에 독립 검사하고 이 폼을 `before`로 캡처합니다. 등록 후 해당 날짜의 제목이 정확히 한 개 표시되는지 검사하고, 새로고침 후 동일 일정의 상세 제목·내용도 확인한 뒤 상세 폼을 `after`로 캡처하고 닫습니다. 캡처는 사전 고정한 `screenshot_checkpoints={before:2,after:5}`의 명시적 hook에서 수행하며 도달하지 못한 화면은 `NOT_CAPTURED`입니다. 화면은 기존 문자·이미지 마스킹 정책을 유지하고 값 비교는 DOM 판정 기록을 사용합니다. 업무 정의·시험 입력·Python 원본·독립 실행 조건을 SHA와 함께 보관하고, 실패한 실행은 기존 M04 분모에 유지합니다. 이 경로는 GPT/M03 생성이나 공식 평가 정답을 사용하지 않는 DEVELOPMENT 실행이며 공식 10건 시험으로 승격하지 않습니다.
+
+`POST /api/development/m04/cu02/evaluations`는 CU02 일정 등록 10건을 고정하고 실제 실행을 한 번 요청합니다. 입력은 단건과 같은 `date`, `title`, `description`, 선택 `browser`이며 제목은 번호를 제외하고 최대 105자입니다. 실행 표시 설정 `visible_browser`(boolean), `action_delay_ms`(0~2000), `keep_open_seconds`(0~60)를 선택할 수 있습니다. 간격·유지 시간은 `visible_browser=true`일 때만 허용합니다. 제목마다 평가 ID 일부와 01~10 번호를 붙여 고유한 일정 10건을 준비합니다. 이 요청은 실제 사이트에 일정 10건을 생성할 수 있습니다.
+
+응답은 201 `{evaluation, execution}`입니다. `evaluation`에는 `evaluation_id`(`CU02-EVAL-`+32자리 hex), `workflow_id=CU02`, `case_count=10`, `counting_unit=SCHEDULE_REGISTRATION`, `target_percent=90`, `required_success_count=9`, `fixed_at`, `script_ids`, `cases[{case_id,case_number,script_id,scenario_id,sha256,expected:{date,title,description,browser}}]`가 있습니다. `execution.cu02_evaluation`과 같은 값을 보관하고 `cu02_evaluation_sha256`으로 고정합니다. 각 실행 사례에는 `cu02_evaluation_id`와 `cu02_case_number`를 기록합니다. 일정 1건의 신규 등록·실제 입력·등록 버튼 클릭·새로고침 후 상세값 재조회까지 전체 성공이 평가 1건이며 내부 업무 단계 5개를 별도 평가 건수로 세지 않습니다. 준비부터 실행까지 서버 간 브라우저 잠금을 유지합니다.
+
+기존 실행 조회·중단·보고서 API를 그대로 사용합니다. 실행 전 `cu02_evaluation.json`과 10건의 원본·기대값을 고정 archive에 넣고, 결과 접수 원본의 `details.cu02_evaluation`에도 연결합니다. 10건을 각 1회 순차 실행하고 오류도 분모 10에 유지하며 자동 재시도하지 않습니다. 전체 실행과 중앙 결과 저장이 완료된 뒤에만 최종 성공률을 표시합니다. 이 CU02 집계 기준은 개발 화면의 평가 구성입니다. 공식 manifest나 M03/LLM 생성 증빙을 대신하지 않습니다.
+
 DEVELOPMENT 화면의 **M01 동작 가져오기**는 M01에서 검증한 CSV·선택 세션의 원본을 읽어 Selenium 재현 코드를 고정합니다. M01의 평가 정답과 점수는 코드 생성에 쓰지 않으며 M02·M03·GPT를 호출하지 않습니다. `GET /api/development/m04/m01-source`로 원본과 준비 상태를 조회하고 `POST /api/development/m04/import-m01`에 `comparison_id` 또는 `dataset_id`, `parameters`를 전달합니다. 입력값이 수집되지 않았다면 행별 `row_N_value`를 명시해야 합니다. 정확한 대상·순서 근거가 부족하면 해당 행을 표시하고 준비를 거부합니다. 관측 원본은 보존하며 재현 완료를 업무 목적 전체의 달성이나 공식 시험 합격으로 확대하지 않습니다.
 
 가져오기는 실행을 시작하지 않습니다. 별도 실행 버튼의 **새 창으로 실행** 기본 설정은 `visible_browser=true, action_delay_ms=700, keep_open_seconds=15`입니다. 원본 Python을 바꾸지 않고 로컬 Chrome/Edge의 headless 실행 옵션만 제외하며, 실제 조작 간격과 종료 화면 표시 시간을 적용한 뒤 브라우저를 정리합니다. 표시 설정은 실행 이력에 보관합니다. API에서 표시 설정을 생략하면 기존 실행 동작을 유지합니다. 표시용 대기 시간은 실행 제한 시간에 별도로 반영하며 M07 실행 동작은 바꾸지 않습니다.
@@ -88,6 +98,24 @@ DEVELOPMENT 화면의 **M01 동작 가져오기**는 M01에서 검증한 CSV·�
 OFFICIAL: 사전 고정한 Selenium/Python script 10건, 각 1회 실행. `official_contract={"fixed_script_count":10,"execution_per_script":1}`, `fixed_at`은 제출 이전 시각, `scripts_manually_modified=false, script_language=python, script_framework=selenium`, `files.scripts`에 archive path/sha256이 필요합니다. 비공식 수량은 고정하지 않습니다. 고정 시점과 실제 실행의 진실성은 외부 로그로 증빙합니다.
 
 ## M07 코드 검증
+
+M07 기본 화면은 회의록의 **독립 입력 20건 → 실제 LLM 생성 → 별도 문법·실행 검사 → 20행 PASS/FAIL·성공률** 흐름입니다. `GET /api/development/m07/meeting-context`는 정확한 수량 20, 목표 80%, 입력 형식·단일 작성 예시·Chrome/로그인/LLM 준비 여부를 반환합니다. 모델 표시명 `GPT 루나`와 실제 API 모델 ID는 구분하며 인증값은 반환하지 않습니다. 미설정이면 업무 컴퓨터의 연결 설정이 필요하다고 표시합니다.
+
+`POST /api/development/m07/meeting-generations`는 최대 256 KiB의 `{items:[{input_id,scenario}, ...20개]}`를 받습니다. `scenario`에는 `scenario_id`, `scenario_name`, `business_unit_id`, `workflow_id`, `steps`, `execution_contract`가 필요하며 설명·사전조건·마스킹 화면 기록 단계는 선택입니다. 각 단계에 동작·대상·기대 결과를 지정하고 입력/선택 단계는 실제 `value`, 이동 단계는 `url`을 지정합니다. 서로 다른 입력·시나리오 ID와 실제 실행 내용이 구분된 20건이어야 하며 동일 내용을 ID만 바꾸어 복제하거나 코드·판정·GT·가짜 M03 증빙을 넣으면 거부합니다. URL·CSS·검사 조건은 실제 앱 근거로 사전에 확정합니다.
+
+응답 202 `{generation}`은 `meeting_protocol=true`, `measurement_protocol=M07_MEETING_20_V1`, `required_count=20`, `code_source=LLM`, `source_kind=MEETING_LLM_BATCH`입니다. 생성 전에 입력 20건과 계약을 고정하며 각 사례에 `input_id`, `meeting_input_sha256`, `source_m03_run_id=null`을 기록합니다. 입력별 LLM 요청 1회씩 수행하고 원본 응답·프롬프트·코드를 보관합니다. 이 경로는 직접 등록한 입력이며 M03 산출물을 만들지 않습니다. 기존 코드 조회 API는 실제 LLM 원본에도 `code_base64`, `identity_verification`을 제공해 화면·고정 원본·검사 코드가 동일한지 검증합니다.
+
+별도 `POST /api/development/m07/generations/{id}/validate`(본문 `{}`)로 생성 원본을 문법 검사한 후 Chrome에서 실행합니다. 실제 LLM 코드는 `ktl_runtime.authenticated_chrome()`으로 창 생성 전 인증된 Chrome을 얻고, 첫 업무 `driver.get()` 직후 `complete_authentication(driver)`을 호출해 세션 bootstrap을 제거합니다. 도우미는 인증·브라우저 초기화만 제공하며 업무 조작·판정은 생성 코드가 수행합니다. 문법·실행을 모두 통과한 경우만 최종 PASS입니다. 요청한 20건의 실제 HTTP 근거와 검사가 완료되면 `both_pass_count / 20 × 100`으로 중앙 결과를 보관합니다. 생성 성공이 19건이어도 16건 통과는 80%입니다. 20건 모두 실제 요청 후 실패한 경우는 0%, 공급자 제한 등으로 미시도·근거 불명이 남으면 `NOT_READY`, 점수 `null`입니다. 기존 생성 성공 건수 분모의 개발 평가기를 회의용 판정에 사용하지 않습니다.
+
+`GET /api/development/m07/meeting-input-draft`는 `{draft:true,approved_for_official:false,description,items:[20개]}`를 반환합니다. PDF의 10업무에서 다른 입력값·기존 조회 행을 구성한 **검토용 초안**입니다. 자동으로 시험 목록을 확정하거나 생성·실행하지 않습니다. 사용자가 명시적으로 불러와 내용을 검토한 후 실제 생성 버튼을 사용합니다. 모든 회의용 개발 결과는 `official_pass=null`이며 실제 업무 PC LLM 연결·실행을 대신한 증빙으로 표시하지 않습니다.
+
+보조 도구에는 **준비 코드**와 **M03 연결** 경로가 있습니다. `GET /api/development/m07/workflows`는 CU01~CU10의 이름·원문 업무 흐름·조회/등록 유형·기본 입력값·`parameter_fields`·로그인 준비 여부·Chrome 실행 환경을 반환합니다. 조회만으로 외부 앱이나 LLM을 호출하지 않습니다.
+
+`POST /api/development/m07/workflows/prepare`의 본문은 `{workflow_ids:["CU01",...],parameters:{...}}`입니다. 업무는 중복 없는 1~10개, `cases_per_workflow`는 1 또는 2(기본 2)로 최대 20개 코드를 준비합니다. 입력은 `date`(YYYY-MM-DD), `title`(최대 90자), `description`(필수·2000자 이하), `contact_name`, `company`, `phone`, `email`, 선택 `lookup_title`, `cases_per_workflow`이며 생략값은 서버 기본값을 씁니다. 새 등록 제목·회사명에는 실행별 고유 접미사가 붙습니다. 조회는 첫 기존 항목을 사용하고 `lookup_title`을 지정하면 그 첫 항목의 제목·회사명과 비교하며 다른 항목으로 자동 변경하지 않습니다.
+
+응답 201 `{generation,workflows}`의 작업은 `source_kind=RBEM_PREPARED_WORKFLOW`, `code_source=PREPARED`, `generated_by_llm=false`, `browser=chrome`입니다. 사례마다 `workflow_id`, `workflow_case_number`, 원본 코드·업무 정의·입력·실행 계약 SHA를 보관합니다. `source_m03_run_id=null`이며 M03 결과를 만들지 않습니다. 준비는 기존 생성 작업 형식을 재사용해 코드 파일을 고정하고 `GENERATED` 상태에 도달하지만 LLM 요청을 보내지 않습니다. 화면은 이를 준비 완료로 표시합니다. 코드 조회의 `identity_verification`으로 표시한 바이트와 고정 원본이 일치하는지 확인합니다.
+
+실제 검사는 기존 `POST /api/development/m07/generations/{id}/validate`(본문 `{}`)를 별도로 호출합니다. 문법 검사 후 고정 원본을 실제 Chrome에서 각 1회 실행하며, 로그인은 창 생성 전에 처리합니다. 빈 신규등록 화면·입력값·실제 UI 저장·새로고침 후 상세값을 확인하고 업무별 시점에서 마스킹 화면을 기록합니다. 조회 대상이 없거나 실행이 실패하면 통과로 처리하지 않습니다. 새 작업은 `visible_browser=true,action_delay_ms=350,keep_open_seconds=3`을 보관하여 Chrome 창과 실제 조작을 보여줍니다. 준비 코드 결과는 등록 코드의 검사 통과율이며 LLM 생성 성능이나 공식 M07 실적에 포함하지 않습니다. 기존 파일 등록·실제 LLM·M03 연계 경로는 유지합니다.
 
 `POST /api/integrations/m07/result`: 공통 metadata와 counts 및 개별 cases를 전송합니다.
 

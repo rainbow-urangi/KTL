@@ -134,6 +134,14 @@ class Observer:
         self.expected_steps = self.scenario.get('steps', [])
         if not isinstance(self.expected_steps, list):
             self.expected_steps = []
+        self.screenshot_checkpoints = self.scenario.get('screenshot_checkpoints')
+        if self.screenshot_checkpoints is not None:
+            points = self.screenshot_checkpoints
+            if (not isinstance(points, dict) or set(points) != {'before', 'after'}
+                    or any(type(value) is not int or not 1 <= value <= len(self.expected_steps)
+                           for value in points.values()) or points['before'] > points['after']):
+                raise ValueError('화면 기록 시점은 유효한 실행 전·후 업무 단계로 고정해야 합니다.')
+            self.screenshot_checkpoints = dict(points)
         self.contract_checker = None
         self.contract_error = None
         self.execution_contract_sha256 = contract_sha256
@@ -155,14 +163,35 @@ class Observer:
                 if any(isinstance(child, (ast.Name, ast.Attribute, ast.Call, ast.Subscript)) for child in ast.walk(node.test)):
                     self.dynamic_assertions.add(node.lineno)
 
-    def capture_screen(self, phase, driver=None, final=False):
+    def capture_evidence(self, phase):
+        """Capture only the declared business checkpoint, through the normal mask policy."""
+        if (phase not in {'before', 'after'} or self.screenshot_checkpoints is None
+                or self.current_step is None
+                or self.current_step['sequence'] != self.screenshot_checkpoints[phase]):
+            raise RuntimeError('사전에 고정한 업무 단계에서만 실행 화면을 기록할 수 있습니다.')
+        self.capture_screen(phase, checkpoint=True)
+
+    def capture_screen(self, phase, driver=None, final=False, checkpoint=False):
         if phase in self.screenshots:
+            return
+        explicit = self.screenshot_checkpoints is not None
+        if explicit and not checkpoint:
+            if final:
+                record = dict(phase=phase, file=None, sha256=None, policy=SCREENSHOT_POLICY,
+                              captured_at=now(), status='NOT_CAPTURED', reason='checkpoint_not_reached',
+                              capture_mode='EXPLICIT_BUSINESS_CHECKPOINT',
+                              business_step_order=self.screenshot_checkpoints[phase])
+                self.screenshots[phase] = record
+                self.emit('screenshot', screenshot=dict(record))
             return
         driver = driver or (self.drivers[-1] if self.drivers else None)
         if driver is None and not final:
             return
         record = dict(phase=phase, file=None, sha256=None, policy=SCREENSHOT_POLICY,
                       captured_at=now(), status='NOT_CAPTURED', reason='no_browser')
+        if explicit:
+            record.update(capture_mode='EXPLICIT_BUSINESS_CHECKPOINT',
+                          business_step_order=self.screenshot_checkpoints[phase])
         self.screenshots[phase] = record
         if driver is None or self.raw_execute is None:
             return
@@ -486,6 +515,14 @@ def execute(script, scenario=None, required=False, contract=None, contract_sha25
     observer = Observer(script, sys.stdout, scenario, required, contract=contract, contract_sha256=contract_sha256)
     runtime = types.ModuleType('ktl_runtime')
     runtime.business_step = observer.business_step
+    runtime.capture_evidence = observer.capture_evidence
+    # -I 작업 프로세스에서 인증 전용 helper를 제공하며 업무 조작은 원본 코드에 남긴다.
+    auth_spec = importlib.util.spec_from_file_location('ktl_authenticated_chrome',
+                                                     Path(__file__).with_name('authenticated_chrome.py'))
+    authentication = importlib.util.module_from_spec(auth_spec)
+    auth_spec.loader.exec_module(authentication)
+    runtime.authenticated_chrome = authentication.authenticated_chrome
+    runtime.complete_authentication = authentication.complete_authentication
     previous_runtime = sys.modules.get('ktl_runtime')
     sys.modules['ktl_runtime'] = runtime
     sink = ScriptOutput(observer)

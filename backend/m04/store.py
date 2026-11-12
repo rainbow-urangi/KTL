@@ -77,7 +77,13 @@ def _screenshot_records(value):
             require(item.get('file') is None and item.get('sha256') is None
                     and isinstance(item.get('reason'), str) and re.fullmatch(r'[a-z_]{1,60}', item['reason']),
                     'Invalid unavailable screenshot evidence')
-        records.append({key: item.get(key) for key in ('phase', 'file', 'sha256', 'policy', 'captured_at', 'status', 'reason')})
+        record = {key: item.get(key) for key in ('phase', 'file', 'sha256', 'policy', 'captured_at', 'status', 'reason')}
+        if 'capture_mode' in item or 'business_step_order' in item:
+            require(item.get('capture_mode') == 'EXPLICIT_BUSINESS_CHECKPOINT'
+                    and type(item.get('business_step_order')) is int and 1 <= item['business_step_order'] <= 1000,
+                    'Invalid screenshot business checkpoint')
+            record.update(capture_mode=item['capture_mode'], business_step_order=item['business_step_order'])
+        records.append(record)
         phases.add(phase)
     return records
 
@@ -325,8 +331,13 @@ class M04Manager:
             if os.environ.get(env):
                 candidates.append(str(Path(os.environ[env]) / 'Google/Chrome/Application/chrome.exe'))
         chrome = any(value and Path(value).is_file() for value in candidates)
-        return {'selenium': selenium, 'chrome': chrome,
-                'message': '실행 환경 준비 완료' if selenium and chrome else 'Selenium 및 Chrome 설치 확인 필요'}
+        edge_candidates = [shutil.which('msedge')]
+        for env in ('PROGRAMFILES', 'PROGRAMFILES(X86)', 'LOCALAPPDATA'):
+            if os.environ.get(env):
+                edge_candidates.append(str(Path(os.environ[env]) / 'Microsoft/Edge/Application/msedge.exe'))
+        edge = any(value and Path(value).is_file() for value in edge_candidates)
+        return {'selenium': selenium, 'chrome': chrome, 'edge': edge,
+                'message': '실행 환경 준비 완료' if selenium and (chrome or edge) else 'Selenium 및 브라우저 설치 확인 필요'}
 
     def scripts(self):
         records = [self._json(path) for path in self.script_directory.glob('*/script.json')
@@ -360,7 +371,22 @@ class M04Manager:
                 require(_sha(self._safe(path.parent / name).read_bytes()) == value[key], 'Fixed evidence SHA-256 mismatch: ' + name)
         self._prepared_files(value, path.parent, raw)
         self._m01_files(value, path.parent)
+        self._cu02_files(value, path.parent)
         return value, raw
+
+    def _cu02_files(self, metadata, folder):
+        if metadata.get('source_kind') != 'CU02_SCHEDULE_REGISTRATION':
+            return {}
+        hashes = metadata.get('source_cu02_files')
+        require(isinstance(hashes, dict) and set(hashes) == {'cu02_definition.json', 'cu02_parameters.json'},
+                'CU02 업무 정의와 시험 입력 원본이 필요합니다.')
+        files = {name: self._safe(folder / name).read_bytes() for name in hashes}
+        require(all(_sha(content) == hashes[name] for name, content in files.items()), 'CU02 원본 SHA-256이 다릅니다.')
+        definition, values = (json.loads(files[name]) for name in ('cu02_definition.json', 'cu02_parameters.json'))
+        require(definition.get('workflow_id') == metadata.get('workflow_id') == 'CU02'
+                and metadata.get('generated_by_llm') is False
+                and values.get('browser') == metadata.get('browser'), 'CU02 고정 코드의 출처가 다릅니다.')
+        return files
 
     def _m01_files(self, metadata, folder):
         if metadata.get('source_kind') != 'M01_OBSERVED_REPLAY':
@@ -479,7 +505,48 @@ class M04Manager:
             scenario_name='M01 수집 동작 재현 · ' + preview['filename'], require_business_steps=True), _m01=prepared)
         return dict(registered, source=preview)
 
-    def register(self, payload, *, _m01=None):
+    def cu02(self):
+        from .cu02 import workflow
+        return workflow(self.root)
+
+    def prepare_cu02(self, payload):
+        from .cu02 import prepare, login_configured
+        if not login_configured(self.root):
+            raise EvaluationError('CU02 실행을 위한 시험 계정 설정이 필요합니다.', 'NOT_CONFIGURED')
+        prepared = prepare(payload)
+        return dict(self._register_cu02(prepared), workflow=self.cu02())
+
+    def _register_cu02(self, prepared):
+        registered = self.register(dict(filename='cu02-schedule-' + prepared['parameters']['date'] + '.py',
+            python_base64=base64.b64encode(prepared['code'].encode('utf-8')).decode('ascii'),
+            scenario_id=prepared['scenario']['scenario_id'], scenario_name='CU02 일정 등록',
+            require_business_steps=True), _cu02=prepared)
+        return registered
+
+    def create_cu02_evaluation(self, payload):
+        from .cu02 import login_configured
+        from .cu02_evaluation import build
+        evaluation, prepared, options = build(payload, _now())
+        if not login_configured(self.root):
+            raise EvaluationError('CU02 실행을 위한 시험 계정 설정이 필요합니다.', 'NOT_CONFIGURED')
+        with self.lock:
+            # Keep the cross-server browser lock from preparation through execution.
+            run_lock = self._global_lock()
+            if not run_lock:
+                raise EvaluationError('M04 execution is already running', 'RUNNING')
+            try:
+                scripts = [self._register_cu02(item)['script'] for item in prepared]
+                evaluation['script_ids'] = [item['script_id'] for item in scripts]
+                for row, script in zip(evaluation['cases'], scripts):
+                    row.update({key: script[key] for key in ('script_id', 'scenario_id', 'sha256')})
+                result = self.create(dict(script_ids=evaluation['script_ids'], **options),
+                                     _cu02_evaluation=evaluation, _run_lock=run_lock)
+                return dict(result, evaluation=deepcopy(evaluation))
+            except BaseException:
+                run_lock.close()
+                raise
+
+    def register(self, payload, *, _m01=None, _cu02=None):
         require(isinstance(payload, dict), 'JSON object required')
         require(payload.get('run_mode', 'DEVELOPMENT') == 'DEVELOPMENT', 'M04 runner supports DEVELOPMENT only')
         strict_requested = payload.get('require_business_steps', False)
@@ -514,6 +581,15 @@ class M04Manager:
         execution_scenario = None
         execution_plan = None
         context_revision = None
+        if _cu02 is not None:
+            require(_m01 is None and source_id is None and payload.get('source_m07_generation_id') is None,
+                    'CU02 고정 업무에는 다른 생성 출처를 섞을 수 없습니다.')
+            require(_cu02['code'].encode('utf-8') == raw, 'CU02 고정 코드 원본이 다릅니다.')
+            snapshot = deepcopy(_cu02['scenario'])
+            require(snapshot.get('scenario_id') == scenario_id, 'CU02 시나리오 ID가 다릅니다.')
+            execution_scenario, contract = snapshot, deepcopy(_cu02['contract'])
+            require(self._execution_contract(dict(snapshot, execution_contract=contract)) == contract,
+                    'CU02 실행 계약이 다릅니다.')
         if _m01 is not None:
             require(source_id is None and payload.get('source_m07_generation_id') is None,
                     'M01 재현에는 M03/M07 출처를 섞을 수 없습니다.')
@@ -601,6 +677,10 @@ class M04Manager:
                         run_mode='DEVELOPMENT', script_language='python', script_framework='selenium',
                         source_kind='UPLOADED_FIXED_SCRIPT', generated_by_llm=None,
                         llm_generation_evidence_available=False)
+        if _cu02 is not None:
+            metadata.update(source_kind='CU02_SCHEDULE_REGISTRATION', workflow_id='CU02', generated_by_llm=False,
+                            browser=_cu02['parameters']['browser'],
+                            source_cu02_files={name: _sha(content) for name, content in _cu02['source_files'].items()})
         uses_steps = any(isinstance(node, ast.ImportFrom) and node.module == 'ktl_runtime'
                          and any(alias.name == 'business_step' for alias in node.names) for node in ast.walk(tree))
         metadata['business_step_required'] = strict_requested or uses_steps or bool(llm_source and llm_source.get('business_step_required'))
@@ -637,6 +717,10 @@ class M04Manager:
                                 model=llm_source.get('model'), request_id=llm_source.get('request_id'))
         self._session_claim('SCRIPT', script_id, metadata)
         directory.mkdir()
+        if _cu02 is not None:
+            for name, content in _cu02['source_files'].items():
+                with self._safe(directory / name).open('xb') as output:
+                    output.write(content)
         if _m01 is not None:
             require(set(_m01['source_files']) == {'m01_source.csv', 'm01_manifest.json', 'm01_replay_source.json', 'm01_parameters.json'},
                     'M01 재현 원본 증빙 파일을 확인하세요.')
@@ -702,7 +786,7 @@ class M04Manager:
         self._recover()
         return {'execution': self._job(execution_id)}
 
-    def create(self, payload):
+    def create(self, payload, *, _cu02_evaluation=None, _run_lock=None):
         require(isinstance(payload, dict), 'JSON object required')
         require(payload.get('run_mode', 'DEVELOPMENT') == 'DEVELOPMENT', 'M04 runner supports DEVELOPMENT only')
         visible = payload.get('visible_browser', False)
@@ -715,7 +799,7 @@ class M04Manager:
         require(isinstance(ids, list) and 1 <= len(ids) <= 10 and all(isinstance(value, str) for value in ids)
                 and len(set(ids)) == len(ids), 'Select 1..10 unique script_ids')
         with self.lock:
-            global_lock = self._global_lock()
+            global_lock = _run_lock if _run_lock is not None else self._global_lock()
             if not global_lock:
                 raise EvaluationError('M04 execution is already running', 'RUNNING')
             try:
@@ -726,6 +810,11 @@ class M04Manager:
                     if stale.get('status') in {'QUEUED', 'RUNNING'}:
                         self._interrupt(stale, '이전 실행이 중단되어 결과를 평가하지 않았습니다.')
                 scripts = [self._script(value) for value in ids]
+                if _cu02_evaluation is not None:
+                    from .cu02_evaluation import validate
+                    validate(_cu02_evaluation, [metadata for metadata, _ in scripts],
+                             lambda metadata: json.loads(self._cu02_files(metadata,
+                                 self.script_directory / metadata['script_id'])['cu02_parameters.json']))
                 contracts = {}
                 for metadata, _ in scripts:
                     if metadata.get('business_step_required'):
@@ -771,7 +860,9 @@ class M04Manager:
                     for name, content in self._prepared_files(metadata, self.script_directory / metadata['script_id'], raw).items():
                         with (case_dir / name).open('xb') as output:
                             output.write(content)
-                    for name, content in self._m01_files(metadata, self.script_directory / metadata['script_id']).items():
+                    sources = dict(self._m01_files(metadata, self.script_directory / metadata['script_id']),
+                                   **self._cu02_files(metadata, self.script_directory / metadata['script_id']))
+                    for name, content in sources.items():
                         with (case_dir / name).open('xb') as output:
                             output.write(content)
                     cases.append(dict(case_id=case_id, script_id=metadata['script_id'], scenario_id=metadata['scenario_id'],
@@ -797,6 +888,11 @@ class M04Manager:
                     if metadata.get('source_kind') == 'M01_OBSERVED_REPLAY':
                         cases[-1].update({key: metadata[key] for key in ('source_kind', 'source_m01_dataset_id',
                             'source_m01_session_id', 'source_m01_csv_sha256', 'source_m01_files')})
+                    if metadata.get('source_kind') == 'CU02_SCHEDULE_REGISTRATION':
+                        cases[-1].update({key: metadata[key] for key in
+                            ('source_kind', 'workflow_id', 'browser', 'source_cu02_files')})
+                    if _cu02_evaluation is not None:
+                        cases[-1].update(cu02_evaluation_id=_cu02_evaluation['evaluation_id'], cu02_case_number=index)
                     if visible:
                         cases[-1].update(visible_browser=True, action_delay_ms=delay, keep_open_seconds=hold)
                 artifacts = [dict(name=name, url=f'/api/development/m04/executions/{execution_id}/artifacts/{name}')
@@ -804,6 +900,12 @@ class M04Manager:
                 job = dict(execution_id=execution_id, status='QUEUED', started_at=_now(), completed_at=None,
                            run_mode='DEVELOPMENT', cases=cases, logs=[], result=None, error=None, artifacts=artifacts,
                            counts=dict(total_execution_count=len(cases), successful_execution_count=0, failed_execution_count=0))
+                if _cu02_evaluation is not None:
+                    job['cu02_evaluation'] = deepcopy(_cu02_evaluation)
+                    evaluation_raw = _encoded(_cu02_evaluation)
+                    job['cu02_evaluation_sha256'] = _sha(evaluation_raw)
+                    with (directory / 'cu02_evaluation.json').open('xb') as output:
+                        output.write(evaluation_raw)
                 if visible:
                     job.update(visible_browser=True, action_delay_ms=delay, keep_open_seconds=hold)
                 if getattr(self, 'session', None) is not None:
@@ -890,6 +992,7 @@ class M04Manager:
         require(_sha(script.read_bytes()) == case['sha256'], 'Execution snapshot SHA-256 mismatch')
         self._prepared_files(case, script.parent, script.read_bytes())
         self._m01_files(case, script.parent)
+        self._cu02_files(case, script.parent)
         runner = self._safe(self.root / 'backend/m04/runner.py')
         require(runner.is_file(), 'M04 runner not configured')
         case.update(status='RUNNING', started_at=_now())
@@ -1106,12 +1209,26 @@ class M04Manager:
     def _provenance(self, job):
         # 실행 전 고정 스크립트 및 출처 보관
         execution = self._job_path(job['execution_id']).parent
-        m01_files = {}
+        evaluation_raw = None
+        if job.get('cu02_evaluation') is not None:
+            from .cu02_evaluation import validate
+            evaluation_raw = self._safe(execution / 'cu02_evaluation.json').read_bytes()
+            require(evaluation_raw == _encoded(job['cu02_evaluation'])
+                    and _sha(evaluation_raw) == job.get('cu02_evaluation_sha256'),
+                    'CU02 사전 고정 평가 항목의 SHA-256이 다릅니다.')
+            validate(job['cu02_evaluation'], job['cases'], lambda case: json.loads(
+                self._cu02_files(case, execution / case['case_id'])['cu02_parameters.json']))
+            require(all(case.get('cu02_evaluation_id') == job['cu02_evaluation']['evaluation_id']
+                        and case.get('cu02_case_number') == number
+                        for number, case in enumerate(job['cases'], 1)),
+                    'CU02 평가 실행 항목의 번호가 다릅니다.')
+        source_files = {}
         for case in job['cases']:
             source = self._safe(execution / case['case_id'] / 'script.py')
             require(_sha(source.read_bytes()) == case['sha256'], 'Execution snapshot SHA-256 mismatch')
             self._prepared_files(case, source.parent, source.read_bytes())
-            m01_files[case['case_id']] = self._m01_files(case, source.parent)
+            source_files[case['case_id']] = dict(self._m01_files(case, source.parent),
+                                                **self._cu02_files(case, source.parent))
             if case.get('execution_plan_sha256'):
                 require(_sha(self._safe(source.parent / 'execution_plan.json').read_bytes()) == case['execution_plan_sha256'],
                         'Execution plan snapshot SHA-256 mismatch')
@@ -1125,15 +1242,19 @@ class M04Manager:
         inputs = dict(run_mode='DEVELOPMENT', official=False, data_class='DEVELOPMENT', script_language='python',
                       script_framework='selenium', scripts_manually_modified=False, execution_id=job['execution_id'],
                       scripts=[{key: value for key, value in case.items() if key not in {'steps', 'status', 'error', 'worker_pid'}} for case in job['cases']])
+        if evaluation_raw is not None:
+            inputs['cu02_evaluation_sha256'] = job['cu02_evaluation_sha256']
         archive_buffer = io.BytesIO()
         with zipfile.ZipFile(archive_buffer, 'w', zipfile.ZIP_DEFLATED) as archive:
             archive.writestr('fixed_scripts.json', _encoded(inputs))
+            if evaluation_raw is not None:
+                archive.writestr('cu02_evaluation.json', evaluation_raw)
             for case in job['cases']:
                 for name in ('script.py', 'script.json', 'source_scenario.json', 'execution_scenario.json', 'execution_contract.json', 'execution_plan.json', 'response.json', 'prompt.json', 'prepared_source.json', 'prepared_code.py'):
                     path = self._safe(execution / case['case_id'] / name)
                     if path.exists():
                         archive.writestr(case['case_id'] + '/' + name, path.read_bytes())
-                for name, content in m01_files[case['case_id']].items():
+                for name, content in source_files[case['case_id']].items():
                     archive.writestr(case['case_id'] + '/' + name, content)
         raw = archive_buffer.getvalue()
         archive_sha = _sha(raw)
@@ -1172,6 +1293,12 @@ class M04Manager:
             payload['details']['script_registration'] = ('M01_OBSERVED_REPLAY' if all(
                 case.get('source_kind') == 'M01_OBSERVED_REPLAY' for case in job['cases']) else 'MIXED')
             payload['details']['replay_scope'] = 'RECORDED_UI_ACTIONS_AND_EXPLICIT_STATE'
+        if any(case.get('source_kind') == 'CU02_SCHEDULE_REGISTRATION' for case in job['cases']):
+            payload['details']['workflow_id'] = 'CU02'
+            payload['details']['script_registration'] = 'CU02_SCHEDULE_REGISTRATION'
+        if job.get('cu02_evaluation') is not None:
+            payload['details']['cu02_evaluation'] = deepcopy(job['cu02_evaluation'])
+            payload['details']['cu02_evaluation_sha256'] = job['cu02_evaluation_sha256']
         if job.get('visible_browser') is True:
             payload['details']['browser_presentation'] = {key: job[key] for key in
                 ('visible_browser', 'action_delay_ms', 'keep_open_seconds')}

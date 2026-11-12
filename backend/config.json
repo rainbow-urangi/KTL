@@ -34,6 +34,7 @@
     ]
   },
   "m07": {
+    "model_display_name": "GPT 루나",
     "model": "",
     "generation_timeout_seconds": 120,
     "target_url": "https://rainbowlab.ai.kr/rbem"

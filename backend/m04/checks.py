@@ -17,7 +17,7 @@ VERSION = 1
 _ACTIONS = {'open', 'navigate', 'click', 'input', 'type', 'clear', 'submit',
             'select', 'back', 'forward', 'refresh', 'verify'}
 _KINDS = {'visible', 'focus', 'value', 'text_equals', 'text_contains', 'url_path',
-          'count', 'cards_search', 'cards_state', 'text_equals_target', 'nonempty', 'native_submit_response'}
+          'count', 'text_count', 'cards_search', 'cards_state', 'text_equals_target', 'nonempty', 'native_submit_response'}
 _RELATIONAL_CHECK_SCRIPT = r"""const qa=s=>[...document.querySelectorAll(s)];
 const shown=e=>!!e && e.getClientRects().length>0 && getComputedStyle(e).visibility!=='hidden';
 const attr=(e,name)=>String(e.getAttribute(name)||'');
@@ -147,6 +147,16 @@ def _condition(value, target, sensitive=False):
     _require(isinstance(value, dict) and isinstance(value.get('kind'), str) and value['kind'] in _KINDS,
              '지원하는 typed condition이 필요합니다: ' + ', '.join(sorted(_KINDS)))
     kind = value['kind']
+    if kind == 'text_count':
+        _require(set(value) == {'kind', 'target', 'expected', 'count'}
+                 and isinstance(value.get('expected'), str) and len(value['expected']) <= 2000
+                 and type(value.get('count')) is int and value['count'] >= 0,
+                 'text_count에는 2000자 이내 expected와 0 이상 정수 count가 필요합니다.')
+        result = dict(kind=kind, target=_locator(value['target']), expected=value['expected'], count=value['count'])
+        _require(not (sensitive or _auth_target(target) or _auth_target(result['target'])),
+                 '인증 입력은 text_count 검사 대상이 아닙니다.')
+        _safe_literal(result['expected'])
+        return result
     if kind == 'native_submit_response':
         _require(set(value) == {'kind', 'method', 'api_origin', 'api_path', 'expected_status'}
                  and isinstance(value.get('method'), str) and value['method'] in {'POST', 'PUT', 'PATCH', 'DELETE'}
@@ -615,15 +625,24 @@ class RuntimeChecks:
             return urlsplit(self._raw(driver, 'getCurrentUrl')).path == condition['expected']
         selector, expected = condition['target']['value'], condition['expected']
         script = """const items=[...document.querySelectorAll(arguments[0])], expected=arguments[1];
-const e=items[0], visible=x=>!!x && x.getClientRects().length>0 && getComputedStyle(x).visibility!=='hidden';
+const e=items[0], visible=x=>{
+  if(!x || !x.getClientRects().length || ['hidden','collapse'].includes(getComputedStyle(x).visibility)) return false;
+  for(let ancestor=x;ancestor;ancestor=ancestor.parentElement){
+    if(Number(getComputedStyle(ancestor).opacity)===0) return false;
+  }
+  return true;
+};
 switch(arguments[2]) {
-case 'visible': return visible(e)===expected;
+case 'visible': return expected ? items.length===1 && visible(e) : !items.some(visible);
 case 'focus': return (!!e && document.activeElement===e)===expected;
 case 'value': return !!e && e.value===expected;
 case 'text_equals': return !!e && e.innerText.trim()===expected;
 case 'text_contains': return !!e && e.innerText.includes(expected);
 case 'count': return items.length===expected;
+case 'text_count': return items.filter(x=>visible(x) && typeof x.innerText==='string' && x.innerText.trim()===expected).length===arguments[3];
 } return false;"""
+        if kind == 'text_count':
+            return self._js(driver, script, selector, expected, kind, condition['count']) is True
         return self._js(driver, script, selector, expected, kind) is True
 
     def _cards_state(self, driver, condition, summary):

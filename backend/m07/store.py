@@ -27,7 +27,7 @@ M03_ID = re.compile(r'DEV-M03-\d{8}T\d{6}-[a-f0-9]{12}')
 
 
 def _scenario_declared(tree, identity):
-    for node in ast.walk(tree):
+    for node in tree.body:
         if isinstance(node, (ast.Assign, ast.AnnAssign)):
             targets = node.targets if isinstance(node, ast.Assign) else [node.target]
             if (any(isinstance(target, ast.Name) and target.id == 'SCENARIO_ID' for target in targets)
@@ -69,9 +69,10 @@ class M07Manager(M04Manager):
         if job.get('measurement_version') != 1 or job.get('code_source') == 'PREPARED':
             return
         cases, counts = job['cases'], job['counts']
+        denominator = 20 if job.get('meeting_protocol') is True else len(cases)
         attempted = sum(c.get('generation_http_attempted') is True for c in cases)
         unknown = sum(c.get('generation_invoked') is True and c.get('generation_http_attempted') is None for c in cases)
-        completed = job['status'] == 'COMPLETED' and attempted == len(cases) and not unknown
+        completed = job['status'] == 'COMPLETED' and len(cases) == denominator and attempted == denominator and not unknown
         pending = job['status'] in ACTIVE or job['status'] == 'GENERATED' and attempted == len(cases) and not unknown
         measurement = dict(version=1, evaluation_status='COMPLETED' if completed else 'PENDING' if pending else 'NOT_READY',
                            registered_count=len(cases), provider_http_attempt_count=attempted,
@@ -85,10 +86,12 @@ class M07Manager(M04Manager):
                            syntax_target_percent=80, syntax_target_met=None,
                            integrated_reference_target_percent=80, integrated_reference_target_met=None, official_pass=None)
         measurement.update({key: counts[key] for key in ('generated_code_count', 'syntax_pass_count', 'execution_pass_count', 'both_pass_count')})
+        if job.get('meeting_protocol') is True:
+            measurement.update(denominator=20, denominator_policy='MEETING_FIXED_20', required_count=20)
         if completed:
-            measurement.update(generation_percent=100 * counts['generated_code_count'] / len(cases),
-                               syntax_percent=100 * counts['syntax_pass_count'] / len(cases),
-                               integrated_percent=100 * counts['both_pass_count'] / len(cases))
+            measurement.update(generation_percent=100 * counts['generated_code_count'] / denominator,
+                               syntax_percent=100 * counts['syntax_pass_count'] / denominator,
+                               integrated_percent=100 * counts['both_pass_count'] / denominator)
             if measurement['browser_started_count']:
                 measurement['browser_percent'] = 100 * counts['execution_pass_count'] / measurement['browser_started_count']
             measurement['syntax_target_met'] = measurement['syntax_percent'] >= 80
@@ -211,6 +214,51 @@ class M07Manager(M04Manager):
         return dict(run_mode='DEVELOPMENT', readiness=ready, scenarios=scenarios, provider_state=self._provider_current(),
                     target_url=settings(self.root, config)['target_url'])
 
+    def workflows(self):
+        from .workflows import catalog
+        return dict(catalog(self.root), readiness=self._readiness())
+
+    def meeting_context(self):
+        from .meeting import schema
+        from ..m04.cu02 import login_configured
+        config = self.config_provider()
+        ready = dict(readiness(self.root, config), **self._readiness())
+        ready.update(model_display_name=config.get('m07', {}).get('model_display_name', 'GPT 루나'),
+                     login_configured=login_configured(self.root))
+        ready['message'] = ('실제 LLM 코드 생성 준비 완료' if ready['configured']
+                            else '업무 컴퓨터의 API 키와 실제 모델 ID를 연결하면 생성할 수 있습니다.')
+        return dict(schema(), run_mode='DEVELOPMENT', measurement_protocol='M07_MEETING_20_V1', readiness=ready,
+                    provider_state=self._provider_current())
+
+    def create_meeting(self, payload):
+        from .meeting import prepare_batch
+        items = prepare_batch(payload)
+        if not readiness(self.root, self.config_provider())['configured'] and self.generator is generate:
+            raise EvaluationError('업무 컴퓨터의 API 키와 실제 모델 ID를 연결하세요. 실행하지 않은 결과는 생성하지 않습니다.', 'NOT_CONFIGURED')
+        if self._provider_current()['blocked']:
+            raise EvaluationError('LLM 공급자 대기 상태입니다. 제한 해제 후 새 작업으로 시작하세요.', 'NOT_READY')
+        refs = [dict(m03_run_id=None, scenario_id=row['scenario']['scenario_id']) for row in items]
+        sources = [(ref, row['scenario'], False) for ref, row in zip(refs, items)]
+        inputs = [self._execution_inputs(row['scenario']) for row in items]
+        return self._create_sources(sources, inputs, {}, False, meeting_items=items)
+
+    def prepare_workflows(self, payload):
+        from .workflows import prepare_batch
+        from ..m04.cu02 import login_configured
+        prepared = prepare_batch(payload)
+        if not login_configured(self.root):
+            raise EvaluationError('준비 코드 실행을 위한 시험 계정 설정이 필요합니다.', 'NOT_CONFIGURED')
+        refs = [dict(m03_run_id=None, scenario_id=item['scenario']['scenario_id']) for item in prepared]
+        uploads = [dict(scenario_id=item['scenario']['scenario_id'],
+                        filename=item['scenario']['workflow_id'].lower() + '-prepared-' + str(item['case_number']) + '.py',
+                        code_base64=base64.b64encode(item['code'].encode('utf-8')).decode('ascii'),
+                        sha256=_sha(item['code'].encode('utf-8'))) for item in prepared]
+        registered = read_codes(self.root, uploads, refs)
+        sources = [(ref, item['scenario'], False) for ref, item in zip(refs, prepared)]
+        inputs = [self._execution_inputs(item['scenario']) for item in prepared]
+        response = self._create_sources(sources, inputs, registered, True, workflows=prepared)
+        return dict(response, workflows=[item['scenario']['workflow_id'] for item in prepared])
+
     def execution_context(self, m03_run_id, scenario_id):
         source, _ = self._source(m03_run_id, scenario_id)
         require(not scenario_deleted(self.root, m03_run_id, scenario_id), '삭제한 시나리오의 실행 조건은 편집할 수 없습니다.')
@@ -306,6 +354,9 @@ class M07Manager(M04Manager):
                         and _sha(_encoded(source)) == ref['source_scenario_sha256'],
                         '선택한 M03 원본이 변경되었습니다. 원본을 확인하고 다시 선택하세요.')
         prepared_inputs = [self._execution_inputs(source, ref['m03_run_id']) for ref, source, _ in sources]
+        return self._create_sources(sources, prepared_inputs, registered, prepared_request)
+
+    def _create_sources(self, sources, prepared_inputs, registered, prepared_request, *, workflows=None, meeting_items=None):
         with self.lock:
             run_lock = self._global_lock()
             if not run_lock:
@@ -337,6 +388,13 @@ class M07Manager(M04Manager):
                                       business_step_required=True,
                                       generation_status='PENDING', syntax_status='PENDING', execution_status='PENDING',
                                       final_status='PENDING', steps=[], error=None))
+                    if meeting_items is not None:
+                        item = meeting_items[index - 1]
+                        item_raw = _encoded(item['source_raw'])
+                        with (case_dir / 'meeting_input.json').open('xb') as output:
+                            output.write(item_raw)
+                        cases[-1].update(source_kind='MEETING_SCENARIO_INPUT', input_id=item['input_id'],
+                                         meeting_input_sha256=_sha(item_raw), code_source='LLM')
                     if prepared.get('execution_plan') is not None:
                         plan_raw = _encoded(prepared['execution_plan'])
                         (case_dir / 'execution_plan.json').write_bytes(plan_raw)
@@ -353,6 +411,16 @@ class M07Manager(M04Manager):
                         cases[-1].update(code_source='PREPARED', generated_by_llm=False,
                                          source_filename=record['source_filename'], source_file_sha256=record['source_file_sha256'],
                                          prepared_source_sha256=_sha(origin))
+                        if workflows is not None:
+                            item = workflows[index - 1]
+                            for name, content in item['source_files'].items():
+                                with (case_dir / name).open('xb') as output:
+                                    output.write(content)
+                            cases[-1].update(source_kind='RBEM_PREPARED_WORKFLOW', workflow_id=source['workflow_id'],
+                                             workflow_case_number=item['case_number'], browser='chrome',
+                                             source_workflow_files={name: _sha(content) for name, content in item['source_files'].items()},
+                                             generation_invoked=False, generation_http_attempted=False,
+                                             provider_response_observed=False)
                     else:
                         cases[-1].update(generation_invoked=False, generation_http_attempted=False,
                                          provider_response_observed=False)
@@ -364,6 +432,18 @@ class M07Manager(M04Manager):
                     job.update(code_source='PREPARED', generated_by_llm=False)
                 else:
                     job.update(measurement_version=1, provider_model=settings(self.root, self.config_provider())['model'])
+                if workflows is not None:
+                    job.update(source_kind='RBEM_PREPARED_WORKFLOW', browser='chrome',
+                               workflow_ids=list(dict.fromkeys(item['scenario']['workflow_id'] for item in workflows)))
+                if meeting_items is not None:
+                    batch_raw = _encoded({'items': [item['source_raw'] for item in meeting_items]})
+                    with (folder / 'meeting_inputs.json').open('xb') as output:
+                        output.write(batch_raw)
+                    job.update(meeting_protocol=True, measurement_protocol='M07_MEETING_20_V1',
+                               required_count=20, target_percent=80, code_source='LLM',
+                               source_kind='MEETING_LLM_BATCH', meeting_inputs_sha256=_sha(batch_raw),
+                               model_display_name=self.config_provider().get('m07', {}).get('model_display_name', 'GPT 루나'))
+                job.update(visible_browser=True, action_delay_ms=350, keep_open_seconds=3)
                 if getattr(self, 'session', None) is not None:
                     job['server_session_id'] = self.session.id
                 self._save(job)
@@ -437,9 +517,12 @@ class M07Manager(M04Manager):
                           ('execution_contract.json', 'execution_contract_sha256'),
                            ('execution_plan.json', 'execution_plan_sha256'),
                           ('prepared_code.py', 'source_file_sha256'),
-                          ('prepared_source.json', 'prepared_source_sha256')):
+                          ('prepared_source.json', 'prepared_source_sha256'),
+                          ('meeting_input.json', 'meeting_input_sha256')):
             if key in case:
                 require(_sha(self._case_path(job, case, name).read_bytes()) == case[key], '보관 원본 SHA-256 불일치: ' + name)
+        if job.get('meeting_protocol') is True:
+            self._check_meeting_inputs(job)
         if job.get('code_source') == 'PREPARED':
             require(case.get('code_source') == 'PREPARED' and case.get('generated_by_llm') is False
                     and case.get('prepared_source_sha256') and case.get('source_file_sha256'),
@@ -451,6 +534,30 @@ class M07Manager(M04Manager):
                     and origin.get('source_file_sha256') == case.get('source_file_sha256')
                     and ('sha256' not in case or case['sha256'] == case['source_file_sha256']),
                     '등록 코드 원본과 표시·검사 파일이 일치하지 않습니다.')
+        if case.get('source_kind') == 'RBEM_PREPARED_WORKFLOW':
+            hashes = case.get('source_workflow_files')
+            require(isinstance(hashes, dict) and set(hashes) == {'workflow_definition.json', 'workflow_parameters.json'},
+                    '준비 업무의 정의와 입력 원본이 필요합니다.')
+            require(all(_sha(self._case_path(job, case, name).read_bytes()) == expected for name, expected in hashes.items()),
+                    '준비 업무의 정의·입력 SHA-256이 다릅니다.')
+            require(case.get('source_m03_run_id') is None and case.get('generated_by_llm') is False,
+                    '준비 업무의 코드 출처가 다릅니다.')
+
+    def _check_meeting_inputs(self, job):
+        from .meeting import prepare_batch
+        raw = self._safe(self._job_path(job['execution_id']).parent / 'meeting_inputs.json').read_bytes()
+        require(_sha(raw) == job.get('meeting_inputs_sha256') and job.get('required_count') == 20,
+                '사전에 고정한 20개 입력 원본의 SHA-256이 다릅니다.')
+        items = prepare_batch(json.loads(raw))
+        require(len(job['cases']) == len(items) == 20 and job.get('code_source') == 'LLM',
+                '회의용 시험은 실제 LLM 입력 20건으로 고정해야 합니다.')
+        for item, case in zip(items, job['cases']):
+            require(case.get('input_id') == item['input_id'] and case.get('source_m03_run_id') is None
+                    and case.get('source_kind') == 'MEETING_SCENARIO_INPUT' and case.get('code_source') == 'LLM'
+                    and case.get('scenario_id') == item['scenario']['scenario_id']
+                    and case.get('source_scenario_sha256') == _sha(_encoded(item['scenario']))
+                    and case.get('meeting_input_sha256') == _sha(_encoded(item['source_raw'])),
+                    '20개 입력과 사례·실행 조건의 연결이 다릅니다.')
 
     def _generate(self, job):
         job['status'] = 'GENERATING'
@@ -483,6 +590,8 @@ class M07Manager(M04Manager):
                 scenario_file = 'execution_scenario.json' if case.get('execution_scenario_sha256') else 'source_scenario.json'
                 source = self._json(self._case_path(job, case, scenario_file))
                 generation_input = dict(source, execution_contract=self._json(self._case_path(job, case, 'execution_contract.json')))
+                if job.get('meeting_protocol') is True:
+                    generation_input['meeting_protocol'] = True
                 case.update(generation_invoked=True, generation_http_attempted=None, provider_response_observed=None)
                 value = self.generator(self.root, config, generation_input)
                 self._transport(case, value)
@@ -536,10 +645,14 @@ class M07Manager(M04Manager):
         buffer = io.BytesIO()
         with zipfile.ZipFile(buffer, 'w', zipfile.ZIP_DEFLATED) as archive:
             archive.writestr('generation.json', _encoded(dict(generation_id=job['generation_id'], cases=job['cases'])))
+            if job.get('meeting_protocol') is True:
+                self._check_meeting_inputs(job)
+                archive.writestr('meeting_inputs.json', self._safe(self._job_path(job['execution_id']).parent / 'meeting_inputs.json').read_bytes())
             for case in job['cases']:
                 self._check(job, case)
                 for name in ('source_scenario.json', 'execution_scenario.json', 'execution_contract.json', 'execution_plan.json', 'script.py',
-                             'response.json', 'prompt.json', 'prepared_code.py', 'prepared_source.json'):
+                             'response.json', 'prompt.json', 'prepared_code.py', 'prepared_source.json',
+                             'workflow_definition.json', 'workflow_parameters.json', 'meeting_input.json'):
                     path = self._case_path(job, case, name)
                     if path.exists():
                         archive.writestr(case['case_id'] + '/' + name, path.read_bytes())
@@ -549,6 +662,8 @@ class M07Manager(M04Manager):
         job['archive_sha256'] = _sha(raw)
 
     def _validate(self, job):
+        if job.get('meeting_protocol') is True:
+            self._check_meeting_inputs(job)
         archive = self._safe(self._job_path(job['execution_id']).parent / 'code.zip').read_bytes()
         require(_sha(archive) == job['archive_sha256'], '생성 원본 묶음 SHA-256 불일치')
         for case in job['cases']:
@@ -592,7 +707,13 @@ class M07Manager(M04Manager):
         job.update(status='COMPLETED', completed_at=_now())
         self._sync(job)
         ready = job.get('measurement_version') != 1 or job['measurement']['evaluation_status'] == 'COMPLETED'
-        if ready and job['counts']['generated_code_count']:
+        if job.get('meeting_protocol') is True:
+            if ready:
+                self._evaluate_meeting(job, archive)
+            else:
+                job['result'] = None
+                job['error'] = '20건 전체의 실제 LLM 요청·검사 근거가 아직 완비되지 않았습니다.'
+        elif ready and job['counts']['generated_code_count']:
             self._evaluate(job, archive)
             if job.get('measurement_version') == 1:
                 job['legacy_result'] = deepcopy(job['result'])
@@ -601,6 +722,39 @@ class M07Manager(M04Manager):
             job['result'] = None
             job['error'] = '전체 등록 요청의 HTTP 시도 근거 또는 생성 코드가 없어 점수를 계산할 수 없습니다.'
         self._save(job)
+
+    def _evaluate_meeting(self, job, archive):
+        from ..run_storage import save_run
+        self._check_meeting_inputs(job)
+        measurement = job.get('measurement', {})
+        require(measurement.get('evaluation_status') == 'COMPLETED'
+                and measurement.get('provider_http_attempt_count') == 20
+                and job['status'] == 'COMPLETED', '실제 LLM 요청 20건의 완료 근거가 필요합니다.')
+        require(all(case['final_status'] in {'PASS', 'FAIL'} for case in job['cases']), '20건 모두 최종 판정이 필요합니다.')
+        require(_sha(archive) == job['archive_sha256'], '검사한 코드 원본 묶음 SHA-256이 다릅니다.')
+        for case in job['cases']:
+            self._check(job, case)
+        folder = self._job_path(job['execution_id']).parent
+        hashes = {str((folder / name).relative_to(self.root)).replace('\\', '/'): _sha((folder / name).read_bytes())
+                  for name in ('meeting_inputs.json', 'code.zip')}
+        counts = deepcopy(job['counts'])
+        score = 100 * counts['both_pass_count'] / 20
+        rows = [{key: case.get(key) for key in ('case_id', 'input_id', 'scenario_id', 'generation_status',
+                'syntax_status', 'execution_status', 'final_status', 'code_sha256', 'validation_code_sha256',
+                'meeting_input_sha256', 'model', 'request_id', 'error')} for case in job['cases']]
+        details = dict(measurement_protocol='M07_MEETING_20_V1', denominator_policy='MEETING_FIXED_20',
+                       denominator=20, formula='both_pass_count / 20 * 100', raw_counts=counts,
+                       generated_by_llm=counts['generated_code_count'] > 0, actual_llm_request_count=20,
+                       measurement=deepcopy(measurement),
+                       meeting_inputs_sha256=job['meeting_inputs_sha256'], archive_sha256=job['archive_sha256'])
+        received = dict(generation_id=job['generation_id'], run_mode='DEVELOPMENT', code_source='LLM',
+                        counts=counts, cases=deepcopy(job['cases']), details=deepcopy(details))
+        result = dict(status='COMPLETED', source_type='DEVELOPMENT', score=score, sample_count=20,
+                      details=details, input_sha256=hashes, evaluator_version='m07-meeting-fixed-20-v1',
+                      provenance=dict(source_module='llm-meeting-20-validator', source_version='v1',
+                                      external_run_id=job['generation_id'], submitted_at=_now()))
+        job['result'] = save_run(self.root, 'M07', 'DEVELOPMENT', self.config_provider(), result, rows, received=received)
+        job['result_scope'] = 'MEETING_FIXED_20'
 
     def _evaluate(self, job, archive):
         if job.get('code_source') == 'PREPARED':
@@ -664,11 +818,12 @@ class M07Manager(M04Manager):
         path = self._case_path(job, case, 'script.py')
         raw = path.read_bytes() if path.exists() else b''
         result = {'case': case, 'code': raw.decode('utf-8')}
-        if job.get('code_source') == 'PREPARED':
+        if job.get('code_source') == 'PREPARED' or job.get('meeting_protocol') is True and raw:
             digest = _sha(raw)
+            expected = case.get('source_file_sha256') if job.get('code_source') == 'PREPARED' else case.get('code_sha256')
             result.update(code_base64=base64.b64encode(raw).decode('ascii'),
-                          identity_verification=dict(verified=digest == case['source_file_sha256'],
-                                                     source_sha256=case['source_file_sha256'], display_sha256=digest))
+                          identity_verification=dict(verified=digest == expected,
+                                                     source_sha256=expected, display_sha256=digest))
         return result
 
     def export_m04(self, identity, payload, manager):
@@ -682,6 +837,8 @@ class M07Manager(M04Manager):
                 raise EvaluationError('M07 작업이 실행 중입니다.', 'RUNNING')
             try:
                 job = self._job(identity)
+                require(job.get('source_kind') != 'RBEM_PREPARED_WORKFLOW' and job.get('meeting_protocol') is not True,
+                        '직접 입력·준비 코드는 M07에서 검사하세요. M04 고정 등록에는 M03 원본 연결이 필요합니다.')
                 require(job['status'] == 'GENERATED', 'M04 고정 대상은 실행 검사 전에 선택해야 합니다.')
                 cases = [c for c in job['cases'] if c['case_id'] in ids]
                 require(len(cases) == len(ids), '코드 사례를 찾을 수 없습니다.')
