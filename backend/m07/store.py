@@ -19,6 +19,7 @@ from ..m03_management import scenario_deleted
 from ..m04.store import M04Manager, _RunLock, _encoded, _masked, _now, _sha
 from .generator import PROMPT_VERSION, GenerationError, generate, readiness, settings
 from .prepared import read_codes
+from .provider_state import ProviderState
 
 
 ACTIVE = {'QUEUED', 'GENERATING', 'VALIDATING'}
@@ -49,6 +50,8 @@ class M07Manager(M04Manager):
         self.execution_directory.mkdir(parents=True, exist_ok=True)
         self.lock = threading.RLock()
         self._active = self._process = None
+        self.provider_state = ProviderState(self._safe(self.directory / 'provider_state.json'),
+                                           read=self._json, write=self._write)
         self._recover()
 
     def _sync(self, job):
@@ -59,6 +62,67 @@ class M07Manager(M04Manager):
             case['final_status'] = 'PASS' if passed else 'PENDING' if any(case[key] in {'PENDING', 'RUNNING'}
                                         for key in ('generation_status', 'syntax_status', 'execution_status')) else 'FAIL'
         self._counts(job)
+        self._measurement(job)
+
+    @staticmethod
+    def _measurement(job):
+        if job.get('measurement_version') != 1 or job.get('code_source') == 'PREPARED':
+            return
+        cases, counts = job['cases'], job['counts']
+        attempted = sum(c.get('generation_http_attempted') is True for c in cases)
+        unknown = sum(c.get('generation_invoked') is True and c.get('generation_http_attempted') is None for c in cases)
+        completed = job['status'] == 'COMPLETED' and attempted == len(cases) and not unknown
+        pending = job['status'] in ACTIVE or job['status'] == 'GENERATED' and attempted == len(cases) and not unknown
+        measurement = dict(version=1, evaluation_status='COMPLETED' if completed else 'PENDING' if pending else 'NOT_READY',
+                           registered_count=len(cases), provider_http_attempt_count=attempted,
+                           provider_http_unknown_count=unknown,
+                           not_attempted_count=sum(c.get('generation_http_attempted') is False for c in cases),
+                           generation_invocation_count=sum(c.get('generation_invoked') is True for c in cases),
+                           provider_response_count=sum(c.get('provider_response_observed') is True for c in cases),
+                           provider_http_inferred_count=sum(c.get('generation_http_inferred') is True for c in cases),
+                           browser_started_count=sum(c.get('browser_started') is True for c in cases),
+                           generation_percent=None, syntax_percent=None, integrated_percent=None, browser_percent=None,
+                           syntax_target_percent=80, syntax_target_met=None,
+                           integrated_reference_target_percent=80, integrated_reference_target_met=None, official_pass=None)
+        measurement.update({key: counts[key] for key in ('generated_code_count', 'syntax_pass_count', 'execution_pass_count', 'both_pass_count')})
+        if completed:
+            measurement.update(generation_percent=100 * counts['generated_code_count'] / len(cases),
+                               syntax_percent=100 * counts['syntax_pass_count'] / len(cases),
+                               integrated_percent=100 * counts['both_pass_count'] / len(cases))
+            if measurement['browser_started_count']:
+                measurement['browser_percent'] = 100 * counts['execution_pass_count'] / measurement['browser_started_count']
+            measurement['syntax_target_met'] = measurement['syntax_percent'] >= 80
+            measurement['integrated_reference_target_met'] = measurement['integrated_percent'] >= 80
+        job['measurement'] = measurement
+
+    def _provider_current(self, model=None):
+        return self.provider_state.current(model or settings(self.root, self.config_provider())['model'])
+
+    def current_provider_state(self):
+        return self._provider_current()
+
+    def _public_job(self, job):
+        value = deepcopy(job)
+        value['provider_state'] = self._provider_current()
+        return value
+
+    @staticmethod
+    def _transport(case, proof):
+        for source, target in (('http_request_attempted', 'generation_http_attempted'),
+                               ('provider_response_observed', 'provider_response_observed')):
+            value = proof.get(source)
+            case[target] = value if type(value) is bool else None
+        case['generation_http_inferred'] = (case['generation_http_attempted'] is None
+                                            and isinstance(proof.get('request_id'), str) and bool(proof['request_id']))
+
+    @staticmethod
+    def _skip_provider_cases(job, cases, state):
+        job['provider_stop'] = deepcopy(state)
+        for case in cases:
+            case.update(generation_status='SKIPPED', syntax_status='SKIPPED', execution_status='SKIPPED', status='SKIPPED',
+                        generation_invoked=False, generation_http_attempted=False, provider_response_observed=False,
+                        not_attempted_reason=state.get('reason') or 'HTTP_429_STOP',
+                        error='Provider 제한으로 요청하지 않았습니다.')
 
     def _save(self, job):
         self._sync(job)
@@ -144,7 +208,7 @@ class M07Manager(M04Manager):
                         scenarios.append(source)
             except (EvaluationError, OSError, ValueError, TypeError):
                 continue
-        return dict(run_mode='DEVELOPMENT', readiness=ready, scenarios=scenarios,
+        return dict(run_mode='DEVELOPMENT', readiness=ready, scenarios=scenarios, provider_state=self._provider_current(),
                     target_url=settings(self.root, config)['target_url'])
 
     def execution_context(self, m03_run_id, scenario_id):
@@ -161,6 +225,16 @@ class M07Manager(M04Manager):
         with self.lock:
             value = execution_contexts.save(self.root, run_id, source, self.config_provider(),
                                             payload['execution_contract'], payload['expected_results'])
+        return {'execution_context': value}
+
+    def save_execution_plan(self, payload):
+        require(isinstance(payload, dict) and set(payload) == {'m03_run_id', 'scenario_id', 'execution_plan'},
+                'M03 실행 ID, 시나리오 ID와 별도 실행 계획이 필요합니다.')
+        run_id, scenario_id = payload['m03_run_id'], payload['scenario_id']
+        source, _ = self._source(run_id, scenario_id)
+        require(not scenario_deleted(self.root, run_id, scenario_id), '삭제한 시나리오의 실행 계획은 저장할 수 없습니다.')
+        with self.lock:
+            value = execution_contexts.save_plan(self.root, run_id, source, self.config_provider(), payload['execution_plan'])
         return {'execution_context': value}
 
     def select_scenarios(self, payload):
@@ -197,11 +271,12 @@ class M07Manager(M04Manager):
         values = [self._json(p) for p in self.execution_directory.glob('*/execution.json')
                   if self._session_has(self._session_kind, p.parent.name)]
         values.sort(key=lambda item: item['started_at'], reverse=True)
-        return {'generations': [{k: v for k, v in job.items() if k not in {'cases', 'logs'}} for job in values]}
+        return {'generations': [{k: v for k, v in self._public_job(job).items() if k not in {'cases', 'logs'}} for job in values],
+                'provider_state': self._provider_current()}
 
     def read(self, execution_id):
         self._recover()
-        return {'generation': self._job(execution_id)}
+        return {'generation': self._public_job(self._job(execution_id)), 'provider_state': self._provider_current()}
 
     def create(self, payload):
         require(isinstance(payload, dict) and payload.get('run_mode', 'DEVELOPMENT') == 'DEVELOPMENT', 'M07 DEVELOPMENT 요청이 필요합니다.')
@@ -209,6 +284,8 @@ class M07Manager(M04Manager):
         prepared_request = 'prepared_codes' in payload
         if not prepared_request and not readiness(self.root, self.config_provider())['configured'] and self.generator is generate:
             raise EvaluationError('OpenAI API 키와 KTL_M07_MODEL 설정이 필요합니다.', 'NOT_CONFIGURED')
+        if not prepared_request and self._provider_current()['blocked']:
+            raise EvaluationError('Provider 대기 상태입니다. 현재 제한과 다음 요청 가능 시각을 확인하세요.', 'NOT_READY')
         refs = payload.get('scenario_refs')
         if refs is None:
             ids = payload.get('scenario_ids')
@@ -260,6 +337,10 @@ class M07Manager(M04Manager):
                                       business_step_required=True,
                                       generation_status='PENDING', syntax_status='PENDING', execution_status='PENDING',
                                       final_status='PENDING', steps=[], error=None))
+                    if prepared.get('execution_plan') is not None:
+                        plan_raw = _encoded(prepared['execution_plan'])
+                        (case_dir / 'execution_plan.json').write_bytes(plan_raw)
+                        cases[-1]['execution_plan_sha256'] = _sha(plan_raw)
                     if prepared_request:
                         record = registered[source['scenario_id']]
                         metadata = dict(code_source='PREPARED', generated_by_llm=False,
@@ -272,17 +353,22 @@ class M07Manager(M04Manager):
                         cases[-1].update(code_source='PREPARED', generated_by_llm=False,
                                          source_filename=record['source_filename'], source_file_sha256=record['source_file_sha256'],
                                          prepared_source_sha256=_sha(origin))
+                    else:
+                        cases[-1].update(generation_invoked=False, generation_http_attempted=False,
+                                         provider_response_observed=False)
                 job = dict(execution_id=identity, generation_id=identity, status='QUEUED', run_mode='DEVELOPMENT',
                            started_at=_now(), completed_at=None, cases=cases, logs=[], result=None, error=None,
                            artifacts=[dict(name=name, url=f'/api/development/m07/generations/{identity}/artifacts/{name}')
                                       for name in ('report.json', 'log.jsonl', 'steps.csv', 'code.zip', 'screenshots.zip')])
                 if prepared_request:
                     job.update(code_source='PREPARED', generated_by_llm=False)
+                else:
+                    job.update(measurement_version=1, provider_model=settings(self.root, self.config_provider())['model'])
                 if getattr(self, 'session', None) is not None:
                     job['server_session_id'] = self.session.id
                 self._save(job)
                 self._launch(identity, 'generate', run_lock)
-                return {'generation': deepcopy(job)}
+                return {'generation': self._public_job(job)}
             except BaseException:
                 run_lock.close()
                 raise
@@ -327,7 +413,7 @@ class M07Manager(M04Manager):
                 job.update(status='VALIDATING', validation_started_at=_now())
                 self._save(job)
                 self._launch(identity, 'validate', run_lock, browser_lock)
-                return {'generation': deepcopy(job)}
+                return {'generation': self._public_job(job)}
             except BaseException:
                 browser_lock.close()
                 run_lock.close()
@@ -339,7 +425,7 @@ class M07Manager(M04Manager):
             if job['status'] in ACTIVE:
                 self._safe(self._job_path(identity).parent / 'cancel.request').touch(exist_ok=True)
                 job['cancel_requested'] = True
-            return {'generation': job}
+            return {'generation': self._public_job(job)}
 
     def _case_path(self, job, case, name):
         return self._safe(self._job_path(job['execution_id']).parent / case['case_id'] / name)
@@ -349,6 +435,7 @@ class M07Manager(M04Manager):
                           ('response.json', 'response_sha256'), ('prompt.json', 'prompt_sha256'),
                           ('execution_scenario.json', 'execution_scenario_sha256'),
                           ('execution_contract.json', 'execution_contract_sha256'),
+                           ('execution_plan.json', 'execution_plan_sha256'),
                           ('prepared_code.py', 'source_file_sha256'),
                           ('prepared_source.json', 'prepared_source_sha256')):
             if key in case:
@@ -369,10 +456,15 @@ class M07Manager(M04Manager):
         job['status'] = 'GENERATING'
         self._save(job)
         config = self.config_provider()
-        for case in job['cases']:
+        for index, case in enumerate(job['cases']):
             if self._cancelled(job['execution_id']):
                 self._interrupt(job, '사용자 생성 중단')
                 return
+            if job.get('code_source') != 'PREPARED':
+                state = self._provider_current(job.get('provider_model'))
+                if state['blocked']:
+                    self._skip_provider_cases(job, job['cases'][index:], state)
+                    break
             case.update(generation_status='RUNNING', generation_started_at=_now())
             self._save(job)
             try:
@@ -391,7 +483,9 @@ class M07Manager(M04Manager):
                 scenario_file = 'execution_scenario.json' if case.get('execution_scenario_sha256') else 'source_scenario.json'
                 source = self._json(self._case_path(job, case, scenario_file))
                 generation_input = dict(source, execution_contract=self._json(self._case_path(job, case, 'execution_contract.json')))
+                case.update(generation_invoked=True, generation_http_attempted=None, provider_response_observed=None)
                 value = self.generator(self.root, config, generation_input)
+                self._transport(case, value)
                 code = value['code'].encode('utf-8')
                 require(0 < len(code) <= 262144 and value.get('generated_by_llm') is True, 'LLM 생성 원본 근거가 필요합니다.')
                 response = value.get('response_bytes') or _encoded(value['response'])
@@ -408,6 +502,7 @@ class M07Manager(M04Manager):
             except Exception as exc:
                 if isinstance(exc, GenerationError):
                     proof = exc.evidence
+                    self._transport(case, proof)
                     response = proof.get('response_bytes') or _encoded(proof.get('response', {}))
                     prompt = _encoded({key: proof.get(key) for key in ('instructions', 'input', 'prompt_version', 'requested_model')})
                     for name, raw, key in (('response.json', response, 'response_sha256'), ('prompt.json', prompt, 'prompt_sha256')):
@@ -415,11 +510,21 @@ class M07Manager(M04Manager):
                             output.write(raw)
                         case[key] = _sha(raw)
                     case.update(model=proof.get('model'), request_id=proof.get('request_id'), prompt_version=proof.get('prompt_version'))
+                    response_value = proof.get('response', {})
+                    if isinstance(response_value, dict) and type(response_value.get('http_status')) is int and response_value['http_status'] == 429:
+                        try:
+                            state = self.provider_state.record(job.get('provider_model') or proof.get('requested_model') or proof.get('model'),
+                                response_value, generation_id=job['generation_id'], evidence_sha256=case['response_sha256'])
+                        except EvaluationError:
+                            state = self._provider_current(job.get('provider_model'))
+                        self._skip_provider_cases(job, job['cases'][index + 1:], state)
                 case.update(generation_status='ERROR', syntax_status='SKIPPED', execution_status='SKIPPED',
                             status='SKIPPED', error=_masked(exc))
                 self._log(job, case['case_id'], case['error'])
             case['generation_completed_at'] = _now()
             self._save(job)
+            if job.get('provider_stop'):
+                break
         if self._cancelled(job['execution_id']):
             self._interrupt(job, '사용자 생성 중단')
             return
@@ -433,7 +538,7 @@ class M07Manager(M04Manager):
             archive.writestr('generation.json', _encoded(dict(generation_id=job['generation_id'], cases=job['cases'])))
             for case in job['cases']:
                 self._check(job, case)
-                for name in ('source_scenario.json', 'execution_scenario.json', 'execution_contract.json', 'script.py',
+                for name in ('source_scenario.json', 'execution_scenario.json', 'execution_contract.json', 'execution_plan.json', 'script.py',
                              'response.json', 'prompt.json', 'prepared_code.py', 'prepared_source.json'):
                     path = self._case_path(job, case, name)
                     if path.exists():
@@ -484,11 +589,17 @@ class M07Manager(M04Manager):
             self._interrupt(job, '사용자 검사 중단')
             return
         self._sync(job)
-        if job['counts']['generated_code_count']:
-            self._evaluate(job, archive)
-        else:
-            job['error'] = '생성된 코드가 없어 점수를 계산할 수 없습니다.'
         job.update(status='COMPLETED', completed_at=_now())
+        self._sync(job)
+        ready = job.get('measurement_version') != 1 or job['measurement']['evaluation_status'] == 'COMPLETED'
+        if ready and job['counts']['generated_code_count']:
+            self._evaluate(job, archive)
+            if job.get('measurement_version') == 1:
+                job['legacy_result'] = deepcopy(job['result'])
+                job['result_scope'] = 'LEGACY_GENERATED_CODE_COUNT'
+        else:
+            job['result'] = None
+            job['error'] = '전체 등록 요청의 HTTP 시도 근거 또는 생성 코드가 없어 점수를 계산할 수 없습니다.'
         self._save(job)
 
     def _evaluate(self, job, archive):

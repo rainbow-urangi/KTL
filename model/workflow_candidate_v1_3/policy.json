@@ -1,0 +1,23 @@
+{
+  "policy_id": "capture-observed-sequence-v1",
+  "mode": "DEVELOPMENT",
+  "official": false,
+  "base_model": "workflow_candidate_v1_2",
+  "model_input": "Existing sanitize_raw twelve fields; original session IDs and original inference sorting retained",
+  "model_parameters": "Unchanged weights, feature extraction, boundary threshold, clustering distances and threshold selection",
+  "artifact_recovery": "Only original bytes or JSON CRLF-to-LF bytes that exactly match the existing pinned SHA256; write a new staging directory and verify again",
+  "medoid_policy": "Cosine medoid among observed workflows with at least one existing action(); lifecycle-only workflows remain in all analysis tables but are ineligible as representatives",
+  "capture_scope": "One independently recorded capture, one declared root/target tab and one frame; concurrent tabs or frames fail closed",
+  "capture_binding": "CSV SHA256, byte count, exact columns, event count, contiguous csv_row and CSV id, event/session/time/tab/frame identity must match the capture manifest",
+  "capture_order": "Original worker archive ordinal (manifest csv_row), never timestamp sorting or global event_sequence sorting",
+  "sequence_scope": "event_sequence is local to the original session; require positive unique increasing integers within each contiguous session block",
+  "session_transition": "Same tab/frame/root; previous block ends with page_close and next block begins with collector_boot followed by page_view; original sessions are never rewritten",
+  "capture_procedures": "Map all actionful source events through actual model process_steps, then preserve their archive order; compress only identical existing signatures adjacent in the actionful subsequence within the same source workflow/model/session; skipped lifecycle rows stay in lineage, as in the existing process_map compression policy",
+  "procedure_signature": ["action", "http_method", "normalized_endpoint", "page_path", "target_role"],
+  "graph_identity": "Preserve observed source node IDs, including revisits; procedure order identifies occurrences",
+  "branches": "Unproven cross-context order, interleaved session blocks or inconsistent navigation evidence fails; never invent links or choose by correctness",
+  "scope_label": "CAPTURE_OBSERVED_SEQUENCE is an observed execution view, not a learned process medoid or a guarantee of typical whole-business semantics",
+  "lifecycle_policy": "Keep every original row and workflow; report action()-excluded rows separately without creating procedures",
+  "coverage_policy": "Event preservation is diagnostic only and is not an official success criterion or M03 score",
+  "evaluation_policy": "Never consume independent reference, GT, evaluation result or business labels as model features; missing reference remains NOT_READY with null score"
+}

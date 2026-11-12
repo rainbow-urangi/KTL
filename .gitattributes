@@ -1,2 +1,21 @@
 # 합성 API 샘플 해시 보존
 data/evaluation/mock-dataset-01/*.json text eol=lf
+
+# 승인 원본의 SHA-256을 유지하도록 체크아웃 개행 변환을 비활성화한다.
+model/v6_2/frozen/** -text
+model/v6_2/runtime/** -text
+data/training/v6_2_source/** -text
+
+# Candidate artifact pins refer to exact serialized bytes. Existing working
+# files are preserved; v1.3 reproduces LF bytes only after exact pin validation.
+model/workflow_candidate_v1_2/artifacts/** -text
+model/workflow_candidate_v1_3/** -text
+
+# Keep the source bytes recorded by the existing candidate identity on every OS.
+model/workflow_candidate_v1/src/*.py text eol=crlf
+model/workflow_candidate_v1_1/src/*.py text eol=crlf
+model/workflow_candidate_v1_2/src/*.py text eol=crlf
+model/workflow_candidate_v1_2/artifacts/model_manifest.json text eol=crlf
+
+# The development canonical manifest pins these files byte-for-byte.
+data/evaluation/m03-canonical-development-*/** -text

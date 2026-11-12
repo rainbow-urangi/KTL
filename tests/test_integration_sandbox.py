@@ -18,7 +18,10 @@ class IntegrationSandboxTests(unittest.TestCase):
     def setUp(self):
         self.temp=tempfile.TemporaryDirectory();self.root=Path(self.temp.name)
         (self.root/'backend').mkdir()
-        shutil.copy(ROOT/'backend/config.json',self.root/'backend/config.json')
+        config=json.loads((ROOT/'backend/config.json').read_text(encoding='utf-8'))
+        config['m03']={'generator_mode':'MOCK'}
+        config['adapters']['scenario_generation']=[]
+        (self.root/'backend/config.json').write_text(json.dumps(config),encoding='utf-8')
         shutil.copytree(ROOT/'frontend',self.root/'frontend')
         shutil.copytree(ROOT/'data/evaluation/mock-dataset-01',self.root/'data/evaluation/mock-dataset-01')
         self.server=ThreadingHTTPServer(('127.0.0.1',0),make_handler(Service(self.root)))
@@ -41,7 +44,11 @@ class IntegrationSandboxTests(unittest.TestCase):
             self.assertEqual(payload['dataset_manifest_sha256'],digest(self.root/'data/evaluation/mock-dataset-01/data_manifest.json'))
             status,raw=self.request('POST',sample['endpoint'],payload);result=json.loads(raw)
             self.assertEqual(status,201,result);self.assertEqual(result['status'],'COMPLETED')
-            self.assertAlmostEqual(result['score'],expected[metric]);self.assertIsNone(result['official_pass']);self.assertIsNone(result['pass'])
+            if metric=='M03':
+                self.assertIsNone(result['score'])
+                self.assertEqual(result['details']['evaluation_status'],'NOT_READY')
+            else:self.assertAlmostEqual(result['score'],expected[metric])
+            self.assertIsNone(result['official_pass']);self.assertIsNone(result['pass'])
             if metric!='M03':self.assertEqual(result['details']['raw_counts'],payload['counts'])
             self.assertEqual(result['run_mode'],'REFERENCE')
             self.assertEqual(result['provenance']['source_module'],payload['source_module'])
@@ -57,7 +64,13 @@ class IntegrationSandboxTests(unittest.TestCase):
                 changed['cases'][0]['syntax_status']='FAIL'
                 changed['cases'][0]['final_status']='FAIL'
             status,raw=self.request('POST',sample['endpoint'],changed)
-            self.assertEqual(status,201);self.assertLess(json.loads(raw)['score'],result['score'])
+            self.assertEqual(status,201)
+            changed_result=json.loads(raw)
+            if metric=='M03':
+                self.assertIsNone(changed_result['score'])
+                self.assertFalse(changed_result['details']['rows'][0]['structure_valid'])
+                self.assertFalse(changed_result['details']['rows'][0]['success'])
+            else:self.assertLess(changed_result['score'],result['score'])
             status,_=self.request('POST',sample['endpoint'],payload);self.assertEqual(status,409)
             status,_=self.request('GET',result['evidence_file']);self.assertEqual(status,200)
     def test_invalid_examples_and_official_rejected(self):
@@ -76,6 +89,11 @@ class IntegrationSandboxTests(unittest.TestCase):
         status,raw=self.request('POST','/api/m03/generate',request)
         self.assertEqual(status,200);body=json.loads(raw)
         self.assertTrue(body['synthetic']);self.assertEqual(body['status'],'SUCCESS')
-        self.assertEqual(self.request('POST','/api/m03/generate',request)[1],raw)
+        second_status,second_raw=self.request('POST','/api/m03/generate',request)
+        second=json.loads(second_raw)
+        self.assertEqual(second_status,200)
+        self.assertEqual(second['steps'],body['steps'])
+        self.assertEqual(second['scenario_id'],body['scenario_id'])
+        self.assertNotEqual(second['origin_generation_id'],body['origin_generation_id'])
         self.assertEqual(self.request('POST','/api/m03/generate',dict(request,run_mode='OFFICIAL'))[0],422)
         self.assertEqual(self.request('POST','/api/m03/generate',dict(request,generator_mode='REAL'))[0],503)

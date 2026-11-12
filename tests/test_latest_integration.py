@@ -15,7 +15,10 @@ class LatestIntegrationTests(unittest.TestCase):
     def test_m03_eight_of_ten(self):
         p=sample('M03');p['score']=100
         score,total,details,rows=calculate('M03',p)
-        self.assertEqual((score,total),(80,10));self.assertEqual(sum(r['success'] for r in rows),8)
+        self.assertEqual((score,total),(None,10))
+        self.assertEqual(sum(r['structure_valid'] for r in rows),8)
+        self.assertEqual(details['evaluation_status'],'NOT_READY')
+        self.assertTrue(all(r['success'] is None for r in rows[:8]))
     def test_m03_missing_fields_and_schema(self):
         good=sample('M03')['scenarios'][0]
         for field in ['action','target','order']:
@@ -30,7 +33,7 @@ class LatestIntegrationTests(unittest.TestCase):
         self.assertFalse(validate_scenario_result(row)['success'])
     def test_m03_official_ten_and_unique_units(self):
         p=sample('M03');p['run_mode']='OFFICIAL'
-        self.assertEqual(calculate('M03',p)[:2],(80,10))
+        self.assertEqual(calculate('M03',p)[:2],(None,10))
         p['scenarios'].pop()
         with self.assertRaises(EvaluationError):calculate('M03',p)
         p['run_mode']='DEVELOPMENT';self.assertEqual(calculate('M03',p)[1],9)
@@ -82,8 +85,10 @@ class LatestIntegrationTests(unittest.TestCase):
             p['run_id']=p.pop('external_run_id')
             # Temporary fixtures are isolated and never written as project official evidence.
             result=ingest(root,config,'M03',p)
-            self.assertTrue(result['official_pass']);self.assertEqual(result['score'],80)
+            self.assertIsNone(result['official_pass']);self.assertIsNone(result['score'])
+            self.assertEqual(result['details']['evaluation_status'],'NOT_READY')
+            self.assertEqual(result['sample_count'],10)
             p['run_id']+='-bad';p['scenarios'][0]['business_unit_id']='UNREGISTERED'
-            with self.assertRaisesRegex(EvaluationError,'do not match'):ingest(root,config,'M03',p)
+            with self.assertRaisesRegex(EvaluationError,'unregistered business units'):ingest(root,config,'M03',p)
             p['scenarios'][0]['business_unit_id']='BU01';p['scenarios'][0]['synthetic']=True
             with self.assertRaisesRegex(EvaluationError,'Mock scenarios'):ingest(root,config,'M03',p)

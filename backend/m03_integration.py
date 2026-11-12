@@ -40,7 +40,8 @@ def _no_truth(value):
     if isinstance(value,dict):
         for key,item in value.items():
             normalized=str(key).lower().replace('-','_')
-            require(normalized not in {'ground_truth','groundtruth','expected_events','expected_label','gt_steps','gt_label','evaluation_pairing','match_result','official_pass'},'Ground Truth and evaluation evidence are prohibited as M03 generation inputs')
+            require(normalized not in {'ground_truth','groundtruth','expected_events','expected_label','gt_steps','gt_label','evaluation_pairing','match_result','official_pass','m03_evaluation_reference','m03_evaluation_references','evaluation_reference'},'Ground Truth and evaluation evidence are prohibited as M03 generation inputs')
+            require(not (normalized=='evaluation_only' and item is True),'Evaluation-only references are prohibited as M03 generation inputs')
             _no_truth(item)
     elif isinstance(value,list):
         for item in value:_no_truth(item)
@@ -224,30 +225,74 @@ def validate_scenario_result(value):
     return dict(schema_valid=bool(schema_valid),step_order_valid=bool(order_valid),action_present=bool(action_present),target_present=bool(target_present),success=success)
 
 
-def evaluate_scenarios(payload):
+def evaluate_scenarios(payload, reference=None, expected_business_units=None):
     rows=payload.get('scenarios')
-    require(isinstance(rows,list) and 1<=len(rows)<=10 and all(isinstance(r,dict) for r in rows),'scenarios must contain 1..10 result objects')
+    official=payload['run_mode']=='OFFICIAL'
+    minimum=0 if official and expected_business_units is not None else 1
+    require(isinstance(rows,list) and minimum<=len(rows)<=10 and all(isinstance(r,dict) for r in rows),'Invalid M03 scenarios result objects')
     ids=[r.get('business_unit_id') for r in rows]
     require(all(nonempty(x) for x in ids) and len(set(ids))==len(ids),'Unique business_unit_id required for every attempt')
     scenario_ids=[r['scenario_id'] for r in rows if nonempty(r.get('scenario_id'))]
     require(len(scenario_ids)==len(set(scenario_ids)),'Duplicate scenario_id')
-    official=payload['run_mode']=='OFFICIAL'
-    require(not official or len(rows)==10,'Official M03 requires exactly 10 business units')
-    evidence=[dict(business_unit_id=r['business_unit_id'],scenario_id=r.get('scenario_id'),**validate_scenario_result(r)) for r in rows]
-    successful=sum(r['success'] for r in evidence);total=10 if official else len(rows)
-    counts=dict(total_business_units=total,successful_scenario_count=successful,failed_scenario_count=total-successful)
+    universe=ids
+    if official:
+        if expected_business_units is None:
+            require(len(rows)==10,'Official M03 requires ten results or a trusted business universe')
+        else:
+            require(isinstance(expected_business_units,list) and len(expected_business_units)==10
+                    and all(nonempty(x) for x in expected_business_units)
+                    and len(set(expected_business_units))==10,'Official M03 requires ten unique expected business units')
+            universe=list(expected_business_units)
+        require(set(ids)<=set(universe),'M03 results contain unregistered business units')
+    from .m03_reference import compare_business_order, validate_reference
+    if reference is not None:
+        validate_reference(reference)
+    references={unit['business_unit_id']:unit for unit in reference['business_units']} if reference is not None else {}
+    if official:
+        require(set(references)<=set(universe),'M03 reference contains unregistered business units')
+    evidence=[]
+    for scenario in rows:
+        validation=validate_scenario_result(scenario)
+        structure_valid=validation.pop('success')
+        expected=references.get(scenario['business_unit_id'])
+        comparison=(compare_business_order(scenario,expected) if expected is not None else
+                    dict(semantic_order_valid=None,reason='MISSING_EVALUATION_REFERENCE'))
+        success=(bool(structure_valid and comparison['semantic_order_valid']) if expected is not None
+                 else False if not structure_valid else None)
+        evidence.append(dict(business_unit_id=scenario['business_unit_id'],scenario_id=scenario.get('scenario_id'),
+                             **validation,structure_valid=structure_valid,reference_available=expected is not None,missing_result=False,
+                             **comparison,success=success,
+                             evaluation_status='NOT_READY' if success is None else 'PASS' if success else 'FAIL'))
+    missing_results=[unit for unit in universe if unit not in ids] if official else []
+    for unit in missing_results:
+        evidence.append(dict(business_unit_id=unit,scenario_id=None,schema_valid=False,step_order_valid=False,
+                             action_present=False,target_present=False,structure_valid=False,
+                             reference_available=unit in references,missing_result=True,semantic_order_valid=False,
+                             reason='MISSING_RESULT',success=False,evaluation_status='FAIL'))
+    missing=[unit for unit in universe if unit not in references]
+    ready=not missing
+    successful=sum(row['success'] is True for row in evidence) if ready else None
+    total=10 if official else len(rows)
+    counts=dict(total_business_units=total,successful_scenario_count=successful,
+                failed_scenario_count=total-successful if ready else None,missing_result_count=len(missing_results))
     if 'counts' in payload:
         require(isinstance(payload['counts'],dict),'counts object required')
         for k,v in payload['counts'].items():
-            if k in counts:require(type(v) is int and v==counts[k],'M03 counts do not match scenario validation: '+k)
+            if k in counts and counts[k] is not None:
+                require(type(v) is int and v==counts[k],'M03 counts do not match scenario validation: '+k)
     details=dict(formula='successful_scenario_count / total_business_units * 100',raw_counts=counts,
                  successful_scenario_count=successful,total_scenario_count=total,denominator=total,
                  schema='evaluation_contracts/m03-scenario.schema.json',denominator_policy='OFFICIAL_FIXED_10' if official else 'NON_OFFICIAL_SAMPLE_SIZE',
+                 success_policy='STRUCTURE_AND_REFERENCE_ORDER',evaluation_status='COMPLETED' if ready else 'NOT_READY',
+                 missing_reference_business_units=missing,
+                 missing_result_business_units=missing_results,
+                 reference_id=reference['reference_id'] if reference is not None else None,
+                 matching_policy=reference['matching_policy'] if reference is not None else None,
                  external_details=payload.get('details',{}),external_evidence=payload.get('evidence',{}))
-    return 100*successful/total,total,details,evidence
+    return 100*successful/total if ready else None,total,details,evidence
 
 
-def generate(root,config,payload):
+def generate(root,config,payload,*,verified_real_input=None):
     require(isinstance(payload,dict),'JSON object required')
     require(set(payload)<= {'business_unit_id','workflow_id','run_mode','generator_mode'},'Unsupported generation request field')
     for k in ('business_unit_id','workflow_id'):require(nonempty(payload.get(k)),'Required field: '+k)
@@ -278,7 +323,8 @@ def generate(root,config,payload):
                     dict(order=8,action='verify',target='명함 목록 화면',expected_result=definition['end_condition'])])
     else:
         adapter_input={k:payload[k] for k in ('business_unit_id','workflow_id')}
-        definitions,verified=_real_input(Path(root).resolve(),config)
+        definitions,verified=(_real_input(Path(root).resolve(),config)
+                              if verified_real_input is None else verified_real_input)
         definition=next((row for row in definitions if all(row[key]==payload[key] for key in ('business_unit_id','workflow_id'))),None)
         require(definition is not None,'Generation request does not match configured M03 business definitions')
         adapter_input.update(business_definition=definition,analysis_input=verified)

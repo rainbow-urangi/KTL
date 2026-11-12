@@ -19,3 +19,7 @@ data/evaluation/m04-development-*/
 data/development/execution_contexts/
 data/development/m07_codes/
 data/evaluation/m07-development-*/
+
+# Local analysis and trial archives contain user collection data.
+data/development/uploaded_analysis/
+data/evaluation/m03-cu10-trial-*/

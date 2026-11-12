@@ -16,7 +16,7 @@
       "metric_name": "Scenario Generation · 테스트 시나리오 자동생성",
       "method": "POST",
       "endpoint": "/api/integrations/m03/result",
-      "purpose": "개별 생성 결과의 schema, step order, action, target을 중앙 검증합니다.",
+      "purpose": "개별 생성 결과의 형식과 사전 고정 정답 업무 순서를 중앙 검증합니다. 정답 미등록 시 점수 없이 평가 대기로 보관합니다.",
       "criteria": "10 scenarios / target >= 80%",
       "request": {
         "external_run_id": "M03-MOCK-001",
@@ -28,7 +28,7 @@
         "dataset_manifest_sha256": "43ff3967565db9380fb57fbb8c19abeae03ce205b927bff00f13ff1a231fcb32",
         "details": {
           "synthetic": true,
-          "note": "10개 중 8개 유효한 합성 시나리오; 실제 업무 근거 아님"
+          "note": "10개 중 8개 형식이 유효한 합성 시나리오; 정답 순서 기준 미등록으로 성공률 미산정, 실제 업무 근거 아님"
         },
         "scenarios": [
           {
@@ -181,9 +181,13 @@
         "run_mode": "REFERENCE",
         "dataset_id": "mock-dataset-01",
         "status": "COMPLETED",
-        "score": 80.0,
+        "score": null,
         "sample_count": 10,
         "target": 80,
+        "details": {
+          "evaluation_status": "NOT_READY",
+          "success_policy": "STRUCTURE_AND_REFERENCE_ORDER"
+        },
         "official_pass": null,
         "pass": null
       },

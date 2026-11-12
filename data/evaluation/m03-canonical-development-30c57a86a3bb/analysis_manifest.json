@@ -1,0 +1,22 @@
+{
+  "data_class": "DEVELOPMENT",
+  "dataset_id": "m03-canonical-local-dev-30c57a86a3bb",
+  "files": [
+    {
+      "path": "canonical_workflows.json",
+      "sha256": "30c57a86a3bbb675b349a7ad87c1c4e18cff798454547a6675250709225cec4b"
+    },
+    {
+      "path": "process_models.csv",
+      "sha256": "b2d6355f819319d260fa793b1a9367fe4fbe6c63696d071c5676ea753a33bc96"
+    }
+  ],
+  "official": false,
+  "run_mode": "DEVELOPMENT",
+  "source_module": "canonical-procedure-adapter",
+  "source_version": "canonical-to-m03-v1",
+  "synthetic": false,
+  "workflow_ids": [
+    "WF-0037"
+  ]
+}

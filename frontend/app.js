@@ -10,6 +10,29 @@ let catalog;
 let catalogRequestNumber=0;
 let serverSessionReloading=false;
 function ktlServerSessionId() {return typeof catalog?.server_session_id==='string'?catalog.server_session_id:null;}
+const M01_REPLAY_SOURCE_KEY='ktl.m01.replay-source.v1';
+function m01RememberReplaySource(comparisonId) {
+  try {
+    if(typeof sessionStorage==='undefined') return;
+    const serverSession=ktlServerSessionId();
+    if(!dev||typeof comparisonId!=='string'||!/^[a-f0-9]{32}$/.test(comparisonId)||!/^SERVER-[a-f0-9]{32}$/.test(serverSession||'')) {
+      sessionStorage.removeItem(M01_REPLAY_SOURCE_KEY);return;
+    }
+    sessionStorage.setItem(M01_REPLAY_SOURCE_KEY,JSON.stringify({comparison_id:comparisonId,server_session_id:serverSession}));
+  } catch {}
+}
+function m01ValidateReplaySource() {
+  try {
+    if(typeof sessionStorage==='undefined') return;
+    const raw=sessionStorage.getItem(M01_REPLAY_SOURCE_KEY);
+    if(raw===null) return;
+    const saved=JSON.parse(raw);
+    if(!saved||Array.isArray(saved)||Object.keys(saved).sort().join(',')!=='comparison_id,server_session_id'
+      ||typeof saved.comparison_id!=='string'||!/^[a-f0-9]{32}$/.test(saved.comparison_id)
+      ||typeof saved.server_session_id!=='string'||!/^SERVER-[a-f0-9]{32}$/.test(saved.server_session_id)
+      ||saved.server_session_id!==ktlServerSessionId()) m01RememberReplaySource(null);
+  } catch {m01RememberReplaySource(null);}
+}
 function ktlDropQuery(keys) {
   if(typeof history==='undefined'||typeof history.replaceState!=='function') return;
   const query=new URLSearchParams(location.search);
@@ -26,6 +49,7 @@ function ktlCheckServerSession(response,data,requestedSession) {
   if(!serverSessionReloading&&!(received&&received!==current)&&data?.status!=='SESSION_EXPIRED') return;
   if(!serverSessionReloading) {
     serverSessionReloading=true;
+    m01RememberReplaySource(null);
     ++m03RequestNumber;m03View=null;
     if(typeof m04RequestNumber!=='undefined') {++m04RequestNumber;clearTimeout(m04PollTimer);m04View=null;}
     if(typeof m07RequestNumber!=='undefined') {++m07RequestNumber;clearTimeout(m07PollTimer);m07View=null;}
@@ -44,6 +68,7 @@ const score = (value,id) => value == null ? '—' : `${Number(value).toFixed(['M
 const statuses = {OFFICIAL_M06_BUNDLE_MISSING:'공식 M06 측정 bundle 없음',BLOCKED:'실행 조건 미충족',INSUFFICIENT_DATA_FOR_CONSENSUS:'Consensus 데이터 부족',NOT_CONFIGURED:'모델/모듈 미설정',WAITING_FOR_DATA:'공식 평가 데이터 대기 중',REFERENCE_READY:'Reference 실행 준비',READY:'공식 평가 준비',RUNNING:'실행 중',COMPLETED:'측정 완료',REFERENCE_PARTIAL:'Reference 부분 동작',EXTERNAL_MODULE_PENDING:'외부 모듈 연동 예정',ERROR:'오류'};
 function badge(r) {
   if (!r) return '<span class="badge neutral">미실행</span>';
+  if (r.metric_id==='M03'&&(r.details?.evaluation_status==='NOT_READY'||r.latest?.details?.evaluation_status==='NOT_READY')) return '<span class="badge neutral">정답 업무 순서 평가 대기</span>';
   if (dev && r.metric_id === 'M01') return '<span class="badge neutral">CSV 개발 평가 가능</span>';
   if (!ref && r.run_mode === 'OFFICIAL' && r.status === 'COMPLETED' && typeof r.official_pass === 'boolean') return `<span class="badge ${r.official_pass ? 'pass':'fail'}">${r.official_pass ? 'PASS':'FAIL'}</span>`;
   return `<span class="badge ${r.status === 'COMPLETED' ? 'neutral':'warning'}">${esc(r.status === 'READY' && dev ? '개발 평가 실행 가능' : statuses[r.status] || r.status)}</span>`;
@@ -127,6 +152,7 @@ function updateM01CompareButton() {
   document.querySelector('#m01-ready-status').textContent=truthDetailBusy?'CSV 평가를 준비하고 있습니다.':comparisonBusy?'CSV를 평가하고 있습니다.':!selected.dataset_id?'CSV를 업로드하면 결과가 자동으로 표시됩니다.':truthReady?'업로드한 CSV의 평가 결과를 확인하세요.':'CSV를 업로드하면 자동으로 평가합니다.';
 }
 function invalidateM01Comparison(message='CSV를 평가합니다.') {
+  m01RememberReplaySource(null);
   m01AutoRequestNumber++;
   comparisonRequestNumber++;
   comparisonVerificationRequestNumber++;
@@ -142,7 +168,6 @@ function renderM01Csv(m) {
   app.innerHTML=`${banner('수집 CSV · 정답 이벤트 비교')}<a class="back" href="${link('/')}">← 전체 평가</a>
     <section class="page-heading"><div><p class="eyebrow">M01 / DEVELOPMENT</p><h1>${labels.M01}</h1><p class="subtitle">${esc(m.metric_name)}</p></div>${badge(m)}</section>
     <section class="evaluation-panel" id="m01-input-panel"><div class="panel-heading"><h2>입력 및 현재 준비 상태</h2></div>
-      <p class="subtitle">확정 시나리오 · ${esc(M01_BU14_PRESET.scenario_name)} · v${esc(M01_BU14_PRESET.scenario_version)}</p>
       <div class="dataset-grid"><div><label>테스트 데이터셋</label><code id="m01-dataset-name">CSV 업로드 대기</code></div><div><label>개발 데이터 입력 수</label><strong id="m01-event-count">—</strong></div><div><label>M01 목표값</label><strong>${m.target==null?'미설정':esc(m.operator||'>=')+' '+score(m.target,'M01')}</strong></div></div>
       <div class="run-row"><p id="m01-ready-status">CSV를 업로드하면 결과가 자동으로 표시됩니다.</p><button id="m01-open-upload" type="button" class="m01-upload-button">CSV 업로드</button></div>
       <input id="csv-file" type="file" accept=".csv,text/csv" aria-label="수집 이벤트 CSV" hidden><p id="csv-status" role="status"></p>
@@ -292,40 +317,113 @@ const M01_BU14_PRESET = {
 async function getM01Bu14Preset() {
   return M01_BU14_PRESET;
 }
+const M01_CU02_PRESET = {
+  "business_unit_id": "CU02",
+  "scenario_name": "CU02 별도 DEVELOPMENT M01 사전 고정 사용자 조작",
+  "scenario_version": "CU02-M01-PREFROZEN-USER-COMMANDS-1",
+  "fixed_at": "2026-11-09T08:57:34.189213+00:00",
+  "reference_sha256": "f27b92df2e4e2e07e235717d22ba6812f5a6e45e5424640277cadeb6d658bb8f",
+  "scope_notice": "11/09 고정 8항목: 특정 날짜 선택, 설명란 마우스 클릭, 등록 후 화면 재조회까지 포함하는 개발용 기준입니다.",
+  "expected_events": [
+    {"expected_event_id":"CU02-M01-EXPECT-01","sequence":1,"event_type":"navigation","interaction_type":"page_view","page_url":"https://rainbowlab.ai.kr/mypage/schedule","data_testid":"","target_selector":"","api_path":"","api_method":""},
+    {"expected_event_id":"CU02-M01-EXPECT-02","sequence":2,"event_type":"click","interaction_type":"click","page_url":"https://rainbowlab.ai.kr/mypage/schedule","data_testid":"","target_selector":"div.mypage-layout > section.mypage-content > div.schedule-page > section.monthly-calendar > div.monthly-calendar__grid:nth-of-type(2) > div.monthly-calendar__cell.monthly-calendar__cell--today:nth-of-type(9)","api_path":"","api_method":""},
+    {"expected_event_id":"CU02-M01-EXPECT-03","sequence":3,"event_type":"click","interaction_type":"click","page_url":"https://rainbowlab.ai.kr/mypage/schedule","data_testid":"","target_selector":"#schedule-title","api_path":"","api_method":""},
+    {"expected_event_id":"CU02-M01-EXPECT-04","sequence":4,"event_type":"input","interaction_type":"change","page_url":"https://rainbowlab.ai.kr/mypage/schedule","data_testid":"","target_selector":"#schedule-title","api_path":"","api_method":""},
+    {"expected_event_id":"CU02-M01-EXPECT-05","sequence":5,"event_type":"click","interaction_type":"click","page_url":"https://rainbowlab.ai.kr/mypage/schedule","data_testid":"","target_selector":"#schedule-description","api_path":"","api_method":""},
+    {"expected_event_id":"CU02-M01-EXPECT-06","sequence":6,"event_type":"input","interaction_type":"change","page_url":"https://rainbowlab.ai.kr/mypage/schedule","data_testid":"","target_selector":"#schedule-description","api_path":"","api_method":""},
+    {"expected_event_id":"CU02-M01-EXPECT-07","sequence":7,"event_type":"click","interaction_type":"click","page_url":"https://rainbowlab.ai.kr/mypage/schedule","data_testid":"","target_selector":"div.mypage-layout > section.mypage-content > div.schedule-modal:nth-of-type(2) > form.schedule-modal__panel > div.schedule-modal__actions:nth-of-type(3) > button:nth-of-type(1)","api_path":"","api_method":""},
+    {"expected_event_id":"CU02-M01-EXPECT-08","sequence":8,"event_type":"navigation","interaction_type":"page_view","page_url":"https://rainbowlab.ai.kr/mypage/schedule","data_testid":"","target_selector":"","api_path":"","api_method":""}
+  ]
+};
+const M01_SCENARIO_PRESETS = [M01_BU14_PRESET,M01_CU02_PRESET];
+function selectM01Representative(candidates) {
+  let winner=null;
+  for(const candidate of candidates) {
+    const value=candidate.result?.measurement?.collection_accuracy;
+    if(candidate.status!=='COMPLETED' || typeof value!=='number' || !Number.isFinite(value) || value<0 || value>100) continue;
+    if(!winner || value>winner.result.measurement.collection_accuracy) winner=candidate;
+  }
+  return winner;
+}
 async function evaluateM01Csv() {
   invalidateM01Comparison('');
   const requestNumber=++m01AutoRequestNumber;
+  const comparisonNumber=++comparisonRequestNumber;
   const selection=()=>JSON.stringify([document.querySelector('#csv-dataset').value,document.querySelector('#csv-session').value]);
   const selected=selection();
-  const isCurrent=()=>requestNumber===m01AutoRequestNumber && selection()===selected;
+  const isCurrent=()=>requestNumber===m01AutoRequestNumber && comparisonNumber===comparisonRequestNumber && selection()===selected;
+  const snapshot={dataset_id:document.querySelector('#csv-dataset').value,session_id:document.querySelector('#csv-session').value};
   const status=document.querySelector('#comparison-status');
-  if(!document.querySelector('#csv-dataset').value) return false;
+  if(!snapshot.dataset_id) return false;
   m01TruthReport=null;
+  comparisonBusy=true;
   truthDetailBusy=true;updateM01CompareButton();
   status.textContent='CSV를 자동으로 평가하고 있습니다…';
+  const candidates=[];
   try {
-    const preset=await getM01Bu14Preset();
-    if(!isCurrent()) return false;
-    const payload={scenario_name:preset.scenario_name,scenario_version:preset.scenario_version,expected_events:preset.expected_events};
-    const result=await csvJson('/api/development/m01/ground-truths',{
-      method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify(payload),
-    });
-    if(!isCurrent()) return false;
-    if(!result.truth?.truth_id || result.truth.scenario_name!==preset.scenario_name
-      || result.truth.scenario_version!==preset.scenario_version || !Array.isArray(result.expected)) {
-      throw new Error('평가 기준을 불러오지 못했습니다.');
+    for(const preset of M01_SCENARIO_PRESETS) {
+      if(!isCurrent()) return false;
+      const candidate={preset,truth:null,result:null,status:'ERROR',error:null};
+      try {
+        const payload={scenario_name:preset.scenario_name,scenario_version:preset.scenario_version,expected_events:preset.expected_events};
+        candidate.truth=await csvJson('/api/development/m01/ground-truths',{
+          method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify(payload),
+        });
+        if(!isCurrent()) return false;
+        const truth=candidate.truth;
+        if(!truth.truth?.truth_id || truth.truth.scenario_name!==preset.scenario_name
+          || truth.truth.scenario_version!==preset.scenario_version || !Array.isArray(truth.expected)) {
+          throw new Error('평가 기준을 불러오지 못했습니다.');
+        }
+        const request={dataset_id:snapshot.dataset_id,truth_id:truth.truth.truth_id};
+        if(snapshot.session_id!=='__all__') request.session_id=snapshot.session_id;
+        candidate.result=await csvJson('/api/development/m01/compare',{
+          method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify(request),
+        });
+        if(!isCurrent()) return false;
+        const result=candidate.result,value=result.measurement?.collection_accuracy;
+        if(result.dataset_id!==snapshot.dataset_id || result.truth_id!==truth.truth.truth_id
+          || (result.session_id??null)!==(snapshot.session_id==='__all__'?null:snapshot.session_id)) {
+          throw new Error('비교 결과의 CSV·세션·정답이 요청과 다릅니다.');
+        }
+        if(typeof value!=='number' || !Number.isFinite(value) || value<0 || value>100) {
+          throw new Error('최종 점수를 확인할 수 없습니다.');
+        }
+        candidate.status='COMPLETED';
+      } catch(error) {
+        if(!isCurrent()) return false;
+        candidate.error=error.message;
+      }
+      candidates.push(candidate);
     }
-    m01TruthReport=result;
+    if(!isCurrent()) return false;
+    const winner=selectM01Representative(candidates);
     truthDetailBusy=false;
-    return await compareM01Events();
+    comparisonBusy=false;
+    if(winner) {
+      m01TruthReport=winner.truth;
+      renderM01ComparisonResult(winner.result,{...snapshot,truth_id:winner.truth.truth.truth_id});
+      m01ComparisonUrl(winner.result.comparison_id);
+    } else {
+      document.querySelector('#comparison-result').innerHTML=m01EmptyResult('평가하지 못했습니다. 오류를 확인하세요.');
+    }
+    const failures=candidates.filter(candidate=>candidate.status==='ERROR');
+    m01RememberReplaySource(winner&&!failures.length?winner.result.comparison_id:null);
+    status.textContent=failures.length
+      ?`일부 평가를 완료하지 못했습니다. ${failures.map(candidate=>`${candidate.preset.business_unit_id}: ${candidate.error}`).join(' · ')}`
+      :'비교 완료 · 정답별 실제 이벤트 ID와 판정 사유를 확인하세요.';
+    updateM01CompareButton();
+    document.querySelector('#m01-result-panel').scrollIntoView?.({block:'start'});
+    return Boolean(winner);
   } catch(error) {
     if(isCurrent()) {
+      m01RememberReplaySource(null);
       status.textContent=error.message;
       document.querySelector('#comparison-result').innerHTML=m01EmptyResult('평가하지 못했습니다. CSV를 다시 업로드하세요.');
     }
     return false;
   } finally {
-    if(requestNumber===m01AutoRequestNumber) {truthDetailBusy=false;updateM01CompareButton();}
+    if(isCurrent()) {truthDetailBusy=false;comparisonBusy=false;updateM01CompareButton();}
   }
 }
 async function compareM01Events() {
@@ -403,6 +501,10 @@ async function restoreM01Comparison(comparisonId) {
     invalidateM01Comparison('비교 ID 형식이 올바르지 않습니다.');return;
   }
   const requestNumber=++comparisonRequestNumber;
+  ++m01AutoRequestNumber;
+  ++comparisonVerificationRequestNumber;
+  m01RememberReplaySource(null);
+  truthDetailBusy=false;
   comparisonBusy=true;updateM01CompareButton();
   status.textContent='저장한 정답 비교 결과를 불러오는 중…';
   try {
@@ -424,7 +526,8 @@ async function restoreM01Comparison(comparisonId) {
     if(requestNumber!==comparisonRequestNumber) return;
     renderM01ComparisonResult(result,m01ComparisonSelection());
     m01ComparisonUrl(result.comparison_id);
-    status.textContent='저장한 비교 결과를 복원했습니다. 정답별 실제 이벤트 ID와 판정 사유를 확인하세요.';
+    m01RememberReplaySource(result.comparison_id);
+    status.textContent='저장한 단일 기준의 비교 결과를 복원했습니다. 정답별 실제 이벤트 ID와 판정 사유를 확인하세요.';
     document.querySelector('#comparison-result').scrollIntoView?.({block:'start'});
   } catch(error) {
     if(requestNumber!==comparisonRequestNumber) return;
@@ -608,7 +711,9 @@ function paintM03() {
   const placeholder=state.scenarios.length&&state.scenarios.every(row=>row.steps?.length===2&&row.steps[0]?.target==='mock workflow screen'&&row.steps[1]?.target==='mock action control');
   source.textContent=placeholder?'현재 Mock API는 모든 업무에 동일한 2단계 예시를 반환합니다. 실제 업무명과 절차는 생성기 연결 후 표시됩니다.':'샘플 API 연동 결과입니다. 실제 수집 CSV를 분석한 시나리오나 공식 시험 결과가 아닙니다.';
   const threshold=r?.threshold_met==null?'—':r.threshold_met?'목표 충족':'목표 미충족';
-  document.querySelector('#m03-result').innerHTML=`<div class="panel-heading"><h2>Development Result</h2>${r&&m03ResultPath(r.run_id)?`<a class="download" href="${m03ResultPath(r.run_id,'evidence.csv')}" download>검증 근거 CSV ↓</a>`:''}</div><div class="result-grid"><div><label>자동생성 성공률${state.sample?' · 샘플':''}</label><strong class="large-score">${score(r?.score,'M03')}</strong></div><div><label>생성 성공 업무</label><strong>${esc(d.successful_scenario_count??'—')}</strong></div><div><label>전체 평가 업무</label><strong>${esc(d.total_scenario_count??'—')}</strong></div><div><label>목표 대비 결과</label><strong>${threshold}</strong></div></div><p class="subtitle">성공 업무 수 / 전체 평가 업무 수 × 100 · 필수항목, 단계 순서, action/target 검증</p>${r?`<p class="run-meta">${esc(r.run_id)} · ${esc(r.completed_at)} · ${esc(r.run_mode)}</p>`:'<p class="empty">평가 API의 결과가 도착하면 성공률을 표시합니다.</p>'}`;
+  const orderPolicy=d.success_policy==='STRUCTURE_AND_REFERENCE_ORDER';
+  const assessment=d.evaluation_status==='NOT_READY'?'정답 업무 순서 기준이 없어 평가 대기 중입니다. 생성 원본은 보관했습니다.':r&&!orderPolicy?'이전 형식 검증 결과입니다. 정답 업무 순서 충족 여부는 검증하지 않았습니다.':'성공 업무 수 / 전체 평가 업무 수 × 100 · 유효한 형식과 정답 업무 순서를 모두 충족해야 성공입니다.';
+  document.querySelector('#m03-result').innerHTML=`<div class="panel-heading"><h2>Development Result</h2>${r&&m03ResultPath(r.run_id)?`<a class="download" href="${m03ResultPath(r.run_id,'evidence.csv')}" download>검증 근거 CSV ↓</a>`:''}</div><div class="result-grid"><div><label>${r&&!orderPolicy?'이전 형식 검사율':'자동생성 성공률'}${state.sample?' · 샘플':''}</label><strong class="large-score">${score(r?.score,'M03')}</strong></div><div><label>생성 성공 업무</label><strong>${esc(d.successful_scenario_count??'—')}</strong></div><div><label>전체 평가 업무</label><strong>${esc(d.total_scenario_count??'—')}</strong></div><div><label>목표 대비 결과</label><strong>${threshold}</strong></div></div><p class="subtitle">${assessment}</p>${r?`<p class="run-meta">${esc(r.run_id)} · ${esc(r.completed_at)} · ${esc(r.run_mode)}</p>`:'<p class="empty">평가 API의 결과가 도착하면 성공률을 표시합니다.</p>'}`;
   const validations=new Map((Array.isArray(d.rows)?d.rows:[]).map(row=>[row.business_unit_id,row]));
   if(!Number.isInteger(state.selectedScenario)||!state.scenarios[state.selectedScenario]) state.selectedScenario=0;
   const current=state.scenarios[state.selectedScenario];
@@ -621,8 +726,9 @@ function paintM03() {
   document.querySelector('#m03-scenarios').innerHTML=state.scenarios.length?state.scenarios.map((row,index)=>{
     const validation=validations.get(row.business_unit_id);
     const steps=Array.isArray(row.steps)?row.steps:[];
-    const label=validation?(validation.success?'생성 성공':'생성 실패'):row.status==='FAILED'?'요청 실패':'평가 대기';
-    return `<button type="button" class="m03-scenario ${index===state.selectedScenario?'selected':''}" data-scenario-index="${index}" aria-pressed="${index===state.selectedScenario}"><span class="m03-scenario-name"><strong>${esc(row.scenario_name||row.business_unit_id)}</strong><small>${esc(row.workflow_id||'워크플로 ID 없음')} · ${steps.length}단계</small></span><span class="badge ${validation?.success?'pass':validation||row.status==='FAILED'?'warning':'neutral'}">${label}</span></button>`;
+    const waiting=!!validation&&validation.success==null;
+    const label=waiting?'평가 대기':validation?(validation.success===true?(orderPolicy?'생성 성공':'이전 형식 검사 통과'):'생성 실패'):row.status==='FAILED'?'요청 실패':'평가 대기';
+    return `<button type="button" class="m03-scenario ${index===state.selectedScenario?'selected':''}" data-scenario-index="${index}" aria-pressed="${index===state.selectedScenario}"><span class="m03-scenario-name"><strong>${esc(row.scenario_name||row.business_unit_id)}</strong><small>${esc(row.workflow_id||'워크플로 ID 없음')} · ${steps.length}단계</small></span><span class="badge ${waiting?'neutral':validation?.success===true?'pass':validation||row.status==='FAILED'?'warning':'neutral'}">${label}</span></button>`;
   }).join(''):'<p class="empty">생성 API에서 받은 시나리오가 여기에 표시됩니다.</p>';
   paintM03Graph();
   paintM03Executions();
@@ -683,7 +789,7 @@ async function loadM03History(token) {
 }
 function paintM03History() {
   const state=m03View;
-  document.querySelector('#m03-history').innerHTML=state.historyError?`<p class="notice">${esc(state.historyError)}</p>`:state.savedRuns?.length?state.savedRuns.map(row=>`<button class="m03-saved-run ${row.run_id===state.result?.run_id?'selected':''}" type="button" data-m03-run="${esc(row.run_id)}" ${state.busy?'disabled':''}><strong>${esc(row.completed_at||row.run_id)}</strong><span>시나리오 ${esc(row.active_scenario_count)}건${row.deleted_scenario_count?' · 삭제 '+esc(row.deleted_scenario_count)+'건':''} · 생성률 ${score(row.score,'M03')}${row.synthetic?' · 샘플':''}</span><small>${esc(row.run_id)}</small></button>`).join(''):'<p class="empty">저장된 시나리오가 없습니다.</p>';
+  document.querySelector('#m03-history').innerHTML=state.historyError?`<p class="notice">${esc(state.historyError)}</p>`:state.savedRuns?.length?state.savedRuns.map(row=>`<button class="m03-saved-run ${row.run_id===state.result?.run_id?'selected':''}" type="button" data-m03-run="${esc(row.run_id)}" ${state.busy?'disabled':''}><strong>${esc(row.completed_at||row.run_id)}</strong><span>시나리오 ${esc(row.active_scenario_count)}건${row.deleted_scenario_count?' · 삭제 '+esc(row.deleted_scenario_count)+'건':''} · 보관 결과 ${score(row.score,'M03')}${row.synthetic?' · 샘플':''}</span><small>${esc(row.run_id)}</small></button>`).join(''):'<p class="empty">저장된 시나리오가 없습니다.</p>';
 }
 async function openM03Saved(runId) {
   if(m03View.busy||!m03ResultPath(runId)) return;
@@ -754,6 +860,8 @@ function paintM03Graph() {
   const steps=Array.isArray(row?.steps)?row.steps:[];
   const validation=state.result?.details?.rows?.find(item=>item.business_unit_id===row?.business_unit_id);
   const reasons=validation?Object.entries({schema_valid:'필수항목·형식',step_order_valid:'단계 순서',action_present:'action',target_present:'target'}).filter(([key])=>!validation[key]).map(([,name])=>name+' 확인 필요'):[];
+  if(validation?.semantic_order_valid===false) reasons.push('정답 업무 순서 불일치');
+  if(validation?.reference_available===false) reasons.push('정답 업무 순서 기준 필요');
   if(row?.status==='FAILED') reasons.push(row.error||'생성 요청 실패');
   document.querySelector('#m03-graph-meta').textContent=row?`${steps.length}개 단계 · ${row.scenario_id||'시나리오 ID 없음'}${reasons.length?' · '+reasons.join(' · '):''}`:'생성 결과를 기다리고 있습니다.';
   for(const id of ['#m03-zoom-in','#m03-zoom-out','#m03-zoom-fit']) document.querySelector(id).disabled=!steps.length;
@@ -837,7 +945,7 @@ async function generateM03Sample() {
       const attempt={business_unit_id:unit.business_unit_id};
       m03View.attempts.push(attempt);
       try {
-        scenario=await m03Json('/api/m03/generate',{business_unit_id:unit.business_unit_id,workflow_id:unit.workflow_id,run_mode:'DEVELOPMENT',generator_mode:template.generator_mode});
+        scenario=await m03Json('/api/m03/generate',{business_unit_id:unit.business_unit_id,workflow_id:unit.workflow_id,run_mode:'DEVELOPMENT',generator_mode:template.generator_mode,dataset_id:template.dataset_id});
         if(!current()) return;
         attempt.response=scenario;
         if(scenario.business_unit_id!==unit.business_unit_id||scenario.workflow_id!==unit.workflow_id||scenario.run_mode!=='DEVELOPMENT'||scenario.synthetic!==template.synthetic||scenario.generator_mode!==template.generator_mode||!['SUCCESS','FAILED'].includes(scenario.status)) throw new Error('생성 응답의 업무·워크플로 또는 생성기 구분을 확인하세요.');
@@ -858,7 +966,7 @@ async function generateM03Sample() {
     await loadM03Management(result.run_id,token);
     if(!current()) return;
     await loadM03History(token);paintM03();
-    status.textContent=`${template.synthetic?'샘플 ':''}생성 → 평가 → 저장을 완료했습니다. 업무와 노드를 선택하면 단계별 내용을 볼 수 있습니다.`;
+    status.textContent=result.details?.evaluation_status==='NOT_READY'?'생성 원본을 저장했습니다. 정답 업무 순서 기준을 등록하면 평가할 수 있습니다.':`${template.synthetic?'샘플 ':''}생성 → 평가 → 저장을 완료했습니다. 업무와 노드를 선택하면 단계별 내용을 볼 수 있습니다.`;
   } catch(error) {if(current()) status.textContent=`평가 완료 전 · ${error.message}`;}
   finally {if(current()) {m03View.busy=false;progress.hidden=true;paintM03();}}
 }
@@ -886,6 +994,7 @@ async function load() {
     if(requestNumber!==catalogRequestNumber) return;
     if (!response.ok) throw new Error(data.error||'평가 정보 조회 실패');
     catalog=data;serverSessionReloading=false;
+    m01ValidateReplaySource();
     render();
   } catch(error) {if(requestNumber===catalogRequestNumber) {app.innerHTML=`<p class="notice">${esc(error.message)}</p><button id="retry">다시 시도</button>`;document.querySelector('#retry').addEventListener('click',load);}}
 }

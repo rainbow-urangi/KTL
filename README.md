@@ -2,6 +2,8 @@
 
 Python 3.10 이상의 로컬 평가 API와 웹 UI입니다. 기본 서버는 표준 라이브러리를 사용하며 OFFICIAL M06 교차 검증에는 scikit-learn이 필요합니다.
 
+Windows/Python 3.12 새 환경의 현재 실행 절차는 [집 PC 실행 안내](docs/HOME_SETUP.txt)를 확인하세요. 저장소의 `scripts/start_local.ps1` 또는 `scripts/start_local.py`로 시작합니다. 기본 개발 canonical 입력을 포함하며, 개인 인증정보·이전 실행 결과·외부 실제 생성기 연결은 별도로 준비합니다.
+
 평가 변경 전 [R&D_COMPLIANCE.md](R&D_COMPLIANCE.md)와 [공식 데이터 매트릭스](docs/compliance/OFFICIAL_EVALUATION_DATA_MATRIX.md)를 확인하세요.
 
 ```sh
@@ -13,13 +15,13 @@ M01~M07 각각 `/metrics/m01` ~ `/metrics/m07` 페이지가 있습니다.
 
 - **REFERENCE**: 실제 보관된 V6.2 산출물을 읽어 평가 프로그램을 검증합니다. 공식 시험성적이 아닙니다.
 - **OFFICIAL**: 공식 manifest와 입력 SHA-256, 필요한 모델/adapter 연결을 요구합니다. 현재 공식 데이터는 없습니다.
-- **DEV**: 임시 unit test fixture만 허용하며 API 실행 모드가 아닙니다.
+- **DEVELOPMENT**: 수집 CSV 비교, 시나리오 생성·보관, 고정 스크립트와 GPT 코드의 개발 시험 모드입니다. 공식 시험성적이 아닙니다.
 
 현재 M02는 legacy GT 7종과 저장된 단일 실행의 직접 절차를 실제 비교합니다.
 M06은 feature matrix가 없어 DBI 없이 군집 요약을 제공합니다.
-M03은 12개 프로세스 모델의 시나리오 생성 입력 미리보기와 계약 검증까지 제공합니다.
+M03은 입력 context 조회, 생성 API 호출, 외부 결과 접수 및 저장한 시나리오 조회를 제공합니다. 기본 canonical 변환은 새 AI 추론이 아니며 정답 업무 순서가 없으면 평가를 대기합니다.
 M05 계산기는 완성되어 있지만 실제 정제 모델과 200개 시험 이벤트가 필요합니다.
-M01/M04/M07은 외부 연동 계약과 화면만 제공합니다.
+M01은 실제 CSV 진단·고정 기준 비교, M04는 M01 동작 가져오기·고정 Python 실행·외부 결과 조회, M07은 명시적 GPT 코드 생성과 문법·실행 상태 표시를 제공합니다. 가져오기·생성·실제 실행은 별도 동작입니다.
 기존 `scripts/selenium_runner.py`는 비활성 legacy 도구이며 현재 API에서 호출하지 않습니다.
 
 결과는 `results/reference/REF-Mxx-.../`와 `results/official/EVAL-Mxx-.../`에 분리됩니다.
@@ -28,9 +30,9 @@ REFERENCE의 `official_pass`와 호환용 `pass`는 항상 null입니다.
 
 [평가 명세](docs/evaluation-spec.md), [데이터·adapter 계약](docs/data-contracts.md)을 참고하세요.
 목표는 M01 ≥65%, M02 ≥75%, M03 ≥80%, M04 ≥90%, M05 F1 ≥0.79, M06 DBI ≤1.0, M07 ≥80%입니다.
-M02 OFFICIAL은 TD-03 업무20종/GT5종이며 V6.2 고정 사용을 강제하지 않습니다. M03은 같은 TD-03의 20업무에 각각 한 번 생성 요청합니다. M04는 사전 고정 Selenium/Python 스크립트20건을 각1회 실행합니다.
+M02 OFFICIAL은 TD-03 업무20종/GT5종이며 V6.2 고정 사용을 강제하지 않습니다. M03은 공식 평가 업무10종에 각각 한 번 생성 요청합니다. M04는 사전 고정 Selenium/Python 스크립트10건을 각1회 실행합니다.
 M06 OFFICIAL은 승인 V6.2 563×128 embedding과 final12군집 label만 사용합니다. 현재 bundle은 PARTIAL이며 정확한 matrix가 없어 `OFFICIAL_M06_BUNDLE_MISSING`입니다. 개발용80차원 feature로 대체하지 않습니다.
-M07 분모는 `generated_code_count`입니다. Sandbox의 요청20/생성18/both PASS15는 83.333…%이며 요청 수는 진단용입니다.
+M07은 등록한 시험 건수를 기준으로 실제 요청·생성·문법 통과·실행 통과·통합 통과를 구분합니다. 공식 설계 수량은20건이며, 미시도·공급자 제한으로 완료되지 않은 측정은 null입니다. 생성 코드 수를 분모로 계산한 과거 부분 결과는 현재 측정과 구분해 표시합니다.
 
 V6.2 승인 기준: 이벤트 32,273, 세그먼트 5,167, 워크플로우 563,
 프로세스 인스턴스 1,619, 모델 12개.

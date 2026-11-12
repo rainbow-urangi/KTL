@@ -3,7 +3,7 @@ import hashlib
 import json
 import os
 from pathlib import Path
-from .external_results import calculate
+from .external_results import calculate, validate_envelope
 from .evaluators import require,read_json,digest,EvaluationError
 from .run_storage import save_run
 from .official_contracts import validate_official_contract
@@ -15,7 +15,7 @@ def ingest(root,config,metric,payload):
     received=payload
     if metric=='M03' and isinstance(payload,dict) and 'external_run_id' not in payload and 'run_id' in payload:
         payload=dict(payload,external_run_id=payload['run_id'])
-    score,count,details,rows=calculate(metric,payload)
+    validate_envelope(payload)
     mode=payload['run_mode'];dataset=payload['dataset_id']
     registered=config.get('integration_datasets',{}).get(dataset)
     require(isinstance(registered,dict) and registered.get('run_mode')==mode,'Dataset not registered for requested mode')
@@ -25,6 +25,12 @@ def ingest(root,config,metric,payload):
     manifest=read_json(path);sha=digest(path)
     require(sha==payload['dataset_manifest_sha256'],'Dataset manifest SHA-256 mismatch')
     require(manifest.get('dataset_id')==dataset,'Dataset ID mismatch')
+    expected_units=manifest.get('business_unit_ids') if metric=='M03' and mode=='OFFICIAL' else None
+    if metric=='M03' and mode=='OFFICIAL':
+        require(isinstance(expected_units,list) and len(expected_units)==10
+                and all(isinstance(unit,str) and unit.strip() for unit in expected_units)
+                and len(set(expected_units))==10,'Official M03 requires ten fixed business_unit_ids')
+    score,count,details,rows=calculate(metric,payload,m03_expected_business_units=expected_units)
     if mode=='OFFICIAL':
         require(manifest.get('source_type')=='OFFICIAL' and manifest.get('run_mode')=='OFFICIAL'
                 and manifest.get('approved_for_official') is True and manifest.get('metric_id')==metric
@@ -34,7 +40,7 @@ def ingest(root,config,metric,payload):
         if metric=='M03':
             units=manifest.get('business_unit_ids')
             require(isinstance(units,list) and len(units)==10 and all(isinstance(u,str) and u.strip() for u in units) and len(set(units))==10,'Official M03 requires ten fixed business_unit_ids')
-            require({s['business_unit_id'] for s in payload['scenarios']}==set(units),'M03 business units do not match registered manifest')
+            require({s['business_unit_id'] for s in payload['scenarios']}<=set(units),'M03 business units do not match registered manifest')
             require(not any(s.get('synthetic') is True or s.get('generator_mode')=='MOCK' for s in payload['scenarios']),'Mock scenarios cannot be official evidence')
         if metric=='M04':
             validate_fixed_at(manifest.get('fixed_at'),datetime.fromisoformat(payload['submitted_at'].replace('Z','+00:00')),'Script set')
@@ -64,6 +70,17 @@ def ingest(root,config,metric,payload):
                     return any(forbidden(x) for x in v) if isinstance(v,list) else False
                 require(not forbidden(read_json(source)),'DEV/reference input prohibited')
         hashes[str(source.relative_to(root))]=actual
+    if metric=='M03':
+        # Reference data is loaded only after generation, from a trusted server
+        # registry. It never becomes part of analysis inputs or adapter requests.
+        from .m03_reference import load_reference
+        reference,reference_hashes=load_reference(root,config,dataset,mode,payload['submitted_at'])
+        score,count,details,rows=calculate(metric,payload,m03_reference=reference,m03_expected_business_units=expected_units)
+        hashes.update(reference_hashes)
+        from .m03_provenance import assess_origins
+        generation_proof,origin_ids=assess_origins(root,payload,reference,reference_hashes,sha)
+        details['generation_provenance']=generation_proof
+        details['official_eligible']=generation_proof['official_eligible'] and details['evaluation_status']=='COMPLETED'
     # Metric + external ID is global across modes and survives server restarts.
     key=hashlib.sha256((metric+'\0'+payload['external_run_id']).encode()).hexdigest()
     index=root/'results/integrations';index.mkdir(parents=True,exist_ok=True);reservation=index/(key+'.json')
@@ -71,9 +88,13 @@ def ingest(root,config,metric,payload):
     except FileExistsError:raise EvaluationError('Duplicate external_run_id for metric','DUPLICATE_EXTERNAL_RUN')
     with os.fdopen(fd,'w') as f:json.dump({'metric_id':metric,'external_run_id':payload['external_run_id'],'status':'RESERVED'},f)
     result={'dataset_id':dataset,'source_type':mode,'score':score,'sample_count':count,'status':'COMPLETED','details':details,
-            'evaluator_version':'external-integration-v3-ktl-20261026' if metric in {'M03','M04','M07'} else 'external-counts-v2-generated-code-denominator',
+            'evaluator_version':'m03-structure-and-reference-order-v1' if metric=='M03' else 'external-integration-v3-ktl-20261026' if metric in {'M04','M07'} else 'external-counts-v2-generated-code-denominator',
             'input_sha256':hashes,'dataset_manifest_sha256':sha,'provenance':{k:payload[k] for k in ['source_module','source_version','external_run_id','submitted_at']}}
     # A persistence failure leaves a reservation, preventing an uncertain duplicate.
-    result=save_run(root,metric,mode,config,result,rows,received=received)
+    before_publish=None
+    if metric=='M03':
+        from .m03_provenance import record_assessment
+        before_publish=lambda pending:record_assessment(root,origin_ids,pending)
+    result=save_run(root,metric,mode,config,result,rows,received=received,before_publish=before_publish)
     reservation.write_text(json.dumps({'metric_id':metric,'external_run_id':payload['external_run_id'],'run_id':result['run_id'],'status':'COMPLETED'}))
     return result

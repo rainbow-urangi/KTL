@@ -354,11 +354,34 @@ class M04Manager:
         require(_sha(raw) == value['sha256'], 'Fixed script SHA-256 mismatch')
         for name, key in (('source_scenario.json', 'source_scenario_sha256'),
                           ('execution_scenario.json', 'execution_scenario_sha256'),
-                          ('execution_contract.json', 'execution_contract_sha256')):
+                          ('execution_contract.json', 'execution_contract_sha256'),
+                          ('execution_plan.json', 'execution_plan_sha256')):
             if value.get(key):
                 require(_sha(self._safe(path.parent / name).read_bytes()) == value[key], 'Fixed evidence SHA-256 mismatch: ' + name)
         self._prepared_files(value, path.parent, raw)
+        self._m01_files(value, path.parent)
         return value, raw
+
+    def _m01_files(self, metadata, folder):
+        if metadata.get('source_kind') != 'M01_OBSERVED_REPLAY':
+            return {}
+        hashes = metadata.get('source_m01_files')
+        require(isinstance(hashes, dict) and set(hashes) ==
+                {'m01_source.csv', 'm01_manifest.json', 'm01_replay_source.json', 'm01_parameters.json'},
+                'M01 재현 원본 파일 목록이 다릅니다.')
+        files = {name: self._safe(folder / name).read_bytes() for name in hashes}
+        require(all(_sha(content) == hashes[name] for name, content in files.items()), 'M01 재현 원본 SHA-256이 다릅니다.')
+        require(metadata.get('generated_by_llm') is False and
+                _sha(files['m01_source.csv']) == metadata.get('source_m01_csv_sha256'), 'M01 원본 CSV 출처가 다릅니다.')
+        proof = json.loads(files['m01_replay_source.json'].decode('utf-8'))
+        manifest = json.loads(files['m01_manifest.json'].decode('utf-8'))
+        require(isinstance(proof, dict) and isinstance(manifest, dict)
+                and proof.get('dataset_id') == manifest.get('dataset_id') == metadata.get('source_m01_dataset_id')
+                and proof.get('source_sha256') == manifest.get('sha256') == metadata.get('source_m01_csv_sha256')
+                and proof.get('session_id') == metadata.get('source_m01_session_id')
+                and proof.get('source_manifest_sha256') == _sha(files['m01_manifest.json']),
+                'M01 데이터셋·선택 세션·고정 원본의 연결이 다릅니다.')
+        return files
 
     def _prepared_files(self, metadata, folder, raw):
         # 사전 작성 원본의 출처·바이트 검증
@@ -398,6 +421,14 @@ class M04Manager:
 
     def _fixed_execution(self, metadata, folder):
         source = self._json(folder / 'source_scenario.json')
+        if metadata.get('execution_plan_sha256'):
+            plan_raw = self._safe(folder / 'execution_plan.json').read_bytes()
+            require(_sha(plan_raw) == metadata['execution_plan_sha256'], 'Execution plan SHA-256 mismatch')
+            prepared = execution_contexts.prepare_plan(self.root, source, self.config_provider(), json.loads(plan_raw))
+            require(prepared['scenario'] == self._json(folder / 'execution_scenario.json')
+                    and prepared['contract'] == self._json(folder / 'execution_contract.json'),
+                    'Fixed execution plan does not match its execution snapshots')
+            return dict(prepared, revision_id=metadata.get('execution_context_revision_id'))
         if metadata.get('execution_scenario_sha256'):
             source = self._json(folder / 'execution_scenario.json')
         if metadata.get('execution_contract_sha256'):
@@ -407,7 +438,48 @@ class M04Manager:
             return result
         return self._execution_inputs(source, metadata.get('source_m03_run_id'))
 
-    def register(self, payload):
+    def _m01_scope(self, payload):
+        from ..m01.compare import M01ComparisonStore
+        require(isinstance(payload, dict) and set(payload) <= {'dataset_id', 'comparison_id', 'session_id', 'parameters'},
+                'M01 데이터셋·비교 ID와 실행 입력만 지정하세요.')
+        comparison = None
+        dataset_id, selected_session = payload.get('dataset_id'), payload.get('session_id')
+        if payload.get('comparison_id'):
+            comparison = M01ComparisonStore(self.root, session=self.session).read(payload['comparison_id'])
+            require(dataset_id is None or dataset_id == comparison['dataset_id'], '선택한 M01 비교와 CSV가 다릅니다.')
+            require('session_id' not in payload or selected_session == comparison.get('session_id'),
+                    '선택한 M01 비교와 수집 세션이 다릅니다.')
+            dataset_id, selected_session = comparison['dataset_id'], comparison.get('session_id')
+        require(isinstance(dataset_id, str) and re.fullmatch(r'[0-9a-f]{32}', dataset_id), 'M01 CSV를 먼저 선택하세요.')
+        require(selected_session is None or (isinstance(selected_session, str) and len(selected_session) <= 1000
+                and not any(ord(char) < 32 for char in selected_session)), '수집 세션 ID를 확인하세요.')
+        return dataset_id, selected_session, comparison
+
+    def m01_source(self, payload):
+        from .replay import inspect_source
+        dataset_id, selected_session, comparison = self._m01_scope(payload)
+        result = inspect_source(self.root, dataset_id, session=self.session, session_id=selected_session)
+        if comparison is not None:
+            require(result['source_sha256'] == comparison.get('input_sha256', {}).get('collector_csv'),
+                    'M01 평가 당시 CSV와 현재 원본의 SHA-256이 다릅니다.')
+            result['comparison_id'] = comparison['comparison_id']
+        return result
+
+    def import_m01(self, payload):
+        from .replay import prepare_replay
+        preview = self.m01_source(payload)
+        dataset_id, selected_session, _ = self._m01_scope(payload)
+        prepared = prepare_replay(self.root, dataset_id, payload.get('parameters'),
+                                  session=self.session, session_id=selected_session)
+        require(prepared['source']['source_sha256'] == preview['source_sha256'], '준비 중 M01 CSV 원본이 변경됐습니다.')
+        code = prepared['code'].encode('utf-8')
+        scenario = prepared['scenario']
+        registered = self.register(dict(filename='m01-replay-' + dataset_id[:12] + '.py',
+            python_base64=base64.b64encode(code).decode('ascii'), scenario_id=scenario['scenario_id'],
+            scenario_name='M01 수집 동작 재현 · ' + preview['filename'], require_business_steps=True), _m01=prepared)
+        return dict(registered, source=preview)
+
+    def register(self, payload, *, _m01=None):
         require(isinstance(payload, dict), 'JSON object required')
         require(payload.get('run_mode', 'DEVELOPMENT') == 'DEVELOPMENT', 'M04 runner supports DEVELOPMENT only')
         strict_requested = payload.get('require_business_steps', False)
@@ -440,7 +512,17 @@ class M04Manager:
         prepared_source = False
         contract = None
         execution_scenario = None
+        execution_plan = None
         context_revision = None
+        if _m01 is not None:
+            require(source_id is None and payload.get('source_m07_generation_id') is None,
+                    'M01 재현에는 M03/M07 출처를 섞을 수 없습니다.')
+            require(_m01['code'].encode('utf-8') == raw, 'M01 재현 코드 원본이 다릅니다.')
+            snapshot = deepcopy(_m01['scenario'])
+            require(snapshot.get('scenario_id') == scenario_id, 'M01 재현 시나리오 ID가 다릅니다.')
+            execution_scenario, contract = snapshot, deepcopy(_m01['contract'])
+            require(self._execution_contract(dict(snapshot, execution_contract=contract)) == contract,
+                    'M01 재현 실행 계약이 다릅니다.')
         if source_id:
             require(isinstance(source_id, str) and re.fullmatch(r'DEV-M03-[A-Za-z0-9-]+', source_id), 'DEVELOPMENT M03 run_id required')
             self._session_check('RESULT', source_id)
@@ -497,6 +579,13 @@ class M04Manager:
                     execution_scenario = json.loads(effective_raw)
                 contract = self._execution_contract(dict(execution_scenario, execution_contract=json.loads(content)))
                 context_revision = llm_source.get('execution_context_revision_id')
+                if llm_source.get('execution_plan_sha256'):
+                    plan_raw = self._safe(source_dir / case_id / 'execution_plan.json').read_bytes()
+                    require(_sha(plan_raw) == llm_source['execution_plan_sha256'], 'M07 execution plan SHA-256 mismatch')
+                    execution_plan = json.loads(plan_raw)
+                    prepared = execution_contexts.prepare_plan(self.root, snapshot, self.config_provider(), execution_plan)
+                    require(prepared['scenario'] == execution_scenario and prepared['contract'] == contract,
+                            'M07 execution plan does not match its execution snapshots')
             for path in self.script_directory.glob('*/script.json'):
                 if not self._session_has('SCRIPT', path.parent.name):
                     continue
@@ -516,6 +605,12 @@ class M04Manager:
                          and any(alias.name == 'business_step' for alias in node.names) for node in ast.walk(tree))
         metadata['business_step_required'] = strict_requested or uses_steps or bool(llm_source and llm_source.get('business_step_required'))
         metadata['step_evidence_mode'] = 'BUSINESS_STEPS' if metadata['business_step_required'] else 'LEGACY_TRACE'
+        if _m01 is not None:
+            metadata.update(source_kind='M01_OBSERVED_REPLAY', generated_by_llm=False,
+                            source_m01_dataset_id=_m01['source']['dataset_id'],
+                            source_m01_session_id=_m01['source'].get('session_id'),
+                            source_m01_csv_sha256=_m01['source']['source_sha256'],
+                            source_m01_files={name: _sha(content) for name, content in _m01['source_files'].items()})
         if metadata['business_step_required']:
             require(uses_steps, 'ktl_runtime.business_step import required for business-step script')
             declared = [node.value.value for node in ast.walk(tree)
@@ -528,6 +623,7 @@ class M04Manager:
                 prepared = self._execution_inputs(snapshot, source_id)
                 execution_scenario, contract = prepared['scenario'], prepared['contract']
                 context_revision = prepared['revision_id']
+                execution_plan = prepared.get('execution_plan')
         if llm_source is not None:
             metadata.update(source_m07_generation_id=generation_id, source_m07_case_id=case_id)
             if prepared_source:
@@ -541,6 +637,12 @@ class M04Manager:
                                 model=llm_source.get('model'), request_id=llm_source.get('request_id'))
         self._session_claim('SCRIPT', script_id, metadata)
         directory.mkdir()
+        if _m01 is not None:
+            require(set(_m01['source_files']) == {'m01_source.csv', 'm01_manifest.json', 'm01_replay_source.json', 'm01_parameters.json'},
+                    'M01 재현 원본 증빙 파일을 확인하세요.')
+            for name, content in _m01['source_files'].items():
+                with self._safe(directory / name).open('xb') as output:
+                    output.write(content)
         with (directory / 'script.py').open('xb') as output:
             output.write(raw)
         if snapshot is not None:
@@ -553,6 +655,9 @@ class M04Manager:
             self._write(directory / 'execution_contract.json', contract)
             metadata['execution_contract_sha256'] = _sha((directory / 'execution_contract.json').read_bytes())
             metadata['execution_contract_version'] = contract['version']
+            if execution_plan is not None:
+                self._write(directory / 'execution_plan.json', execution_plan)
+                metadata['execution_plan_sha256'] = _sha((directory / 'execution_plan.json').read_bytes())
         self._write(directory / 'script.json', metadata)
         for name, content in llm_files.items():
             with (directory / name).open('xb') as output:
@@ -600,6 +705,12 @@ class M04Manager:
     def create(self, payload):
         require(isinstance(payload, dict), 'JSON object required')
         require(payload.get('run_mode', 'DEVELOPMENT') == 'DEVELOPMENT', 'M04 runner supports DEVELOPMENT only')
+        visible = payload.get('visible_browser', False)
+        delay = payload.get('action_delay_ms', 0)
+        hold = payload.get('keep_open_seconds', 0)
+        require(type(visible) is bool and type(delay) is int and 0 <= delay <= 2000
+                and type(hold) is int and 0 <= hold <= 60, '브라우저 표시·동작 간격·유지 시간을 확인하세요.')
+        require(visible or (delay == 0 and hold == 0), '동작 간격과 유지 시간은 새 창 실행에서만 지정하세요.')
         ids = payload.get('script_ids')
         require(isinstance(ids, list) and 1 <= len(ids) <= 10 and all(isinstance(value, str) for value in ids)
                 and len(set(ids)) == len(ids), 'Select 1..10 unique script_ids')
@@ -647,6 +758,10 @@ class M04Manager:
                         execution_scenario_hash = _sha((case_dir / 'execution_scenario.json').read_bytes())
                         self._write(case_dir / 'execution_contract.json', contract)
                         contract_hash = _sha((case_dir / 'execution_contract.json').read_bytes())
+                    plan_hash = None
+                    if prepared and prepared.get('execution_plan') is not None:
+                        self._write(case_dir / 'execution_plan.json', prepared['execution_plan'])
+                        plan_hash = _sha((case_dir / 'execution_plan.json').read_bytes())
                     for name, key in (('response.json', 'response_sha256'), ('prompt.json', 'prompt_sha256')):
                         if metadata.get('generated_by_llm') is True:
                             content = self._safe(self.script_directory / metadata['script_id'] / name).read_bytes()
@@ -654,6 +769,9 @@ class M04Manager:
                             with (case_dir / name).open('xb') as output:
                                 output.write(content)
                     for name, content in self._prepared_files(metadata, self.script_directory / metadata['script_id'], raw).items():
+                        with (case_dir / name).open('xb') as output:
+                            output.write(content)
+                    for name, content in self._m01_files(metadata, self.script_directory / metadata['script_id']).items():
                         with (case_dir / name).open('xb') as output:
                             output.write(content)
                     cases.append(dict(case_id=case_id, script_id=metadata['script_id'], scenario_id=metadata['scenario_id'],
@@ -671,14 +789,23 @@ class M04Manager:
                                       llm_generation_evidence_available=metadata.get('llm_generation_evidence_available', False),
                                       source_m07_generation_id=metadata.get('source_m07_generation_id'),
                                       source_m07_case_id=metadata.get('source_m07_case_id')))
+                    if plan_hash is not None:
+                        cases[-1]['execution_plan_sha256'] = plan_hash
                     if metadata.get('code_source') == 'PREPARED':
                         cases[-1].update({key: metadata[key] for key in ('code_source', 'source_kind', 'source_filename',
                             'source_file_sha256', 'code_sha256', 'prepared_source_sha256', 'scripts_manually_modified')})
+                    if metadata.get('source_kind') == 'M01_OBSERVED_REPLAY':
+                        cases[-1].update({key: metadata[key] for key in ('source_kind', 'source_m01_dataset_id',
+                            'source_m01_session_id', 'source_m01_csv_sha256', 'source_m01_files')})
+                    if visible:
+                        cases[-1].update(visible_browser=True, action_delay_ms=delay, keep_open_seconds=hold)
                 artifacts = [dict(name=name, url=f'/api/development/m04/executions/{execution_id}/artifacts/{name}')
                              for name in ('report.json', 'log.jsonl', 'steps.csv', 'scripts.zip', 'screenshots.zip')]
                 job = dict(execution_id=execution_id, status='QUEUED', started_at=_now(), completed_at=None,
                            run_mode='DEVELOPMENT', cases=cases, logs=[], result=None, error=None, artifacts=artifacts,
                            counts=dict(total_execution_count=len(cases), successful_execution_count=0, failed_execution_count=0))
+                if visible:
+                    job.update(visible_browser=True, action_delay_ms=delay, keep_open_seconds=hold)
                 if getattr(self, 'session', None) is not None:
                     job['server_session_id'] = self.session.id
                 self._provenance(job)
@@ -762,6 +889,7 @@ class M04Manager:
         script = self._safe(self._job_path(job['execution_id']).parent / case['case_id'] / 'script.py')
         require(_sha(script.read_bytes()) == case['sha256'], 'Execution snapshot SHA-256 mismatch')
         self._prepared_files(case, script.parent, script.read_bytes())
+        self._m01_files(case, script.parent)
         runner = self._safe(self.root / 'backend/m04/runner.py')
         require(runner.is_file(), 'M04 runner not configured')
         case.update(status='RUNNING', started_at=_now())
@@ -770,7 +898,21 @@ class M04Manager:
         started = time.monotonic()
         options = {'creationflags': subprocess.CREATE_NEW_PROCESS_GROUP | subprocess.CREATE_NO_WINDOW} if os.name == 'nt' else {'start_new_session': True}
         command = [sys.executable, '-I', '-B', '-u', str(runner), '--script', str(script)]
+        timeout_seconds = self.case_timeout_seconds
+        if job.get('visible_browser') is True:
+            delay, hold = job['action_delay_ms'], job['keep_open_seconds']
+            command.extend(['--visible-browser', '--action-delay-ms', str(delay), '--keep-open-seconds', str(hold)])
+            steps = max(1, len(case.get('steps', [])))
+            scenario_file = script.parent / 'execution_scenario.json'
+            if scenario_file.is_file():
+                steps = max(steps, len(self._json(scenario_file).get('steps', [])))
+            timeout_seconds += hold + min(600, (3 * steps + 10) * delay / 1000)
+            case['execution_timeout_seconds'] = timeout_seconds
         source = self._safe(script.parent / 'source_scenario.json')
+        plan_file = self._safe(script.parent / 'execution_plan.json')
+        if case.get('execution_plan_sha256'):
+            require(plan_file.is_file() and _sha(plan_file.read_bytes()) == case['execution_plan_sha256'],
+                    'Execution plan SHA-256 mismatch')
         execution_scenario = source
         if case.get('business_step_required'):
             require(source.is_file(), 'Business step scenario snapshot required')
@@ -829,7 +971,7 @@ class M04Manager:
                     reason = 'CANCELLED'
                     self._kill(process)
                     break
-                if time.monotonic() - started >= self.case_timeout_seconds:
+                if time.monotonic() - started >= timeout_seconds:
                     reason = 'TIMEOUT'
                     self._kill(process)
                     break
@@ -889,6 +1031,8 @@ class M04Manager:
                 fixed_hash = _sha(script.read_bytes())
                 require(fixed_hash == case['sha256'], 'Execution script changed during execution')
                 self._prepared_files(case, script.parent, script.read_bytes())
+                if case.get('execution_plan_sha256'):
+                    require(_sha(plan_file.read_bytes()) == case['execution_plan_sha256'], 'Execution plan changed during execution')
                 require(terminal.get('code_sha256') == case['sha256'], 'Worker code SHA-256 mismatch')
                 screenshots = _screenshot_records(terminal.get('screenshots', []))
                 observed = {row['phase']: row for row in case.get('screenshots', [])}
@@ -962,10 +1106,15 @@ class M04Manager:
     def _provenance(self, job):
         # 실행 전 고정 스크립트 및 출처 보관
         execution = self._job_path(job['execution_id']).parent
+        m01_files = {}
         for case in job['cases']:
             source = self._safe(execution / case['case_id'] / 'script.py')
             require(_sha(source.read_bytes()) == case['sha256'], 'Execution snapshot SHA-256 mismatch')
             self._prepared_files(case, source.parent, source.read_bytes())
+            m01_files[case['case_id']] = self._m01_files(case, source.parent)
+            if case.get('execution_plan_sha256'):
+                require(_sha(self._safe(source.parent / 'execution_plan.json').read_bytes()) == case['execution_plan_sha256'],
+                        'Execution plan snapshot SHA-256 mismatch')
         if job.get('dataset_id'):
             directory = self._safe(self.root / 'data/evaluation' / job['dataset_id'])
             manifest = self._json(directory / 'data_manifest.json')
@@ -980,10 +1129,12 @@ class M04Manager:
         with zipfile.ZipFile(archive_buffer, 'w', zipfile.ZIP_DEFLATED) as archive:
             archive.writestr('fixed_scripts.json', _encoded(inputs))
             for case in job['cases']:
-                for name in ('script.py', 'script.json', 'source_scenario.json', 'execution_scenario.json', 'execution_contract.json', 'response.json', 'prompt.json', 'prepared_source.json', 'prepared_code.py'):
+                for name in ('script.py', 'script.json', 'source_scenario.json', 'execution_scenario.json', 'execution_contract.json', 'execution_plan.json', 'response.json', 'prompt.json', 'prepared_source.json', 'prepared_code.py'):
                     path = self._safe(execution / case['case_id'] / name)
                     if path.exists():
                         archive.writestr(case['case_id'] + '/' + name, path.read_bytes())
+                for name, content in m01_files[case['case_id']].items():
+                    archive.writestr(case['case_id'] + '/' + name, content)
         raw = archive_buffer.getvalue()
         archive_sha = _sha(raw)
         dataset_id = 'm04-development-' + archive_sha[:12]
@@ -1017,6 +1168,13 @@ class M04Manager:
                                     script_registration='UPLOADED_FIXED_SCRIPT', logs=job['logs']))
         if any(case.get('code_source') == 'PREPARED' for case in job['cases']):
             payload['details']['code_source'] = 'PREPARED' if all(case.get('code_source') == 'PREPARED' for case in job['cases']) else 'MIXED'
+        if any(case.get('source_kind') == 'M01_OBSERVED_REPLAY' for case in job['cases']):
+            payload['details']['script_registration'] = ('M01_OBSERVED_REPLAY' if all(
+                case.get('source_kind') == 'M01_OBSERVED_REPLAY' for case in job['cases']) else 'MIXED')
+            payload['details']['replay_scope'] = 'RECORDED_UI_ACTIONS_AND_EXPLICIT_STATE'
+        if job.get('visible_browser') is True:
+            payload['details']['browser_presentation'] = {key: job[key] for key in
+                ('visible_browser', 'action_delay_ms', 'keep_open_seconds')}
         return config, payload, raw
 
     def _execute(self, execution_id, global_lock):

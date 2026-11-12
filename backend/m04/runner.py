@@ -3,6 +3,7 @@ import argparse
 import ast
 import base64
 import contextlib
+from copy import deepcopy
 import hashlib
 import io
 import importlib.util
@@ -431,7 +432,56 @@ class ScriptOutput(io.TextIOBase):
         self.buffered = ''
 
 
-def execute(script, scenario=None, required=False, contract=None, contract_sha256=None):
+def _presentation_options(visible_browser, action_delay_ms, keep_open_seconds):
+    if type(visible_browser) is not bool:
+        raise ValueError('visible_browser must be a boolean')
+    for name, value, limit in (('action_delay_ms', action_delay_ms, 2000),
+                               ('keep_open_seconds', keep_open_seconds, 60)):
+        if type(value) is not int or not 0 <= value <= limit:
+            raise ValueError(f'{name} must be an integer from 0 to {limit}')
+    if not visible_browser and (action_delay_ms or keep_open_seconds):
+        raise ValueError('Browser pacing and final-screen hold require visible_browser')
+
+
+def _visible_capabilities(driver, capabilities):
+    if not isinstance(capabilities, dict):
+        raise ValueError('Visible execution requires browser capabilities')
+    browser = str(capabilities.get('browserName', '')).lower()
+    option_key = {'chrome': 'goog:chromeOptions', 'msedge': 'ms:edgeOptions',
+                  'microsoftedge': 'ms:edgeOptions'}.get(browser)
+    service = getattr(driver, 'service', None)
+    process = getattr(service, 'process', None)
+    service_url = getattr(service, 'service_url', None)
+    connection = getattr(driver, 'command_executor', None)
+    client_config = getattr(connection, '_client_config', None)
+    remote_url = getattr(client_config, 'remote_server_addr', None) or getattr(connection, '_url', None)
+    def local(value):
+        if not isinstance(value, str):
+            return False
+        parsed = urlsplit(value)
+        return (parsed.scheme in {'http', 'https'} and parsed.hostname in {'127.0.0.1', 'localhost', '::1'}
+                and not parsed.username and not parsed.password and parsed.path in {'', '/'}
+                and not parsed.query and not parsed.fragment)
+    if (not option_key or not local(service_url) or not local(remote_url)
+            or service_url.rstrip('/') != remote_url.rstrip('/')
+            or process is None or not callable(getattr(process, 'poll', None)) or process.poll() is not None):
+        raise ValueError('Visible execution supports a local Chrome or Edge driver service only')
+    result = deepcopy(capabilities)
+    options = result.get(option_key, {})
+    if not isinstance(options, dict):
+        raise ValueError('Visible execution requires Chromium options object')
+    arguments = options.get('args', [])
+    if not isinstance(arguments, list) or any(not isinstance(value, str) for value in arguments):
+        raise ValueError('Visible execution requires a string browser-argument list')
+    options['args'] = [value for value in arguments
+                       if value.strip().lstrip('-').split('=', 1)[0].lower() != 'headless']
+    result[option_key] = options
+    return result
+
+
+def execute(script, scenario=None, required=False, contract=None, contract_sha256=None, *,
+            visible_browser=False, action_delay_ms=0, keep_open_seconds=0):
+    _presentation_options(visible_browser, action_delay_ms, keep_open_seconds)
     load_login_settings()
     observer = Observer(script, sys.stdout, scenario, required, contract=contract, contract_sha256=contract_sha256)
     runtime = types.ModuleType('ktl_runtime')
@@ -440,9 +490,23 @@ def execute(script, scenario=None, required=False, contract=None, contract_sha25
     sys.modules['ktl_runtime'] = runtime
     sink = ScriptOutput(observer)
     status, error, browser_version = 'ERROR', None, None
+    held_drivers = set()
+
+    def hold_visible(driver):
+        identity = id(driver)
+        if visible_browser and keep_open_seconds and identity not in held_drivers:
+            held_drivers.add(identity)
+            observer.emit('log', message=f'최종 브라우저 화면을 {keep_open_seconds}초 유지한 후 종료합니다.')
+            time.sleep(keep_open_seconds)
+
     try:
         from importlib.metadata import version
         from selenium.webdriver.remote.webdriver import WebDriver
+        try:
+            from selenium.webdriver.remote.webelement import WebElement
+        except ImportError:
+            WebElement = None
+        original_submit = WebElement.submit if WebElement is not None else None
         original_session, original_execute = WebDriver.start_session, WebDriver.execute
         observer.raw_execute = original_execute
         if observer.contract_checker:
@@ -455,6 +519,20 @@ def execute(script, scenario=None, required=False, contract=None, contract_sha25
 
         def start_session(driver, *args, **kwargs):
             nonlocal browser_version
+            observe_submit = bool(observer.contract_checker and any(condition['kind'] == 'native_submit_response'
+                    for step in observer.contract_checker.contract['steps'] for condition in step['checks']))
+            if visible_browser or observe_submit:
+                capabilities = args[0] if args else kwargs.get('capabilities')
+                if not isinstance(capabilities, dict):
+                    raise RuntimeError('독립 submit 관측을 위한 브라우저 capabilities가 필요합니다.')
+                capabilities = _visible_capabilities(driver, capabilities) if visible_browser else dict(capabilities)
+                if observe_submit:
+                    logging = capabilities.get('goog:loggingPrefs', {})
+                    capabilities['goog:loggingPrefs'] = dict(logging if isinstance(logging, dict) else {}, performance='ALL')
+                if args:
+                    args = (capabilities,) + args[1:]
+                else:
+                    kwargs = dict(kwargs, capabilities=capabilities)
             result = original_session(driver, *args, **kwargs)
             observer.drivers.append(driver)
             browser_version = driver.capabilities.get('browserVersion')
@@ -463,8 +541,14 @@ def execute(script, scenario=None, required=False, contract=None, contract_sha25
 
         def command(driver, name, params=None):
             line = observer.source_line()
+            if line and action_delay_ms and name in {'get', 'goBack', 'goForward', 'refresh',
+                    'clickElement', 'sendKeysToElement', 'clearElement', 'submitElement',
+                    'switchToWindow', 'newWindow'}:
+                time.sleep(action_delay_ms / 1000)
             if name == 'quit':
                 observer.capture_screen('after', driver)
+                if line:
+                    hold_visible(driver)
             elif name in actions and line and (observer.current_step or not observer.expected_steps):
                 observer.capture_screen('before', driver)
             lookup = name in {'findElement', 'findElements', 'findChildElement', 'findChildElements'}
@@ -529,7 +613,48 @@ def execute(script, scenario=None, required=False, contract=None, contract_sha25
             observer.step(actions[name], line, 'PASS', started, stamp)
             return value
 
+        def submit(element):
+            line = observer.source_line()
+            if not line:
+                return original_submit(element)
+            if action_delay_ms:
+                time.sleep(action_delay_ms / 1000)
+            driver, identity = element._parent, element.id
+            selector = observer.elements.get(identity)
+            checker = observer.contract_checker
+            previous_action = checker.target_action if checker else None
+            observer.capture_screen('before', driver)
+            if checker:
+                # Selenium 4 implements this public method with execute_script.
+                # Match the exact target before the form can disappear, retaining
+                # normal typed outcome checks and excluding arbitrary script calls.
+                checker.before_command(driver, 'submitElement', {'id': identity})
+            started, stamp = time.monotonic(), now()
+            try:
+                value = original_submit(element)
+            except Exception as exc:
+                if checker:
+                    checker.native_submit_completed(driver, False)
+                    checker.target_action = previous_action
+                observer.last_failed_target = selector
+                if observer.current_step:
+                    observer.current_step.update(error=type(exc).__name__, failure_selector=selector)
+                observer.step('submit', line, 'ERROR', started, stamp, type(exc).__name__)
+                raise
+            if checker:
+                checker.native_submit_completed(driver, True)
+            observer.actions += 1
+            if observer.current_step:
+                observer.current_step['action_count'] += 1
+                observer.current_step['observed_actions'].append('submit')
+                if selector:
+                    observer.current_step['actual_selector'] = selector
+            observer.step('submit', line, 'PASS', started, stamp)
+            return value
+
         WebDriver.start_session, WebDriver.execute = start_session, command
+        if WebElement is not None:
+            WebElement.submit = submit
         try:
             with contextlib.redirect_stdout(sink), contextlib.redirect_stderr(sink):
                 previous_trace = sys.gettrace()
@@ -548,6 +673,8 @@ def execute(script, scenario=None, required=False, contract=None, contract_sha25
                 status = 'PASS'
         finally:
             WebDriver.start_session, WebDriver.execute = original_session, original_execute
+            if WebElement is not None:
+                WebElement.submit = original_submit
     except AssertionError as exc:
         status, error = 'FAIL', mask(str(exc) or '기대 결과 assert 실패')
     except SystemExit as exc:
@@ -563,8 +690,11 @@ def execute(script, scenario=None, required=False, contract=None, contract_sha25
         sink.flush()
         for driver in observer.drivers:
             try:
-                observer.capture_screen('after', driver)
-                driver.quit()
+                try:
+                    observer.capture_screen('after', driver)
+                    hold_visible(driver)
+                finally:
+                    driver.quit()
             except Exception:
                 observer.emit('log', message='브라우저 세션 종료 확인 실패')
     try:
@@ -582,6 +712,8 @@ def execute(script, scenario=None, required=False, contract=None, contract_sha25
                   action_count=observer.actions, assertion_count=observer.assertions,
                   passed_assertion_count=observer.passed, browser_version=browser_version,
                   selenium_version=selenium_version, code_sha256=hashlib.sha256(script.read_bytes()).hexdigest(),
+                  browser_presentation=dict(visible_browser=visible_browser, action_delay_ms=action_delay_ms,
+                                            keep_open_seconds=keep_open_seconds, physical_visibility_verified=False),
                   screenshots=observer.screenshot_result())
     return {'PASS': 0, 'FAIL': 1, 'ERROR': 2}[status]
 
@@ -594,10 +726,14 @@ if __name__ == '__main__':
     parser.add_argument('--scenario')
     parser.add_argument('--contract')
     parser.add_argument('--require-business-steps', action='store_true')
+    parser.add_argument('--visible-browser', action='store_true')
+    parser.add_argument('--action-delay-ms', type=int, default=0)
+    parser.add_argument('--keep-open-seconds', type=int, default=0)
     args = parser.parse_args()
     scenario = json.loads(Path(args.scenario).read_text(encoding='utf-8-sig')) if args.scenario else None
     contract_raw = Path(args.contract).read_bytes() if args.contract else None
     contract = json.loads(contract_raw.decode('utf-8-sig')) if contract_raw is not None else None
     contract_sha = hashlib.sha256(contract_raw).hexdigest() if contract_raw is not None else None
     sys.exit(execute(Path(args.script).resolve(strict=True), scenario, args.require_business_steps,
-                     contract=contract, contract_sha256=contract_sha))
+                     contract=contract, contract_sha256=contract_sha, visible_browser=args.visible_browser,
+                     action_delay_ms=args.action_delay_ms, keep_open_seconds=args.keep_open_seconds))

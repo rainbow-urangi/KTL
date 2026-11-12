@@ -4,9 +4,11 @@ import hashlib
 import io
 import json
 import math
+import os
 import subprocess
 import unicodedata
 from collections import Counter
+from pathlib import Path
 
 REFERENCE = {"events": 32273, "latent_segments": 5167, "latent_workflows": 563,
              "process_instances": 1619, "process_models": 12}
@@ -64,9 +66,16 @@ def call_adapter(config, name, payload, cwd):
         raise EvaluationError(f"Configure the {name} adapter in backend/config.json")
     require(isinstance(command, list) and all(isinstance(x, str) for x in command),
             f"{name} adapter must be an argv array")
+    # Import the installed product code while keeping all adapter data paths and
+    # subprocess-relative files inside the Service's explicitly selected root.
+    environment = os.environ.copy()
+    environment['KTL_RUNTIME_ROOT'] = str(Path(cwd).resolve())
+    source_root = str(Path(__file__).resolve().parents[1])
+    environment['PYTHONPATH'] = os.pathsep.join(filter(None, (source_root, environment.get('PYTHONPATH'))))
+    environment['PYTHONDONTWRITEBYTECODE'] = '1'
     try:
         completed = subprocess.run(command, input=json.dumps(payload, ensure_ascii=False).encode('utf-8'),
-                                   capture_output=True, cwd=cwd,
+                                   capture_output=True, cwd=cwd, env=environment,
                                    timeout=config.get("adapter_timeout_seconds", 120), check=False)
     except subprocess.TimeoutExpired as exc:
         raise EvaluationError(f"{name} adapter timed out", "ERROR") from exc

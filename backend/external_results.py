@@ -3,7 +3,7 @@ from datetime import datetime
 from .evaluators import require
 
 
-def calculate(metric, payload):
+def validate_envelope(payload):
     require(isinstance(payload, dict), 'JSON object required')
     for field in ('external_run_id','dataset_id','run_mode','source_module','source_version','submitted_at','dataset_manifest_sha256'):
         require(isinstance(payload.get(field), str) and 0 < len(payload[field].strip()) and len(payload[field]) <= 256, 'Required field: '+field)
@@ -14,9 +14,13 @@ def calculate(metric, payload):
     except ValueError:
         require(False, 'Invalid submitted_at')
     require(isinstance(payload.get('details'), dict) or isinstance(payload.get('evidence'), (dict,list)), 'details or evidence required')
+
+
+def calculate(metric, payload, *, m03_reference=None, m03_expected_business_units=None):
+    validate_envelope(payload)
     if metric == 'M03':
         from .m03_integration import evaluate_scenarios
-        return evaluate_scenarios(payload)
+        return evaluate_scenarios(payload, reference=m03_reference, expected_business_units=m03_expected_business_units)
     counts = payload.get('counts'); require(isinstance(counts, dict), 'counts object required')
     def count(name, positive=False):
         value=counts.get(name)

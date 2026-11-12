@@ -7,7 +7,7 @@ from .evaluators import METRICS, csv_evidence
 
 def now(): return datetime.now(timezone.utc).isoformat()
 
-def save_run(root, metric, mode, config, result, rows, received=None):
+def save_run(root, metric, mode, config, result, rows, received=None, *, before_publish=None):
     prefix={'REFERENCE':'REF','OFFICIAL':'EVAL','DEVELOPMENT':'DEV'}[mode]
     run_id=prefix+'-'+metric+'-'+datetime.now(timezone.utc).strftime('%Y%m%dT%H%M%S')+'-'+uuid.uuid4().hex[:12]
     directory=root/'results'/mode.lower()/run_id;directory.mkdir(parents=True,exist_ok=False)
@@ -15,8 +15,9 @@ def save_run(root, metric, mode, config, result, rows, received=None):
     score=result.get('score');threshold=None
     if score is not None and target is not None:
         threshold=score<=target if operator=='<=' else score>=target
+    official_eligible=metric!='M03' or result.get('details',{}).get('official_eligible') is True
     result.update(metric_id=metric,metric_name=METRICS[metric][0],run_id=run_id,run_mode=mode,target=target,operator=operator,
-                  threshold_met=threshold,official_pass=threshold if mode=='OFFICIAL' else None)
+                  threshold_met=threshold,official_pass=threshold if mode=='OFFICIAL' and official_eligible else None)
     result['pass']=result['official_pass'];result.setdefault('started_at',now());result['completed_at']=now()
     result.setdefault('error',None);result.setdefault('evaluator_version','external-counts-v2-generated-code-denominator')
     result.setdefault('details',{})['rows']=rows
@@ -28,6 +29,8 @@ def save_run(root, metric, mode, config, result, rows, received=None):
         result['evidence_files'].append('received_payload.json')
         (directory/'received_payload.json').write_text(json.dumps(received,ensure_ascii=False,indent=2,allow_nan=False), encoding='utf-8')
     (directory/'evidence.csv').write_text(csv_evidence(rows or [{'status':result['status'],'error':result.get('error')}]),encoding='utf-8')
+    if before_publish is not None:
+        before_publish(result)
     text=json.dumps(result,ensure_ascii=False,indent=2,allow_nan=False)
     (directory/'result.json').write_text(text,encoding='utf-8')
     (directory/'run_manifest.json').write_text(json.dumps({k:v for k,v in result.items() if k!='details'},ensure_ascii=False,indent=2,allow_nan=False), encoding='utf-8')

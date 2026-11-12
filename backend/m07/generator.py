@@ -3,6 +3,7 @@ import json
 import os
 import re
 import hashlib
+import http.client
 import urllib.error
 import urllib.request
 from pathlib import Path
@@ -12,14 +13,86 @@ from ..evaluators import EvaluationError, require
 from ..m04.checks import prepare_contract, validate_source_data
 
 
-PROMPT_VERSION = 'ktl-selenium-v4'
+PROMPT_VERSION = 'ktl-selenium-v7'
+MAX_ATTEMPTS = 1
 NAMES = ('OPENAI_API_KEY', 'KTL_M07_OPENAI_API_KEY', 'KTL_M07_MODEL')
+ERROR_TYPES = frozenset({'rate_limit_error', 'insufficient_quota', 'requests', 'tokens',
+                         'invalid_request_error', 'authentication_error', 'permission_error',
+                         'not_found_error', 'server_error', 'api_error'})
+ERROR_CODES = frozenset({'rate_limit_exceeded', 'slow_down', 'insufficient_quota',
+                        'credit_balance_exhausted', 'organization_spend_limit_exceeded',
+                        'project_spend_limit_exceeded', 'organization_usage_limit_exceeded',
+                        'invalid_api_key', 'account_deactivated', 'model_not_found',
+                        'context_length_exceeded', 'server_error'})
+COUNT_HEADERS = frozenset('x-ratelimit-' + kind + '-' + unit for kind in ('limit', 'remaining')
+                         for unit in ('requests', 'tokens', 'project-tokens'))
+SECONDS_HEADERS = frozenset({'retry-after', 'x-ratelimit-reset-requests',
+                            'x-ratelimit-reset-tokens', 'x-ratelimit-reset-project-tokens'})
 
 
 class GenerationError(EvaluationError):
     def __init__(self, message, evidence):
         super().__init__(message)
         self.evidence = evidence
+
+
+def _single_header(headers, name):
+    try:
+        values = (headers.get_all(name) or []) if hasattr(headers, 'get_all') else [
+            value for key, value in (headers or {}).items() if isinstance(key, str) and key.lower() == name]
+    except (AttributeError, TypeError, ValueError):
+        return None
+    if (len(values) != 1 or not isinstance(values[0], str) or len(values[0]) > 256
+            or re.search(r'[^\x20-\x7e]', values[0])):
+        return None
+    return values[0].strip(' ')
+
+
+def _unique_members(pairs):
+    result = {}
+    for key, value in pairs:
+        if key in result:
+            raise ValueError('Duplicate error response member')
+        result[key] = value
+    return result
+
+
+def _invalid_constant(value):
+    raise ValueError('Nonstandard error response number')
+
+
+def _http_error_metadata(error, raw):
+    # 원문·message는 보관하지 않고, 완전한 응답의 알려진 분류와 숫자 헤더만 추가한다.
+    request_id = _single_header(error.headers, 'x-request-id')
+    if not request_id or not re.fullmatch(r'req_[A-Za-z0-9_-]{1,128}', request_id, flags=re.ASCII):
+        request_id = None
+    unavailable = raw is None
+    truncated = len(raw) > 1024 * 1024 if not unavailable else None
+    diagnostic = dict(schema_version=1, max_attempts=MAX_ATTEMPTS, numeric_headers={})
+    for name in sorted(COUNT_HEADERS | SECONDS_HEADERS):
+        value = _single_header(error.headers, name)
+        pattern = r'[0-9]{1,13}' if name in COUNT_HEADERS else r'[0-9]{1,8}(?:\.[0-9]{1,6})?'
+        if value is not None and re.fullmatch(pattern, value, flags=re.ASCII):
+            number = int(value) if name in COUNT_HEADERS else float(value)
+            if 0 <= number <= (10 ** 12 if name in COUNT_HEADERS else 86400):
+                diagnostic['numeric_headers'][name] = number
+    if not unavailable and not truncated:
+        try:
+            body = json.loads(raw.decode('utf-8'), object_pairs_hook=_unique_members, parse_constant=_invalid_constant)
+            detail = body.get('error') if isinstance(body, dict) else None
+            if isinstance(detail, dict):
+                for field, allowed in (('type', ERROR_TYPES), ('code', ERROR_CODES)):
+                    value = detail.get(field)
+                    if isinstance(value, str) and value in allowed:
+                        diagnostic['error_' + field] = value
+        except (ValueError, UnicodeError, RecursionError):
+            pass
+    result = dict(http_status=error.code, request_id=request_id,
+                  response_body_sha256=hashlib.sha256(raw).hexdigest() if not unavailable else None,
+                  body_policy='HASH_ONLY', body_truncated=truncated, diagnostics=diagnostic)
+    if unavailable:
+        result['body_read_failed'] = True
+    return result
 
 
 def _public_text(value):
@@ -124,22 +197,47 @@ def prompt(scenario, config):
         context['business_context'] = clean_context(supplied)
     instructions = (
         'Return one complete Python Selenium script only, without markdown. '
-        'Preserve the scenario order and perform every required step. Set SCENARIO_ID to the supplied ID. '
+        'Preserve the scenario order and perform every required step. '
+        f'At module top level, include the exact literal assignment SCENARIO_ID = {source["scenario_id"]!r}. '
+        'Do not omit it, place it only inside a function, or compute it from an expression or environment variable. '
         'Import `from ktl_runtime import business_step`; the Runner provides this module. '
         'Wrap EACH scenario step exactly once, in order, in `with business_step(the_integer_order):`. '
         'The login/browser setup may precede the first block; do not combine different steps into one block. '
+        'Perform each required navigate/get, click, input or submit action inside its own corresponding '
+        'business_step block, not before it; only a verify step may consist solely of browser-state reads and asserts. '
         'Every block must perform its stated browser action or browser-state read and execute a dynamic Python assert '
-        'that verifies its expected_result using actual browser/API state. For click-input steps assert activeElement/focus; '
+        'that verifies its expected_result using actual browser/API state. Assert activeElement/focus only when the '
+        'execution_contract explicitly requires a focus check; never assume a modal or button receives focus on opening '
+        'or clicking, and do not add arbitrary modal focus waits. '
         'for input/clear assert the live input value; for open/verify assert the expected screen/state. '
         'Do not skip steps, invent missing expected results, use constant assertions, or catch/suppress an AssertionError. '
         'The supplied execution_contract is fixed independently of your code. Use its exact target locators and '
         'satisfy every typed browser-state check in the corresponding block; the Runner independently verifies '
         'targets, request-response linkage and outcomes. Do not modify, bypass or fabricate these checks. '
+        'A native_submit_response condition is observed independently by the Runner: inside that submit '
+        'business_step, call standard WebElement.submit() on the exact contract form after checking its inputs. '
+        'Keep the corresponding live UI outcome asserts. Do not fabricate a network receipt, duplicate the '
+        'Runner observer, invoke a separate HTTP request, or submit twice to satisfy this condition. '
+        'For nonempty, require exactly one visible element at target and a nonempty trimmed DOM string from '
+        'property text (innerText) or value. For text_equals_target, require exactly one visible element at '
+        'each of target and other_target, distinct DOM elements, and nonempty trimmed strings from property '
+        'and other_property that are exactly equal. Do not replace these checks with visibility or an empty-string comparison. '
+        'Perform these comparisons inside browser JavaScript and return only a boolean; never return, print, hash, '
+        'log or embed the observed strings in assertion messages or output. '
         'Use webdriver.Chrome, WebDriverWait and meaningful Python assert statements for the stated outcomes. '
+        'Set the browser window to 1440x1100. Before native click, input focus or standard WebElement.submit(), scroll the exact target with scrollIntoView({block:"center",inline:"center",behavior:"instant"}) and use WebDriverWait until its center is inside the viewport and elementFromPoint hits that target or its descendant, then perform the native Selenium action without JavaScript click. '
+        'For EVERY typed condition, use WebDriverWait to await its exact predicate before the corresponding dynamic assert; a visible modal or container does not mean that its fetch response or field values have finished loading. '
+        'For visible=false, the wait predicate must return True when the element is absent or hidden; then assert '
+        'the current visibility is False, for example wait.until(lambda d: not is_visible(d, locator)); '
+        'assert not is_visible(driver, locator). Do not assert a successful wait result is False, or directly assert '
+        'a visibility helper that correctly returns False for a closed form. '
         'For JSON decoding errors use json.JSONDecodeError or built-in ValueError, never import JSONDecodeError '
         'from selenium.common.exceptions. If needed, import only supported Selenium exception names '
         'TimeoutException, StaleElementReferenceException or NoSuchElementException; omit unused imports. '
         'Read login credentials ONLY from the specified environment variables, never print credentials or personal data. '
+        'After login submit, wait for the same-origin authenticated application route distinct from the login route '
+        'AND the login form to be absent or hidden before any business navigation. Do not immediately driver.get a '
+        'business URL while asynchronous login is pending. Do not read, return or log authentication token values. '
         'Default to --headless=new unless KTL_M04_HEADLESS=0. Always quit Chrome in finally. '
         'Use the supplied real selectors and page URLs. For search verify the actual query, API response content and '
         'rendered results correspond; HTTP success and table visibility alone are insufficient. '
@@ -166,14 +264,17 @@ def generate(root, config, scenario):
     instructions, text = prompt(scenario, config)
     body = dict(model=value['model'], instructions=instructions, input=text, store=False)
     evidence = dict(model=value['model'], requested_model=value['model'], prompt_version=PROMPT_VERSION,
-                    instructions=instructions, input=text, request_id=None)
+                    instructions=instructions, input=text, request_id=None, max_attempts=MAX_ATTEMPTS,
+                    http_request_attempted=False, provider_response_observed=False)
     request = urllib.request.Request('https://api.openai.com/v1/responses',
                                      data=json.dumps(body, ensure_ascii=False).encode('utf-8'),
                                      headers={'Authorization': 'Bearer ' + value['api_key'], 'Content-Type': 'application/json'})
     timeout = config.get('m07', {}).get('generation_timeout_seconds', 120)
     require(type(timeout) in (int, float) and 1 <= timeout <= 300, 'M07 생성 제한시간은 1~300초입니다.')
     try:
+        evidence['http_request_attempted'] = True
         with urllib.request.urlopen(request, timeout=timeout) as response:
+            evidence['provider_response_observed'] = True
             raw = response.read(4 * 1024 * 1024 + 1)
         if len(raw) > 4 * 1024 * 1024:
             response = dict(status='RESPONSE_TOO_LARGE', body_policy='HASH_ONLY', body_truncated=True,
@@ -182,14 +283,17 @@ def generate(root, config, scenario):
             raise GenerationError('LLM 응답 크기 제한 초과', evidence)
         result = json.loads(raw)
     except urllib.error.HTTPError as exc:
+        evidence['provider_response_observed'] = True
         # 인증 오류 본문은 키가 포함될 수 있어 해시만 보관
-        error_body = exc.read(1024 * 1024 + 1)
-        response = dict(http_status=exc.code, request_id=(exc.headers or {}).get('x-request-id'),
-                        response_body_sha256=hashlib.sha256(error_body).hexdigest(), body_policy='HASH_ONLY',
-                        body_truncated=len(error_body) > 1024 * 1024)
+        try:
+            error_body = exc.read(1024 * 1024 + 1)
+        except (urllib.error.URLError, TimeoutError, OSError, http.client.HTTPException):
+            # Status and allowlisted headers were received even if the body connection failed.
+            error_body = None
+        response = _http_error_metadata(exc, error_body)
         evidence.update(response=response, response_bytes=json.dumps(response).encode('utf-8'), request_id=response['request_id'])
         raise GenerationError('OpenAI 요청 실패: HTTP ' + str(exc.code), evidence) from None
-    except (urllib.error.URLError, TimeoutError, OSError):
+    except (urllib.error.URLError, TimeoutError, OSError, http.client.HTTPException):
         response = dict(status='TRANSPORT_ERROR')
         evidence.update(response=response, response_bytes=json.dumps(response).encode('utf-8'))
         raise GenerationError('OpenAI 통신 실패 또는 시간 초과', evidence) from None
@@ -211,10 +315,11 @@ def generate(root, config, scenario):
                        and part.get('type') == 'output_text' and isinstance(part.get('text'), str))
     try:
         code = extract_code(output)
+        require(code.strip(), '생성 코드가 없습니다.')
         require(len(code.encode('utf-8')) <= 262144, '생성 코드 최대 256 KiB')
     except EvaluationError as exc:
         raise GenerationError(str(exc), evidence) from None
     return dict(code=code, response=result, response_bytes=raw, request_id=result.get('id'),
                 model=result.get('model', value['model']), requested_model=value['model'],
                 prompt_version=PROMPT_VERSION, instructions=instructions, input=text,
-                generated_by_llm=True)
+                generated_by_llm=True, http_request_attempted=True, provider_response_observed=True)

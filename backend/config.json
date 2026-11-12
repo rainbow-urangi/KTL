@@ -10,7 +10,28 @@
   },
   "adapter_timeout_seconds": 120,
   "m03": {
-    "generator_mode": "MOCK"
+    "generator_mode": "REAL",
+    "transport": "SUBPROCESS",
+    "input_manifest": "data/evaluation/m03-canonical-development-30c57a86a3bb/analysis_manifest.json",
+    "source_module": "canonical-procedure-adapter",
+    "source_version": "canonical-to-m03-v1",
+    "business_units": [
+      {
+        "business_unit_id": "DEV-CANON-PM-001",
+        "workflow_id": "WF-0037",
+        "business_name": "DEVELOPMENT canonical PM-001",
+        "start_screen": "/mypage/personal-info",
+        "required_procedures": [
+          "Preserve every observed canonical procedure and its source evidence"
+        ],
+        "end_condition": "All procedures in the preselected canonical source have been transferred",
+        "definition_source": "DEVELOPMENT_TECHNICAL_ADAPTER_CONTRACT",
+        "canonical_process_model_id": "PM-001",
+        "canonical_instance_id": "WF-0037",
+        "canonical_input_path": "data/evaluation/m03-canonical-development-30c57a86a3bb/canonical_workflows.json",
+        "canonical_models_path": "data/evaluation/m03-canonical-development-30c57a86a3bb/process_models.csv"
+      }
+    ]
   },
   "m07": {
     "model": "",
@@ -19,7 +40,14 @@
   },
   "adapters": {
     "cleaning": [],
-    "scenario_generation": []
+    "scenario_generation": [
+      "python",
+      "-B",
+      "-X",
+      "utf8",
+      "-m",
+      "backend.m03_canonical_adapter"
+    ]
   },
   "official_manifests": {
     "M01": null,

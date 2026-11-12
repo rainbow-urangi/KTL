@@ -143,8 +143,21 @@ def call_http(root, config, payload):
         require(not proof['response_truncated'], 'M03 외부 생성기 응답 크기 상한을 초과했습니다.')
         if secret and secret.encode('utf-8') in raw:
             raise EvaluationError('M03 외부 생성기 응답에 인증정보가 포함되어 원문 보관을 차단했습니다.', 'ERROR')
+        def checked_object(pairs):
+            # Check every decoded pair before duplicate keys discard earlier values.
+            if secret:
+                pending = [item for pair in pairs for item in pair]
+                while pending:
+                    value = pending.pop()
+                    if isinstance(value, str) and secret in value:
+                        raise EvaluationError('M03 외부 생성기 응답에 인증정보가 포함되어 원문 보관을 차단했습니다.', 'ERROR')
+                    # Child objects were already checked by this parsing hook.
+                    if isinstance(value, list):
+                        pending.extend(value)
+            return dict(pairs)
         try:
-            result = json.loads(raw.decode('utf-8-sig'), parse_constant=lambda _: (_ for _ in ()).throw(ValueError()))
+            result = json.loads(raw.decode('utf-8-sig'), object_pairs_hook=checked_object,
+                                parse_constant=lambda _: (_ for _ in ()).throw(ValueError()))
         except (ValueError, UnicodeError, RecursionError):
             raise EvaluationError('M03 외부 생성기는 UTF-8 JSON 객체를 반환해야 합니다.', 'ERROR') from None
         require(isinstance(result, dict), 'M03 외부 생성기는 시나리오 JSON 객체 하나를 반환해야 합니다.')

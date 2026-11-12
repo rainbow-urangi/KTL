@@ -9,16 +9,28 @@ const m07RunId=id=>/^DEV-M03-\d{8}T\d{6}-[0-9a-f]{12}$/.test(id||'');
 const m07Running=job=>['QUEUED','GENERATING','VALIDATING'].includes(job?.status);
 const m07Active=token=>token===m07RequestNumber&&/^\/metrics\/m07\/?$/i.test(location.pathname)&&new URLSearchParams(location.search).get('mode')==='DEVELOPMENT';
 const m07Name=status=>m07Names[status]||String(status||'대기');
+function m07AcceptProvider(value) {
+  if(m07View&&value&&typeof value==='object'&&!Array.isArray(value)&&typeof value.blocked==='boolean') m07View.providerState=value;
+}
+function m07ProviderBlocked(state=m07View) {return state?.providerState?.blocked===true;}
+function m07ProviderNotice(state=m07View) {
+  const value=state?.providerState;if(!value?.blocked) return '';
+  const reason=value.error_type==='tokens'?'토큰 사용량 제한':value.error_type==='requests'?'요청 횟수 제한':'공급자 요청 제한';
+  const when=typeof value.next_eligible_at==='string'&&!Number.isNaN(Date.parse(value.next_eligible_at))?value.next_eligible_at:null;
+  return `<p class="notice" id="m07-provider-blocker">${reason}${value.http_status===429?' (HTTP429)':''}으로 GPT 생성을 중단했습니다.${value.error_code?` 사유: ${esc(value.error_code)}.`:''}${when?` 다음 요청 가능 시각 하한: <time datetime="${esc(when)}">${esc(new Date(when).toLocaleString('ko-KR',{timeZone:'Asia/Seoul'}))} KST</time>.`:' 다음 요청 가능 시각은 확인되지 않았습니다.'} 대기창 이후 새로고침으로 다시 확인하세요. 자동 재시도는 하지 않습니다. 기존 코드 검사·취소는 계속 사용할 수 있습니다.</p>`;
+}
 function m07Artifact(id,name) {
   return m07Id(id)&&['report.json','code.zip','steps.csv','log.jsonl','screenshots.zip'].includes(name)?`/api/development/m07/generations/${id}/artifacts/${name}`:null;
 }
 async function m07Json(url,payload) {
   const session=typeof catalog!=='undefined'?catalog?.server_session_id:null;
+  const view=m07View;
   const controller=new AbortController(),timer=setTimeout(()=>controller.abort(),30000);
   try {
     const response=await fetch(url,{signal:controller.signal,...(payload===undefined?{}:{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify(payload)})});
     const data=await response.json();
     if(typeof ktlCheckServerSession==='function') ktlCheckServerSession(response,data,session);
+    if(m07View===view) m07AcceptProvider(data?.provider_state||data?.generation?.provider_state);
     if(!response.ok) throw new Error(data?.error||`요청 오류 (${response.status})`);
     if(!data||typeof data!=='object'||Array.isArray(data)) throw new Error('코드 생성 API 응답 형식을 확인하세요.');
     return data;
@@ -35,13 +47,13 @@ function m07Remember(id) {
 function renderM07(metric) {
   clearTimeout(m07PollTimer);
   const token=++m07RequestNumber,query=new URLSearchParams(location.search);
-  m07View={metric,context:null,selected:new Set(),source:query.get('m03_run_id')||'',requestedScenario:query.get('scenario_id')||'',generations:[],generation:null,code:new Map(),codeProof:new Map(),openCode:new Set(),exportSelected:new Set(),exportInitialized:false,exportLink:null,busy:false,selection:0,contextError:'',contextEditor:null,bulkRefs:new Map(),preparedCodes:[],preparedSelected:false,preparedLoading:false,preparedError:''};
+  m07View={metric,context:null,providerState:null,selected:new Set(),source:query.get('m03_run_id')||'',requestedScenario:query.get('scenario_id')||'',generations:[],generation:null,code:new Map(),codeProof:new Map(),openCode:new Set(),exportSelected:new Set(),exportInitialized:false,exportLink:null,busy:false,selection:0,contextError:'',contextEditor:null,bulkRefs:new Map(),preparedCodes:[],preparedSelected:false,preparedLoading:false,preparedError:''};
   document.title='DEVELOPMENT · M07 · Rainbow';
   app.innerHTML=`${banner('시나리오 기반 Selenium/Python 코드 생성')}<a class="back" href="${link('/')}">← 전체 평가</a>
     <section class="page-heading"><div><p class="eyebrow">M07 / DEVELOPMENT</p><h1>${labels.M07}</h1><p class="subtitle">시나리오로 생성한 코드의 문법과 실제 동작을 각각 검사합니다.</p></div><span class="badge neutral">개발 검증</span></section>
     <section class="evaluation-panel m07-panel"><div class="panel-heading"><h2>입력 및 현재 준비 상태</h2><button id="m07-refresh" class="m07-secondary" type="button">새로고침</button></div>
       <div class="dataset-grid"><div><label>LLM 연결</label><strong id="m07-ready">확인 중…</strong></div><div><label>선택 시나리오</label><strong id="m07-selected-count">0건</strong></div><div><label>목표값</label><strong>≥ ${score(metric.target,'M07')}</strong></div></div>
-      <p id="m07-environment" class="subtitle"></p><div id="m07-scenarios"></div>
+      <p id="m07-environment" class="subtitle"></p><div id="m07-provider-state" role="status"></div><div id="m07-scenarios"></div>
       <details class="m07-step-detail"><summary>준비한 시나리오 목록 한꺼번에 선택</summary>
         <p class="subtitle">저장된 M03 시나리오 원본 JSON 배열 또는 실행 ID·시나리오 ID·원본 해시 참조를 최대 20건 입력하세요. 입력 내용이 저장 원본과 일치하는지 검사한 뒤 선택하며, 생성·실행은 별도 버튼으로 시작합니다.</p>
         <textarea id="m07-bulk-input" rows="7" style="width:100%;font-family:monospace" aria-label="일괄 시나리오 JSON" spellcheck="false"></textarea>
@@ -210,13 +222,14 @@ async function bootstrapM07(token,query) {
 }
 function paintM07() {
   const state=m07View,job=state.generation,blocked=state.busy||state.generations.some(m07Running),ready=state.context?.readiness,rows=m07Scenarios();
-  document.querySelector('#m07-ready').textContent=ready?(ready.configured?(ready.model||'LLM 연결 준비 완료'):'서버 LLM 설정 필요'):'확인 중…';
+  document.querySelector('#m07-ready').textContent=ready?(ready.configured?(m07ProviderBlocked(state)?'공급자 제한 대기':ready.model||'LLM 연결 준비 완료'):'서버 LLM 설정 필요'):'확인 중…';
   document.querySelector('#m07-selected-count').textContent=state.selected.size+'건';
   document.querySelector('#m07-environment').textContent=[ready?.message,state.context?.target_url?`실행 대상: ${state.context.target_url}`:'',ready?`Selenium · Chrome ${ready.selenium&&ready.chrome?'준비 완료':'설치·연결 확인 필요'}`:''].filter(Boolean).join(' · ');
+  document.querySelector('#m07-provider-state').innerHTML=m07ProviderNotice(state);
   const renderScenario=row=>`<label class="m07-scenario"><input type="checkbox" data-scenario-id="${esc(row.scenario_id)}" ${state.selected.has(row.scenario_id)?'checked':''} ${blocked||row.execution_ready===false?'disabled':''}><span><strong>${esc(row.scenario_name||row.business_unit_id||row.scenario_id)}</strong><small>${esc(row.scenario_id)}${row.source_synthetic||row.synthetic||row.generator_mode==='MOCK'?' · 샘플 시나리오':''}<br>${esc(row.m03_run_id)}</small>${row.execution_ready===false?`<small class="m07-fail">${esc(row.execution_notice||'시나리오 실행 조건을 먼저 준비하세요.')}</small>`:''}</span></label>`;
   const prepared=rows.filter(row=>row.execution_ready!==false),unprepared=rows.filter(row=>row.execution_ready===false);
   document.querySelector('#m07-scenarios').innerHTML=state.contextError?`<p class="notice">${esc(state.contextError)}</p>`:rows.length?`${prepared.length?`<div class="m07-scenario-list">${prepared.map(renderScenario).join('')}</div>`:'<p class="notice">실행할 시나리오의 대상 요소와 기대 결과를 먼저 준비하세요.</p>'}${unprepared.length?`<details class="m07-step-detail"><summary>실행 조건 준비 필요 ${unprepared.length}건</summary><div class="m07-scenario-list">${unprepared.map(renderScenario).join('')}</div></details>`:''}<p class="run-meta">서로 다른 시나리오 최대 20건 · 저장된 M03 원본 연결</p>`:'<p class="empty">M03에서 시나리오를 생성·저장한 후 코드 생성을 진행하세요.</p>';
-  document.querySelector('#m07-generate').disabled=blocked||(state.preparedSelected?!m07PreparedReady(state):!ready?.configured)||!!state.contextError||!state.selected.size||state.selected.size>20||[...state.selected].some(id=>!rows.some(row=>row.scenario_id===id&&row.execution_ready!==false));
+  document.querySelector('#m07-generate').disabled=blocked||(state.preparedSelected?!m07PreparedReady(state):!ready?.configured||m07ProviderBlocked(state))||!!state.contextError||!state.selected.size||state.selected.size>20||[...state.selected].some(id=>!rows.some(row=>row.scenario_id===id&&row.execution_ready!==false));
   document.querySelector('#m07-code-files').disabled=blocked;
   document.querySelector('#m07-code-status').textContent=state.preparedLoading?'코드 파일의 UTF-8 원본과 SHA-256을 확인하고 있습니다…':state.preparedError||(!state.preparedSelected?'파일을 선택하지 않으면 GPT로 코드를 생성합니다. 파일 선택은 새로고침으로 해제합니다.':!m07PreparedReady(state)?'선택한 시나리오와 코드 파일의 SCENARIO_ID가 정확히 일치해야 합니다.':`등록한 원본 코드 ${state.preparedCodes.length}건 · GPT를 호출하지 않습니다.\n${state.preparedCodes.map(row=>`${row.filename} · ${row.scenario_id} · SHA-256: ${row.sha256}`).join('\n')}`);
   document.querySelector('#m07-validate').disabled=blocked||job?.status!=='GENERATED'||!ready?.selenium||!ready?.chrome||!m07ValidationReady(job);
@@ -300,6 +313,28 @@ async function saveM07ExecutionContext() {
   } catch(error) {if(m07Active(token)) document.querySelector('#m07-context-status').textContent=error.message;}
   finally {if(m07Active(token)) {state.busy=false;paintM07();}}
 }
+function m07Measurement(job,counts) {
+  const value=job?.measurement;
+  if(value?.version===1) return value;
+  const cases=job?.cases||[],registered=Math.max(cases.length,Number.isInteger(job?.counts?.generation_request_count)?job.counts.generation_request_count:0,counts.generated_code_count);
+  const ready=!!job?.result&&job?.status==='COMPLETED'&&registered>0&&counts.generated_code_count===registered&&cases.length===registered
+    &&cases.every(row=>['PASS','FAIL','ERROR','TIMEOUT','SKIPPED'].includes(row.syntax_status)&&['PASS','FAIL','ERROR','TIMEOUT','SKIPPED'].includes(row.execution_status));
+  return {version:0,evaluation_status:ready?'COMPLETED':'NOT_READY',registered_count:registered,provider_http_attempt_count:null,
+    provider_http_unknown_count:registered,not_attempted_count:null,...counts,
+    generation_percent:ready?100*counts.generated_code_count/registered:null,syntax_percent:ready?100*counts.syntax_pass_count/registered:null,
+    integrated_percent:ready?100*counts.both_pass_count/registered:null,syntax_target_percent:80,
+    syntax_target_met:ready?100*counts.syntax_pass_count/registered>=80:null,integrated_reference_target_percent:80,
+    integrated_reference_target_met:ready?100*counts.both_pass_count/registered>=80:null};
+}
+function m07MeasurementSummary(job,counts,result) {
+  const value=m07Measurement(job,counts),ready=value.evaluation_status==='COMPLETED';
+  const count=n=>Number.isInteger(n)&&n>=0?esc(n):'확인 불가';
+  const percent=n=>ready&&typeof n==='number'&&Number.isFinite(n)?score(n,'M07'):'—';
+  const verdict=met=>!ready||met==null?'판정 대기':met?'기준 충족':'기준 미달';
+  const fields=[['등록 요청','registered_count'],['실제 HTTP 시도','provider_http_attempt_count'],['시도 근거 미확인','provider_http_unknown_count'],['생성 코드','generated_code_count'],['문법 통과','syntax_pass_count'],['실제 브라우저 시작','browser_started_count'],['실행 통과','execution_pass_count'],['문법·실행 모두 통과','both_pass_count'],['미시도','not_attempted_count']];
+  const legacy=job?.legacy_result||result;
+  return `<div class="panel-heading"><h2>등록 요청 기준 측정</h2><span class="badge neutral">${esc(value.evaluation_status||'NOT_READY')}</span></div><div class="result-grid m07-summary">${fields.map(([label,key])=>`<div><label>${label}</label><strong data-m07-summary="${key}">${job?count(value[key]):'—'}</strong></div>`).join('')}<div><label>생성 성공률 · 등록 수 분모</label><strong data-m07-rate="generation">${percent(value.generation_percent)}</strong></div><div><label>문법 통과율 · 등록 수 분모</label><strong data-m07-rate="syntax" class="large-score">${percent(value.syntax_percent)}</strong></div><div><label>통합 성공률 · 등록 수 분모</label><strong data-m07-rate="integrated">${percent(value.integrated_percent)}</strong></div><div><label>회의 해석 · 문법 목표 ≥ ${score(value.syntax_target_percent??80,'M07')}</label><strong>${verdict(value.syntax_target_met)}</strong></div><div><label>통합 비교 기준 ≥ ${score(value.integrated_reference_target_percent??80,'M07')}</label><strong>${verdict(value.integrated_reference_target_met)}</strong></div></div><p class="subtitle">생성·문법·통합의 각 통과 건수 / 등록 요청 ${job?count(value.registered_count):'—'}건 × 100 · DEVELOPMENT · 공식 시험성적 아님</p>${!ready?'<p class="notice">등록 작업이 미완료이거나 실제 시도 근거가 부족합니다. 표시 건수는 중간 진행이며 최종 비율과 판정은 대기(null)입니다.</p>':''}${value.version===0&&job?'<p class="run-meta">이전 기록에는 실제 HTTP 시도·미시도 집계가 없습니다. 생성 시작시각으로 실제 호출 수를 추정하지 않습니다.</p>':''}${legacy?`<details class="m07-step-detail" data-m07-legacy-result><summary>생성코드 수 분모의 이전 부분 결과</summary><p class="run-meta">저장 점수 ${score(legacy.score,'M07')} · ${esc(legacy.run_id||'이전 기록')}${legacy.threshold_met!=null?' · '+(legacy.threshold_met?'기준 충족':'기준 미달'):''}</p><p class="subtitle">저장된 결과는 변경하지 않았습니다. 이 비율을 등록 전체의 완료·품질 판정으로 사용하지 않습니다.</p></details>`:''}`;
+}
 function paintM07Generation() {
   const state=m07View,job=state.generation,cases=Array.isArray(job?.cases)?job.cases:[],result=job?.status==='COMPLETED'?job.result:null;
   const generated=cases.filter(row=>row.generation_status==='PASS').length,both=cases.filter(row=>row.final_status==='PASS').length;
@@ -310,6 +345,13 @@ function paintM07Generation() {
   document.querySelector('#m07-progress-label').textContent=job?`${m07Name(job.status)} · 생성 ${generated}/${cases.length}건 · 최종 통과 ${both}건${job.error?' · '+job.error:''}`:'작업 기록 대기';
   document.querySelector('#m07-result').innerHTML=`<div class="panel-heading"><h2>Development Result</h2></div><div class="result-grid m07-summary"><div><label>코드 유효성·정확도</label><strong class="large-score">${score(result?.score,'M07')}</strong></div>${[['생성 코드 (GeneratedCode)','generated_code_count'],['문법 통과 (SyntaxPASS)','syntax_pass_count'],['실행 통과 (ExecutionPASS)','execution_pass_count'],['문법·실행 모두 통과 (BothPASS)','both_pass_count']].map(([label,key])=>`<div><label>${label}</label><strong data-m07-summary="${key}">${job?esc(counts[key]):'—'}</strong></div>`).join('')}<div><label>목표 ≥ ${score(state.metric.target,'M07')}</label><strong class="${met===true?'m07-pass':met===false?'m07-fail':''}">${met===true?'기준 충족':met===false?'기준 미달':'판정 대기'}</strong></div></div><p class="subtitle">문법검사와 실행테스트를 모두 통과한 코드 수 / 실제 생성 코드 수 × 100 · DEVELOPMENT 평가</p>${result?`<p class="run-meta">${esc(result.run_id)} · DEVELOPMENT · 공식 시험성적 아님</p>`:'<p class="empty">문법·실행 검사와 결과 저장이 완료되면 서버 평가 점수를 표시합니다.</p>'}`;
   if(prepared) document.querySelector('#m07-result').innerHTML+='<p class="notice">등록한 원본 코드 · GPT 생성 결과가 아닙니다. 표시 건수와 검사 비율은 등록한 코드 기준이며 공식 M07 생성 실적에 포함하지 않습니다.</p>';
+  else {
+    document.querySelector('#m07-result').innerHTML=m07MeasurementSummary(job,counts,result);
+    if(job) {
+      const value=m07Measurement(job,counts),actual=Number.isInteger(value.provider_http_attempt_count)?value.provider_http_attempt_count:'확인 불가';
+      document.querySelector('#m07-progress-label').textContent=`${value.evaluation_status==='COMPLETED'?'등록 작업 측정 완료':'평가 대기 (NOT_READY)'} · 등록 ${value.registered_count}건 · 실제 HTTP 시도 ${actual}건 · 생성 ${value.generated_code_count}건${job.error?' · '+job.error:''}`;
+    }
+  }
   document.querySelector('#m07-cases').innerHTML=cases.length?cases.map(row=>{
     const open=state.openCode.has(row.case_id),code=state.code.get(row.case_id),canRead=row.generation_status==='PASS'||!!row.code_sha256;
     const origin=row.code_source==='PREPARED'||prepared?`<p class="run-meta">등록한 원본 코드${row.source_filename?' · '+esc(row.source_filename):''}<br>원본 SHA-256: ${esc(row.source_file_sha256||row.code_sha256||'—')}${row.validation_code_sha256?'<br>검사 원본 SHA-256: '+esc(row.validation_code_sha256):''}${state.codeProof.has(row.case_id)?'<br>화면 원본 SHA-256 일치':''}</p>`:'';
@@ -374,7 +416,7 @@ function scheduleM07Poll(token,selection=m07View.selection) {
 }
 async function startM07() {
   const state=m07View,ready=state.context?.readiness,rows=m07Scenarios();
-  if(state.busy||state.generations.some(m07Running)||(state.preparedSelected?!m07PreparedReady(state):!ready?.configured)||state.contextError||!state.selected.size||state.selected.size>20||[...state.selected].some(id=>!rows.some(row=>row.scenario_id===id&&row.execution_ready!==false))) return;
+  if(state.busy||state.generations.some(m07Running)||(state.preparedSelected?!m07PreparedReady(state):!ready?.configured||m07ProviderBlocked(state))||state.contextError||!state.selected.size||state.selected.size>20||[...state.selected].some(id=>!rows.some(row=>row.scenario_id===id&&row.execution_ready!==false))) return;
   const token=m07RequestNumber;state.busy=true;paintM07();m07Status(state.preparedSelected?'등록한 원본 코드를 요청하고 있습니다…':'LLM 코드 생성을 요청하고 있습니다…');
   try {
     const scenario_refs=[...state.selected].map(id=>m07SelectedRef(rows.find(item=>item.scenario_id===id)));

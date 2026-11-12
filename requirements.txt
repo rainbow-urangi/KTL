@@ -1,0 +1,4 @@
+# Local web UI, CSV evaluation, canonical adapter and Selenium execution.
+# Historical V6.2 inference has separate requirements and model/data artifacts.
+-r backend/m04/requirements.txt
+selenium==4.51.0

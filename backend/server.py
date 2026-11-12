@@ -1,5 +1,6 @@
 """Local KTL evaluation service. Run: python3 -m backend.server"""
 import argparse
+import hashlib
 import json
 import math
 import mimetypes
@@ -7,6 +8,7 @@ import os
 import re
 import socket
 import threading
+import time
 import uuid
 from datetime import datetime, timezone
 from http.server import BaseHTTPRequestHandler, ThreadingHTTPServer
@@ -21,6 +23,7 @@ from .data_sources import V62ReferenceProvider, OfficialEvaluationDataSource
 from .contracts import cleaning_payload
 from .m01 import M01CsvStore, M01ComparisonStore, MAX_JSON_BYTES
 from .session import RuntimeSession
+from .runtime_build import RuntimeBuild
 
 ROOT = Path(__file__).resolve().parents[1]
 
@@ -42,6 +45,23 @@ class Service:
         self.session = RuntimeSession() if session_scoped else None
         self._m04 = None
         self._m07 = None
+        self.started_at = datetime.now(timezone.utc).isoformat()
+        self.runtime_build = RuntimeBuild(Path(__file__).resolve().parent)
+        self.startup_source_sha256 = self.runtime_build.startup
+        # Import the real runtime constant; do not infer a loaded version from edited text.
+        from .m07.generator import PROMPT_VERSION
+        self.m07_prompt_version = PROMPT_VERSION
+
+    def health(self):
+        build = self.runtime_build.status()
+        return dict(status='READY' if build['source_current'] else 'RESTART_REQUIRED', service='KTL',
+                    started_at=self.started_at, startup_source_sha256=self.startup_source_sha256,
+                    server_session_id=self.session.id if self.session else None,
+                    runtime_build=build, m07_prompt_version=self.m07_prompt_version)
+
+    def require_current_sources(self):
+        if not self.runtime_build.status()['source_current']:
+            raise EvaluationError('업데이트된 서버 코드를 적용하려면 서버를 다시 시작하세요.', 'RESTART_REQUIRED')
 
     # M04 개발 실행 연결
     def m04(self):
@@ -135,6 +155,21 @@ class Service:
                 require(payload['dataset_id'] == context['dataset_id'], 'Development M03 dataset does not match current context')
                 require(payload.get('details', {}).get('synthetic') is context['synthetic'], 'M03 source mode does not match current context')
             return self.claim_result(ingest(self.root, config, metric, payload))
+
+    def generate_m03(self, payload):
+        config = self.config()
+        if isinstance(payload, dict) and payload.get('run_mode', 'DEVELOPMENT') == 'DEVELOPMENT':
+            settings = config.get('m03', {})
+            if (payload.get('generator_mode', 'MOCK') == settings.get('generator_mode', 'MOCK')
+                    and (not payload.get('dataset_id') or str(payload['dataset_id']).startswith(('m03-mock-development-', 'm03-real-development-')))):
+                from .m03_integration import development_context
+                context = development_context(self.root, config)
+                if any(all(payload.get(key) == unit[key] for key in ('business_unit_id', 'workflow_id'))
+                       for unit in context['business_units']):
+                    require(not payload.get('dataset_id') or payload['dataset_id'] == context['dataset_id'], 'M03 generation dataset differs from context')
+                    payload = dict(payload, dataset_id=context['dataset_id'])
+        from .m03_provenance import generate_recorded
+        return generate_recorded(self.root, config, payload)
 
     def run(self, metric, mode="REFERENCE"):
         require(mode in MODES and metric in METRICS, "Invalid mode or metric")
@@ -257,6 +292,33 @@ def make_handler(service):
             origin = self.headers.get("Origin")
             return host in allowed and (not origin or origin == "http://" + host)
 
+        def reject_post(self, status, body):
+            # Consume only a small, unambiguous framed body before closing. An
+            # unread split POST can otherwise reset the error response on Windows.
+            self.close_connection = True
+            lengths = self.headers.get_all('Content-Length', [])
+            if (len(lengths) == 1 and re.fullmatch(r'[0-9]{1,7}', lengths[0])
+                    and not self.headers.get_all('Transfer-Encoding')):
+                remaining = int(lengths[0])
+                if 0 < remaining <= 1048576:
+                    previous_timeout = self.connection.gettimeout()
+                    deadline = time.monotonic() + 1.0
+                    try:
+                        while remaining:
+                            available = deadline - time.monotonic()
+                            if available <= 0:
+                                break
+                            self.connection.settimeout(available)
+                            chunk = self.rfile.read1(min(remaining, 65536))
+                            if not chunk:
+                                break
+                            remaining -= len(chunk)
+                    except OSError:
+                        pass
+                    finally:
+                        self.connection.settimeout(previous_timeout)
+            return self.reply(status, body)
+
         def do_GET(self):
             if not self.trusted_request():
                 return self.reply(403, {"error": "Local same-origin access required"})
@@ -299,6 +361,11 @@ def make_handler(service):
                 if path.startswith('/api/development/m04/'):
                     try:
                         manager = service.m04()
+                        if path == '/api/development/m04/m01-source':
+                            query = parse_qs(urlparse(self.path).query, keep_blank_values=True)
+                            require(set(query) <= {'dataset_id', 'comparison_id', 'session_id'}
+                                    and all(len(values) == 1 for values in query.values()), 'M01 원본 조회 조건을 확인하세요.')
+                            return self.reply(200, manager.m01_source({key: values[0] for key, values in query.items()}))
                         if path == '/api/development/m04/scripts':
                             return self.reply(200, manager.scripts())
                         if path == '/api/development/m04/executions':
@@ -420,6 +487,8 @@ def make_handler(service):
                         return self.reply(404 if exc.status == "NOT_FOUND" else 422, {"status": exc.status, "error": str(exc)})
                 if path == "/api/evaluations":
                     return self.reply(200, service.catalog(parse_qs(urlparse(self.path).query).get("mode", ["REFERENCE"])[0]))
+                if path == '/api/health':
+                    return self.reply(200, service.health())
                 match = re.fullmatch(r"/api/evaluations/(m0[1-7])/runs/((?:REF|EVAL|DEV)-M0[1-7]-[0-9]{8}T[0-9]{6}-[0-9a-f]{12})/(evidence.csv|result.json|run_manifest.json|received_payload.json)", path)
                 if match:
                     metric, run_id, filename = match.groups()
@@ -453,8 +522,17 @@ def make_handler(service):
 
         def do_POST(self):
             if not self.trusted_request():
-                return self.reply(403, {"error": "Local same-origin access required"})
+                return self.reject_post(403, {"error": "Local same-origin access required"})
             m04_path = urlparse(self.path).path
+            starts_work = (m04_path in {'/api/m03/generate', '/api/development/m07/generations',
+                                       '/api/development/m04/scripts', '/api/development/m04/executions',
+                                       '/api/development/m04/import-m01'}
+                           or re.fullmatch(r'/api/development/m07/generations/M07-GEN-[a-f0-9]{32}/(?:validate|export-m04)', m04_path))
+            if starts_work:
+                try:
+                    service.require_current_sources()
+                except EvaluationError as exc:
+                    return self.reject_post(409, {'status': exc.status, 'error': str(exc)})
             if m04_path == '/api/development/m03/connection':
                 from .m03_setup import save_connection
                 try:
@@ -493,17 +571,28 @@ def make_handler(service):
                 try:
                     length = int(self.headers.get('Content-Length', '0'))
                     context_save = m04_path == '/api/development/m07/execution-contexts'
+                    plan_save = m04_path == '/api/development/m07/execution-plans'
                     selection_save = m04_path == '/api/development/m07/scenario-selection'
                     generation_create = m04_path == '/api/development/m07/generations'
-                    maximum = 8388608 if generation_create else 262144 if selection_save else 65536 if context_save else 16384
+                    maximum = 8388608 if generation_create else 1048576 if plan_save else 262144 if selection_save else 65536 if context_save else 16384
                     require(0 < length <= maximum and not self.headers.get('Transfer-Encoding'),
-                            'M07 코드 등록은 최대 8 MiB, 일괄 선택은 256 KiB, 실행 조건은 64 KiB, 기타 요청은 16 KiB입니다.')
-                    if context_save or selection_save or generation_create:
+                            'M07 코드 등록은 최대 8 MiB, 실행 계획은 1 MiB, 일괄 선택은 256 KiB, 실행 조건은 64 KiB, 기타 요청은 16 KiB입니다.')
+                    if context_save or plan_save or selection_save or generation_create:
                         require(self.headers.get('Content-Type', '').split(';', 1)[0].strip() == 'application/json', 'Content-Type application/json required')
-                    payload = json.loads(self.rfile.read(length), parse_constant=lambda _: (_ for _ in ()).throw(ValueError('Non-finite JSON')))
+                    def plan_object(pairs):
+                        value = {}
+                        for key, item in pairs:
+                            if key in value:
+                                raise ValueError('Duplicate execution plan JSON key')
+                            value[key] = item
+                        return value
+                    payload = json.loads(self.rfile.read(length), object_pairs_hook=plan_object if plan_save else None,
+                                         parse_constant=lambda _: (_ for _ in ()).throw(ValueError('Non-finite JSON')))
                     manager = service.m07()
                     if context_save:
                         return self.reply(201, manager.save_execution_context(payload))
+                    if plan_save:
+                        return self.reply(201, manager.save_execution_plan(payload))
                     if selection_save:
                         return self.reply(200, manager.select_scenarios(payload))
                     if m04_path == '/api/development/m07/generations':
@@ -519,8 +608,14 @@ def make_handler(service):
                 except (ValueError, UnicodeError):
                     return self.reply(400, {'status': 'ERROR', 'error': 'Invalid JSON or Content-Length'})
                 except EvaluationError as exc:
+                    failure = {'status': exc.status, 'error': str(exc)}
+                    if service._m07 is not None:
+                        try:
+                            failure['provider_state'] = service._m07.current_provider_state()
+                        except (EvaluationError, OSError, ValueError, TypeError):
+                            failure['provider_state'] = {'blocked': True, 'reason': 'PROVIDER_STATE_UNAVAILABLE'}
                     return self.reply(503 if exc.status == 'NOT_CONFIGURED' else 409 if exc.status == 'RUNNING' else 422,
-                                      {'status': exc.status, 'error': str(exc)})
+                                      failure)
                 except OSError:
                     return self.reply(500, {'status': 'ERROR', 'error': 'M07 생성 원본과 검사 기록을 저장할 수 없습니다.'})
             if m04_path.startswith('/api/development/m04/'):
@@ -530,6 +625,8 @@ def make_handler(service):
                     require(0 < length <= 1048576 and not self.headers.get('Transfer-Encoding'), 'JSON body required; maximum 1 MiB')
                     payload = json.loads(self.rfile.read(length), parse_constant=lambda _: (_ for _ in ()).throw(ValueError('Non-finite JSON number')))
                     manager = service.m04()
+                    if m04_path == '/api/development/m04/import-m01':
+                        return self.reply(201, manager.import_m01(payload))
                     if m04_path == '/api/development/m04/scripts':
                         return self.reply(201, manager.register(payload))
                     if m04_path == '/api/development/m04/executions':
@@ -589,18 +686,21 @@ def make_handler(service):
             generation = urlparse(self.path).path == '/api/m03/generate'
             if integration or generation:
                 try:
-                    require(not generation or not self.headers.get('X-KTL-M03-Adapter'), 'M03 HTTP 생성기를 이 서버의 생성 경로로 다시 연결할 수 없습니다.')
+                    if generation and self.headers.get('X-KTL-M03-Adapter'):
+                        return self.reject_post(422, {'status': 'ERROR', 'error': 'M03 HTTP 생성기를 이 서버의 생성 경로로 다시 연결할 수 없습니다.'})
                     length=int(self.headers.get('Content-Length','0'))
                     require(0<length<=1048576 and not self.headers.get('Transfer-Encoding'),'JSON body required; maximum 1 MiB')
                     payload=json.loads(self.rfile.read(length),parse_constant=lambda _: (_ for _ in ()).throw(ValueError('Non-finite JSON number')))
                     if generation:
-                        from .m03_integration import generate
-                        return self.reply(200,generate(service.root,service.config(),payload))
+                        return self.reply(200,service.generate_m03(payload))
                     return self.reply(201,service.ingest(integration[1].upper(),payload))
                 except (ValueError,UnicodeError):
                     return self.reply(400,{'status':'ERROR','error':'Invalid JSON or Content-Length'})
                 except EvaluationError as exc:
-                    return self.reply(409 if exc.status=='DUPLICATE_EXTERNAL_RUN' else 503 if generation and exc.status=='NOT_CONFIGURED' else 422,{'status':exc.status,'error':str(exc)})
+                    body = {'status':exc.status,'error':str(exc)}
+                    if generation and getattr(exc, 'origin_generation_id', None):
+                        body['origin_generation_id'] = exc.origin_generation_id
+                    return self.reply(409 if exc.status=='DUPLICATE_EXTERNAL_RUN' else 503 if generation and exc.status=='NOT_CONFIGURED' else 422,body)
                 except OSError:
                     return self.reply(500,{'status':'ERROR','error':'Unable to persist external evidence'})
             match = re.fullmatch(r"/api/evaluations/(m0[1-7])/run", urlparse(self.path).path)
@@ -621,12 +721,22 @@ def make_handler(service):
     return Handler
 
 
-def main():
+def main(argv=None):
     parser = argparse.ArgumentParser(description="Local KTL evaluation server")
     parser.add_argument("--port", type=int, default=8000)
-    args = parser.parse_args()
-    server = LocalHTTPServer(("127.0.0.1", args.port), make_handler(Service(session_scoped=True)))
-    print(f"Rainbow KTL: http://127.0.0.1:{args.port}", flush=True)
+    parser.add_argument("--root", type=Path, default=ROOT,
+                        help="Project data/config/results root (default: installed project root)")
+    args = parser.parse_args(argv)
+    root = args.root.resolve()
+    if not root.is_dir():
+        parser.error("--root must be an existing project directory")
+    service = Service(root=root, session_scoped=True)
+    try:
+        service.config()
+    except (EvaluationError, OSError, ValueError) as exc:
+        parser.error("Unable to load runtime configuration: " + str(exc))
+    server = LocalHTTPServer(("127.0.0.1", args.port), make_handler(service))
+    print(f"Rainbow KTL: http://127.0.0.1:{server.server_address[1]}", flush=True)
     try:
         server.serve_forever()
     except KeyboardInterrupt:

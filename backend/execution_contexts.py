@@ -80,6 +80,13 @@ def _overlay(source, expected_results):
     return effective
 
 
+def prepare_plan(root, source, config, plan):
+    """원 관측 근거를 검증하고 별도 계획을 기존 실행 계약으로 변환한다."""
+    from .execution_plan import load_observations, prepare
+    observations = load_observations(root, source, plan, config)
+    return prepare(source, plan, config, observations=observations)
+
+
 def resolve(root, run_id, source, config):
     """새 작업에 사용할 입력을 결정한다. 원본 dict와 과거 작업은 수정하지 않는다."""
     record = _read(root, run_id, source)
@@ -87,6 +94,9 @@ def resolve(root, run_id, source, config):
     if record is not None:
         require(record.get('source_scenario_sha256') == sha(encoded(source)),
                 'M03 원본이 저장 조건과 달라졌습니다. 현재 원본으로 실행 조건을 다시 저장하세요.')
+        if record.get('version') == 2:
+            prepared = prepare_plan(root, source, config, record['execution_plan'])
+            return dict(prepared, revision_id=record['revision_id'])
         effective = _overlay(source, record['expected_results'])
         effective['execution_contract'] = copy.deepcopy(record['execution_contract'])
     try:
@@ -102,11 +112,19 @@ def editor(root, run_id, source, config):
     expected = [dict(order=index, expected_result=(step.get('expected_result') if isinstance(step.get('expected_result'), str) else ''))
                 for index, step in enumerate(source['steps'], 1)]
     contract = None
+    plan = None
     if record is not None:
-        expected, contract = record['expected_results'], record['execution_contract']
+        if record.get('version') == 2:
+            plan = copy.deepcopy(record['execution_plan'])
+        else:
+            expected, contract = record['expected_results'], record['execution_contract']
     try:
         prepared = resolve(root, run_id, source, config)
         contract = prepared['contract']
+        if prepared.get('execution_plan') is not None:
+            plan = copy.deepcopy(prepared['execution_plan'])
+            expected = [dict(order=step['order'], expected_result=step['expected_result'])
+                        for step in prepared['scenario']['steps']]
         ready, notice = True, ''
     except EvaluationError as exc:
         ready, notice = False, str(exc)
@@ -129,9 +147,12 @@ def editor(root, run_id, source, config):
             _safe_literal(value['expected_result'])
         except ValueError:
             value['expected_result'] = ''
-    return dict(m03_run_id=run_id, scenario_id=source['scenario_id'], source_scenario_sha256=sha(encoded(source)),
-                saved_revision_id=record['revision_id'] if record else None, execution_ready=ready,
-                execution_notice=notice, execution_contract=copy.deepcopy(contract), expected_results=copy.deepcopy(expected))
+    result = dict(m03_run_id=run_id, scenario_id=source['scenario_id'], source_scenario_sha256=sha(encoded(source)),
+                  saved_revision_id=record['revision_id'] if record else None, execution_ready=ready,
+                  execution_notice=notice, execution_contract=copy.deepcopy(contract), expected_results=copy.deepcopy(expected))
+    if plan is not None:
+        result['execution_plan'] = plan
+    return result
 
 
 def save(root, run_id, source, config, contract, expected_results):
@@ -145,6 +166,18 @@ def save(root, run_id, source, config, contract, expected_results):
     expected = [dict(order=step['order'], expected_result=step['expected_result']) for step in effective['steps']]
     content = dict(version=1, run_mode='DEVELOPMENT', m03_run_id=run_id, scenario_id=source['scenario_id'],
                    source_scenario_sha256=sha(encoded(source)), execution_contract=prepared, expected_results=expected)
+    return _save_record(root, run_id, source, config, content)
+
+
+def save_plan(root, run_id, source, config, plan):
+    require(isinstance(run_id, str) and _RUN.fullmatch(run_id), '저장된 M03 실행 ID가 필요합니다.')
+    prepared = prepare_plan(root, source, config, plan)
+    content = dict(version=2, run_mode='DEVELOPMENT', m03_run_id=run_id, scenario_id=source['scenario_id'],
+                   source_scenario_sha256=sha(encoded(source)), execution_plan=prepared['execution_plan'])
+    return _save_record(root, run_id, source, config, content)
+
+
+def _save_record(root, run_id, source, config, content):
     revision = sha(encoded(content))
     folder = _directory(root, run_id, source['scenario_id'])
     with _LOCK:
