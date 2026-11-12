@@ -1,0 +1,37 @@
+{
+  "status": "BLOCKED_LABEL_EVIDENCE_INSUFFICIENT",
+  "target_count_locked": 0,
+  "partial_candidate_count": 13,
+  "candidate_counts": {
+    "KEEP": 10,
+    "REMOVE": 3,
+    "noise": 1,
+    "repeated_action": 2
+  },
+  "required_target_counts": {
+    "KEEP": 10,
+    "REMOVE": 10,
+    "duplicate": 3,
+    "noise": 3,
+    "repeated_action": 2,
+    "irrelevant_action": 2
+  },
+  "prediction_runs": 0,
+  "prediction_seen": false,
+  "created_at_utc": "2026-11-11T12:23:38.808515+00:00",
+  "artifacts": {
+    "README.md": "0c869f380a7339eac517b82e7f6ca44482a0c0de8ac09503d926de163d5418c8",
+    "ambiguous_candidates_NOT_GT.json": "d13e1d43643465627b002003fe1aee623acf94182986f6b10c10a51f150d496c",
+    "history_inventory.json": "ca193b25f99cec0ee5af6b0040ee73c20b09b7a40e36d1594bfa2885ffd21140",
+    "partial_label_candidates_NOT_FOR_EVALUATION.csv": "23cdcfdf6596fa35f5aaf314fdd5ca6251daca32bfeca4af7d852f120223f47c",
+    "raw_validation.json": "04c72918c97d3fd7b5570e493d443ef5ba39712ee9f2c88147708218a97aeb24",
+    "validate_raw.py": "23e33fbb4203f82f6f071d855d93280e641ecbe144ac6615d842b884e57163ed",
+    "write_blind_review.py": "8c9baeead17feb84acac934aab04fe5760b43ca4478f5b8b80f18c68e591abc2"
+  },
+  "raw_files": {
+    "events.csv": "8a797dadcd8341b39e1ce96487eaaafe8995a62dabce3d027495c0f34382b8b4",
+    "sessions.csv": "247856007334e9237085077b950e127b6720f9f98db5cdeaab5876e7299fac62",
+    "tasks.csv": "f8c82493004d429d5ebd2f824275f3d617b716172a77bcb283d9cce8c6747924"
+  },
+  "note": "Evidence snapshot only, not a target lock. Do not score partial or ambiguous candidates. A complete held-out nonuse claim is not certified."
+}

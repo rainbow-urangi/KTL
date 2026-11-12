@@ -1,0 +1,14 @@
+{
+  "verdict": "PASS",
+  "snapshot_manifest_sha256": "972f0460adc8bac5490bb5754188a1b11050c3c044353ce5e155f1262e4c0f72",
+  "gt_leakage_check": "PASS",
+  "scope_check": "PASS",
+  "provenance_preservation_check": "PASS",
+  "direct_comparison_contract": "LOGICAL_BUSINESS_PROCEDURE_V1",
+  "verification_stage": "PROVENANCE_PRESERVATION_PRECOMPARISON",
+  "actual_score_computed": false,
+  "actual_comparability_verified": false,
+  "report_path": "/Users/sooeunkim/Documents/Codex/2026-11-05/task-4/M02_PROVENANCE_PRESERVATION_INDEPENDENT_VERIFICATION.txt",
+  "report_sha256": "9f609a7e2b5f5465697376185e26a86908043aed6e7c308368448d5558419a3a",
+  "semantic_rule_changes": false
+}

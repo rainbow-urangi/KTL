@@ -1,0 +1,7 @@
+{
+  "review_manifest_sha256": "8e021f399fc6d9d2ccdb50c2c50eb162e8d89959f3d8d485f25ea6800e259d5d",
+  "report_sha256": "d880ba8271e2e6e37764924ccaf11f2067b562529244e795bc4a8d46927d4be7",
+  "status": "PENDING_INDEPENDENT_GT_ONLY_VERIFICATION",
+  "measurement_ready": false,
+  "actual_rescore_performed": false
+}

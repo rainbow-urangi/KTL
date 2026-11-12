@@ -1,0 +1,357 @@
+{
+  "status": "NOT_GT",
+  "candidates": [
+    {
+      "category": "duplicate",
+      "positions": [
+        9,
+        10
+      ],
+      "reason": "동일 GET /api/auth/me지만 서로 다른 request_id, start/end timestamp를 가진 별도 요청이다. 응답 본문이 수집되지 않아 의미 중복을 확인할 수 없다.",
+      "events": [
+        {
+          "event_id": "3b556e22-3cf9-4728-aa91-6a72dc4d34c8",
+          "source_file": "data/evaluation/m05_heldout_raw_02/events.csv",
+          "source_position_1based": 9,
+          "source_sha256": "06a86358ada46c3b04c905c018af6004624348a214e210047633da4e28773b50",
+          "raw_row_sha256": "d2e602bd441905ff2602eabf27bdb1a47c846605759e7f7f338be47ed1893f37"
+        },
+        {
+          "event_id": "b43bf937-ab8a-42ea-9adb-04e553ed31ec",
+          "source_file": "data/evaluation/m05_heldout_raw_02/events.csv",
+          "source_position_1based": 10,
+          "source_sha256": "06a86358ada46c3b04c905c018af6004624348a214e210047633da4e28773b50",
+          "raw_row_sha256": "169f9155268409ddd960261e22127173ced5a1e9aeced1583faaac004fc5f715"
+        }
+      ]
+    },
+    {
+      "category": "duplicate",
+      "positions": [
+        139,
+        141,
+        144
+      ],
+      "reason": "같은 저장 완료 팝업이지만 open lifecycle, ui_outcome, 구조 snapshot의 의미가 다르다. 무엇을 canonical로 보존할지 사전 규약이 없다.",
+      "events": [
+        {
+          "event_id": "369bc63b-0f94-4f0f-b8fb-7c87c11aeaf9",
+          "source_file": "data/evaluation/m05_heldout_raw_02/events.csv",
+          "source_position_1based": 139,
+          "source_sha256": "06a86358ada46c3b04c905c018af6004624348a214e210047633da4e28773b50",
+          "raw_row_sha256": "55e21313e4429a006a375923a4e7668d41ffee19f5651168c690ae18ef9ce225"
+        },
+        {
+          "event_id": "452426e8-56ff-49a0-8303-65be202ad5c5",
+          "source_file": "data/evaluation/m05_heldout_raw_02/events.csv",
+          "source_position_1based": 141,
+          "source_sha256": "06a86358ada46c3b04c905c018af6004624348a214e210047633da4e28773b50",
+          "raw_row_sha256": "5c35d5897fb63b2566d74ac586f879ac4eaea092c91dce13e7e8e0c2f6e9849d"
+        },
+        {
+          "event_id": "859dda17-86d2-41b2-b655-916fe7921c48",
+          "source_file": "data/evaluation/m05_heldout_raw_02/events.csv",
+          "source_position_1based": 144,
+          "source_sha256": "06a86358ada46c3b04c905c018af6004624348a214e210047633da4e28773b50",
+          "raw_row_sha256": "c6883b1be1c4eb2ec0ca518d1ceafeccf93807a6046b372602b72d901c59bc39"
+        }
+      ]
+    },
+    {
+      "category": "duplicate",
+      "positions": [
+        42,
+        52,
+        71
+      ],
+      "reason": "현재 메뉴 재선택은 별도 interaction ID를 가진 사용자 행위다. 반복행동 의도는 인정하나 duplicate와 repeated_action의 독립적 구별/동일 사건 중복수집 증거가 없어 duplicate 3건으로 간주하지 않는다.",
+      "events": [
+        {
+          "event_id": "336d644b-0c27-465e-84da-b42bbdb245b6",
+          "source_file": "data/evaluation/m05_heldout_raw_02/events.csv",
+          "source_position_1based": 42,
+          "source_sha256": "06a86358ada46c3b04c905c018af6004624348a214e210047633da4e28773b50",
+          "raw_row_sha256": "cf6e7e7162bb3c08b3d5e710880a0e256c265215418a3f68a92cd690789e0da4"
+        },
+        {
+          "event_id": "993ba492-eecf-47ed-ad5b-fcc0b920476c",
+          "source_file": "data/evaluation/m05_heldout_raw_02/events.csv",
+          "source_position_1based": 52,
+          "source_sha256": "06a86358ada46c3b04c905c018af6004624348a214e210047633da4e28773b50",
+          "raw_row_sha256": "77241d2ae3b87ead7a7f66bf8c3e78985b328e396cf661561e819103fcd334be"
+        },
+        {
+          "event_id": "358ef869-0bc4-40e4-90c7-f24c4196b797",
+          "source_file": "data/evaluation/m05_heldout_raw_02/events.csv",
+          "source_position_1based": 71,
+          "source_sha256": "06a86358ada46c3b04c905c018af6004624348a214e210047633da4e28773b50",
+          "raw_row_sha256": "b0be489fe08ffe123384ec9b4afebed4162e4b8ef9f75b8147e8df4128305748"
+        }
+      ]
+    },
+    {
+      "category": "duplicate",
+      "positions": [
+        18,
+        22,
+        27,
+        29,
+        34,
+        37,
+        43,
+        47
+      ],
+      "reason": "일정 상세 확인은 각각 /api/schedules/16, /18, /28, /32에 별도 PATCH를 일으킨다. 서로 다른 업무 객체를 동일 사건의 복제라고 볼 근거가 없다.",
+      "events": [
+        {
+          "event_id": "65cac5d4-21f3-40b9-af8f-27e83f553931",
+          "source_file": "data/evaluation/m05_heldout_raw_02/events.csv",
+          "source_position_1based": 18,
+          "source_sha256": "06a86358ada46c3b04c905c018af6004624348a214e210047633da4e28773b50",
+          "raw_row_sha256": "6efa960cb09d3378def49db526850b47c8d0e7dbab4a5230423905ceb40af9eb"
+        },
+        {
+          "event_id": "03e178e4-9cbb-4f28-add7-6470a3021da7",
+          "source_file": "data/evaluation/m05_heldout_raw_02/events.csv",
+          "source_position_1based": 22,
+          "source_sha256": "06a86358ada46c3b04c905c018af6004624348a214e210047633da4e28773b50",
+          "raw_row_sha256": "ec39d01a00ea7973390cdd3cd0bb3b23e45b941084701ce8090e285270c55d7d"
+        },
+        {
+          "event_id": "1f3dbbc9-0270-49a3-87be-a2b7efa270ea",
+          "source_file": "data/evaluation/m05_heldout_raw_02/events.csv",
+          "source_position_1based": 27,
+          "source_sha256": "06a86358ada46c3b04c905c018af6004624348a214e210047633da4e28773b50",
+          "raw_row_sha256": "f6de3daee786d3e605d6ec5fb3c0cca384c2e9fcc164cd2c62564e4b69af6194"
+        },
+        {
+          "event_id": "d95d49a0-217f-4604-9d61-9536e1fb2aa6",
+          "source_file": "data/evaluation/m05_heldout_raw_02/events.csv",
+          "source_position_1based": 29,
+          "source_sha256": "06a86358ada46c3b04c905c018af6004624348a214e210047633da4e28773b50",
+          "raw_row_sha256": "40a438c839297389dc43747f9e6b0f4534b99ebdb15bb1279f682cfbffc19260"
+        },
+        {
+          "event_id": "a606f460-7b1d-4a28-91e8-72e4c2609600",
+          "source_file": "data/evaluation/m05_heldout_raw_02/events.csv",
+          "source_position_1based": 34,
+          "source_sha256": "06a86358ada46c3b04c905c018af6004624348a214e210047633da4e28773b50",
+          "raw_row_sha256": "6626e926f1ec0413da5656b81fc76a275b29abb2249426a1597eeb6fb83bb9ee"
+        },
+        {
+          "event_id": "f3e98d4b-6959-48bd-8c49-9f5dbf026d30",
+          "source_file": "data/evaluation/m05_heldout_raw_02/events.csv",
+          "source_position_1based": 37,
+          "source_sha256": "06a86358ada46c3b04c905c018af6004624348a214e210047633da4e28773b50",
+          "raw_row_sha256": "c5c1735ed7974b2b155f45a1d0bfe4141bc0ad4d8577b85cfcb39f250e6164bd"
+        },
+        {
+          "event_id": "31316f5c-3536-4c73-8f45-f9c0b42d6d65",
+          "source_file": "data/evaluation/m05_heldout_raw_02/events.csv",
+          "source_position_1based": 43,
+          "source_sha256": "06a86358ada46c3b04c905c018af6004624348a214e210047633da4e28773b50",
+          "raw_row_sha256": "6a5b90a051316e8f921fd42aa374c65fb2179b5d4b5555527771db2a1f599c36"
+        },
+        {
+          "event_id": "936570a5-3536-4c44-8dad-11a25260155d",
+          "source_file": "data/evaluation/m05_heldout_raw_02/events.csv",
+          "source_position_1based": 47,
+          "source_sha256": "06a86358ada46c3b04c905c018af6004624348a214e210047633da4e28773b50",
+          "raw_row_sha256": "9faa6577d0b097dba75852526e100514810d60d934bd5604ffa06160cc6a9834"
+        }
+      ]
+    },
+    {
+      "category": "duplicate",
+      "positions": [
+        107,
+        108
+      ],
+      "reason": "동일 제목 필드의 연속 클릭이나 각각 별도 interaction_id이다. repeated_action에 가깝고 쿼터를 위해 duplicate로 바꾸지 않는다. raw01 반복행동 2건은 유지한다.",
+      "events": [
+        {
+          "event_id": "01b6de6d-552d-4366-b84d-a423f9756c85",
+          "source_file": "data/evaluation/m05_heldout_raw_02/events.csv",
+          "source_position_1based": 107,
+          "source_sha256": "06a86358ada46c3b04c905c018af6004624348a214e210047633da4e28773b50",
+          "raw_row_sha256": "8bb9987a24792c8086a6a7dbb6e2636607a9440d33786006be29c3edc3f81b0f"
+        },
+        {
+          "event_id": "67a05167-127b-4eb3-80f7-6fd83966c7b7",
+          "source_file": "data/evaluation/m05_heldout_raw_02/events.csv",
+          "source_position_1based": 108,
+          "source_sha256": "06a86358ada46c3b04c905c018af6004624348a214e210047633da4e28773b50",
+          "raw_row_sha256": "13c04c91bb2926ed778b3f824c5a6f3df0d399235525cf95e6ea88257a3430a0"
+        }
+      ]
+    },
+    {
+      "category": "noise",
+      "positions": [
+        12,
+        147
+      ],
+      "reason": "visibilitychange_hidden에 따른 page_close는 세션/사용자 탭 상태 경계 정보를 갖는다. 단순 noise라는 근거가 없다.",
+      "events": [
+        {
+          "event_id": "b2339214-a5b7-44ab-9fd2-b634ba764ece",
+          "source_file": "data/evaluation/m05_heldout_raw_02/events.csv",
+          "source_position_1based": 12,
+          "source_sha256": "06a86358ada46c3b04c905c018af6004624348a214e210047633da4e28773b50",
+          "raw_row_sha256": "e49035045663a46df9f896387fbbee101cc2c266ccb71349dcd805f10bc6717b"
+        },
+        {
+          "event_id": "8f82b2b7-73fc-4b8c-b57b-e86db0f440fe",
+          "source_file": "data/evaluation/m05_heldout_raw_02/events.csv",
+          "source_position_1based": 147,
+          "source_sha256": "06a86358ada46c3b04c905c018af6004624348a214e210047633da4e28773b50",
+          "raw_row_sha256": "3912a8596757716425bb4f5e55c30d8ebe3cf64de0cfc5ebb1645054388483e6"
+        }
+      ]
+    },
+    {
+      "category": "noise",
+      "positions": [
+        21,
+        46,
+        68,
+        81,
+        86,
+        101,
+        133,
+        144
+      ],
+      "reason": "popup_structure는 화면 상태와 폼/결과 문맥을 갖는다. 기술 이벤트라는 이유만으로 제거하지 않는다.",
+      "events": [
+        {
+          "event_id": "18057eff-5375-4115-913f-aeb58b1aae2d",
+          "source_file": "data/evaluation/m05_heldout_raw_02/events.csv",
+          "source_position_1based": 21,
+          "source_sha256": "06a86358ada46c3b04c905c018af6004624348a214e210047633da4e28773b50",
+          "raw_row_sha256": "9375ac95befaea484528ca81289d3584c506d8a14e63541f0fdd56475ecaecfb"
+        },
+        {
+          "event_id": "f67b14e7-a120-45ce-99b9-b260c103a6f5",
+          "source_file": "data/evaluation/m05_heldout_raw_02/events.csv",
+          "source_position_1based": 46,
+          "source_sha256": "06a86358ada46c3b04c905c018af6004624348a214e210047633da4e28773b50",
+          "raw_row_sha256": "2edc78b34976914049195cf64777d57c8a6c964a40213d24ff569dcb2efffd39"
+        },
+        {
+          "event_id": "9243b7ae-c589-4368-99e6-f2369e5e9855",
+          "source_file": "data/evaluation/m05_heldout_raw_02/events.csv",
+          "source_position_1based": 68,
+          "source_sha256": "06a86358ada46c3b04c905c018af6004624348a214e210047633da4e28773b50",
+          "raw_row_sha256": "a4af94ea328179112332265d5c930b58ed8e290b39a655144d52cd407ffb9be7"
+        },
+        {
+          "event_id": "b237c0d2-b4e3-4a1f-9875-42e863d1d9ea",
+          "source_file": "data/evaluation/m05_heldout_raw_02/events.csv",
+          "source_position_1based": 81,
+          "source_sha256": "06a86358ada46c3b04c905c018af6004624348a214e210047633da4e28773b50",
+          "raw_row_sha256": "161087d23281dcd315fcc89d514f0d28b12a0fdb4618260433b45c1bf3d7ba63"
+        },
+        {
+          "event_id": "9240d92f-b214-4390-8c04-0c39a9eed61c",
+          "source_file": "data/evaluation/m05_heldout_raw_02/events.csv",
+          "source_position_1based": 86,
+          "source_sha256": "06a86358ada46c3b04c905c018af6004624348a214e210047633da4e28773b50",
+          "raw_row_sha256": "8a2cf157891635c7679a5f75d858dee08c6c338a7a7aff84d018bfdc56459b81"
+        },
+        {
+          "event_id": "1a155b57-8b05-45c3-a12e-dd9f714c1ec4",
+          "source_file": "data/evaluation/m05_heldout_raw_02/events.csv",
+          "source_position_1based": 101,
+          "source_sha256": "06a86358ada46c3b04c905c018af6004624348a214e210047633da4e28773b50",
+          "raw_row_sha256": "d30ba3b9850ec0c3f6b478cc4ad807aabec6e582bfd8fb1b59b5ca44bb1c7fc5"
+        },
+        {
+          "event_id": "0173b6b6-1f5c-4e45-9668-f00f97ccb9c1",
+          "source_file": "data/evaluation/m05_heldout_raw_02/events.csv",
+          "source_position_1based": 133,
+          "source_sha256": "06a86358ada46c3b04c905c018af6004624348a214e210047633da4e28773b50",
+          "raw_row_sha256": "1ab0604e72242f2896c123a3fe27ae302884fd511feee7fbfb9785b350632db7"
+        },
+        {
+          "event_id": "859dda17-86d2-41b2-b655-916fe7921c48",
+          "source_file": "data/evaluation/m05_heldout_raw_02/events.csv",
+          "source_position_1based": 144,
+          "source_sha256": "06a86358ada46c3b04c905c018af6004624348a214e210047633da4e28773b50",
+          "raw_row_sha256": "c6883b1be1c4eb2ec0ca518d1ceafeccf93807a6046b372602b72d901c59bc39"
+        }
+      ]
+    },
+    {
+      "category": "irrelevant_action",
+      "positions": [
+        59,
+        89,
+        114
+      ],
+      "reason": "명함 관리로의 이동은 일일보고 작업 사이의 우회로 보이나 수집 후 회상에 무관행동 2건 의도가 있으나 ID/행위 대응이 없어 해당 이동이 조회 업무인지 시험상 무관행동인지 구별할 수 없다.",
+      "events": [
+        {
+          "event_id": "4cbf484c-bd4d-40dd-8f3e-d34e45031646",
+          "source_file": "data/evaluation/m05_heldout_raw_02/events.csv",
+          "source_position_1based": 59,
+          "source_sha256": "06a86358ada46c3b04c905c018af6004624348a214e210047633da4e28773b50",
+          "raw_row_sha256": "c74fccc34d620bb2dae9c245cd404a53d54f9a73b421833b04333c7e13c4bc64"
+        },
+        {
+          "event_id": "058affd9-f52b-4794-a5d2-c4baf6a5a166",
+          "source_file": "data/evaluation/m05_heldout_raw_02/events.csv",
+          "source_position_1based": 89,
+          "source_sha256": "06a86358ada46c3b04c905c018af6004624348a214e210047633da4e28773b50",
+          "raw_row_sha256": "31c8e78e82eb5d0d8d852989b32647a0739a30ff63731c697a7a94b991bd8aa1"
+        },
+        {
+          "event_id": "632b9977-106e-45be-ae70-5c49cb54fad6",
+          "source_file": "data/evaluation/m05_heldout_raw_02/events.csv",
+          "source_position_1based": 114,
+          "source_sha256": "06a86358ada46c3b04c905c018af6004624348a214e210047633da4e28773b50",
+          "raw_row_sha256": "7294750228150a1a2b468f58f40f784caa4db029cd355f608ac9910cb4720a0d"
+        }
+      ]
+    },
+    {
+      "category": "irrelevant_action",
+      "positions": [
+        84,
+        87,
+        99,
+        112
+      ],
+      "reason": "보고서 열기/닫기·중단은 실제 업무 준비/취소와 무관행동을 구별할 수 없다. 수집 후 회상의 category 수량만으로 특정 중단을 무관행동에 대응시킬 수 없다.",
+      "events": [
+        {
+          "event_id": "ee5aaaac-1072-4c69-86d2-70bee8f931f8",
+          "source_file": "data/evaluation/m05_heldout_raw_02/events.csv",
+          "source_position_1based": 84,
+          "source_sha256": "06a86358ada46c3b04c905c018af6004624348a214e210047633da4e28773b50",
+          "raw_row_sha256": "d93b3f50e041cc6359a9c16f2777c3e8aa0181f52eba12d26cd6c2bf04a67d5d"
+        },
+        {
+          "event_id": "e5054cb9-0164-48cd-8836-80923f681d8b",
+          "source_file": "data/evaluation/m05_heldout_raw_02/events.csv",
+          "source_position_1based": 87,
+          "source_sha256": "06a86358ada46c3b04c905c018af6004624348a214e210047633da4e28773b50",
+          "raw_row_sha256": "dc542e64bfadc31f39be9082c0ff6f2f2a1ece9b33c274a93b436e7a8164640e"
+        },
+        {
+          "event_id": "f188af9c-3301-4beb-8b60-ea462aa53d3e",
+          "source_file": "data/evaluation/m05_heldout_raw_02/events.csv",
+          "source_position_1based": 99,
+          "source_sha256": "06a86358ada46c3b04c905c018af6004624348a214e210047633da4e28773b50",
+          "raw_row_sha256": "dee36a9919f6ac0f2d2c44547653a56e25ce15bf489cd7c4f4075ebc45a4f133"
+        },
+        {
+          "event_id": "7a8a17ca-f8e3-47bc-8175-7652e568e4e9",
+          "source_file": "data/evaluation/m05_heldout_raw_02/events.csv",
+          "source_position_1based": 112,
+          "source_sha256": "06a86358ada46c3b04c905c018af6004624348a214e210047633da4e28773b50",
+          "raw_row_sha256": "e0e7764370c916d0722b69a731fc04ed73bfdee6bc340da75489ff1df8c36e1a"
+        }
+      ]
+    }
+  ]
+}

@@ -1,0 +1,10 @@
+{
+  "full_context_results_directory_existed": false,
+  "existing_m05_result_directories": [
+    "results/official/EVAL-M05-20261004T125248-94cb105ba1f7",
+    "results/official/latest-M05.json",
+    "results/reference/REF-M05-20261004T125248-e82087ebd4c3",
+    "results/reference/latest-M05.json"
+  ],
+  "note": "Historical unrelated October M05 outputs preserved; no full-context attempt for this normalized input existed."
+}

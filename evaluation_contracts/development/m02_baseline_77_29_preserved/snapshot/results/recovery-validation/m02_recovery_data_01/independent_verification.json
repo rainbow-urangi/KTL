@@ -1,0 +1,185 @@
+{
+  "verification_status": "PASS_WITH_WARNINGS_FOR_CLI_MEASUREMENT",
+  "web_verification_status": "FAIL_NOT_REGISTERED",
+  "official": false,
+  "dataset": "m02_recovery_data_01",
+  "checks": {
+    "frozen_127_dependency_hashes": "PASS",
+    "raw_four_file_hashes": "PASS",
+    "raw_schema_session_task_integrity": "PASS",
+    "raw_execution_identification": "PASS_WITH_WARNINGS",
+    "raw_only_independent_frozen_inference": "PASS_JSON_EXACT_MATCH",
+    "independent_semantic_completion_restore_serializer_scope_replay": "PASS",
+    "independent_formula_and_evaluator_recalculation": "PASS",
+    "evidence_csv_regeneration": "PASS_BYTE_EXACT",
+    "gt_leakage": "PASS_NO_GT_IN_MODEL_OR_GENERATION",
+    "all_generated_steps_in_denominator": "PASS_30_OF_30"
+  },
+  "warnings": [
+    "5 raw attempts identified; BU03 starts after menu entry, so not 5 complete menu-start executions.",
+    "Two CSV timestamp inversions: 7ms and 5ms; raw unchanged; frozen inference sorts timestamp/event_id.",
+    "BU03 has HTTP 201 but no explicit success UI; BU09 explicit target-week selection absent.",
+    "Inference produces 7 workflows, splitting BU17 and BU20; all 30 generated steps remain in denominator.",
+    "Web catalog lacks recovery dataset; Service.run rejects selection; browser rendering and web download cannot be passed."
+  ],
+  "metrics": {
+    "accuracy": 36.666666666666664,
+    "completeness": 55.55555555555556,
+    "correctly_mapped": 11,
+    "evaluated_procedures": 30,
+    "included_required": 15,
+    "defined_required": 27,
+    "formula": "sqrt(Accuracy * Completeness)",
+    "auxiliary_evidence_counted": false,
+    "matching_method": "M02_USER_CONFIRMED_V1",
+    "per_business_unit": [
+      {
+        "business_unit_id": "BU03",
+        "generated_count": 11,
+        "required_count": 5,
+        "matched_count": 1,
+        "included_required_count": 1,
+        "unmatched_count": 10,
+        "missing_count": 4,
+        "accuracy": 9.090909090909092,
+        "completeness": 20.0,
+        "score": 13.483997249264842,
+        "status": "COMPLETED_WITH_MISSING_EVIDENCE"
+      },
+      {
+        "business_unit_id": "BU07",
+        "generated_count": 5,
+        "required_count": 6,
+        "matched_count": 2,
+        "included_required_count": 4,
+        "unmatched_count": 3,
+        "missing_count": 2,
+        "accuracy": 40.0,
+        "completeness": 66.66666666666667,
+        "score": 51.63977794943223,
+        "status": "COMPLETED_WITH_MISSING_EVIDENCE"
+      },
+      {
+        "business_unit_id": "BU09",
+        "generated_count": 5,
+        "required_count": 6,
+        "matched_count": 2,
+        "included_required_count": 3,
+        "unmatched_count": 3,
+        "missing_count": 3,
+        "accuracy": 40.0,
+        "completeness": 50.0,
+        "score": 44.721359549995796,
+        "status": "COMPLETED_WITH_MISSING_EVIDENCE"
+      },
+      {
+        "business_unit_id": "BU17",
+        "generated_count": 5,
+        "required_count": 5,
+        "matched_count": 3,
+        "included_required_count": 3,
+        "unmatched_count": 2,
+        "missing_count": 2,
+        "accuracy": 60.0,
+        "completeness": 60.0,
+        "score": 60.0,
+        "status": "COMPLETED_WITH_MISSING_EVIDENCE"
+      },
+      {
+        "business_unit_id": "BU20",
+        "generated_count": 4,
+        "required_count": 5,
+        "matched_count": 3,
+        "included_required_count": 4,
+        "unmatched_count": 1,
+        "missing_count": 1,
+        "accuracy": 75.0,
+        "completeness": 80.0,
+        "score": 77.45966692414834,
+        "status": "COMPLETED_WITH_MISSING_EVIDENCE"
+      }
+    ],
+    "semantic_uncertainties": [
+      {
+        "process_id": "BU03",
+        "required_step_id": "BU03-S01",
+        "reason": "UNRESOLVED_OR_MIXED_INTENT",
+        "treatment": "MISSING_NOT_GUESSED_SUCCESS"
+      },
+      {
+        "process_id": "BU03",
+        "required_step_id": "BU03-S02",
+        "reason": "UNRESOLVED_OR_MIXED_INTENT",
+        "treatment": "MISSING_NOT_GUESSED_SUCCESS"
+      },
+      {
+        "process_id": "BU03",
+        "required_step_id": "BU03-S03",
+        "reason": "MISSING_OR_DIFFERENT_DIRECT_CONTEXT|UNRESOLVED_OR_MIXED_INTENT",
+        "treatment": "MISSING_NOT_GUESSED_SUCCESS"
+      },
+      {
+        "process_id": "BU03",
+        "required_step_id": "BU03-S05",
+        "reason": "MISSING_MATCHED_WRITE_OR_DIRECT_COMPLETION_STATE",
+        "treatment": "MISSING_NOT_GUESSED_SUCCESS"
+      },
+      {
+        "process_id": "BU07",
+        "required_step_id": "BU07-S01",
+        "reason": "UNRESOLVED_OR_MIXED_INTENT",
+        "treatment": "MISSING_NOT_GUESSED_SUCCESS"
+      },
+      {
+        "process_id": "BU07",
+        "required_step_id": "BU07-S02",
+        "reason": "MISSING_OR_DIFFERENT_DIRECT_CONTEXT|UNRESOLVED_OR_MIXED_INTENT",
+        "treatment": "MISSING_NOT_GUESSED_SUCCESS"
+      },
+      {
+        "process_id": "BU09",
+        "required_step_id": "BU09-S01",
+        "reason": "UNRESOLVED_OR_MIXED_INTENT",
+        "treatment": "MISSING_NOT_GUESSED_SUCCESS"
+      },
+      {
+        "process_id": "BU09",
+        "required_step_id": "BU09-S02",
+        "reason": "MISSING_OR_DIFFERENT_DIRECT_CONTEXT|UNRESOLVED_OR_MIXED_INTENT",
+        "treatment": "MISSING_NOT_GUESSED_SUCCESS"
+      },
+      {
+        "process_id": "BU09",
+        "required_step_id": "BU09-S03",
+        "reason": "UNRESOLVED_OR_MIXED_INTENT",
+        "treatment": "MISSING_NOT_GUESSED_SUCCESS"
+      },
+      {
+        "process_id": "BU17",
+        "required_step_id": "BU17-S01",
+        "reason": "UNRESOLVED_OR_MIXED_INTENT",
+        "treatment": "MISSING_NOT_GUESSED_SUCCESS"
+      },
+      {
+        "process_id": "BU17",
+        "required_step_id": "BU17-S05",
+        "reason": "MISSING_MATCHED_WRITE_OR_DIRECT_COMPLETION_STATE",
+        "treatment": "MISSING_NOT_GUESSED_SUCCESS"
+      },
+      {
+        "process_id": "BU20",
+        "required_step_id": "BU20-S01",
+        "reason": "UNRESOLVED_OR_MIXED_INTENT",
+        "treatment": "MISSING_NOT_GUESSED_SUCCESS"
+      }
+    ]
+  },
+  "score": 45.133546692422,
+  "target": 75,
+  "target_met": false,
+  "result_sha256": "0e2c850b8f4216cad8015ed38289a58c4aac678cf5ef98d557de0a5840a9c1fe",
+  "evidence_sha256": "487934fc9ba8b318a92b08cc4c74cf1249b94f1763f927ac99f2802d6e211abc",
+  "protected_manifest_sha256": "1c607d663d8ff63e4709a569be471f33ddc61d51dda61798a3cbf58ce849aa8f",
+  "implementation_changed": false,
+  "tuning_performed": false
+}

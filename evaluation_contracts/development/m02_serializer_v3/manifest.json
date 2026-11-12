@@ -1,0 +1,23 @@
+{
+  "business_step_count": 137,
+  "files": {
+    "backend/business_process_serializer.py": "2a35e790368bb6cd74ca228f496bd401c338aa6660243281d197984117a79169",
+    "data/development/current_site_unseen_validation_v1/m02_frozen_output/process_models.json": "5cd98d5c3375cc90c68d2de736e87dcd56543f526057f930f8fa62e05ea325b3",
+    "data/development/current_site_unseen_validation_v1/m02_frozen_output/process_nodes.json": "f0f0d5f5852f615255028775fef54e08eecdfb02b4818d7c25380d17ff4f48a7",
+    "docs/agents/M02_BUSINESS_SERIALIZER_CONTRACT.md": "f723a55f46fd516182e4df45e069f71a78f6995e065bc8a5e08965c78bcbde52",
+    "scripts/freeze_m02_business_serializer.py": "45efd925f461e36aaeaf532ed729b2c10c637dcfb6d902094b1ae664c8257b22"
+  },
+  "mode": "DEVELOPMENT",
+  "official": false,
+  "output_sha256": "dc1044ecb932976ac0aac57ccf5837636d1955f3a962eaa75cf59a98f2a45abb",
+  "process_count": 21,
+  "provenance_binding": "Independent audit confirms prediction hash matches frozen map; canonical instance/order/node checked at runtime",
+  "provenance_inputs": {
+    "/Users/sooeunkim/Documents/Codex/2026-11-03/task-5/MODEL-VAL-01/predictions.json": "96a5cffd393ea47f478f27c7fda0e4a58b2dc00d6e409d8475e2385b22dbcc1a",
+    "/Users/sooeunkim/Documents/Codex/2026-11-03/task-5/MODEL-VAL-01/process_steps.json": "79174217389e6d506da657056354efa17a179eab152c6d217fc10deff9e3fcb3"
+  },
+  "score_computed": false,
+  "semantic_readiness": "READY_FOR_INDEPENDENT_VERIFICATION",
+  "stage": "PRE_GT_COMPARISON",
+  "verification": "PENDING_INDEPENDENT_VERIFICATION"
+}

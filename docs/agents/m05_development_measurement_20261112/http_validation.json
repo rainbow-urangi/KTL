@@ -1,0 +1,9 @@
+{
+  "status": "PASS",
+  "dataset_list": [
+    "raw01_raw02_raw03_target20_20261111"
+  ],
+  "result_retrieval_without_rerun": true,
+  "duplicate_measure_blocked": true,
+  "evidence_download_sha256": "728f01e24a8581dfd369b9bf5aea7df886396a4e2962107e6305853c76144af3"
+}

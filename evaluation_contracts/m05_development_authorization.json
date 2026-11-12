@@ -1,0 +1,21 @@
+{
+  "schema_version": "m05-user-authorized-development-v1",
+  "run_mode": "DEVELOPMENT",
+  "official_pass": null,
+  "authorization_source": "Sentinel_3048406b58788191ae7a10eac87c6acd",
+  "dataset_id": "raw01_raw02_raw03_target20_20261111",
+  "manifest_sha256": "1aabb9f92383586326d3afd42429b17fb28a56a335e81c6854c5108b46e7a5dd",
+  "target_labels_sha256": "3057c8c9e020f0a156b65df66a4284c8b51f219c174032a9e5c89c95746a9750",
+  "original_locked_targets_sha256": "88f48576253211e47f8a39a857734e031d30a9bdbcf4da619e58fdd11cf3ceea",
+  "engine_freeze_sha256": "23fde29b22c23976ccf02760f58b2c2490f3e5b054c385193fc7c463f5f00d10",
+  "eligibility": "USER_AUTHORIZED_DEVELOPMENT_EXISTING_LOCKED_TARGETS",
+  "held_out_evidence_status": "INSUFFICIENT_NOT_BLOCKING_FOR_THIS_DEVELOPMENT",
+  "category_quota": null,
+  "full_event_count": 417,
+  "target_event_count": 20,
+  "limitations": [
+    "Historical training/development and prediction access coverage incomplete",
+    "Per-label attribution/timestamps incomplete",
+    "User authorization is not KTL acceptance or strict held-out certification"
+  ]
+}

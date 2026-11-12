@@ -1,0 +1,101 @@
+{
+  "kind": "AUDIT_SNAPSHOT_NOT_TARGET_LOCK",
+  "status": "ADDITIONAL_REMOVE_RAW_REQUIRED",
+  "created_at_utc": "2026-11-11T13:11:39.690944+00:00",
+  "prediction_executions_by_this_review": 0,
+  "target_lock_created": false,
+  "protected_sources_and_previous_audits": {
+    "data/evaluation/m05_heldout_raw_01/events.csv": "8a797dadcd8341b39e1ce96487eaaafe8995a62dabce3d027495c0f34382b8b4",
+    "data/evaluation/m05_heldout_raw_01/sessions.csv": "247856007334e9237085077b950e127b6720f9f98db5cdeaab5876e7299fac62",
+    "data/evaluation/m05_heldout_raw_01/tasks.csv": "f8c82493004d429d5ebd2f824275f3d617b716172a77bcb283d9cce8c6747924",
+    "data/evaluation/m05_heldout_raw_02/events.csv": "06a86358ada46c3b04c905c018af6004624348a214e210047633da4e28773b50",
+    "data/evaluation/m05_heldout_raw_02/sessions.csv": "d7f16a298060dbae1aecd2876e63f9f2e706234d901d8a74c1ba5da6a6ba9a00",
+    "data/evaluation/m05_heldout_raw_02/tasks.csv": "656c9c0c640095acda82e391e47d1a1e9e3fd30ca4f41c7c5ca40a62881a9536",
+    "docs/agents/m05_raw_blind_audit_20261111/README.md": "0c869f380a7339eac517b82e7f6ca44482a0c0de8ac09503d926de163d5418c8",
+    "docs/agents/m05_raw_blind_audit_20261111/ambiguous_candidates_NOT_GT.json": "d13e1d43643465627b002003fe1aee623acf94182986f6b10c10a51f150d496c",
+    "docs/agents/m05_raw_blind_audit_20261111/audit_snapshot_pre_prediction.json": "cd153ce555b711da0060b5c11bfedf6773e041bae5a1968f94b6acd91d26c936",
+    "docs/agents/m05_raw_blind_audit_20261111/history_inventory.json": "ca193b25f99cec0ee5af6b0040ee73c20b09b7a40e36d1594bfa2885ffd21140",
+    "docs/agents/m05_raw_blind_audit_20261111/partial_label_candidates_NOT_FOR_EVALUATION.csv": "23cdcfdf6596fa35f5aaf314fdd5ca6251daca32bfeca4af7d852f120223f47c",
+    "docs/agents/m05_raw_blind_audit_20261111/raw_validation.json": "04c72918c97d3fd7b5570e493d443ef5ba39712ee9f2c88147708218a97aeb24",
+    "docs/agents/m05_raw_blind_audit_20261111/validate_raw.py": "23e33fbb4203f82f6f071d855d93280e641ecbe144ac6615d842b884e57163ed",
+    "docs/agents/m05_raw_blind_audit_20261111/write_blind_review.py": "8c9baeead17feb84acac934aab04fe5760b43ca4478f5b8b80f18c68e591abc2",
+    "docs/agents/m05_raw02_blind_audit_20261111/README.md": "71d2e48cc29d7cd2eec6929522deead70ed838b6a161a8a2e7d3501d70088011",
+    "docs/agents/m05_raw02_blind_audit_20261111/ambiguous_candidates_NOT_GT.json": "e4ff9598dec8c1e63e62b6934fcc46d9f4ee87189109c1f2edeb72404db562d7",
+    "docs/agents/m05_raw02_blind_audit_20261111/audit_raws.py": "16c3549c3b965a3dac32aeca22513b78d545543d3a04d5495e11d3a9bac13e26",
+    "docs/agents/m05_raw02_blind_audit_20261111/history_inventory.json": "8e7c59cffafc825f7ac28336e2ae47df1d03ad98786328d7cf7afde0e715a645",
+    "docs/agents/m05_raw02_blind_audit_20261111/partial_label_candidates_NOT_FOR_EVALUATION.csv": "445c38587c8ab2ecc1f1927f75fa8a229b9eab8b78bc69413ce398fb2b68dbba",
+    "docs/agents/m05_raw02_blind_audit_20261111/raw_context_index.json": "214dc2e396c56d52fcac593b619aa1fbe07f45ea0eb614534e349e84ff2a5b47",
+    "docs/agents/m05_raw02_blind_audit_20261111/raw_validation.json": "8f5395700243ea1697e2f6cc017b91967ce19b81e6769f5512fd9a441efada92",
+    "docs/agents/m05_raw02_blind_audit_20261111/audit_snapshot_pre_prediction.json": "ac9290106da949b021fd829e44ac60e75d59f3f2c758e433efec717db9ad7a46"
+  },
+  "history_inventory": [
+    {
+      "path": "data/development/current_site_20x3_v1/events.csv",
+      "sha256": "c15c7cc51bf039eae9d9feef507fb40085675838e5d217698de46d957d56483f"
+    },
+    {
+      "path": "data/development/current_site_20x3_v2/execution_event_index.csv",
+      "sha256": "82181aa82384d22b4853851d8e657ea7c86d0e2565e0386bcfb684db37bbdbdb"
+    },
+    {
+      "path": "data/development/current_site_20x3_v3/excluded_recollection_events.csv",
+      "sha256": "20a62b42bf0e6e9691b45d83af99ce75d3924e686c32e8d3c874aad5b8c2ba4d"
+    },
+    {
+      "path": "data/development/current_site_20x3_v3/execution_event_index.csv",
+      "sha256": "cadea3c119466ee5fb30c09eb63d61c3b115b4b48c397e5c03730dbe7423d00e"
+    },
+    {
+      "path": "data/development/current_site_recollection_01/events.csv",
+      "sha256": "ac6d40bff9ec18e38f35aba44e58f956b3b406486e11d3890e756c6d9fb60db6"
+    },
+    {
+      "path": "data/development/current_site_recollection_02/events.csv",
+      "sha256": "07c90862f3e714b93ddd5f8379932884184898233984c57facaf09ef90e541e9"
+    },
+    {
+      "path": "data/development/current_site_unseen_validation_v1/events.csv",
+      "sha256": "01a1aa94e5a1df4edddbb86cc8f5be0a538cd157dd11533b5bf82af1a461d746"
+    },
+    {
+      "path": "data/development/m02_recovery_data_01/events.csv",
+      "sha256": "15f35162f6b1235a51ac2a220667bfbee9d191313e9e4b1324daafd3a7b95fb1"
+    },
+    {
+      "path": "data/development/m02_recovery_data_02/events.csv",
+      "sha256": "174e76253ecaedf693bff2dfbbfeb37aabdb906eca620e0e88c2da7ea1502224"
+    },
+    {
+      "path": "data/development/m02_recovery_data_03/events.csv",
+      "sha256": "d7bd6b4e7bc7016dd1f43398094a06f482ec0bff8783831521002619e5323910"
+    },
+    {
+      "path": "data/development/m02_recovery_data_04/events.csv",
+      "sha256": "70d98ba6f4044f915ed5ab2a65442dcb4fac6bb93b27f0eb92e73b6926568ee5"
+    },
+    {
+      "path": "data/development/m02_recovery_data_05/events.csv",
+      "sha256": "40bc1323fab944673a3698fa4d2d125f5d1cba49a8f059dd21b290149c6cd945"
+    },
+    {
+      "path": "data/evaluation/current_site_dev_01/events.csv",
+      "sha256": "2a041722995ac7c8a5dbcdb324c0e9f27e8e305b7ac32c9568a143b82200b367"
+    },
+    {
+      "path": "data/evaluation/current_site_dev_02/events.csv",
+      "sha256": "bc4c25d22db7de7ba176a14e77af2451f9b45338d1a2f3135fa70597694205d0"
+    },
+    {
+      "path": "data/training/v6_2_source/events.csv",
+      "sha256": "1828ccf4b8ebf1b65b8e39ded66e174e7335c36b8725f44c38bc94be556f8c0f"
+    }
+  ],
+  "artifacts": {
+    "docs/agents/m05_quota_free_blind_audit_20261111/README.md": "05650dfb0825ab29c1e52d5627d571899bb64c71ec1f419eef180c3266026320",
+    "docs/agents/m05_quota_free_blind_audit_20261111/additional_label_evidence.json": "083e79c00899fcf256f752a8c410f5be2a86b1bd0434c2f6d0b2fd2879a8759d",
+    "docs/agents/m05_quota_free_blind_audit_20261111/ambiguous_candidates_NOT_GT.json": "699a896baf54745de60e2f7be5ff055b0fb6c9b3650c132651bc52171aea4157",
+    "docs/agents/m05_quota_free_blind_audit_20261111/partial_label_candidates_NOT_FOR_EVALUATION.csv": "387dac12d451f199bd226ae11c8289eae35f5b8c11dff0d95f40e49a1fe14583",
+    "docs/agents/m05_quota_free_blind_audit_20261111/review_report.json": "9f0f1ed37c22a8f5feba234566c022c99d9176cea4686857af0443be71aa2ab8",
+    "docs/agents/m05_quota_free_blind_audit_20261111/verify_audit.py": "d65669478abc6642ef2e35ea91bf2932999547aa97176b2366915c0a23e328dd"
+  }
+}

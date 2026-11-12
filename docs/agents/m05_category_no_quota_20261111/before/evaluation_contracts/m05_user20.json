@@ -1,0 +1,26 @@
+{
+  "authority": "USER_DECISION_2026_11_09",
+  "ktl_confirmation": false,
+  "total_event_count": 20,
+  "REMOVE": 10,
+  "KEEP": 10,
+  "recommended_remove_categories": {
+    "duplicate": 3,
+    "noise": 3,
+    "repeated_action": 2,
+    "irrelevant_action": 2
+  },
+  "target": 0.79,
+  "mode": "DEVELOPMENT",
+  "single_batch": true,
+  "stale_requirements": [
+    200,
+    "REMOVE 100",
+    "KEEP 100"
+  ],
+  "held_out_proof_required": true,
+  "implementation": "backend/m05_heldout.py",
+  "web": "backend/m05_readiness_web.py",
+  "legacy_main_web_m05": "STALE_DO_NOT_USE",
+  "actual_status": "BLOCKED_DATA_AND_ENGINE_MISSING"
+}

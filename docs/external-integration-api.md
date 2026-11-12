@@ -1,4 +1,4 @@
-# 외부 연동 API — 2026-10-26
+# 외부 연동 API — 2026-11-12 계약 점검
 
 현재 연동 대상은 **M03 Scenario Generation → M04 Selenium Runner → M07 LLM Code Generation**입니다.
 기준은 [R&D_COMPLIANCE.md](../R&D_COMPLIANCE.md)의 최신 사용자 확인 협의입니다. 보관된 2026-09-18 KTL PDF의 구판 수량과 구분하며 최신 서명본 확보는 TODO입니다.
@@ -39,7 +39,7 @@ curl -i http://127.0.0.1:8000/api/m03/generate \
 {"business_unit_id":"BU03","workflow_id":"WF-001","scenario_id":"MOCK-SCN-<deterministic hash>","status":"SUCCESS","steps":[{"order":1,"action":"open","target":"mock workflow screen"},{"order":2,"action":"click","target":"mock action control"}],"run_mode":"DEVELOPMENT","generator_mode":"MOCK","synthetic":true,"official_pass":null}
 ```
 
-동일 BU/workflow ID는 동일 Mock 응답을 반환합니다. 실제 업무명이나 GT를 생성하지 않습니다. REAL도 동일 응답 구조를 사용하며 서버의 `adapters.scenario_generation` 설정이 필요합니다. 미설정 시 503 NOT_CONFIGURED, MOCK+OFFICIAL은 422입니다. 실제 generator 연결은 TODO입니다.
+동일 BU/workflow ID는 동일 Mock 응답을 반환합니다. 실제 업무명이나 GT를 생성하지 않습니다. REAL도 기존 응답 구조를 유지합니다. 현재 기본 `backend/config.json`의 `m03_real_generator`가 기존 관측 business-step snapshot에 연결되며 `adapters.scenario_generation`보다 우선합니다. 로컬 REAL은 DEVELOPMENT 전용이며 REFERENCE/OFFICIAL은 422입니다. binding과 외부 adapter를 모두 제거한 경우에만 503 NOT_CONFIGURED입니다. MOCK+OFFICIAL은 422입니다.
 
 ## M03 평가
 
@@ -137,4 +137,73 @@ M04는 score90/sample10/target90, M07은 score80/sample20/target80입니다. 실
 
 `POST /api/integrations/m01/result`와 전체 KTL dashboard의 M01은 유지됩니다. 기존 공통 metadata와 일곱 counts(defined_required_event_count, collected_required_event_count, total_collected_event_count, required_field_count, missing_required_field_count, defined_event_type_count, collected_event_type_count)를 받습니다. 산식은 0.5*C1+0.3*(100-C2)+0.2*C3, 목표65%입니다. 기존 요청·응답·201·검증 계약은 유지하며 합성 예시는 integration-samples.json의 legacy_samples에서 확인합니다.
 
-M06의 최신 설명은 **최종 업무패턴 분석 엔진의 workflow embedding + cluster label**입니다. 신규 연동 API는 제공하지 않으며 이번 작업에서는 M06 evaluator와 모델 구현을 변경하지 않습니다. M05도 수량 상충 확인 전까지 유지합니다.
+M06의 최신 설명은 **최종 업무패턴 분석 엔진의 workflow embedding + cluster label**입니다. 신규 연동 API는 제공하지 않으며 이번 작업에서는 M06 evaluator와 모델 구현을 변경하지 않습니다. M05는 별도 검증된 20 target / 전체 417 context의 DEVELOPMENT F1 0.8235 흐름을 유지하며 이번 API 계약 범위에 포함하지 않습니다.
+
+
+## 2026-11-12 주니어 연동 계약 고정 범위
+
+아래 표는 희망 구조가 아니라 현재 route/검증기 구현입니다. wire request/response, 계산기, 데이터, config는 이 점검에서 변경하지 않습니다. M03의 내부 생성 개선도 아래 요청/응답 core를 유지해야 합니다. 추가 metadata는 허용되므로 응답의 알 수 없는 필드는 무시하세요.
+
+### 접속과 역할
+
+Base URL: `http://127.0.0.1:8000` (`python3 -m backend.server --port 8000`). 현재 서버는 loopback에만 bind하며 Host는 해당 port의 localhost/127.0.0.1, Origin은 없거나 같은 origin이어야 합니다. **다른 PC에서 직접 호출하는 원격 공개 API가 아닙니다.** 주니어 프로그램은 동일 호스트에서 실행하거나 별도 승인된 배포 계약이 필요합니다. 인증/프록시 설정을 임의 우회하지 않습니다.
+
+| Method / URL | caller → receiver | 목적 / 필수 요청 | 선택 요청 | 응답 / HTTP | 현재 상태 / 테스트 |
+|---|---|---|---|---|---|
+| POST `/api/m03/generate` | 외부 scenario consumer → RainbowKTL generator | `business_unit_id`, `workflow_id`: 공백 아닌 1~256자 문자열 | `run_mode` (기본 DEVELOPMENT), `generator_mode` (기본 MOCK). 이 4개 외 요청 key 거부 | 200: BU/workflow/scenario ID, status, steps, run_mode, generator_mode, synthetic, official_pass | MOCK/REAL 구현·합성 HTTP 검증. 기존 REAL snapshot binding 연결 |
+| POST `/api/integrations/m03/result` | M03 생성/연동 모듈 → 중앙 evaluator | 공통 metadata + `scenarios` 1~10개 | `counts`, row의 workflow_id/status/description/expected_result/evidence; `run_id`는 external_run_id 대체 가능 | 201: 공통 평가 응답 + 중앙 schema/order/action/target 판정 | 구현·합성 HTTP 검증 |
+| POST `/api/integrations/m04/result` | 주니어 Selenium Runner → 중앙 evaluator | 공통 metadata + `counts.total_execution_count`, `counts.successful_execution_count` 또는 passed 별칭 | failed_execution_count, cases(case_id/status/error/evidence) | 201: 공통 평가 응답 + 집계 count | 구현·합성 HTTP 검증; 실제 Runner 실행은 외부 책임 |
+| POST `/api/integrations/m07/result` | 주니어 LLM code/실행 모듈 → 중앙 evaluator | 공통 metadata + counts 5종; OFFICIAL은 cases 필수 | 비공식 cases, error/evidence | 201: 공통 평가 응답 + 교집합 검증 | 구현·합성 HTTP 검증; 실제 생성/실행은 외부 책임 |
+
+공통 평가 응답 필드: `metric_id, metric_name, run_id, run_mode, dataset_id, source_type, status, score, sample_count, target, operator, threshold_met, official_pass, pass, started_at, completed_at, error, details, evaluator_version, input_sha256, input_paths, dataset_manifest_sha256, provenance, evidence_file, result_file, manifest_file, evidence_files`.
+`details.rows`는 CSV 근거와 같습니다. `threshold_met`는 모든 모드의 목표 비교이며 `pass/official_pass`는 OFFICIAL 이외 null입니다. 외부는 score/PASS를 확정하지 않습니다.
+
+### 중앙 계산 책임과 제한
+
+- M03: 외부가 시나리오 원문을 제출하고 서버가 schema, 연속 order, action, target, FAILED status를 판정합니다. schema 완전성 검증이지 실제 브라우저 수행 성공 인증은 아닙니다.
+- M04: 외부가 실행 count와 가능하면 전체 cases를 제출합니다. 서버가 count 범위를 검증하고 성공/전체×100을 계산합니다. cases가 있으면 PASS 수를 count와 대조합니다. **현재 cases는 OFFICIAL에서도 선택**입니다. 개별 case 강제는 별도 호환성 변경이므로 이번에 추가하지 않습니다.
+- M07: OFFICIAL은 전체 cases가 필수이고 서버가 generation/syntax/execution 모두 PASS인 교집합 C1을 계산합니다. C2=20. 비공식 count-only 호환 경로는 유지됩니다.
+- 외부 `score` 필드는 계산에 사용하지 않습니다. raw/count의 진실성과 실제 실행은 외부 로그/evidence가 뒷받침해야 합니다. 서버는 원격 evidence URL을 실행/다운로드하지 않습니다.
+
+### 고정 수량과 현재 차단 상태
+
+FINAL 운영 목표는 M03 10 business units / M04 10 scripts / M07 C2=20입니다. `backend/official_contracts.py`의 해당 3개 계약과 일치합니다. 내부 non-OFFICIAL 부분표본/가변 분모는 호환 API이며 FINAL 수량을 바꾸는 근거가 아닙니다.
+
+현재 등록 dataset은 mock-dataset-01(REFERENCE), current_site_dev_01(DEVELOPMENT)이며 승인 OFFICIAL dataset은 기본 config에 등록되어 있지 않습니다. 따라서 **schema 연동과 합성 검증 가능 ≠ 실제 FINAL 시험 실행 준비 완료**입니다. REAL M03 연결은 완료했지만 승인된 10 업무단위/10 scripts/20 codes의 manifest/evidence는 별도 준비가 필요합니다.
+
+기존 상위 문서의 2026-09-18 PDF/서명본 TODO 표현은 역사적 설명입니다. 현재 `docs/compliance/source/KTL_TEST_CRITERIA_FINAL.pdf`가 존재합니다. 이번 점검에서는 원본 PDF나 시험 데이터 자체를 수정하지 않습니다. M05 200건/수량상충 문구 등 범위 밖 stale 값은 FINAL API 수량으로 재사용하지 않습니다.
+
+### 재시도와 오류
+
+생성 MOCK은 동일 BU/workflow에 결정론적 응답이며 저장 run을 만들지 않습니다. REAL 재호출의 외부 부작용/idempotency는 보장하지 않습니다. result 제출은 `(metric, external_run_id)` 전역 중복 방지이므로 같은 제출 재시도는 409입니다. 다른 metric에서 같은 ID는 별도입니다. 실패/timeout 후 무조건 새 ID로 재제출하지 말고 저장 상태를 확인하세요. 저장 실패 시 RESERVED가 남을 수 있습니다.
+
+오류 예시는 세 result endpoint에 공통입니다:
+```json
+{"status":"ERROR","error":"Required field: dataset_id"}
+```
+```json
+{"status":"DUPLICATE_EXTERNAL_RUN","error":"Duplicate external_run_id for metric"}
+```
+REAL 미설정은 503 + status NOT_CONFIGURED입니다. envelope 형식 오류는 422, JSON 문법/Content-Length 오류는 400, origin/Host 위반은 403입니다. 실패한 scenario의 action 누락은 envelope 거부가 아니라 분모에 포함된 실패 row가 됩니다.
+
+**Malformed enum 타입:** 공통 `require_string_enum`은 membership 검사 전에 문자열 타입을 검증합니다. list/dict/bool/number/null은 구조화된 HTTP 422 오류로 처리합니다. 예: `{"status":"ERROR","error":"Invalid type for generator_mode: expected string"}`. 기존 필수 필드 검증이 먼저 적용되는 외부 `run_mode` 오류는 기존 `Required field: run_mode` 문구를 유지합니다. 정상 문자열 enum과 success response 계약은 바뀌지 않습니다.
+
+
+### 완전한 request/response 예시와 검증
+
+`frontend/integration-samples.json`의 samples 배열은 각 endpoint의 **완전한 실행 가능한 JSON request와 response 예시**입니다. 위 curl 생성 절차는 실제 manifest hash를 보존하며 제출 ID/시간만 새로 만듭니다. 합성 REFERENCE 데이터이므로 실제 점수 증빙으로 쓰지 않습니다. M03 생성 예시는 위 본문과 동일합니다.
+
+검증 파일: `tests/test_junior_api_contract.py`, `tests/test_latest_integration.py`, `tests/test_integration_sandbox.py`. 모든 HTTP 제출은 임시 디렉터리/합성 fixture만 사용하며 기존 results나 dataset을 변경하지 않습니다. M03 REAL은 임시 합성 snapshot으로 실제 HTTP 생성/재시도/잘못된 workflow/허용되지 않은 mode를 검증합니다. 기본 binding의 기존 snapshot/code/schema hash도 읽기 전용으로 대조합니다. 실제 10건 성능 재평가 및 브라우저 클릭은 이번 작업에서 하지 않습니다.
+
+
+### M03 REAL 연결 상세 (2026-11-12)
+
+- 호출 경로: `POST /api/m03/generate` → `backend.m03_integration.generate` → `backend.m03_real_generator.generate_observed`.
+- 기본 설정: `backend/config.json`의 `m03_real_generator.snapshot_path` = `results/development/m03_current_semantics_20261109/business_steps.json`; `snapshot_sha256` = `86b1e77c8ca4ec365806d7d145d99ffa802bc097347b3db16ed9b3f600503f39`.
+- workflow ID는 위 snapshot의 `canonical_instance_id` 하나와 정확히 일치해야 합니다. caller의 business_unit_id는 응답 identity이며 GT를 generator에 전달하지 않습니다. 외부에 임의 workflow 데이터를 등록하는 API는 아닙니다.
+- 이 snapshot은 기존 raw `data/development/current_site_unseen_validation_v1/events.csv`와 동결 predictions에 기존 semantic/process-map 처리를 적용해 보존한 출력입니다. API는 이를 읽어 observed steps를 투영하며 workflow model을 재추론하지 않습니다.
+- 기존 6/10 진단의 `remeasure.py`도 같은 `generate` → `generate_observed`를 사용했습니다. generator SHA-256 `cdb9e03002923e9166f515c09059efcc459a4a29c85b19a2e84ea71c94cbe52b` 및 scenario schema SHA-256 `4ed1caada4bb194de2a95ac4954e6aa7b86479646f8cfa601fa3c4d4277de101`이 해당 manifest와 같습니다. 이번 변경은 API binding과 malformed 입력 검증뿐이며 generator logic을 변경하지 않았습니다.
+- 기존 6/10은 `REUSED_PRIOR_PROPOSAL_COHORT_NOT_FINAL_TEN_BUSINESS_UNITS` 진단입니다. 승인된 FINAL 10 business units 성능으로 표현하지 않습니다.
+- response의 기존 `issues`, `generator_version`, `source_process_id`, `source_snapshot_sha256`, `readiness_only` provenance를 유지합니다. HTTP 200의 `status: FAILED`는 생성 경로 실행 성공과 시나리오 생성 실패를 구분하며, 평가 시 실패를 분모에서 제거하지 않습니다.
+- 현재 로컬 generator는 파일/측정 결과를 쓰지 않으며 동일 snapshot/ID에 결정론적 응답입니다. 향후 외부 adapter의 부작용까지 보장하는 계약은 아닙니다.
+- 주니어 프로그램의 실제 배치 host는 현재 문서에서 확정되지 않았습니다. 동일 host이면 현재 loopback 그대로 사용합니다. 별도 PC/서버 호출이 필요하면 `REMOTE_ACCESS_REQUIRED`로 분리하고 별도 승인 전 공개 bind/프록시/인증 우회를 하지 않습니다.

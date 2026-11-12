@@ -1,0 +1,4685 @@
+{
+  "mode": "DEVELOPMENT",
+  "offline": true,
+  "workflows": [
+    {
+      "workflow_instance_id": "WF-0001",
+      "stream_index": 0,
+      "begin": 0,
+      "end": 18,
+      "start_event_id": "b6f5e3ba-bcbd-4b6d-ad61-a2ad8adaab23",
+      "end_event_id": "82acd91e-9e28-41e0-9e6c-9164225bfb4a",
+      "start_time": "2026-11-08 19:05:11.721",
+      "end_time": "2026-11-08 19:05:33.215",
+      "event_count": 18,
+      "source_dataset": "raw_input",
+      "source_session_id": "276d9376-b0b9-43c9-8d39-6cb30be99c42",
+      "boundary_confidence": null,
+      "boundary_source": "source_session_start",
+      "source_event_evidence": [
+        "b6f5e3ba-bcbd-4b6d-ad61-a2ad8adaab23",
+        "62fec245-c283-464d-8d87-d9e7f99c7b4b",
+        "757ca200-6198-4e0b-9a8c-ee0e46a3cad0",
+        "009dc486-bff9-49a5-98b4-58ba8750674c",
+        "5d3bc5f2-0067-4215-af43-295d0618707d",
+        "dbd6226d-fb1a-4872-8a5f-b4abfcbd99c1",
+        "0e2659e3-be85-46ea-9521-4b38fff2f8a2",
+        "f3d013a3-29eb-4558-9552-3fc78664c9a7",
+        "d8c8a93a-7ae7-48aa-890d-298092b2fa43",
+        "cc6c388a-04c2-482d-b134-542d3241b517",
+        "fcd9fc63-7258-4aaa-951a-164dc0b8b1f1",
+        "c0e0e82d-1fe9-40cf-aef6-abc16ef3b229",
+        "955dcf1d-6d3b-4a06-97b6-1604c0a64d07",
+        "dcaca911-fa50-425a-a442-5e0862c902d0",
+        "c79bfd19-28df-4a96-a1cc-feb349f5cde9",
+        "661e8b4c-4531-497a-b07e-5ff3af8294ac",
+        "fa29fa13-79c3-406e-a5bd-1366c613570a",
+        "82acd91e-9e28-41e0-9e6c-9164225bfb4a"
+      ]
+    },
+    {
+      "workflow_instance_id": "WF-0002",
+      "stream_index": 0,
+      "begin": 18,
+      "end": 41,
+      "start_event_id": "539e75a1-569e-4d1c-a7cb-539e54ae45cb",
+      "end_event_id": "d32410b0-cd82-4bf8-aa4b-d1e8514a0576",
+      "start_time": "2026-11-08 19:05:36.386",
+      "end_time": "2026-11-08 19:05:43.848",
+      "event_count": 23,
+      "source_dataset": "raw_input",
+      "source_session_id": "276d9376-b0b9-43c9-8d39-6cb30be99c42",
+      "boundary_confidence": 0.9989833235740662,
+      "boundary_source": "neural_prediction",
+      "source_event_evidence": [
+        "539e75a1-569e-4d1c-a7cb-539e54ae45cb",
+        "fa9290fa-4fd0-4820-8dd5-beee1743da29",
+        "bf2cf602-e490-4b4e-a967-f5f65055f3ff",
+        "c0af36c6-1a83-446f-8bf7-01634a05347f",
+        "637074bb-6c1b-44a8-8d98-d542163d8630",
+        "ed5d42e7-8fa0-4417-afb8-1797f7b36c90",
+        "4740f429-eebd-46a5-9714-7788bdd53cb3",
+        "a1a89b09-b14d-44a7-a4a3-7f5967b3d966",
+        "3c28656d-8635-4659-bfd8-57e641a95a5d",
+        "0b1e413f-0769-4b8c-b85a-275e865a86ee",
+        "eb6b1c04-2792-4fef-87f1-1d55f0ae87d7",
+        "c74d45fe-3e22-46e6-9940-aa605d4adb49",
+        "0b401fb1-ed2e-4809-9377-eefe685017a3",
+        "a910e4db-c09b-4ee5-af7d-fff8807bc97f",
+        "0af86b08-8a38-4cae-bcb3-c15d3bbf744b",
+        "de3e75b6-7163-40b7-8952-8be7c5ea709a",
+        "4b4bb913-a6ca-4a8c-ae06-746d7480a718",
+        "d6eae1a3-1c4a-4b76-8ca8-b6b1792d837b",
+        "36433873-e319-482c-8869-01a03624264d",
+        "b0ebb232-4cae-488c-ab90-ef1d38ff766b",
+        "c668b6c9-221d-4ed0-ba68-2f6d31d73092",
+        "c791820a-674a-4355-b074-f6c3d2be309c",
+        "d32410b0-cd82-4bf8-aa4b-d1e8514a0576"
+      ]
+    },
+    {
+      "workflow_instance_id": "WF-0003",
+      "stream_index": 0,
+      "begin": 41,
+      "end": 66,
+      "start_event_id": "b76bfbfa-47f2-4a40-9bc5-2a0df020f821",
+      "end_event_id": "5ecdf03c-fddd-496b-8c08-6e0d69cfced3",
+      "start_time": "2026-11-08 19:05:45.049",
+      "end_time": "2026-11-08 19:05:51.733",
+      "event_count": 25,
+      "source_dataset": "raw_input",
+      "source_session_id": "276d9376-b0b9-43c9-8d39-6cb30be99c42",
+      "boundary_confidence": 0.9999843835830688,
+      "boundary_source": "neural_prediction",
+      "source_event_evidence": [
+        "b76bfbfa-47f2-4a40-9bc5-2a0df020f821",
+        "184a6658-053a-4bfb-a82a-c3e097bf2051",
+        "1dc818e4-ebe8-4da8-8ac6-1c1dbbe4b9cf",
+        "5703f470-27b5-4c54-8d82-0ba4659391a1",
+        "12deca98-8b48-431a-a208-a3aa3c055c38",
+        "73141be6-e784-48bf-99f9-4431a7f6982c",
+        "96140f52-acc6-4685-935f-78e6a6d4afd0",
+        "fa69ae07-476a-4013-a195-954357f1070c",
+        "a4d2a5e9-d4bb-485d-87b5-e5d4d4ece615",
+        "311652ea-eaa4-41ef-bffe-83fe864a198f",
+        "296f5267-f0f3-43c3-bf2a-8c11ddb052d3",
+        "98af281c-97b4-416e-b093-debab017c30c",
+        "9a05d0ba-468b-4d4e-90a9-c3ca282738e3",
+        "13235361-fabe-4623-80f1-fe35e4595fbb",
+        "51368e2b-acaf-45b7-b01a-160d782eed4c",
+        "05df9d7f-4b41-46fe-a125-92ece7eaacf9",
+        "b0655d61-6ae4-4f70-8494-029e43e9eefa",
+        "be3f4f25-e465-401e-8ce8-9f5e73a301ad",
+        "f43c94cd-7e72-4df0-b02a-38484f2c4593",
+        "780818c1-f52c-4442-9788-3498e5132278",
+        "60c41ccf-055c-4c95-bd5f-11331653b85b",
+        "93d397b0-f42f-48b4-9746-0fbe197531ed",
+        "d82b17dc-5ee9-458f-9018-f5f2d13c0cd0",
+        "7e11b652-c6fc-4eaa-b32f-b6342e7596b6",
+        "5ecdf03c-fddd-496b-8c08-6e0d69cfced3"
+      ]
+    },
+    {
+      "workflow_instance_id": "WF-0004",
+      "stream_index": 0,
+      "begin": 66,
+      "end": 71,
+      "start_event_id": "e5635e43-d438-42e4-870a-b8bc29634ba6",
+      "end_event_id": "0d82af01-00cd-4416-8139-8eb967de672e",
+      "start_time": "2026-11-08 19:05:56.500",
+      "end_time": "2026-11-08 19:05:57.362",
+      "event_count": 5,
+      "source_dataset": "raw_input",
+      "source_session_id": "276d9376-b0b9-43c9-8d39-6cb30be99c42",
+      "boundary_confidence": 0.9999923706054688,
+      "boundary_source": "neural_prediction",
+      "source_event_evidence": [
+        "e5635e43-d438-42e4-870a-b8bc29634ba6",
+        "d8854e7b-ca39-4086-acad-ca8cd68a2efd",
+        "4a94ba8b-c11d-4a1b-a94b-07da9639de2f",
+        "b72999a8-5a36-42c3-880b-de7cbb11a11f",
+        "0d82af01-00cd-4416-8139-8eb967de672e"
+      ]
+    },
+    {
+      "workflow_instance_id": "WF-0005",
+      "stream_index": 0,
+      "begin": 71,
+      "end": 96,
+      "start_event_id": "1d1925e1-dc41-44e3-97f8-b752203efe59",
+      "end_event_id": "81cf767c-0f16-4d19-9b20-193a7a6e8ea7",
+      "start_time": "2026-11-08 19:05:57.911",
+      "end_time": "2026-11-08 19:06:23.345",
+      "event_count": 25,
+      "source_dataset": "raw_input",
+      "source_session_id": "276d9376-b0b9-43c9-8d39-6cb30be99c42",
+      "boundary_confidence": 0.9987307190895081,
+      "boundary_source": "neural_prediction",
+      "source_event_evidence": [
+        "1d1925e1-dc41-44e3-97f8-b752203efe59",
+        "e9fa9155-1948-4746-98e5-41152a59a93d",
+        "4e340fc2-b362-45d9-b198-a856a50eb744",
+        "07958465-00ab-4339-9ed0-8cbe2c16243f",
+        "b08a99f0-d0d0-4021-b522-3c6571481232",
+        "dbee4962-6c32-4029-8af1-4bcf3d51df76",
+        "d8e6632f-1ec2-4da5-8dec-ace661295a6f",
+        "af179592-c4c4-493c-882f-a0c352317e52",
+        "cdaaa352-a9c6-4687-97d7-5de3ca6bf274",
+        "c488f50d-767b-49b9-9e14-5e8dc406a646",
+        "0a81f206-f9a9-45ff-8c80-db83e8d2f560",
+        "c4912424-3fa1-4b08-8a34-4e582ee985aa",
+        "15ed07da-a4f9-48e5-bf55-d204b1a1e79b",
+        "c1979f4c-645c-4fea-925d-03cb3b63f02b",
+        "b9ec2d1d-68c3-4325-961a-851d6329f5ff",
+        "848f73d6-860c-4cb1-b138-f953bfaa33ae",
+        "ec2546d6-9763-409a-aa01-790c97aedd1b",
+        "bfd05466-a2e8-44cd-a75c-b9cacb394b3a",
+        "b78d63ae-f0a0-415a-afac-4a3acca17dbc",
+        "40ecd720-27cc-4f80-b490-5f09a1aaa46f",
+        "639c3fce-9100-459c-9502-a9040fdc2a2d",
+        "6fc15433-040f-4f31-9d5e-cf2ef3af5611",
+        "1c803c70-e33b-447d-be76-d79c9f6c6e09",
+        "ee5f94b1-cc44-48d0-afa0-bd53fba10fc9",
+        "81cf767c-0f16-4d19-9b20-193a7a6e8ea7"
+      ]
+    },
+    {
+      "workflow_instance_id": "WF-0006",
+      "stream_index": 0,
+      "begin": 96,
+      "end": 101,
+      "start_event_id": "8c58f682-b205-4a26-b20b-8c98690d1332",
+      "end_event_id": "9b649fe4-dd13-4018-bcc6-6a6517a894b4",
+      "start_time": "2026-11-08 19:06:24.299",
+      "end_time": "2026-11-08 19:06:25.156",
+      "event_count": 5,
+      "source_dataset": "raw_input",
+      "source_session_id": "276d9376-b0b9-43c9-8d39-6cb30be99c42",
+      "boundary_confidence": 0.9999985694885254,
+      "boundary_source": "neural_prediction",
+      "source_event_evidence": [
+        "8c58f682-b205-4a26-b20b-8c98690d1332",
+        "6c4fc675-45b6-49a2-be32-ac1b3a4aec68",
+        "80ce1d19-7129-4b00-b0bf-6e1034ccb8b3",
+        "6b048283-ddeb-473c-af13-d9b6ca8fd426",
+        "9b649fe4-dd13-4018-bcc6-6a6517a894b4"
+      ]
+    },
+    {
+      "workflow_instance_id": "WF-0007",
+      "stream_index": 0,
+      "begin": 101,
+      "end": 122,
+      "start_event_id": "1ba723c8-d5f9-413b-b97b-785c4cb57da6",
+      "end_event_id": "5994cadd-d683-4ff6-9bda-6058745ca032",
+      "start_time": "2026-11-08 19:06:25.444",
+      "end_time": "2026-11-08 19:06:35.249",
+      "event_count": 21,
+      "source_dataset": "raw_input",
+      "source_session_id": "276d9376-b0b9-43c9-8d39-6cb30be99c42",
+      "boundary_confidence": 0.9932310581207275,
+      "boundary_source": "neural_prediction",
+      "source_event_evidence": [
+        "1ba723c8-d5f9-413b-b97b-785c4cb57da6",
+        "0d438cd7-7376-44ef-83c6-66fd13a67441",
+        "5de5f00f-d503-408c-919a-c792dd49ab32",
+        "920b1051-d5c1-4266-9aea-a4b9a6dd508b",
+        "979eeb38-3653-4ca7-8b2c-5c332d763c1f",
+        "96ed338f-3daa-4441-b03c-fa475c4edaa6",
+        "5975d02c-0f50-429a-9d74-52b0ce56d331",
+        "a81eac33-844c-443a-9b70-1f4eb1403211",
+        "76654159-6116-437d-9647-190f7cb7195f",
+        "c96fc987-b08c-4498-93f2-199125e5aeda",
+        "8f143632-1995-4feb-868b-2ec9fdca897b",
+        "77178151-4ad2-4694-b1cd-98d56e18449d",
+        "0c8d1959-efb7-4642-b07a-f9f72abcb2f8",
+        "502923d7-ccce-4f4d-be90-2ce976a377b1",
+        "d733b8b0-71ca-481c-889c-9603c8649075",
+        "ea8f0f14-1b79-44de-88c6-8e44f7c55ba1",
+        "cbee6ee1-c14d-49d9-90d5-1c0d53fc1359",
+        "cc149bd1-c540-4f99-b208-e6a2896bc5ca",
+        "81d5d054-1d95-4c68-8fe0-c439f0e6e781",
+        "caae4fec-0405-4025-b2ba-32dacac1ee47",
+        "5994cadd-d683-4ff6-9bda-6058745ca032"
+      ]
+    }
+  ],
+  "cluster_labels": [
+    3,
+    6,
+    5,
+    2,
+    4,
+    1,
+    0
+  ],
+  "clustering": {
+    "mode": "DEVELOPMENT",
+    "official_m06": false,
+    "selection": "fixed historical DEVELOPMENT threshold; no search",
+    "selected": {
+      "threshold": 0.25,
+      "cluster_count": 7,
+      "silhouette": null,
+      "dbi": null,
+      "cluster_sizes": {
+        "3": 1,
+        "6": 1,
+        "5": 1,
+        "2": 1,
+        "4": 1,
+        "1": 1,
+        "0": 1
+      }
+    }
+  },
+  "tables": {
+    "process_models": [
+      {
+        "process_model_id": "PM-001",
+        "cluster_id": 0,
+        "instance_count": 1,
+        "canonical_instance_id": "WF-0007",
+        "canonical_policy": "cosine medoid observed procedure; variants retained in graph",
+        "mode": "DEVELOPMENT",
+        "canonical_node_sequence": [
+          "PM-001-N001",
+          "PM-001-N002",
+          "PM-001-N003",
+          "PM-001-N004",
+          "PM-001-N003",
+          "PM-001-N004",
+          "PM-001-N003",
+          "PM-001-N004",
+          "PM-001-N005",
+          "PM-001-N006",
+          "PM-001-N007",
+          "PM-001-N002",
+          "PM-001-N008",
+          "PM-001-N005",
+          "PM-001-N008"
+        ]
+      },
+      {
+        "process_model_id": "PM-002",
+        "cluster_id": 1,
+        "instance_count": 1,
+        "canonical_instance_id": "WF-0006",
+        "canonical_policy": "cosine medoid observed procedure; variants retained in graph",
+        "mode": "DEVELOPMENT",
+        "canonical_node_sequence": [
+          "PM-002-N001",
+          "PM-002-N002",
+          "PM-002-N003",
+          "PM-002-N004"
+        ]
+      },
+      {
+        "process_model_id": "PM-003",
+        "cluster_id": 2,
+        "instance_count": 1,
+        "canonical_instance_id": "WF-0004",
+        "canonical_policy": "cosine medoid observed procedure; variants retained in graph",
+        "mode": "DEVELOPMENT",
+        "canonical_node_sequence": [
+          "PM-003-N001",
+          "PM-003-N002",
+          "PM-003-N003",
+          "PM-003-N004"
+        ]
+      },
+      {
+        "process_model_id": "PM-004",
+        "cluster_id": 3,
+        "instance_count": 1,
+        "canonical_instance_id": "WF-0001",
+        "canonical_policy": "cosine medoid observed procedure; variants retained in graph",
+        "mode": "DEVELOPMENT",
+        "canonical_node_sequence": [
+          "PM-004-N001",
+          "PM-004-N002",
+          "PM-004-N003",
+          "PM-004-N002",
+          "PM-004-N004",
+          "PM-004-N002",
+          "PM-004-N004",
+          "PM-004-N002",
+          "PM-004-N005",
+          "PM-004-N006",
+          "PM-004-N007",
+          "PM-004-N008"
+        ]
+      },
+      {
+        "process_model_id": "PM-005",
+        "cluster_id": 4,
+        "instance_count": 1,
+        "canonical_instance_id": "WF-0005",
+        "canonical_policy": "cosine medoid observed procedure; variants retained in graph",
+        "mode": "DEVELOPMENT",
+        "canonical_node_sequence": [
+          "PM-005-N001",
+          "PM-005-N002",
+          "PM-005-N003",
+          "PM-005-N004",
+          "PM-005-N003",
+          "PM-005-N004",
+          "PM-005-N003",
+          "PM-005-N004",
+          "PM-005-N003",
+          "PM-005-N004",
+          "PM-005-N003",
+          "PM-005-N004",
+          "PM-005-N005",
+          "PM-005-N006",
+          "PM-005-N007",
+          "PM-005-N002",
+          "PM-005-N008",
+          "PM-005-N005",
+          "PM-005-N008"
+        ]
+      },
+      {
+        "process_model_id": "PM-006",
+        "cluster_id": 5,
+        "instance_count": 1,
+        "canonical_instance_id": "WF-0003",
+        "canonical_policy": "cosine medoid observed procedure; variants retained in graph",
+        "mode": "DEVELOPMENT",
+        "canonical_node_sequence": [
+          "PM-006-N001",
+          "PM-006-N002",
+          "PM-006-N003",
+          "PM-006-N004",
+          "PM-006-N005",
+          "PM-006-N006",
+          "PM-006-N007",
+          "PM-006-N008",
+          "PM-006-N007",
+          "PM-006-N008",
+          "PM-006-N009",
+          "PM-006-N010",
+          "PM-006-N006",
+          "PM-006-N011",
+          "PM-006-N004",
+          "PM-006-N009",
+          "PM-006-N011"
+        ]
+      },
+      {
+        "process_model_id": "PM-007",
+        "cluster_id": 6,
+        "instance_count": 1,
+        "canonical_instance_id": "WF-0002",
+        "canonical_policy": "cosine medoid observed procedure; variants retained in graph",
+        "mode": "DEVELOPMENT",
+        "canonical_node_sequence": [
+          "PM-007-N001",
+          "PM-007-N002",
+          "PM-007-N003",
+          "PM-007-N004",
+          "PM-007-N005",
+          "PM-007-N006",
+          "PM-007-N007",
+          "PM-007-N008",
+          "PM-007-N007",
+          "PM-007-N008",
+          "PM-007-N009",
+          "PM-007-N010",
+          "PM-007-N006",
+          "PM-007-N011",
+          "PM-007-N003",
+          "PM-007-N009",
+          "PM-007-N011"
+        ]
+      }
+    ],
+    "process_nodes": [
+      {
+        "process_model_id": "PM-004",
+        "node_id": "PM-004-N001",
+        "action": "page_entry",
+        "http_method": "",
+        "normalized_endpoint": "",
+        "page_path": "/mypage/schedule",
+        "target_role": "html",
+        "source_event_evidence": [
+          "62fec245-c283-464d-8d87-d9e7f99c7b4b"
+        ]
+      },
+      {
+        "process_model_id": "PM-004",
+        "node_id": "PM-004-N002",
+        "action": "selection",
+        "http_method": "",
+        "normalized_endpoint": "",
+        "page_path": "/mypage/schedule",
+        "target_role": "div",
+        "source_event_evidence": [
+          "757ca200-6198-4e0b-9a8c-ee0e46a3cad0",
+          "dbd6226d-fb1a-4872-8a5f-b4abfcbd99c1",
+          "0e2659e3-be85-46ea-9521-4b38fff2f8a2",
+          "f3d013a3-29eb-4558-9552-3fc78664c9a7",
+          "d8c8a93a-7ae7-48aa-890d-298092b2fa43",
+          "fcd9fc63-7258-4aaa-951a-164dc0b8b1f1",
+          "dcaca911-fa50-425a-a442-5e0862c902d0"
+        ]
+      },
+      {
+        "process_model_id": "PM-004",
+        "node_id": "PM-004-N003",
+        "action": "detail_open",
+        "http_method": "",
+        "normalized_endpoint": "",
+        "page_path": "/mypage/schedule",
+        "target_role": "dialog_control",
+        "source_event_evidence": [
+          "009dc486-bff9-49a5-98b4-58ba8750674c"
+        ]
+      },
+      {
+        "process_model_id": "PM-004",
+        "node_id": "PM-004-N004",
+        "action": "input",
+        "http_method": "",
+        "normalized_endpoint": "",
+        "page_path": "/mypage/schedule",
+        "target_role": "input_control",
+        "source_event_evidence": [
+          "cc6c388a-04c2-482d-b134-542d3241b517",
+          "c0e0e82d-1fe9-40cf-aef6-abc16ef3b229",
+          "955dcf1d-6d3b-4a06-97b6-1604c0a64d07"
+        ]
+      },
+      {
+        "process_model_id": "PM-004",
+        "node_id": "PM-004-N005",
+        "action": "submit_save",
+        "http_method": "",
+        "normalized_endpoint": "",
+        "page_path": "/mypage/schedule",
+        "target_role": "dialog_control",
+        "source_event_evidence": [
+          "c79bfd19-28df-4a96-a1cc-feb349f5cde9"
+        ]
+      },
+      {
+        "process_model_id": "PM-004",
+        "node_id": "PM-004-N006",
+        "action": "api_confirmation",
+        "http_method": "POST",
+        "normalized_endpoint": "/api/schedules",
+        "page_path": "/mypage/schedule",
+        "target_role": "/api/schedules",
+        "source_event_evidence": [
+          "661e8b4c-4531-497a-b07e-5ff3af8294ac"
+        ]
+      },
+      {
+        "process_model_id": "PM-004",
+        "node_id": "PM-004-N007",
+        "action": "api_confirmation",
+        "http_method": "GET",
+        "normalized_endpoint": "/api/schedules",
+        "page_path": "/mypage/schedule",
+        "target_role": "/api/schedules",
+        "source_event_evidence": [
+          "fa29fa13-79c3-406e-a5bd-1366c613570a"
+        ]
+      },
+      {
+        "process_model_id": "PM-004",
+        "node_id": "PM-004-N008",
+        "action": "detail_close",
+        "http_method": "",
+        "normalized_endpoint": "",
+        "page_path": "/mypage/schedule",
+        "target_role": "dialog_control",
+        "source_event_evidence": [
+          "82acd91e-9e28-41e0-9e6c-9164225bfb4a"
+        ]
+      },
+      {
+        "process_model_id": "PM-007",
+        "node_id": "PM-007-N001",
+        "action": "page_entry",
+        "http_method": "",
+        "normalized_endpoint": "",
+        "page_path": "/mypage/schedule",
+        "target_role": "navigation",
+        "source_event_evidence": [
+          "539e75a1-569e-4d1c-a7cb-539e54ae45cb",
+          "fa9290fa-4fd0-4820-8dd5-beee1743da29"
+        ]
+      },
+      {
+        "process_model_id": "PM-007",
+        "node_id": "PM-007-N002",
+        "action": "page_entry",
+        "http_method": "",
+        "normalized_endpoint": "",
+        "page_path": "/mypage/work/daily",
+        "target_role": "html",
+        "source_event_evidence": [
+          "bf2cf602-e490-4b4e-a967-f5f65055f3ff"
+        ]
+      },
+      {
+        "process_model_id": "PM-007",
+        "node_id": "PM-007-N003",
+        "action": "api_confirmation",
+        "http_method": "GET",
+        "normalized_endpoint": "/api/work-reports",
+        "page_path": "/mypage/work/daily",
+        "target_role": "/api/work-reports",
+        "source_event_evidence": [
+          "c0af36c6-1a83-446f-8bf7-01634a05347f",
+          "c668b6c9-221d-4ed0-ba68-2f6d31d73092"
+        ]
+      },
+      {
+        "process_model_id": "PM-007",
+        "node_id": "PM-007-N004",
+        "action": "api_confirmation",
+        "http_method": "GET",
+        "normalized_endpoint": "/api/auth/me",
+        "page_path": "/mypage/work/daily",
+        "target_role": "/api/auth/me",
+        "source_event_evidence": [
+          "637074bb-6c1b-44a8-8d98-d542163d8630"
+        ]
+      },
+      {
+        "process_model_id": "PM-007",
+        "node_id": "PM-007-N005",
+        "action": "selection",
+        "http_method": "",
+        "normalized_endpoint": "",
+        "page_path": "/mypage/work/daily",
+        "target_role": "button",
+        "source_event_evidence": [
+          "4740f429-eebd-46a5-9714-7788bdd53cb3"
+        ]
+      },
+      {
+        "process_model_id": "PM-007",
+        "node_id": "PM-007-N006",
+        "action": "detail_open",
+        "http_method": "",
+        "normalized_endpoint": "",
+        "page_path": "/mypage/work/daily",
+        "target_role": "dialog_control",
+        "source_event_evidence": [
+          "a1a89b09-b14d-44a7-a4a3-7f5967b3d966",
+          "d6eae1a3-1c4a-4b76-8ca8-b6b1792d837b"
+        ]
+      },
+      {
+        "process_model_id": "PM-007",
+        "node_id": "PM-007-N007",
+        "action": "selection",
+        "http_method": "",
+        "normalized_endpoint": "",
+        "page_path": "/mypage/work/daily",
+        "target_role": "input_control",
+        "source_event_evidence": [
+          "0b1e413f-0769-4b8c-b85a-275e865a86ee",
+          "0b401fb1-ed2e-4809-9377-eefe685017a3"
+        ]
+      },
+      {
+        "process_model_id": "PM-007",
+        "node_id": "PM-007-N008",
+        "action": "input",
+        "http_method": "",
+        "normalized_endpoint": "",
+        "page_path": "/mypage/work/daily",
+        "target_role": "input_control",
+        "source_event_evidence": [
+          "eb6b1c04-2792-4fef-87f1-1d55f0ae87d7",
+          "c74d45fe-3e22-46e6-9940-aa605d4adb49",
+          "a910e4db-c09b-4ee5-af7d-fff8807bc97f",
+          "0af86b08-8a38-4cae-bcb3-c15d3bbf744b"
+        ]
+      },
+      {
+        "process_model_id": "PM-007",
+        "node_id": "PM-007-N009",
+        "action": "selection",
+        "http_method": "",
+        "normalized_endpoint": "",
+        "page_path": "/mypage/work/daily",
+        "target_role": "dialog_control",
+        "source_event_evidence": [
+          "de3e75b6-7163-40b7-8952-8be7c5ea709a",
+          "c791820a-674a-4355-b074-f6c3d2be309c"
+        ]
+      },
+      {
+        "process_model_id": "PM-007",
+        "node_id": "PM-007-N010",
+        "action": "api_confirmation",
+        "http_method": "POST",
+        "normalized_endpoint": "/api/work-reports",
+        "page_path": "/mypage/work/daily",
+        "target_role": "/api/work-reports",
+        "source_event_evidence": [
+          "4b4bb913-a6ca-4a8c-ae06-746d7480a718"
+        ]
+      },
+      {
+        "process_model_id": "PM-007",
+        "node_id": "PM-007-N011",
+        "action": "detail_close",
+        "http_method": "",
+        "normalized_endpoint": "",
+        "page_path": "/mypage/work/daily",
+        "target_role": "dialog_control",
+        "source_event_evidence": [
+          "36433873-e319-482c-8869-01a03624264d",
+          "d32410b0-cd82-4bf8-aa4b-d1e8514a0576"
+        ]
+      },
+      {
+        "process_model_id": "PM-006",
+        "node_id": "PM-006-N001",
+        "action": "page_entry",
+        "http_method": "",
+        "normalized_endpoint": "",
+        "page_path": "/mypage/work/daily",
+        "target_role": "navigation",
+        "source_event_evidence": [
+          "b76bfbfa-47f2-4a40-9bc5-2a0df020f821"
+        ]
+      },
+      {
+        "process_model_id": "PM-006",
+        "node_id": "PM-006-N002",
+        "action": "page_entry",
+        "http_method": "",
+        "normalized_endpoint": "",
+        "page_path": "/mypage/work/weekly",
+        "target_role": "html",
+        "source_event_evidence": [
+          "184a6658-053a-4bfb-a82a-c3e097bf2051"
+        ]
+      },
+      {
+        "process_model_id": "PM-006",
+        "node_id": "PM-006-N003",
+        "action": "api_confirmation",
+        "http_method": "GET",
+        "normalized_endpoint": "/api/auth/me",
+        "page_path": "/mypage/work/weekly",
+        "target_role": "/api/auth/me",
+        "source_event_evidence": [
+          "1dc818e4-ebe8-4da8-8ac6-1c1dbbe4b9cf"
+        ]
+      },
+      {
+        "process_model_id": "PM-006",
+        "node_id": "PM-006-N004",
+        "action": "api_confirmation",
+        "http_method": "GET",
+        "normalized_endpoint": "/api/work-reports",
+        "page_path": "/mypage/work/weekly",
+        "target_role": "/api/work-reports",
+        "source_event_evidence": [
+          "5703f470-27b5-4c54-8d82-0ba4659391a1",
+          "60c41ccf-055c-4c95-bd5f-11331653b85b"
+        ]
+      },
+      {
+        "process_model_id": "PM-006",
+        "node_id": "PM-006-N005",
+        "action": "selection",
+        "http_method": "",
+        "normalized_endpoint": "",
+        "page_path": "/mypage/work/weekly",
+        "target_role": "button",
+        "source_event_evidence": [
+          "73141be6-e784-48bf-99f9-4431a7f6982c"
+        ]
+      },
+      {
+        "process_model_id": "PM-006",
+        "node_id": "PM-006-N006",
+        "action": "detail_open",
+        "http_method": "",
+        "normalized_endpoint": "",
+        "page_path": "/mypage/work/weekly",
+        "target_role": "dialog_control",
+        "source_event_evidence": [
+          "96140f52-acc6-4685-935f-78e6a6d4afd0",
+          "be3f4f25-e465-401e-8ce8-9f5e73a301ad"
+        ]
+      },
+      {
+        "process_model_id": "PM-006",
+        "node_id": "PM-006-N007",
+        "action": "selection",
+        "http_method": "",
+        "normalized_endpoint": "",
+        "page_path": "/mypage/work/weekly",
+        "target_role": "input_control",
+        "source_event_evidence": [
+          "a4d2a5e9-d4bb-485d-87b5-e5d4d4ece615",
+          "311652ea-eaa4-41ef-bffe-83fe864a198f",
+          "9a05d0ba-468b-4d4e-90a9-c3ca282738e3"
+        ]
+      },
+      {
+        "process_model_id": "PM-006",
+        "node_id": "PM-006-N008",
+        "action": "input",
+        "http_method": "",
+        "normalized_endpoint": "",
+        "page_path": "/mypage/work/weekly",
+        "target_role": "input_control",
+        "source_event_evidence": [
+          "296f5267-f0f3-43c3-bf2a-8c11ddb052d3",
+          "98af281c-97b4-416e-b093-debab017c30c",
+          "13235361-fabe-4623-80f1-fe35e4595fbb",
+          "51368e2b-acaf-45b7-b01a-160d782eed4c"
+        ]
+      },
+      {
+        "process_model_id": "PM-006",
+        "node_id": "PM-006-N009",
+        "action": "selection",
+        "http_method": "",
+        "normalized_endpoint": "",
+        "page_path": "/mypage/work/weekly",
+        "target_role": "dialog_control",
+        "source_event_evidence": [
+          "05df9d7f-4b41-46fe-a125-92ece7eaacf9",
+          "93d397b0-f42f-48b4-9746-0fbe197531ed",
+          "7e11b652-c6fc-4eaa-b32f-b6342e7596b6"
+        ]
+      },
+      {
+        "process_model_id": "PM-006",
+        "node_id": "PM-006-N010",
+        "action": "api_confirmation",
+        "http_method": "POST",
+        "normalized_endpoint": "/api/work-reports",
+        "page_path": "/mypage/work/weekly",
+        "target_role": "/api/work-reports",
+        "source_event_evidence": [
+          "b0655d61-6ae4-4f70-8494-029e43e9eefa"
+        ]
+      },
+      {
+        "process_model_id": "PM-006",
+        "node_id": "PM-006-N011",
+        "action": "detail_close",
+        "http_method": "",
+        "normalized_endpoint": "",
+        "page_path": "/mypage/work/weekly",
+        "target_role": "dialog_control",
+        "source_event_evidence": [
+          "f43c94cd-7e72-4df0-b02a-38484f2c4593",
+          "5ecdf03c-fddd-496b-8c08-6e0d69cfced3"
+        ]
+      },
+      {
+        "process_model_id": "PM-003",
+        "node_id": "PM-003-N001",
+        "action": "page_entry",
+        "http_method": "",
+        "normalized_endpoint": "",
+        "page_path": "/mypage/work/weekly",
+        "target_role": "navigation",
+        "source_event_evidence": [
+          "e5635e43-d438-42e4-870a-b8bc29634ba6"
+        ]
+      },
+      {
+        "process_model_id": "PM-003",
+        "node_id": "PM-003-N002",
+        "action": "page_entry",
+        "http_method": "",
+        "normalized_endpoint": "",
+        "page_path": "/mypage/clients",
+        "target_role": "html",
+        "source_event_evidence": [
+          "d8854e7b-ca39-4086-acad-ca8cd68a2efd"
+        ]
+      },
+      {
+        "process_model_id": "PM-003",
+        "node_id": "PM-003-N003",
+        "action": "api_confirmation",
+        "http_method": "GET",
+        "normalized_endpoint": "/api/auth/me",
+        "page_path": "/mypage/clients",
+        "target_role": "/api/auth/me",
+        "source_event_evidence": [
+          "4a94ba8b-c11d-4a1b-a94b-07da9639de2f"
+        ]
+      },
+      {
+        "process_model_id": "PM-003",
+        "node_id": "PM-003-N004",
+        "action": "api_confirmation",
+        "http_method": "GET",
+        "normalized_endpoint": "/api/clients",
+        "page_path": "/mypage/clients",
+        "target_role": "/api/clients",
+        "source_event_evidence": [
+          "b72999a8-5a36-42c3-880b-de7cbb11a11f"
+        ]
+      },
+      {
+        "process_model_id": "PM-005",
+        "node_id": "PM-005-N001",
+        "action": "selection",
+        "http_method": "",
+        "normalized_endpoint": "",
+        "page_path": "/mypage/clients",
+        "target_role": "button",
+        "source_event_evidence": [
+          "1d1925e1-dc41-44e3-97f8-b752203efe59"
+        ]
+      },
+      {
+        "process_model_id": "PM-005",
+        "node_id": "PM-005-N002",
+        "action": "detail_open",
+        "http_method": "",
+        "normalized_endpoint": "",
+        "page_path": "/mypage/clients",
+        "target_role": "dialog_control",
+        "source_event_evidence": [
+          "e9fa9155-1948-4746-98e5-41152a59a93d",
+          "40ecd720-27cc-4f80-b490-5f09a1aaa46f"
+        ]
+      },
+      {
+        "process_model_id": "PM-005",
+        "node_id": "PM-005-N003",
+        "action": "selection",
+        "http_method": "",
+        "normalized_endpoint": "",
+        "page_path": "/mypage/clients",
+        "target_role": "input_control",
+        "source_event_evidence": [
+          "07958465-00ab-4339-9ed0-8cbe2c16243f",
+          "d8e6632f-1ec2-4da5-8dec-ace661295a6f",
+          "cdaaa352-a9c6-4687-97d7-5de3ca6bf274",
+          "c4912424-3fa1-4b08-8a34-4e582ee985aa",
+          "b9ec2d1d-68c3-4325-961a-851d6329f5ff"
+        ]
+      },
+      {
+        "process_model_id": "PM-005",
+        "node_id": "PM-005-N004",
+        "action": "input",
+        "http_method": "",
+        "normalized_endpoint": "",
+        "page_path": "/mypage/clients",
+        "target_role": "input_control",
+        "source_event_evidence": [
+          "b08a99f0-d0d0-4021-b522-3c6571481232",
+          "dbee4962-6c32-4029-8af1-4bcf3d51df76",
+          "af179592-c4c4-493c-882f-a0c352317e52",
+          "c488f50d-767b-49b9-9e14-5e8dc406a646",
+          "0a81f206-f9a9-45ff-8c80-db83e8d2f560",
+          "15ed07da-a4f9-48e5-bf55-d204b1a1e79b",
+          "c1979f4c-645c-4fea-925d-03cb3b63f02b",
+          "848f73d6-860c-4cb1-b138-f953bfaa33ae"
+        ]
+      },
+      {
+        "process_model_id": "PM-005",
+        "node_id": "PM-005-N005",
+        "action": "selection",
+        "http_method": "",
+        "normalized_endpoint": "",
+        "page_path": "/mypage/clients",
+        "target_role": "dialog_control",
+        "source_event_evidence": [
+          "ec2546d6-9763-409a-aa01-790c97aedd1b",
+          "1c803c70-e33b-447d-be76-d79c9f6c6e09",
+          "ee5f94b1-cc44-48d0-afa0-bd53fba10fc9"
+        ]
+      },
+      {
+        "process_model_id": "PM-005",
+        "node_id": "PM-005-N006",
+        "action": "api_confirmation",
+        "http_method": "POST",
+        "normalized_endpoint": "/api/clients",
+        "page_path": "/mypage/clients",
+        "target_role": "/api/clients",
+        "source_event_evidence": [
+          "bfd05466-a2e8-44cd-a75c-b9cacb394b3a"
+        ]
+      },
+      {
+        "process_model_id": "PM-005",
+        "node_id": "PM-005-N007",
+        "action": "api_confirmation",
+        "http_method": "GET",
+        "normalized_endpoint": "/api/clients",
+        "page_path": "/mypage/clients",
+        "target_role": "/api/clients",
+        "source_event_evidence": [
+          "b78d63ae-f0a0-415a-afac-4a3acca17dbc"
+        ]
+      },
+      {
+        "process_model_id": "PM-005",
+        "node_id": "PM-005-N008",
+        "action": "detail_close",
+        "http_method": "",
+        "normalized_endpoint": "",
+        "page_path": "/mypage/clients",
+        "target_role": "dialog_control",
+        "source_event_evidence": [
+          "639c3fce-9100-459c-9502-a9040fdc2a2d",
+          "81cf767c-0f16-4d19-9b20-193a7a6e8ea7"
+        ]
+      },
+      {
+        "process_model_id": "PM-002",
+        "node_id": "PM-002-N001",
+        "action": "page_entry",
+        "http_method": "",
+        "normalized_endpoint": "",
+        "page_path": "/mypage/clients",
+        "target_role": "navigation",
+        "source_event_evidence": [
+          "8c58f682-b205-4a26-b20b-8c98690d1332"
+        ]
+      },
+      {
+        "process_model_id": "PM-002",
+        "node_id": "PM-002-N002",
+        "action": "page_entry",
+        "http_method": "",
+        "normalized_endpoint": "",
+        "page_path": "/mypage/assets",
+        "target_role": "html",
+        "source_event_evidence": [
+          "6c4fc675-45b6-49a2-be32-ac1b3a4aec68"
+        ]
+      },
+      {
+        "process_model_id": "PM-002",
+        "node_id": "PM-002-N003",
+        "action": "api_confirmation",
+        "http_method": "GET",
+        "normalized_endpoint": "/api/auth/me",
+        "page_path": "/mypage/assets",
+        "target_role": "/api/auth/me",
+        "source_event_evidence": [
+          "80ce1d19-7129-4b00-b0bf-6e1034ccb8b3"
+        ]
+      },
+      {
+        "process_model_id": "PM-002",
+        "node_id": "PM-002-N004",
+        "action": "api_confirmation",
+        "http_method": "GET",
+        "normalized_endpoint": "/api/assets",
+        "page_path": "/mypage/assets",
+        "target_role": "/api/assets",
+        "source_event_evidence": [
+          "6b048283-ddeb-473c-af13-d9b6ca8fd426"
+        ]
+      },
+      {
+        "process_model_id": "PM-001",
+        "node_id": "PM-001-N001",
+        "action": "selection",
+        "http_method": "",
+        "normalized_endpoint": "",
+        "page_path": "/mypage/assets",
+        "target_role": "button",
+        "source_event_evidence": [
+          "1ba723c8-d5f9-413b-b97b-785c4cb57da6"
+        ]
+      },
+      {
+        "process_model_id": "PM-001",
+        "node_id": "PM-001-N002",
+        "action": "detail_open",
+        "http_method": "",
+        "normalized_endpoint": "",
+        "page_path": "/mypage/assets",
+        "target_role": "dialog_control",
+        "source_event_evidence": [
+          "0d438cd7-7376-44ef-83c6-66fd13a67441",
+          "ea8f0f14-1b79-44de-88c6-8e44f7c55ba1"
+        ]
+      },
+      {
+        "process_model_id": "PM-001",
+        "node_id": "PM-001-N003",
+        "action": "selection",
+        "http_method": "",
+        "normalized_endpoint": "",
+        "page_path": "/mypage/assets",
+        "target_role": "input_control",
+        "source_event_evidence": [
+          "920b1051-d5c1-4266-9aea-a4b9a6dd508b",
+          "5975d02c-0f50-429a-9d74-52b0ce56d331",
+          "c96fc987-b08c-4498-93f2-199125e5aeda"
+        ]
+      },
+      {
+        "process_model_id": "PM-001",
+        "node_id": "PM-001-N004",
+        "action": "input",
+        "http_method": "",
+        "normalized_endpoint": "",
+        "page_path": "/mypage/assets",
+        "target_role": "input_control",
+        "source_event_evidence": [
+          "979eeb38-3653-4ca7-8b2c-5c332d763c1f",
+          "96ed338f-3daa-4441-b03c-fa475c4edaa6",
+          "a81eac33-844c-443a-9b70-1f4eb1403211",
+          "76654159-6116-437d-9647-190f7cb7195f",
+          "8f143632-1995-4feb-868b-2ec9fdca897b",
+          "77178151-4ad2-4694-b1cd-98d56e18449d"
+        ]
+      },
+      {
+        "process_model_id": "PM-001",
+        "node_id": "PM-001-N005",
+        "action": "selection",
+        "http_method": "",
+        "normalized_endpoint": "",
+        "page_path": "/mypage/assets",
+        "target_role": "dialog_control",
+        "source_event_evidence": [
+          "0c8d1959-efb7-4642-b07a-f9f72abcb2f8",
+          "81d5d054-1d95-4c68-8fe0-c439f0e6e781"
+        ]
+      },
+      {
+        "process_model_id": "PM-001",
+        "node_id": "PM-001-N006",
+        "action": "api_confirmation",
+        "http_method": "POST",
+        "normalized_endpoint": "/api/assets",
+        "page_path": "/mypage/assets",
+        "target_role": "/api/assets",
+        "source_event_evidence": [
+          "502923d7-ccce-4f4d-be90-2ce976a377b1"
+        ]
+      },
+      {
+        "process_model_id": "PM-001",
+        "node_id": "PM-001-N007",
+        "action": "api_confirmation",
+        "http_method": "GET",
+        "normalized_endpoint": "/api/assets",
+        "page_path": "/mypage/assets",
+        "target_role": "/api/assets",
+        "source_event_evidence": [
+          "d733b8b0-71ca-481c-889c-9603c8649075"
+        ]
+      },
+      {
+        "process_model_id": "PM-001",
+        "node_id": "PM-001-N008",
+        "action": "detail_close",
+        "http_method": "",
+        "normalized_endpoint": "",
+        "page_path": "/mypage/assets",
+        "target_role": "dialog_control",
+        "source_event_evidence": [
+          "cbee6ee1-c14d-49d9-90d5-1c0d53fc1359",
+          "caae4fec-0405-4025-b2ba-32dacac1ee47"
+        ]
+      }
+    ],
+    "process_edges": [
+      {
+        "process_model_id": "PM-001",
+        "source_node_id": "PM-001-N001",
+        "target_node_id": "PM-001-N002",
+        "occurrence_count": 1,
+        "source_instance_evidence": [
+          "WF-0007"
+        ]
+      },
+      {
+        "process_model_id": "PM-001",
+        "source_node_id": "PM-001-N002",
+        "target_node_id": "PM-001-N003",
+        "occurrence_count": 1,
+        "source_instance_evidence": [
+          "WF-0007"
+        ]
+      },
+      {
+        "process_model_id": "PM-001",
+        "source_node_id": "PM-001-N002",
+        "target_node_id": "PM-001-N008",
+        "occurrence_count": 1,
+        "source_instance_evidence": [
+          "WF-0007"
+        ]
+      },
+      {
+        "process_model_id": "PM-001",
+        "source_node_id": "PM-001-N003",
+        "target_node_id": "PM-001-N004",
+        "occurrence_count": 3,
+        "source_instance_evidence": [
+          "WF-0007",
+          "WF-0007",
+          "WF-0007"
+        ]
+      },
+      {
+        "process_model_id": "PM-001",
+        "source_node_id": "PM-001-N004",
+        "target_node_id": "PM-001-N003",
+        "occurrence_count": 2,
+        "source_instance_evidence": [
+          "WF-0007",
+          "WF-0007"
+        ]
+      },
+      {
+        "process_model_id": "PM-001",
+        "source_node_id": "PM-001-N004",
+        "target_node_id": "PM-001-N005",
+        "occurrence_count": 1,
+        "source_instance_evidence": [
+          "WF-0007"
+        ]
+      },
+      {
+        "process_model_id": "PM-001",
+        "source_node_id": "PM-001-N005",
+        "target_node_id": "PM-001-N006",
+        "occurrence_count": 1,
+        "source_instance_evidence": [
+          "WF-0007"
+        ]
+      },
+      {
+        "process_model_id": "PM-001",
+        "source_node_id": "PM-001-N005",
+        "target_node_id": "PM-001-N008",
+        "occurrence_count": 1,
+        "source_instance_evidence": [
+          "WF-0007"
+        ]
+      },
+      {
+        "process_model_id": "PM-001",
+        "source_node_id": "PM-001-N006",
+        "target_node_id": "PM-001-N007",
+        "occurrence_count": 1,
+        "source_instance_evidence": [
+          "WF-0007"
+        ]
+      },
+      {
+        "process_model_id": "PM-001",
+        "source_node_id": "PM-001-N007",
+        "target_node_id": "PM-001-N002",
+        "occurrence_count": 1,
+        "source_instance_evidence": [
+          "WF-0007"
+        ]
+      },
+      {
+        "process_model_id": "PM-001",
+        "source_node_id": "PM-001-N008",
+        "target_node_id": "PM-001-N005",
+        "occurrence_count": 1,
+        "source_instance_evidence": [
+          "WF-0007"
+        ]
+      },
+      {
+        "process_model_id": "PM-002",
+        "source_node_id": "PM-002-N001",
+        "target_node_id": "PM-002-N002",
+        "occurrence_count": 1,
+        "source_instance_evidence": [
+          "WF-0006"
+        ]
+      },
+      {
+        "process_model_id": "PM-002",
+        "source_node_id": "PM-002-N002",
+        "target_node_id": "PM-002-N003",
+        "occurrence_count": 1,
+        "source_instance_evidence": [
+          "WF-0006"
+        ]
+      },
+      {
+        "process_model_id": "PM-002",
+        "source_node_id": "PM-002-N003",
+        "target_node_id": "PM-002-N004",
+        "occurrence_count": 1,
+        "source_instance_evidence": [
+          "WF-0006"
+        ]
+      },
+      {
+        "process_model_id": "PM-003",
+        "source_node_id": "PM-003-N001",
+        "target_node_id": "PM-003-N002",
+        "occurrence_count": 1,
+        "source_instance_evidence": [
+          "WF-0004"
+        ]
+      },
+      {
+        "process_model_id": "PM-003",
+        "source_node_id": "PM-003-N002",
+        "target_node_id": "PM-003-N003",
+        "occurrence_count": 1,
+        "source_instance_evidence": [
+          "WF-0004"
+        ]
+      },
+      {
+        "process_model_id": "PM-003",
+        "source_node_id": "PM-003-N003",
+        "target_node_id": "PM-003-N004",
+        "occurrence_count": 1,
+        "source_instance_evidence": [
+          "WF-0004"
+        ]
+      },
+      {
+        "process_model_id": "PM-004",
+        "source_node_id": "PM-004-N001",
+        "target_node_id": "PM-004-N002",
+        "occurrence_count": 1,
+        "source_instance_evidence": [
+          "WF-0001"
+        ]
+      },
+      {
+        "process_model_id": "PM-004",
+        "source_node_id": "PM-004-N002",
+        "target_node_id": "PM-004-N003",
+        "occurrence_count": 1,
+        "source_instance_evidence": [
+          "WF-0001"
+        ]
+      },
+      {
+        "process_model_id": "PM-004",
+        "source_node_id": "PM-004-N002",
+        "target_node_id": "PM-004-N004",
+        "occurrence_count": 2,
+        "source_instance_evidence": [
+          "WF-0001",
+          "WF-0001"
+        ]
+      },
+      {
+        "process_model_id": "PM-004",
+        "source_node_id": "PM-004-N002",
+        "target_node_id": "PM-004-N005",
+        "occurrence_count": 1,
+        "source_instance_evidence": [
+          "WF-0001"
+        ]
+      },
+      {
+        "process_model_id": "PM-004",
+        "source_node_id": "PM-004-N003",
+        "target_node_id": "PM-004-N002",
+        "occurrence_count": 1,
+        "source_instance_evidence": [
+          "WF-0001"
+        ]
+      },
+      {
+        "process_model_id": "PM-004",
+        "source_node_id": "PM-004-N004",
+        "target_node_id": "PM-004-N002",
+        "occurrence_count": 2,
+        "source_instance_evidence": [
+          "WF-0001",
+          "WF-0001"
+        ]
+      },
+      {
+        "process_model_id": "PM-004",
+        "source_node_id": "PM-004-N005",
+        "target_node_id": "PM-004-N006",
+        "occurrence_count": 1,
+        "source_instance_evidence": [
+          "WF-0001"
+        ]
+      },
+      {
+        "process_model_id": "PM-004",
+        "source_node_id": "PM-004-N006",
+        "target_node_id": "PM-004-N007",
+        "occurrence_count": 1,
+        "source_instance_evidence": [
+          "WF-0001"
+        ]
+      },
+      {
+        "process_model_id": "PM-004",
+        "source_node_id": "PM-004-N007",
+        "target_node_id": "PM-004-N008",
+        "occurrence_count": 1,
+        "source_instance_evidence": [
+          "WF-0001"
+        ]
+      },
+      {
+        "process_model_id": "PM-005",
+        "source_node_id": "PM-005-N001",
+        "target_node_id": "PM-005-N002",
+        "occurrence_count": 1,
+        "source_instance_evidence": [
+          "WF-0005"
+        ]
+      },
+      {
+        "process_model_id": "PM-005",
+        "source_node_id": "PM-005-N002",
+        "target_node_id": "PM-005-N003",
+        "occurrence_count": 1,
+        "source_instance_evidence": [
+          "WF-0005"
+        ]
+      },
+      {
+        "process_model_id": "PM-005",
+        "source_node_id": "PM-005-N002",
+        "target_node_id": "PM-005-N008",
+        "occurrence_count": 1,
+        "source_instance_evidence": [
+          "WF-0005"
+        ]
+      },
+      {
+        "process_model_id": "PM-005",
+        "source_node_id": "PM-005-N003",
+        "target_node_id": "PM-005-N004",
+        "occurrence_count": 5,
+        "source_instance_evidence": [
+          "WF-0005",
+          "WF-0005",
+          "WF-0005",
+          "WF-0005",
+          "WF-0005"
+        ]
+      },
+      {
+        "process_model_id": "PM-005",
+        "source_node_id": "PM-005-N004",
+        "target_node_id": "PM-005-N003",
+        "occurrence_count": 4,
+        "source_instance_evidence": [
+          "WF-0005",
+          "WF-0005",
+          "WF-0005",
+          "WF-0005"
+        ]
+      },
+      {
+        "process_model_id": "PM-005",
+        "source_node_id": "PM-005-N004",
+        "target_node_id": "PM-005-N005",
+        "occurrence_count": 1,
+        "source_instance_evidence": [
+          "WF-0005"
+        ]
+      },
+      {
+        "process_model_id": "PM-005",
+        "source_node_id": "PM-005-N005",
+        "target_node_id": "PM-005-N006",
+        "occurrence_count": 1,
+        "source_instance_evidence": [
+          "WF-0005"
+        ]
+      },
+      {
+        "process_model_id": "PM-005",
+        "source_node_id": "PM-005-N005",
+        "target_node_id": "PM-005-N008",
+        "occurrence_count": 1,
+        "source_instance_evidence": [
+          "WF-0005"
+        ]
+      },
+      {
+        "process_model_id": "PM-005",
+        "source_node_id": "PM-005-N006",
+        "target_node_id": "PM-005-N007",
+        "occurrence_count": 1,
+        "source_instance_evidence": [
+          "WF-0005"
+        ]
+      },
+      {
+        "process_model_id": "PM-005",
+        "source_node_id": "PM-005-N007",
+        "target_node_id": "PM-005-N002",
+        "occurrence_count": 1,
+        "source_instance_evidence": [
+          "WF-0005"
+        ]
+      },
+      {
+        "process_model_id": "PM-005",
+        "source_node_id": "PM-005-N008",
+        "target_node_id": "PM-005-N005",
+        "occurrence_count": 1,
+        "source_instance_evidence": [
+          "WF-0005"
+        ]
+      },
+      {
+        "process_model_id": "PM-006",
+        "source_node_id": "PM-006-N001",
+        "target_node_id": "PM-006-N002",
+        "occurrence_count": 1,
+        "source_instance_evidence": [
+          "WF-0003"
+        ]
+      },
+      {
+        "process_model_id": "PM-006",
+        "source_node_id": "PM-006-N002",
+        "target_node_id": "PM-006-N003",
+        "occurrence_count": 1,
+        "source_instance_evidence": [
+          "WF-0003"
+        ]
+      },
+      {
+        "process_model_id": "PM-006",
+        "source_node_id": "PM-006-N003",
+        "target_node_id": "PM-006-N004",
+        "occurrence_count": 1,
+        "source_instance_evidence": [
+          "WF-0003"
+        ]
+      },
+      {
+        "process_model_id": "PM-006",
+        "source_node_id": "PM-006-N004",
+        "target_node_id": "PM-006-N005",
+        "occurrence_count": 1,
+        "source_instance_evidence": [
+          "WF-0003"
+        ]
+      },
+      {
+        "process_model_id": "PM-006",
+        "source_node_id": "PM-006-N004",
+        "target_node_id": "PM-006-N009",
+        "occurrence_count": 1,
+        "source_instance_evidence": [
+          "WF-0003"
+        ]
+      },
+      {
+        "process_model_id": "PM-006",
+        "source_node_id": "PM-006-N005",
+        "target_node_id": "PM-006-N006",
+        "occurrence_count": 1,
+        "source_instance_evidence": [
+          "WF-0003"
+        ]
+      },
+      {
+        "process_model_id": "PM-006",
+        "source_node_id": "PM-006-N006",
+        "target_node_id": "PM-006-N007",
+        "occurrence_count": 1,
+        "source_instance_evidence": [
+          "WF-0003"
+        ]
+      },
+      {
+        "process_model_id": "PM-006",
+        "source_node_id": "PM-006-N006",
+        "target_node_id": "PM-006-N011",
+        "occurrence_count": 1,
+        "source_instance_evidence": [
+          "WF-0003"
+        ]
+      },
+      {
+        "process_model_id": "PM-006",
+        "source_node_id": "PM-006-N007",
+        "target_node_id": "PM-006-N008",
+        "occurrence_count": 2,
+        "source_instance_evidence": [
+          "WF-0003",
+          "WF-0003"
+        ]
+      },
+      {
+        "process_model_id": "PM-006",
+        "source_node_id": "PM-006-N008",
+        "target_node_id": "PM-006-N007",
+        "occurrence_count": 1,
+        "source_instance_evidence": [
+          "WF-0003"
+        ]
+      },
+      {
+        "process_model_id": "PM-006",
+        "source_node_id": "PM-006-N008",
+        "target_node_id": "PM-006-N009",
+        "occurrence_count": 1,
+        "source_instance_evidence": [
+          "WF-0003"
+        ]
+      },
+      {
+        "process_model_id": "PM-006",
+        "source_node_id": "PM-006-N009",
+        "target_node_id": "PM-006-N010",
+        "occurrence_count": 1,
+        "source_instance_evidence": [
+          "WF-0003"
+        ]
+      },
+      {
+        "process_model_id": "PM-006",
+        "source_node_id": "PM-006-N009",
+        "target_node_id": "PM-006-N011",
+        "occurrence_count": 1,
+        "source_instance_evidence": [
+          "WF-0003"
+        ]
+      },
+      {
+        "process_model_id": "PM-006",
+        "source_node_id": "PM-006-N010",
+        "target_node_id": "PM-006-N006",
+        "occurrence_count": 1,
+        "source_instance_evidence": [
+          "WF-0003"
+        ]
+      },
+      {
+        "process_model_id": "PM-006",
+        "source_node_id": "PM-006-N011",
+        "target_node_id": "PM-006-N004",
+        "occurrence_count": 1,
+        "source_instance_evidence": [
+          "WF-0003"
+        ]
+      },
+      {
+        "process_model_id": "PM-007",
+        "source_node_id": "PM-007-N001",
+        "target_node_id": "PM-007-N002",
+        "occurrence_count": 1,
+        "source_instance_evidence": [
+          "WF-0002"
+        ]
+      },
+      {
+        "process_model_id": "PM-007",
+        "source_node_id": "PM-007-N002",
+        "target_node_id": "PM-007-N003",
+        "occurrence_count": 1,
+        "source_instance_evidence": [
+          "WF-0002"
+        ]
+      },
+      {
+        "process_model_id": "PM-007",
+        "source_node_id": "PM-007-N003",
+        "target_node_id": "PM-007-N004",
+        "occurrence_count": 1,
+        "source_instance_evidence": [
+          "WF-0002"
+        ]
+      },
+      {
+        "process_model_id": "PM-007",
+        "source_node_id": "PM-007-N003",
+        "target_node_id": "PM-007-N009",
+        "occurrence_count": 1,
+        "source_instance_evidence": [
+          "WF-0002"
+        ]
+      },
+      {
+        "process_model_id": "PM-007",
+        "source_node_id": "PM-007-N004",
+        "target_node_id": "PM-007-N005",
+        "occurrence_count": 1,
+        "source_instance_evidence": [
+          "WF-0002"
+        ]
+      },
+      {
+        "process_model_id": "PM-007",
+        "source_node_id": "PM-007-N005",
+        "target_node_id": "PM-007-N006",
+        "occurrence_count": 1,
+        "source_instance_evidence": [
+          "WF-0002"
+        ]
+      },
+      {
+        "process_model_id": "PM-007",
+        "source_node_id": "PM-007-N006",
+        "target_node_id": "PM-007-N007",
+        "occurrence_count": 1,
+        "source_instance_evidence": [
+          "WF-0002"
+        ]
+      },
+      {
+        "process_model_id": "PM-007",
+        "source_node_id": "PM-007-N006",
+        "target_node_id": "PM-007-N011",
+        "occurrence_count": 1,
+        "source_instance_evidence": [
+          "WF-0002"
+        ]
+      },
+      {
+        "process_model_id": "PM-007",
+        "source_node_id": "PM-007-N007",
+        "target_node_id": "PM-007-N008",
+        "occurrence_count": 2,
+        "source_instance_evidence": [
+          "WF-0002",
+          "WF-0002"
+        ]
+      },
+      {
+        "process_model_id": "PM-007",
+        "source_node_id": "PM-007-N008",
+        "target_node_id": "PM-007-N007",
+        "occurrence_count": 1,
+        "source_instance_evidence": [
+          "WF-0002"
+        ]
+      },
+      {
+        "process_model_id": "PM-007",
+        "source_node_id": "PM-007-N008",
+        "target_node_id": "PM-007-N009",
+        "occurrence_count": 1,
+        "source_instance_evidence": [
+          "WF-0002"
+        ]
+      },
+      {
+        "process_model_id": "PM-007",
+        "source_node_id": "PM-007-N009",
+        "target_node_id": "PM-007-N010",
+        "occurrence_count": 1,
+        "source_instance_evidence": [
+          "WF-0002"
+        ]
+      },
+      {
+        "process_model_id": "PM-007",
+        "source_node_id": "PM-007-N009",
+        "target_node_id": "PM-007-N011",
+        "occurrence_count": 1,
+        "source_instance_evidence": [
+          "WF-0002"
+        ]
+      },
+      {
+        "process_model_id": "PM-007",
+        "source_node_id": "PM-007-N010",
+        "target_node_id": "PM-007-N006",
+        "occurrence_count": 1,
+        "source_instance_evidence": [
+          "WF-0002"
+        ]
+      },
+      {
+        "process_model_id": "PM-007",
+        "source_node_id": "PM-007-N011",
+        "target_node_id": "PM-007-N003",
+        "occurrence_count": 1,
+        "source_instance_evidence": [
+          "WF-0002"
+        ]
+      }
+    ],
+    "process_instances": [
+      {
+        "process_instance_id": "WF-0001",
+        "process_model_id": "PM-004",
+        "start_event_id": "b6f5e3ba-bcbd-4b6d-ad61-a2ad8adaab23",
+        "end_event_id": "82acd91e-9e28-41e0-9e6c-9164225bfb4a",
+        "event_count": 18,
+        "source_dataset": "raw_input",
+        "source_session_id": "276d9376-b0b9-43c9-8d39-6cb30be99c42"
+      },
+      {
+        "process_instance_id": "WF-0002",
+        "process_model_id": "PM-007",
+        "start_event_id": "539e75a1-569e-4d1c-a7cb-539e54ae45cb",
+        "end_event_id": "d32410b0-cd82-4bf8-aa4b-d1e8514a0576",
+        "event_count": 23,
+        "source_dataset": "raw_input",
+        "source_session_id": "276d9376-b0b9-43c9-8d39-6cb30be99c42"
+      },
+      {
+        "process_instance_id": "WF-0003",
+        "process_model_id": "PM-006",
+        "start_event_id": "b76bfbfa-47f2-4a40-9bc5-2a0df020f821",
+        "end_event_id": "5ecdf03c-fddd-496b-8c08-6e0d69cfced3",
+        "event_count": 25,
+        "source_dataset": "raw_input",
+        "source_session_id": "276d9376-b0b9-43c9-8d39-6cb30be99c42"
+      },
+      {
+        "process_instance_id": "WF-0004",
+        "process_model_id": "PM-003",
+        "start_event_id": "e5635e43-d438-42e4-870a-b8bc29634ba6",
+        "end_event_id": "0d82af01-00cd-4416-8139-8eb967de672e",
+        "event_count": 5,
+        "source_dataset": "raw_input",
+        "source_session_id": "276d9376-b0b9-43c9-8d39-6cb30be99c42"
+      },
+      {
+        "process_instance_id": "WF-0005",
+        "process_model_id": "PM-005",
+        "start_event_id": "1d1925e1-dc41-44e3-97f8-b752203efe59",
+        "end_event_id": "81cf767c-0f16-4d19-9b20-193a7a6e8ea7",
+        "event_count": 25,
+        "source_dataset": "raw_input",
+        "source_session_id": "276d9376-b0b9-43c9-8d39-6cb30be99c42"
+      },
+      {
+        "process_instance_id": "WF-0006",
+        "process_model_id": "PM-002",
+        "start_event_id": "8c58f682-b205-4a26-b20b-8c98690d1332",
+        "end_event_id": "9b649fe4-dd13-4018-bcc6-6a6517a894b4",
+        "event_count": 5,
+        "source_dataset": "raw_input",
+        "source_session_id": "276d9376-b0b9-43c9-8d39-6cb30be99c42"
+      },
+      {
+        "process_instance_id": "WF-0007",
+        "process_model_id": "PM-001",
+        "start_event_id": "1ba723c8-d5f9-413b-b97b-785c4cb57da6",
+        "end_event_id": "5994cadd-d683-4ff6-9bda-6058745ca032",
+        "event_count": 21,
+        "source_dataset": "raw_input",
+        "source_session_id": "276d9376-b0b9-43c9-8d39-6cb30be99c42"
+      }
+    ],
+    "process_steps": [
+      {
+        "process_instance_id": "WF-0001",
+        "process_model_id": "PM-004",
+        "step_order": 1,
+        "node_id": "PM-004-N001",
+        "action": "page_entry",
+        "http_method": "",
+        "normalized_endpoint": "",
+        "page_path": "/mypage/schedule",
+        "target_role": "html",
+        "source_dataset": "raw_input",
+        "source_session_id": "276d9376-b0b9-43c9-8d39-6cb30be99c42",
+        "source_event_evidence": [
+          "62fec245-c283-464d-8d87-d9e7f99c7b4b"
+        ]
+      },
+      {
+        "process_instance_id": "WF-0001",
+        "process_model_id": "PM-004",
+        "step_order": 2,
+        "node_id": "PM-004-N002",
+        "action": "selection",
+        "http_method": "",
+        "normalized_endpoint": "",
+        "page_path": "/mypage/schedule",
+        "target_role": "div",
+        "source_dataset": "raw_input",
+        "source_session_id": "276d9376-b0b9-43c9-8d39-6cb30be99c42",
+        "source_event_evidence": [
+          "757ca200-6198-4e0b-9a8c-ee0e46a3cad0"
+        ]
+      },
+      {
+        "process_instance_id": "WF-0001",
+        "process_model_id": "PM-004",
+        "step_order": 3,
+        "node_id": "PM-004-N003",
+        "action": "detail_open",
+        "http_method": "",
+        "normalized_endpoint": "",
+        "page_path": "/mypage/schedule",
+        "target_role": "dialog_control",
+        "source_dataset": "raw_input",
+        "source_session_id": "276d9376-b0b9-43c9-8d39-6cb30be99c42",
+        "source_event_evidence": [
+          "009dc486-bff9-49a5-98b4-58ba8750674c"
+        ]
+      },
+      {
+        "process_instance_id": "WF-0001",
+        "process_model_id": "PM-004",
+        "step_order": 4,
+        "node_id": "PM-004-N002",
+        "action": "selection",
+        "http_method": "",
+        "normalized_endpoint": "",
+        "page_path": "/mypage/schedule",
+        "target_role": "div",
+        "source_dataset": "raw_input",
+        "source_session_id": "276d9376-b0b9-43c9-8d39-6cb30be99c42",
+        "source_event_evidence": [
+          "dbd6226d-fb1a-4872-8a5f-b4abfcbd99c1",
+          "0e2659e3-be85-46ea-9521-4b38fff2f8a2",
+          "f3d013a3-29eb-4558-9552-3fc78664c9a7",
+          "d8c8a93a-7ae7-48aa-890d-298092b2fa43"
+        ]
+      },
+      {
+        "process_instance_id": "WF-0001",
+        "process_model_id": "PM-004",
+        "step_order": 5,
+        "node_id": "PM-004-N004",
+        "action": "input",
+        "http_method": "",
+        "normalized_endpoint": "",
+        "page_path": "/mypage/schedule",
+        "target_role": "input_control",
+        "source_dataset": "raw_input",
+        "source_session_id": "276d9376-b0b9-43c9-8d39-6cb30be99c42",
+        "source_event_evidence": [
+          "cc6c388a-04c2-482d-b134-542d3241b517"
+        ]
+      },
+      {
+        "process_instance_id": "WF-0001",
+        "process_model_id": "PM-004",
+        "step_order": 6,
+        "node_id": "PM-004-N002",
+        "action": "selection",
+        "http_method": "",
+        "normalized_endpoint": "",
+        "page_path": "/mypage/schedule",
+        "target_role": "div",
+        "source_dataset": "raw_input",
+        "source_session_id": "276d9376-b0b9-43c9-8d39-6cb30be99c42",
+        "source_event_evidence": [
+          "fcd9fc63-7258-4aaa-951a-164dc0b8b1f1"
+        ]
+      },
+      {
+        "process_instance_id": "WF-0001",
+        "process_model_id": "PM-004",
+        "step_order": 7,
+        "node_id": "PM-004-N004",
+        "action": "input",
+        "http_method": "",
+        "normalized_endpoint": "",
+        "page_path": "/mypage/schedule",
+        "target_role": "input_control",
+        "source_dataset": "raw_input",
+        "source_session_id": "276d9376-b0b9-43c9-8d39-6cb30be99c42",
+        "source_event_evidence": [
+          "c0e0e82d-1fe9-40cf-aef6-abc16ef3b229",
+          "955dcf1d-6d3b-4a06-97b6-1604c0a64d07"
+        ]
+      },
+      {
+        "process_instance_id": "WF-0001",
+        "process_model_id": "PM-004",
+        "step_order": 8,
+        "node_id": "PM-004-N002",
+        "action": "selection",
+        "http_method": "",
+        "normalized_endpoint": "",
+        "page_path": "/mypage/schedule",
+        "target_role": "div",
+        "source_dataset": "raw_input",
+        "source_session_id": "276d9376-b0b9-43c9-8d39-6cb30be99c42",
+        "source_event_evidence": [
+          "dcaca911-fa50-425a-a442-5e0862c902d0"
+        ]
+      },
+      {
+        "process_instance_id": "WF-0001",
+        "process_model_id": "PM-004",
+        "step_order": 9,
+        "node_id": "PM-004-N005",
+        "action": "submit_save",
+        "http_method": "",
+        "normalized_endpoint": "",
+        "page_path": "/mypage/schedule",
+        "target_role": "dialog_control",
+        "source_dataset": "raw_input",
+        "source_session_id": "276d9376-b0b9-43c9-8d39-6cb30be99c42",
+        "source_event_evidence": [
+          "c79bfd19-28df-4a96-a1cc-feb349f5cde9"
+        ]
+      },
+      {
+        "process_instance_id": "WF-0001",
+        "process_model_id": "PM-004",
+        "step_order": 10,
+        "node_id": "PM-004-N006",
+        "action": "api_confirmation",
+        "http_method": "POST",
+        "normalized_endpoint": "/api/schedules",
+        "page_path": "/mypage/schedule",
+        "target_role": "/api/schedules",
+        "source_dataset": "raw_input",
+        "source_session_id": "276d9376-b0b9-43c9-8d39-6cb30be99c42",
+        "source_event_evidence": [
+          "661e8b4c-4531-497a-b07e-5ff3af8294ac"
+        ]
+      },
+      {
+        "process_instance_id": "WF-0001",
+        "process_model_id": "PM-004",
+        "step_order": 11,
+        "node_id": "PM-004-N007",
+        "action": "api_confirmation",
+        "http_method": "GET",
+        "normalized_endpoint": "/api/schedules",
+        "page_path": "/mypage/schedule",
+        "target_role": "/api/schedules",
+        "source_dataset": "raw_input",
+        "source_session_id": "276d9376-b0b9-43c9-8d39-6cb30be99c42",
+        "source_event_evidence": [
+          "fa29fa13-79c3-406e-a5bd-1366c613570a"
+        ]
+      },
+      {
+        "process_instance_id": "WF-0001",
+        "process_model_id": "PM-004",
+        "step_order": 12,
+        "node_id": "PM-004-N008",
+        "action": "detail_close",
+        "http_method": "",
+        "normalized_endpoint": "",
+        "page_path": "/mypage/schedule",
+        "target_role": "dialog_control",
+        "source_dataset": "raw_input",
+        "source_session_id": "276d9376-b0b9-43c9-8d39-6cb30be99c42",
+        "source_event_evidence": [
+          "82acd91e-9e28-41e0-9e6c-9164225bfb4a"
+        ]
+      },
+      {
+        "process_instance_id": "WF-0002",
+        "process_model_id": "PM-007",
+        "step_order": 1,
+        "node_id": "PM-007-N001",
+        "action": "page_entry",
+        "http_method": "",
+        "normalized_endpoint": "",
+        "page_path": "/mypage/schedule",
+        "target_role": "navigation",
+        "source_dataset": "raw_input",
+        "source_session_id": "276d9376-b0b9-43c9-8d39-6cb30be99c42",
+        "source_event_evidence": [
+          "539e75a1-569e-4d1c-a7cb-539e54ae45cb",
+          "fa9290fa-4fd0-4820-8dd5-beee1743da29"
+        ]
+      },
+      {
+        "process_instance_id": "WF-0002",
+        "process_model_id": "PM-007",
+        "step_order": 2,
+        "node_id": "PM-007-N002",
+        "action": "page_entry",
+        "http_method": "",
+        "normalized_endpoint": "",
+        "page_path": "/mypage/work/daily",
+        "target_role": "html",
+        "source_dataset": "raw_input",
+        "source_session_id": "276d9376-b0b9-43c9-8d39-6cb30be99c42",
+        "source_event_evidence": [
+          "bf2cf602-e490-4b4e-a967-f5f65055f3ff"
+        ]
+      },
+      {
+        "process_instance_id": "WF-0002",
+        "process_model_id": "PM-007",
+        "step_order": 3,
+        "node_id": "PM-007-N003",
+        "action": "api_confirmation",
+        "http_method": "GET",
+        "normalized_endpoint": "/api/work-reports",
+        "page_path": "/mypage/work/daily",
+        "target_role": "/api/work-reports",
+        "source_dataset": "raw_input",
+        "source_session_id": "276d9376-b0b9-43c9-8d39-6cb30be99c42",
+        "source_event_evidence": [
+          "c0af36c6-1a83-446f-8bf7-01634a05347f"
+        ]
+      },
+      {
+        "process_instance_id": "WF-0002",
+        "process_model_id": "PM-007",
+        "step_order": 4,
+        "node_id": "PM-007-N004",
+        "action": "api_confirmation",
+        "http_method": "GET",
+        "normalized_endpoint": "/api/auth/me",
+        "page_path": "/mypage/work/daily",
+        "target_role": "/api/auth/me",
+        "source_dataset": "raw_input",
+        "source_session_id": "276d9376-b0b9-43c9-8d39-6cb30be99c42",
+        "source_event_evidence": [
+          "637074bb-6c1b-44a8-8d98-d542163d8630"
+        ]
+      },
+      {
+        "process_instance_id": "WF-0002",
+        "process_model_id": "PM-007",
+        "step_order": 5,
+        "node_id": "PM-007-N005",
+        "action": "selection",
+        "http_method": "",
+        "normalized_endpoint": "",
+        "page_path": "/mypage/work/daily",
+        "target_role": "button",
+        "source_dataset": "raw_input",
+        "source_session_id": "276d9376-b0b9-43c9-8d39-6cb30be99c42",
+        "source_event_evidence": [
+          "4740f429-eebd-46a5-9714-7788bdd53cb3"
+        ]
+      },
+      {
+        "process_instance_id": "WF-0002",
+        "process_model_id": "PM-007",
+        "step_order": 6,
+        "node_id": "PM-007-N006",
+        "action": "detail_open",
+        "http_method": "",
+        "normalized_endpoint": "",
+        "page_path": "/mypage/work/daily",
+        "target_role": "dialog_control",
+        "source_dataset": "raw_input",
+        "source_session_id": "276d9376-b0b9-43c9-8d39-6cb30be99c42",
+        "source_event_evidence": [
+          "a1a89b09-b14d-44a7-a4a3-7f5967b3d966"
+        ]
+      },
+      {
+        "process_instance_id": "WF-0002",
+        "process_model_id": "PM-007",
+        "step_order": 7,
+        "node_id": "PM-007-N007",
+        "action": "selection",
+        "http_method": "",
+        "normalized_endpoint": "",
+        "page_path": "/mypage/work/daily",
+        "target_role": "input_control",
+        "source_dataset": "raw_input",
+        "source_session_id": "276d9376-b0b9-43c9-8d39-6cb30be99c42",
+        "source_event_evidence": [
+          "0b1e413f-0769-4b8c-b85a-275e865a86ee"
+        ]
+      },
+      {
+        "process_instance_id": "WF-0002",
+        "process_model_id": "PM-007",
+        "step_order": 8,
+        "node_id": "PM-007-N008",
+        "action": "input",
+        "http_method": "",
+        "normalized_endpoint": "",
+        "page_path": "/mypage/work/daily",
+        "target_role": "input_control",
+        "source_dataset": "raw_input",
+        "source_session_id": "276d9376-b0b9-43c9-8d39-6cb30be99c42",
+        "source_event_evidence": [
+          "eb6b1c04-2792-4fef-87f1-1d55f0ae87d7",
+          "c74d45fe-3e22-46e6-9940-aa605d4adb49"
+        ]
+      },
+      {
+        "process_instance_id": "WF-0002",
+        "process_model_id": "PM-007",
+        "step_order": 9,
+        "node_id": "PM-007-N007",
+        "action": "selection",
+        "http_method": "",
+        "normalized_endpoint": "",
+        "page_path": "/mypage/work/daily",
+        "target_role": "input_control",
+        "source_dataset": "raw_input",
+        "source_session_id": "276d9376-b0b9-43c9-8d39-6cb30be99c42",
+        "source_event_evidence": [
+          "0b401fb1-ed2e-4809-9377-eefe685017a3"
+        ]
+      },
+      {
+        "process_instance_id": "WF-0002",
+        "process_model_id": "PM-007",
+        "step_order": 10,
+        "node_id": "PM-007-N008",
+        "action": "input",
+        "http_method": "",
+        "normalized_endpoint": "",
+        "page_path": "/mypage/work/daily",
+        "target_role": "input_control",
+        "source_dataset": "raw_input",
+        "source_session_id": "276d9376-b0b9-43c9-8d39-6cb30be99c42",
+        "source_event_evidence": [
+          "a910e4db-c09b-4ee5-af7d-fff8807bc97f",
+          "0af86b08-8a38-4cae-bcb3-c15d3bbf744b"
+        ]
+      },
+      {
+        "process_instance_id": "WF-0002",
+        "process_model_id": "PM-007",
+        "step_order": 11,
+        "node_id": "PM-007-N009",
+        "action": "selection",
+        "http_method": "",
+        "normalized_endpoint": "",
+        "page_path": "/mypage/work/daily",
+        "target_role": "dialog_control",
+        "source_dataset": "raw_input",
+        "source_session_id": "276d9376-b0b9-43c9-8d39-6cb30be99c42",
+        "source_event_evidence": [
+          "de3e75b6-7163-40b7-8952-8be7c5ea709a"
+        ]
+      },
+      {
+        "process_instance_id": "WF-0002",
+        "process_model_id": "PM-007",
+        "step_order": 12,
+        "node_id": "PM-007-N010",
+        "action": "api_confirmation",
+        "http_method": "POST",
+        "normalized_endpoint": "/api/work-reports",
+        "page_path": "/mypage/work/daily",
+        "target_role": "/api/work-reports",
+        "source_dataset": "raw_input",
+        "source_session_id": "276d9376-b0b9-43c9-8d39-6cb30be99c42",
+        "source_event_evidence": [
+          "4b4bb913-a6ca-4a8c-ae06-746d7480a718"
+        ]
+      },
+      {
+        "process_instance_id": "WF-0002",
+        "process_model_id": "PM-007",
+        "step_order": 13,
+        "node_id": "PM-007-N006",
+        "action": "detail_open",
+        "http_method": "",
+        "normalized_endpoint": "",
+        "page_path": "/mypage/work/daily",
+        "target_role": "dialog_control",
+        "source_dataset": "raw_input",
+        "source_session_id": "276d9376-b0b9-43c9-8d39-6cb30be99c42",
+        "source_event_evidence": [
+          "d6eae1a3-1c4a-4b76-8ca8-b6b1792d837b"
+        ]
+      },
+      {
+        "process_instance_id": "WF-0002",
+        "process_model_id": "PM-007",
+        "step_order": 14,
+        "node_id": "PM-007-N011",
+        "action": "detail_close",
+        "http_method": "",
+        "normalized_endpoint": "",
+        "page_path": "/mypage/work/daily",
+        "target_role": "dialog_control",
+        "source_dataset": "raw_input",
+        "source_session_id": "276d9376-b0b9-43c9-8d39-6cb30be99c42",
+        "source_event_evidence": [
+          "36433873-e319-482c-8869-01a03624264d"
+        ]
+      },
+      {
+        "process_instance_id": "WF-0002",
+        "process_model_id": "PM-007",
+        "step_order": 15,
+        "node_id": "PM-007-N003",
+        "action": "api_confirmation",
+        "http_method": "GET",
+        "normalized_endpoint": "/api/work-reports",
+        "page_path": "/mypage/work/daily",
+        "target_role": "/api/work-reports",
+        "source_dataset": "raw_input",
+        "source_session_id": "276d9376-b0b9-43c9-8d39-6cb30be99c42",
+        "source_event_evidence": [
+          "c668b6c9-221d-4ed0-ba68-2f6d31d73092"
+        ]
+      },
+      {
+        "process_instance_id": "WF-0002",
+        "process_model_id": "PM-007",
+        "step_order": 16,
+        "node_id": "PM-007-N009",
+        "action": "selection",
+        "http_method": "",
+        "normalized_endpoint": "",
+        "page_path": "/mypage/work/daily",
+        "target_role": "dialog_control",
+        "source_dataset": "raw_input",
+        "source_session_id": "276d9376-b0b9-43c9-8d39-6cb30be99c42",
+        "source_event_evidence": [
+          "c791820a-674a-4355-b074-f6c3d2be309c"
+        ]
+      },
+      {
+        "process_instance_id": "WF-0002",
+        "process_model_id": "PM-007",
+        "step_order": 17,
+        "node_id": "PM-007-N011",
+        "action": "detail_close",
+        "http_method": "",
+        "normalized_endpoint": "",
+        "page_path": "/mypage/work/daily",
+        "target_role": "dialog_control",
+        "source_dataset": "raw_input",
+        "source_session_id": "276d9376-b0b9-43c9-8d39-6cb30be99c42",
+        "source_event_evidence": [
+          "d32410b0-cd82-4bf8-aa4b-d1e8514a0576"
+        ]
+      },
+      {
+        "process_instance_id": "WF-0003",
+        "process_model_id": "PM-006",
+        "step_order": 1,
+        "node_id": "PM-006-N001",
+        "action": "page_entry",
+        "http_method": "",
+        "normalized_endpoint": "",
+        "page_path": "/mypage/work/daily",
+        "target_role": "navigation",
+        "source_dataset": "raw_input",
+        "source_session_id": "276d9376-b0b9-43c9-8d39-6cb30be99c42",
+        "source_event_evidence": [
+          "b76bfbfa-47f2-4a40-9bc5-2a0df020f821"
+        ]
+      },
+      {
+        "process_instance_id": "WF-0003",
+        "process_model_id": "PM-006",
+        "step_order": 2,
+        "node_id": "PM-006-N002",
+        "action": "page_entry",
+        "http_method": "",
+        "normalized_endpoint": "",
+        "page_path": "/mypage/work/weekly",
+        "target_role": "html",
+        "source_dataset": "raw_input",
+        "source_session_id": "276d9376-b0b9-43c9-8d39-6cb30be99c42",
+        "source_event_evidence": [
+          "184a6658-053a-4bfb-a82a-c3e097bf2051"
+        ]
+      },
+      {
+        "process_instance_id": "WF-0003",
+        "process_model_id": "PM-006",
+        "step_order": 3,
+        "node_id": "PM-006-N003",
+        "action": "api_confirmation",
+        "http_method": "GET",
+        "normalized_endpoint": "/api/auth/me",
+        "page_path": "/mypage/work/weekly",
+        "target_role": "/api/auth/me",
+        "source_dataset": "raw_input",
+        "source_session_id": "276d9376-b0b9-43c9-8d39-6cb30be99c42",
+        "source_event_evidence": [
+          "1dc818e4-ebe8-4da8-8ac6-1c1dbbe4b9cf"
+        ]
+      },
+      {
+        "process_instance_id": "WF-0003",
+        "process_model_id": "PM-006",
+        "step_order": 4,
+        "node_id": "PM-006-N004",
+        "action": "api_confirmation",
+        "http_method": "GET",
+        "normalized_endpoint": "/api/work-reports",
+        "page_path": "/mypage/work/weekly",
+        "target_role": "/api/work-reports",
+        "source_dataset": "raw_input",
+        "source_session_id": "276d9376-b0b9-43c9-8d39-6cb30be99c42",
+        "source_event_evidence": [
+          "5703f470-27b5-4c54-8d82-0ba4659391a1"
+        ]
+      },
+      {
+        "process_instance_id": "WF-0003",
+        "process_model_id": "PM-006",
+        "step_order": 5,
+        "node_id": "PM-006-N005",
+        "action": "selection",
+        "http_method": "",
+        "normalized_endpoint": "",
+        "page_path": "/mypage/work/weekly",
+        "target_role": "button",
+        "source_dataset": "raw_input",
+        "source_session_id": "276d9376-b0b9-43c9-8d39-6cb30be99c42",
+        "source_event_evidence": [
+          "73141be6-e784-48bf-99f9-4431a7f6982c"
+        ]
+      },
+      {
+        "process_instance_id": "WF-0003",
+        "process_model_id": "PM-006",
+        "step_order": 6,
+        "node_id": "PM-006-N006",
+        "action": "detail_open",
+        "http_method": "",
+        "normalized_endpoint": "",
+        "page_path": "/mypage/work/weekly",
+        "target_role": "dialog_control",
+        "source_dataset": "raw_input",
+        "source_session_id": "276d9376-b0b9-43c9-8d39-6cb30be99c42",
+        "source_event_evidence": [
+          "96140f52-acc6-4685-935f-78e6a6d4afd0"
+        ]
+      },
+      {
+        "process_instance_id": "WF-0003",
+        "process_model_id": "PM-006",
+        "step_order": 7,
+        "node_id": "PM-006-N007",
+        "action": "selection",
+        "http_method": "",
+        "normalized_endpoint": "",
+        "page_path": "/mypage/work/weekly",
+        "target_role": "input_control",
+        "source_dataset": "raw_input",
+        "source_session_id": "276d9376-b0b9-43c9-8d39-6cb30be99c42",
+        "source_event_evidence": [
+          "a4d2a5e9-d4bb-485d-87b5-e5d4d4ece615",
+          "311652ea-eaa4-41ef-bffe-83fe864a198f"
+        ]
+      },
+      {
+        "process_instance_id": "WF-0003",
+        "process_model_id": "PM-006",
+        "step_order": 8,
+        "node_id": "PM-006-N008",
+        "action": "input",
+        "http_method": "",
+        "normalized_endpoint": "",
+        "page_path": "/mypage/work/weekly",
+        "target_role": "input_control",
+        "source_dataset": "raw_input",
+        "source_session_id": "276d9376-b0b9-43c9-8d39-6cb30be99c42",
+        "source_event_evidence": [
+          "296f5267-f0f3-43c3-bf2a-8c11ddb052d3",
+          "98af281c-97b4-416e-b093-debab017c30c"
+        ]
+      },
+      {
+        "process_instance_id": "WF-0003",
+        "process_model_id": "PM-006",
+        "step_order": 9,
+        "node_id": "PM-006-N007",
+        "action": "selection",
+        "http_method": "",
+        "normalized_endpoint": "",
+        "page_path": "/mypage/work/weekly",
+        "target_role": "input_control",
+        "source_dataset": "raw_input",
+        "source_session_id": "276d9376-b0b9-43c9-8d39-6cb30be99c42",
+        "source_event_evidence": [
+          "9a05d0ba-468b-4d4e-90a9-c3ca282738e3"
+        ]
+      },
+      {
+        "process_instance_id": "WF-0003",
+        "process_model_id": "PM-006",
+        "step_order": 10,
+        "node_id": "PM-006-N008",
+        "action": "input",
+        "http_method": "",
+        "normalized_endpoint": "",
+        "page_path": "/mypage/work/weekly",
+        "target_role": "input_control",
+        "source_dataset": "raw_input",
+        "source_session_id": "276d9376-b0b9-43c9-8d39-6cb30be99c42",
+        "source_event_evidence": [
+          "13235361-fabe-4623-80f1-fe35e4595fbb",
+          "51368e2b-acaf-45b7-b01a-160d782eed4c"
+        ]
+      },
+      {
+        "process_instance_id": "WF-0003",
+        "process_model_id": "PM-006",
+        "step_order": 11,
+        "node_id": "PM-006-N009",
+        "action": "selection",
+        "http_method": "",
+        "normalized_endpoint": "",
+        "page_path": "/mypage/work/weekly",
+        "target_role": "dialog_control",
+        "source_dataset": "raw_input",
+        "source_session_id": "276d9376-b0b9-43c9-8d39-6cb30be99c42",
+        "source_event_evidence": [
+          "05df9d7f-4b41-46fe-a125-92ece7eaacf9"
+        ]
+      },
+      {
+        "process_instance_id": "WF-0003",
+        "process_model_id": "PM-006",
+        "step_order": 12,
+        "node_id": "PM-006-N010",
+        "action": "api_confirmation",
+        "http_method": "POST",
+        "normalized_endpoint": "/api/work-reports",
+        "page_path": "/mypage/work/weekly",
+        "target_role": "/api/work-reports",
+        "source_dataset": "raw_input",
+        "source_session_id": "276d9376-b0b9-43c9-8d39-6cb30be99c42",
+        "source_event_evidence": [
+          "b0655d61-6ae4-4f70-8494-029e43e9eefa"
+        ]
+      },
+      {
+        "process_instance_id": "WF-0003",
+        "process_model_id": "PM-006",
+        "step_order": 13,
+        "node_id": "PM-006-N006",
+        "action": "detail_open",
+        "http_method": "",
+        "normalized_endpoint": "",
+        "page_path": "/mypage/work/weekly",
+        "target_role": "dialog_control",
+        "source_dataset": "raw_input",
+        "source_session_id": "276d9376-b0b9-43c9-8d39-6cb30be99c42",
+        "source_event_evidence": [
+          "be3f4f25-e465-401e-8ce8-9f5e73a301ad"
+        ]
+      },
+      {
+        "process_instance_id": "WF-0003",
+        "process_model_id": "PM-006",
+        "step_order": 14,
+        "node_id": "PM-006-N011",
+        "action": "detail_close",
+        "http_method": "",
+        "normalized_endpoint": "",
+        "page_path": "/mypage/work/weekly",
+        "target_role": "dialog_control",
+        "source_dataset": "raw_input",
+        "source_session_id": "276d9376-b0b9-43c9-8d39-6cb30be99c42",
+        "source_event_evidence": [
+          "f43c94cd-7e72-4df0-b02a-38484f2c4593"
+        ]
+      },
+      {
+        "process_instance_id": "WF-0003",
+        "process_model_id": "PM-006",
+        "step_order": 15,
+        "node_id": "PM-006-N004",
+        "action": "api_confirmation",
+        "http_method": "GET",
+        "normalized_endpoint": "/api/work-reports",
+        "page_path": "/mypage/work/weekly",
+        "target_role": "/api/work-reports",
+        "source_dataset": "raw_input",
+        "source_session_id": "276d9376-b0b9-43c9-8d39-6cb30be99c42",
+        "source_event_evidence": [
+          "60c41ccf-055c-4c95-bd5f-11331653b85b"
+        ]
+      },
+      {
+        "process_instance_id": "WF-0003",
+        "process_model_id": "PM-006",
+        "step_order": 16,
+        "node_id": "PM-006-N009",
+        "action": "selection",
+        "http_method": "",
+        "normalized_endpoint": "",
+        "page_path": "/mypage/work/weekly",
+        "target_role": "dialog_control",
+        "source_dataset": "raw_input",
+        "source_session_id": "276d9376-b0b9-43c9-8d39-6cb30be99c42",
+        "source_event_evidence": [
+          "93d397b0-f42f-48b4-9746-0fbe197531ed",
+          "7e11b652-c6fc-4eaa-b32f-b6342e7596b6"
+        ]
+      },
+      {
+        "process_instance_id": "WF-0003",
+        "process_model_id": "PM-006",
+        "step_order": 17,
+        "node_id": "PM-006-N011",
+        "action": "detail_close",
+        "http_method": "",
+        "normalized_endpoint": "",
+        "page_path": "/mypage/work/weekly",
+        "target_role": "dialog_control",
+        "source_dataset": "raw_input",
+        "source_session_id": "276d9376-b0b9-43c9-8d39-6cb30be99c42",
+        "source_event_evidence": [
+          "5ecdf03c-fddd-496b-8c08-6e0d69cfced3"
+        ]
+      },
+      {
+        "process_instance_id": "WF-0004",
+        "process_model_id": "PM-003",
+        "step_order": 1,
+        "node_id": "PM-003-N001",
+        "action": "page_entry",
+        "http_method": "",
+        "normalized_endpoint": "",
+        "page_path": "/mypage/work/weekly",
+        "target_role": "navigation",
+        "source_dataset": "raw_input",
+        "source_session_id": "276d9376-b0b9-43c9-8d39-6cb30be99c42",
+        "source_event_evidence": [
+          "e5635e43-d438-42e4-870a-b8bc29634ba6"
+        ]
+      },
+      {
+        "process_instance_id": "WF-0004",
+        "process_model_id": "PM-003",
+        "step_order": 2,
+        "node_id": "PM-003-N002",
+        "action": "page_entry",
+        "http_method": "",
+        "normalized_endpoint": "",
+        "page_path": "/mypage/clients",
+        "target_role": "html",
+        "source_dataset": "raw_input",
+        "source_session_id": "276d9376-b0b9-43c9-8d39-6cb30be99c42",
+        "source_event_evidence": [
+          "d8854e7b-ca39-4086-acad-ca8cd68a2efd"
+        ]
+      },
+      {
+        "process_instance_id": "WF-0004",
+        "process_model_id": "PM-003",
+        "step_order": 3,
+        "node_id": "PM-003-N003",
+        "action": "api_confirmation",
+        "http_method": "GET",
+        "normalized_endpoint": "/api/auth/me",
+        "page_path": "/mypage/clients",
+        "target_role": "/api/auth/me",
+        "source_dataset": "raw_input",
+        "source_session_id": "276d9376-b0b9-43c9-8d39-6cb30be99c42",
+        "source_event_evidence": [
+          "4a94ba8b-c11d-4a1b-a94b-07da9639de2f"
+        ]
+      },
+      {
+        "process_instance_id": "WF-0004",
+        "process_model_id": "PM-003",
+        "step_order": 4,
+        "node_id": "PM-003-N004",
+        "action": "api_confirmation",
+        "http_method": "GET",
+        "normalized_endpoint": "/api/clients",
+        "page_path": "/mypage/clients",
+        "target_role": "/api/clients",
+        "source_dataset": "raw_input",
+        "source_session_id": "276d9376-b0b9-43c9-8d39-6cb30be99c42",
+        "source_event_evidence": [
+          "b72999a8-5a36-42c3-880b-de7cbb11a11f"
+        ]
+      },
+      {
+        "process_instance_id": "WF-0005",
+        "process_model_id": "PM-005",
+        "step_order": 1,
+        "node_id": "PM-005-N001",
+        "action": "selection",
+        "http_method": "",
+        "normalized_endpoint": "",
+        "page_path": "/mypage/clients",
+        "target_role": "button",
+        "source_dataset": "raw_input",
+        "source_session_id": "276d9376-b0b9-43c9-8d39-6cb30be99c42",
+        "source_event_evidence": [
+          "1d1925e1-dc41-44e3-97f8-b752203efe59"
+        ]
+      },
+      {
+        "process_instance_id": "WF-0005",
+        "process_model_id": "PM-005",
+        "step_order": 2,
+        "node_id": "PM-005-N002",
+        "action": "detail_open",
+        "http_method": "",
+        "normalized_endpoint": "",
+        "page_path": "/mypage/clients",
+        "target_role": "dialog_control",
+        "source_dataset": "raw_input",
+        "source_session_id": "276d9376-b0b9-43c9-8d39-6cb30be99c42",
+        "source_event_evidence": [
+          "e9fa9155-1948-4746-98e5-41152a59a93d"
+        ]
+      },
+      {
+        "process_instance_id": "WF-0005",
+        "process_model_id": "PM-005",
+        "step_order": 3,
+        "node_id": "PM-005-N003",
+        "action": "selection",
+        "http_method": "",
+        "normalized_endpoint": "",
+        "page_path": "/mypage/clients",
+        "target_role": "input_control",
+        "source_dataset": "raw_input",
+        "source_session_id": "276d9376-b0b9-43c9-8d39-6cb30be99c42",
+        "source_event_evidence": [
+          "07958465-00ab-4339-9ed0-8cbe2c16243f"
+        ]
+      },
+      {
+        "process_instance_id": "WF-0005",
+        "process_model_id": "PM-005",
+        "step_order": 4,
+        "node_id": "PM-005-N004",
+        "action": "input",
+        "http_method": "",
+        "normalized_endpoint": "",
+        "page_path": "/mypage/clients",
+        "target_role": "input_control",
+        "source_dataset": "raw_input",
+        "source_session_id": "276d9376-b0b9-43c9-8d39-6cb30be99c42",
+        "source_event_evidence": [
+          "b08a99f0-d0d0-4021-b522-3c6571481232",
+          "dbee4962-6c32-4029-8af1-4bcf3d51df76"
+        ]
+      },
+      {
+        "process_instance_id": "WF-0005",
+        "process_model_id": "PM-005",
+        "step_order": 5,
+        "node_id": "PM-005-N003",
+        "action": "selection",
+        "http_method": "",
+        "normalized_endpoint": "",
+        "page_path": "/mypage/clients",
+        "target_role": "input_control",
+        "source_dataset": "raw_input",
+        "source_session_id": "276d9376-b0b9-43c9-8d39-6cb30be99c42",
+        "source_event_evidence": [
+          "d8e6632f-1ec2-4da5-8dec-ace661295a6f"
+        ]
+      },
+      {
+        "process_instance_id": "WF-0005",
+        "process_model_id": "PM-005",
+        "step_order": 6,
+        "node_id": "PM-005-N004",
+        "action": "input",
+        "http_method": "",
+        "normalized_endpoint": "",
+        "page_path": "/mypage/clients",
+        "target_role": "input_control",
+        "source_dataset": "raw_input",
+        "source_session_id": "276d9376-b0b9-43c9-8d39-6cb30be99c42",
+        "source_event_evidence": [
+          "af179592-c4c4-493c-882f-a0c352317e52"
+        ]
+      },
+      {
+        "process_instance_id": "WF-0005",
+        "process_model_id": "PM-005",
+        "step_order": 7,
+        "node_id": "PM-005-N003",
+        "action": "selection",
+        "http_method": "",
+        "normalized_endpoint": "",
+        "page_path": "/mypage/clients",
+        "target_role": "input_control",
+        "source_dataset": "raw_input",
+        "source_session_id": "276d9376-b0b9-43c9-8d39-6cb30be99c42",
+        "source_event_evidence": [
+          "cdaaa352-a9c6-4687-97d7-5de3ca6bf274"
+        ]
+      },
+      {
+        "process_instance_id": "WF-0005",
+        "process_model_id": "PM-005",
+        "step_order": 8,
+        "node_id": "PM-005-N004",
+        "action": "input",
+        "http_method": "",
+        "normalized_endpoint": "",
+        "page_path": "/mypage/clients",
+        "target_role": "input_control",
+        "source_dataset": "raw_input",
+        "source_session_id": "276d9376-b0b9-43c9-8d39-6cb30be99c42",
+        "source_event_evidence": [
+          "c488f50d-767b-49b9-9e14-5e8dc406a646",
+          "0a81f206-f9a9-45ff-8c80-db83e8d2f560"
+        ]
+      },
+      {
+        "process_instance_id": "WF-0005",
+        "process_model_id": "PM-005",
+        "step_order": 9,
+        "node_id": "PM-005-N003",
+        "action": "selection",
+        "http_method": "",
+        "normalized_endpoint": "",
+        "page_path": "/mypage/clients",
+        "target_role": "input_control",
+        "source_dataset": "raw_input",
+        "source_session_id": "276d9376-b0b9-43c9-8d39-6cb30be99c42",
+        "source_event_evidence": [
+          "c4912424-3fa1-4b08-8a34-4e582ee985aa"
+        ]
+      },
+      {
+        "process_instance_id": "WF-0005",
+        "process_model_id": "PM-005",
+        "step_order": 10,
+        "node_id": "PM-005-N004",
+        "action": "input",
+        "http_method": "",
+        "normalized_endpoint": "",
+        "page_path": "/mypage/clients",
+        "target_role": "input_control",
+        "source_dataset": "raw_input",
+        "source_session_id": "276d9376-b0b9-43c9-8d39-6cb30be99c42",
+        "source_event_evidence": [
+          "15ed07da-a4f9-48e5-bf55-d204b1a1e79b",
+          "c1979f4c-645c-4fea-925d-03cb3b63f02b"
+        ]
+      },
+      {
+        "process_instance_id": "WF-0005",
+        "process_model_id": "PM-005",
+        "step_order": 11,
+        "node_id": "PM-005-N003",
+        "action": "selection",
+        "http_method": "",
+        "normalized_endpoint": "",
+        "page_path": "/mypage/clients",
+        "target_role": "input_control",
+        "source_dataset": "raw_input",
+        "source_session_id": "276d9376-b0b9-43c9-8d39-6cb30be99c42",
+        "source_event_evidence": [
+          "b9ec2d1d-68c3-4325-961a-851d6329f5ff"
+        ]
+      },
+      {
+        "process_instance_id": "WF-0005",
+        "process_model_id": "PM-005",
+        "step_order": 12,
+        "node_id": "PM-005-N004",
+        "action": "input",
+        "http_method": "",
+        "normalized_endpoint": "",
+        "page_path": "/mypage/clients",
+        "target_role": "input_control",
+        "source_dataset": "raw_input",
+        "source_session_id": "276d9376-b0b9-43c9-8d39-6cb30be99c42",
+        "source_event_evidence": [
+          "848f73d6-860c-4cb1-b138-f953bfaa33ae"
+        ]
+      },
+      {
+        "process_instance_id": "WF-0005",
+        "process_model_id": "PM-005",
+        "step_order": 13,
+        "node_id": "PM-005-N005",
+        "action": "selection",
+        "http_method": "",
+        "normalized_endpoint": "",
+        "page_path": "/mypage/clients",
+        "target_role": "dialog_control",
+        "source_dataset": "raw_input",
+        "source_session_id": "276d9376-b0b9-43c9-8d39-6cb30be99c42",
+        "source_event_evidence": [
+          "ec2546d6-9763-409a-aa01-790c97aedd1b"
+        ]
+      },
+      {
+        "process_instance_id": "WF-0005",
+        "process_model_id": "PM-005",
+        "step_order": 14,
+        "node_id": "PM-005-N006",
+        "action": "api_confirmation",
+        "http_method": "POST",
+        "normalized_endpoint": "/api/clients",
+        "page_path": "/mypage/clients",
+        "target_role": "/api/clients",
+        "source_dataset": "raw_input",
+        "source_session_id": "276d9376-b0b9-43c9-8d39-6cb30be99c42",
+        "source_event_evidence": [
+          "bfd05466-a2e8-44cd-a75c-b9cacb394b3a"
+        ]
+      },
+      {
+        "process_instance_id": "WF-0005",
+        "process_model_id": "PM-005",
+        "step_order": 15,
+        "node_id": "PM-005-N007",
+        "action": "api_confirmation",
+        "http_method": "GET",
+        "normalized_endpoint": "/api/clients",
+        "page_path": "/mypage/clients",
+        "target_role": "/api/clients",
+        "source_dataset": "raw_input",
+        "source_session_id": "276d9376-b0b9-43c9-8d39-6cb30be99c42",
+        "source_event_evidence": [
+          "b78d63ae-f0a0-415a-afac-4a3acca17dbc"
+        ]
+      },
+      {
+        "process_instance_id": "WF-0005",
+        "process_model_id": "PM-005",
+        "step_order": 16,
+        "node_id": "PM-005-N002",
+        "action": "detail_open",
+        "http_method": "",
+        "normalized_endpoint": "",
+        "page_path": "/mypage/clients",
+        "target_role": "dialog_control",
+        "source_dataset": "raw_input",
+        "source_session_id": "276d9376-b0b9-43c9-8d39-6cb30be99c42",
+        "source_event_evidence": [
+          "40ecd720-27cc-4f80-b490-5f09a1aaa46f"
+        ]
+      },
+      {
+        "process_instance_id": "WF-0005",
+        "process_model_id": "PM-005",
+        "step_order": 17,
+        "node_id": "PM-005-N008",
+        "action": "detail_close",
+        "http_method": "",
+        "normalized_endpoint": "",
+        "page_path": "/mypage/clients",
+        "target_role": "dialog_control",
+        "source_dataset": "raw_input",
+        "source_session_id": "276d9376-b0b9-43c9-8d39-6cb30be99c42",
+        "source_event_evidence": [
+          "639c3fce-9100-459c-9502-a9040fdc2a2d"
+        ]
+      },
+      {
+        "process_instance_id": "WF-0005",
+        "process_model_id": "PM-005",
+        "step_order": 18,
+        "node_id": "PM-005-N005",
+        "action": "selection",
+        "http_method": "",
+        "normalized_endpoint": "",
+        "page_path": "/mypage/clients",
+        "target_role": "dialog_control",
+        "source_dataset": "raw_input",
+        "source_session_id": "276d9376-b0b9-43c9-8d39-6cb30be99c42",
+        "source_event_evidence": [
+          "1c803c70-e33b-447d-be76-d79c9f6c6e09",
+          "ee5f94b1-cc44-48d0-afa0-bd53fba10fc9"
+        ]
+      },
+      {
+        "process_instance_id": "WF-0005",
+        "process_model_id": "PM-005",
+        "step_order": 19,
+        "node_id": "PM-005-N008",
+        "action": "detail_close",
+        "http_method": "",
+        "normalized_endpoint": "",
+        "page_path": "/mypage/clients",
+        "target_role": "dialog_control",
+        "source_dataset": "raw_input",
+        "source_session_id": "276d9376-b0b9-43c9-8d39-6cb30be99c42",
+        "source_event_evidence": [
+          "81cf767c-0f16-4d19-9b20-193a7a6e8ea7"
+        ]
+      },
+      {
+        "process_instance_id": "WF-0006",
+        "process_model_id": "PM-002",
+        "step_order": 1,
+        "node_id": "PM-002-N001",
+        "action": "page_entry",
+        "http_method": "",
+        "normalized_endpoint": "",
+        "page_path": "/mypage/clients",
+        "target_role": "navigation",
+        "source_dataset": "raw_input",
+        "source_session_id": "276d9376-b0b9-43c9-8d39-6cb30be99c42",
+        "source_event_evidence": [
+          "8c58f682-b205-4a26-b20b-8c98690d1332"
+        ]
+      },
+      {
+        "process_instance_id": "WF-0006",
+        "process_model_id": "PM-002",
+        "step_order": 2,
+        "node_id": "PM-002-N002",
+        "action": "page_entry",
+        "http_method": "",
+        "normalized_endpoint": "",
+        "page_path": "/mypage/assets",
+        "target_role": "html",
+        "source_dataset": "raw_input",
+        "source_session_id": "276d9376-b0b9-43c9-8d39-6cb30be99c42",
+        "source_event_evidence": [
+          "6c4fc675-45b6-49a2-be32-ac1b3a4aec68"
+        ]
+      },
+      {
+        "process_instance_id": "WF-0006",
+        "process_model_id": "PM-002",
+        "step_order": 3,
+        "node_id": "PM-002-N003",
+        "action": "api_confirmation",
+        "http_method": "GET",
+        "normalized_endpoint": "/api/auth/me",
+        "page_path": "/mypage/assets",
+        "target_role": "/api/auth/me",
+        "source_dataset": "raw_input",
+        "source_session_id": "276d9376-b0b9-43c9-8d39-6cb30be99c42",
+        "source_event_evidence": [
+          "80ce1d19-7129-4b00-b0bf-6e1034ccb8b3"
+        ]
+      },
+      {
+        "process_instance_id": "WF-0006",
+        "process_model_id": "PM-002",
+        "step_order": 4,
+        "node_id": "PM-002-N004",
+        "action": "api_confirmation",
+        "http_method": "GET",
+        "normalized_endpoint": "/api/assets",
+        "page_path": "/mypage/assets",
+        "target_role": "/api/assets",
+        "source_dataset": "raw_input",
+        "source_session_id": "276d9376-b0b9-43c9-8d39-6cb30be99c42",
+        "source_event_evidence": [
+          "6b048283-ddeb-473c-af13-d9b6ca8fd426"
+        ]
+      },
+      {
+        "process_instance_id": "WF-0007",
+        "process_model_id": "PM-001",
+        "step_order": 1,
+        "node_id": "PM-001-N001",
+        "action": "selection",
+        "http_method": "",
+        "normalized_endpoint": "",
+        "page_path": "/mypage/assets",
+        "target_role": "button",
+        "source_dataset": "raw_input",
+        "source_session_id": "276d9376-b0b9-43c9-8d39-6cb30be99c42",
+        "source_event_evidence": [
+          "1ba723c8-d5f9-413b-b97b-785c4cb57da6"
+        ]
+      },
+      {
+        "process_instance_id": "WF-0007",
+        "process_model_id": "PM-001",
+        "step_order": 2,
+        "node_id": "PM-001-N002",
+        "action": "detail_open",
+        "http_method": "",
+        "normalized_endpoint": "",
+        "page_path": "/mypage/assets",
+        "target_role": "dialog_control",
+        "source_dataset": "raw_input",
+        "source_session_id": "276d9376-b0b9-43c9-8d39-6cb30be99c42",
+        "source_event_evidence": [
+          "0d438cd7-7376-44ef-83c6-66fd13a67441"
+        ]
+      },
+      {
+        "process_instance_id": "WF-0007",
+        "process_model_id": "PM-001",
+        "step_order": 3,
+        "node_id": "PM-001-N003",
+        "action": "selection",
+        "http_method": "",
+        "normalized_endpoint": "",
+        "page_path": "/mypage/assets",
+        "target_role": "input_control",
+        "source_dataset": "raw_input",
+        "source_session_id": "276d9376-b0b9-43c9-8d39-6cb30be99c42",
+        "source_event_evidence": [
+          "920b1051-d5c1-4266-9aea-a4b9a6dd508b"
+        ]
+      },
+      {
+        "process_instance_id": "WF-0007",
+        "process_model_id": "PM-001",
+        "step_order": 4,
+        "node_id": "PM-001-N004",
+        "action": "input",
+        "http_method": "",
+        "normalized_endpoint": "",
+        "page_path": "/mypage/assets",
+        "target_role": "input_control",
+        "source_dataset": "raw_input",
+        "source_session_id": "276d9376-b0b9-43c9-8d39-6cb30be99c42",
+        "source_event_evidence": [
+          "979eeb38-3653-4ca7-8b2c-5c332d763c1f",
+          "96ed338f-3daa-4441-b03c-fa475c4edaa6"
+        ]
+      },
+      {
+        "process_instance_id": "WF-0007",
+        "process_model_id": "PM-001",
+        "step_order": 5,
+        "node_id": "PM-001-N003",
+        "action": "selection",
+        "http_method": "",
+        "normalized_endpoint": "",
+        "page_path": "/mypage/assets",
+        "target_role": "input_control",
+        "source_dataset": "raw_input",
+        "source_session_id": "276d9376-b0b9-43c9-8d39-6cb30be99c42",
+        "source_event_evidence": [
+          "5975d02c-0f50-429a-9d74-52b0ce56d331"
+        ]
+      },
+      {
+        "process_instance_id": "WF-0007",
+        "process_model_id": "PM-001",
+        "step_order": 6,
+        "node_id": "PM-001-N004",
+        "action": "input",
+        "http_method": "",
+        "normalized_endpoint": "",
+        "page_path": "/mypage/assets",
+        "target_role": "input_control",
+        "source_dataset": "raw_input",
+        "source_session_id": "276d9376-b0b9-43c9-8d39-6cb30be99c42",
+        "source_event_evidence": [
+          "a81eac33-844c-443a-9b70-1f4eb1403211",
+          "76654159-6116-437d-9647-190f7cb7195f"
+        ]
+      },
+      {
+        "process_instance_id": "WF-0007",
+        "process_model_id": "PM-001",
+        "step_order": 7,
+        "node_id": "PM-001-N003",
+        "action": "selection",
+        "http_method": "",
+        "normalized_endpoint": "",
+        "page_path": "/mypage/assets",
+        "target_role": "input_control",
+        "source_dataset": "raw_input",
+        "source_session_id": "276d9376-b0b9-43c9-8d39-6cb30be99c42",
+        "source_event_evidence": [
+          "c96fc987-b08c-4498-93f2-199125e5aeda"
+        ]
+      },
+      {
+        "process_instance_id": "WF-0007",
+        "process_model_id": "PM-001",
+        "step_order": 8,
+        "node_id": "PM-001-N004",
+        "action": "input",
+        "http_method": "",
+        "normalized_endpoint": "",
+        "page_path": "/mypage/assets",
+        "target_role": "input_control",
+        "source_dataset": "raw_input",
+        "source_session_id": "276d9376-b0b9-43c9-8d39-6cb30be99c42",
+        "source_event_evidence": [
+          "8f143632-1995-4feb-868b-2ec9fdca897b",
+          "77178151-4ad2-4694-b1cd-98d56e18449d"
+        ]
+      },
+      {
+        "process_instance_id": "WF-0007",
+        "process_model_id": "PM-001",
+        "step_order": 9,
+        "node_id": "PM-001-N005",
+        "action": "selection",
+        "http_method": "",
+        "normalized_endpoint": "",
+        "page_path": "/mypage/assets",
+        "target_role": "dialog_control",
+        "source_dataset": "raw_input",
+        "source_session_id": "276d9376-b0b9-43c9-8d39-6cb30be99c42",
+        "source_event_evidence": [
+          "0c8d1959-efb7-4642-b07a-f9f72abcb2f8"
+        ]
+      },
+      {
+        "process_instance_id": "WF-0007",
+        "process_model_id": "PM-001",
+        "step_order": 10,
+        "node_id": "PM-001-N006",
+        "action": "api_confirmation",
+        "http_method": "POST",
+        "normalized_endpoint": "/api/assets",
+        "page_path": "/mypage/assets",
+        "target_role": "/api/assets",
+        "source_dataset": "raw_input",
+        "source_session_id": "276d9376-b0b9-43c9-8d39-6cb30be99c42",
+        "source_event_evidence": [
+          "502923d7-ccce-4f4d-be90-2ce976a377b1"
+        ]
+      },
+      {
+        "process_instance_id": "WF-0007",
+        "process_model_id": "PM-001",
+        "step_order": 11,
+        "node_id": "PM-001-N007",
+        "action": "api_confirmation",
+        "http_method": "GET",
+        "normalized_endpoint": "/api/assets",
+        "page_path": "/mypage/assets",
+        "target_role": "/api/assets",
+        "source_dataset": "raw_input",
+        "source_session_id": "276d9376-b0b9-43c9-8d39-6cb30be99c42",
+        "source_event_evidence": [
+          "d733b8b0-71ca-481c-889c-9603c8649075"
+        ]
+      },
+      {
+        "process_instance_id": "WF-0007",
+        "process_model_id": "PM-001",
+        "step_order": 12,
+        "node_id": "PM-001-N002",
+        "action": "detail_open",
+        "http_method": "",
+        "normalized_endpoint": "",
+        "page_path": "/mypage/assets",
+        "target_role": "dialog_control",
+        "source_dataset": "raw_input",
+        "source_session_id": "276d9376-b0b9-43c9-8d39-6cb30be99c42",
+        "source_event_evidence": [
+          "ea8f0f14-1b79-44de-88c6-8e44f7c55ba1"
+        ]
+      },
+      {
+        "process_instance_id": "WF-0007",
+        "process_model_id": "PM-001",
+        "step_order": 13,
+        "node_id": "PM-001-N008",
+        "action": "detail_close",
+        "http_method": "",
+        "normalized_endpoint": "",
+        "page_path": "/mypage/assets",
+        "target_role": "dialog_control",
+        "source_dataset": "raw_input",
+        "source_session_id": "276d9376-b0b9-43c9-8d39-6cb30be99c42",
+        "source_event_evidence": [
+          "cbee6ee1-c14d-49d9-90d5-1c0d53fc1359"
+        ]
+      },
+      {
+        "process_instance_id": "WF-0007",
+        "process_model_id": "PM-001",
+        "step_order": 14,
+        "node_id": "PM-001-N005",
+        "action": "selection",
+        "http_method": "",
+        "normalized_endpoint": "",
+        "page_path": "/mypage/assets",
+        "target_role": "dialog_control",
+        "source_dataset": "raw_input",
+        "source_session_id": "276d9376-b0b9-43c9-8d39-6cb30be99c42",
+        "source_event_evidence": [
+          "81d5d054-1d95-4c68-8fe0-c439f0e6e781"
+        ]
+      },
+      {
+        "process_instance_id": "WF-0007",
+        "process_model_id": "PM-001",
+        "step_order": 15,
+        "node_id": "PM-001-N008",
+        "action": "detail_close",
+        "http_method": "",
+        "normalized_endpoint": "",
+        "page_path": "/mypage/assets",
+        "target_role": "dialog_control",
+        "source_dataset": "raw_input",
+        "source_session_id": "276d9376-b0b9-43c9-8d39-6cb30be99c42",
+        "source_event_evidence": [
+          "caae4fec-0405-4025-b2ba-32dacac1ee47"
+        ]
+      }
+    ],
+    "node_inputs": [
+      {
+        "process_instance_id": "WF-0001",
+        "node_id": "PM-004-N004",
+        "step_order": 5,
+        "input_value": "<redacted>",
+        "source_event_evidence": [
+          "cc6c388a-04c2-482d-b134-542d3241b517"
+        ]
+      },
+      {
+        "process_instance_id": "WF-0001",
+        "node_id": "PM-004-N004",
+        "step_order": 7,
+        "input_value": "<redacted>",
+        "source_event_evidence": [
+          "c0e0e82d-1fe9-40cf-aef6-abc16ef3b229",
+          "955dcf1d-6d3b-4a06-97b6-1604c0a64d07"
+        ]
+      },
+      {
+        "process_instance_id": "WF-0002",
+        "node_id": "PM-007-N008",
+        "step_order": 8,
+        "input_value": "<redacted>",
+        "source_event_evidence": [
+          "eb6b1c04-2792-4fef-87f1-1d55f0ae87d7",
+          "c74d45fe-3e22-46e6-9940-aa605d4adb49"
+        ]
+      },
+      {
+        "process_instance_id": "WF-0002",
+        "node_id": "PM-007-N008",
+        "step_order": 10,
+        "input_value": "<redacted>",
+        "source_event_evidence": [
+          "a910e4db-c09b-4ee5-af7d-fff8807bc97f",
+          "0af86b08-8a38-4cae-bcb3-c15d3bbf744b"
+        ]
+      },
+      {
+        "process_instance_id": "WF-0003",
+        "node_id": "PM-006-N008",
+        "step_order": 8,
+        "input_value": "<redacted>",
+        "source_event_evidence": [
+          "296f5267-f0f3-43c3-bf2a-8c11ddb052d3",
+          "98af281c-97b4-416e-b093-debab017c30c"
+        ]
+      },
+      {
+        "process_instance_id": "WF-0003",
+        "node_id": "PM-006-N008",
+        "step_order": 10,
+        "input_value": "<redacted>",
+        "source_event_evidence": [
+          "13235361-fabe-4623-80f1-fe35e4595fbb",
+          "51368e2b-acaf-45b7-b01a-160d782eed4c"
+        ]
+      },
+      {
+        "process_instance_id": "WF-0005",
+        "node_id": "PM-005-N004",
+        "step_order": 4,
+        "input_value": "<redacted>",
+        "source_event_evidence": [
+          "b08a99f0-d0d0-4021-b522-3c6571481232",
+          "dbee4962-6c32-4029-8af1-4bcf3d51df76"
+        ]
+      },
+      {
+        "process_instance_id": "WF-0005",
+        "node_id": "PM-005-N004",
+        "step_order": 6,
+        "input_value": "<redacted>",
+        "source_event_evidence": [
+          "af179592-c4c4-493c-882f-a0c352317e52"
+        ]
+      },
+      {
+        "process_instance_id": "WF-0005",
+        "node_id": "PM-005-N004",
+        "step_order": 8,
+        "input_value": "<redacted>",
+        "source_event_evidence": [
+          "c488f50d-767b-49b9-9e14-5e8dc406a646",
+          "0a81f206-f9a9-45ff-8c80-db83e8d2f560"
+        ]
+      },
+      {
+        "process_instance_id": "WF-0005",
+        "node_id": "PM-005-N004",
+        "step_order": 10,
+        "input_value": "<redacted>",
+        "source_event_evidence": [
+          "15ed07da-a4f9-48e5-bf55-d204b1a1e79b",
+          "c1979f4c-645c-4fea-925d-03cb3b63f02b"
+        ]
+      },
+      {
+        "process_instance_id": "WF-0005",
+        "node_id": "PM-005-N004",
+        "step_order": 12,
+        "input_value": "<redacted>",
+        "source_event_evidence": [
+          "848f73d6-860c-4cb1-b138-f953bfaa33ae"
+        ]
+      },
+      {
+        "process_instance_id": "WF-0007",
+        "node_id": "PM-001-N004",
+        "step_order": 4,
+        "input_value": "<redacted>",
+        "source_event_evidence": [
+          "979eeb38-3653-4ca7-8b2c-5c332d763c1f",
+          "96ed338f-3daa-4441-b03c-fa475c4edaa6"
+        ]
+      },
+      {
+        "process_instance_id": "WF-0007",
+        "node_id": "PM-001-N004",
+        "step_order": 6,
+        "input_value": "<redacted>",
+        "source_event_evidence": [
+          "a81eac33-844c-443a-9b70-1f4eb1403211",
+          "76654159-6116-437d-9647-190f7cb7195f"
+        ]
+      },
+      {
+        "process_instance_id": "WF-0007",
+        "node_id": "PM-001-N004",
+        "step_order": 8,
+        "input_value": "<redacted>",
+        "source_event_evidence": [
+          "8f143632-1995-4feb-868b-2ec9fdca897b",
+          "77178151-4ad2-4694-b1cd-98d56e18449d"
+        ]
+      }
+    ]
+  },
+  "canonical": [
+    {
+      "schema_version": "workflow-canonical-1.1",
+      "process_model_id": "PM-001",
+      "procedures": [
+        {
+          "id": "PM-001-N001",
+          "order": 1,
+          "action": "selection",
+          "http_method": "",
+          "target": {
+            "page_path": "/mypage/assets",
+            "role": "button",
+            "normalized_endpoint": ""
+          },
+          "evidence": [
+            "1ba723c8-d5f9-413b-b97b-785c4cb57da6"
+          ]
+        },
+        {
+          "id": "PM-001-N002",
+          "order": 2,
+          "action": "detail_open",
+          "http_method": "",
+          "target": {
+            "page_path": "/mypage/assets",
+            "role": "dialog_control",
+            "normalized_endpoint": ""
+          },
+          "evidence": [
+            "0d438cd7-7376-44ef-83c6-66fd13a67441"
+          ]
+        },
+        {
+          "id": "PM-001-N003",
+          "order": 3,
+          "action": "selection",
+          "http_method": "",
+          "target": {
+            "page_path": "/mypage/assets",
+            "role": "input_control",
+            "normalized_endpoint": ""
+          },
+          "evidence": [
+            "920b1051-d5c1-4266-9aea-a4b9a6dd508b"
+          ]
+        },
+        {
+          "id": "PM-001-N004",
+          "order": 4,
+          "action": "input",
+          "http_method": "",
+          "target": {
+            "page_path": "/mypage/assets",
+            "role": "input_control",
+            "normalized_endpoint": ""
+          },
+          "evidence": [
+            "979eeb38-3653-4ca7-8b2c-5c332d763c1f",
+            "96ed338f-3daa-4441-b03c-fa475c4edaa6"
+          ]
+        },
+        {
+          "id": "PM-001-N003",
+          "order": 5,
+          "action": "selection",
+          "http_method": "",
+          "target": {
+            "page_path": "/mypage/assets",
+            "role": "input_control",
+            "normalized_endpoint": ""
+          },
+          "evidence": [
+            "5975d02c-0f50-429a-9d74-52b0ce56d331"
+          ]
+        },
+        {
+          "id": "PM-001-N004",
+          "order": 6,
+          "action": "input",
+          "http_method": "",
+          "target": {
+            "page_path": "/mypage/assets",
+            "role": "input_control",
+            "normalized_endpoint": ""
+          },
+          "evidence": [
+            "a81eac33-844c-443a-9b70-1f4eb1403211",
+            "76654159-6116-437d-9647-190f7cb7195f"
+          ]
+        },
+        {
+          "id": "PM-001-N003",
+          "order": 7,
+          "action": "selection",
+          "http_method": "",
+          "target": {
+            "page_path": "/mypage/assets",
+            "role": "input_control",
+            "normalized_endpoint": ""
+          },
+          "evidence": [
+            "c96fc987-b08c-4498-93f2-199125e5aeda"
+          ]
+        },
+        {
+          "id": "PM-001-N004",
+          "order": 8,
+          "action": "input",
+          "http_method": "",
+          "target": {
+            "page_path": "/mypage/assets",
+            "role": "input_control",
+            "normalized_endpoint": ""
+          },
+          "evidence": [
+            "8f143632-1995-4feb-868b-2ec9fdca897b",
+            "77178151-4ad2-4694-b1cd-98d56e18449d"
+          ]
+        },
+        {
+          "id": "PM-001-N005",
+          "order": 9,
+          "action": "selection",
+          "http_method": "",
+          "target": {
+            "page_path": "/mypage/assets",
+            "role": "dialog_control",
+            "normalized_endpoint": ""
+          },
+          "evidence": [
+            "0c8d1959-efb7-4642-b07a-f9f72abcb2f8"
+          ]
+        },
+        {
+          "id": "PM-001-N006",
+          "order": 10,
+          "action": "api_confirmation",
+          "http_method": "POST",
+          "target": {
+            "page_path": "/mypage/assets",
+            "role": "/api/assets",
+            "normalized_endpoint": "/api/assets"
+          },
+          "evidence": [
+            "502923d7-ccce-4f4d-be90-2ce976a377b1"
+          ]
+        },
+        {
+          "id": "PM-001-N007",
+          "order": 11,
+          "action": "api_confirmation",
+          "http_method": "GET",
+          "target": {
+            "page_path": "/mypage/assets",
+            "role": "/api/assets",
+            "normalized_endpoint": "/api/assets"
+          },
+          "evidence": [
+            "d733b8b0-71ca-481c-889c-9603c8649075"
+          ]
+        },
+        {
+          "id": "PM-001-N002",
+          "order": 12,
+          "action": "detail_open",
+          "http_method": "",
+          "target": {
+            "page_path": "/mypage/assets",
+            "role": "dialog_control",
+            "normalized_endpoint": ""
+          },
+          "evidence": [
+            "ea8f0f14-1b79-44de-88c6-8e44f7c55ba1"
+          ]
+        },
+        {
+          "id": "PM-001-N008",
+          "order": 13,
+          "action": "detail_close",
+          "http_method": "",
+          "target": {
+            "page_path": "/mypage/assets",
+            "role": "dialog_control",
+            "normalized_endpoint": ""
+          },
+          "evidence": [
+            "cbee6ee1-c14d-49d9-90d5-1c0d53fc1359"
+          ]
+        },
+        {
+          "id": "PM-001-N005",
+          "order": 14,
+          "action": "selection",
+          "http_method": "",
+          "target": {
+            "page_path": "/mypage/assets",
+            "role": "dialog_control",
+            "normalized_endpoint": ""
+          },
+          "evidence": [
+            "81d5d054-1d95-4c68-8fe0-c439f0e6e781"
+          ]
+        },
+        {
+          "id": "PM-001-N008",
+          "order": 15,
+          "action": "detail_close",
+          "http_method": "",
+          "target": {
+            "page_path": "/mypage/assets",
+            "role": "dialog_control",
+            "normalized_endpoint": ""
+          },
+          "evidence": [
+            "caae4fec-0405-4025-b2ba-32dacac1ee47"
+          ]
+        }
+      ]
+    },
+    {
+      "schema_version": "workflow-canonical-1.1",
+      "process_model_id": "PM-002",
+      "procedures": [
+        {
+          "id": "PM-002-N001",
+          "order": 1,
+          "action": "page_entry",
+          "http_method": "",
+          "target": {
+            "page_path": "/mypage/clients",
+            "role": "navigation",
+            "normalized_endpoint": ""
+          },
+          "evidence": [
+            "8c58f682-b205-4a26-b20b-8c98690d1332"
+          ]
+        },
+        {
+          "id": "PM-002-N002",
+          "order": 2,
+          "action": "page_entry",
+          "http_method": "",
+          "target": {
+            "page_path": "/mypage/assets",
+            "role": "html",
+            "normalized_endpoint": ""
+          },
+          "evidence": [
+            "6c4fc675-45b6-49a2-be32-ac1b3a4aec68"
+          ]
+        },
+        {
+          "id": "PM-002-N003",
+          "order": 3,
+          "action": "api_confirmation",
+          "http_method": "GET",
+          "target": {
+            "page_path": "/mypage/assets",
+            "role": "/api/auth/me",
+            "normalized_endpoint": "/api/auth/me"
+          },
+          "evidence": [
+            "80ce1d19-7129-4b00-b0bf-6e1034ccb8b3"
+          ]
+        },
+        {
+          "id": "PM-002-N004",
+          "order": 4,
+          "action": "api_confirmation",
+          "http_method": "GET",
+          "target": {
+            "page_path": "/mypage/assets",
+            "role": "/api/assets",
+            "normalized_endpoint": "/api/assets"
+          },
+          "evidence": [
+            "6b048283-ddeb-473c-af13-d9b6ca8fd426"
+          ]
+        }
+      ]
+    },
+    {
+      "schema_version": "workflow-canonical-1.1",
+      "process_model_id": "PM-003",
+      "procedures": [
+        {
+          "id": "PM-003-N001",
+          "order": 1,
+          "action": "page_entry",
+          "http_method": "",
+          "target": {
+            "page_path": "/mypage/work/weekly",
+            "role": "navigation",
+            "normalized_endpoint": ""
+          },
+          "evidence": [
+            "e5635e43-d438-42e4-870a-b8bc29634ba6"
+          ]
+        },
+        {
+          "id": "PM-003-N002",
+          "order": 2,
+          "action": "page_entry",
+          "http_method": "",
+          "target": {
+            "page_path": "/mypage/clients",
+            "role": "html",
+            "normalized_endpoint": ""
+          },
+          "evidence": [
+            "d8854e7b-ca39-4086-acad-ca8cd68a2efd"
+          ]
+        },
+        {
+          "id": "PM-003-N003",
+          "order": 3,
+          "action": "api_confirmation",
+          "http_method": "GET",
+          "target": {
+            "page_path": "/mypage/clients",
+            "role": "/api/auth/me",
+            "normalized_endpoint": "/api/auth/me"
+          },
+          "evidence": [
+            "4a94ba8b-c11d-4a1b-a94b-07da9639de2f"
+          ]
+        },
+        {
+          "id": "PM-003-N004",
+          "order": 4,
+          "action": "api_confirmation",
+          "http_method": "GET",
+          "target": {
+            "page_path": "/mypage/clients",
+            "role": "/api/clients",
+            "normalized_endpoint": "/api/clients"
+          },
+          "evidence": [
+            "b72999a8-5a36-42c3-880b-de7cbb11a11f"
+          ]
+        }
+      ]
+    },
+    {
+      "schema_version": "workflow-canonical-1.1",
+      "process_model_id": "PM-004",
+      "procedures": [
+        {
+          "id": "PM-004-N001",
+          "order": 1,
+          "action": "page_entry",
+          "http_method": "",
+          "target": {
+            "page_path": "/mypage/schedule",
+            "role": "html",
+            "normalized_endpoint": ""
+          },
+          "evidence": [
+            "62fec245-c283-464d-8d87-d9e7f99c7b4b"
+          ]
+        },
+        {
+          "id": "PM-004-N002",
+          "order": 2,
+          "action": "selection",
+          "http_method": "",
+          "target": {
+            "page_path": "/mypage/schedule",
+            "role": "div",
+            "normalized_endpoint": ""
+          },
+          "evidence": [
+            "757ca200-6198-4e0b-9a8c-ee0e46a3cad0"
+          ]
+        },
+        {
+          "id": "PM-004-N003",
+          "order": 3,
+          "action": "detail_open",
+          "http_method": "",
+          "target": {
+            "page_path": "/mypage/schedule",
+            "role": "dialog_control",
+            "normalized_endpoint": ""
+          },
+          "evidence": [
+            "009dc486-bff9-49a5-98b4-58ba8750674c"
+          ]
+        },
+        {
+          "id": "PM-004-N002",
+          "order": 4,
+          "action": "selection",
+          "http_method": "",
+          "target": {
+            "page_path": "/mypage/schedule",
+            "role": "div",
+            "normalized_endpoint": ""
+          },
+          "evidence": [
+            "dbd6226d-fb1a-4872-8a5f-b4abfcbd99c1",
+            "0e2659e3-be85-46ea-9521-4b38fff2f8a2",
+            "f3d013a3-29eb-4558-9552-3fc78664c9a7",
+            "d8c8a93a-7ae7-48aa-890d-298092b2fa43"
+          ]
+        },
+        {
+          "id": "PM-004-N004",
+          "order": 5,
+          "action": "input",
+          "http_method": "",
+          "target": {
+            "page_path": "/mypage/schedule",
+            "role": "input_control",
+            "normalized_endpoint": ""
+          },
+          "evidence": [
+            "cc6c388a-04c2-482d-b134-542d3241b517"
+          ]
+        },
+        {
+          "id": "PM-004-N002",
+          "order": 6,
+          "action": "selection",
+          "http_method": "",
+          "target": {
+            "page_path": "/mypage/schedule",
+            "role": "div",
+            "normalized_endpoint": ""
+          },
+          "evidence": [
+            "fcd9fc63-7258-4aaa-951a-164dc0b8b1f1"
+          ]
+        },
+        {
+          "id": "PM-004-N004",
+          "order": 7,
+          "action": "input",
+          "http_method": "",
+          "target": {
+            "page_path": "/mypage/schedule",
+            "role": "input_control",
+            "normalized_endpoint": ""
+          },
+          "evidence": [
+            "c0e0e82d-1fe9-40cf-aef6-abc16ef3b229",
+            "955dcf1d-6d3b-4a06-97b6-1604c0a64d07"
+          ]
+        },
+        {
+          "id": "PM-004-N002",
+          "order": 8,
+          "action": "selection",
+          "http_method": "",
+          "target": {
+            "page_path": "/mypage/schedule",
+            "role": "div",
+            "normalized_endpoint": ""
+          },
+          "evidence": [
+            "dcaca911-fa50-425a-a442-5e0862c902d0"
+          ]
+        },
+        {
+          "id": "PM-004-N005",
+          "order": 9,
+          "action": "submit_save",
+          "http_method": "",
+          "target": {
+            "page_path": "/mypage/schedule",
+            "role": "dialog_control",
+            "normalized_endpoint": ""
+          },
+          "evidence": [
+            "c79bfd19-28df-4a96-a1cc-feb349f5cde9"
+          ]
+        },
+        {
+          "id": "PM-004-N006",
+          "order": 10,
+          "action": "api_confirmation",
+          "http_method": "POST",
+          "target": {
+            "page_path": "/mypage/schedule",
+            "role": "/api/schedules",
+            "normalized_endpoint": "/api/schedules"
+          },
+          "evidence": [
+            "661e8b4c-4531-497a-b07e-5ff3af8294ac"
+          ]
+        },
+        {
+          "id": "PM-004-N007",
+          "order": 11,
+          "action": "api_confirmation",
+          "http_method": "GET",
+          "target": {
+            "page_path": "/mypage/schedule",
+            "role": "/api/schedules",
+            "normalized_endpoint": "/api/schedules"
+          },
+          "evidence": [
+            "fa29fa13-79c3-406e-a5bd-1366c613570a"
+          ]
+        },
+        {
+          "id": "PM-004-N008",
+          "order": 12,
+          "action": "detail_close",
+          "http_method": "",
+          "target": {
+            "page_path": "/mypage/schedule",
+            "role": "dialog_control",
+            "normalized_endpoint": ""
+          },
+          "evidence": [
+            "82acd91e-9e28-41e0-9e6c-9164225bfb4a"
+          ]
+        }
+      ]
+    },
+    {
+      "schema_version": "workflow-canonical-1.1",
+      "process_model_id": "PM-005",
+      "procedures": [
+        {
+          "id": "PM-005-N001",
+          "order": 1,
+          "action": "selection",
+          "http_method": "",
+          "target": {
+            "page_path": "/mypage/clients",
+            "role": "button",
+            "normalized_endpoint": ""
+          },
+          "evidence": [
+            "1d1925e1-dc41-44e3-97f8-b752203efe59"
+          ]
+        },
+        {
+          "id": "PM-005-N002",
+          "order": 2,
+          "action": "detail_open",
+          "http_method": "",
+          "target": {
+            "page_path": "/mypage/clients",
+            "role": "dialog_control",
+            "normalized_endpoint": ""
+          },
+          "evidence": [
+            "e9fa9155-1948-4746-98e5-41152a59a93d"
+          ]
+        },
+        {
+          "id": "PM-005-N003",
+          "order": 3,
+          "action": "selection",
+          "http_method": "",
+          "target": {
+            "page_path": "/mypage/clients",
+            "role": "input_control",
+            "normalized_endpoint": ""
+          },
+          "evidence": [
+            "07958465-00ab-4339-9ed0-8cbe2c16243f"
+          ]
+        },
+        {
+          "id": "PM-005-N004",
+          "order": 4,
+          "action": "input",
+          "http_method": "",
+          "target": {
+            "page_path": "/mypage/clients",
+            "role": "input_control",
+            "normalized_endpoint": ""
+          },
+          "evidence": [
+            "b08a99f0-d0d0-4021-b522-3c6571481232",
+            "dbee4962-6c32-4029-8af1-4bcf3d51df76"
+          ]
+        },
+        {
+          "id": "PM-005-N003",
+          "order": 5,
+          "action": "selection",
+          "http_method": "",
+          "target": {
+            "page_path": "/mypage/clients",
+            "role": "input_control",
+            "normalized_endpoint": ""
+          },
+          "evidence": [
+            "d8e6632f-1ec2-4da5-8dec-ace661295a6f"
+          ]
+        },
+        {
+          "id": "PM-005-N004",
+          "order": 6,
+          "action": "input",
+          "http_method": "",
+          "target": {
+            "page_path": "/mypage/clients",
+            "role": "input_control",
+            "normalized_endpoint": ""
+          },
+          "evidence": [
+            "af179592-c4c4-493c-882f-a0c352317e52"
+          ]
+        },
+        {
+          "id": "PM-005-N003",
+          "order": 7,
+          "action": "selection",
+          "http_method": "",
+          "target": {
+            "page_path": "/mypage/clients",
+            "role": "input_control",
+            "normalized_endpoint": ""
+          },
+          "evidence": [
+            "cdaaa352-a9c6-4687-97d7-5de3ca6bf274"
+          ]
+        },
+        {
+          "id": "PM-005-N004",
+          "order": 8,
+          "action": "input",
+          "http_method": "",
+          "target": {
+            "page_path": "/mypage/clients",
+            "role": "input_control",
+            "normalized_endpoint": ""
+          },
+          "evidence": [
+            "c488f50d-767b-49b9-9e14-5e8dc406a646",
+            "0a81f206-f9a9-45ff-8c80-db83e8d2f560"
+          ]
+        },
+        {
+          "id": "PM-005-N003",
+          "order": 9,
+          "action": "selection",
+          "http_method": "",
+          "target": {
+            "page_path": "/mypage/clients",
+            "role": "input_control",
+            "normalized_endpoint": ""
+          },
+          "evidence": [
+            "c4912424-3fa1-4b08-8a34-4e582ee985aa"
+          ]
+        },
+        {
+          "id": "PM-005-N004",
+          "order": 10,
+          "action": "input",
+          "http_method": "",
+          "target": {
+            "page_path": "/mypage/clients",
+            "role": "input_control",
+            "normalized_endpoint": ""
+          },
+          "evidence": [
+            "15ed07da-a4f9-48e5-bf55-d204b1a1e79b",
+            "c1979f4c-645c-4fea-925d-03cb3b63f02b"
+          ]
+        },
+        {
+          "id": "PM-005-N003",
+          "order": 11,
+          "action": "selection",
+          "http_method": "",
+          "target": {
+            "page_path": "/mypage/clients",
+            "role": "input_control",
+            "normalized_endpoint": ""
+          },
+          "evidence": [
+            "b9ec2d1d-68c3-4325-961a-851d6329f5ff"
+          ]
+        },
+        {
+          "id": "PM-005-N004",
+          "order": 12,
+          "action": "input",
+          "http_method": "",
+          "target": {
+            "page_path": "/mypage/clients",
+            "role": "input_control",
+            "normalized_endpoint": ""
+          },
+          "evidence": [
+            "848f73d6-860c-4cb1-b138-f953bfaa33ae"
+          ]
+        },
+        {
+          "id": "PM-005-N005",
+          "order": 13,
+          "action": "selection",
+          "http_method": "",
+          "target": {
+            "page_path": "/mypage/clients",
+            "role": "dialog_control",
+            "normalized_endpoint": ""
+          },
+          "evidence": [
+            "ec2546d6-9763-409a-aa01-790c97aedd1b"
+          ]
+        },
+        {
+          "id": "PM-005-N006",
+          "order": 14,
+          "action": "api_confirmation",
+          "http_method": "POST",
+          "target": {
+            "page_path": "/mypage/clients",
+            "role": "/api/clients",
+            "normalized_endpoint": "/api/clients"
+          },
+          "evidence": [
+            "bfd05466-a2e8-44cd-a75c-b9cacb394b3a"
+          ]
+        },
+        {
+          "id": "PM-005-N007",
+          "order": 15,
+          "action": "api_confirmation",
+          "http_method": "GET",
+          "target": {
+            "page_path": "/mypage/clients",
+            "role": "/api/clients",
+            "normalized_endpoint": "/api/clients"
+          },
+          "evidence": [
+            "b78d63ae-f0a0-415a-afac-4a3acca17dbc"
+          ]
+        },
+        {
+          "id": "PM-005-N002",
+          "order": 16,
+          "action": "detail_open",
+          "http_method": "",
+          "target": {
+            "page_path": "/mypage/clients",
+            "role": "dialog_control",
+            "normalized_endpoint": ""
+          },
+          "evidence": [
+            "40ecd720-27cc-4f80-b490-5f09a1aaa46f"
+          ]
+        },
+        {
+          "id": "PM-005-N008",
+          "order": 17,
+          "action": "detail_close",
+          "http_method": "",
+          "target": {
+            "page_path": "/mypage/clients",
+            "role": "dialog_control",
+            "normalized_endpoint": ""
+          },
+          "evidence": [
+            "639c3fce-9100-459c-9502-a9040fdc2a2d"
+          ]
+        },
+        {
+          "id": "PM-005-N005",
+          "order": 18,
+          "action": "selection",
+          "http_method": "",
+          "target": {
+            "page_path": "/mypage/clients",
+            "role": "dialog_control",
+            "normalized_endpoint": ""
+          },
+          "evidence": [
+            "1c803c70-e33b-447d-be76-d79c9f6c6e09",
+            "ee5f94b1-cc44-48d0-afa0-bd53fba10fc9"
+          ]
+        },
+        {
+          "id": "PM-005-N008",
+          "order": 19,
+          "action": "detail_close",
+          "http_method": "",
+          "target": {
+            "page_path": "/mypage/clients",
+            "role": "dialog_control",
+            "normalized_endpoint": ""
+          },
+          "evidence": [
+            "81cf767c-0f16-4d19-9b20-193a7a6e8ea7"
+          ]
+        }
+      ]
+    },
+    {
+      "schema_version": "workflow-canonical-1.1",
+      "process_model_id": "PM-006",
+      "procedures": [
+        {
+          "id": "PM-006-N001",
+          "order": 1,
+          "action": "page_entry",
+          "http_method": "",
+          "target": {
+            "page_path": "/mypage/work/daily",
+            "role": "navigation",
+            "normalized_endpoint": ""
+          },
+          "evidence": [
+            "b76bfbfa-47f2-4a40-9bc5-2a0df020f821"
+          ]
+        },
+        {
+          "id": "PM-006-N002",
+          "order": 2,
+          "action": "page_entry",
+          "http_method": "",
+          "target": {
+            "page_path": "/mypage/work/weekly",
+            "role": "html",
+            "normalized_endpoint": ""
+          },
+          "evidence": [
+            "184a6658-053a-4bfb-a82a-c3e097bf2051"
+          ]
+        },
+        {
+          "id": "PM-006-N003",
+          "order": 3,
+          "action": "api_confirmation",
+          "http_method": "GET",
+          "target": {
+            "page_path": "/mypage/work/weekly",
+            "role": "/api/auth/me",
+            "normalized_endpoint": "/api/auth/me"
+          },
+          "evidence": [
+            "1dc818e4-ebe8-4da8-8ac6-1c1dbbe4b9cf"
+          ]
+        },
+        {
+          "id": "PM-006-N004",
+          "order": 4,
+          "action": "api_confirmation",
+          "http_method": "GET",
+          "target": {
+            "page_path": "/mypage/work/weekly",
+            "role": "/api/work-reports",
+            "normalized_endpoint": "/api/work-reports"
+          },
+          "evidence": [
+            "5703f470-27b5-4c54-8d82-0ba4659391a1"
+          ]
+        },
+        {
+          "id": "PM-006-N005",
+          "order": 5,
+          "action": "selection",
+          "http_method": "",
+          "target": {
+            "page_path": "/mypage/work/weekly",
+            "role": "button",
+            "normalized_endpoint": ""
+          },
+          "evidence": [
+            "73141be6-e784-48bf-99f9-4431a7f6982c"
+          ]
+        },
+        {
+          "id": "PM-006-N006",
+          "order": 6,
+          "action": "detail_open",
+          "http_method": "",
+          "target": {
+            "page_path": "/mypage/work/weekly",
+            "role": "dialog_control",
+            "normalized_endpoint": ""
+          },
+          "evidence": [
+            "96140f52-acc6-4685-935f-78e6a6d4afd0"
+          ]
+        },
+        {
+          "id": "PM-006-N007",
+          "order": 7,
+          "action": "selection",
+          "http_method": "",
+          "target": {
+            "page_path": "/mypage/work/weekly",
+            "role": "input_control",
+            "normalized_endpoint": ""
+          },
+          "evidence": [
+            "a4d2a5e9-d4bb-485d-87b5-e5d4d4ece615",
+            "311652ea-eaa4-41ef-bffe-83fe864a198f"
+          ]
+        },
+        {
+          "id": "PM-006-N008",
+          "order": 8,
+          "action": "input",
+          "http_method": "",
+          "target": {
+            "page_path": "/mypage/work/weekly",
+            "role": "input_control",
+            "normalized_endpoint": ""
+          },
+          "evidence": [
+            "296f5267-f0f3-43c3-bf2a-8c11ddb052d3",
+            "98af281c-97b4-416e-b093-debab017c30c"
+          ]
+        },
+        {
+          "id": "PM-006-N007",
+          "order": 9,
+          "action": "selection",
+          "http_method": "",
+          "target": {
+            "page_path": "/mypage/work/weekly",
+            "role": "input_control",
+            "normalized_endpoint": ""
+          },
+          "evidence": [
+            "9a05d0ba-468b-4d4e-90a9-c3ca282738e3"
+          ]
+        },
+        {
+          "id": "PM-006-N008",
+          "order": 10,
+          "action": "input",
+          "http_method": "",
+          "target": {
+            "page_path": "/mypage/work/weekly",
+            "role": "input_control",
+            "normalized_endpoint": ""
+          },
+          "evidence": [
+            "13235361-fabe-4623-80f1-fe35e4595fbb",
+            "51368e2b-acaf-45b7-b01a-160d782eed4c"
+          ]
+        },
+        {
+          "id": "PM-006-N009",
+          "order": 11,
+          "action": "selection",
+          "http_method": "",
+          "target": {
+            "page_path": "/mypage/work/weekly",
+            "role": "dialog_control",
+            "normalized_endpoint": ""
+          },
+          "evidence": [
+            "05df9d7f-4b41-46fe-a125-92ece7eaacf9"
+          ]
+        },
+        {
+          "id": "PM-006-N010",
+          "order": 12,
+          "action": "api_confirmation",
+          "http_method": "POST",
+          "target": {
+            "page_path": "/mypage/work/weekly",
+            "role": "/api/work-reports",
+            "normalized_endpoint": "/api/work-reports"
+          },
+          "evidence": [
+            "b0655d61-6ae4-4f70-8494-029e43e9eefa"
+          ]
+        },
+        {
+          "id": "PM-006-N006",
+          "order": 13,
+          "action": "detail_open",
+          "http_method": "",
+          "target": {
+            "page_path": "/mypage/work/weekly",
+            "role": "dialog_control",
+            "normalized_endpoint": ""
+          },
+          "evidence": [
+            "be3f4f25-e465-401e-8ce8-9f5e73a301ad"
+          ]
+        },
+        {
+          "id": "PM-006-N011",
+          "order": 14,
+          "action": "detail_close",
+          "http_method": "",
+          "target": {
+            "page_path": "/mypage/work/weekly",
+            "role": "dialog_control",
+            "normalized_endpoint": ""
+          },
+          "evidence": [
+            "f43c94cd-7e72-4df0-b02a-38484f2c4593"
+          ]
+        },
+        {
+          "id": "PM-006-N004",
+          "order": 15,
+          "action": "api_confirmation",
+          "http_method": "GET",
+          "target": {
+            "page_path": "/mypage/work/weekly",
+            "role": "/api/work-reports",
+            "normalized_endpoint": "/api/work-reports"
+          },
+          "evidence": [
+            "60c41ccf-055c-4c95-bd5f-11331653b85b"
+          ]
+        },
+        {
+          "id": "PM-006-N009",
+          "order": 16,
+          "action": "selection",
+          "http_method": "",
+          "target": {
+            "page_path": "/mypage/work/weekly",
+            "role": "dialog_control",
+            "normalized_endpoint": ""
+          },
+          "evidence": [
+            "93d397b0-f42f-48b4-9746-0fbe197531ed",
+            "7e11b652-c6fc-4eaa-b32f-b6342e7596b6"
+          ]
+        },
+        {
+          "id": "PM-006-N011",
+          "order": 17,
+          "action": "detail_close",
+          "http_method": "",
+          "target": {
+            "page_path": "/mypage/work/weekly",
+            "role": "dialog_control",
+            "normalized_endpoint": ""
+          },
+          "evidence": [
+            "5ecdf03c-fddd-496b-8c08-6e0d69cfced3"
+          ]
+        }
+      ]
+    },
+    {
+      "schema_version": "workflow-canonical-1.1",
+      "process_model_id": "PM-007",
+      "procedures": [
+        {
+          "id": "PM-007-N001",
+          "order": 1,
+          "action": "page_entry",
+          "http_method": "",
+          "target": {
+            "page_path": "/mypage/schedule",
+            "role": "navigation",
+            "normalized_endpoint": ""
+          },
+          "evidence": [
+            "539e75a1-569e-4d1c-a7cb-539e54ae45cb",
+            "fa9290fa-4fd0-4820-8dd5-beee1743da29"
+          ]
+        },
+        {
+          "id": "PM-007-N002",
+          "order": 2,
+          "action": "page_entry",
+          "http_method": "",
+          "target": {
+            "page_path": "/mypage/work/daily",
+            "role": "html",
+            "normalized_endpoint": ""
+          },
+          "evidence": [
+            "bf2cf602-e490-4b4e-a967-f5f65055f3ff"
+          ]
+        },
+        {
+          "id": "PM-007-N003",
+          "order": 3,
+          "action": "api_confirmation",
+          "http_method": "GET",
+          "target": {
+            "page_path": "/mypage/work/daily",
+            "role": "/api/work-reports",
+            "normalized_endpoint": "/api/work-reports"
+          },
+          "evidence": [
+            "c0af36c6-1a83-446f-8bf7-01634a05347f"
+          ]
+        },
+        {
+          "id": "PM-007-N004",
+          "order": 4,
+          "action": "api_confirmation",
+          "http_method": "GET",
+          "target": {
+            "page_path": "/mypage/work/daily",
+            "role": "/api/auth/me",
+            "normalized_endpoint": "/api/auth/me"
+          },
+          "evidence": [
+            "637074bb-6c1b-44a8-8d98-d542163d8630"
+          ]
+        },
+        {
+          "id": "PM-007-N005",
+          "order": 5,
+          "action": "selection",
+          "http_method": "",
+          "target": {
+            "page_path": "/mypage/work/daily",
+            "role": "button",
+            "normalized_endpoint": ""
+          },
+          "evidence": [
+            "4740f429-eebd-46a5-9714-7788bdd53cb3"
+          ]
+        },
+        {
+          "id": "PM-007-N006",
+          "order": 6,
+          "action": "detail_open",
+          "http_method": "",
+          "target": {
+            "page_path": "/mypage/work/daily",
+            "role": "dialog_control",
+            "normalized_endpoint": ""
+          },
+          "evidence": [
+            "a1a89b09-b14d-44a7-a4a3-7f5967b3d966"
+          ]
+        },
+        {
+          "id": "PM-007-N007",
+          "order": 7,
+          "action": "selection",
+          "http_method": "",
+          "target": {
+            "page_path": "/mypage/work/daily",
+            "role": "input_control",
+            "normalized_endpoint": ""
+          },
+          "evidence": [
+            "0b1e413f-0769-4b8c-b85a-275e865a86ee"
+          ]
+        },
+        {
+          "id": "PM-007-N008",
+          "order": 8,
+          "action": "input",
+          "http_method": "",
+          "target": {
+            "page_path": "/mypage/work/daily",
+            "role": "input_control",
+            "normalized_endpoint": ""
+          },
+          "evidence": [
+            "eb6b1c04-2792-4fef-87f1-1d55f0ae87d7",
+            "c74d45fe-3e22-46e6-9940-aa605d4adb49"
+          ]
+        },
+        {
+          "id": "PM-007-N007",
+          "order": 9,
+          "action": "selection",
+          "http_method": "",
+          "target": {
+            "page_path": "/mypage/work/daily",
+            "role": "input_control",
+            "normalized_endpoint": ""
+          },
+          "evidence": [
+            "0b401fb1-ed2e-4809-9377-eefe685017a3"
+          ]
+        },
+        {
+          "id": "PM-007-N008",
+          "order": 10,
+          "action": "input",
+          "http_method": "",
+          "target": {
+            "page_path": "/mypage/work/daily",
+            "role": "input_control",
+            "normalized_endpoint": ""
+          },
+          "evidence": [
+            "a910e4db-c09b-4ee5-af7d-fff8807bc97f",
+            "0af86b08-8a38-4cae-bcb3-c15d3bbf744b"
+          ]
+        },
+        {
+          "id": "PM-007-N009",
+          "order": 11,
+          "action": "selection",
+          "http_method": "",
+          "target": {
+            "page_path": "/mypage/work/daily",
+            "role": "dialog_control",
+            "normalized_endpoint": ""
+          },
+          "evidence": [
+            "de3e75b6-7163-40b7-8952-8be7c5ea709a"
+          ]
+        },
+        {
+          "id": "PM-007-N010",
+          "order": 12,
+          "action": "api_confirmation",
+          "http_method": "POST",
+          "target": {
+            "page_path": "/mypage/work/daily",
+            "role": "/api/work-reports",
+            "normalized_endpoint": "/api/work-reports"
+          },
+          "evidence": [
+            "4b4bb913-a6ca-4a8c-ae06-746d7480a718"
+          ]
+        },
+        {
+          "id": "PM-007-N006",
+          "order": 13,
+          "action": "detail_open",
+          "http_method": "",
+          "target": {
+            "page_path": "/mypage/work/daily",
+            "role": "dialog_control",
+            "normalized_endpoint": ""
+          },
+          "evidence": [
+            "d6eae1a3-1c4a-4b76-8ca8-b6b1792d837b"
+          ]
+        },
+        {
+          "id": "PM-007-N011",
+          "order": 14,
+          "action": "detail_close",
+          "http_method": "",
+          "target": {
+            "page_path": "/mypage/work/daily",
+            "role": "dialog_control",
+            "normalized_endpoint": ""
+          },
+          "evidence": [
+            "36433873-e319-482c-8869-01a03624264d"
+          ]
+        },
+        {
+          "id": "PM-007-N003",
+          "order": 15,
+          "action": "api_confirmation",
+          "http_method": "GET",
+          "target": {
+            "page_path": "/mypage/work/daily",
+            "role": "/api/work-reports",
+            "normalized_endpoint": "/api/work-reports"
+          },
+          "evidence": [
+            "c668b6c9-221d-4ed0-ba68-2f6d31d73092"
+          ]
+        },
+        {
+          "id": "PM-007-N009",
+          "order": 16,
+          "action": "selection",
+          "http_method": "",
+          "target": {
+            "page_path": "/mypage/work/daily",
+            "role": "dialog_control",
+            "normalized_endpoint": ""
+          },
+          "evidence": [
+            "c791820a-674a-4355-b074-f6c3d2be309c"
+          ]
+        },
+        {
+          "id": "PM-007-N011",
+          "order": 17,
+          "action": "detail_close",
+          "http_method": "",
+          "target": {
+            "page_path": "/mypage/work/daily",
+            "role": "dialog_control",
+            "normalized_endpoint": ""
+          },
+          "evidence": [
+            "d32410b0-cd82-4bf8-aa4b-d1e8514a0576"
+          ]
+        }
+      ]
+    }
+  ]
+}

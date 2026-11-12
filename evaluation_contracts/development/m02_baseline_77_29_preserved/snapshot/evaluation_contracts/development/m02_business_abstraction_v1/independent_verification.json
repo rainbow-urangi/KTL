@@ -1,0 +1,22 @@
+{
+  "verdict": "PASS",
+  "snapshot_manifest_sha256": "d00201019debb6f7488c3dae9123f08bb4c15cf4d762244180d0b5b4ab2616b8",
+  "gt_leakage_check": "PASS",
+  "scope_check": "PASS",
+  "direct_comparison_contract": "BUSINESS_INTENT_STATE_V1",
+  "compositional_intent_state_count_review": "PASS_DEVELOPMENT",
+  "verification_stage": "IMPLEMENTATION_PRECOMPARISON",
+  "actual_score_computed": false,
+  "report_path": "/Users/sooeunkim/Documents/Codex/2026-11-05/task-4/M02_BUSINESS_ABSTRACTION_A1_A2_A3_REVERIFICATION.txt",
+  "report_sha256": "c1fe00dd99e24fed1f728b80f919a60bdc1760449355d5d3e6b110b3e8e4c24d",
+  "coverage_disclosures": {
+    "raw_events": 260,
+    "field_records": 34,
+    "graph_references": 227,
+    "occurrence_references": 227,
+    "all_generated_steps": 65,
+    "target_generated_steps": 26,
+    "unassigned_steps": 7,
+    "mixed_steps": 0
+  }
+}

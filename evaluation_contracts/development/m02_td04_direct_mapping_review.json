@@ -1,0 +1,650 @@
+{
+  "status": "REVIEW_ONLY_NOT_MATCHING_CONTRACT",
+  "source_contract": "evaluation_contracts/development/m02_td04_v1.json",
+  "source_contract_sha256": "19922ea39a42c756e9f951cee85ce5b4c6dae0db2d0d31591ad2a2ef636d6578",
+  "direct_fields": [
+    "action",
+    "page_path",
+    "target_role",
+    "http_method",
+    "normalized_endpoint"
+  ],
+  "policy": "Candidates are technical compatibility leads, not approved aliases, selected matches, scores or output enrichment. No raw label/source-event semantics used. All176 occurrences and27 required steps unchanged.",
+  "steps": [
+    {
+      "process_id": "BU03",
+      "business_name": "일정 등록",
+      "required_step_id": "BU03-S01",
+      "required_label": "일정관리",
+      "step_order": 1,
+      "source_process_id": "PM-020",
+      "status": "UNRESOLVED",
+      "candidate_direct_occurrences": [
+        {
+          "id": "PM-020-S002",
+          "node_id": "PM-020-N002",
+          "technical_signature": "page_entry|/mypage/schedule|html||"
+        }
+      ],
+      "conflict_or_unknown_meaning": "page_entry supplies route context; whether route entry equals menu procedure needs contract."
+    },
+    {
+      "process_id": "BU03",
+      "business_name": "일정 등록",
+      "required_step_id": "BU03-S02",
+      "required_label": "날짜 선택",
+      "step_order": 2,
+      "source_process_id": "PM-020",
+      "status": "UNRESOLVED",
+      "candidate_direct_occurrences": [
+        {
+          "id": "PM-020-S005",
+          "node_id": "PM-020-N005",
+          "technical_signature": "selection|/mypage/schedule|item||"
+        },
+        {
+          "id": "PM-020-S007",
+          "node_id": "PM-020-N007",
+          "technical_signature": "selection|/mypage/schedule|div||"
+        },
+        {
+          "id": "PM-020-S012",
+          "node_id": "PM-020-N007",
+          "technical_signature": "selection|/mypage/schedule|div||"
+        },
+        {
+          "id": "PM-020-S014",
+          "node_id": "PM-020-N007",
+          "technical_signature": "selection|/mypage/schedule|div||"
+        },
+        {
+          "id": "PM-020-S016",
+          "node_id": "PM-020-N007",
+          "technical_signature": "selection|/mypage/schedule|div||"
+        },
+        {
+          "id": "PM-020-S018",
+          "node_id": "PM-020-N007",
+          "technical_signature": "selection|/mypage/schedule|div||"
+        }
+      ],
+      "conflict_or_unknown_meaning": "Generic item/div selections cannot identify a date; several occurrences conflict."
+    },
+    {
+      "process_id": "BU03",
+      "business_name": "일정 등록",
+      "required_step_id": "BU03-S03",
+      "required_label": "일정 입력",
+      "step_order": 3,
+      "source_process_id": "PM-020",
+      "status": "UNRESOLVED",
+      "candidate_direct_occurrences": [
+        {
+          "id": "PM-020-S015",
+          "node_id": "PM-020-N011",
+          "technical_signature": "input|/mypage/schedule|input_control||"
+        },
+        {
+          "id": "PM-020-S017",
+          "node_id": "PM-020-N011",
+          "technical_signature": "input|/mypage/schedule|input_control||"
+        }
+      ],
+      "conflict_or_unknown_meaning": "Identical input signatures do not identify field semantics or whether both inputs form one procedure."
+    },
+    {
+      "process_id": "BU03",
+      "business_name": "일정 등록",
+      "required_step_id": "BU03-S04",
+      "required_label": "등록",
+      "step_order": 4,
+      "source_process_id": "PM-020",
+      "status": "UNRESOLVED",
+      "candidate_direct_occurrences": [
+        {
+          "id": "PM-020-S008",
+          "node_id": "PM-020-N008",
+          "technical_signature": "submit_save|/mypage/schedule|dialog_control||"
+        },
+        {
+          "id": "PM-020-S019",
+          "node_id": "PM-020-N008",
+          "technical_signature": "submit_save|/mypage/schedule|dialog_control||"
+        },
+        {
+          "id": "PM-020-S020",
+          "node_id": "PM-020-N012",
+          "technical_signature": "api_confirmation|/mypage/schedule|/api/schedules|POST|/api/schedules"
+        }
+      ],
+      "conflict_or_unknown_meaning": "submit_save occurs twice; POST creation and PATCH update are distinct. The POST api_confirmation directly represents an HTTP 2xx-class response, not mere request emission. Whether submit_save or that response qualifies as registration, and how to count them, remains unresolved; HTTP 2xx alone does not establish business persistence, completion confirmation or exit."
+    },
+    {
+      "process_id": "BU03",
+      "business_name": "일정 등록",
+      "required_step_id": "BU03-S05",
+      "required_label": "종료",
+      "step_order": 5,
+      "source_process_id": "PM-020",
+      "status": "UNRESOLVED",
+      "candidate_direct_occurrences": [
+        {
+          "id": "PM-020-S011",
+          "node_id": "PM-020-N010",
+          "technical_signature": "detail_close|/mypage/schedule|dialog_control||"
+        },
+        {
+          "id": "PM-020-S022",
+          "node_id": "PM-020-N010",
+          "technical_signature": "detail_close|/mypage/schedule|dialog_control||"
+        }
+      ],
+      "conflict_or_unknown_meaning": "Two detail_close occurrences; ending a dialog is not independently business termination."
+    },
+    {
+      "process_id": "BU07",
+      "business_name": "일일보고 작성",
+      "required_step_id": "BU07-S01",
+      "required_label": "일일보고",
+      "step_order": 1,
+      "source_process_id": "PM-010",
+      "status": "UNRESOLVED",
+      "candidate_direct_occurrences": [],
+      "conflict_or_unknown_meaning": "Paired map has no page_entry; page path supplies context, not a generated entry procedure."
+    },
+    {
+      "process_id": "BU07",
+      "business_name": "일일보고 작성",
+      "required_step_id": "BU07-S02",
+      "required_label": "등록",
+      "step_order": 2,
+      "source_process_id": "PM-010",
+      "status": "UNRESOLVED",
+      "candidate_direct_occurrences": [
+        {
+          "id": "PM-010-S001",
+          "node_id": "PM-010-N001",
+          "technical_signature": "selection|/mypage/work/daily|button||"
+        },
+        {
+          "id": "PM-010-S002",
+          "node_id": "PM-010-N002",
+          "technical_signature": "detail_open|/mypage/work/daily|dialog_control||"
+        }
+      ],
+      "conflict_or_unknown_meaning": "button selection and detail_open may represent opening registration; button identity unspecified."
+    },
+    {
+      "process_id": "BU07",
+      "business_name": "일일보고 작성",
+      "required_step_id": "BU07-S03",
+      "required_label": "내용 입력",
+      "step_order": 3,
+      "source_process_id": "PM-010",
+      "status": "UNRESOLVED",
+      "candidate_direct_occurrences": [
+        {
+          "id": "PM-010-S004",
+          "node_id": "PM-010-N004",
+          "technical_signature": "input|/mypage/work/daily|input_control||"
+        },
+        {
+          "id": "PM-010-S006",
+          "node_id": "PM-010-N004",
+          "technical_signature": "input|/mypage/work/daily|input_control||"
+        }
+      ],
+      "conflict_or_unknown_meaning": "Two identical inputs; content vs other input cannot be distinguished by output."
+    },
+    {
+      "process_id": "BU07",
+      "business_name": "일일보고 작성",
+      "required_step_id": "BU07-S04",
+      "required_label": "저장",
+      "step_order": 4,
+      "source_process_id": "PM-010",
+      "status": "UNRESOLVED",
+      "candidate_direct_occurrences": [
+        {
+          "id": "PM-010-S007",
+          "node_id": "PM-010-N005",
+          "technical_signature": "selection|/mypage/work/daily|dialog_control||"
+        },
+        {
+          "id": "PM-010-S008",
+          "node_id": "PM-010-N006",
+          "technical_signature": "api_confirmation|/mypage/work/daily|/api/work-reports|POST|/api/work-reports"
+        }
+      ],
+      "conflict_or_unknown_meaning": "Generic dialog selection and POST api_confirmation are distinct candidates. api_confirmation directly represents an HTTP 2xx-class response, not mere request emission. Whether that response qualifies as the required save remains unresolved; HTTP 2xx alone does not establish business persistence, completion confirmation or exit."
+    },
+    {
+      "process_id": "BU07",
+      "business_name": "일일보고 작성",
+      "required_step_id": "BU07-S05",
+      "required_label": "완료 확인",
+      "step_order": 5,
+      "source_process_id": "PM-010",
+      "status": "UNRESOLVED",
+      "candidate_direct_occurrences": [
+        {
+          "id": "PM-010-S009",
+          "node_id": "PM-010-N002",
+          "technical_signature": "detail_open|/mypage/work/daily|dialog_control||"
+        },
+        {
+          "id": "PM-010-S010",
+          "node_id": "PM-010-N007",
+          "technical_signature": "detail_close|/mypage/work/daily|dialog_control||"
+        },
+        {
+          "id": "PM-010-S011",
+          "node_id": "PM-010-N008",
+          "technical_signature": "api_confirmation|/mypage/work/daily|/api/work-reports|GET|/api/work-reports"
+        },
+        {
+          "id": "PM-010-S012",
+          "node_id": "PM-010-N005",
+          "technical_signature": "selection|/mypage/work/daily|dialog_control||"
+        }
+      ],
+      "conflict_or_unknown_meaning": "Dialog open/close, GET, selection lack explicit success/confirmation semantics."
+    },
+    {
+      "process_id": "BU07",
+      "business_name": "일일보고 작성",
+      "required_step_id": "BU07-S06",
+      "required_label": "종료",
+      "step_order": 6,
+      "source_process_id": "PM-010",
+      "status": "UNRESOLVED",
+      "candidate_direct_occurrences": [
+        {
+          "id": "PM-010-S010",
+          "node_id": "PM-010-N007",
+          "technical_signature": "detail_close|/mypage/work/daily|dialog_control||"
+        },
+        {
+          "id": "PM-010-S013",
+          "node_id": "PM-010-N007",
+          "technical_signature": "detail_close|/mypage/work/daily|dialog_control||"
+        }
+      ],
+      "conflict_or_unknown_meaning": "Multiple detail_close occurrences; dialog close vs business termination unresolved."
+    },
+    {
+      "process_id": "BU09",
+      "business_name": "주간보고 작성",
+      "required_step_id": "BU09-S01",
+      "required_label": "주간보고",
+      "step_order": 1,
+      "source_process_id": "PM-019",
+      "status": "UNRESOLVED",
+      "candidate_direct_occurrences": [],
+      "conflict_or_unknown_meaning": "Paired map has no page_entry; route context alone is not an emitted entry procedure."
+    },
+    {
+      "process_id": "BU09",
+      "business_name": "주간보고 작성",
+      "required_step_id": "BU09-S02",
+      "required_label": "등록",
+      "step_order": 2,
+      "source_process_id": "PM-019",
+      "status": "UNRESOLVED",
+      "candidate_direct_occurrences": [
+        {
+          "id": "PM-019-S001",
+          "node_id": "PM-019-N001",
+          "technical_signature": "selection|/mypage/work/weekly|button||"
+        },
+        {
+          "id": "PM-019-S002",
+          "node_id": "PM-019-N002",
+          "technical_signature": "detail_open|/mypage/work/weekly|dialog_control||"
+        }
+      ],
+      "conflict_or_unknown_meaning": "button selection/detail_open do not identify registration command."
+    },
+    {
+      "process_id": "BU09",
+      "business_name": "주간보고 작성",
+      "required_step_id": "BU09-S03",
+      "required_label": "대상 주차 선택",
+      "step_order": 3,
+      "source_process_id": "PM-019",
+      "status": "UNRESOLVED",
+      "candidate_direct_occurrences": [
+        {
+          "id": "PM-019-S003",
+          "node_id": "PM-019-N003",
+          "technical_signature": "selection|/mypage/work/weekly|input_control||"
+        },
+        {
+          "id": "PM-019-S004",
+          "node_id": "PM-019-N004",
+          "technical_signature": "input|/mypage/work/weekly|input_control||"
+        },
+        {
+          "id": "PM-019-S005",
+          "node_id": "PM-019-N003",
+          "technical_signature": "selection|/mypage/work/weekly|input_control||"
+        },
+        {
+          "id": "PM-019-S006",
+          "node_id": "PM-019-N004",
+          "technical_signature": "input|/mypage/work/weekly|input_control||"
+        }
+      ],
+      "conflict_or_unknown_meaning": "Generic input selections/inputs do not name week; same occurrences also candidates for content."
+    },
+    {
+      "process_id": "BU09",
+      "business_name": "주간보고 작성",
+      "required_step_id": "BU09-S04",
+      "required_label": "내용 입력",
+      "step_order": 4,
+      "source_process_id": "PM-019",
+      "status": "UNRESOLVED",
+      "candidate_direct_occurrences": [
+        {
+          "id": "PM-019-S004",
+          "node_id": "PM-019-N004",
+          "technical_signature": "input|/mypage/work/weekly|input_control||"
+        },
+        {
+          "id": "PM-019-S006",
+          "node_id": "PM-019-N004",
+          "technical_signature": "input|/mypage/work/weekly|input_control||"
+        }
+      ],
+      "conflict_or_unknown_meaning": "Repeated input signatures cannot distinguish content vs week; overlap with preceding requirement."
+    },
+    {
+      "process_id": "BU09",
+      "business_name": "주간보고 작성",
+      "required_step_id": "BU09-S05",
+      "required_label": "저장",
+      "step_order": 5,
+      "source_process_id": "PM-019",
+      "status": "UNRESOLVED",
+      "candidate_direct_occurrences": [
+        {
+          "id": "PM-019-S007",
+          "node_id": "PM-019-N005",
+          "technical_signature": "selection|/mypage/work/weekly|dialog_control||"
+        },
+        {
+          "id": "PM-019-S008",
+          "node_id": "PM-019-N006",
+          "technical_signature": "api_confirmation|/mypage/work/weekly|/api/work-reports|POST|/api/work-reports"
+        }
+      ],
+      "conflict_or_unknown_meaning": "Generic dialog selection and POST api_confirmation are distinct candidates. api_confirmation directly represents an HTTP 2xx-class response, not mere request emission. Click vs successful HTTP response equivalence remains unresolved; HTTP 2xx alone does not establish business persistence, completion confirmation or exit."
+    },
+    {
+      "process_id": "BU09",
+      "business_name": "주간보고 작성",
+      "required_step_id": "BU09-S06",
+      "required_label": "완료 확인",
+      "step_order": 6,
+      "source_process_id": "PM-019",
+      "status": "UNRESOLVED",
+      "candidate_direct_occurrences": [
+        {
+          "id": "PM-019-S009",
+          "node_id": "PM-019-N002",
+          "technical_signature": "detail_open|/mypage/work/weekly|dialog_control||"
+        },
+        {
+          "id": "PM-019-S010",
+          "node_id": "PM-019-N007",
+          "technical_signature": "detail_close|/mypage/work/weekly|dialog_control||"
+        },
+        {
+          "id": "PM-019-S011",
+          "node_id": "PM-019-N008",
+          "technical_signature": "api_confirmation|/mypage/work/weekly|/api/work-reports|GET|/api/work-reports"
+        },
+        {
+          "id": "PM-019-S012",
+          "node_id": "PM-019-N005",
+          "technical_signature": "selection|/mypage/work/weekly|dialog_control||"
+        },
+        {
+          "id": "PM-019-S013",
+          "node_id": "PM-019-N007",
+          "technical_signature": "detail_close|/mypage/work/weekly|dialog_control||"
+        }
+      ],
+      "conflict_or_unknown_meaning": "Dialog/GET/selection cannot establish successful completion confirmation."
+    },
+    {
+      "process_id": "BU17",
+      "business_name": "거래처 정보 등록",
+      "required_step_id": "BU17-S01",
+      "required_label": "거래처 정보 관리",
+      "step_order": 1,
+      "source_process_id": "PM-007",
+      "status": "UNRESOLVED",
+      "candidate_direct_occurrences": [],
+      "conflict_or_unknown_meaning": "No page_entry in paired map; route is only context."
+    },
+    {
+      "process_id": "BU17",
+      "business_name": "거래처 정보 등록",
+      "required_step_id": "BU17-S02",
+      "required_label": "등록",
+      "step_order": 2,
+      "source_process_id": "PM-007",
+      "status": "UNRESOLVED",
+      "candidate_direct_occurrences": [
+        {
+          "id": "PM-007-S001",
+          "node_id": "PM-007-N001",
+          "technical_signature": "selection|/mypage/clients|button||"
+        },
+        {
+          "id": "PM-007-S002",
+          "node_id": "PM-007-N002",
+          "technical_signature": "detail_open|/mypage/clients|dialog_control||"
+        }
+      ],
+      "conflict_or_unknown_meaning": "button selection/detail_open lacks registration identity."
+    },
+    {
+      "process_id": "BU17",
+      "business_name": "거래처 정보 등록",
+      "required_step_id": "BU17-S03",
+      "required_label": "테스트 거래처 정보 입력",
+      "step_order": 3,
+      "source_process_id": "PM-007",
+      "status": "UNRESOLVED",
+      "candidate_direct_occurrences": [
+        {
+          "id": "PM-007-S004",
+          "node_id": "PM-007-N004",
+          "technical_signature": "input|/mypage/clients|input_control||"
+        },
+        {
+          "id": "PM-007-S006",
+          "node_id": "PM-007-N004",
+          "technical_signature": "input|/mypage/clients|input_control||"
+        },
+        {
+          "id": "PM-007-S008",
+          "node_id": "PM-007-N004",
+          "technical_signature": "input|/mypage/clients|input_control||"
+        },
+        {
+          "id": "PM-007-S010",
+          "node_id": "PM-007-N004",
+          "technical_signature": "input|/mypage/clients|input_control||"
+        }
+      ],
+      "conflict_or_unknown_meaning": "Four identical input signatures do not identify business fields or procedure grouping."
+    },
+    {
+      "process_id": "BU17",
+      "business_name": "거래처 정보 등록",
+      "required_step_id": "BU17-S04",
+      "required_label": "저장",
+      "step_order": 4,
+      "source_process_id": "PM-007",
+      "status": "UNRESOLVED",
+      "candidate_direct_occurrences": [
+        {
+          "id": "PM-007-S011",
+          "node_id": "PM-007-N005",
+          "technical_signature": "selection|/mypage/clients|dialog_control||"
+        },
+        {
+          "id": "PM-007-S012",
+          "node_id": "PM-007-N006",
+          "technical_signature": "api_confirmation|/mypage/clients|/api/clients|POST|/api/clients"
+        }
+      ],
+      "conflict_or_unknown_meaning": "Generic selection and POST api_confirmation are distinct candidates. api_confirmation directly represents an HTTP 2xx-class response, not mere request emission. Whether that response qualifies as the required save remains unresolved; HTTP 2xx alone does not establish business persistence, completion confirmation or exit."
+    },
+    {
+      "process_id": "BU17",
+      "business_name": "거래처 정보 등록",
+      "required_step_id": "BU17-S05",
+      "required_label": "종료",
+      "step_order": 5,
+      "source_process_id": "PM-007",
+      "status": "UNRESOLVED",
+      "candidate_direct_occurrences": [
+        {
+          "id": "PM-007-S014",
+          "node_id": "PM-007-N002",
+          "technical_signature": "detail_open|/mypage/clients|dialog_control||"
+        },
+        {
+          "id": "PM-007-S015",
+          "node_id": "PM-007-N008",
+          "technical_signature": "detail_close|/mypage/clients|dialog_control||"
+        }
+      ],
+      "conflict_or_unknown_meaning": "detail_open/detail_close may close confirmation dialog; PM-008 remains unpaired; no demonstrated business termination."
+    },
+    {
+      "process_id": "BU20",
+      "business_name": "자산 등록",
+      "required_step_id": "BU20-S01",
+      "required_label": "자산관리",
+      "step_order": 1,
+      "source_process_id": "PM-002",
+      "status": "UNRESOLVED",
+      "candidate_direct_occurrences": [],
+      "conflict_or_unknown_meaning": "No page_entry in paired map; route is only context."
+    },
+    {
+      "process_id": "BU20",
+      "business_name": "자산 등록",
+      "required_step_id": "BU20-S02",
+      "required_label": "등록",
+      "step_order": 2,
+      "source_process_id": "PM-002",
+      "status": "UNRESOLVED",
+      "candidate_direct_occurrences": [
+        {
+          "id": "PM-002-S001",
+          "node_id": "PM-002-N001",
+          "technical_signature": "selection|/mypage/assets|button||"
+        },
+        {
+          "id": "PM-002-S002",
+          "node_id": "PM-002-N002",
+          "technical_signature": "detail_open|/mypage/assets|dialog_control||"
+        }
+      ],
+      "conflict_or_unknown_meaning": "button selection/detail_open lacks registration identity."
+    },
+    {
+      "process_id": "BU20",
+      "business_name": "자산 등록",
+      "required_step_id": "BU20-S03",
+      "required_label": "테스트 자산 정보 입력",
+      "step_order": 3,
+      "source_process_id": "PM-002",
+      "status": "UNRESOLVED",
+      "candidate_direct_occurrences": [
+        {
+          "id": "PM-002-S004",
+          "node_id": "PM-002-N004",
+          "technical_signature": "input|/mypage/assets|input_control||"
+        },
+        {
+          "id": "PM-002-S006",
+          "node_id": "PM-002-N004",
+          "technical_signature": "input|/mypage/assets|input_control||"
+        },
+        {
+          "id": "PM-002-S008",
+          "node_id": "PM-002-N004",
+          "technical_signature": "input|/mypage/assets|input_control||"
+        },
+        {
+          "id": "PM-002-S010",
+          "node_id": "PM-002-N004",
+          "technical_signature": "input|/mypage/assets|input_control||"
+        }
+      ],
+      "conflict_or_unknown_meaning": "Four repeated input signatures lack named asset fields and grouping."
+    },
+    {
+      "process_id": "BU20",
+      "business_name": "자산 등록",
+      "required_step_id": "BU20-S04",
+      "required_label": "저장",
+      "step_order": 4,
+      "source_process_id": "PM-002",
+      "status": "UNRESOLVED",
+      "candidate_direct_occurrences": [
+        {
+          "id": "PM-002-S011",
+          "node_id": "PM-002-N005",
+          "technical_signature": "selection|/mypage/assets|dialog_control||"
+        },
+        {
+          "id": "PM-002-S012",
+          "node_id": "PM-002-N006",
+          "technical_signature": "api_confirmation|/mypage/assets|/api/assets|POST|/api/assets"
+        }
+      ],
+      "conflict_or_unknown_meaning": "Generic selection and POST api_confirmation are distinct candidates. api_confirmation directly represents an HTTP 2xx-class response, not mere request emission. Whether that response qualifies as the required save remains unresolved; HTTP 2xx alone does not establish business persistence, completion confirmation or exit."
+    },
+    {
+      "process_id": "BU20",
+      "business_name": "자산 등록",
+      "required_step_id": "BU20-S05",
+      "required_label": "종료",
+      "step_order": 5,
+      "source_process_id": "PM-002",
+      "status": "UNRESOLVED",
+      "candidate_direct_occurrences": [
+        {
+          "id": "PM-002-S014",
+          "node_id": "PM-002-N002",
+          "technical_signature": "detail_open|/mypage/assets|dialog_control||"
+        },
+        {
+          "id": "PM-002-S015",
+          "node_id": "PM-002-N008",
+          "technical_signature": "detail_close|/mypage/assets|dialog_control||"
+        },
+        {
+          "id": "PM-002-S016",
+          "node_id": "PM-002-N005",
+          "technical_signature": "selection|/mypage/assets|dialog_control||"
+        },
+        {
+          "id": "PM-002-S017",
+          "node_id": "PM-002-N008",
+          "technical_signature": "detail_close|/mypage/assets|dialog_control||"
+        }
+      ],
+      "conflict_or_unknown_meaning": "Several dialog operations; confirmation vs final business termination unspecified."
+    }
+  ]
+}

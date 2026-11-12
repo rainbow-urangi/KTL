@@ -1,0 +1,36 @@
+{
+  "verdict": "PASS",
+  "snapshot_manifest_sha256": "b3537ec756be0b6fbf63e7fc8a23428fb26f9ad8c0564a61e336f9f899ff8a41",
+  "generic_contract_check": "PASS",
+  "gt_leakage_check": "PASS",
+  "provenance_check": "PASS",
+  "regression_check": "PASS",
+  "scope_check": "PASS",
+  "verified_by": "independent_verify_process_improvements",
+  "verified_at": "2026-11-08T13:09:12.423269+00:00",
+  "regression": {
+    "backend_tests": 339,
+    "command": "PYTHONDONTWRITEBYTECODE=1 python3 -m unittest discover -s tests -v",
+    "elapsed_seconds": 19.234
+  },
+  "independent_checks": [
+    "Exact manifest and every listed dependency hash verified; parent model/config/raw dependencies unchanged except the three explicitly approved source files",
+    "Previous independent sibling Export/Refresh counterexample now retains both steps; nav ancestry compression disabled",
+    "Actual date click plus validated nested popup opener, direct click-close cause and unchanged parent lifecycle required; defaults, wrong context, stale identity and contradictory causes rejected by structural tests",
+    "Owner-approved weekly registration plus actual date-selection meaning; no BU identifier or date value condition; ordered matching and scoring formulas unchanged",
+    "Actual intent order, not earlier attached context, controls scope order; no chronology rewritten to match GT",
+    "Recovery01 122 and Recovery04 62 raw atoms replayed through generation only twice: deterministic, all original atom fields unchanged, final attached evidence exactly equals raw ledger including existing native-submit allowlisted extension",
+    "Intent IDs remain within source IDs and source/evidence IDs match; no raw or historical event edits",
+    "Same-form compression preserves sources and unknown/lifecycle barriers; nested parent identity and cross-fragment form proof adverse tests pass",
+    "Existing causal success popup lifecycle and completion modules unchanged; full regression includes their adverse cases",
+    "Collector build/reload and actual web runtime verification remains TODO before OFFICIAL"
+  ],
+  "score_computed": false,
+  "limits": [
+    "Implementation verification only, not KTL certification or a measured M02 score",
+    "Freeze and same exact five-execution DEVELOPMENT evaluation occur after this gate",
+    "Post-measurement aggregates and evidence export still require independent verification",
+    "Navigation auxiliary merge remains disabled without explicit raw expansion/descendant proof",
+    "No approval for additional tuning or changes after reporting results"
+  ]
+}

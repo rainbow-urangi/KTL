@@ -1,0 +1,23 @@
+{
+  "cleaning_model_version": "session-context-cleaning-v2",
+  "model_artifact": {
+    "path": "/Users/sooeunkim/workspace/RainbowKTL/evaluation_contracts/development/m05_session_cleaning_candidate/rules.json",
+    "sha256": "ed8e9f911f8cae1b260e9742be6ba75dfa35f2f7ed13a3a401de8022528629c8"
+  },
+  "adapter_artifact": {
+    "path": "/Users/sooeunkim/workspace/RainbowKTL/backend/m05_session_cleaning.py",
+    "sha256": "277b1070b550d58c6de9b497e151e4686bfcb6c6a3c58de471bf28ea398268c8"
+  },
+  "interpreter_artifact": {
+    "path": "/Library/Frameworks/Python.framework/Versions/3.10/bin/python3.10",
+    "sha256": "6d79f1a4ec08239d2e901db97d35962b300d4431393d7b502ba00f5c1df30dd0"
+  },
+  "adapters": {
+    "cleaning": [
+      "/Library/Frameworks/Python.framework/Versions/3.10/bin/python3.10",
+      "/Users/sooeunkim/workspace/RainbowKTL/backend/m05_session_cleaning.py",
+      "--model",
+      "/Users/sooeunkim/workspace/RainbowKTL/evaluation_contracts/development/m05_session_cleaning_candidate/rules.json"
+    ]
+  }
+}

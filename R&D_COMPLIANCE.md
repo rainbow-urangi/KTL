@@ -92,3 +92,29 @@ V6.2 frozen/reference/runtime과 승인 산출물은 명시적 승인 없이 변
 - LLM exact API model identifier/version
 
 KTL 원문의 제품명 수준 표기는 정확한 API identifier 확정을 대신하지 않습니다.
+
+## M05 사용자 결정 20건 계약 (2026-11-11 갱신) — 최신 운영 기준
+
+사용자 직접 결정으로 총20건(REMOVE10/KEEP10), 학습·DEVELOPMENT tuning 미사용 held-out, 1회 일괄 평가, F1≥0.79를 적용한다. REMOVE category는 prediction 전 raw 문맥과 필요시 추적 가능한 명시적 사용자 확인을 근거로 duplicate/noise/repeated_action/irrelevant_action 중 하나로 기록하며, category별 고정 quota나 4종 모두의 포함 의무는 없다. remove_category는 evidence/설명용 metadata이며 평가 대상은 binary REMOVE/KEEP F1이다. prediction 결과를 보고 target이나 label을 변경하지 않는다. 기존 본문/구형 evaluator의 200/REMOVE100/KEEP100 및 각 category25는 **STALE REQUIREMENT / 역사 기록**이다. FINAL PDF는 수정하지 않았으며 사용자 결정은 KTL 승인 증거가 아니다. 공식 성적서 수용 확인은 별도다.
+
+현재 M05 구현은 `backend/m05_full_context.py`, 별도 웹 `python3 -m backend.m05_readiness_web` (localhost:8768). 동결 정제 엔진은 그대로 유지하며 전체 raw sequence를 1회 처리한 후 사전 잠금 target20만 평가한다. M02 frozen dependency인 기존 server/evaluator/config/frontend 파일은 변경하지 않았다. 따라서 기존 main web의 구형 M05 경로는 stale, 사용 금지이며 별도 화면이 현재20건 경로다. 실제 target20의 label 내용·원본 lock 무결성은 독립 검증되었고 전체417행 bundle 준비도 별도 검증되었다. 완전한 held-out 이력, 실제 prediction 실행·열람 로그 coverage, 평가 스키마상 label 출처 메타데이터, 별도 full-context 승인은 미완료이므로 측정 BLOCKED이고 score/confusion/Precision/Recall/F1은 미산출이다. 임시 합성 fixture는 테스트 전용이며 실측 evidence가 아니다.
+
+평가 데이터는 `data/held_out/m05/<dataset>/`에 분리한다. 각 event의 event_id/expected_label/remove_category/held_out/features, dataset SHA-256, training 및 development 이력 inventory SHA-256, event ID+feature content hash 비중복 검증, 이력 completeness reviewer/감사 근거를 요구한다. 선언만으로 held-out 증명하지 않는다. 모델에는 id/features만 전달한다. 중앙 evaluator가 raw prediction으로 TP/FP/FN/TN 및 P/R/F1을 계산한다. evidence CSV는 event_id, expected_label, predicted_label, remove_category, classification, model_version/model_sha256, dataset_sha256을 포함한다.
+
+TODO: 잠금 target20 및 전체417행 준비 bundle의 완전한 사용 이력·실행/열람 로그·출처 메타데이터 확보 → 정확한 binding에 대한 별도 Independent Verification/승인 → 실데이터 1회 측정 → 실제 브라우저 실행/결과/CSV 다운로드 검증. 모델 tuning 금지. M02 77.29% freeze와 M06/M03 상태는 유지.
+
+
+### M05 prediction 전 label 근거의 구분 (2026-11-11)
+
+raw만으로 사용자 의도나 당시 상태가 확정되지 않는 경우, prediction 전에 질문·답변과 출처를 추적할 수 있는 명시적 사용자 확인을 raw 문맥과 함께 사용한다. 이는 일반적인 label 증거 원칙이며 특정 event에 대한 분류 예외나 category 정의 변경이 아니다. raw 관측과 사후 회고를 분리하고, raw에 없는 값·selection·cursor 상태를 원래 계측된 사실로 보충하지 않는다. 질문/답변, 관련 event와 source artifact/hash, 남은 불확실성을 provenance에 보관한다.
+
+현재 적용 이력은 사전 잠금된 raw03 제목 #26 및 내용 #37의 두 event이며, 기존 docs/agents/m05_raw03_attested_label_lock_20261111/ 및 evaluation_contracts/m05_user20.json의 provenance에 연결되어 있다. 기존20개 label/category/rationale, 원본 raw 및 lock hash를 바꾸지 않는다. 두 label은 RAW_CONTEXT_PLUS_DIRECT_USER_RECOLLECTION이며 raw-only 증거라고 표기하지 않는다. 선행 paste30의 미반영/삭제 경과는 UNKNOWN을 유지한다.
+
+이 근거 원칙은 held-out 미사용 이력, 수집/내보내기 완전성, 실제 prediction 실행·열람 로그 및 별도 full-context 승인 gate를 완화하지 않는다. 사용자 확인이나 DEVELOPMENT 계약 변경은 KTL 수용 승인이 아니다. 이번 문서/계약 동기화 내역은 docs/agents/m05_attested_contract_sync_20261111/에 원본 lock과 분리하여 보존한다.
+
+
+## M05 DEVELOPMENT 사용자 최신 결정 (2026-11-12)
+
+기존 417 raw / 잠금 target20 / frozen engine을 유지한 binary 평가를 사용자가 명시적으로 승인했다. 이번 DEVELOPMENT에 한해 과거 엄격 provenance/audit completeness, label별 작성 시각, 과거 prediction 열람 이력, category 구성은 blocking condition이 아니다. 이력 부족은 참고 evidence로 보존하며 true 선언이나 사후 증빙을 생성하지 않는다. 원본 20 label, full sequence, engine/config/hash는 불변이고 context397은 점수 분모에서 제외한다. 별도 hash-bound `evaluation_contracts/m05_development_authorization.json`이 해당 입력에만 적용된다. 위 기존 BLOCKED/TODO 설명은 이 DEVELOPMENT 실행에 대해서는 superseded되며 엄격 held-out 입증 또는 KTL 공식 승인을 뜻하지 않는다.
+
+실측: TP0 FP0 FN10 TN10, Precision0 Recall0 F1=0.00 <0.79. M05 DEVELOPMENT FAIL. 원본/GT/engine을 그대로 보존하고 추가 tuning은 사용자 승인 대기. 보고 및 무결성: `docs/agents/m05_development_measurement_20261112/`.

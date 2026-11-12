@@ -1,0 +1,34 @@
+{
+  "kind": "AUDIT_SNAPSHOT_NOT_TARGET_LOCK",
+  "status": "BLOCKED_NO_FINAL20",
+  "created_at_utc": "2026-11-11T12:48:19.427204+00:00",
+  "prediction_executions": 0,
+  "target_lock_created": false,
+  "sources": {
+    "data/evaluation/m05_heldout_raw_01/events.csv": "8a797dadcd8341b39e1ce96487eaaafe8995a62dabce3d027495c0f34382b8b4",
+    "data/evaluation/m05_heldout_raw_01/sessions.csv": "247856007334e9237085077b950e127b6720f9f98db5cdeaab5876e7299fac62",
+    "data/evaluation/m05_heldout_raw_01/tasks.csv": "f8c82493004d429d5ebd2f824275f3d617b716172a77bcb283d9cce8c6747924",
+    "data/evaluation/m05_heldout_raw_02/events.csv": "06a86358ada46c3b04c905c018af6004624348a214e210047633da4e28773b50",
+    "data/evaluation/m05_heldout_raw_02/sessions.csv": "d7f16a298060dbae1aecd2876e63f9f2e706234d901d8a74c1ba5da6a6ba9a00",
+    "data/evaluation/m05_heldout_raw_02/tasks.csv": "656c9c0c640095acda82e391e47d1a1e9e3fd30ca4f41c7c5ca40a62881a9536"
+  },
+  "previous_audit": {
+    "docs/agents/m05_raw_blind_audit_20261111/README.md": "0c869f380a7339eac517b82e7f6ca44482a0c0de8ac09503d926de163d5418c8",
+    "docs/agents/m05_raw_blind_audit_20261111/ambiguous_candidates_NOT_GT.json": "d13e1d43643465627b002003fe1aee623acf94182986f6b10c10a51f150d496c",
+    "docs/agents/m05_raw_blind_audit_20261111/audit_snapshot_pre_prediction.json": "cd153ce555b711da0060b5c11bfedf6773e041bae5a1968f94b6acd91d26c936",
+    "docs/agents/m05_raw_blind_audit_20261111/history_inventory.json": "ca193b25f99cec0ee5af6b0040ee73c20b09b7a40e36d1594bfa2885ffd21140",
+    "docs/agents/m05_raw_blind_audit_20261111/partial_label_candidates_NOT_FOR_EVALUATION.csv": "23cdcfdf6596fa35f5aaf314fdd5ca6251daca32bfeca4af7d852f120223f47c",
+    "docs/agents/m05_raw_blind_audit_20261111/raw_validation.json": "04c72918c97d3fd7b5570e493d443ef5ba39712ee9f2c88147708218a97aeb24",
+    "docs/agents/m05_raw_blind_audit_20261111/validate_raw.py": "23e33fbb4203f82f6f071d855d93280e641ecbe144ac6615d842b884e57163ed",
+    "docs/agents/m05_raw_blind_audit_20261111/write_blind_review.py": "8c9baeead17feb84acac934aab04fe5760b43ca4478f5b8b80f18c68e591abc2"
+  },
+  "artifacts": {
+    "docs/agents/m05_raw02_blind_audit_20261111/README.md": "71d2e48cc29d7cd2eec6929522deead70ed838b6a161a8a2e7d3501d70088011",
+    "docs/agents/m05_raw02_blind_audit_20261111/ambiguous_candidates_NOT_GT.json": "e4ff9598dec8c1e63e62b6934fcc46d9f4ee87189109c1f2edeb72404db562d7",
+    "docs/agents/m05_raw02_blind_audit_20261111/audit_raws.py": "16c3549c3b965a3dac32aeca22513b78d545543d3a04d5495e11d3a9bac13e26",
+    "docs/agents/m05_raw02_blind_audit_20261111/history_inventory.json": "8e7c59cffafc825f7ac28336e2ae47df1d03ad98786328d7cf7afde0e715a645",
+    "docs/agents/m05_raw02_blind_audit_20261111/partial_label_candidates_NOT_FOR_EVALUATION.csv": "445c38587c8ab2ecc1f1927f75fa8a229b9eab8b78bc69413ce398fb2b68dbba",
+    "docs/agents/m05_raw02_blind_audit_20261111/raw_context_index.json": "214dc2e396c56d52fcac593b619aa1fbe07f45ea0eb614534e349e84ff2a5b47",
+    "docs/agents/m05_raw02_blind_audit_20261111/raw_validation.json": "8f5395700243ea1697e2f6cc017b91967ce19b81e6769f5512fd9a441efada92"
+  }
+}

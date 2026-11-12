@@ -1,0 +1,13 @@
+[
+  {
+    "business_unit_id": "BU09",
+    "end_event_id": "e7e300fe-5c24-4878-82bb-ea7350fa533a",
+    "end_raw_id": 91123,
+    "execution_id": "05-BU09",
+    "menu_reentry_observed": true,
+    "session_id": "efdadf18-9e83-4911-9820-9725ae6f62a0",
+    "source": "RAW_ONLY: upper menu to page close, single weekly registration/save lifecycle; no model/GT prediction",
+    "start_event_id": "1679b659-eb4c-4b39-8f06-8430c0f6ae3f",
+    "start_raw_id": 91091
+  }
+]

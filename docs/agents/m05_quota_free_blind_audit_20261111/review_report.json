@@ -1,0 +1,70 @@
+{
+  "status": "ADDITIONAL_REMOVE_RAW_REQUIRED",
+  "created_at_utc": "2026-11-11T13:11:39.690944+00:00",
+  "contract": {
+    "mode": "DEVELOPMENT",
+    "total": 20,
+    "KEEP": 10,
+    "REMOVE": 10,
+    "category_quotas": null
+  },
+  "review": {
+    "raw_events": 350,
+    "raw_sessions": 2,
+    "source_order_preserved": true,
+    "preserved_prior_rows": 14,
+    "new_accepted_remove_rows": 4,
+    "labels": {
+      "KEEP": 10,
+      "REMOVE": 8
+    },
+    "remove_categories": {
+      "noise": 2,
+      "repeated_action": 6
+    },
+    "missing_remove_events": 2,
+    "target_lock_created": false
+  },
+  "held_out": {
+    "status": "SUPPORTED_BY_AVAILABLE_HISTORY_NOT_CERTIFIED",
+    "field_value": "blank",
+    "prior_inventory_path": "docs/agents/m05_raw02_blind_audit_20261111/history_inventory.json",
+    "prior_inventory_sha256": "8e7c59cffafc825f7ac28336e2ae47df1d03ad98786328d7cf7afde0e715a645",
+    "inventory_files_rehashed": 15,
+    "hash_mismatches": 0,
+    "prior_overlap_counts": {
+      "event_id": 0,
+      "session_id": 0,
+      "canonical_raw_row": 0,
+      "id_excluded_raw_content": 0
+    },
+    "complete_training_development_nonuse_certified": false,
+    "inference_feature_content_hash_check": "NOT_PERFORMED_BY_BLIND_LABELER",
+    "limitations": [
+      "가용 15개 이력 파일과 원본 및 기존 감사 hash를 재확인했다. 기존 비교에서 중복은 0이었다.",
+      "nested ID/timestamp를 포함한 raw hash는 실제 inference feature hash가 아니다.",
+      "외부·삭제된 학습/개발 이력까지 완전한 미사용으로 선언하지 않는다.",
+      "두 raw는 다른 수집 세션이지만 같은 install/tab 및 실제 업무 객체 연결이 있으므로 독립 업무 객체로 가장하지 않는다."
+    ]
+  },
+  "blindness": {
+    "engine_code_read": false,
+    "adapter_code_read": false,
+    "prediction_files_read": false,
+    "engine_or_adapter_execution": false,
+    "prediction_executions_by_this_review": 0,
+    "prediction_based_selection": false
+  },
+  "collection_request": {
+    "minimum_additional_eligible_remove_events": 2,
+    "minimum_additional_full_capture_sessions": 1,
+    "minimum_total_raw_event_count": "NOT_FIXED; retain the full actual task sequence",
+    "suggested_behavior": "실제로 필요한 보고서 작성 시 제목과 내용이 모두 비어 있는 새 폼에서 각 필드를 최초 focus 후 한 번 더 클릭하고 실제 내용을 입력한다. 각 최초 focus는 보존하고 추가 클릭 두 건만 반복행위 후보로 검토한다. 대안은 한 빈 필드 최초 focus와 추가 두 클릭이다. 이미 채운 텍스트의 다중 클릭·선택·복사는 사용하지 않는다.",
+    "capture_evidence": [
+      "수집 전에 의도와 최초 focus 보존 원칙을 메모하고 시각을 남긴다.",
+      "실제 업무 시작부터 저장/취소 종료까지 events/tasks/sessions를 원래 순서 그대로 보존한다.",
+      "빈 값·선택 범위와 실제 입력 변화가 관측되도록 수집하며 클릭 사이에 입력·선택·키보드 단축키를 섞지 않는다.",
+      "category quota나 engine prediction으로 행동/label을 맞추지 않는다. 새 raw도 실제 증거로 재심사하므로 2건 확보를 보장하지 않는다."
+    ]
+  }
+}

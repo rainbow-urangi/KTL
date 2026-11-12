@@ -1,0 +1,122 @@
+{
+  "label_lock_sha256": "b8500a69ed468d64e682f22b6d380d4a6961f1d414dab7a999523b9ab07db77b",
+  "source_label_lock_sha256": "ad553f26834c14995ae31b38b4a884f4875585e0a81b0dd168507e652810b156",
+  "raw_sequence_sha256": "2c82ddb91814246ab22c584f8cd78d12821c080faf6377611143d83ab46009ad",
+  "coverage_complete": false,
+  "prediction_runs": null,
+  "prediction_views": null,
+  "method": "EXECUTION_AND_ACCESS_LOG_RECONCILIATION",
+  "findings": "Accessible record inventory and current attempt-directory observation only. No matching durable full-context attempt file exists at observation time, but this cannot establish zero executions/views or coverage from collection start through lock. Existing agent reports are self-reports, not exhaustive execution/access logs.",
+  "reviewer": null,
+  "reviewed_until_utc": null,
+  "source_logs": [],
+  "source_record_inventory": [
+    {
+      "path": "results/development/m05_baseline_adapter_candidate/functional_validation.json",
+      "sha256": "73f126eebb13cb7dadbf58b16768dfa644771d1ebdd5940009c33d223f560319",
+      "source_kind": "existing_project_record",
+      "coverage": "Not an exhaustive execution/access log"
+    },
+    {
+      "path": "results/development/m05_baseline_adapter_candidate/regression.log",
+      "sha256": "6dd936d9848e4bbf4539717f6580eb28767ae73f132a5f1db40e011983d81762",
+      "source_kind": "existing_project_record",
+      "coverage": "Not an exhaustive execution/access log"
+    },
+    {
+      "path": "results/exam-preparation/m05/regression.log",
+      "sha256": "d91e86e8aa26e035dea0ce5ddce99a6fc7630ed760ffbe577d2e06d819427d35",
+      "source_kind": "existing_project_record",
+      "coverage": "Not an exhaustive execution/access log"
+    },
+    {
+      "path": "results/official/EVAL-M05-20261004T125248-94cb105ba1f7/run_manifest.json",
+      "sha256": "90be0d652b4d75c5789d85e6ae70a1eb9f9d8ca71796e21ae680443221cbecae",
+      "source_kind": "existing_project_record",
+      "coverage": "Not an exhaustive execution/access log"
+    },
+    {
+      "path": "results/reference/REF-M05-20261004T125248-e82087ebd4c3/run_manifest.json",
+      "sha256": "71adb91198ffe5f62825177b5b193e33d644bfede2a6e15276eb48a27a92abec",
+      "source_kind": "existing_project_record",
+      "coverage": "Not an exhaustive execution/access log"
+    },
+    {
+      "path": "docs/agents/m05_category_no_quota_20261111/focused_tests.log",
+      "sha256": "4c79ee0a0297c23b854aa9f5d5b5172d8ad2dab6b2197d943da30fc7853344ec",
+      "source_kind": "existing_project_record",
+      "coverage": "Not an exhaustive execution/access log"
+    },
+    {
+      "path": "docs/agents/m05_category_no_quota_20261111/regression_tests.log",
+      "sha256": "589614cb082918902b7ee55a0f10deb3bc1f0d162cbcf37c46e901e445925860",
+      "source_kind": "existing_project_record",
+      "coverage": "Not an exhaustive execution/access log"
+    },
+    {
+      "path": "docs/agents/m05_quota_free_blind_audit_20261111/audit_snapshot_pre_prediction.json",
+      "sha256": "4a812ac1326f8a4882782412becb5149ff9552e67e69161c3e256c02f7a4adc5",
+      "source_kind": "existing_project_record",
+      "coverage": "Not an exhaustive execution/access log"
+    },
+    {
+      "path": "docs/agents/m05_raw02_blind_audit_20261111/audit_snapshot_pre_prediction.json",
+      "sha256": "ac9290106da949b021fd829e44ac60e75d59f3f2c758e433efec717db9ad7a46",
+      "source_kind": "existing_project_record",
+      "coverage": "Not an exhaustive execution/access log"
+    },
+    {
+      "path": "docs/agents/m05_raw03_attested_label_lock_20261111/gate_report.json",
+      "sha256": "3346dc9296dcce8e6e1546a2721bd5f52b06c6a932a12dc7d9bad704732477ba",
+      "source_kind": "existing_project_record",
+      "coverage": "Not an exhaustive execution/access log"
+    },
+    {
+      "path": "docs/agents/m05_raw03_blind_audit_20261111/audit_snapshot_pre_prediction.json",
+      "sha256": "afded6f18590c0b38d97f2caa1344128497a8496dfa7a95be9d6e57d2f0af924",
+      "source_kind": "existing_project_record",
+      "coverage": "Not an exhaustive execution/access log"
+    },
+    {
+      "path": "docs/agents/m05_raw_blind_audit_20261111/audit_snapshot_pre_prediction.json",
+      "sha256": "cd153ce555b711da0060b5c11bfedf6773e041bae5a1968f94b6acd91d26c936",
+      "source_kind": "existing_project_record",
+      "coverage": "Not an exhaustive execution/access log"
+    },
+    {
+      "path": "docs/agents/m05_timestamp_evidence_20261111/focused_tests.log",
+      "sha256": "7b3f52e5011cad18c6ffb0353c40c868814354fbf9833eb9808b19d7e8583fd7",
+      "source_kind": "existing_project_record",
+      "coverage": "Not an exhaustive execution/access log"
+    },
+    {
+      "path": "docs/agents/m05_timestamp_evidence_20261111/focused_tests_python312.log",
+      "sha256": "9ddacff61146299b8c7af69e6a780159f291cd42cc7a027c4fc26134bab6d759",
+      "source_kind": "existing_project_record",
+      "coverage": "Not an exhaustive execution/access log"
+    },
+    {
+      "path": "docs/agents/m05_timestamp_evidence_20261111/full_regression.log",
+      "sha256": "90abc8d1d3f130bcf229599e0afe0b08b36f9e351d07bf0dee96dbf9249826d4",
+      "source_kind": "existing_project_record",
+      "coverage": "Not an exhaustive execution/access log"
+    }
+  ],
+  "existing_claim_files": [],
+  "matching_normalized_input_attempt_exists": false,
+  "shell_history_observation": {
+    "path": "/Users/sooeunkim/.zsh_history",
+    "exists": true,
+    "coverage_complete": false,
+    "sha256": "cae4f0c94993f47326ed0fc911882065ba8cbf06daa825f5f0cc78b1be47a10c",
+    "line_count": 1609,
+    "relevant_line_count": 0,
+    "matching_raw_session_lines": 0,
+    "content_copied": false,
+    "limitation": "Interactive shell history can omit subprocesses, other shells, other tools, deleted history, and file views. Its current existence or mtime is not coverage proof."
+  },
+  "prep_prediction_executions": 0,
+  "prep_scoring_executions": 0,
+  "required_coverage_start": "2026-11-11T12:09:46.818000+00:00",
+  "required_coverage_end": "2026-11-11T13:47:09.237438+00:00"
+}

@@ -1,0 +1,61 @@
+{
+  "created_at_utc": "2026-11-11T13:58:13.975721+00:00",
+  "status": "PREPARED_BLOCKED",
+  "full_event_count": 417,
+  "target_event_count": 20,
+  "context_event_count": 397,
+  "session_count": 3,
+  "task_case_count": 313,
+  "source_rows": [
+    203,
+    147,
+    67
+  ],
+  "labels": {
+    "KEEP": 10,
+    "REMOVE": 10
+  },
+  "label_categories": {
+    "noise": 2,
+    "repeated_action": 8
+  },
+  "raw_sequence_sha256": "2c82ddb91814246ab22c584f8cd78d12821c080faf6377611143d83ab46009ad",
+  "normalized_input_sha256": "8c855f793ee411a309a3b86d06f08203f33ecbe6b010d7ccb55bec985bda7855",
+  "source_target_labels_sha256": "88f48576253211e47f8a39a857734e031d30a9bdbcf4da619e58fdd11cf3ceea",
+  "source_target_lock_sha256": "ad553f26834c14995ae31b38b4a884f4875585e0a81b0dd168507e652810b156",
+  "engine_freeze_sha256": "23fde29b22c23976ccf02760f58b2c2490f3e5b054c385193fc7c463f5f00d10",
+  "manifest_byte_sha256": "8e048e425d9cb789a5ba19bbf6b2b48005c787ede4d6b018aa9927f285fd647a",
+  "manifest_canonical_sha256": "1aabb9f92383586326d3afd42429b17fb28a56a335e81c6854c5108b46e7a5dd",
+  "history": {
+    "source_file_count": 12,
+    "source_row_count": 34553,
+    "reference_index_count": 3,
+    "reference_index_rows": 1838,
+    "event_id_overlap_count": 0,
+    "feature_hash_overlap_count": 0,
+    "coverage_complete": false
+  },
+  "frozen_artifact_count": 18,
+  "protected_files_unchanged": 129,
+  "timestamp_proof_pass_count": 417,
+  "collection_validation": "PASS_EXPORTED_ROW_CONTINUITY_AND_BOUNDARIES",
+  "collection_authority": "PENDING_INDEPENDENT_EXPORT_COMPLETENESS",
+  "runtime_validation": {
+    "status": "BLOCKED",
+    "reason": "PRIOR_USE_DECLARATIONS_REQUIRED"
+  },
+  "blockers": [
+    "Complete training/development use-history coverage is unproven.",
+    "Actual prediction execution/access logs covering collection through label lock are unavailable; no false empty log was written.",
+    "Original CSV omits labeler and individual labeled_at_utc. Source batch-lock time was not recast as per-label time; attributable preservation/review is pending.",
+    "Independent full-context approval registry does not exist; label correctness PASS alone is not full-context readiness."
+  ],
+  "prediction_executions": 0,
+  "score_executions": 0,
+  "metrics_generated": false,
+  "independent_review_status": "REQUESTED_SEPARATELY_NOT_SELF_APPROVED",
+  "source_files_modified": false,
+  "engine_or_adapter_modified": false,
+  "read_only_checks_only": true,
+  "full_backend_tests": "NOT_RUN_METADATA_ONLY_NO_BACKEND_CHANGE"
+}

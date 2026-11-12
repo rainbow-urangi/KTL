@@ -1,0 +1,279 @@
+--- before/backend/m05_full_context.py
++++ backend/m05_full_context.py
+@@ -21,7 +21,8 @@
+ FREEZE_PATH = 'evaluation_contracts/development/m05_baseline_frozen_v1/freeze.json'
+ FREEZE_SHA256 = '23fde29b22c23976ccf02760f58b2c2490f3e5b054c385193fc7c463f5f00d10'
+ APPROVALS_PATH = 'evaluation_contracts/m05_full_context_approvals.json'
+-CATEGORY_COUNTS = {'duplicate': 3, 'noise': 3, 'repeated_action': 2, 'irrelevant_action': 2}
++# Semantic evidence metadata only; no per-category count or coverage requirement.
++REMOVE_CATEGORIES = frozenset({'duplicate', 'noise', 'repeated_action', 'irrelevant_action'})
+ PROVENANCE_FIELDS = ('source_dataset', 'source_session_id', 'source_case_id',
+                      'source_file', 'source_file_sha256', 'raw_sequence_index',
+                      'csv_record_number', 'raw_event_timestamp')
+@@ -246,7 +247,8 @@
+     require(selection.get('event_ids') == ids and selection.get('raw_sequence_sha256') == raw_sha
+             and selection.get('selection_principle'), 'TARGET_SELECTION_LOCK_MISMATCH')
+     require(Counter(r['expected_label'] for r in labels) == {'KEEP': 10, 'REMOVE': 10}, 'KEEP10_REMOVE10_REQUIRED')
+-    require(Counter(r['remove_category'] for r in labels if r['expected_label'] == 'REMOVE') == CATEGORY_COUNTS, 'REMOVE_CATEGORY_3_3_2_2_REQUIRED')
++    require(all(r['remove_category'] in REMOVE_CATEGORIES for r in labels if r['expected_label'] == 'REMOVE'),
++            'INVALID_REMOVE_CATEGORY')
+     lock = read_json(root, manifest.get('label_lock'), bundle)
+     locked_at = instant(lock.get('locked_at_utc'))
+     require(lock.get('target_labels_sha256') == manifest['target_labels']['sha256']
+--- before/backend/m05_full_context_csv.py
++++ backend/m05_full_context_csv.py
+@@ -13,8 +13,9 @@
+     check(all(r['event_id'].strip() and r['is_target'] == 'True' and r['held_out'] == 'True'
+               and r['run_mode'] == 'DEVELOPMENT' for r in rows), 'Context/non-held-out row in evidence')
+     check(Counter(r['expected_label'] for r in rows) == {'KEEP': 10, 'REMOVE': 10}, '10/10 labels required')
+-    check(Counter(r['remove_category'] for r in rows if r['expected_label'] == 'REMOVE') ==
+-          {'duplicate': 3, 'noise': 3, 'repeated_action': 2, 'irrelevant_action': 2}, 'Category counts invalid')
++    # Independently validate the allowed metadata values, never category quotas.
++    check(all(r['remove_category'] in {'duplicate', 'noise', 'repeated_action', 'irrelevant_action'}
++              for r in rows if r['expected_label'] == 'REMOVE'), 'Invalid REMOVE category')
+     counts = dict(TP=0, FP=0, FN=0, TN=0)
+     table = {('REMOVE', 'REMOVE'): 'TP', ('KEEP', 'REMOVE'): 'FP',
+              ('REMOVE', 'KEEP'): 'FN', ('KEEP', 'KEEP'): 'TN'}
+--- before/backend/m05_readiness_web.py
++++ backend/m05_readiness_web.py
+@@ -11,7 +11,7 @@
+ PAGE = '''<!doctype html><html lang="ko"><meta charset="utf-8"><title>M05 DEVELOPMENT</title>
+ <h1>M05 full-context / target 20건</h1>
+ <p>DEVELOPMENT 전용. 전체 raw sequence를 frozen engine으로 1회 실행하고, 사전 잠금 target 20건(KEEP10/REMOVE10)만 계산합니다. context는 점수 분모에서 제외합니다.</p>
+-<p>REMOVE 구성: duplicate3 / noise3 / repeated_action2 / irrelevant_action2. 목표 F1 ≥ 0.79. KTL 공식 판정이 아닙니다. 구형 target-only 경로는 stale이며 사용하지 않습니다.</p>
++<p>REMOVE category는 실제 raw에서 객관적으로 확인한 duplicate / noise / repeated_action / irrelevant_action 중 하나이며 category별 고정 quota는 없습니다. remove_category는 evidence/설명용 metadata이고 평가는 binary REMOVE / KEEP F1입니다. 예측 결과를 보고 target이나 label을 변경하지 않습니다. 목표 F1 ≥ 0.79. KTL 공식 판정이 아닙니다. 구형 target-only 경로는 stale이며 사용하지 않습니다.</p>
+ <select id="dataset" aria-label="held-out dataset"></select><button id="validate">근거 검증</button><button id="run" disabled>검증된 전체 sequence 1회 측정</button>
+ <a id="csv" hidden>target20 evidence CSV 다운로드</a><a id="manifest" hidden>run manifest 다운로드</a>
+ <pre id="result">BLOCKED: 새 raw 수집 근거·독립 라벨 lock·별도 reviewer 승인이 없으면 점수 미산출.</pre>
+--- before/tests/test_m05_full_context.py
++++ tests/test_m05_full_context.py
+@@ -99,6 +99,16 @@
+             writer.writerows(rows)
+         return {'path': name, 'sha256': fc.sha(path)}
+ 
++    def relock_labels(self, labels):
++        """Rebuild a synthetic pre-prediction lock; never used on real raw."""
++        self.labels = copy.deepcopy(labels)
++        self.manifest['target_labels'] = self.csv(self.base + 'labels.csv', self.labels, fc.LABEL_FIELDS)
++        self.lock['target_labels_sha256'] = self.manifest['target_labels']['sha256']
++        self.manifest['label_lock'] = self.write(self.base + 'lock.json', self.lock)
++        self.access_audit['label_lock_sha256'] = self.manifest['label_lock']['sha256']
++        self.manifest['prediction_access_audit'] = self.write(self.base + 'access_audit.json', self.access_audit)
++        self.approve()
++
+     def approve(self):
+         binding = dict(manifest_sha256=fc.digest(self.manifest), raw_sequence_sha256=self.raw_sha,
+                        normalized_input_sha256=fc.digest({'events': self.events}), engine_freeze_sha256=fc.FREEZE_SHA256)
+@@ -164,7 +174,7 @@
+             self.validate()
+ 
+     def test_contract_and_provenance_fail_closed(self):
+-        mutations = [('held_out', 'True'), ('expected_label', 'KEEP'), ('remove_category', 'irrelevant_action'),
++        mutations = [('held_out', 'True'), ('expected_label', 'KEEP'), ('remove_category', 'unknown'),
+                      ('source_session_id', 'wrong'), ('raw_sequence_index', '999'), ('csv_record_number', '0'),
+                      ('event_id', 'missing'), ('label_rationale', ''), ('labeler', 'other')]
+         original = copy.deepcopy(self.fx.labels)
+@@ -172,11 +182,87 @@
+             with self.subTest(key=key):
+                 labels = copy.deepcopy(original)
+                 labels[0][key] = value
+-                self.fx.manifest['target_labels'] = self.fx.csv(self.fx.base + 'labels.csv', labels, fc.LABEL_FIELDS)
+-                self.fx.lock['target_labels_sha256'] = self.fx.manifest['target_labels']['sha256']
+-                self.fx.manifest['label_lock'] = self.fx.write(self.fx.base + 'lock.json', self.fx.lock)
++                self.fx.relock_labels(labels)
+                 with self.assertRaises(EvaluationError):
+                     self.validate()
++
++    def test_remove_category_distributions_have_no_quotas(self):
++        distributions = [[category] * 10 for category in sorted(fc.REMOVE_CATEGORIES)]
++        distributions += [['noise'] * 7 + ['duplicate', 'repeated_action', 'irrelevant_action'],
++                          ['noise'] * 2 + ['repeated_action'] * 8]
++        for categories in distributions:
++            with self.subTest(categories=categories):
++                labels = copy.deepcopy(self.fx.labels)
++                for row, category in zip(labels[:10], categories):
++                    row['remove_category'] = category
++                self.fx.relock_labels(labels)
++                with patch.object(fc, 'call_adapter') as adapter:
++                    prepared = self.validate()
++                adapter.assert_not_called()
++                self.assertEqual([r['remove_category'] for r in prepared['targets'][:10]], categories)
++                self.assertEqual(prepared['events'], self.fx.events)
++
++    def test_invalid_remove_categories_block_before_prediction(self):
++        for category in ('', 'unknown', 'Noise', 'noise '):
++            with self.subTest(category=category):
++                labels = copy.deepcopy(self.fx.labels)
++                labels[0]['remove_category'] = category
++                self.fx.relock_labels(labels)
++                with patch.object(fc, 'call_adapter') as adapter, patch.object(fc, 'calculate') as score:
++                    with self.assertRaisesRegex(EvaluationError, 'INVALID_REMOVE_CATEGORY'):
++                        fc.evaluate(self.root, self.fx.manifest, CONFIG)
++                adapter.assert_not_called()
++                score.assert_not_called()
++
++    def test_no_quota_run_preserves_binary_scoring_and_csv_verification(self):
++        labels = copy.deepcopy(self.fx.labels)
++        for row in labels[:10]:
++            row['remove_category'] = 'irrelevant_action'
++        self.fx.relock_labels(labels)
++        result, rows = fc.evaluate(self.root, self.fx.manifest, CONFIG)
++        checked = recalculate_csv(fc.csv_text(rows))
++        self.assertEqual([result[k] for k in ('TP', 'FP', 'FN', 'TN')], [4, 0, 6, 10])
++        self.assertEqual(checked['f1'], result['f1'])
++        self.assertEqual(verify(self.root / 'results/development/m05_full_context' / result['run_id'])['status'], 'PASS')
++        for category in sorted(fc.REMOVE_CATEGORIES):
++            alternate = copy.deepcopy(rows)
++            for row in alternate[:10]:
++                row['remove_category'] = category
++            self.assertEqual(recalculate_csv(fc.csv_text(alternate)), checked)
++        for category in ('', 'unknown', 'Noise', 'noise '):
++            bad = copy.deepcopy(rows)
++            bad[0]['remove_category'] = category
++            with self.assertRaisesRegex(ValueError, 'Invalid REMOVE category'):
++                recalculate_csv(fc.csv_text(bad))
++        bad = copy.deepcopy(rows)
++        bad[10]['remove_category'] = 'noise'
++        with self.assertRaisesRegex(ValueError, 'KEEP category'):
++            recalculate_csv(fc.csv_text(bad))
++        bad = copy.deepcopy(rows)
++        bad[0]['expected_label'] = 'KEEP'
++        with self.assertRaisesRegex(ValueError, '10/10 labels'):
++            recalculate_csv(fc.csv_text(bad))
++        # Rewriting a label/approval never reopens a previously exposed full input.
++        for row in labels[:10]:
++            row['remove_category'] = 'noise'
++        self.fx.relock_labels(labels)
++        with patch.object(fc, 'call_adapter') as adapter:
++            with self.assertRaisesRegex(EvaluationError, 'ALREADY_ATTEMPTED'):
++                fc.evaluate(self.root, self.fx.manifest, CONFIG)
++        adapter.assert_not_called()
++
++    def test_no_quota_contract_and_web_copy(self):
++        from backend.m05_readiness_web import PAGE
++        contract = json.loads((REPO / 'evaluation_contracts/m05_user20.json').read_text())
++        self.assertEqual((contract['total_event_count'], contract['KEEP'], contract['REMOVE']), (20, 10, 10))
++        self.assertEqual(set(contract['allowed_remove_categories']), fc.REMOVE_CATEGORIES)
++        self.assertIsNone(contract['remove_category_quota'])
++        self.assertNotIn('recommended_remove_categories', contract)
++        self.assertEqual(contract['remove_category_role'], 'EVIDENCE_METADATA_ONLY')
++        self.assertFalse(contract['prediction_based_target_or_label_changes_allowed'])
++        self.assertIn('category별 고정 quota는 없습니다', PAGE)
++        self.assertIn('binary REMOVE / KEEP F1', PAGE)
++        self.assertNotIn('duplicate3', PAGE)
+ 
+     def test_postfreeze_and_completeness(self):
+         original = copy.deepcopy(self.fx.collection)
+--- before/evaluation_contracts/m05_user20.json
++++ evaluation_contracts/m05_user20.json
+@@ -1,15 +1,9 @@
+ {
+-  "authority": "USER_DECISION_2026_11_09",
++  "authority": "USER_DECISION_2026_11_11",
+   "ktl_confirmation": false,
+   "total_event_count": 20,
+   "REMOVE": 10,
+   "KEEP": 10,
+-  "recommended_remove_categories": {
+-    "duplicate": 3,
+-    "noise": 3,
+-    "repeated_action": 2,
+-    "irrelevant_action": 2
+-  },
+   "target": 0.79,
+   "mode": "DEVELOPMENT",
+   "single_batch": true,
+@@ -19,8 +13,20 @@
+     "KEEP 100"
+   ],
+   "held_out_proof_required": true,
+-  "implementation": "backend/m05_heldout.py",
++  "implementation": "backend/m05_full_context.py",
+   "web": "backend/m05_readiness_web.py",
+   "legacy_main_web_m05": "STALE_DO_NOT_USE",
+-  "actual_status": "BLOCKED_DATA_AND_ENGINE_MISSING"
++  "actual_status": "BLOCKED_INDEPENDENT_HELDOUT_AND_LABEL_EVIDENCE",
++  "allowed_remove_categories": [
++    "duplicate",
++    "noise",
++    "repeated_action",
++    "irrelevant_action"
++  ],
++  "remove_category_quota": null,
++  "remove_category_role": "EVIDENCE_METADATA_ONLY",
++  "category_assignment_basis": "OBJECTIVELY_SUPPORTED_BY_RAW_BEFORE_PREDICTION",
++  "scoring": "BINARY_REMOVE_KEEP_F1",
++  "prediction_based_target_or_label_changes_allowed": false,
++  "legacy_target_only_m05": "STALE_DO_NOT_USE"
+ }
+--- before/docs/agents/m05_full_context_implementation/README.md
++++ docs/agents/m05_full_context_implementation/README.md
+@@ -2,7 +2,7 @@
+ 
+ Implementation supports full raw inference followed by scoring **only twenty independently locked targets**. It does not establish that a new real dataset, independent labels, or a valid held-out approval exists. No real new raw inference or F1 measurement was run while implementing this change.
+ 
+-The prior preparation directory remains a historical record. Its “not implemented” statements describe that earlier stage. This new path enforces the current requested REMOVE distribution as a hard requirement: duplicate3, noise3, repeated_action2, irrelevant_action2. KEEP10 has no category. Category is independent semantic GT; binary REMOVE vs KEEP determines confusion, regardless of engine reason/category alignment.
++The 2026-11-11 user decision keeps exactly KEEP10/REMOVE10 and removes all per-category quotas. Each REMOVE has one objectively raw-supported category from duplicate, noise, repeated_action, or irrelevant_action; a category may occur zero to ten times. KEEP10 has no category. remove_category is evidence/explanatory metadata, independently labeled before prediction; binary REMOVE vs KEEP determines confusion, regardless of engine reason/category alignment. Targets or labels must never be changed after viewing predictions. Earlier preparation and audit snapshots remain historical records, not current category requirements.
+ 
+ ## Entry points
+ 
+@@ -46,7 +46,7 @@
+ 
+ ### Targets and independent labels
+ 
+-`target_labels` is CSV with exactly the header in `backend/m05_full_context.py::LABEL_FIELDS` (the preparation `target_labels.template.csv` has this same schema). Exactly twenty unique IDs must join to full raw rows. `held_out` is the exact CSV string `true`, not Python truthiness. Provenance columns, zero-based full sequence index and one-based CSV **record** number must match byte-hashed raw sources. KEEP10/REMOVE10 and the 3/3/2/2 REMOVE distribution are mandatory. KEEP category must be empty. Label rationale, labeler and timezone-aware labeling time are mandatory; labeling must follow full collection completion.
++`target_labels` is CSV with exactly the header in `backend/m05_full_context.py::LABEL_FIELDS` (the preparation `target_labels.template.csv` has this same schema). Exactly twenty unique IDs must join to full raw rows. `held_out` is the exact CSV string `true`, not Python truthiness. Provenance columns, zero-based full sequence index and one-based CSV **record** number must match byte-hashed raw sources. KEEP10/REMOVE10 is mandatory. REMOVE category must be one of the four allowed metadata values; there is no category quota or requirement to cover all four types. KEEP category must be empty. Label rationale, labeler and timezone-aware labeling time are mandatory; labeling must follow full collection completion.
+ 
+ Selection JSON: ordered `event_ids` matching CSV order, `raw_sequence_sha256`, and a substantive `selection_principle`.
+ 
+--- before/R&D_COMPLIANCE.md
++++ R&D_COMPLIANCE.md
+@@ -93,11 +93,11 @@
+ 
+ KTL 원문의 제품명 수준 표기는 정확한 API identifier 확정을 대신하지 않습니다.
+ 
+-## M05 사용자 결정 20건 계약 (2026-11-09) — 최신 운영 기준
++## M05 사용자 결정 20건 계약 (2026-11-11 갱신) — 최신 운영 기준
+ 
+-사용자 직접 결정으로 총20건(REMOVE10/KEEP10), 학습·DEVELOPMENT tuning 미사용 held-out, 1회 일괄 평가, F1≥0.79를 적용한다. REMOVE 권장구성 duplicate3/noise3/repeated_action2/irrelevant_action2는 권장이지 강제하지 않는다. 기존 본문/구형 evaluator의 200/REMOVE100/KEEP100 및 각 category25는 **STALE REQUIREMENT / 역사 기록**이다. FINAL PDF는 수정하지 않았으며 사용자 결정은 KTL 승인 증거가 아니다. 공식 성적서 수용 확인은 별도다.
++사용자 직접 결정으로 총20건(REMOVE10/KEEP10), 학습·DEVELOPMENT tuning 미사용 held-out, 1회 일괄 평가, F1≥0.79를 적용한다. REMOVE category는 실제 raw에서 객관적으로 확인 가능한 duplicate/noise/repeated_action/irrelevant_action 중 하나로 기록하며, category별 고정 quota나 4종 모두의 포함 의무는 없다. remove_category는 evidence/설명용 metadata이며 평가 대상은 binary REMOVE/KEEP F1이다. prediction 결과를 보고 target이나 label을 변경하지 않는다. 기존 본문/구형 evaluator의 200/REMOVE100/KEEP100 및 각 category25는 **STALE REQUIREMENT / 역사 기록**이다. FINAL PDF는 수정하지 않았으며 사용자 결정은 KTL 승인 증거가 아니다. 공식 성적서 수용 확인은 별도다.
+ 
+-현재 M05 구현은 `backend/m05_heldout.py`, 별도 웹 `python3 -m backend.m05_readiness_web` (localhost:8768). M02 frozen dependency인 기존 server/evaluator/config/frontend 파일은 변경하지 않았다. 따라서 기존 main web의 구형 M05 경로는 stale, 사용 금지이며 별도 화면이 현재20건 경로다. 실제20건 데이터/미사용 감사 근거/실제 정제 모델이 확보되지 않아 측정 BLOCKED이고 score/confusion/Precision/Recall/F1은 미산출이다. 임시 합성 fixture는 테스트 전용이며 실측 evidence가 아니다.
++현재 M05 구현은 `backend/m05_full_context.py`, 별도 웹 `python3 -m backend.m05_readiness_web` (localhost:8768). 동결 정제 엔진은 그대로 유지하며 전체 raw sequence를 1회 처리한 후 사전 잠금 target20만 평가한다. M02 frozen dependency인 기존 server/evaluator/config/frontend 파일은 변경하지 않았다. 따라서 기존 main web의 구형 M05 경로는 stale, 사용 금지이며 별도 화면이 현재20건 경로다. 실제 target20의 독립 blind label lock 및 완전한 held-out 감사·승인이 대기 중이므로 측정 BLOCKED이고 score/confusion/Precision/Recall/F1은 미산출이다. 임시 합성 fixture는 테스트 전용이며 실측 evidence가 아니다.
+ 
+ 평가 데이터는 `data/held_out/m05/<dataset>/`에 분리한다. 각 event의 event_id/expected_label/remove_category/held_out/features, dataset SHA-256, training 및 development 이력 inventory SHA-256, event ID+feature content hash 비중복 검증, 이력 completeness reviewer/감사 근거를 요구한다. 선언만으로 held-out 증명하지 않는다. 모델에는 id/features만 전달한다. 중앙 evaluator가 raw prediction으로 TP/FP/FN/TN 및 P/R/F1을 계산한다. evidence CSV는 event_id, expected_label, predicted_label, remove_category, classification, model_version/model_sha256, dataset_sha256을 포함한다.
+ 
+--- before/docs/agents/CURRENT_STATE.md
++++ docs/agents/CURRENT_STATE.md
+@@ -111,11 +111,11 @@
+ 
+ User approved readiness and ordered M02 first. Development adapter/web/TD-04 transcript implemented, but Phase1 is incomplete: actual score is null (DIRECT_PROCEDURE_MAPPING_REQUIRED), not 0 or PASS. 21 frozen maps/176 canonical occurrences versus27 PDF procedures require a validated direct equivalence/granularity contract; raw labels/node evidence cannot become direct matches. Six synthetic tests added;114 unit tests and frontend/HTTP checks pass. See M02_PHASE1_DEVELOPMENT_REPORT.md for exact evidence, limitations and separate Verification Task request. Model untouched; Phase2/3 not started.
+ 
+-## M05 사용자 결정 20건 계약 (2026-11-09) — 최신 운영 기준
++## M05 사용자 결정 20건 계약 (2026-11-11 갱신) — 최신 운영 기준
+ 
+-사용자 직접 결정으로 총20건(REMOVE10/KEEP10), 학습·DEVELOPMENT tuning 미사용 held-out, 1회 일괄 평가, F1≥0.79를 적용한다. REMOVE 권장구성 duplicate3/noise3/repeated_action2/irrelevant_action2는 권장이지 강제하지 않는다. 기존 본문/구형 evaluator의 200/REMOVE100/KEEP100 및 각 category25는 **STALE REQUIREMENT / 역사 기록**이다. FINAL PDF는 수정하지 않았으며 사용자 결정은 KTL 승인 증거가 아니다. 공식 성적서 수용 확인은 별도다.
++사용자 직접 결정으로 총20건(REMOVE10/KEEP10), 학습·DEVELOPMENT tuning 미사용 held-out, 1회 일괄 평가, F1≥0.79를 적용한다. REMOVE category는 실제 raw에서 객관적으로 확인 가능한 duplicate/noise/repeated_action/irrelevant_action 중 하나이며 category별 고정 quota는 없다. remove_category는 evidence/설명용 metadata이고 binary REMOVE/KEEP F1을 평가한다. prediction을 본 뒤 target이나 label을 변경하지 않는다. 기존 본문/구형 evaluator의 200/REMOVE100/KEEP100 및 각 category25는 **STALE REQUIREMENT / 역사 기록**이다. FINAL PDF는 수정하지 않았으며 사용자 결정은 KTL 승인 증거가 아니다. 공식 성적서 수용 확인은 별도다.
+ 
+-현재 M05 구현은 `backend/m05_heldout.py`, 별도 웹 `python3 -m backend.m05_readiness_web` (localhost:8768). M02 frozen dependency인 기존 server/evaluator/config/frontend 파일은 변경하지 않았다. 따라서 기존 main web의 구형 M05 경로는 stale, 사용 금지이며 별도 화면이 현재20건 경로다. 실제20건 데이터/미사용 감사 근거/실제 정제 모델이 확보되지 않아 측정 BLOCKED이고 score/confusion/Precision/Recall/F1은 미산출이다. 임시 합성 fixture는 테스트 전용이며 실측 evidence가 아니다.
++현재 M05 구현은 `backend/m05_full_context.py`, 별도 웹 `python3 -m backend.m05_readiness_web` (localhost:8768). 동결 정제 엔진은 그대로 유지하며 전체 raw sequence를 1회 처리한 후 사전 잠금 target20만 평가한다. M02 frozen dependency인 기존 server/evaluator/config/frontend 파일은 변경하지 않았다. 따라서 기존 main web의 구형 M05 경로는 stale, 사용 금지이며 별도 화면이 현재20건 경로다. 실제 target20의 독립 blind label lock 및 완전한 held-out 감사·승인이 대기 중이므로 측정 BLOCKED이고 score/confusion/Precision/Recall/F1은 미산출이다. 임시 합성 fixture는 테스트 전용이며 실측 evidence가 아니다.
+ 
+ 평가 데이터는 `data/held_out/m05/<dataset>/`에 분리한다. 각 event의 event_id/expected_label/remove_category/held_out/features, dataset SHA-256, training 및 development 이력 inventory SHA-256, event ID+feature content hash 비중복 검증, 이력 completeness reviewer/감사 근거를 요구한다. 선언만으로 held-out 증명하지 않는다. 모델에는 id/features만 전달한다. 중앙 evaluator가 raw prediction으로 TP/FP/FN/TN 및 P/R/F1을 계산한다. evidence CSV는 event_id, expected_label, predicted_label, remove_category, classification, model_version/model_sha256, dataset_sha256을 포함한다.
+ 
+--- before/docs/agents/TASK_QUEUE.md
++++ docs/agents/TASK_QUEUE.md
+@@ -71,11 +71,11 @@
+ 
+ No v1.3, retraining, validation tuning, OFFICIAL data creation, final freeze or external breaking change. See M02_PHASE1_DEVELOPMENT_REPORT.md.
+ 
+-## M05 사용자 결정 20건 계약 (2026-11-09) — 최신 운영 기준
++## M05 사용자 결정 20건 계약 (2026-11-11 갱신) — 최신 운영 기준
+ 
+-사용자 직접 결정으로 총20건(REMOVE10/KEEP10), 학습·DEVELOPMENT tuning 미사용 held-out, 1회 일괄 평가, F1≥0.79를 적용한다. REMOVE 권장구성 duplicate3/noise3/repeated_action2/irrelevant_action2는 권장이지 강제하지 않는다. 기존 본문/구형 evaluator의 200/REMOVE100/KEEP100 및 각 category25는 **STALE REQUIREMENT / 역사 기록**이다. FINAL PDF는 수정하지 않았으며 사용자 결정은 KTL 승인 증거가 아니다. 공식 성적서 수용 확인은 별도다.
++사용자 직접 결정으로 총20건(REMOVE10/KEEP10), 학습·DEVELOPMENT tuning 미사용 held-out, 1회 일괄 평가, F1≥0.79를 적용한다. REMOVE category는 실제 raw에서 객관적으로 확인 가능한 duplicate/noise/repeated_action/irrelevant_action 중 하나이며 category별 고정 quota는 없다. remove_category는 evidence/설명용 metadata이고 binary REMOVE/KEEP F1을 평가한다. prediction을 본 뒤 target이나 label을 변경하지 않는다. 기존 본문/구형 evaluator의 200/REMOVE100/KEEP100 및 각 category25는 **STALE REQUIREMENT / 역사 기록**이다. FINAL PDF는 수정하지 않았으며 사용자 결정은 KTL 승인 증거가 아니다. 공식 성적서 수용 확인은 별도다.
+ 
+-현재 M05 구현은 `backend/m05_heldout.py`, 별도 웹 `python3 -m backend.m05_readiness_web` (localhost:8768). M02 frozen dependency인 기존 server/evaluator/config/frontend 파일은 변경하지 않았다. 따라서 기존 main web의 구형 M05 경로는 stale, 사용 금지이며 별도 화면이 현재20건 경로다. 실제20건 데이터/미사용 감사 근거/실제 정제 모델이 확보되지 않아 측정 BLOCKED이고 score/confusion/Precision/Recall/F1은 미산출이다. 임시 합성 fixture는 테스트 전용이며 실측 evidence가 아니다.
++현재 M05 구현은 `backend/m05_full_context.py`, 별도 웹 `python3 -m backend.m05_readiness_web` (localhost:8768). 동결 정제 엔진은 그대로 유지하며 전체 raw sequence를 1회 처리한 후 사전 잠금 target20만 평가한다. M02 frozen dependency인 기존 server/evaluator/config/frontend 파일은 변경하지 않았다. 따라서 기존 main web의 구형 M05 경로는 stale, 사용 금지이며 별도 화면이 현재20건 경로다. 실제 target20의 독립 blind label lock 및 완전한 held-out 감사·승인이 대기 중이므로 측정 BLOCKED이고 score/confusion/Precision/Recall/F1은 미산출이다. 임시 합성 fixture는 테스트 전용이며 실측 evidence가 아니다.
+ 
+ 평가 데이터는 `data/held_out/m05/<dataset>/`에 분리한다. 각 event의 event_id/expected_label/remove_category/held_out/features, dataset SHA-256, training 및 development 이력 inventory SHA-256, event ID+feature content hash 비중복 검증, 이력 completeness reviewer/감사 근거를 요구한다. 선언만으로 held-out 증명하지 않는다. 모델에는 id/features만 전달한다. 중앙 evaluator가 raw prediction으로 TP/FP/FN/TN 및 P/R/F1을 계산한다. evidence CSV는 event_id, expected_label, predicted_label, remove_category, classification, model_version/model_sha256, dataset_sha256을 포함한다.
+ 

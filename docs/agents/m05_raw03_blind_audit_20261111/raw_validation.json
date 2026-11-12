@@ -1,0 +1,119 @@
+{
+  "status": "RAW_STRUCTURALLY_VALID",
+  "created_at_utc": "2026-11-11T13:40:53.691514+00:00",
+  "raw_files": {
+    "events.csv": {
+      "columns": [
+        "id",
+        "event_id",
+        "session_id",
+        "task_id",
+        "workflow_index",
+        "step_duration_ms",
+        "workflow_key",
+        "workflow_outcome",
+        "event_time",
+        "event_type",
+        "page_url",
+        "target_selector",
+        "locators_json",
+        "data_testid",
+        "element_tag",
+        "selector_xpath",
+        "interaction_type",
+        "input_data",
+        "api_path",
+        "api_method",
+        "api_status_code",
+        "page_title",
+        "element_text",
+        "associated_label",
+        "api_latency_ms"
+      ],
+      "sha256": "c7b699fb540a2f7f67b5b218dbfd0df53b41fe8d4ccac3922b73a7842d1057f8",
+      "record_count": 67
+    },
+    "tasks.csv": {
+      "columns": [
+        "id",
+        "session_id",
+        "task_name",
+        "status",
+        "start_time",
+        "end_time",
+        "duration_ms",
+        "step_id"
+      ],
+      "sha256": "f1113a5093b6520ecc083de3ef45721989082f5f9b7a973e89df8a3433ee117c",
+      "record_count": 57
+    },
+    "sessions.csv": {
+      "columns": [
+        "id",
+        "user_id",
+        "tenant_id",
+        "start_time",
+        "end_time",
+        "user_agent",
+        "browser_id",
+        "viewport_size",
+        "viewport_width",
+        "viewport_height",
+        "ip_address"
+      ],
+      "sha256": "d8bfc3c7ecad5082c72979eaa0f247baf5da2d594d5cc6db140d9c7bdf68d5fc",
+      "record_count": 1
+    }
+  },
+  "event_count": 67,
+  "task_count": 57,
+  "session_count": 1,
+  "session_ids": [
+    "e91bbeec-405d-4ff8-8966-315320ce00e4"
+  ],
+  "interaction_counts": {
+    "collector_boot": 1,
+    "page_view": 1,
+    "change": 6,
+    "click": 32,
+    "submit": 3,
+    "route_change": 2,
+    "api_transaction": 9,
+    "screen_change": 2,
+    "popup_open": 2,
+    "popup_structure": 2,
+    "paste": 4,
+    "popup_close": 2,
+    "page_close": 1
+  },
+  "source_sequence_contiguous": true,
+  "source_order_preserved": true,
+  "timestamps": {
+    "first_utc": "2026-11-11T13:27:29.635000+00:00",
+    "last_utc": "2026-11-11T13:28:28.909000+00:00",
+    "first_kst": "2026-11-11T22:27:29.635000+09:00",
+    "last_kst": "2026-11-11T22:28:28.909000+09:00",
+    "received_min_utc": "2026-11-11T13:27:34.707000+00:00",
+    "received_max_utc": "2026-11-11T13:28:31.211000+00:00",
+    "all_after_recorded_freeze": true,
+    "source_order_backtracks": []
+  },
+  "freeze_reference": {
+    "kst": "2026-11-09T10:56:51+09:00",
+    "utc": "2026-11-09T01:56:51+00:00",
+    "authority": "Previously recorded independent raw audit cutoff. Current engine metadata not read by blind reviewer; independent freeze re-verification remains separate."
+  },
+  "checks": {
+    "unique_event_ids": true,
+    "parsed_json_count": 67,
+    "history_files": 17,
+    "prior_history_hash_mismatches": 0,
+    "history_event_id_overlap_count": 0,
+    "history_session_id_overlap_count": 0,
+    "history_canonical_raw_row_overlap_count": 0,
+    "history_id_excluded_raw_content_overlap_count": 0
+  },
+  "issues": [],
+  "held_out_certified": false,
+  "history_inventory_sha256": "3db0b4c295fd0c9c9306a315a931ec0f11f7cd167206d90b29033a528b032681"
+}

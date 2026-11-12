@@ -1,0 +1,22 @@
+{
+  "status": "IMPLEMENTATION_COMPLETE_TESTS_PENDING",
+  "binding": {
+    "manifest_sha256": "1aabb9f92383586326d3afd42429b17fb28a56a335e81c6854c5108b46e7a5dd",
+    "raw_sequence_sha256": "2c82ddb91814246ab22c584f8cd78d12821c080faf6377611143d83ab46009ad",
+    "normalized_input_sha256": "30cd596b15158b9d772ad3b4f69b8aeaa3e345514cadd58a3027d9ff85e453c9",
+    "engine_freeze_sha256": "23fde29b22c23976ccf02760f58b2c2490f3e5b054c385193fc7c463f5f00d10",
+    "development_authorization_sha256": "52f60fffe92c5c8e31c08681f64a78c7ecc15141dcffda39e186568e3cfd2ab4",
+    "baseline_normalized_input_sha256": "8c855f793ee411a309a3b86d06f08203f33ecbe6b010d7ccb55bec985bda7855",
+    "candidate_engine_config_sha256": "740b661a89dcc25cd64ed1dcfce98cde0a32dbf992792448aee89c514839dbd5",
+    "candidate_runner_sha256": "d23ece3d0bccb289da3968f521a8407e77954878f7d6c8331189d8660f7a27a4"
+  },
+  "full_event_count": 417,
+  "target_count": 20,
+  "hashes": {
+    "backend/m05_session_cleaning.py": "277b1070b550d58c6de9b497e151e4686bfcb6c6a3c58de471bf28ea398268c8",
+    "backend/m05_session_candidate.py": "d23ece3d0bccb289da3968f521a8407e77954878f7d6c8331189d8660f7a27a4",
+    "backend/m05_session_candidate_web.py": "80cb79e215df7c3e90ecd721a8ecbdf2d02bb193ae87df47147e57eda6bf7abd",
+    "evaluation_contracts/development/m05_session_cleaning_candidate/engine.json": "499f5f1f13188e1856fbf094e718cae4154f313f41fa8bae8696962b5b0df862",
+    "evaluation_contracts/development/m05_session_cleaning_candidate/rules.json": "ed8e9f911f8cae1b260e9742be6ba75dfa35f2f7ed13a3a401de8022528629c8"
+  }
+}

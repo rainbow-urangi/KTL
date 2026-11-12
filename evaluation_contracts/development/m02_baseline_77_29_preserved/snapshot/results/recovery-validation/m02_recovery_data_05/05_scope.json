@@ -1,0 +1,3782 @@
+{
+  "mixed_steps": [],
+  "out_of_scope_steps": [],
+  "ownership_ledger": [
+    {
+      "action_type": "MENU_ENTER",
+      "business_context": "업무 관리",
+      "business_object": "",
+      "business_unit_id": "BU09",
+      "business_unit_ids": [
+        "BU09"
+      ],
+      "business_unit_ownership": "ASSIGNED",
+      "comparison_order": 1,
+      "completion_evidence": [],
+      "evidence": [
+        {
+          "api": {},
+          "associated_label": null,
+          "element_role": "",
+          "element_text": "업무 관리",
+          "event": {
+            "action": "click",
+            "active_parent_popup_id": null,
+            "active_popup_id": null,
+            "cause_event_id": null,
+            "correlation_id": null,
+            "event_id": "1679b659-eb4c-4b39-8f06-8430c0f6ae3f",
+            "event_sequence": 5,
+            "event_time": "2026-11-08T13:25:33.689Z",
+            "interaction_id": "efdadf18-9e83-4911-9820-9725ae6f62a0:click:5",
+            "parent_event_id": null,
+            "related_event_id": null,
+            "related_interaction_id": null
+          },
+          "event_id": "1679b659-eb4c-4b39-8f06-8430c0f6ae3f",
+          "event_time": "2026-11-08 22:25:33.689",
+          "form": {},
+          "grid": {},
+          "http_endpoint_raw": "",
+          "http_method": "",
+          "http_relationship_strategy": "",
+          "http_status": "",
+          "input": {},
+          "input_detected": false,
+          "input_form": {},
+          "input_key": {},
+          "menu": {
+            "parser": "location_path",
+            "path_text": "mypage",
+            "selected_label": "mypage",
+            "selected_path_text": "mypage",
+            "source": "url"
+          },
+          "page_path": "/mypage",
+          "page_title": "Rainbow",
+          "popup": {
+            "target_popup": {}
+          },
+          "popup_containment": {},
+          "popup_stack": [],
+          "selector": "aside.mypage-sidebar > div.mypage-sidebar__panel > nav.mypage-sidebar__nav > ul.mypage-sidebar__sections > li.mypage-sidebar__section:nth-of-type(3) > button.mypage-sidebar__section-button",
+          "session_id": "efdadf18-9e83-4911-9820-9725ae6f62a0",
+          "tag": "button",
+          "ui_outcome": {}
+        }
+      ],
+      "evidence_roles": {
+        "1679b659-eb4c-4b39-8f06-8430c0f6ae3f": "DIRECT_USER_INTENT"
+      },
+      "execution_ids": [
+        "05-BU09"
+      ],
+      "fields": [],
+      "form_identity": null,
+      "generated_step_id": "BA-1679b659-eb4c-4b39-8f06-8430c0f6ae3f",
+      "http_evidence": [],
+      "in_m02_denominator": true,
+      "intent_order": 4,
+      "intent_phase": "UNKNOWN",
+      "intent_source_event_ids": [
+        "1679b659-eb4c-4b39-8f06-8430c0f6ae3f"
+      ],
+      "last_intent_order": 4,
+      "matching_eligible": true,
+      "menu": {
+        "parser": "location_path",
+        "path_text": "mypage",
+        "selected_label": "mypage",
+        "selected_path_text": "mypage",
+        "source": "url"
+      },
+      "menu_page": "/mypage",
+      "page_title": "Rainbow",
+      "popup_title": "",
+      "process_id": "PM-001",
+      "resolution_status": "RESOLVED",
+      "serializer_rule_id": "BA-DIRECT-INTENT",
+      "source_event_ids": [
+        "1679b659-eb4c-4b39-8f06-8430c0f6ae3f"
+      ],
+      "source_node_ids": [
+        "PM-001-N003"
+      ],
+      "source_process_ids": [
+        "PM-001"
+      ],
+      "step_order": 1,
+      "target": "업무 관리",
+      "target_field_label": "업무 관리",
+      "workflow_id": "WF-0001"
+    },
+    {
+      "action_type": "MENU_ENTER",
+      "business_context": "주간보고",
+      "business_object": "",
+      "business_unit_id": "BU09",
+      "business_unit_ids": [
+        "BU09"
+      ],
+      "business_unit_ownership": "ASSIGNED",
+      "comparison_order": 2,
+      "completion_evidence": [],
+      "evidence": [
+        {
+          "api": {},
+          "associated_label": null,
+          "element_role": "",
+          "element_text": "주간보고",
+          "event": {
+            "action": "click",
+            "active_parent_popup_id": null,
+            "active_popup_id": null,
+            "cause_event_id": null,
+            "correlation_id": null,
+            "event_id": "345aedf5-481c-4550-8d6f-d0c89735e8de",
+            "event_sequence": 6,
+            "event_time": "2026-11-08T13:25:34.820Z",
+            "interaction_id": "efdadf18-9e83-4911-9820-9725ae6f62a0:click:6",
+            "parent_event_id": null,
+            "related_event_id": null,
+            "related_interaction_id": null
+          },
+          "event_id": "345aedf5-481c-4550-8d6f-d0c89735e8de",
+          "event_time": "2026-11-08 22:25:34.820",
+          "form": {},
+          "grid": {},
+          "http_endpoint_raw": "",
+          "http_method": "",
+          "http_relationship_strategy": "",
+          "http_status": "",
+          "input": {},
+          "input_detected": false,
+          "input_form": {},
+          "input_key": {},
+          "menu": {
+            "parser": "generic_dom_tree",
+            "path_text": "업무 관리 > 주간보고",
+            "selected_label": "주간보고",
+            "selected_path_text": "업무 관리 > 주간보고",
+            "source": "tree"
+          },
+          "page_path": "/mypage",
+          "page_title": "Rainbow",
+          "popup": {
+            "target_popup": {}
+          },
+          "popup_containment": {},
+          "popup_stack": [],
+          "selector": "div.mypage-sidebar__panel > nav.mypage-sidebar__nav > ul.mypage-sidebar__sections > li.mypage-sidebar__section:nth-of-type(3) > ul.mypage-sidebar__submenu > li.mypage-sidebar__submenu-item:nth-of-type(3)",
+          "session_id": "efdadf18-9e83-4911-9820-9725ae6f62a0",
+          "tag": "li",
+          "ui_outcome": {}
+        }
+      ],
+      "evidence_roles": {
+        "345aedf5-481c-4550-8d6f-d0c89735e8de": "DIRECT_USER_INTENT"
+      },
+      "execution_ids": [
+        "05-BU09"
+      ],
+      "fields": [],
+      "form_identity": null,
+      "generated_step_id": "BA-345aedf5-481c-4550-8d6f-d0c89735e8de",
+      "http_evidence": [],
+      "in_m02_denominator": true,
+      "intent_order": 5,
+      "intent_phase": "UNKNOWN",
+      "intent_source_event_ids": [
+        "345aedf5-481c-4550-8d6f-d0c89735e8de"
+      ],
+      "last_intent_order": 5,
+      "matching_eligible": true,
+      "menu": {
+        "parser": "generic_dom_tree",
+        "path_text": "업무 관리 > 주간보고",
+        "selected_label": "주간보고",
+        "selected_path_text": "업무 관리 > 주간보고",
+        "source": "tree"
+      },
+      "menu_page": "/mypage",
+      "page_title": "Rainbow",
+      "popup_title": "",
+      "process_id": "PM-001",
+      "resolution_status": "RESOLVED",
+      "serializer_rule_id": "BA-TREE-MENU",
+      "source_event_ids": [
+        "345aedf5-481c-4550-8d6f-d0c89735e8de"
+      ],
+      "source_node_ids": [
+        "PM-001-N003"
+      ],
+      "source_process_ids": [
+        "PM-001"
+      ],
+      "step_order": 2,
+      "target": "주간보고",
+      "target_field_label": "주간보고",
+      "workflow_id": "WF-0001"
+    },
+    {
+      "action_type": "REGISTER",
+      "business_context": "업무 관리",
+      "business_object": "",
+      "business_unit_id": "BU09",
+      "business_unit_ids": [
+        "BU09"
+      ],
+      "business_unit_ownership": "ASSIGNED",
+      "comparison_order": 3,
+      "completion_evidence": [],
+      "evidence": [
+        {
+          "api": {},
+          "associated_label": null,
+          "element_role": "",
+          "element_text": "등록",
+          "event": {
+            "action": "click",
+            "active_parent_popup_id": null,
+            "active_popup_id": null,
+            "cause_event_id": null,
+            "correlation_id": null,
+            "event_id": "b0d7a561-2fd1-4330-a4bb-8adbaad874b9",
+            "event_sequence": 11,
+            "event_time": "2026-11-08T13:25:37.707Z",
+            "interaction_id": "efdadf18-9e83-4911-9820-9725ae6f62a0:click:11",
+            "parent_event_id": null,
+            "related_event_id": null,
+            "related_interaction_id": null
+          },
+          "event_id": "b0d7a561-2fd1-4330-a4bb-8adbaad874b9",
+          "event_time": "2026-11-08 22:25:37.707",
+          "form": {},
+          "grid": {},
+          "http_endpoint_raw": "",
+          "http_method": "",
+          "http_relationship_strategy": "",
+          "http_status": "",
+          "input": {},
+          "input_detected": false,
+          "input_form": {},
+          "input_key": {},
+          "menu": {
+            "parser": "sidebar_active_dom",
+            "path_text": "마이페이지 메뉴 > 업무 관리",
+            "selected_label": "업무 관리",
+            "selected_path_text": "마이페이지 메뉴 > 업무 관리",
+            "source": "nav"
+          },
+          "page_path": "/mypage/work/weekly",
+          "page_title": "Rainbow",
+          "popup": {
+            "target_popup": {}
+          },
+          "popup_containment": {},
+          "popup_stack": [],
+          "selector": "div.mypage-layout > section.mypage-content > div.work-report-page > div.work-report-page__bottom:nth-of-type(2) > div.work-report-page__footer:nth-of-type(2) > button.work-report-page__register",
+          "session_id": "efdadf18-9e83-4911-9820-9725ae6f62a0",
+          "tag": "button",
+          "ui_outcome": {}
+        },
+        {
+          "api": {},
+          "associated_label": "주간업무 등록",
+          "element_role": "",
+          "element_text": "주간업무 등록",
+          "event": {
+            "action": "popup_open",
+            "active_parent_popup_id": null,
+            "active_popup_id": "popup:efdadf18-9e83-4911-9820-9725ae6f62a0:1",
+            "cause_event_id": "b0d7a561-2fd1-4330-a4bb-8adbaad874b9",
+            "correlation_id": null,
+            "event_id": "6c3dffa5-40fe-4396-81ed-e42633891a7d",
+            "event_sequence": 12,
+            "event_time": "2026-11-08T13:25:37.797Z",
+            "interaction_id": "efdadf18-9e83-4911-9820-9725ae6f62a0:popup_open:12",
+            "parent_event_id": "b0d7a561-2fd1-4330-a4bb-8adbaad874b9",
+            "related_event_id": "b0d7a561-2fd1-4330-a4bb-8adbaad874b9",
+            "related_interaction_id": "efdadf18-9e83-4911-9820-9725ae6f62a0:click:11"
+          },
+          "event_id": "6c3dffa5-40fe-4396-81ed-e42633891a7d",
+          "event_time": "2026-11-08 22:25:37.797",
+          "form": {},
+          "grid": {},
+          "http_endpoint_raw": "",
+          "http_method": "",
+          "http_relationship_strategy": "",
+          "http_status": "",
+          "input": {},
+          "input_detected": false,
+          "input_form": {},
+          "input_key": {},
+          "menu": {},
+          "page_path": "/mypage/work/weekly",
+          "page_title": "Rainbow",
+          "popup": {
+            "active_parent_popup_id": null,
+            "active_popup_id": "popup:efdadf18-9e83-4911-9820-9725ae6f62a0:1",
+            "active_popup_title": "주간업무 등록",
+            "closer_event_id": null,
+            "closer_interaction_id": null,
+            "lifecycle_action": "open",
+            "opener_event_id": "b0d7a561-2fd1-4330-a4bb-8adbaad874b9",
+            "opener_interaction_id": "efdadf18-9e83-4911-9820-9725ae6f62a0:click:11",
+            "target_popup": {
+              "opened_at": "2026-11-08T13:25:37.796Z",
+              "opened_by_event_id": "b0d7a561-2fd1-4330-a4bb-8adbaad874b9",
+              "opened_by_interaction_id": "efdadf18-9e83-4911-9820-9725ae6f62a0:click:11",
+              "parent_popup_id": null,
+              "popup_id": "popup:efdadf18-9e83-4911-9820-9725ae6f62a0:1",
+              "role": "dialog",
+              "selector_css": "div > main.mypage > div.mypage-layout > section.mypage-content > div.work-report-form-modal:nth-of-type(2) > div.work-report-form-modal__panel",
+              "selector_xpath": "/html[1]/body[1]/div[1]/main[1]/div[1]/section[1]/div[2]/div[1]",
+              "source_action": "click",
+              "tag": "div",
+              "title": "주간업무 등록"
+            }
+          },
+          "popup_containment": {
+            "active_popup_id": "popup:efdadf18-9e83-4911-9820-9725ae6f62a0:1",
+            "is_inside_popup": true
+          },
+          "popup_stack": [
+            {
+              "opened_at": "2026-11-08T13:25:37.796Z",
+              "opened_by_event_id": "b0d7a561-2fd1-4330-a4bb-8adbaad874b9",
+              "opened_by_interaction_id": "efdadf18-9e83-4911-9820-9725ae6f62a0:click:11",
+              "popup_id": "popup:efdadf18-9e83-4911-9820-9725ae6f62a0:1"
+            }
+          ],
+          "selector": "div > main.mypage > div.mypage-layout > section.mypage-content > div.work-report-form-modal:nth-of-type(2) > div.work-report-form-modal__panel",
+          "session_id": "efdadf18-9e83-4911-9820-9725ae6f62a0",
+          "tag": "div",
+          "ui_outcome": {}
+        }
+      ],
+      "evidence_roles": {
+        "6c3dffa5-40fe-4396-81ed-e42633891a7d": "VALIDATED_FORM_OPENER_CONTEXT",
+        "b0d7a561-2fd1-4330-a4bb-8adbaad874b9": "DIRECT_USER_INTENT"
+      },
+      "execution_ids": [
+        "05-BU09"
+      ],
+      "fields": [],
+      "form_identity": null,
+      "generated_step_id": "BA-b0d7a561-2fd1-4330-a4bb-8adbaad874b9",
+      "http_evidence": [],
+      "in_m02_denominator": true,
+      "intent_order": 10,
+      "intent_phase": "INITIATE",
+      "intent_source_event_ids": [
+        "b0d7a561-2fd1-4330-a4bb-8adbaad874b9"
+      ],
+      "last_intent_order": 10,
+      "matching_eligible": true,
+      "menu": {
+        "parser": "sidebar_active_dom",
+        "path_text": "마이페이지 메뉴 > 업무 관리",
+        "selected_label": "업무 관리",
+        "selected_path_text": "마이페이지 메뉴 > 업무 관리",
+        "source": "nav"
+      },
+      "menu_page": "/mypage/work/weekly",
+      "page_title": "Rainbow",
+      "popup_title": "",
+      "process_id": "PM-001",
+      "resolution_status": "RESOLVED",
+      "serializer_rule_id": "BA-VALIDATED-FORM-OPENER",
+      "source_event_ids": [
+        "b0d7a561-2fd1-4330-a4bb-8adbaad874b9",
+        "6c3dffa5-40fe-4396-81ed-e42633891a7d"
+      ],
+      "source_node_ids": [
+        "PM-001-N007",
+        "PM-001-N008"
+      ],
+      "source_process_ids": [
+        "PM-001"
+      ],
+      "step_order": 3,
+      "target": "등록",
+      "target_field_label": "등록",
+      "workflow_id": "WF-0001"
+    },
+    {
+      "action_type": "SELECT",
+      "business_context": "주간업무",
+      "business_object": "",
+      "business_unit_id": "BU09",
+      "business_unit_ids": [
+        "BU09"
+      ],
+      "business_unit_ownership": "ASSIGNED",
+      "comparison_order": 4,
+      "completion_evidence": [],
+      "context_provenance": [
+        {
+          "opener_source_event_id": "fb0c5621-61d7-4482-ad80-07ede4912f06",
+          "page_path": "/mypage/work/weekly",
+          "popup_source_event_id": "1bb16c7d-4ecd-42fd-91c3-92e2dd0f0eb8",
+          "raw_menu": {
+            "parser": "sidebar_active_dom",
+            "path_text": "마이페이지 메뉴 > 업무 관리",
+            "selected_label": "업무 관리",
+            "selected_path_text": "마이페이지 메뉴 > 업무 관리",
+            "source": "nav"
+          },
+          "rule_id": "BA-VALIDATED-OPENER-MENU"
+        }
+      ],
+      "evidence": [
+        {
+          "api": {},
+          "associated_label": "주간업무 등록",
+          "element_role": "",
+          "element_text": "주간업무 등록",
+          "event": {
+            "action": "popup_open",
+            "active_parent_popup_id": null,
+            "active_popup_id": "popup:efdadf18-9e83-4911-9820-9725ae6f62a0:1",
+            "cause_event_id": "b0d7a561-2fd1-4330-a4bb-8adbaad874b9",
+            "correlation_id": null,
+            "event_id": "6c3dffa5-40fe-4396-81ed-e42633891a7d",
+            "event_sequence": 12,
+            "event_time": "2026-11-08T13:25:37.797Z",
+            "interaction_id": "efdadf18-9e83-4911-9820-9725ae6f62a0:popup_open:12",
+            "parent_event_id": "b0d7a561-2fd1-4330-a4bb-8adbaad874b9",
+            "related_event_id": "b0d7a561-2fd1-4330-a4bb-8adbaad874b9",
+            "related_interaction_id": "efdadf18-9e83-4911-9820-9725ae6f62a0:click:11"
+          },
+          "event_id": "6c3dffa5-40fe-4396-81ed-e42633891a7d",
+          "event_time": "2026-11-08 22:25:37.797",
+          "form": {},
+          "grid": {},
+          "http_endpoint_raw": "",
+          "http_method": "",
+          "http_relationship_strategy": "",
+          "http_status": "",
+          "input": {},
+          "input_detected": false,
+          "input_form": {},
+          "input_key": {},
+          "menu": {},
+          "page_path": "/mypage/work/weekly",
+          "page_title": "Rainbow",
+          "popup": {
+            "active_parent_popup_id": null,
+            "active_popup_id": "popup:efdadf18-9e83-4911-9820-9725ae6f62a0:1",
+            "active_popup_title": "주간업무 등록",
+            "closer_event_id": null,
+            "closer_interaction_id": null,
+            "lifecycle_action": "open",
+            "opener_event_id": "b0d7a561-2fd1-4330-a4bb-8adbaad874b9",
+            "opener_interaction_id": "efdadf18-9e83-4911-9820-9725ae6f62a0:click:11",
+            "target_popup": {
+              "opened_at": "2026-11-08T13:25:37.796Z",
+              "opened_by_event_id": "b0d7a561-2fd1-4330-a4bb-8adbaad874b9",
+              "opened_by_interaction_id": "efdadf18-9e83-4911-9820-9725ae6f62a0:click:11",
+              "parent_popup_id": null,
+              "popup_id": "popup:efdadf18-9e83-4911-9820-9725ae6f62a0:1",
+              "role": "dialog",
+              "selector_css": "div > main.mypage > div.mypage-layout > section.mypage-content > div.work-report-form-modal:nth-of-type(2) > div.work-report-form-modal__panel",
+              "selector_xpath": "/html[1]/body[1]/div[1]/main[1]/div[1]/section[1]/div[2]/div[1]",
+              "source_action": "click",
+              "tag": "div",
+              "title": "주간업무 등록"
+            }
+          },
+          "popup_containment": {
+            "active_popup_id": "popup:efdadf18-9e83-4911-9820-9725ae6f62a0:1",
+            "is_inside_popup": true
+          },
+          "popup_stack": [
+            {
+              "opened_at": "2026-11-08T13:25:37.796Z",
+              "opened_by_event_id": "b0d7a561-2fd1-4330-a4bb-8adbaad874b9",
+              "opened_by_interaction_id": "efdadf18-9e83-4911-9820-9725ae6f62a0:click:11",
+              "popup_id": "popup:efdadf18-9e83-4911-9820-9725ae6f62a0:1"
+            }
+          ],
+          "selector": "div > main.mypage > div.mypage-layout > section.mypage-content > div.work-report-form-modal:nth-of-type(2) > div.work-report-form-modal__panel",
+          "session_id": "efdadf18-9e83-4911-9820-9725ae6f62a0",
+          "tag": "div",
+          "ui_outcome": {}
+        },
+        {
+          "api": {},
+          "associated_label": null,
+          "element_role": "",
+          "element_text": "2026.11.08 (일)",
+          "event": {
+            "action": "click",
+            "active_parent_popup_id": null,
+            "active_popup_id": "popup:efdadf18-9e83-4911-9820-9725ae6f62a0:1",
+            "cause_event_id": null,
+            "correlation_id": null,
+            "event_id": "fb0c5621-61d7-4482-ad80-07ede4912f06",
+            "event_sequence": 14,
+            "event_time": "2026-11-08T13:25:38.837Z",
+            "interaction_id": "efdadf18-9e83-4911-9820-9725ae6f62a0:click:14",
+            "parent_event_id": null,
+            "related_event_id": null,
+            "related_interaction_id": null
+          },
+          "event_id": "fb0c5621-61d7-4482-ad80-07ede4912f06",
+          "event_time": "2026-11-08 22:25:38.837",
+          "form": {},
+          "grid": {},
+          "http_endpoint_raw": "",
+          "http_method": "",
+          "http_relationship_strategy": "",
+          "http_status": "",
+          "input": {},
+          "input_detected": false,
+          "input_form": {},
+          "input_key": {},
+          "menu": {
+            "parser": "sidebar_active_dom",
+            "path_text": "마이페이지 메뉴 > 업무 관리",
+            "selected_label": "업무 관리",
+            "selected_path_text": "마이페이지 메뉴 > 업무 관리",
+            "source": "nav"
+          },
+          "page_path": "/mypage/work/weekly",
+          "page_title": "Rainbow",
+          "popup": {
+            "active_parent_popup_id": null,
+            "active_popup_id": "popup:efdadf18-9e83-4911-9820-9725ae6f62a0:1",
+            "active_popup_title": "주간업무 등록",
+            "target_popup": {}
+          },
+          "popup_containment": {
+            "active_popup_id": "popup:efdadf18-9e83-4911-9820-9725ae6f62a0:1",
+            "is_inside_popup": true
+          },
+          "popup_stack": [
+            {
+              "opened_at": "2026-11-08T13:25:37.796Z",
+              "opened_by_event_id": "b0d7a561-2fd1-4330-a4bb-8adbaad874b9",
+              "opened_by_interaction_id": "efdadf18-9e83-4911-9820-9725ae6f62a0:click:11",
+              "popup_id": "popup:efdadf18-9e83-4911-9820-9725ae6f62a0:1"
+            }
+          ],
+          "selector": "section.mypage-content > div.work-report-form-modal:nth-of-type(2) > div.work-report-form-modal__panel > div.work-report-form-modal__meta:nth-of-type(2) > div.work-report-form-modal__date > button.work-report-form-modal__date-button",
+          "session_id": "efdadf18-9e83-4911-9820-9725ae6f62a0",
+          "tag": "button",
+          "ui_outcome": {}
+        },
+        {
+          "api": {},
+          "associated_label": "날짜 선택",
+          "element_role": "",
+          "element_text": "날짜 선택",
+          "event": {
+            "action": "popup_open",
+            "active_parent_popup_id": "popup:efdadf18-9e83-4911-9820-9725ae6f62a0:1",
+            "active_popup_id": "popup:efdadf18-9e83-4911-9820-9725ae6f62a0:2",
+            "cause_event_id": "fb0c5621-61d7-4482-ad80-07ede4912f06",
+            "correlation_id": null,
+            "event_id": "1bb16c7d-4ecd-42fd-91c3-92e2dd0f0eb8",
+            "event_sequence": 15,
+            "event_time": "2026-11-08T13:25:38.930Z",
+            "interaction_id": "efdadf18-9e83-4911-9820-9725ae6f62a0:popup_open:15",
+            "parent_event_id": "fb0c5621-61d7-4482-ad80-07ede4912f06",
+            "related_event_id": "fb0c5621-61d7-4482-ad80-07ede4912f06",
+            "related_interaction_id": "efdadf18-9e83-4911-9820-9725ae6f62a0:click:14"
+          },
+          "event_id": "1bb16c7d-4ecd-42fd-91c3-92e2dd0f0eb8",
+          "event_time": "2026-11-08 22:25:38.930",
+          "form": {},
+          "grid": {},
+          "http_endpoint_raw": "",
+          "http_method": "",
+          "http_relationship_strategy": "",
+          "http_status": "",
+          "input": {},
+          "input_detected": false,
+          "input_form": {},
+          "input_key": {},
+          "menu": {},
+          "page_path": "/mypage/work/weekly",
+          "page_title": "Rainbow",
+          "popup": {
+            "active_parent_popup_id": "popup:efdadf18-9e83-4911-9820-9725ae6f62a0:1",
+            "active_popup_id": "popup:efdadf18-9e83-4911-9820-9725ae6f62a0:2",
+            "active_popup_title": "날짜 선택",
+            "closer_event_id": null,
+            "closer_interaction_id": null,
+            "lifecycle_action": "open",
+            "opener_event_id": "fb0c5621-61d7-4482-ad80-07ede4912f06",
+            "opener_interaction_id": "efdadf18-9e83-4911-9820-9725ae6f62a0:click:14",
+            "target_popup": {
+              "opened_at": "2026-11-08T13:25:38.929Z",
+              "opened_by_event_id": "fb0c5621-61d7-4482-ad80-07ede4912f06",
+              "opened_by_interaction_id": "efdadf18-9e83-4911-9820-9725ae6f62a0:click:14",
+              "parent_popup_id": "popup:efdadf18-9e83-4911-9820-9725ae6f62a0:1",
+              "popup_id": "popup:efdadf18-9e83-4911-9820-9725ae6f62a0:2",
+              "role": "dialog",
+              "selector_css": "section.mypage-content > div.work-report-form-modal:nth-of-type(2) > div.work-report-form-modal__panel > div.work-report-form-modal__meta:nth-of-type(2) > div.work-report-form-modal__date > div.work-report-form-modal__date-picker",
+              "selector_xpath": "/html[1]/body[1]/div[1]/main[1]/div[1]/section[1]/div[2]/div[1]/div[2]/div[1]/div[1]",
+              "source_action": "click",
+              "tag": "div",
+              "title": "날짜 선택"
+            }
+          },
+          "popup_containment": {
+            "active_popup_id": "popup:efdadf18-9e83-4911-9820-9725ae6f62a0:2",
+            "is_inside_popup": true
+          },
+          "popup_stack": [
+            {
+              "opened_at": "2026-11-08T13:25:37.796Z",
+              "opened_by_event_id": "b0d7a561-2fd1-4330-a4bb-8adbaad874b9",
+              "opened_by_interaction_id": "efdadf18-9e83-4911-9820-9725ae6f62a0:click:11",
+              "popup_id": "popup:efdadf18-9e83-4911-9820-9725ae6f62a0:1"
+            },
+            {
+              "opened_at": "2026-11-08T13:25:38.929Z",
+              "opened_by_event_id": "fb0c5621-61d7-4482-ad80-07ede4912f06",
+              "opened_by_interaction_id": "efdadf18-9e83-4911-9820-9725ae6f62a0:click:14",
+              "popup_id": "popup:efdadf18-9e83-4911-9820-9725ae6f62a0:2"
+            }
+          ],
+          "selector": "section.mypage-content > div.work-report-form-modal:nth-of-type(2) > div.work-report-form-modal__panel > div.work-report-form-modal__meta:nth-of-type(2) > div.work-report-form-modal__date > div.work-report-form-modal__date-picker",
+          "session_id": "efdadf18-9e83-4911-9820-9725ae6f62a0",
+          "tag": "div",
+          "ui_outcome": {}
+        },
+        {
+          "api": {},
+          "associated_label": "2026-11-15",
+          "element_role": "",
+          "element_text": "2026-11-15",
+          "event": {
+            "action": "click",
+            "active_parent_popup_id": "popup:efdadf18-9e83-4911-9820-9725ae6f62a0:1",
+            "active_popup_id": "popup:efdadf18-9e83-4911-9820-9725ae6f62a0:2",
+            "cause_event_id": null,
+            "correlation_id": null,
+            "event_id": "67872b06-55bb-4310-9a2f-19ab3006c7fe",
+            "event_sequence": 17,
+            "event_time": "2026-11-08T13:25:40.739Z",
+            "interaction_id": "efdadf18-9e83-4911-9820-9725ae6f62a0:click:17",
+            "parent_event_id": null,
+            "related_event_id": null,
+            "related_interaction_id": null
+          },
+          "event_id": "67872b06-55bb-4310-9a2f-19ab3006c7fe",
+          "event_time": "2026-11-08 22:25:40.739",
+          "form": {},
+          "grid": {},
+          "http_endpoint_raw": "",
+          "http_method": "",
+          "http_relationship_strategy": "",
+          "http_status": "",
+          "input": {},
+          "input_detected": false,
+          "input_form": {},
+          "input_key": {},
+          "menu": {
+            "parser": "sidebar_active_dom",
+            "path_text": "마이페이지 메뉴 > 업무 관리",
+            "selected_label": "업무 관리",
+            "selected_path_text": "마이페이지 메뉴 > 업무 관리",
+            "source": "nav"
+          },
+          "page_path": "/mypage/work/weekly",
+          "page_title": "Rainbow",
+          "popup": {
+            "active_parent_popup_id": "popup:efdadf18-9e83-4911-9820-9725ae6f62a0:1",
+            "active_popup_id": "popup:efdadf18-9e83-4911-9820-9725ae6f62a0:2",
+            "active_popup_title": "날짜 선택",
+            "target_popup": {}
+          },
+          "popup_containment": {
+            "active_popup_id": "popup:efdadf18-9e83-4911-9820-9725ae6f62a0:2",
+            "is_inside_popup": true
+          },
+          "popup_stack": [
+            {
+              "opened_at": "2026-11-08T13:25:37.796Z",
+              "opened_by_event_id": "b0d7a561-2fd1-4330-a4bb-8adbaad874b9",
+              "opened_by_interaction_id": "efdadf18-9e83-4911-9820-9725ae6f62a0:click:11",
+              "popup_id": "popup:efdadf18-9e83-4911-9820-9725ae6f62a0:1"
+            },
+            {
+              "opened_at": "2026-11-08T13:25:38.929Z",
+              "opened_by_event_id": "fb0c5621-61d7-4482-ad80-07ede4912f06",
+              "opened_by_interaction_id": "efdadf18-9e83-4911-9820-9725ae6f62a0:click:14",
+              "popup_id": "popup:efdadf18-9e83-4911-9820-9725ae6f62a0:2"
+            }
+          ],
+          "selector": "div.work-report-form-modal__meta:nth-of-type(2) > div.work-report-form-modal__date > div.work-report-form-modal__date-picker > div.work-date-calendar:nth-of-type(1) > div.work-date-calendar__grid:nth-of-type(3) > button.work-date-calendar__day.is-sunday:nth-of-type(15)",
+          "session_id": "efdadf18-9e83-4911-9820-9725ae6f62a0",
+          "tag": "button",
+          "ui_outcome": {}
+        },
+        {
+          "api": {},
+          "associated_label": "날짜 선택",
+          "element_role": "",
+          "element_text": "날짜 선택",
+          "event": {
+            "action": "popup_close",
+            "active_parent_popup_id": "popup:efdadf18-9e83-4911-9820-9725ae6f62a0:1",
+            "active_popup_id": "popup:efdadf18-9e83-4911-9820-9725ae6f62a0:2",
+            "cause_event_id": "67872b06-55bb-4310-9a2f-19ab3006c7fe",
+            "correlation_id": null,
+            "event_id": "a7565749-5722-41c6-9289-a669ce357d4a",
+            "event_sequence": 18,
+            "event_time": "2026-11-08T13:25:40.826Z",
+            "interaction_id": "efdadf18-9e83-4911-9820-9725ae6f62a0:popup_close:18",
+            "parent_event_id": "67872b06-55bb-4310-9a2f-19ab3006c7fe",
+            "related_event_id": "67872b06-55bb-4310-9a2f-19ab3006c7fe",
+            "related_interaction_id": "efdadf18-9e83-4911-9820-9725ae6f62a0:click:17"
+          },
+          "event_id": "a7565749-5722-41c6-9289-a669ce357d4a",
+          "event_time": "2026-11-08 22:25:40.826",
+          "form": {},
+          "grid": {},
+          "http_endpoint_raw": "",
+          "http_method": "",
+          "http_relationship_strategy": "",
+          "http_status": "",
+          "input": {},
+          "input_detected": false,
+          "input_form": {},
+          "input_key": {},
+          "menu": {},
+          "page_path": "/mypage/work/weekly",
+          "page_title": "Rainbow",
+          "popup": {
+            "active_parent_popup_id": "popup:efdadf18-9e83-4911-9820-9725ae6f62a0:1",
+            "active_popup_id": "popup:efdadf18-9e83-4911-9820-9725ae6f62a0:2",
+            "active_popup_title": "날짜 선택",
+            "closer_event_id": "67872b06-55bb-4310-9a2f-19ab3006c7fe",
+            "closer_interaction_id": "efdadf18-9e83-4911-9820-9725ae6f62a0:click:17",
+            "lifecycle_action": "close",
+            "opener_event_id": "fb0c5621-61d7-4482-ad80-07ede4912f06",
+            "opener_interaction_id": "efdadf18-9e83-4911-9820-9725ae6f62a0:click:14",
+            "target_popup": {
+              "opened_at": "2026-11-08T13:25:38.929Z",
+              "opened_by_event_id": "fb0c5621-61d7-4482-ad80-07ede4912f06",
+              "opened_by_interaction_id": "efdadf18-9e83-4911-9820-9725ae6f62a0:click:14",
+              "parent_popup_id": "popup:efdadf18-9e83-4911-9820-9725ae6f62a0:1",
+              "popup_id": "popup:efdadf18-9e83-4911-9820-9725ae6f62a0:2",
+              "role": "dialog",
+              "selector_css": "section.mypage-content > div.work-report-form-modal:nth-of-type(2) > div.work-report-form-modal__panel > div.work-report-form-modal__meta:nth-of-type(2) > div.work-report-form-modal__date > div.work-report-form-modal__date-picker",
+              "selector_xpath": "/html[1]/body[1]/div[1]/main[1]/div[1]/section[1]/div[2]/div[1]/div[2]/div[1]/div[1]",
+              "source_action": "click",
+              "tag": "div",
+              "title": "날짜 선택"
+            }
+          },
+          "popup_containment": {
+            "active_popup_id": "popup:efdadf18-9e83-4911-9820-9725ae6f62a0:2",
+            "is_inside_popup": true
+          },
+          "popup_stack": [
+            {
+              "opened_at": "2026-11-08T13:25:37.796Z",
+              "opened_by_event_id": "b0d7a561-2fd1-4330-a4bb-8adbaad874b9",
+              "opened_by_interaction_id": "efdadf18-9e83-4911-9820-9725ae6f62a0:click:11",
+              "popup_id": "popup:efdadf18-9e83-4911-9820-9725ae6f62a0:1"
+            }
+          ],
+          "selector": "div.work-report-form-modal__date-picker",
+          "session_id": "efdadf18-9e83-4911-9820-9725ae6f62a0",
+          "tag": "div",
+          "ui_outcome": {}
+        }
+      ],
+      "evidence_roles": {
+        "1bb16c7d-4ecd-42fd-91c3-92e2dd0f0eb8": "LIVE_FORM_CONTEXT",
+        "67872b06-55bb-4310-9a2f-19ab3006c7fe": "DIRECT_DATE_PICKER_LIFECYCLE",
+        "6c3dffa5-40fe-4396-81ed-e42633891a7d": "MERGED_AUXILIARY_OR_SAME_ACTION",
+        "a7565749-5722-41c6-9289-a669ce357d4a": "DIRECT_DATE_PICKER_LIFECYCLE",
+        "fb0c5621-61d7-4482-ad80-07ede4912f06": "MERGED_AUXILIARY_OR_SAME_ACTION"
+      },
+      "execution_ids": [
+        "05-BU09"
+      ],
+      "fields": [],
+      "form_identity": [
+        "efdadf18-9e83-4911-9820-9725ae6f62a0",
+        "/mypage/work/weekly",
+        "FORM_POPUP",
+        "popup:efdadf18-9e83-4911-9820-9725ae6f62a0:2",
+        "section.mypage-content > div.work-report-form-modal:nth-of-type(2) > div.work-report-form-modal__panel > div.work-report-form-modal__meta:nth-of-type(2) > div.work-report-form-modal__date > div.work-report-form-modal__date-picker",
+        "날짜 선택"
+      ],
+      "form_lifecycle_provenance": {
+        "opening_source_event_id": "1bb16c7d-4ecd-42fd-91c3-92e2dd0f0eb8",
+        "rule_id": "BA-LIVE-FORM-OPENING"
+      },
+      "generated_step_id": "BA-67872b06-55bb-4310-9a2f-19ab3006c7fe",
+      "http_evidence": [],
+      "in_m02_denominator": true,
+      "intent_order": 16,
+      "intent_phase": "UNKNOWN",
+      "intent_source_event_ids": [
+        "67872b06-55bb-4310-9a2f-19ab3006c7fe"
+      ],
+      "last_intent_order": 16,
+      "matching_eligible": true,
+      "menu": {
+        "parser": "sidebar_active_dom",
+        "path_text": "마이페이지 메뉴 > 업무 관리",
+        "selected_label": "업무 관리",
+        "selected_path_text": "마이페이지 메뉴 > 업무 관리",
+        "source": "nav"
+      },
+      "menu_page": "/mypage/work/weekly",
+      "merge_provenance": [
+        {
+          "merged_generated_step_id": "BA-fb0c5621-61d7-4482-ad80-07ede4912f06",
+          "rule_id": "BA-DATE-PICKER-OPEN-AUXILIARY",
+          "source_event_ids": [
+            "fb0c5621-61d7-4482-ad80-07ede4912f06",
+            "6c3dffa5-40fe-4396-81ed-e42633891a7d"
+          ]
+        }
+      ],
+      "page_title": "Rainbow",
+      "popup_title": "날짜 선택",
+      "process_id": "PM-001",
+      "resolution_status": "RESOLVED",
+      "selection_kind": "DATE_PICKER_DAY",
+      "selection_provenance": {
+        "click_source_event_id": "67872b06-55bb-4310-9a2f-19ab3006c7fe",
+        "date_inferred": false,
+        "opener_source_event_id": "fb0c5621-61d7-4482-ad80-07ede4912f06",
+        "parent_open_source_event_id": "6c3dffa5-40fe-4396-81ed-e42633891a7d",
+        "parent_popup_title": "주간업무 등록",
+        "picker_close_source_event_id": "a7565749-5722-41c6-9289-a669ce357d4a",
+        "picker_open_source_event_id": "1bb16c7d-4ecd-42fd-91c3-92e2dd0f0eb8"
+      },
+      "serializer_rule_id": "BA-NESTED-DATE-PICKER-DIRECT-SELECTION",
+      "source_event_ids": [
+        "6c3dffa5-40fe-4396-81ed-e42633891a7d",
+        "fb0c5621-61d7-4482-ad80-07ede4912f06",
+        "1bb16c7d-4ecd-42fd-91c3-92e2dd0f0eb8",
+        "67872b06-55bb-4310-9a2f-19ab3006c7fe",
+        "a7565749-5722-41c6-9289-a669ce357d4a"
+      ],
+      "source_node_ids": [
+        "PM-001-N008",
+        "PM-001-N009",
+        "PM-001-N010"
+      ],
+      "source_process_ids": [
+        "PM-001"
+      ],
+      "step_order": 4,
+      "target": "2026-11-15",
+      "target_field_label": "2026-11-15",
+      "workflow_id": "WF-0001"
+    },
+    {
+      "action_type": "INPUT",
+      "business_context": "업무 관리",
+      "business_object": "주간업무",
+      "business_unit_id": "BU09",
+      "business_unit_ids": [
+        "BU09"
+      ],
+      "business_unit_ownership": "ASSIGNED",
+      "comparison_order": 5,
+      "completion_evidence": [],
+      "context_provenance": [
+        {
+          "opener_source_event_id": "b0d7a561-2fd1-4330-a4bb-8adbaad874b9",
+          "page_path": "/mypage/work/weekly",
+          "popup_source_event_id": "6c3dffa5-40fe-4396-81ed-e42633891a7d",
+          "raw_menu": {
+            "parser": "sidebar_active_dom",
+            "path_text": "마이페이지 메뉴 > 업무 관리",
+            "selected_label": "업무 관리",
+            "selected_path_text": "마이페이지 메뉴 > 업무 관리",
+            "source": "nav"
+          },
+          "rule_id": "BA-VALIDATED-OPENER-MENU"
+        }
+      ],
+      "evidence": [
+        {
+          "api": {},
+          "associated_label": "주간업무 등록",
+          "element_role": "",
+          "element_text": "주간업무 등록",
+          "event": {
+            "action": "popup_open",
+            "active_parent_popup_id": null,
+            "active_popup_id": "popup:efdadf18-9e83-4911-9820-9725ae6f62a0:1",
+            "cause_event_id": "b0d7a561-2fd1-4330-a4bb-8adbaad874b9",
+            "correlation_id": null,
+            "event_id": "6c3dffa5-40fe-4396-81ed-e42633891a7d",
+            "event_sequence": 12,
+            "event_time": "2026-11-08T13:25:37.797Z",
+            "interaction_id": "efdadf18-9e83-4911-9820-9725ae6f62a0:popup_open:12",
+            "parent_event_id": "b0d7a561-2fd1-4330-a4bb-8adbaad874b9",
+            "related_event_id": "b0d7a561-2fd1-4330-a4bb-8adbaad874b9",
+            "related_interaction_id": "efdadf18-9e83-4911-9820-9725ae6f62a0:click:11"
+          },
+          "event_id": "6c3dffa5-40fe-4396-81ed-e42633891a7d",
+          "event_time": "2026-11-08 22:25:37.797",
+          "form": {},
+          "grid": {},
+          "http_endpoint_raw": "",
+          "http_method": "",
+          "http_relationship_strategy": "",
+          "http_status": "",
+          "input": {},
+          "input_detected": false,
+          "input_form": {},
+          "input_key": {},
+          "menu": {},
+          "page_path": "/mypage/work/weekly",
+          "page_title": "Rainbow",
+          "popup": {
+            "active_parent_popup_id": null,
+            "active_popup_id": "popup:efdadf18-9e83-4911-9820-9725ae6f62a0:1",
+            "active_popup_title": "주간업무 등록",
+            "closer_event_id": null,
+            "closer_interaction_id": null,
+            "lifecycle_action": "open",
+            "opener_event_id": "b0d7a561-2fd1-4330-a4bb-8adbaad874b9",
+            "opener_interaction_id": "efdadf18-9e83-4911-9820-9725ae6f62a0:click:11",
+            "target_popup": {
+              "opened_at": "2026-11-08T13:25:37.796Z",
+              "opened_by_event_id": "b0d7a561-2fd1-4330-a4bb-8adbaad874b9",
+              "opened_by_interaction_id": "efdadf18-9e83-4911-9820-9725ae6f62a0:click:11",
+              "parent_popup_id": null,
+              "popup_id": "popup:efdadf18-9e83-4911-9820-9725ae6f62a0:1",
+              "role": "dialog",
+              "selector_css": "div > main.mypage > div.mypage-layout > section.mypage-content > div.work-report-form-modal:nth-of-type(2) > div.work-report-form-modal__panel",
+              "selector_xpath": "/html[1]/body[1]/div[1]/main[1]/div[1]/section[1]/div[2]/div[1]",
+              "source_action": "click",
+              "tag": "div",
+              "title": "주간업무 등록"
+            }
+          },
+          "popup_containment": {
+            "active_popup_id": "popup:efdadf18-9e83-4911-9820-9725ae6f62a0:1",
+            "is_inside_popup": true
+          },
+          "popup_stack": [
+            {
+              "opened_at": "2026-11-08T13:25:37.796Z",
+              "opened_by_event_id": "b0d7a561-2fd1-4330-a4bb-8adbaad874b9",
+              "opened_by_interaction_id": "efdadf18-9e83-4911-9820-9725ae6f62a0:click:11",
+              "popup_id": "popup:efdadf18-9e83-4911-9820-9725ae6f62a0:1"
+            }
+          ],
+          "selector": "div > main.mypage > div.mypage-layout > section.mypage-content > div.work-report-form-modal:nth-of-type(2) > div.work-report-form-modal__panel",
+          "session_id": "efdadf18-9e83-4911-9820-9725ae6f62a0",
+          "tag": "div",
+          "ui_outcome": {}
+        },
+        {
+          "api": {},
+          "associated_label": "제목",
+          "element_role": "",
+          "element_text": "제목",
+          "event": {
+            "action": "paste",
+            "active_parent_popup_id": null,
+            "active_popup_id": "popup:efdadf18-9e83-4911-9820-9725ae6f62a0:1",
+            "cause_event_id": null,
+            "correlation_id": null,
+            "event_id": "19f120f4-a150-418c-947c-19f1d05b9aae",
+            "event_sequence": 20,
+            "event_time": "2026-11-08T13:25:43.185Z",
+            "interaction_id": "efdadf18-9e83-4911-9820-9725ae6f62a0:paste:20",
+            "parent_event_id": null,
+            "related_event_id": null,
+            "related_interaction_id": null
+          },
+          "event_id": "19f120f4-a150-418c-947c-19f1d05b9aae",
+          "event_time": "2026-11-08 22:25:43.185",
+          "form": {},
+          "grid": {},
+          "http_endpoint_raw": "",
+          "http_method": "",
+          "http_relationship_strategy": "",
+          "http_status": "",
+          "input": {
+            "associated_label": "제목",
+            "id": "daily-report-create-title-input",
+            "name": null,
+            "type": "text"
+          },
+          "input_detected": true,
+          "input_form": {},
+          "input_key": {
+            "code": null,
+            "key": null
+          },
+          "menu": {
+            "parser": "location_path",
+            "path_text": "mypage > work > weekly",
+            "selected_label": "weekly",
+            "selected_path_text": "mypage > work > weekly",
+            "source": "url"
+          },
+          "page_path": "/mypage/work/weekly",
+          "page_title": "Rainbow",
+          "popup": {
+            "active_parent_popup_id": null,
+            "active_popup_id": "popup:efdadf18-9e83-4911-9820-9725ae6f62a0:1",
+            "active_popup_title": "주간업무 등록",
+            "target_popup": {}
+          },
+          "popup_containment": {
+            "active_popup_id": "popup:efdadf18-9e83-4911-9820-9725ae6f62a0:1",
+            "is_inside_popup": true
+          },
+          "popup_stack": [
+            {
+              "opened_at": "2026-11-08T13:25:37.796Z",
+              "opened_by_event_id": "b0d7a561-2fd1-4330-a4bb-8adbaad874b9",
+              "opened_by_interaction_id": "efdadf18-9e83-4911-9820-9725ae6f62a0:click:11",
+              "popup_id": "popup:efdadf18-9e83-4911-9820-9725ae6f62a0:1"
+            }
+          ],
+          "selector": "#daily-report-create-title-input",
+          "session_id": "efdadf18-9e83-4911-9820-9725ae6f62a0",
+          "tag": "input",
+          "ui_outcome": {}
+        },
+        {
+          "api": {},
+          "associated_label": "제목",
+          "element_role": "",
+          "element_text": "제목",
+          "event": {
+            "action": "change",
+            "active_parent_popup_id": null,
+            "active_popup_id": "popup:efdadf18-9e83-4911-9820-9725ae6f62a0:1",
+            "cause_event_id": null,
+            "correlation_id": null,
+            "event_id": "84291014-5973-4e2b-a81b-fdb9f7080b75",
+            "event_sequence": 24,
+            "event_time": "2026-11-08T13:25:51.931Z",
+            "interaction_id": "efdadf18-9e83-4911-9820-9725ae6f62a0:change:24",
+            "parent_event_id": null,
+            "related_event_id": null,
+            "related_interaction_id": null
+          },
+          "event_id": "84291014-5973-4e2b-a81b-fdb9f7080b75",
+          "event_time": "2026-11-08 22:25:51.931",
+          "form": {},
+          "grid": {},
+          "http_endpoint_raw": "",
+          "http_method": "",
+          "http_relationship_strategy": "",
+          "http_status": "",
+          "input": {
+            "associated_label": "제목",
+            "id": "daily-report-create-title-input",
+            "name": null,
+            "type": "text"
+          },
+          "input_detected": true,
+          "input_form": {},
+          "input_key": {
+            "code": null,
+            "key": null
+          },
+          "menu": {
+            "parser": "location_path",
+            "path_text": "mypage > work > weekly",
+            "selected_label": "weekly",
+            "selected_path_text": "mypage > work > weekly",
+            "source": "url"
+          },
+          "page_path": "/mypage/work/weekly",
+          "page_title": "Rainbow",
+          "popup": {
+            "active_parent_popup_id": null,
+            "active_popup_id": "popup:efdadf18-9e83-4911-9820-9725ae6f62a0:1",
+            "active_popup_title": "주간업무 등록",
+            "target_popup": {}
+          },
+          "popup_containment": {
+            "active_popup_id": "popup:efdadf18-9e83-4911-9820-9725ae6f62a0:1",
+            "is_inside_popup": true
+          },
+          "popup_stack": [
+            {
+              "opened_at": "2026-11-08T13:25:37.796Z",
+              "opened_by_event_id": "b0d7a561-2fd1-4330-a4bb-8adbaad874b9",
+              "opened_by_interaction_id": "efdadf18-9e83-4911-9820-9725ae6f62a0:click:11",
+              "popup_id": "popup:efdadf18-9e83-4911-9820-9725ae6f62a0:1"
+            }
+          ],
+          "selector": "#daily-report-create-title-input",
+          "session_id": "efdadf18-9e83-4911-9820-9725ae6f62a0",
+          "tag": "input",
+          "ui_outcome": {}
+        },
+        {
+          "api": {},
+          "associated_label": "내용",
+          "element_role": "",
+          "element_text": "내용",
+          "event": {
+            "action": "paste",
+            "active_parent_popup_id": null,
+            "active_popup_id": "popup:efdadf18-9e83-4911-9820-9725ae6f62a0:1",
+            "cause_event_id": null,
+            "correlation_id": null,
+            "event_id": "6a9e4910-e0f0-4fda-a8e6-9293cae16f89",
+            "event_sequence": 26,
+            "event_time": "2026-11-08T13:25:53.014Z",
+            "interaction_id": "efdadf18-9e83-4911-9820-9725ae6f62a0:paste:26",
+            "parent_event_id": null,
+            "related_event_id": null,
+            "related_interaction_id": null
+          },
+          "event_id": "6a9e4910-e0f0-4fda-a8e6-9293cae16f89",
+          "event_time": "2026-11-08 22:25:53.014",
+          "form": {},
+          "grid": {},
+          "http_endpoint_raw": "",
+          "http_method": "",
+          "http_relationship_strategy": "",
+          "http_status": "",
+          "input": {
+            "associated_label": "내용",
+            "id": "daily-report-create-content-input",
+            "name": null,
+            "type": null
+          },
+          "input_detected": true,
+          "input_form": {},
+          "input_key": {
+            "code": null,
+            "key": null
+          },
+          "menu": {
+            "parser": "location_path",
+            "path_text": "mypage > work > weekly",
+            "selected_label": "weekly",
+            "selected_path_text": "mypage > work > weekly",
+            "source": "url"
+          },
+          "page_path": "/mypage/work/weekly",
+          "page_title": "Rainbow",
+          "popup": {
+            "active_parent_popup_id": null,
+            "active_popup_id": "popup:efdadf18-9e83-4911-9820-9725ae6f62a0:1",
+            "active_popup_title": "주간업무 등록",
+            "target_popup": {}
+          },
+          "popup_containment": {
+            "active_popup_id": "popup:efdadf18-9e83-4911-9820-9725ae6f62a0:1",
+            "is_inside_popup": true
+          },
+          "popup_stack": [
+            {
+              "opened_at": "2026-11-08T13:25:37.796Z",
+              "opened_by_event_id": "b0d7a561-2fd1-4330-a4bb-8adbaad874b9",
+              "opened_by_interaction_id": "efdadf18-9e83-4911-9820-9725ae6f62a0:click:11",
+              "popup_id": "popup:efdadf18-9e83-4911-9820-9725ae6f62a0:1"
+            }
+          ],
+          "selector": "#daily-report-create-content-input",
+          "session_id": "efdadf18-9e83-4911-9820-9725ae6f62a0",
+          "tag": "textarea",
+          "ui_outcome": {}
+        },
+        {
+          "api": {},
+          "associated_label": "내용",
+          "element_role": "",
+          "element_text": "내용",
+          "event": {
+            "action": "change",
+            "active_parent_popup_id": null,
+            "active_popup_id": "popup:efdadf18-9e83-4911-9820-9725ae6f62a0:1",
+            "cause_event_id": null,
+            "correlation_id": null,
+            "event_id": "425dd043-149f-4877-a5d7-c24ec48b86e9",
+            "event_sequence": 27,
+            "event_time": "2026-11-08T13:25:55.737Z",
+            "interaction_id": "efdadf18-9e83-4911-9820-9725ae6f62a0:change:27",
+            "parent_event_id": null,
+            "related_event_id": null,
+            "related_interaction_id": null
+          },
+          "event_id": "425dd043-149f-4877-a5d7-c24ec48b86e9",
+          "event_time": "2026-11-08 22:25:55.737",
+          "form": {},
+          "grid": {},
+          "http_endpoint_raw": "",
+          "http_method": "",
+          "http_relationship_strategy": "",
+          "http_status": "",
+          "input": {
+            "associated_label": "내용",
+            "id": "daily-report-create-content-input",
+            "name": null,
+            "type": null
+          },
+          "input_detected": true,
+          "input_form": {},
+          "input_key": {
+            "code": null,
+            "key": null
+          },
+          "menu": {
+            "parser": "location_path",
+            "path_text": "mypage > work > weekly",
+            "selected_label": "weekly",
+            "selected_path_text": "mypage > work > weekly",
+            "source": "url"
+          },
+          "page_path": "/mypage/work/weekly",
+          "page_title": "Rainbow",
+          "popup": {
+            "active_parent_popup_id": null,
+            "active_popup_id": "popup:efdadf18-9e83-4911-9820-9725ae6f62a0:1",
+            "active_popup_title": "주간업무 등록",
+            "target_popup": {}
+          },
+          "popup_containment": {
+            "active_popup_id": "popup:efdadf18-9e83-4911-9820-9725ae6f62a0:1",
+            "is_inside_popup": true
+          },
+          "popup_stack": [
+            {
+              "opened_at": "2026-11-08T13:25:37.796Z",
+              "opened_by_event_id": "b0d7a561-2fd1-4330-a4bb-8adbaad874b9",
+              "opened_by_interaction_id": "efdadf18-9e83-4911-9820-9725ae6f62a0:click:11",
+              "popup_id": "popup:efdadf18-9e83-4911-9820-9725ae6f62a0:1"
+            }
+          ],
+          "selector": "#daily-report-create-content-input",
+          "session_id": "efdadf18-9e83-4911-9820-9725ae6f62a0",
+          "tag": "textarea",
+          "ui_outcome": {}
+        }
+      ],
+      "evidence_roles": {
+        "19f120f4-a150-418c-947c-19f1d05b9aae": "DIRECT_USER_INTENT",
+        "425dd043-149f-4877-a5d7-c24ec48b86e9": "INPUT_FIELD",
+        "6a9e4910-e0f0-4fda-a8e6-9293cae16f89": "INPUT_FIELD",
+        "6c3dffa5-40fe-4396-81ed-e42633891a7d": "LIVE_FORM_CONTEXT",
+        "84291014-5973-4e2b-a81b-fdb9f7080b75": "INPUT_FIELD"
+      },
+      "execution_ids": [
+        "05-BU09"
+      ],
+      "fields": [
+        {
+          "id": "daily-report-create-title-input",
+          "label": "제목",
+          "name": null,
+          "selector": "#daily-report-create-title-input",
+          "source_event_id": "19f120f4-a150-418c-947c-19f1d05b9aae",
+          "source_node_ids": [
+            "PM-001-N012"
+          ],
+          "value_type": "text"
+        },
+        {
+          "id": "daily-report-create-title-input",
+          "label": "제목",
+          "name": null,
+          "selector": "#daily-report-create-title-input",
+          "source_event_id": "84291014-5973-4e2b-a81b-fdb9f7080b75",
+          "source_node_ids": [
+            "PM-001-N012"
+          ],
+          "value_type": "text"
+        },
+        {
+          "id": "daily-report-create-content-input",
+          "label": "내용",
+          "name": null,
+          "selector": "#daily-report-create-content-input",
+          "source_event_id": "6a9e4910-e0f0-4fda-a8e6-9293cae16f89",
+          "source_node_ids": [
+            "PM-001-N012"
+          ],
+          "value_type": null
+        },
+        {
+          "id": "daily-report-create-content-input",
+          "label": "내용",
+          "name": null,
+          "selector": "#daily-report-create-content-input",
+          "source_event_id": "425dd043-149f-4877-a5d7-c24ec48b86e9",
+          "source_node_ids": [
+            "PM-001-N012"
+          ],
+          "value_type": null
+        }
+      ],
+      "form_detection_evidence": [
+        {
+          "raw_selector": "#daily-report-create-title-input",
+          "rule_id": "BA-DIALOG-DESCENDANT-INPUT",
+          "source_event_id": "19f120f4-a150-418c-947c-19f1d05b9aae"
+        },
+        {
+          "raw_selector": "#daily-report-create-title-input",
+          "rule_id": "BA-DIALOG-DESCENDANT-INPUT",
+          "source_event_id": "84291014-5973-4e2b-a81b-fdb9f7080b75"
+        },
+        {
+          "raw_selector": "#daily-report-create-content-input",
+          "rule_id": "BA-DIALOG-DESCENDANT-INPUT",
+          "source_event_id": "6a9e4910-e0f0-4fda-a8e6-9293cae16f89"
+        },
+        {
+          "raw_selector": "#daily-report-create-content-input",
+          "rule_id": "BA-DIALOG-DESCENDANT-INPUT",
+          "source_event_id": "425dd043-149f-4877-a5d7-c24ec48b86e9"
+        }
+      ],
+      "form_identity": [
+        "efdadf18-9e83-4911-9820-9725ae6f62a0",
+        "/mypage/work/weekly",
+        "FORM_POPUP",
+        "popup:efdadf18-9e83-4911-9820-9725ae6f62a0:1",
+        "div > main.mypage > div.mypage-layout > section.mypage-content > div.work-report-form-modal:nth-of-type(2) > div.work-report-form-modal__panel",
+        "주간업무 등록"
+      ],
+      "form_lifecycle_provenance": {
+        "opening_source_event_id": "6c3dffa5-40fe-4396-81ed-e42633891a7d",
+        "rule_id": "BA-LIVE-FORM-OPENING"
+      },
+      "generated_step_id": "BA-19f120f4-a150-418c-947c-19f1d05b9aae",
+      "http_evidence": [],
+      "in_m02_denominator": true,
+      "intent_order": 19,
+      "intent_phase": "UNKNOWN",
+      "intent_source_event_ids": [
+        "19f120f4-a150-418c-947c-19f1d05b9aae",
+        "84291014-5973-4e2b-a81b-fdb9f7080b75",
+        "6a9e4910-e0f0-4fda-a8e6-9293cae16f89",
+        "425dd043-149f-4877-a5d7-c24ec48b86e9"
+      ],
+      "last_intent_order": 26,
+      "matching_eligible": true,
+      "menu": {
+        "parser": "location_path",
+        "path_text": "mypage > work > weekly",
+        "selected_label": "weekly",
+        "selected_path_text": "mypage > work > weekly",
+        "source": "url"
+      },
+      "menu_page": "/mypage/work/weekly",
+      "page_title": "Rainbow",
+      "popup_title": "주간업무 등록",
+      "process_id": "PM-001",
+      "resolution_status": "RESOLVED",
+      "serializer_rule_id": "BA-INPUT-FORM",
+      "source_event_ids": [
+        "6c3dffa5-40fe-4396-81ed-e42633891a7d",
+        "19f120f4-a150-418c-947c-19f1d05b9aae",
+        "84291014-5973-4e2b-a81b-fdb9f7080b75",
+        "6a9e4910-e0f0-4fda-a8e6-9293cae16f89",
+        "425dd043-149f-4877-a5d7-c24ec48b86e9"
+      ],
+      "source_node_ids": [
+        "PM-001-N008",
+        "PM-001-N012"
+      ],
+      "source_process_ids": [
+        "PM-001"
+      ],
+      "step_order": 5,
+      "target": "주간업무",
+      "target_field_label": "주간업무",
+      "workflow_id": "WF-0001"
+    },
+    {
+      "action_type": "SAVE",
+      "business_context": "업무 관리",
+      "business_object": "",
+      "business_unit_id": "BU09",
+      "business_unit_ids": [
+        "BU09"
+      ],
+      "business_unit_ownership": "ASSIGNED",
+      "comparison_order": 6,
+      "completion_evidence": [
+        {
+          "causal_rule": "EXPLICIT_CAUSAL_ID",
+          "kind": "SUCCESS_POPUP",
+          "message": "주간업무가 저장되었습니다. 목록에서 등록한 게시물을 확인할 수 있습니다.",
+          "raw_order": 28,
+          "source_event_id": "36b6f856-c019-416c-932e-734438103951"
+        },
+        {
+          "causal_rule": "EXPLICIT_CAUSAL_ID",
+          "kind": "UI_OUTCOME",
+          "message": "주간업무가 저장되었습니다.목록에서 등록한 게시물을 확인할 수 있습니다.",
+          "raw_order": 30,
+          "source_event_id": "71db192e-63ba-4e9d-9915-36ddfd460154"
+        }
+      ],
+      "context_provenance": [
+        {
+          "opener_source_event_id": "b0d7a561-2fd1-4330-a4bb-8adbaad874b9",
+          "page_path": "/mypage/work/weekly",
+          "popup_source_event_id": "6c3dffa5-40fe-4396-81ed-e42633891a7d",
+          "raw_menu": {
+            "parser": "sidebar_active_dom",
+            "path_text": "마이페이지 메뉴 > 업무 관리",
+            "selected_label": "업무 관리",
+            "selected_path_text": "마이페이지 메뉴 > 업무 관리",
+            "source": "nav"
+          },
+          "rule_id": "BA-VALIDATED-OPENER-MENU"
+        }
+      ],
+      "evidence": [
+        {
+          "api": {},
+          "associated_label": "주간업무 등록",
+          "element_role": "",
+          "element_text": "주간업무 등록",
+          "event": {
+            "action": "popup_open",
+            "active_parent_popup_id": null,
+            "active_popup_id": "popup:efdadf18-9e83-4911-9820-9725ae6f62a0:1",
+            "cause_event_id": "b0d7a561-2fd1-4330-a4bb-8adbaad874b9",
+            "correlation_id": null,
+            "event_id": "6c3dffa5-40fe-4396-81ed-e42633891a7d",
+            "event_sequence": 12,
+            "event_time": "2026-11-08T13:25:37.797Z",
+            "interaction_id": "efdadf18-9e83-4911-9820-9725ae6f62a0:popup_open:12",
+            "parent_event_id": "b0d7a561-2fd1-4330-a4bb-8adbaad874b9",
+            "related_event_id": "b0d7a561-2fd1-4330-a4bb-8adbaad874b9",
+            "related_interaction_id": "efdadf18-9e83-4911-9820-9725ae6f62a0:click:11"
+          },
+          "event_id": "6c3dffa5-40fe-4396-81ed-e42633891a7d",
+          "event_time": "2026-11-08 22:25:37.797",
+          "form": {},
+          "grid": {},
+          "http_endpoint_raw": "",
+          "http_method": "",
+          "http_relationship_strategy": "",
+          "http_status": "",
+          "input": {},
+          "input_detected": false,
+          "input_form": {},
+          "input_key": {},
+          "menu": {},
+          "page_path": "/mypage/work/weekly",
+          "page_title": "Rainbow",
+          "popup": {
+            "active_parent_popup_id": null,
+            "active_popup_id": "popup:efdadf18-9e83-4911-9820-9725ae6f62a0:1",
+            "active_popup_title": "주간업무 등록",
+            "closer_event_id": null,
+            "closer_interaction_id": null,
+            "lifecycle_action": "open",
+            "opener_event_id": "b0d7a561-2fd1-4330-a4bb-8adbaad874b9",
+            "opener_interaction_id": "efdadf18-9e83-4911-9820-9725ae6f62a0:click:11",
+            "target_popup": {
+              "opened_at": "2026-11-08T13:25:37.796Z",
+              "opened_by_event_id": "b0d7a561-2fd1-4330-a4bb-8adbaad874b9",
+              "opened_by_interaction_id": "efdadf18-9e83-4911-9820-9725ae6f62a0:click:11",
+              "parent_popup_id": null,
+              "popup_id": "popup:efdadf18-9e83-4911-9820-9725ae6f62a0:1",
+              "role": "dialog",
+              "selector_css": "div > main.mypage > div.mypage-layout > section.mypage-content > div.work-report-form-modal:nth-of-type(2) > div.work-report-form-modal__panel",
+              "selector_xpath": "/html[1]/body[1]/div[1]/main[1]/div[1]/section[1]/div[2]/div[1]",
+              "source_action": "click",
+              "tag": "div",
+              "title": "주간업무 등록"
+            }
+          },
+          "popup_containment": {
+            "active_popup_id": "popup:efdadf18-9e83-4911-9820-9725ae6f62a0:1",
+            "is_inside_popup": true
+          },
+          "popup_stack": [
+            {
+              "opened_at": "2026-11-08T13:25:37.796Z",
+              "opened_by_event_id": "b0d7a561-2fd1-4330-a4bb-8adbaad874b9",
+              "opened_by_interaction_id": "efdadf18-9e83-4911-9820-9725ae6f62a0:click:11",
+              "popup_id": "popup:efdadf18-9e83-4911-9820-9725ae6f62a0:1"
+            }
+          ],
+          "selector": "div > main.mypage > div.mypage-layout > section.mypage-content > div.work-report-form-modal:nth-of-type(2) > div.work-report-form-modal__panel",
+          "session_id": "efdadf18-9e83-4911-9820-9725ae6f62a0",
+          "tag": "div",
+          "ui_outcome": {}
+        },
+        {
+          "api": {},
+          "associated_label": null,
+          "element_role": "",
+          "element_text": "저장",
+          "event": {
+            "action": "click",
+            "active_parent_popup_id": null,
+            "active_popup_id": "popup:efdadf18-9e83-4911-9820-9725ae6f62a0:1",
+            "cause_event_id": null,
+            "correlation_id": null,
+            "event_id": "410a669d-695e-49f7-86f1-7f3eea5af0f2",
+            "event_sequence": 28,
+            "event_time": "2026-11-08T13:25:55.885Z",
+            "interaction_id": "efdadf18-9e83-4911-9820-9725ae6f62a0:click:28",
+            "parent_event_id": null,
+            "related_event_id": null,
+            "related_interaction_id": null
+          },
+          "event_id": "410a669d-695e-49f7-86f1-7f3eea5af0f2",
+          "event_time": "2026-11-08 22:25:55.885",
+          "form": {},
+          "grid": {},
+          "http_endpoint_raw": "",
+          "http_method": "",
+          "http_relationship_strategy": "",
+          "http_status": "",
+          "input": {},
+          "input_detected": false,
+          "input_form": {},
+          "input_key": {},
+          "menu": {
+            "parser": "sidebar_active_dom",
+            "path_text": "마이페이지 메뉴 > 업무 관리",
+            "selected_label": "업무 관리",
+            "selected_path_text": "마이페이지 메뉴 > 업무 관리",
+            "source": "nav"
+          },
+          "page_path": "/mypage/work/weekly",
+          "page_title": "Rainbow",
+          "popup": {
+            "active_parent_popup_id": null,
+            "active_popup_id": "popup:efdadf18-9e83-4911-9820-9725ae6f62a0:1",
+            "active_popup_title": "주간업무 등록",
+            "target_popup": {}
+          },
+          "popup_containment": {
+            "active_popup_id": "popup:efdadf18-9e83-4911-9820-9725ae6f62a0:1",
+            "is_inside_popup": true
+          },
+          "popup_stack": [
+            {
+              "opened_at": "2026-11-08T13:25:37.796Z",
+              "opened_by_event_id": "b0d7a561-2fd1-4330-a4bb-8adbaad874b9",
+              "opened_by_interaction_id": "efdadf18-9e83-4911-9820-9725ae6f62a0:click:11",
+              "popup_id": "popup:efdadf18-9e83-4911-9820-9725ae6f62a0:1"
+            }
+          ],
+          "selector": "div.mypage-layout > section.mypage-content > div.work-report-form-modal:nth-of-type(2) > div.work-report-form-modal__panel > div.work-report-form-modal__footer:nth-of-type(4) > button.work-report-form-modal__submit",
+          "session_id": "efdadf18-9e83-4911-9820-9725ae6f62a0",
+          "tag": "button",
+          "ui_outcome": {}
+        },
+        {
+          "api": {},
+          "associated_label": "주간업무가 저장되었습니다. 목록에서 등록한 게시물을 확인할 수 있습니다.",
+          "element_role": "",
+          "element_text": "주간업무가 저장되었습니다. 목록에서 등록한 게시물을 확인할 수 있습니다.",
+          "event": {
+            "action": "popup_open",
+            "active_parent_popup_id": null,
+            "active_popup_id": "popup:efdadf18-9e83-4911-9820-9725ae6f62a0:3",
+            "cause_event_id": "410a669d-695e-49f7-86f1-7f3eea5af0f2",
+            "correlation_id": null,
+            "event_id": "36b6f856-c019-416c-932e-734438103951",
+            "event_sequence": 29,
+            "event_time": "2026-11-08T13:25:55.930Z",
+            "interaction_id": "efdadf18-9e83-4911-9820-9725ae6f62a0:popup_open:29",
+            "parent_event_id": "410a669d-695e-49f7-86f1-7f3eea5af0f2",
+            "related_event_id": "410a669d-695e-49f7-86f1-7f3eea5af0f2",
+            "related_interaction_id": "efdadf18-9e83-4911-9820-9725ae6f62a0:click:28"
+          },
+          "event_id": "36b6f856-c019-416c-932e-734438103951",
+          "event_time": "2026-11-08 22:25:55.930",
+          "form": {},
+          "grid": {},
+          "http_endpoint_raw": "",
+          "http_method": "",
+          "http_relationship_strategy": "",
+          "http_status": "",
+          "input": {},
+          "input_detected": false,
+          "input_form": {},
+          "input_key": {},
+          "menu": {},
+          "page_path": "/mypage/work/weekly",
+          "page_title": "Rainbow",
+          "popup": {
+            "active_parent_popup_id": null,
+            "active_popup_id": "popup:efdadf18-9e83-4911-9820-9725ae6f62a0:3",
+            "active_popup_title": "주간업무가 저장되었습니다. 목록에서 등록한 게시물을 확인할 수 있습니다.",
+            "closer_event_id": null,
+            "closer_interaction_id": null,
+            "lifecycle_action": "open",
+            "opener_event_id": "410a669d-695e-49f7-86f1-7f3eea5af0f2",
+            "opener_interaction_id": "efdadf18-9e83-4911-9820-9725ae6f62a0:click:28",
+            "target_popup": {
+              "opened_at": "2026-11-08T13:25:55.930Z",
+              "opened_by_event_id": "410a669d-695e-49f7-86f1-7f3eea5af0f2",
+              "opened_by_interaction_id": "efdadf18-9e83-4911-9820-9725ae6f62a0:click:28",
+              "parent_popup_id": null,
+              "popup_id": "popup:efdadf18-9e83-4911-9820-9725ae6f62a0:3",
+              "role": "dialog",
+              "selector_css": "div > main.mypage > div.mypage-layout > section.mypage-content > div.work-report-message-modal:nth-of-type(2) > div.work-report-message-modal__panel",
+              "selector_xpath": "/html[1]/body[1]/div[1]/main[1]/div[1]/section[1]/div[2]/div[1]",
+              "source_action": "click",
+              "tag": "div",
+              "title": "주간업무가 저장되었습니다. 목록에서 등록한 게시물을 확인할 수 있습니다."
+            }
+          },
+          "popup_containment": {
+            "active_popup_id": "popup:efdadf18-9e83-4911-9820-9725ae6f62a0:3",
+            "is_inside_popup": true
+          },
+          "popup_stack": [
+            {
+              "opened_at": "2026-11-08T13:25:55.930Z",
+              "opened_by_event_id": "410a669d-695e-49f7-86f1-7f3eea5af0f2",
+              "opened_by_interaction_id": "efdadf18-9e83-4911-9820-9725ae6f62a0:click:28",
+              "popup_id": "popup:efdadf18-9e83-4911-9820-9725ae6f62a0:3"
+            }
+          ],
+          "selector": "div > main.mypage > div.mypage-layout > section.mypage-content > div.work-report-message-modal:nth-of-type(2) > div.work-report-message-modal__panel",
+          "session_id": "efdadf18-9e83-4911-9820-9725ae6f62a0",
+          "tag": "div",
+          "ui_outcome": {}
+        },
+        {
+          "api": {},
+          "associated_label": "주간업무가 저장되었습니다. 목록에서 등록한 게시물을 확인할 수 있습니다.",
+          "element_role": "",
+          "element_text": "주간업무가 저장되었습니다.목록에서 등록한 게시물을 확인할 수 있습니다.",
+          "event": {
+            "action": "ui_outcome",
+            "active_parent_popup_id": null,
+            "active_popup_id": "popup:efdadf18-9e83-4911-9820-9725ae6f62a0:3",
+            "cause_event_id": null,
+            "correlation_id": null,
+            "event_id": "71db192e-63ba-4e9d-9915-36ddfd460154",
+            "event_sequence": 31,
+            "event_time": "2026-11-08T13:25:55.936Z",
+            "interaction_id": "efdadf18-9e83-4911-9820-9725ae6f62a0:ui_outcome:31",
+            "parent_event_id": null,
+            "related_event_id": "410a669d-695e-49f7-86f1-7f3eea5af0f2",
+            "related_interaction_id": "efdadf18-9e83-4911-9820-9725ae6f62a0:click:28"
+          },
+          "event_id": "71db192e-63ba-4e9d-9915-36ddfd460154",
+          "event_time": "2026-11-08 22:25:55.936",
+          "form": {},
+          "grid": {},
+          "http_endpoint_raw": "",
+          "http_method": "",
+          "http_relationship_strategy": "",
+          "http_status": "",
+          "input": {},
+          "input_detected": false,
+          "input_form": {},
+          "input_key": {},
+          "menu": {},
+          "page_path": "/mypage/work/weekly",
+          "page_title": "Rainbow",
+          "popup": {
+            "active_parent_popup_id": null,
+            "active_popup_id": "popup:efdadf18-9e83-4911-9820-9725ae6f62a0:3",
+            "active_popup_title": "주간업무가 저장되었습니다. 목록에서 등록한 게시물을 확인할 수 있습니다.",
+            "target_popup": {}
+          },
+          "popup_containment": {
+            "active_popup_id": "popup:efdadf18-9e83-4911-9820-9725ae6f62a0:3",
+            "is_inside_popup": true
+          },
+          "popup_stack": [
+            {
+              "opened_at": "2026-11-08T13:25:55.930Z",
+              "opened_by_event_id": "410a669d-695e-49f7-86f1-7f3eea5af0f2",
+              "opened_by_interaction_id": "efdadf18-9e83-4911-9820-9725ae6f62a0:click:28",
+              "popup_id": "popup:efdadf18-9e83-4911-9820-9725ae6f62a0:3"
+            }
+          ],
+          "selector": "div > main.mypage > div.mypage-layout > section.mypage-content > div.work-report-message-modal:nth-of-type(2) > div.work-report-message-modal__panel",
+          "session_id": "efdadf18-9e83-4911-9820-9725ae6f62a0",
+          "tag": "div",
+          "ui_outcome": {
+            "message": "주간업무가 저장되었습니다.목록에서 등록한 게시물을 확인할 수 있습니다.",
+            "source_interaction_id": "efdadf18-9e83-4911-9820-9725ae6f62a0:click:28",
+            "type": "modal_message"
+          }
+        },
+        {
+          "api": {},
+          "associated_label": null,
+          "element_role": "",
+          "element_text": "확인",
+          "event": {
+            "action": "click",
+            "active_parent_popup_id": null,
+            "active_popup_id": "popup:efdadf18-9e83-4911-9820-9725ae6f62a0:3",
+            "cause_event_id": null,
+            "correlation_id": null,
+            "event_id": "e3ebebf8-b924-4223-8e24-ee03d50222f1",
+            "event_sequence": 35,
+            "event_time": "2026-11-08T13:25:59.570Z",
+            "interaction_id": "efdadf18-9e83-4911-9820-9725ae6f62a0:click:35",
+            "parent_event_id": null,
+            "related_event_id": null,
+            "related_interaction_id": null
+          },
+          "event_id": "e3ebebf8-b924-4223-8e24-ee03d50222f1",
+          "event_time": "2026-11-08 22:25:59.570",
+          "form": {},
+          "grid": {},
+          "http_endpoint_raw": "",
+          "http_method": "",
+          "http_relationship_strategy": "",
+          "http_status": "",
+          "input": {},
+          "input_detected": false,
+          "input_form": {},
+          "input_key": {},
+          "menu": {
+            "parser": "sidebar_active_dom",
+            "path_text": "마이페이지 메뉴 > 업무 관리",
+            "selected_label": "업무 관리",
+            "selected_path_text": "마이페이지 메뉴 > 업무 관리",
+            "source": "nav"
+          },
+          "page_path": "/mypage/work/weekly",
+          "page_title": "Rainbow",
+          "popup": {
+            "active_parent_popup_id": null,
+            "active_popup_id": "popup:efdadf18-9e83-4911-9820-9725ae6f62a0:3",
+            "active_popup_title": "주간업무가 저장되었습니다. 목록에서 등록한 게시물을 확인할 수 있습니다.",
+            "target_popup": {}
+          },
+          "popup_containment": {
+            "active_popup_id": "popup:efdadf18-9e83-4911-9820-9725ae6f62a0:3",
+            "is_inside_popup": true
+          },
+          "popup_stack": [
+            {
+              "opened_at": "2026-11-08T13:25:55.930Z",
+              "opened_by_event_id": "410a669d-695e-49f7-86f1-7f3eea5af0f2",
+              "opened_by_interaction_id": "efdadf18-9e83-4911-9820-9725ae6f62a0:click:28",
+              "popup_id": "popup:efdadf18-9e83-4911-9820-9725ae6f62a0:3"
+            }
+          ],
+          "selector": "main.mypage > div.mypage-layout > section.mypage-content > div.work-report-message-modal:nth-of-type(2) > div.work-report-message-modal__panel > button.work-report-message-modal__button",
+          "session_id": "efdadf18-9e83-4911-9820-9725ae6f62a0",
+          "tag": "button",
+          "ui_outcome": {}
+        }
+      ],
+      "evidence_roles": {
+        "36b6f856-c019-416c-932e-734438103951": "COMPLETION_EVIDENCE",
+        "410a669d-695e-49f7-86f1-7f3eea5af0f2": "DIRECT_USER_INTENT",
+        "6c3dffa5-40fe-4396-81ed-e42633891a7d": "LIVE_FORM_CONTEXT",
+        "71db192e-63ba-4e9d-9915-36ddfd460154": "COMPLETION_EVIDENCE",
+        "e3ebebf8-b924-4223-8e24-ee03d50222f1": "SUCCESS_ACKNOWLEDGEMENT_CONTEXT"
+      },
+      "execution_ids": [
+        "05-BU09"
+      ],
+      "fields": [],
+      "form_detection_evidence": [
+        {
+          "raw_selector": "#daily-report-create-title-input",
+          "rule_id": "BA-DIALOG-DESCENDANT-INPUT",
+          "source_event_id": "19f120f4-a150-418c-947c-19f1d05b9aae"
+        },
+        {
+          "raw_selector": "#daily-report-create-title-input",
+          "rule_id": "BA-DIALOG-DESCENDANT-INPUT",
+          "source_event_id": "84291014-5973-4e2b-a81b-fdb9f7080b75"
+        },
+        {
+          "raw_selector": "#daily-report-create-content-input",
+          "rule_id": "BA-DIALOG-DESCENDANT-INPUT",
+          "source_event_id": "6a9e4910-e0f0-4fda-a8e6-9293cae16f89"
+        },
+        {
+          "raw_selector": "#daily-report-create-content-input",
+          "rule_id": "BA-DIALOG-DESCENDANT-INPUT",
+          "source_event_id": "425dd043-149f-4877-a5d7-c24ec48b86e9"
+        }
+      ],
+      "form_identity": [
+        "efdadf18-9e83-4911-9820-9725ae6f62a0",
+        "/mypage/work/weekly",
+        "FORM_POPUP",
+        "popup:efdadf18-9e83-4911-9820-9725ae6f62a0:1",
+        "div > main.mypage > div.mypage-layout > section.mypage-content > div.work-report-form-modal:nth-of-type(2) > div.work-report-form-modal__panel",
+        "주간업무 등록"
+      ],
+      "form_lifecycle_provenance": {
+        "opening_source_event_id": "6c3dffa5-40fe-4396-81ed-e42633891a7d",
+        "rule_id": "BA-LIVE-FORM-OPENING"
+      },
+      "generated_step_id": "BA-410a669d-695e-49f7-86f1-7f3eea5af0f2",
+      "http_evidence": [],
+      "in_m02_denominator": true,
+      "intent_order": 27,
+      "intent_phase": "COMMIT",
+      "intent_source_event_ids": [
+        "410a669d-695e-49f7-86f1-7f3eea5af0f2"
+      ],
+      "last_intent_order": 27,
+      "matching_eligible": true,
+      "menu": {
+        "parser": "sidebar_active_dom",
+        "path_text": "마이페이지 메뉴 > 업무 관리",
+        "selected_label": "업무 관리",
+        "selected_path_text": "마이페이지 메뉴 > 업무 관리",
+        "source": "nav"
+      },
+      "menu_page": "/mypage/work/weekly",
+      "page_title": "Rainbow",
+      "popup_title": "주간업무 등록",
+      "process_id": "PM-001",
+      "resolution_status": "RESOLVED",
+      "serializer_rule_id": "BA-LINKED-SUCCESS-ACK",
+      "source_event_ids": [
+        "6c3dffa5-40fe-4396-81ed-e42633891a7d",
+        "410a669d-695e-49f7-86f1-7f3eea5af0f2",
+        "36b6f856-c019-416c-932e-734438103951",
+        "71db192e-63ba-4e9d-9915-36ddfd460154",
+        "e3ebebf8-b924-4223-8e24-ee03d50222f1"
+      ],
+      "source_node_ids": [
+        "PM-001-N008",
+        "PM-001-N009"
+      ],
+      "source_process_ids": [
+        "PM-001"
+      ],
+      "step_order": 6,
+      "target": "저장",
+      "target_field_label": "저장",
+      "workflow_id": "WF-0001"
+    }
+  ],
+  "processes": [
+    {
+      "canonical_instance_id": "ALL_FROZEN_SPLIT_FRAGMENTS",
+      "id": "BU09",
+      "procedures": [
+        {
+          "action_type": "MENU_ENTER",
+          "business_context": "업무 관리",
+          "business_object": "",
+          "business_unit_id": "BU09",
+          "business_unit_ids": [
+            "BU09"
+          ],
+          "business_unit_ownership": "ASSIGNED",
+          "comparison_order": 1,
+          "completion_evidence": [],
+          "evidence": [
+            {
+              "api": {},
+              "associated_label": null,
+              "element_role": "",
+              "element_text": "업무 관리",
+              "event": {
+                "action": "click",
+                "active_parent_popup_id": null,
+                "active_popup_id": null,
+                "cause_event_id": null,
+                "correlation_id": null,
+                "event_id": "1679b659-eb4c-4b39-8f06-8430c0f6ae3f",
+                "event_sequence": 5,
+                "event_time": "2026-11-08T13:25:33.689Z",
+                "interaction_id": "efdadf18-9e83-4911-9820-9725ae6f62a0:click:5",
+                "parent_event_id": null,
+                "related_event_id": null,
+                "related_interaction_id": null
+              },
+              "event_id": "1679b659-eb4c-4b39-8f06-8430c0f6ae3f",
+              "event_time": "2026-11-08 22:25:33.689",
+              "form": {},
+              "grid": {},
+              "http_endpoint_raw": "",
+              "http_method": "",
+              "http_relationship_strategy": "",
+              "http_status": "",
+              "input": {},
+              "input_detected": false,
+              "input_form": {},
+              "input_key": {},
+              "menu": {
+                "parser": "location_path",
+                "path_text": "mypage",
+                "selected_label": "mypage",
+                "selected_path_text": "mypage",
+                "source": "url"
+              },
+              "page_path": "/mypage",
+              "page_title": "Rainbow",
+              "popup": {
+                "target_popup": {}
+              },
+              "popup_containment": {},
+              "popup_stack": [],
+              "selector": "aside.mypage-sidebar > div.mypage-sidebar__panel > nav.mypage-sidebar__nav > ul.mypage-sidebar__sections > li.mypage-sidebar__section:nth-of-type(3) > button.mypage-sidebar__section-button",
+              "session_id": "efdadf18-9e83-4911-9820-9725ae6f62a0",
+              "tag": "button",
+              "ui_outcome": {}
+            }
+          ],
+          "evidence_roles": {
+            "1679b659-eb4c-4b39-8f06-8430c0f6ae3f": "DIRECT_USER_INTENT"
+          },
+          "evidence_type": "direct",
+          "execution_ids": [
+            "05-BU09"
+          ],
+          "fields": [],
+          "form_identity": null,
+          "generated_step_id": "BA-1679b659-eb4c-4b39-8f06-8430c0f6ae3f",
+          "http_evidence": [],
+          "id": "BA-1679b659-eb4c-4b39-8f06-8430c0f6ae3f",
+          "in_m02_denominator": true,
+          "intent_order": 4,
+          "intent_phase": "UNKNOWN",
+          "intent_source_event_ids": [
+            "1679b659-eb4c-4b39-8f06-8430c0f6ae3f"
+          ],
+          "label": "업무 관리",
+          "last_intent_order": 4,
+          "matching_eligible": true,
+          "menu": {
+            "parser": "location_path",
+            "path_text": "mypage",
+            "selected_label": "mypage",
+            "selected_path_text": "mypage",
+            "source": "url"
+          },
+          "menu_page": "/mypage",
+          "node_id": "PM-001-N003",
+          "page_title": "Rainbow",
+          "popup_title": "",
+          "process_id": "PM-001",
+          "resolution_status": "RESOLVED",
+          "serializer_rule_id": "BA-DIRECT-INTENT",
+          "source_event_ids": [
+            "1679b659-eb4c-4b39-8f06-8430c0f6ae3f"
+          ],
+          "source_node_ids": [
+            "PM-001-N003"
+          ],
+          "source_process_ids": [
+            "PM-001"
+          ],
+          "step_order": 1,
+          "target": "업무 관리",
+          "target_field_label": "업무 관리",
+          "workflow_id": "WF-0001"
+        },
+        {
+          "action_type": "MENU_ENTER",
+          "business_context": "주간보고",
+          "business_object": "",
+          "business_unit_id": "BU09",
+          "business_unit_ids": [
+            "BU09"
+          ],
+          "business_unit_ownership": "ASSIGNED",
+          "comparison_order": 2,
+          "completion_evidence": [],
+          "evidence": [
+            {
+              "api": {},
+              "associated_label": null,
+              "element_role": "",
+              "element_text": "주간보고",
+              "event": {
+                "action": "click",
+                "active_parent_popup_id": null,
+                "active_popup_id": null,
+                "cause_event_id": null,
+                "correlation_id": null,
+                "event_id": "345aedf5-481c-4550-8d6f-d0c89735e8de",
+                "event_sequence": 6,
+                "event_time": "2026-11-08T13:25:34.820Z",
+                "interaction_id": "efdadf18-9e83-4911-9820-9725ae6f62a0:click:6",
+                "parent_event_id": null,
+                "related_event_id": null,
+                "related_interaction_id": null
+              },
+              "event_id": "345aedf5-481c-4550-8d6f-d0c89735e8de",
+              "event_time": "2026-11-08 22:25:34.820",
+              "form": {},
+              "grid": {},
+              "http_endpoint_raw": "",
+              "http_method": "",
+              "http_relationship_strategy": "",
+              "http_status": "",
+              "input": {},
+              "input_detected": false,
+              "input_form": {},
+              "input_key": {},
+              "menu": {
+                "parser": "generic_dom_tree",
+                "path_text": "업무 관리 > 주간보고",
+                "selected_label": "주간보고",
+                "selected_path_text": "업무 관리 > 주간보고",
+                "source": "tree"
+              },
+              "page_path": "/mypage",
+              "page_title": "Rainbow",
+              "popup": {
+                "target_popup": {}
+              },
+              "popup_containment": {},
+              "popup_stack": [],
+              "selector": "div.mypage-sidebar__panel > nav.mypage-sidebar__nav > ul.mypage-sidebar__sections > li.mypage-sidebar__section:nth-of-type(3) > ul.mypage-sidebar__submenu > li.mypage-sidebar__submenu-item:nth-of-type(3)",
+              "session_id": "efdadf18-9e83-4911-9820-9725ae6f62a0",
+              "tag": "li",
+              "ui_outcome": {}
+            }
+          ],
+          "evidence_roles": {
+            "345aedf5-481c-4550-8d6f-d0c89735e8de": "DIRECT_USER_INTENT"
+          },
+          "evidence_type": "direct",
+          "execution_ids": [
+            "05-BU09"
+          ],
+          "fields": [],
+          "form_identity": null,
+          "generated_step_id": "BA-345aedf5-481c-4550-8d6f-d0c89735e8de",
+          "http_evidence": [],
+          "id": "BA-345aedf5-481c-4550-8d6f-d0c89735e8de",
+          "in_m02_denominator": true,
+          "intent_order": 5,
+          "intent_phase": "UNKNOWN",
+          "intent_source_event_ids": [
+            "345aedf5-481c-4550-8d6f-d0c89735e8de"
+          ],
+          "label": "주간보고",
+          "last_intent_order": 5,
+          "matching_eligible": true,
+          "menu": {
+            "parser": "generic_dom_tree",
+            "path_text": "업무 관리 > 주간보고",
+            "selected_label": "주간보고",
+            "selected_path_text": "업무 관리 > 주간보고",
+            "source": "tree"
+          },
+          "menu_page": "/mypage",
+          "node_id": "PM-001-N003",
+          "page_title": "Rainbow",
+          "popup_title": "",
+          "process_id": "PM-001",
+          "resolution_status": "RESOLVED",
+          "serializer_rule_id": "BA-TREE-MENU",
+          "source_event_ids": [
+            "345aedf5-481c-4550-8d6f-d0c89735e8de"
+          ],
+          "source_node_ids": [
+            "PM-001-N003"
+          ],
+          "source_process_ids": [
+            "PM-001"
+          ],
+          "step_order": 2,
+          "target": "주간보고",
+          "target_field_label": "주간보고",
+          "workflow_id": "WF-0001"
+        },
+        {
+          "action_type": "REGISTER",
+          "business_context": "업무 관리",
+          "business_object": "",
+          "business_unit_id": "BU09",
+          "business_unit_ids": [
+            "BU09"
+          ],
+          "business_unit_ownership": "ASSIGNED",
+          "comparison_order": 3,
+          "completion_evidence": [],
+          "evidence": [
+            {
+              "api": {},
+              "associated_label": null,
+              "element_role": "",
+              "element_text": "등록",
+              "event": {
+                "action": "click",
+                "active_parent_popup_id": null,
+                "active_popup_id": null,
+                "cause_event_id": null,
+                "correlation_id": null,
+                "event_id": "b0d7a561-2fd1-4330-a4bb-8adbaad874b9",
+                "event_sequence": 11,
+                "event_time": "2026-11-08T13:25:37.707Z",
+                "interaction_id": "efdadf18-9e83-4911-9820-9725ae6f62a0:click:11",
+                "parent_event_id": null,
+                "related_event_id": null,
+                "related_interaction_id": null
+              },
+              "event_id": "b0d7a561-2fd1-4330-a4bb-8adbaad874b9",
+              "event_time": "2026-11-08 22:25:37.707",
+              "form": {},
+              "grid": {},
+              "http_endpoint_raw": "",
+              "http_method": "",
+              "http_relationship_strategy": "",
+              "http_status": "",
+              "input": {},
+              "input_detected": false,
+              "input_form": {},
+              "input_key": {},
+              "menu": {
+                "parser": "sidebar_active_dom",
+                "path_text": "마이페이지 메뉴 > 업무 관리",
+                "selected_label": "업무 관리",
+                "selected_path_text": "마이페이지 메뉴 > 업무 관리",
+                "source": "nav"
+              },
+              "page_path": "/mypage/work/weekly",
+              "page_title": "Rainbow",
+              "popup": {
+                "target_popup": {}
+              },
+              "popup_containment": {},
+              "popup_stack": [],
+              "selector": "div.mypage-layout > section.mypage-content > div.work-report-page > div.work-report-page__bottom:nth-of-type(2) > div.work-report-page__footer:nth-of-type(2) > button.work-report-page__register",
+              "session_id": "efdadf18-9e83-4911-9820-9725ae6f62a0",
+              "tag": "button",
+              "ui_outcome": {}
+            },
+            {
+              "api": {},
+              "associated_label": "주간업무 등록",
+              "element_role": "",
+              "element_text": "주간업무 등록",
+              "event": {
+                "action": "popup_open",
+                "active_parent_popup_id": null,
+                "active_popup_id": "popup:efdadf18-9e83-4911-9820-9725ae6f62a0:1",
+                "cause_event_id": "b0d7a561-2fd1-4330-a4bb-8adbaad874b9",
+                "correlation_id": null,
+                "event_id": "6c3dffa5-40fe-4396-81ed-e42633891a7d",
+                "event_sequence": 12,
+                "event_time": "2026-11-08T13:25:37.797Z",
+                "interaction_id": "efdadf18-9e83-4911-9820-9725ae6f62a0:popup_open:12",
+                "parent_event_id": "b0d7a561-2fd1-4330-a4bb-8adbaad874b9",
+                "related_event_id": "b0d7a561-2fd1-4330-a4bb-8adbaad874b9",
+                "related_interaction_id": "efdadf18-9e83-4911-9820-9725ae6f62a0:click:11"
+              },
+              "event_id": "6c3dffa5-40fe-4396-81ed-e42633891a7d",
+              "event_time": "2026-11-08 22:25:37.797",
+              "form": {},
+              "grid": {},
+              "http_endpoint_raw": "",
+              "http_method": "",
+              "http_relationship_strategy": "",
+              "http_status": "",
+              "input": {},
+              "input_detected": false,
+              "input_form": {},
+              "input_key": {},
+              "menu": {},
+              "page_path": "/mypage/work/weekly",
+              "page_title": "Rainbow",
+              "popup": {
+                "active_parent_popup_id": null,
+                "active_popup_id": "popup:efdadf18-9e83-4911-9820-9725ae6f62a0:1",
+                "active_popup_title": "주간업무 등록",
+                "closer_event_id": null,
+                "closer_interaction_id": null,
+                "lifecycle_action": "open",
+                "opener_event_id": "b0d7a561-2fd1-4330-a4bb-8adbaad874b9",
+                "opener_interaction_id": "efdadf18-9e83-4911-9820-9725ae6f62a0:click:11",
+                "target_popup": {
+                  "opened_at": "2026-11-08T13:25:37.796Z",
+                  "opened_by_event_id": "b0d7a561-2fd1-4330-a4bb-8adbaad874b9",
+                  "opened_by_interaction_id": "efdadf18-9e83-4911-9820-9725ae6f62a0:click:11",
+                  "parent_popup_id": null,
+                  "popup_id": "popup:efdadf18-9e83-4911-9820-9725ae6f62a0:1",
+                  "role": "dialog",
+                  "selector_css": "div > main.mypage > div.mypage-layout > section.mypage-content > div.work-report-form-modal:nth-of-type(2) > div.work-report-form-modal__panel",
+                  "selector_xpath": "/html[1]/body[1]/div[1]/main[1]/div[1]/section[1]/div[2]/div[1]",
+                  "source_action": "click",
+                  "tag": "div",
+                  "title": "주간업무 등록"
+                }
+              },
+              "popup_containment": {
+                "active_popup_id": "popup:efdadf18-9e83-4911-9820-9725ae6f62a0:1",
+                "is_inside_popup": true
+              },
+              "popup_stack": [
+                {
+                  "opened_at": "2026-11-08T13:25:37.796Z",
+                  "opened_by_event_id": "b0d7a561-2fd1-4330-a4bb-8adbaad874b9",
+                  "opened_by_interaction_id": "efdadf18-9e83-4911-9820-9725ae6f62a0:click:11",
+                  "popup_id": "popup:efdadf18-9e83-4911-9820-9725ae6f62a0:1"
+                }
+              ],
+              "selector": "div > main.mypage > div.mypage-layout > section.mypage-content > div.work-report-form-modal:nth-of-type(2) > div.work-report-form-modal__panel",
+              "session_id": "efdadf18-9e83-4911-9820-9725ae6f62a0",
+              "tag": "div",
+              "ui_outcome": {}
+            }
+          ],
+          "evidence_roles": {
+            "6c3dffa5-40fe-4396-81ed-e42633891a7d": "VALIDATED_FORM_OPENER_CONTEXT",
+            "b0d7a561-2fd1-4330-a4bb-8adbaad874b9": "DIRECT_USER_INTENT"
+          },
+          "evidence_type": "direct",
+          "execution_ids": [
+            "05-BU09"
+          ],
+          "fields": [],
+          "form_identity": null,
+          "generated_step_id": "BA-b0d7a561-2fd1-4330-a4bb-8adbaad874b9",
+          "http_evidence": [],
+          "id": "BA-b0d7a561-2fd1-4330-a4bb-8adbaad874b9",
+          "in_m02_denominator": true,
+          "intent_order": 10,
+          "intent_phase": "INITIATE",
+          "intent_source_event_ids": [
+            "b0d7a561-2fd1-4330-a4bb-8adbaad874b9"
+          ],
+          "label": "등록",
+          "last_intent_order": 10,
+          "matching_eligible": true,
+          "menu": {
+            "parser": "sidebar_active_dom",
+            "path_text": "마이페이지 메뉴 > 업무 관리",
+            "selected_label": "업무 관리",
+            "selected_path_text": "마이페이지 메뉴 > 업무 관리",
+            "source": "nav"
+          },
+          "menu_page": "/mypage/work/weekly",
+          "node_id": "PM-001-N007",
+          "page_title": "Rainbow",
+          "popup_title": "",
+          "process_id": "PM-001",
+          "resolution_status": "RESOLVED",
+          "serializer_rule_id": "BA-VALIDATED-FORM-OPENER",
+          "source_event_ids": [
+            "b0d7a561-2fd1-4330-a4bb-8adbaad874b9",
+            "6c3dffa5-40fe-4396-81ed-e42633891a7d"
+          ],
+          "source_node_ids": [
+            "PM-001-N007",
+            "PM-001-N008"
+          ],
+          "source_process_ids": [
+            "PM-001"
+          ],
+          "step_order": 3,
+          "target": "등록",
+          "target_field_label": "등록",
+          "workflow_id": "WF-0001"
+        },
+        {
+          "action_type": "SELECT",
+          "business_context": "주간업무",
+          "business_object": "",
+          "business_unit_id": "BU09",
+          "business_unit_ids": [
+            "BU09"
+          ],
+          "business_unit_ownership": "ASSIGNED",
+          "comparison_order": 4,
+          "completion_evidence": [],
+          "context_provenance": [
+            {
+              "opener_source_event_id": "fb0c5621-61d7-4482-ad80-07ede4912f06",
+              "page_path": "/mypage/work/weekly",
+              "popup_source_event_id": "1bb16c7d-4ecd-42fd-91c3-92e2dd0f0eb8",
+              "raw_menu": {
+                "parser": "sidebar_active_dom",
+                "path_text": "마이페이지 메뉴 > 업무 관리",
+                "selected_label": "업무 관리",
+                "selected_path_text": "마이페이지 메뉴 > 업무 관리",
+                "source": "nav"
+              },
+              "rule_id": "BA-VALIDATED-OPENER-MENU"
+            }
+          ],
+          "evidence": [
+            {
+              "api": {},
+              "associated_label": "주간업무 등록",
+              "element_role": "",
+              "element_text": "주간업무 등록",
+              "event": {
+                "action": "popup_open",
+                "active_parent_popup_id": null,
+                "active_popup_id": "popup:efdadf18-9e83-4911-9820-9725ae6f62a0:1",
+                "cause_event_id": "b0d7a561-2fd1-4330-a4bb-8adbaad874b9",
+                "correlation_id": null,
+                "event_id": "6c3dffa5-40fe-4396-81ed-e42633891a7d",
+                "event_sequence": 12,
+                "event_time": "2026-11-08T13:25:37.797Z",
+                "interaction_id": "efdadf18-9e83-4911-9820-9725ae6f62a0:popup_open:12",
+                "parent_event_id": "b0d7a561-2fd1-4330-a4bb-8adbaad874b9",
+                "related_event_id": "b0d7a561-2fd1-4330-a4bb-8adbaad874b9",
+                "related_interaction_id": "efdadf18-9e83-4911-9820-9725ae6f62a0:click:11"
+              },
+              "event_id": "6c3dffa5-40fe-4396-81ed-e42633891a7d",
+              "event_time": "2026-11-08 22:25:37.797",
+              "form": {},
+              "grid": {},
+              "http_endpoint_raw": "",
+              "http_method": "",
+              "http_relationship_strategy": "",
+              "http_status": "",
+              "input": {},
+              "input_detected": false,
+              "input_form": {},
+              "input_key": {},
+              "menu": {},
+              "page_path": "/mypage/work/weekly",
+              "page_title": "Rainbow",
+              "popup": {
+                "active_parent_popup_id": null,
+                "active_popup_id": "popup:efdadf18-9e83-4911-9820-9725ae6f62a0:1",
+                "active_popup_title": "주간업무 등록",
+                "closer_event_id": null,
+                "closer_interaction_id": null,
+                "lifecycle_action": "open",
+                "opener_event_id": "b0d7a561-2fd1-4330-a4bb-8adbaad874b9",
+                "opener_interaction_id": "efdadf18-9e83-4911-9820-9725ae6f62a0:click:11",
+                "target_popup": {
+                  "opened_at": "2026-11-08T13:25:37.796Z",
+                  "opened_by_event_id": "b0d7a561-2fd1-4330-a4bb-8adbaad874b9",
+                  "opened_by_interaction_id": "efdadf18-9e83-4911-9820-9725ae6f62a0:click:11",
+                  "parent_popup_id": null,
+                  "popup_id": "popup:efdadf18-9e83-4911-9820-9725ae6f62a0:1",
+                  "role": "dialog",
+                  "selector_css": "div > main.mypage > div.mypage-layout > section.mypage-content > div.work-report-form-modal:nth-of-type(2) > div.work-report-form-modal__panel",
+                  "selector_xpath": "/html[1]/body[1]/div[1]/main[1]/div[1]/section[1]/div[2]/div[1]",
+                  "source_action": "click",
+                  "tag": "div",
+                  "title": "주간업무 등록"
+                }
+              },
+              "popup_containment": {
+                "active_popup_id": "popup:efdadf18-9e83-4911-9820-9725ae6f62a0:1",
+                "is_inside_popup": true
+              },
+              "popup_stack": [
+                {
+                  "opened_at": "2026-11-08T13:25:37.796Z",
+                  "opened_by_event_id": "b0d7a561-2fd1-4330-a4bb-8adbaad874b9",
+                  "opened_by_interaction_id": "efdadf18-9e83-4911-9820-9725ae6f62a0:click:11",
+                  "popup_id": "popup:efdadf18-9e83-4911-9820-9725ae6f62a0:1"
+                }
+              ],
+              "selector": "div > main.mypage > div.mypage-layout > section.mypage-content > div.work-report-form-modal:nth-of-type(2) > div.work-report-form-modal__panel",
+              "session_id": "efdadf18-9e83-4911-9820-9725ae6f62a0",
+              "tag": "div",
+              "ui_outcome": {}
+            },
+            {
+              "api": {},
+              "associated_label": null,
+              "element_role": "",
+              "element_text": "2026.11.08 (일)",
+              "event": {
+                "action": "click",
+                "active_parent_popup_id": null,
+                "active_popup_id": "popup:efdadf18-9e83-4911-9820-9725ae6f62a0:1",
+                "cause_event_id": null,
+                "correlation_id": null,
+                "event_id": "fb0c5621-61d7-4482-ad80-07ede4912f06",
+                "event_sequence": 14,
+                "event_time": "2026-11-08T13:25:38.837Z",
+                "interaction_id": "efdadf18-9e83-4911-9820-9725ae6f62a0:click:14",
+                "parent_event_id": null,
+                "related_event_id": null,
+                "related_interaction_id": null
+              },
+              "event_id": "fb0c5621-61d7-4482-ad80-07ede4912f06",
+              "event_time": "2026-11-08 22:25:38.837",
+              "form": {},
+              "grid": {},
+              "http_endpoint_raw": "",
+              "http_method": "",
+              "http_relationship_strategy": "",
+              "http_status": "",
+              "input": {},
+              "input_detected": false,
+              "input_form": {},
+              "input_key": {},
+              "menu": {
+                "parser": "sidebar_active_dom",
+                "path_text": "마이페이지 메뉴 > 업무 관리",
+                "selected_label": "업무 관리",
+                "selected_path_text": "마이페이지 메뉴 > 업무 관리",
+                "source": "nav"
+              },
+              "page_path": "/mypage/work/weekly",
+              "page_title": "Rainbow",
+              "popup": {
+                "active_parent_popup_id": null,
+                "active_popup_id": "popup:efdadf18-9e83-4911-9820-9725ae6f62a0:1",
+                "active_popup_title": "주간업무 등록",
+                "target_popup": {}
+              },
+              "popup_containment": {
+                "active_popup_id": "popup:efdadf18-9e83-4911-9820-9725ae6f62a0:1",
+                "is_inside_popup": true
+              },
+              "popup_stack": [
+                {
+                  "opened_at": "2026-11-08T13:25:37.796Z",
+                  "opened_by_event_id": "b0d7a561-2fd1-4330-a4bb-8adbaad874b9",
+                  "opened_by_interaction_id": "efdadf18-9e83-4911-9820-9725ae6f62a0:click:11",
+                  "popup_id": "popup:efdadf18-9e83-4911-9820-9725ae6f62a0:1"
+                }
+              ],
+              "selector": "section.mypage-content > div.work-report-form-modal:nth-of-type(2) > div.work-report-form-modal__panel > div.work-report-form-modal__meta:nth-of-type(2) > div.work-report-form-modal__date > button.work-report-form-modal__date-button",
+              "session_id": "efdadf18-9e83-4911-9820-9725ae6f62a0",
+              "tag": "button",
+              "ui_outcome": {}
+            },
+            {
+              "api": {},
+              "associated_label": "날짜 선택",
+              "element_role": "",
+              "element_text": "날짜 선택",
+              "event": {
+                "action": "popup_open",
+                "active_parent_popup_id": "popup:efdadf18-9e83-4911-9820-9725ae6f62a0:1",
+                "active_popup_id": "popup:efdadf18-9e83-4911-9820-9725ae6f62a0:2",
+                "cause_event_id": "fb0c5621-61d7-4482-ad80-07ede4912f06",
+                "correlation_id": null,
+                "event_id": "1bb16c7d-4ecd-42fd-91c3-92e2dd0f0eb8",
+                "event_sequence": 15,
+                "event_time": "2026-11-08T13:25:38.930Z",
+                "interaction_id": "efdadf18-9e83-4911-9820-9725ae6f62a0:popup_open:15",
+                "parent_event_id": "fb0c5621-61d7-4482-ad80-07ede4912f06",
+                "related_event_id": "fb0c5621-61d7-4482-ad80-07ede4912f06",
+                "related_interaction_id": "efdadf18-9e83-4911-9820-9725ae6f62a0:click:14"
+              },
+              "event_id": "1bb16c7d-4ecd-42fd-91c3-92e2dd0f0eb8",
+              "event_time": "2026-11-08 22:25:38.930",
+              "form": {},
+              "grid": {},
+              "http_endpoint_raw": "",
+              "http_method": "",
+              "http_relationship_strategy": "",
+              "http_status": "",
+              "input": {},
+              "input_detected": false,
+              "input_form": {},
+              "input_key": {},
+              "menu": {},
+              "page_path": "/mypage/work/weekly",
+              "page_title": "Rainbow",
+              "popup": {
+                "active_parent_popup_id": "popup:efdadf18-9e83-4911-9820-9725ae6f62a0:1",
+                "active_popup_id": "popup:efdadf18-9e83-4911-9820-9725ae6f62a0:2",
+                "active_popup_title": "날짜 선택",
+                "closer_event_id": null,
+                "closer_interaction_id": null,
+                "lifecycle_action": "open",
+                "opener_event_id": "fb0c5621-61d7-4482-ad80-07ede4912f06",
+                "opener_interaction_id": "efdadf18-9e83-4911-9820-9725ae6f62a0:click:14",
+                "target_popup": {
+                  "opened_at": "2026-11-08T13:25:38.929Z",
+                  "opened_by_event_id": "fb0c5621-61d7-4482-ad80-07ede4912f06",
+                  "opened_by_interaction_id": "efdadf18-9e83-4911-9820-9725ae6f62a0:click:14",
+                  "parent_popup_id": "popup:efdadf18-9e83-4911-9820-9725ae6f62a0:1",
+                  "popup_id": "popup:efdadf18-9e83-4911-9820-9725ae6f62a0:2",
+                  "role": "dialog",
+                  "selector_css": "section.mypage-content > div.work-report-form-modal:nth-of-type(2) > div.work-report-form-modal__panel > div.work-report-form-modal__meta:nth-of-type(2) > div.work-report-form-modal__date > div.work-report-form-modal__date-picker",
+                  "selector_xpath": "/html[1]/body[1]/div[1]/main[1]/div[1]/section[1]/div[2]/div[1]/div[2]/div[1]/div[1]",
+                  "source_action": "click",
+                  "tag": "div",
+                  "title": "날짜 선택"
+                }
+              },
+              "popup_containment": {
+                "active_popup_id": "popup:efdadf18-9e83-4911-9820-9725ae6f62a0:2",
+                "is_inside_popup": true
+              },
+              "popup_stack": [
+                {
+                  "opened_at": "2026-11-08T13:25:37.796Z",
+                  "opened_by_event_id": "b0d7a561-2fd1-4330-a4bb-8adbaad874b9",
+                  "opened_by_interaction_id": "efdadf18-9e83-4911-9820-9725ae6f62a0:click:11",
+                  "popup_id": "popup:efdadf18-9e83-4911-9820-9725ae6f62a0:1"
+                },
+                {
+                  "opened_at": "2026-11-08T13:25:38.929Z",
+                  "opened_by_event_id": "fb0c5621-61d7-4482-ad80-07ede4912f06",
+                  "opened_by_interaction_id": "efdadf18-9e83-4911-9820-9725ae6f62a0:click:14",
+                  "popup_id": "popup:efdadf18-9e83-4911-9820-9725ae6f62a0:2"
+                }
+              ],
+              "selector": "section.mypage-content > div.work-report-form-modal:nth-of-type(2) > div.work-report-form-modal__panel > div.work-report-form-modal__meta:nth-of-type(2) > div.work-report-form-modal__date > div.work-report-form-modal__date-picker",
+              "session_id": "efdadf18-9e83-4911-9820-9725ae6f62a0",
+              "tag": "div",
+              "ui_outcome": {}
+            },
+            {
+              "api": {},
+              "associated_label": "2026-11-15",
+              "element_role": "",
+              "element_text": "2026-11-15",
+              "event": {
+                "action": "click",
+                "active_parent_popup_id": "popup:efdadf18-9e83-4911-9820-9725ae6f62a0:1",
+                "active_popup_id": "popup:efdadf18-9e83-4911-9820-9725ae6f62a0:2",
+                "cause_event_id": null,
+                "correlation_id": null,
+                "event_id": "67872b06-55bb-4310-9a2f-19ab3006c7fe",
+                "event_sequence": 17,
+                "event_time": "2026-11-08T13:25:40.739Z",
+                "interaction_id": "efdadf18-9e83-4911-9820-9725ae6f62a0:click:17",
+                "parent_event_id": null,
+                "related_event_id": null,
+                "related_interaction_id": null
+              },
+              "event_id": "67872b06-55bb-4310-9a2f-19ab3006c7fe",
+              "event_time": "2026-11-08 22:25:40.739",
+              "form": {},
+              "grid": {},
+              "http_endpoint_raw": "",
+              "http_method": "",
+              "http_relationship_strategy": "",
+              "http_status": "",
+              "input": {},
+              "input_detected": false,
+              "input_form": {},
+              "input_key": {},
+              "menu": {
+                "parser": "sidebar_active_dom",
+                "path_text": "마이페이지 메뉴 > 업무 관리",
+                "selected_label": "업무 관리",
+                "selected_path_text": "마이페이지 메뉴 > 업무 관리",
+                "source": "nav"
+              },
+              "page_path": "/mypage/work/weekly",
+              "page_title": "Rainbow",
+              "popup": {
+                "active_parent_popup_id": "popup:efdadf18-9e83-4911-9820-9725ae6f62a0:1",
+                "active_popup_id": "popup:efdadf18-9e83-4911-9820-9725ae6f62a0:2",
+                "active_popup_title": "날짜 선택",
+                "target_popup": {}
+              },
+              "popup_containment": {
+                "active_popup_id": "popup:efdadf18-9e83-4911-9820-9725ae6f62a0:2",
+                "is_inside_popup": true
+              },
+              "popup_stack": [
+                {
+                  "opened_at": "2026-11-08T13:25:37.796Z",
+                  "opened_by_event_id": "b0d7a561-2fd1-4330-a4bb-8adbaad874b9",
+                  "opened_by_interaction_id": "efdadf18-9e83-4911-9820-9725ae6f62a0:click:11",
+                  "popup_id": "popup:efdadf18-9e83-4911-9820-9725ae6f62a0:1"
+                },
+                {
+                  "opened_at": "2026-11-08T13:25:38.929Z",
+                  "opened_by_event_id": "fb0c5621-61d7-4482-ad80-07ede4912f06",
+                  "opened_by_interaction_id": "efdadf18-9e83-4911-9820-9725ae6f62a0:click:14",
+                  "popup_id": "popup:efdadf18-9e83-4911-9820-9725ae6f62a0:2"
+                }
+              ],
+              "selector": "div.work-report-form-modal__meta:nth-of-type(2) > div.work-report-form-modal__date > div.work-report-form-modal__date-picker > div.work-date-calendar:nth-of-type(1) > div.work-date-calendar__grid:nth-of-type(3) > button.work-date-calendar__day.is-sunday:nth-of-type(15)",
+              "session_id": "efdadf18-9e83-4911-9820-9725ae6f62a0",
+              "tag": "button",
+              "ui_outcome": {}
+            },
+            {
+              "api": {},
+              "associated_label": "날짜 선택",
+              "element_role": "",
+              "element_text": "날짜 선택",
+              "event": {
+                "action": "popup_close",
+                "active_parent_popup_id": "popup:efdadf18-9e83-4911-9820-9725ae6f62a0:1",
+                "active_popup_id": "popup:efdadf18-9e83-4911-9820-9725ae6f62a0:2",
+                "cause_event_id": "67872b06-55bb-4310-9a2f-19ab3006c7fe",
+                "correlation_id": null,
+                "event_id": "a7565749-5722-41c6-9289-a669ce357d4a",
+                "event_sequence": 18,
+                "event_time": "2026-11-08T13:25:40.826Z",
+                "interaction_id": "efdadf18-9e83-4911-9820-9725ae6f62a0:popup_close:18",
+                "parent_event_id": "67872b06-55bb-4310-9a2f-19ab3006c7fe",
+                "related_event_id": "67872b06-55bb-4310-9a2f-19ab3006c7fe",
+                "related_interaction_id": "efdadf18-9e83-4911-9820-9725ae6f62a0:click:17"
+              },
+              "event_id": "a7565749-5722-41c6-9289-a669ce357d4a",
+              "event_time": "2026-11-08 22:25:40.826",
+              "form": {},
+              "grid": {},
+              "http_endpoint_raw": "",
+              "http_method": "",
+              "http_relationship_strategy": "",
+              "http_status": "",
+              "input": {},
+              "input_detected": false,
+              "input_form": {},
+              "input_key": {},
+              "menu": {},
+              "page_path": "/mypage/work/weekly",
+              "page_title": "Rainbow",
+              "popup": {
+                "active_parent_popup_id": "popup:efdadf18-9e83-4911-9820-9725ae6f62a0:1",
+                "active_popup_id": "popup:efdadf18-9e83-4911-9820-9725ae6f62a0:2",
+                "active_popup_title": "날짜 선택",
+                "closer_event_id": "67872b06-55bb-4310-9a2f-19ab3006c7fe",
+                "closer_interaction_id": "efdadf18-9e83-4911-9820-9725ae6f62a0:click:17",
+                "lifecycle_action": "close",
+                "opener_event_id": "fb0c5621-61d7-4482-ad80-07ede4912f06",
+                "opener_interaction_id": "efdadf18-9e83-4911-9820-9725ae6f62a0:click:14",
+                "target_popup": {
+                  "opened_at": "2026-11-08T13:25:38.929Z",
+                  "opened_by_event_id": "fb0c5621-61d7-4482-ad80-07ede4912f06",
+                  "opened_by_interaction_id": "efdadf18-9e83-4911-9820-9725ae6f62a0:click:14",
+                  "parent_popup_id": "popup:efdadf18-9e83-4911-9820-9725ae6f62a0:1",
+                  "popup_id": "popup:efdadf18-9e83-4911-9820-9725ae6f62a0:2",
+                  "role": "dialog",
+                  "selector_css": "section.mypage-content > div.work-report-form-modal:nth-of-type(2) > div.work-report-form-modal__panel > div.work-report-form-modal__meta:nth-of-type(2) > div.work-report-form-modal__date > div.work-report-form-modal__date-picker",
+                  "selector_xpath": "/html[1]/body[1]/div[1]/main[1]/div[1]/section[1]/div[2]/div[1]/div[2]/div[1]/div[1]",
+                  "source_action": "click",
+                  "tag": "div",
+                  "title": "날짜 선택"
+                }
+              },
+              "popup_containment": {
+                "active_popup_id": "popup:efdadf18-9e83-4911-9820-9725ae6f62a0:2",
+                "is_inside_popup": true
+              },
+              "popup_stack": [
+                {
+                  "opened_at": "2026-11-08T13:25:37.796Z",
+                  "opened_by_event_id": "b0d7a561-2fd1-4330-a4bb-8adbaad874b9",
+                  "opened_by_interaction_id": "efdadf18-9e83-4911-9820-9725ae6f62a0:click:11",
+                  "popup_id": "popup:efdadf18-9e83-4911-9820-9725ae6f62a0:1"
+                }
+              ],
+              "selector": "div.work-report-form-modal__date-picker",
+              "session_id": "efdadf18-9e83-4911-9820-9725ae6f62a0",
+              "tag": "div",
+              "ui_outcome": {}
+            }
+          ],
+          "evidence_roles": {
+            "1bb16c7d-4ecd-42fd-91c3-92e2dd0f0eb8": "LIVE_FORM_CONTEXT",
+            "67872b06-55bb-4310-9a2f-19ab3006c7fe": "DIRECT_DATE_PICKER_LIFECYCLE",
+            "6c3dffa5-40fe-4396-81ed-e42633891a7d": "MERGED_AUXILIARY_OR_SAME_ACTION",
+            "a7565749-5722-41c6-9289-a669ce357d4a": "DIRECT_DATE_PICKER_LIFECYCLE",
+            "fb0c5621-61d7-4482-ad80-07ede4912f06": "MERGED_AUXILIARY_OR_SAME_ACTION"
+          },
+          "evidence_type": "direct",
+          "execution_ids": [
+            "05-BU09"
+          ],
+          "fields": [],
+          "form_identity": [
+            "efdadf18-9e83-4911-9820-9725ae6f62a0",
+            "/mypage/work/weekly",
+            "FORM_POPUP",
+            "popup:efdadf18-9e83-4911-9820-9725ae6f62a0:2",
+            "section.mypage-content > div.work-report-form-modal:nth-of-type(2) > div.work-report-form-modal__panel > div.work-report-form-modal__meta:nth-of-type(2) > div.work-report-form-modal__date > div.work-report-form-modal__date-picker",
+            "날짜 선택"
+          ],
+          "form_lifecycle_provenance": {
+            "opening_source_event_id": "1bb16c7d-4ecd-42fd-91c3-92e2dd0f0eb8",
+            "rule_id": "BA-LIVE-FORM-OPENING"
+          },
+          "generated_step_id": "BA-67872b06-55bb-4310-9a2f-19ab3006c7fe",
+          "http_evidence": [],
+          "id": "BA-67872b06-55bb-4310-9a2f-19ab3006c7fe",
+          "in_m02_denominator": true,
+          "intent_order": 16,
+          "intent_phase": "UNKNOWN",
+          "intent_source_event_ids": [
+            "67872b06-55bb-4310-9a2f-19ab3006c7fe"
+          ],
+          "label": "2026-11-15",
+          "last_intent_order": 16,
+          "matching_eligible": true,
+          "menu": {
+            "parser": "sidebar_active_dom",
+            "path_text": "마이페이지 메뉴 > 업무 관리",
+            "selected_label": "업무 관리",
+            "selected_path_text": "마이페이지 메뉴 > 업무 관리",
+            "source": "nav"
+          },
+          "menu_page": "/mypage/work/weekly",
+          "merge_provenance": [
+            {
+              "merged_generated_step_id": "BA-fb0c5621-61d7-4482-ad80-07ede4912f06",
+              "rule_id": "BA-DATE-PICKER-OPEN-AUXILIARY",
+              "source_event_ids": [
+                "fb0c5621-61d7-4482-ad80-07ede4912f06",
+                "6c3dffa5-40fe-4396-81ed-e42633891a7d"
+              ]
+            }
+          ],
+          "node_id": "PM-001-N008",
+          "page_title": "Rainbow",
+          "popup_title": "날짜 선택",
+          "process_id": "PM-001",
+          "resolution_status": "RESOLVED",
+          "selection_kind": "DATE_PICKER_DAY",
+          "selection_provenance": {
+            "click_source_event_id": "67872b06-55bb-4310-9a2f-19ab3006c7fe",
+            "date_inferred": false,
+            "opener_source_event_id": "fb0c5621-61d7-4482-ad80-07ede4912f06",
+            "parent_open_source_event_id": "6c3dffa5-40fe-4396-81ed-e42633891a7d",
+            "parent_popup_title": "주간업무 등록",
+            "picker_close_source_event_id": "a7565749-5722-41c6-9289-a669ce357d4a",
+            "picker_open_source_event_id": "1bb16c7d-4ecd-42fd-91c3-92e2dd0f0eb8"
+          },
+          "serializer_rule_id": "BA-NESTED-DATE-PICKER-DIRECT-SELECTION",
+          "source_event_ids": [
+            "6c3dffa5-40fe-4396-81ed-e42633891a7d",
+            "fb0c5621-61d7-4482-ad80-07ede4912f06",
+            "1bb16c7d-4ecd-42fd-91c3-92e2dd0f0eb8",
+            "67872b06-55bb-4310-9a2f-19ab3006c7fe",
+            "a7565749-5722-41c6-9289-a669ce357d4a"
+          ],
+          "source_node_ids": [
+            "PM-001-N008",
+            "PM-001-N009",
+            "PM-001-N010"
+          ],
+          "source_process_ids": [
+            "PM-001"
+          ],
+          "step_order": 4,
+          "target": "2026-11-15",
+          "target_field_label": "2026-11-15",
+          "workflow_id": "WF-0001"
+        },
+        {
+          "action_type": "INPUT",
+          "business_context": "업무 관리",
+          "business_object": "주간업무",
+          "business_unit_id": "BU09",
+          "business_unit_ids": [
+            "BU09"
+          ],
+          "business_unit_ownership": "ASSIGNED",
+          "comparison_order": 5,
+          "completion_evidence": [],
+          "context_provenance": [
+            {
+              "opener_source_event_id": "b0d7a561-2fd1-4330-a4bb-8adbaad874b9",
+              "page_path": "/mypage/work/weekly",
+              "popup_source_event_id": "6c3dffa5-40fe-4396-81ed-e42633891a7d",
+              "raw_menu": {
+                "parser": "sidebar_active_dom",
+                "path_text": "마이페이지 메뉴 > 업무 관리",
+                "selected_label": "업무 관리",
+                "selected_path_text": "마이페이지 메뉴 > 업무 관리",
+                "source": "nav"
+              },
+              "rule_id": "BA-VALIDATED-OPENER-MENU"
+            }
+          ],
+          "evidence": [
+            {
+              "api": {},
+              "associated_label": "주간업무 등록",
+              "element_role": "",
+              "element_text": "주간업무 등록",
+              "event": {
+                "action": "popup_open",
+                "active_parent_popup_id": null,
+                "active_popup_id": "popup:efdadf18-9e83-4911-9820-9725ae6f62a0:1",
+                "cause_event_id": "b0d7a561-2fd1-4330-a4bb-8adbaad874b9",
+                "correlation_id": null,
+                "event_id": "6c3dffa5-40fe-4396-81ed-e42633891a7d",
+                "event_sequence": 12,
+                "event_time": "2026-11-08T13:25:37.797Z",
+                "interaction_id": "efdadf18-9e83-4911-9820-9725ae6f62a0:popup_open:12",
+                "parent_event_id": "b0d7a561-2fd1-4330-a4bb-8adbaad874b9",
+                "related_event_id": "b0d7a561-2fd1-4330-a4bb-8adbaad874b9",
+                "related_interaction_id": "efdadf18-9e83-4911-9820-9725ae6f62a0:click:11"
+              },
+              "event_id": "6c3dffa5-40fe-4396-81ed-e42633891a7d",
+              "event_time": "2026-11-08 22:25:37.797",
+              "form": {},
+              "grid": {},
+              "http_endpoint_raw": "",
+              "http_method": "",
+              "http_relationship_strategy": "",
+              "http_status": "",
+              "input": {},
+              "input_detected": false,
+              "input_form": {},
+              "input_key": {},
+              "menu": {},
+              "page_path": "/mypage/work/weekly",
+              "page_title": "Rainbow",
+              "popup": {
+                "active_parent_popup_id": null,
+                "active_popup_id": "popup:efdadf18-9e83-4911-9820-9725ae6f62a0:1",
+                "active_popup_title": "주간업무 등록",
+                "closer_event_id": null,
+                "closer_interaction_id": null,
+                "lifecycle_action": "open",
+                "opener_event_id": "b0d7a561-2fd1-4330-a4bb-8adbaad874b9",
+                "opener_interaction_id": "efdadf18-9e83-4911-9820-9725ae6f62a0:click:11",
+                "target_popup": {
+                  "opened_at": "2026-11-08T13:25:37.796Z",
+                  "opened_by_event_id": "b0d7a561-2fd1-4330-a4bb-8adbaad874b9",
+                  "opened_by_interaction_id": "efdadf18-9e83-4911-9820-9725ae6f62a0:click:11",
+                  "parent_popup_id": null,
+                  "popup_id": "popup:efdadf18-9e83-4911-9820-9725ae6f62a0:1",
+                  "role": "dialog",
+                  "selector_css": "div > main.mypage > div.mypage-layout > section.mypage-content > div.work-report-form-modal:nth-of-type(2) > div.work-report-form-modal__panel",
+                  "selector_xpath": "/html[1]/body[1]/div[1]/main[1]/div[1]/section[1]/div[2]/div[1]",
+                  "source_action": "click",
+                  "tag": "div",
+                  "title": "주간업무 등록"
+                }
+              },
+              "popup_containment": {
+                "active_popup_id": "popup:efdadf18-9e83-4911-9820-9725ae6f62a0:1",
+                "is_inside_popup": true
+              },
+              "popup_stack": [
+                {
+                  "opened_at": "2026-11-08T13:25:37.796Z",
+                  "opened_by_event_id": "b0d7a561-2fd1-4330-a4bb-8adbaad874b9",
+                  "opened_by_interaction_id": "efdadf18-9e83-4911-9820-9725ae6f62a0:click:11",
+                  "popup_id": "popup:efdadf18-9e83-4911-9820-9725ae6f62a0:1"
+                }
+              ],
+              "selector": "div > main.mypage > div.mypage-layout > section.mypage-content > div.work-report-form-modal:nth-of-type(2) > div.work-report-form-modal__panel",
+              "session_id": "efdadf18-9e83-4911-9820-9725ae6f62a0",
+              "tag": "div",
+              "ui_outcome": {}
+            },
+            {
+              "api": {},
+              "associated_label": "제목",
+              "element_role": "",
+              "element_text": "제목",
+              "event": {
+                "action": "paste",
+                "active_parent_popup_id": null,
+                "active_popup_id": "popup:efdadf18-9e83-4911-9820-9725ae6f62a0:1",
+                "cause_event_id": null,
+                "correlation_id": null,
+                "event_id": "19f120f4-a150-418c-947c-19f1d05b9aae",
+                "event_sequence": 20,
+                "event_time": "2026-11-08T13:25:43.185Z",
+                "interaction_id": "efdadf18-9e83-4911-9820-9725ae6f62a0:paste:20",
+                "parent_event_id": null,
+                "related_event_id": null,
+                "related_interaction_id": null
+              },
+              "event_id": "19f120f4-a150-418c-947c-19f1d05b9aae",
+              "event_time": "2026-11-08 22:25:43.185",
+              "form": {},
+              "grid": {},
+              "http_endpoint_raw": "",
+              "http_method": "",
+              "http_relationship_strategy": "",
+              "http_status": "",
+              "input": {
+                "associated_label": "제목",
+                "id": "daily-report-create-title-input",
+                "name": null,
+                "type": "text"
+              },
+              "input_detected": true,
+              "input_form": {},
+              "input_key": {
+                "code": null,
+                "key": null
+              },
+              "menu": {
+                "parser": "location_path",
+                "path_text": "mypage > work > weekly",
+                "selected_label": "weekly",
+                "selected_path_text": "mypage > work > weekly",
+                "source": "url"
+              },
+              "page_path": "/mypage/work/weekly",
+              "page_title": "Rainbow",
+              "popup": {
+                "active_parent_popup_id": null,
+                "active_popup_id": "popup:efdadf18-9e83-4911-9820-9725ae6f62a0:1",
+                "active_popup_title": "주간업무 등록",
+                "target_popup": {}
+              },
+              "popup_containment": {
+                "active_popup_id": "popup:efdadf18-9e83-4911-9820-9725ae6f62a0:1",
+                "is_inside_popup": true
+              },
+              "popup_stack": [
+                {
+                  "opened_at": "2026-11-08T13:25:37.796Z",
+                  "opened_by_event_id": "b0d7a561-2fd1-4330-a4bb-8adbaad874b9",
+                  "opened_by_interaction_id": "efdadf18-9e83-4911-9820-9725ae6f62a0:click:11",
+                  "popup_id": "popup:efdadf18-9e83-4911-9820-9725ae6f62a0:1"
+                }
+              ],
+              "selector": "#daily-report-create-title-input",
+              "session_id": "efdadf18-9e83-4911-9820-9725ae6f62a0",
+              "tag": "input",
+              "ui_outcome": {}
+            },
+            {
+              "api": {},
+              "associated_label": "제목",
+              "element_role": "",
+              "element_text": "제목",
+              "event": {
+                "action": "change",
+                "active_parent_popup_id": null,
+                "active_popup_id": "popup:efdadf18-9e83-4911-9820-9725ae6f62a0:1",
+                "cause_event_id": null,
+                "correlation_id": null,
+                "event_id": "84291014-5973-4e2b-a81b-fdb9f7080b75",
+                "event_sequence": 24,
+                "event_time": "2026-11-08T13:25:51.931Z",
+                "interaction_id": "efdadf18-9e83-4911-9820-9725ae6f62a0:change:24",
+                "parent_event_id": null,
+                "related_event_id": null,
+                "related_interaction_id": null
+              },
+              "event_id": "84291014-5973-4e2b-a81b-fdb9f7080b75",
+              "event_time": "2026-11-08 22:25:51.931",
+              "form": {},
+              "grid": {},
+              "http_endpoint_raw": "",
+              "http_method": "",
+              "http_relationship_strategy": "",
+              "http_status": "",
+              "input": {
+                "associated_label": "제목",
+                "id": "daily-report-create-title-input",
+                "name": null,
+                "type": "text"
+              },
+              "input_detected": true,
+              "input_form": {},
+              "input_key": {
+                "code": null,
+                "key": null
+              },
+              "menu": {
+                "parser": "location_path",
+                "path_text": "mypage > work > weekly",
+                "selected_label": "weekly",
+                "selected_path_text": "mypage > work > weekly",
+                "source": "url"
+              },
+              "page_path": "/mypage/work/weekly",
+              "page_title": "Rainbow",
+              "popup": {
+                "active_parent_popup_id": null,
+                "active_popup_id": "popup:efdadf18-9e83-4911-9820-9725ae6f62a0:1",
+                "active_popup_title": "주간업무 등록",
+                "target_popup": {}
+              },
+              "popup_containment": {
+                "active_popup_id": "popup:efdadf18-9e83-4911-9820-9725ae6f62a0:1",
+                "is_inside_popup": true
+              },
+              "popup_stack": [
+                {
+                  "opened_at": "2026-11-08T13:25:37.796Z",
+                  "opened_by_event_id": "b0d7a561-2fd1-4330-a4bb-8adbaad874b9",
+                  "opened_by_interaction_id": "efdadf18-9e83-4911-9820-9725ae6f62a0:click:11",
+                  "popup_id": "popup:efdadf18-9e83-4911-9820-9725ae6f62a0:1"
+                }
+              ],
+              "selector": "#daily-report-create-title-input",
+              "session_id": "efdadf18-9e83-4911-9820-9725ae6f62a0",
+              "tag": "input",
+              "ui_outcome": {}
+            },
+            {
+              "api": {},
+              "associated_label": "내용",
+              "element_role": "",
+              "element_text": "내용",
+              "event": {
+                "action": "paste",
+                "active_parent_popup_id": null,
+                "active_popup_id": "popup:efdadf18-9e83-4911-9820-9725ae6f62a0:1",
+                "cause_event_id": null,
+                "correlation_id": null,
+                "event_id": "6a9e4910-e0f0-4fda-a8e6-9293cae16f89",
+                "event_sequence": 26,
+                "event_time": "2026-11-08T13:25:53.014Z",
+                "interaction_id": "efdadf18-9e83-4911-9820-9725ae6f62a0:paste:26",
+                "parent_event_id": null,
+                "related_event_id": null,
+                "related_interaction_id": null
+              },
+              "event_id": "6a9e4910-e0f0-4fda-a8e6-9293cae16f89",
+              "event_time": "2026-11-08 22:25:53.014",
+              "form": {},
+              "grid": {},
+              "http_endpoint_raw": "",
+              "http_method": "",
+              "http_relationship_strategy": "",
+              "http_status": "",
+              "input": {
+                "associated_label": "내용",
+                "id": "daily-report-create-content-input",
+                "name": null,
+                "type": null
+              },
+              "input_detected": true,
+              "input_form": {},
+              "input_key": {
+                "code": null,
+                "key": null
+              },
+              "menu": {
+                "parser": "location_path",
+                "path_text": "mypage > work > weekly",
+                "selected_label": "weekly",
+                "selected_path_text": "mypage > work > weekly",
+                "source": "url"
+              },
+              "page_path": "/mypage/work/weekly",
+              "page_title": "Rainbow",
+              "popup": {
+                "active_parent_popup_id": null,
+                "active_popup_id": "popup:efdadf18-9e83-4911-9820-9725ae6f62a0:1",
+                "active_popup_title": "주간업무 등록",
+                "target_popup": {}
+              },
+              "popup_containment": {
+                "active_popup_id": "popup:efdadf18-9e83-4911-9820-9725ae6f62a0:1",
+                "is_inside_popup": true
+              },
+              "popup_stack": [
+                {
+                  "opened_at": "2026-11-08T13:25:37.796Z",
+                  "opened_by_event_id": "b0d7a561-2fd1-4330-a4bb-8adbaad874b9",
+                  "opened_by_interaction_id": "efdadf18-9e83-4911-9820-9725ae6f62a0:click:11",
+                  "popup_id": "popup:efdadf18-9e83-4911-9820-9725ae6f62a0:1"
+                }
+              ],
+              "selector": "#daily-report-create-content-input",
+              "session_id": "efdadf18-9e83-4911-9820-9725ae6f62a0",
+              "tag": "textarea",
+              "ui_outcome": {}
+            },
+            {
+              "api": {},
+              "associated_label": "내용",
+              "element_role": "",
+              "element_text": "내용",
+              "event": {
+                "action": "change",
+                "active_parent_popup_id": null,
+                "active_popup_id": "popup:efdadf18-9e83-4911-9820-9725ae6f62a0:1",
+                "cause_event_id": null,
+                "correlation_id": null,
+                "event_id": "425dd043-149f-4877-a5d7-c24ec48b86e9",
+                "event_sequence": 27,
+                "event_time": "2026-11-08T13:25:55.737Z",
+                "interaction_id": "efdadf18-9e83-4911-9820-9725ae6f62a0:change:27",
+                "parent_event_id": null,
+                "related_event_id": null,
+                "related_interaction_id": null
+              },
+              "event_id": "425dd043-149f-4877-a5d7-c24ec48b86e9",
+              "event_time": "2026-11-08 22:25:55.737",
+              "form": {},
+              "grid": {},
+              "http_endpoint_raw": "",
+              "http_method": "",
+              "http_relationship_strategy": "",
+              "http_status": "",
+              "input": {
+                "associated_label": "내용",
+                "id": "daily-report-create-content-input",
+                "name": null,
+                "type": null
+              },
+              "input_detected": true,
+              "input_form": {},
+              "input_key": {
+                "code": null,
+                "key": null
+              },
+              "menu": {
+                "parser": "location_path",
+                "path_text": "mypage > work > weekly",
+                "selected_label": "weekly",
+                "selected_path_text": "mypage > work > weekly",
+                "source": "url"
+              },
+              "page_path": "/mypage/work/weekly",
+              "page_title": "Rainbow",
+              "popup": {
+                "active_parent_popup_id": null,
+                "active_popup_id": "popup:efdadf18-9e83-4911-9820-9725ae6f62a0:1",
+                "active_popup_title": "주간업무 등록",
+                "target_popup": {}
+              },
+              "popup_containment": {
+                "active_popup_id": "popup:efdadf18-9e83-4911-9820-9725ae6f62a0:1",
+                "is_inside_popup": true
+              },
+              "popup_stack": [
+                {
+                  "opened_at": "2026-11-08T13:25:37.796Z",
+                  "opened_by_event_id": "b0d7a561-2fd1-4330-a4bb-8adbaad874b9",
+                  "opened_by_interaction_id": "efdadf18-9e83-4911-9820-9725ae6f62a0:click:11",
+                  "popup_id": "popup:efdadf18-9e83-4911-9820-9725ae6f62a0:1"
+                }
+              ],
+              "selector": "#daily-report-create-content-input",
+              "session_id": "efdadf18-9e83-4911-9820-9725ae6f62a0",
+              "tag": "textarea",
+              "ui_outcome": {}
+            }
+          ],
+          "evidence_roles": {
+            "19f120f4-a150-418c-947c-19f1d05b9aae": "DIRECT_USER_INTENT",
+            "425dd043-149f-4877-a5d7-c24ec48b86e9": "INPUT_FIELD",
+            "6a9e4910-e0f0-4fda-a8e6-9293cae16f89": "INPUT_FIELD",
+            "6c3dffa5-40fe-4396-81ed-e42633891a7d": "LIVE_FORM_CONTEXT",
+            "84291014-5973-4e2b-a81b-fdb9f7080b75": "INPUT_FIELD"
+          },
+          "evidence_type": "direct",
+          "execution_ids": [
+            "05-BU09"
+          ],
+          "fields": [
+            {
+              "id": "daily-report-create-title-input",
+              "label": "제목",
+              "name": null,
+              "selector": "#daily-report-create-title-input",
+              "source_event_id": "19f120f4-a150-418c-947c-19f1d05b9aae",
+              "source_node_ids": [
+                "PM-001-N012"
+              ],
+              "value_type": "text"
+            },
+            {
+              "id": "daily-report-create-title-input",
+              "label": "제목",
+              "name": null,
+              "selector": "#daily-report-create-title-input",
+              "source_event_id": "84291014-5973-4e2b-a81b-fdb9f7080b75",
+              "source_node_ids": [
+                "PM-001-N012"
+              ],
+              "value_type": "text"
+            },
+            {
+              "id": "daily-report-create-content-input",
+              "label": "내용",
+              "name": null,
+              "selector": "#daily-report-create-content-input",
+              "source_event_id": "6a9e4910-e0f0-4fda-a8e6-9293cae16f89",
+              "source_node_ids": [
+                "PM-001-N012"
+              ],
+              "value_type": null
+            },
+            {
+              "id": "daily-report-create-content-input",
+              "label": "내용",
+              "name": null,
+              "selector": "#daily-report-create-content-input",
+              "source_event_id": "425dd043-149f-4877-a5d7-c24ec48b86e9",
+              "source_node_ids": [
+                "PM-001-N012"
+              ],
+              "value_type": null
+            }
+          ],
+          "form_detection_evidence": [
+            {
+              "raw_selector": "#daily-report-create-title-input",
+              "rule_id": "BA-DIALOG-DESCENDANT-INPUT",
+              "source_event_id": "19f120f4-a150-418c-947c-19f1d05b9aae"
+            },
+            {
+              "raw_selector": "#daily-report-create-title-input",
+              "rule_id": "BA-DIALOG-DESCENDANT-INPUT",
+              "source_event_id": "84291014-5973-4e2b-a81b-fdb9f7080b75"
+            },
+            {
+              "raw_selector": "#daily-report-create-content-input",
+              "rule_id": "BA-DIALOG-DESCENDANT-INPUT",
+              "source_event_id": "6a9e4910-e0f0-4fda-a8e6-9293cae16f89"
+            },
+            {
+              "raw_selector": "#daily-report-create-content-input",
+              "rule_id": "BA-DIALOG-DESCENDANT-INPUT",
+              "source_event_id": "425dd043-149f-4877-a5d7-c24ec48b86e9"
+            }
+          ],
+          "form_identity": [
+            "efdadf18-9e83-4911-9820-9725ae6f62a0",
+            "/mypage/work/weekly",
+            "FORM_POPUP",
+            "popup:efdadf18-9e83-4911-9820-9725ae6f62a0:1",
+            "div > main.mypage > div.mypage-layout > section.mypage-content > div.work-report-form-modal:nth-of-type(2) > div.work-report-form-modal__panel",
+            "주간업무 등록"
+          ],
+          "form_lifecycle_provenance": {
+            "opening_source_event_id": "6c3dffa5-40fe-4396-81ed-e42633891a7d",
+            "rule_id": "BA-LIVE-FORM-OPENING"
+          },
+          "generated_step_id": "BA-19f120f4-a150-418c-947c-19f1d05b9aae",
+          "http_evidence": [],
+          "id": "BA-19f120f4-a150-418c-947c-19f1d05b9aae",
+          "in_m02_denominator": true,
+          "intent_order": 19,
+          "intent_phase": "UNKNOWN",
+          "intent_source_event_ids": [
+            "19f120f4-a150-418c-947c-19f1d05b9aae",
+            "84291014-5973-4e2b-a81b-fdb9f7080b75",
+            "6a9e4910-e0f0-4fda-a8e6-9293cae16f89",
+            "425dd043-149f-4877-a5d7-c24ec48b86e9"
+          ],
+          "label": "주간업무",
+          "last_intent_order": 26,
+          "matching_eligible": true,
+          "menu": {
+            "parser": "location_path",
+            "path_text": "mypage > work > weekly",
+            "selected_label": "weekly",
+            "selected_path_text": "mypage > work > weekly",
+            "source": "url"
+          },
+          "menu_page": "/mypage/work/weekly",
+          "node_id": "PM-001-N008",
+          "page_title": "Rainbow",
+          "popup_title": "주간업무 등록",
+          "process_id": "PM-001",
+          "resolution_status": "RESOLVED",
+          "serializer_rule_id": "BA-INPUT-FORM",
+          "source_event_ids": [
+            "6c3dffa5-40fe-4396-81ed-e42633891a7d",
+            "19f120f4-a150-418c-947c-19f1d05b9aae",
+            "84291014-5973-4e2b-a81b-fdb9f7080b75",
+            "6a9e4910-e0f0-4fda-a8e6-9293cae16f89",
+            "425dd043-149f-4877-a5d7-c24ec48b86e9"
+          ],
+          "source_node_ids": [
+            "PM-001-N008",
+            "PM-001-N012"
+          ],
+          "source_process_ids": [
+            "PM-001"
+          ],
+          "step_order": 5,
+          "target": "주간업무",
+          "target_field_label": "주간업무",
+          "workflow_id": "WF-0001"
+        },
+        {
+          "action_type": "SAVE",
+          "business_context": "업무 관리",
+          "business_object": "",
+          "business_unit_id": "BU09",
+          "business_unit_ids": [
+            "BU09"
+          ],
+          "business_unit_ownership": "ASSIGNED",
+          "comparison_order": 6,
+          "completion_evidence": [
+            {
+              "causal_rule": "EXPLICIT_CAUSAL_ID",
+              "kind": "SUCCESS_POPUP",
+              "message": "주간업무가 저장되었습니다. 목록에서 등록한 게시물을 확인할 수 있습니다.",
+              "raw_order": 28,
+              "source_event_id": "36b6f856-c019-416c-932e-734438103951"
+            },
+            {
+              "causal_rule": "EXPLICIT_CAUSAL_ID",
+              "kind": "UI_OUTCOME",
+              "message": "주간업무가 저장되었습니다.목록에서 등록한 게시물을 확인할 수 있습니다.",
+              "raw_order": 30,
+              "source_event_id": "71db192e-63ba-4e9d-9915-36ddfd460154"
+            }
+          ],
+          "context_provenance": [
+            {
+              "opener_source_event_id": "b0d7a561-2fd1-4330-a4bb-8adbaad874b9",
+              "page_path": "/mypage/work/weekly",
+              "popup_source_event_id": "6c3dffa5-40fe-4396-81ed-e42633891a7d",
+              "raw_menu": {
+                "parser": "sidebar_active_dom",
+                "path_text": "마이페이지 메뉴 > 업무 관리",
+                "selected_label": "업무 관리",
+                "selected_path_text": "마이페이지 메뉴 > 업무 관리",
+                "source": "nav"
+              },
+              "rule_id": "BA-VALIDATED-OPENER-MENU"
+            }
+          ],
+          "evidence": [
+            {
+              "api": {},
+              "associated_label": "주간업무 등록",
+              "element_role": "",
+              "element_text": "주간업무 등록",
+              "event": {
+                "action": "popup_open",
+                "active_parent_popup_id": null,
+                "active_popup_id": "popup:efdadf18-9e83-4911-9820-9725ae6f62a0:1",
+                "cause_event_id": "b0d7a561-2fd1-4330-a4bb-8adbaad874b9",
+                "correlation_id": null,
+                "event_id": "6c3dffa5-40fe-4396-81ed-e42633891a7d",
+                "event_sequence": 12,
+                "event_time": "2026-11-08T13:25:37.797Z",
+                "interaction_id": "efdadf18-9e83-4911-9820-9725ae6f62a0:popup_open:12",
+                "parent_event_id": "b0d7a561-2fd1-4330-a4bb-8adbaad874b9",
+                "related_event_id": "b0d7a561-2fd1-4330-a4bb-8adbaad874b9",
+                "related_interaction_id": "efdadf18-9e83-4911-9820-9725ae6f62a0:click:11"
+              },
+              "event_id": "6c3dffa5-40fe-4396-81ed-e42633891a7d",
+              "event_time": "2026-11-08 22:25:37.797",
+              "form": {},
+              "grid": {},
+              "http_endpoint_raw": "",
+              "http_method": "",
+              "http_relationship_strategy": "",
+              "http_status": "",
+              "input": {},
+              "input_detected": false,
+              "input_form": {},
+              "input_key": {},
+              "menu": {},
+              "page_path": "/mypage/work/weekly",
+              "page_title": "Rainbow",
+              "popup": {
+                "active_parent_popup_id": null,
+                "active_popup_id": "popup:efdadf18-9e83-4911-9820-9725ae6f62a0:1",
+                "active_popup_title": "주간업무 등록",
+                "closer_event_id": null,
+                "closer_interaction_id": null,
+                "lifecycle_action": "open",
+                "opener_event_id": "b0d7a561-2fd1-4330-a4bb-8adbaad874b9",
+                "opener_interaction_id": "efdadf18-9e83-4911-9820-9725ae6f62a0:click:11",
+                "target_popup": {
+                  "opened_at": "2026-11-08T13:25:37.796Z",
+                  "opened_by_event_id": "b0d7a561-2fd1-4330-a4bb-8adbaad874b9",
+                  "opened_by_interaction_id": "efdadf18-9e83-4911-9820-9725ae6f62a0:click:11",
+                  "parent_popup_id": null,
+                  "popup_id": "popup:efdadf18-9e83-4911-9820-9725ae6f62a0:1",
+                  "role": "dialog",
+                  "selector_css": "div > main.mypage > div.mypage-layout > section.mypage-content > div.work-report-form-modal:nth-of-type(2) > div.work-report-form-modal__panel",
+                  "selector_xpath": "/html[1]/body[1]/div[1]/main[1]/div[1]/section[1]/div[2]/div[1]",
+                  "source_action": "click",
+                  "tag": "div",
+                  "title": "주간업무 등록"
+                }
+              },
+              "popup_containment": {
+                "active_popup_id": "popup:efdadf18-9e83-4911-9820-9725ae6f62a0:1",
+                "is_inside_popup": true
+              },
+              "popup_stack": [
+                {
+                  "opened_at": "2026-11-08T13:25:37.796Z",
+                  "opened_by_event_id": "b0d7a561-2fd1-4330-a4bb-8adbaad874b9",
+                  "opened_by_interaction_id": "efdadf18-9e83-4911-9820-9725ae6f62a0:click:11",
+                  "popup_id": "popup:efdadf18-9e83-4911-9820-9725ae6f62a0:1"
+                }
+              ],
+              "selector": "div > main.mypage > div.mypage-layout > section.mypage-content > div.work-report-form-modal:nth-of-type(2) > div.work-report-form-modal__panel",
+              "session_id": "efdadf18-9e83-4911-9820-9725ae6f62a0",
+              "tag": "div",
+              "ui_outcome": {}
+            },
+            {
+              "api": {},
+              "associated_label": null,
+              "element_role": "",
+              "element_text": "저장",
+              "event": {
+                "action": "click",
+                "active_parent_popup_id": null,
+                "active_popup_id": "popup:efdadf18-9e83-4911-9820-9725ae6f62a0:1",
+                "cause_event_id": null,
+                "correlation_id": null,
+                "event_id": "410a669d-695e-49f7-86f1-7f3eea5af0f2",
+                "event_sequence": 28,
+                "event_time": "2026-11-08T13:25:55.885Z",
+                "interaction_id": "efdadf18-9e83-4911-9820-9725ae6f62a0:click:28",
+                "parent_event_id": null,
+                "related_event_id": null,
+                "related_interaction_id": null
+              },
+              "event_id": "410a669d-695e-49f7-86f1-7f3eea5af0f2",
+              "event_time": "2026-11-08 22:25:55.885",
+              "form": {},
+              "grid": {},
+              "http_endpoint_raw": "",
+              "http_method": "",
+              "http_relationship_strategy": "",
+              "http_status": "",
+              "input": {},
+              "input_detected": false,
+              "input_form": {},
+              "input_key": {},
+              "menu": {
+                "parser": "sidebar_active_dom",
+                "path_text": "마이페이지 메뉴 > 업무 관리",
+                "selected_label": "업무 관리",
+                "selected_path_text": "마이페이지 메뉴 > 업무 관리",
+                "source": "nav"
+              },
+              "page_path": "/mypage/work/weekly",
+              "page_title": "Rainbow",
+              "popup": {
+                "active_parent_popup_id": null,
+                "active_popup_id": "popup:efdadf18-9e83-4911-9820-9725ae6f62a0:1",
+                "active_popup_title": "주간업무 등록",
+                "target_popup": {}
+              },
+              "popup_containment": {
+                "active_popup_id": "popup:efdadf18-9e83-4911-9820-9725ae6f62a0:1",
+                "is_inside_popup": true
+              },
+              "popup_stack": [
+                {
+                  "opened_at": "2026-11-08T13:25:37.796Z",
+                  "opened_by_event_id": "b0d7a561-2fd1-4330-a4bb-8adbaad874b9",
+                  "opened_by_interaction_id": "efdadf18-9e83-4911-9820-9725ae6f62a0:click:11",
+                  "popup_id": "popup:efdadf18-9e83-4911-9820-9725ae6f62a0:1"
+                }
+              ],
+              "selector": "div.mypage-layout > section.mypage-content > div.work-report-form-modal:nth-of-type(2) > div.work-report-form-modal__panel > div.work-report-form-modal__footer:nth-of-type(4) > button.work-report-form-modal__submit",
+              "session_id": "efdadf18-9e83-4911-9820-9725ae6f62a0",
+              "tag": "button",
+              "ui_outcome": {}
+            },
+            {
+              "api": {},
+              "associated_label": "주간업무가 저장되었습니다. 목록에서 등록한 게시물을 확인할 수 있습니다.",
+              "element_role": "",
+              "element_text": "주간업무가 저장되었습니다. 목록에서 등록한 게시물을 확인할 수 있습니다.",
+              "event": {
+                "action": "popup_open",
+                "active_parent_popup_id": null,
+                "active_popup_id": "popup:efdadf18-9e83-4911-9820-9725ae6f62a0:3",
+                "cause_event_id": "410a669d-695e-49f7-86f1-7f3eea5af0f2",
+                "correlation_id": null,
+                "event_id": "36b6f856-c019-416c-932e-734438103951",
+                "event_sequence": 29,
+                "event_time": "2026-11-08T13:25:55.930Z",
+                "interaction_id": "efdadf18-9e83-4911-9820-9725ae6f62a0:popup_open:29",
+                "parent_event_id": "410a669d-695e-49f7-86f1-7f3eea5af0f2",
+                "related_event_id": "410a669d-695e-49f7-86f1-7f3eea5af0f2",
+                "related_interaction_id": "efdadf18-9e83-4911-9820-9725ae6f62a0:click:28"
+              },
+              "event_id": "36b6f856-c019-416c-932e-734438103951",
+              "event_time": "2026-11-08 22:25:55.930",
+              "form": {},
+              "grid": {},
+              "http_endpoint_raw": "",
+              "http_method": "",
+              "http_relationship_strategy": "",
+              "http_status": "",
+              "input": {},
+              "input_detected": false,
+              "input_form": {},
+              "input_key": {},
+              "menu": {},
+              "page_path": "/mypage/work/weekly",
+              "page_title": "Rainbow",
+              "popup": {
+                "active_parent_popup_id": null,
+                "active_popup_id": "popup:efdadf18-9e83-4911-9820-9725ae6f62a0:3",
+                "active_popup_title": "주간업무가 저장되었습니다. 목록에서 등록한 게시물을 확인할 수 있습니다.",
+                "closer_event_id": null,
+                "closer_interaction_id": null,
+                "lifecycle_action": "open",
+                "opener_event_id": "410a669d-695e-49f7-86f1-7f3eea5af0f2",
+                "opener_interaction_id": "efdadf18-9e83-4911-9820-9725ae6f62a0:click:28",
+                "target_popup": {
+                  "opened_at": "2026-11-08T13:25:55.930Z",
+                  "opened_by_event_id": "410a669d-695e-49f7-86f1-7f3eea5af0f2",
+                  "opened_by_interaction_id": "efdadf18-9e83-4911-9820-9725ae6f62a0:click:28",
+                  "parent_popup_id": null,
+                  "popup_id": "popup:efdadf18-9e83-4911-9820-9725ae6f62a0:3",
+                  "role": "dialog",
+                  "selector_css": "div > main.mypage > div.mypage-layout > section.mypage-content > div.work-report-message-modal:nth-of-type(2) > div.work-report-message-modal__panel",
+                  "selector_xpath": "/html[1]/body[1]/div[1]/main[1]/div[1]/section[1]/div[2]/div[1]",
+                  "source_action": "click",
+                  "tag": "div",
+                  "title": "주간업무가 저장되었습니다. 목록에서 등록한 게시물을 확인할 수 있습니다."
+                }
+              },
+              "popup_containment": {
+                "active_popup_id": "popup:efdadf18-9e83-4911-9820-9725ae6f62a0:3",
+                "is_inside_popup": true
+              },
+              "popup_stack": [
+                {
+                  "opened_at": "2026-11-08T13:25:55.930Z",
+                  "opened_by_event_id": "410a669d-695e-49f7-86f1-7f3eea5af0f2",
+                  "opened_by_interaction_id": "efdadf18-9e83-4911-9820-9725ae6f62a0:click:28",
+                  "popup_id": "popup:efdadf18-9e83-4911-9820-9725ae6f62a0:3"
+                }
+              ],
+              "selector": "div > main.mypage > div.mypage-layout > section.mypage-content > div.work-report-message-modal:nth-of-type(2) > div.work-report-message-modal__panel",
+              "session_id": "efdadf18-9e83-4911-9820-9725ae6f62a0",
+              "tag": "div",
+              "ui_outcome": {}
+            },
+            {
+              "api": {},
+              "associated_label": "주간업무가 저장되었습니다. 목록에서 등록한 게시물을 확인할 수 있습니다.",
+              "element_role": "",
+              "element_text": "주간업무가 저장되었습니다.목록에서 등록한 게시물을 확인할 수 있습니다.",
+              "event": {
+                "action": "ui_outcome",
+                "active_parent_popup_id": null,
+                "active_popup_id": "popup:efdadf18-9e83-4911-9820-9725ae6f62a0:3",
+                "cause_event_id": null,
+                "correlation_id": null,
+                "event_id": "71db192e-63ba-4e9d-9915-36ddfd460154",
+                "event_sequence": 31,
+                "event_time": "2026-11-08T13:25:55.936Z",
+                "interaction_id": "efdadf18-9e83-4911-9820-9725ae6f62a0:ui_outcome:31",
+                "parent_event_id": null,
+                "related_event_id": "410a669d-695e-49f7-86f1-7f3eea5af0f2",
+                "related_interaction_id": "efdadf18-9e83-4911-9820-9725ae6f62a0:click:28"
+              },
+              "event_id": "71db192e-63ba-4e9d-9915-36ddfd460154",
+              "event_time": "2026-11-08 22:25:55.936",
+              "form": {},
+              "grid": {},
+              "http_endpoint_raw": "",
+              "http_method": "",
+              "http_relationship_strategy": "",
+              "http_status": "",
+              "input": {},
+              "input_detected": false,
+              "input_form": {},
+              "input_key": {},
+              "menu": {},
+              "page_path": "/mypage/work/weekly",
+              "page_title": "Rainbow",
+              "popup": {
+                "active_parent_popup_id": null,
+                "active_popup_id": "popup:efdadf18-9e83-4911-9820-9725ae6f62a0:3",
+                "active_popup_title": "주간업무가 저장되었습니다. 목록에서 등록한 게시물을 확인할 수 있습니다.",
+                "target_popup": {}
+              },
+              "popup_containment": {
+                "active_popup_id": "popup:efdadf18-9e83-4911-9820-9725ae6f62a0:3",
+                "is_inside_popup": true
+              },
+              "popup_stack": [
+                {
+                  "opened_at": "2026-11-08T13:25:55.930Z",
+                  "opened_by_event_id": "410a669d-695e-49f7-86f1-7f3eea5af0f2",
+                  "opened_by_interaction_id": "efdadf18-9e83-4911-9820-9725ae6f62a0:click:28",
+                  "popup_id": "popup:efdadf18-9e83-4911-9820-9725ae6f62a0:3"
+                }
+              ],
+              "selector": "div > main.mypage > div.mypage-layout > section.mypage-content > div.work-report-message-modal:nth-of-type(2) > div.work-report-message-modal__panel",
+              "session_id": "efdadf18-9e83-4911-9820-9725ae6f62a0",
+              "tag": "div",
+              "ui_outcome": {
+                "message": "주간업무가 저장되었습니다.목록에서 등록한 게시물을 확인할 수 있습니다.",
+                "source_interaction_id": "efdadf18-9e83-4911-9820-9725ae6f62a0:click:28",
+                "type": "modal_message"
+              }
+            },
+            {
+              "api": {},
+              "associated_label": null,
+              "element_role": "",
+              "element_text": "확인",
+              "event": {
+                "action": "click",
+                "active_parent_popup_id": null,
+                "active_popup_id": "popup:efdadf18-9e83-4911-9820-9725ae6f62a0:3",
+                "cause_event_id": null,
+                "correlation_id": null,
+                "event_id": "e3ebebf8-b924-4223-8e24-ee03d50222f1",
+                "event_sequence": 35,
+                "event_time": "2026-11-08T13:25:59.570Z",
+                "interaction_id": "efdadf18-9e83-4911-9820-9725ae6f62a0:click:35",
+                "parent_event_id": null,
+                "related_event_id": null,
+                "related_interaction_id": null
+              },
+              "event_id": "e3ebebf8-b924-4223-8e24-ee03d50222f1",
+              "event_time": "2026-11-08 22:25:59.570",
+              "form": {},
+              "grid": {},
+              "http_endpoint_raw": "",
+              "http_method": "",
+              "http_relationship_strategy": "",
+              "http_status": "",
+              "input": {},
+              "input_detected": false,
+              "input_form": {},
+              "input_key": {},
+              "menu": {
+                "parser": "sidebar_active_dom",
+                "path_text": "마이페이지 메뉴 > 업무 관리",
+                "selected_label": "업무 관리",
+                "selected_path_text": "마이페이지 메뉴 > 업무 관리",
+                "source": "nav"
+              },
+              "page_path": "/mypage/work/weekly",
+              "page_title": "Rainbow",
+              "popup": {
+                "active_parent_popup_id": null,
+                "active_popup_id": "popup:efdadf18-9e83-4911-9820-9725ae6f62a0:3",
+                "active_popup_title": "주간업무가 저장되었습니다. 목록에서 등록한 게시물을 확인할 수 있습니다.",
+                "target_popup": {}
+              },
+              "popup_containment": {
+                "active_popup_id": "popup:efdadf18-9e83-4911-9820-9725ae6f62a0:3",
+                "is_inside_popup": true
+              },
+              "popup_stack": [
+                {
+                  "opened_at": "2026-11-08T13:25:55.930Z",
+                  "opened_by_event_id": "410a669d-695e-49f7-86f1-7f3eea5af0f2",
+                  "opened_by_interaction_id": "efdadf18-9e83-4911-9820-9725ae6f62a0:click:28",
+                  "popup_id": "popup:efdadf18-9e83-4911-9820-9725ae6f62a0:3"
+                }
+              ],
+              "selector": "main.mypage > div.mypage-layout > section.mypage-content > div.work-report-message-modal:nth-of-type(2) > div.work-report-message-modal__panel > button.work-report-message-modal__button",
+              "session_id": "efdadf18-9e83-4911-9820-9725ae6f62a0",
+              "tag": "button",
+              "ui_outcome": {}
+            }
+          ],
+          "evidence_roles": {
+            "36b6f856-c019-416c-932e-734438103951": "COMPLETION_EVIDENCE",
+            "410a669d-695e-49f7-86f1-7f3eea5af0f2": "DIRECT_USER_INTENT",
+            "6c3dffa5-40fe-4396-81ed-e42633891a7d": "LIVE_FORM_CONTEXT",
+            "71db192e-63ba-4e9d-9915-36ddfd460154": "COMPLETION_EVIDENCE",
+            "e3ebebf8-b924-4223-8e24-ee03d50222f1": "SUCCESS_ACKNOWLEDGEMENT_CONTEXT"
+          },
+          "evidence_type": "direct",
+          "execution_ids": [
+            "05-BU09"
+          ],
+          "fields": [],
+          "form_detection_evidence": [
+            {
+              "raw_selector": "#daily-report-create-title-input",
+              "rule_id": "BA-DIALOG-DESCENDANT-INPUT",
+              "source_event_id": "19f120f4-a150-418c-947c-19f1d05b9aae"
+            },
+            {
+              "raw_selector": "#daily-report-create-title-input",
+              "rule_id": "BA-DIALOG-DESCENDANT-INPUT",
+              "source_event_id": "84291014-5973-4e2b-a81b-fdb9f7080b75"
+            },
+            {
+              "raw_selector": "#daily-report-create-content-input",
+              "rule_id": "BA-DIALOG-DESCENDANT-INPUT",
+              "source_event_id": "6a9e4910-e0f0-4fda-a8e6-9293cae16f89"
+            },
+            {
+              "raw_selector": "#daily-report-create-content-input",
+              "rule_id": "BA-DIALOG-DESCENDANT-INPUT",
+              "source_event_id": "425dd043-149f-4877-a5d7-c24ec48b86e9"
+            }
+          ],
+          "form_identity": [
+            "efdadf18-9e83-4911-9820-9725ae6f62a0",
+            "/mypage/work/weekly",
+            "FORM_POPUP",
+            "popup:efdadf18-9e83-4911-9820-9725ae6f62a0:1",
+            "div > main.mypage > div.mypage-layout > section.mypage-content > div.work-report-form-modal:nth-of-type(2) > div.work-report-form-modal__panel",
+            "주간업무 등록"
+          ],
+          "form_lifecycle_provenance": {
+            "opening_source_event_id": "6c3dffa5-40fe-4396-81ed-e42633891a7d",
+            "rule_id": "BA-LIVE-FORM-OPENING"
+          },
+          "generated_step_id": "BA-410a669d-695e-49f7-86f1-7f3eea5af0f2",
+          "http_evidence": [],
+          "id": "BA-410a669d-695e-49f7-86f1-7f3eea5af0f2",
+          "in_m02_denominator": true,
+          "intent_order": 27,
+          "intent_phase": "COMMIT",
+          "intent_source_event_ids": [
+            "410a669d-695e-49f7-86f1-7f3eea5af0f2"
+          ],
+          "label": "저장",
+          "last_intent_order": 27,
+          "matching_eligible": true,
+          "menu": {
+            "parser": "sidebar_active_dom",
+            "path_text": "마이페이지 메뉴 > 업무 관리",
+            "selected_label": "업무 관리",
+            "selected_path_text": "마이페이지 메뉴 > 업무 관리",
+            "source": "nav"
+          },
+          "menu_page": "/mypage/work/weekly",
+          "node_id": "PM-001-N008",
+          "page_title": "Rainbow",
+          "popup_title": "주간업무 등록",
+          "process_id": "PM-001",
+          "resolution_status": "RESOLVED",
+          "serializer_rule_id": "BA-LINKED-SUCCESS-ACK",
+          "source_event_ids": [
+            "6c3dffa5-40fe-4396-81ed-e42633891a7d",
+            "410a669d-695e-49f7-86f1-7f3eea5af0f2",
+            "36b6f856-c019-416c-932e-734438103951",
+            "71db192e-63ba-4e9d-9915-36ddfd460154",
+            "e3ebebf8-b924-4223-8e24-ee03d50222f1"
+          ],
+          "source_node_ids": [
+            "PM-001-N008",
+            "PM-001-N009"
+          ],
+          "source_process_ids": [
+            "PM-001"
+          ],
+          "step_order": 6,
+          "target": "저장",
+          "target_field_label": "저장",
+          "workflow_id": "WF-0001"
+        }
+      ],
+      "source_process_id": "EXECUTION_OWNERSHIP",
+      "unlinked_technical_evidence": []
+    }
+  ],
+  "scope_summary": {
+    "all_generated_steps": 6,
+    "mixed_count": 0,
+    "out_of_scope_count": 0,
+    "ownership_counts": {
+      "ASSIGNED": 6
+    },
+    "per_business_unit": {
+      "BU09": 6
+    },
+    "policy": "EXPLICIT_START_END_ANCHORS; MISSING_END_NOT_INFERRED; MIXED_COUNT_ONCE_INELIGIBLE",
+    "target_units": [
+      "BU09"
+    ],
+    "total_generated_steps": 6,
+    "unassigned_count": 0
+  },
+  "serializer_rules_hash": "77dda00894ec52a32e5b61e36fce24a56581c2ff3a1ca0bc11e31807e531373e",
+  "serializer_version": "business-process-abstraction-1.4+track-a-native-submit-1+causal-form-close-1",
+  "unassigned_steps": []
+}

@@ -1,0 +1,156 @@
+{
+  "status": "RAW_STRUCTURALLY_VALID",
+  "raw_directory": "data/evaluation/m05_heldout_raw_01",
+  "raw_files": {
+    "events.csv": {
+      "columns": [
+        "id",
+        "event_id",
+        "session_id",
+        "task_id",
+        "workflow_index",
+        "step_duration_ms",
+        "workflow_key",
+        "workflow_outcome",
+        "event_time",
+        "event_type",
+        "page_url",
+        "target_selector",
+        "locators_json",
+        "data_testid",
+        "element_tag",
+        "selector_xpath",
+        "interaction_type",
+        "input_data",
+        "api_path",
+        "api_method",
+        "api_status_code",
+        "page_title",
+        "element_text",
+        "associated_label",
+        "api_latency_ms"
+      ],
+      "sha256": "8a797dadcd8341b39e1ce96487eaaafe8995a62dabce3d027495c0f34382b8b4",
+      "record_count": 203
+    },
+    "tasks.csv": {
+      "columns": [
+        "id",
+        "session_id",
+        "task_name",
+        "status",
+        "start_time",
+        "end_time",
+        "duration_ms",
+        "step_id"
+      ],
+      "sha256": "f8c82493004d429d5ebd2f824275f3d617b716172a77bcb283d9cce8c6747924",
+      "record_count": 152
+    },
+    "sessions.csv": {
+      "columns": [
+        "id",
+        "user_id",
+        "tenant_id",
+        "start_time",
+        "end_time",
+        "user_agent",
+        "browser_id",
+        "viewport_size",
+        "viewport_width",
+        "viewport_height",
+        "ip_address"
+      ],
+      "sha256": "247856007334e9237085077b950e127b6720f9f98db5cdeaab5876e7299fac62",
+      "record_count": 1
+    }
+  },
+  "session_ids": [
+    "a901242f-3b9f-472d-ac88-5ba8215ca827"
+  ],
+  "event_count": 203,
+  "task_count": 152,
+  "session_count": 1,
+  "event_types": {
+    "collector_boot": 1,
+    "page_view": 1,
+    "change": 28,
+    "click": 64,
+    "submit": 2,
+    "route_change": 8,
+    "api_transaction": 31,
+    "screen_change": 8,
+    "popup_open": 15,
+    "popup_structure": 14,
+    "paste": 12,
+    "popup_close": 15,
+    "ui_outcome": 3,
+    "page_close": 1
+  },
+  "source_sequence": {
+    "min": 1,
+    "max": 203,
+    "contiguous": true,
+    "preserve_order": true
+  },
+  "freeze_reference": {
+    "kst": "2026-11-09T10:56:51+09:00",
+    "utc": "2026-11-09T01:56:51+00:00",
+    "authority": "Parent-supplied freeze cutoff; engine manifest independently verified by another worker, not opened by blind labeler."
+  },
+  "timestamps": {
+    "first_payload_utc": "2026-11-11T12:09:46.818000+00:00",
+    "last_payload_utc": "2026-11-11T12:12:16.348000+00:00",
+    "first_export_kst": "2026-11-11T21:09:46.818000+09:00",
+    "last_export_kst": "2026-11-11T21:12:16.348000+09:00",
+    "received_at_min_utc": "2026-11-11T12:09:51.346000+00:00",
+    "received_at_max_utc": "2026-11-11T12:12:18.940000+00:00",
+    "all_after_freeze": true,
+    "csv_payload_offset_hours": 9,
+    "source_order_timestamp_backtracks": [
+      {
+        "previous_source_position": 51,
+        "source_position": 52,
+        "delta_ms": -6.0,
+        "interaction_type": "api_transaction"
+      },
+      {
+        "previous_source_position": 81,
+        "source_position": 82,
+        "delta_ms": -6.0,
+        "interaction_type": "api_transaction"
+      },
+      {
+        "previous_source_position": 110,
+        "source_position": 111,
+        "delta_ms": -4.0,
+        "interaction_type": "api_transaction"
+      }
+    ]
+  },
+  "checks": {
+    "unique_event_ids": true,
+    "json_payloads_parsed": 203,
+    "raw_canonical_distinct_rows": 203,
+    "raw_id_excluded_distinct_content": 203,
+    "history_event_id_overlap_count": 0,
+    "history_session_id_overlap_count": 0,
+    "history_canonical_row_overlap_count": 0,
+    "history_id_excluded_raw_content_overlap_count": 0
+  },
+  "issues": [],
+  "history_inventory_sha256": "ca193b25f99cec0ee5af6b0040ee73c20b09b7a40e36d1594bfa2885ffd21140",
+  "held_out_evidence": {
+    "new_collection_after_freeze": true,
+    "distinct_from_available_csv_history": true,
+    "complete_historical_nonuse_certified": false,
+    "inference_feature_content_hash_check": "NOT_PERFORMED: this blind audit did not read the adapter or derive its model-facing feature mapping. Raw content hashes include nested source IDs and timestamps and are not a model-feature nonoverlap proof."
+  },
+  "blindness": {
+    "model_code_read": false,
+    "prediction_files_read": false,
+    "model_or_adapter_executed": false,
+    "engine_prediction_generated": false
+  },
+  "created_at_utc": "2026-11-11T12:21:44.666748+00:00"
+}

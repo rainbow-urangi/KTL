@@ -1,13 +1,16 @@
 """외부 엔진의 원시 count 검증 및 중앙 산식. 실행 엔진은 포함하지 않습니다."""
 from datetime import datetime
 from .evaluators import require
+from .api_validation import require_string_enum
+
+CASE_STATUSES = {'PASS', 'FAIL', 'ERROR', 'TIMEOUT', 'SKIPPED'}
 
 
 def calculate(metric, payload):
     require(isinstance(payload, dict), 'JSON object required')
     for field in ('external_run_id','dataset_id','run_mode','source_module','source_version','submitted_at','dataset_manifest_sha256'):
         require(isinstance(payload.get(field), str) and 0 < len(payload[field].strip()) and len(payload[field]) <= 256, 'Required field: '+field)
-    require(payload['run_mode'] in {'DEVELOPMENT','REFERENCE','OFFICIAL'}, 'Invalid run_mode')
+    require_string_enum(payload['run_mode'], {'DEVELOPMENT','REFERENCE','OFFICIAL'}, 'run_mode', 'Invalid run_mode')
     try:
         stamp = datetime.fromisoformat(payload['submitted_at'].replace('Z','+00:00'))
         require(stamp.tzinfo is not None, 'submitted_at requires timezone')
@@ -63,11 +66,13 @@ def calculate(metric, payload):
         if metric in {'M04','M07'}:
             require(len(cases)==(requests if metric=='M07' else sample), 'Provided cases must cover all requests/executions; generated codes define M07 denominator')
         if metric=='M04':
-            require(all(c.get('status') in {'PASS','FAIL','ERROR','TIMEOUT','SKIPPED'} for c in cases),'Invalid case status')
+            for c in cases:
+                require_string_enum(c.get('status'), CASE_STATUSES, 'status', 'Invalid case status')
             require(sum(c['status']=='PASS' for c in cases)==success,'Cases/counts mismatch')
         if metric=='M07':
             for c in cases:
-                require(all(c.get(k) in {'PASS','FAIL','ERROR','TIMEOUT','SKIPPED'} for k in ['generation_status','syntax_status','execution_status','final_status']),'Invalid M07 case status')
+                for key in ('generation_status','syntax_status','execution_status','final_status'):
+                    require_string_enum(c.get(key), CASE_STATUSES, key, 'Invalid M07 case status')
                 require((c['final_status']=='PASS')==(c['generation_status']=='PASS' and c['syntax_status']=='PASS' and c['execution_status']=='PASS'),'Final status requires generation/syntax/execution PASS')
                 require(c['generation_status']=='PASS' or (c['syntax_status']!='PASS' and c['execution_status']!='PASS'),'Ungenerated code cannot pass')
             calculated_both=sum(c['generation_status']=='PASS' and c['syntax_status']=='PASS' and c['execution_status']=='PASS' for c in cases)

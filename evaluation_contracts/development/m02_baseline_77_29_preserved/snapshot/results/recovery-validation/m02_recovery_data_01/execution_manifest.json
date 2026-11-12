@@ -1,0 +1,127 @@
+[
+  {
+    "execution_id": "RECOVERY-E01",
+    "business_unit_id": "BU03",
+    "session_id": "276d9376-b0b9-43c9-8d39-6cb30be99c42",
+    "start_event_id": "b6f5e3ba-bcbd-4b6d-ad61-a2ad8adaab23",
+    "end_event_id": "82acd91e-9e28-41e0-9e6c-9164225bfb4a",
+    "start_raw_id": 90653,
+    "end_raw_id": 90670,
+    "start_time": "2026-11-08 19:05:11.721",
+    "end_time": "2026-11-08 19:05:33.215",
+    "event_count": 18,
+    "start_menu_observed": false,
+    "start_status": "LEFT_CENSORED_ALREADY_OPEN_SCREEN",
+    "normal_end_status": "HTTP_201_ONLY_NO_EXPLICIT_SUCCESS_UI",
+    "source": "collection_order.txt plus raw event sequence; no model prediction",
+    "write_requests": [
+      {
+        "id": "90668",
+        "method": "POST",
+        "path": "/api/schedules",
+        "status": "201"
+      }
+    ],
+    "cancel_event_ids": []
+  },
+  {
+    "execution_id": "RECOVERY-E02",
+    "business_unit_id": "BU07",
+    "session_id": "276d9376-b0b9-43c9-8d39-6cb30be99c42",
+    "start_event_id": "539e75a1-569e-4d1c-a7cb-539e54ae45cb",
+    "end_event_id": "d32410b0-cd82-4bf8-aa4b-d1e8514a0576",
+    "start_raw_id": 90671,
+    "end_raw_id": 90693,
+    "start_time": "2026-11-08 19:05:36.386",
+    "end_time": "2026-11-08 19:05:43.848",
+    "event_count": 23,
+    "start_menu_observed": true,
+    "start_status": "MENU_ACTION_OBSERVED",
+    "normal_end_status": "EXPLICIT_SUCCESS_POPUP_OBSERVED",
+    "source": "collection_order.txt plus raw event sequence; no model prediction",
+    "write_requests": [
+      {
+        "id": "90690",
+        "method": "POST",
+        "path": "/api/work-reports",
+        "status": "201"
+      }
+    ],
+    "cancel_event_ids": []
+  },
+  {
+    "execution_id": "RECOVERY-E03",
+    "business_unit_id": "BU09",
+    "session_id": "276d9376-b0b9-43c9-8d39-6cb30be99c42",
+    "start_event_id": "b76bfbfa-47f2-4a40-9bc5-2a0df020f821",
+    "end_event_id": "5ecdf03c-fddd-496b-8c08-6e0d69cfced3",
+    "start_raw_id": 90694,
+    "end_raw_id": 90718,
+    "start_time": "2026-11-08 19:05:45.049",
+    "end_time": "2026-11-08 19:05:51.733",
+    "event_count": 25,
+    "start_menu_observed": true,
+    "start_status": "MENU_ACTION_OBSERVED",
+    "normal_end_status": "EXPLICIT_SUCCESS_POPUP_OBSERVED",
+    "source": "collection_order.txt plus raw event sequence; no model prediction",
+    "write_requests": [
+      {
+        "id": "90713",
+        "method": "POST",
+        "path": "/api/work-reports",
+        "status": "201"
+      }
+    ],
+    "cancel_event_ids": []
+  },
+  {
+    "execution_id": "RECOVERY-E04",
+    "business_unit_id": "BU17",
+    "session_id": "276d9376-b0b9-43c9-8d39-6cb30be99c42",
+    "start_event_id": "e5635e43-d438-42e4-870a-b8bc29634ba6",
+    "end_event_id": "81cf767c-0f16-4d19-9b20-193a7a6e8ea7",
+    "start_raw_id": 90719,
+    "end_raw_id": 90748,
+    "start_time": "2026-11-08 19:05:56.500",
+    "end_time": "2026-11-08 19:06:23.345",
+    "event_count": 30,
+    "start_menu_observed": true,
+    "start_status": "MENU_ACTION_OBSERVED",
+    "normal_end_status": "EXPLICIT_SUCCESS_POPUP_OBSERVED",
+    "source": "collection_order.txt plus raw event sequence; no model prediction",
+    "write_requests": [
+      {
+        "id": "90741",
+        "method": "POST",
+        "path": "/api/clients",
+        "status": "201"
+      }
+    ],
+    "cancel_event_ids": []
+  },
+  {
+    "execution_id": "RECOVERY-E05",
+    "business_unit_id": "BU20",
+    "session_id": "276d9376-b0b9-43c9-8d39-6cb30be99c42",
+    "start_event_id": "8c58f682-b205-4a26-b20b-8c98690d1332",
+    "end_event_id": "5994cadd-d683-4ff6-9bda-6058745ca032",
+    "start_raw_id": 90749,
+    "end_raw_id": 90774,
+    "start_time": "2026-11-08 19:06:24.299",
+    "end_time": "2026-11-08 19:06:35.249",
+    "event_count": 26,
+    "start_menu_observed": true,
+    "start_status": "MENU_ACTION_OBSERVED",
+    "normal_end_status": "EXPLICIT_SUCCESS_POPUP_OBSERVED",
+    "source": "collection_order.txt plus raw event sequence; no model prediction",
+    "write_requests": [
+      {
+        "id": "90767",
+        "method": "POST",
+        "path": "/api/assets",
+        "status": "201"
+      }
+    ],
+    "cancel_event_ids": []
+  }
+]

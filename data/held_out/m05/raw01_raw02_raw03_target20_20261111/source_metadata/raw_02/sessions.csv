@@ -1,0 +1,2 @@
+"id","user_id","tenant_id","start_time","end_time","user_agent","browser_id","viewport_size","viewport_width","viewport_height","ip_address"
+"44e0ee56-29e0-4993-af4c-520b93e26cd2",test,,2026-11-11 21:36:45.064,2026-11-11 21:38:29.307,"Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/156.0.0.0 Safari/537.36",f6ca502c-a6cb-45f0-b3d9-abb3c77105a0,"1200x857",1200,857,"116.120.116.208"

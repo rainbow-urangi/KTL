@@ -1,0 +1,3340 @@
+{
+  "events": [
+    {
+      "id": "cddde329-1a9d-456d-925c-9d38dbc7816c",
+      "features": {
+        "case_id": 91027837,
+        "activity": "EVT:collector_boot",
+        "ts": "2026-11-11 21:09:46.818"
+      }
+    },
+    {
+      "id": "f01c0d2c-8d79-4e94-b84e-334fd0a40690",
+      "features": {
+        "case_id": 91027838,
+        "activity": "NAV:/rbem",
+        "ts": "2026-11-11 21:09:46.834"
+      }
+    },
+    {
+      "id": "f4e6c747-e1bc-4d16-848c-47d2bffde07d",
+      "features": {
+        "case_id": 91027839,
+        "activity": "INPUT:아이디",
+        "ts": "2026-11-11 21:09:47.753"
+      }
+    },
+    {
+      "id": "1c4b3ecd-7ca1-48c0-8a12-6c1e1ccac317",
+      "features": {
+        "case_id": 91027840,
+        "activity": "INPUT:비밀번호",
+        "ts": "2026-11-11 21:09:47.758"
+      }
+    },
+    {
+      "id": "4ece290b-482b-4da9-a4d0-40bc9ae8626e",
+      "features": {
+        "case_id": 91027841,
+        "activity": "CLICK:로그인",
+        "ts": "2026-11-11 21:09:47.828"
+      }
+    },
+    {
+      "id": "2518b51a-07d9-49e1-bd4f-dcb713b19afe",
+      "features": {
+        "case_id": 91027841,
+        "activity": "SUBMIT:Rainbow",
+        "ts": "2026-11-11 21:09:47.830"
+      }
+    },
+    {
+      "id": "4616db87-fd7e-483d-99ef-f306fd6cfa2a",
+      "features": {
+        "case_id": 91027842,
+        "activity": "EVT:route_change",
+        "ts": "2026-11-11 21:09:48.013"
+      }
+    },
+    {
+      "id": "e7af5b3a-5a8e-4116-978a-387a7b199ffa",
+      "features": {
+        "case_id": 91027843,
+        "activity": "API:POST_/api/auth/login_2xx",
+        "ts": "2026-11-11 21:09:48.013"
+      }
+    },
+    {
+      "id": "7a9afd04-2539-4dbb-910a-395406500125",
+      "features": {
+        "case_id": 91027844,
+        "activity": "API:GET_/api/auth/me_2xx",
+        "ts": "2026-11-11 21:09:48.061"
+      }
+    },
+    {
+      "id": "53aeddf4-b23c-45ea-917d-f5f0b5b33eab",
+      "features": {
+        "case_id": 91027845,
+        "activity": "API:GET_/api/auth/me_2xx",
+        "ts": "2026-11-11 21:09:48.365"
+      }
+    },
+    {
+      "id": "a36d21c1-c027-4315-87fe-f4b9f32bd387",
+      "features": {
+        "case_id": 91027846,
+        "activity": "EVT:screen_change",
+        "ts": "2026-11-11 21:09:49.168"
+      }
+    },
+    {
+      "id": "2e91031e-53ae-401f-ae88-c4bae77e81ba",
+      "features": {
+        "case_id": 91027847,
+        "activity": "CLICK:일정 관리",
+        "ts": "2026-11-11 21:09:53.520"
+      }
+    },
+    {
+      "id": "6b1a481b-438e-411f-b6ed-fcd0c07fcfca",
+      "features": {
+        "case_id": 91027847,
+        "activity": "EVT:route_change",
+        "ts": "2026-11-11 21:09:53.523"
+      }
+    },
+    {
+      "id": "2521969d-322f-4d6f-bbc1-8111d45b4daf",
+      "features": {
+        "case_id": 91027848,
+        "activity": "API:GET_/api/schedules/viewers_2xx",
+        "ts": "2026-11-11 21:09:53.560"
+      }
+    },
+    {
+      "id": "6af9d851-6fd0-4973-aa8d-ea70221fde30",
+      "features": {
+        "case_id": 91027849,
+        "activity": "API:GET_/api/schedules_2xx",
+        "ts": "2026-11-11 21:09:53.595"
+      }
+    },
+    {
+      "id": "662f7485-8b37-448f-8c17-25a590adc572",
+      "features": {
+        "case_id": 91027850,
+        "activity": "EVT:screen_change",
+        "ts": "2026-11-11 21:09:54.400"
+      }
+    },
+    {
+      "id": "c8746a72-4100-47ac-9651-31f2865dcbe2",
+      "features": {
+        "case_id": 91027851,
+        "activity": "CLICK:4",
+        "ts": "2026-11-11 21:09:59.877"
+      }
+    },
+    {
+      "id": "359a7b80-e153-4fa0-bcee-b8b8ef39046e",
+      "features": {
+        "case_id": 91027851,
+        "activity": "EVT:popup_open",
+        "ts": "2026-11-11 21:09:59.969"
+      }
+    },
+    {
+      "id": "7f6f7123-5564-4277-bf95-daf2718a4a89",
+      "features": {
+        "case_id": 91027851,
+        "activity": "EVT:popup_structure",
+        "ts": "2026-11-11 21:10:00.834"
+      }
+    },
+    {
+      "id": "2863f196-98e5-4803-b0f9-ab2c366f2fff",
+      "features": {
+        "case_id": 91027852,
+        "activity": "CLICK:제목",
+        "ts": "2026-11-11 21:10:00.904"
+      }
+    },
+    {
+      "id": "93edf909-9cb1-43de-a8fa-9b671aa75b05",
+      "features": {
+        "case_id": 91027853,
+        "activity": "CLICK:제목",
+        "ts": "2026-11-11 21:10:09.131"
+      }
+    },
+    {
+      "id": "215fe929-63e1-46d5-9c31-e7008b403fbd",
+      "features": {
+        "case_id": 91027854,
+        "activity": "CLICK:제목",
+        "ts": "2026-11-11 21:10:09.260"
+      }
+    },
+    {
+      "id": "885531a6-3cb7-4ac9-9035-86160605f408",
+      "features": {
+        "case_id": 91027855,
+        "activity": "CLICK:제목",
+        "ts": "2026-11-11 21:10:09.378"
+      }
+    },
+    {
+      "id": "98ea8b66-8855-4066-9b4b-bb3c81835c47",
+      "features": {
+        "case_id": 91027856,
+        "activity": "INPUT:제목",
+        "ts": "2026-11-11 21:10:09.913"
+      }
+    },
+    {
+      "id": "acc37112-49df-4f6c-94b7-9c924b87caaf",
+      "features": {
+        "case_id": 91027857,
+        "activity": "CLICK:내용",
+        "ts": "2026-11-11 21:10:10.029"
+      }
+    },
+    {
+      "id": "4655d590-0d1e-42dc-8985-c4b6a0592038",
+      "features": {
+        "case_id": 91027858,
+        "activity": "EVT:paste",
+        "ts": "2026-11-11 21:10:10.167"
+      }
+    },
+    {
+      "id": "5cfc9856-fe91-41f7-a523-4fc92189a807",
+      "features": {
+        "case_id": 91027859,
+        "activity": "INPUT:내용",
+        "ts": "2026-11-11 21:10:12.468"
+      }
+    },
+    {
+      "id": "0a72db15-b62c-43e0-bcd2-9a538f3343bc",
+      "features": {
+        "case_id": 91027860,
+        "activity": "CLICK:등록",
+        "ts": "2026-11-11 21:10:12.540"
+      }
+    },
+    {
+      "id": "06dd8b1a-29cc-4901-b5b5-a41a7e9cae46",
+      "features": {
+        "case_id": 91027860,
+        "activity": "SUBMIT:Rainbow",
+        "ts": "2026-11-11 21:10:12.547"
+      }
+    },
+    {
+      "id": "0d57f749-cb34-41cd-b57f-37f18186ac05",
+      "features": {
+        "case_id": 91027861,
+        "activity": "API:POST_/api/schedules_2xx",
+        "ts": "2026-11-11 21:10:12.617"
+      }
+    },
+    {
+      "id": "31a9ad08-63c9-4c65-8403-060cbf97b8bf",
+      "features": {
+        "case_id": 91027862,
+        "activity": "API:GET_/api/schedules_2xx",
+        "ts": "2026-11-11 21:10:12.645"
+      }
+    },
+    {
+      "id": "41ff9cc1-1d30-4ddb-a4ce-01eac96e9c73",
+      "features": {
+        "case_id": 91027860,
+        "activity": "EVT:popup_close",
+        "ts": "2026-11-11 21:10:12.727"
+      }
+    },
+    {
+      "id": "0cd1425a-e2f6-4865-aeff-8528691cbce2",
+      "features": {
+        "case_id": 91027863,
+        "activity": "CLICK:업무 관리",
+        "ts": "2026-11-11 21:10:15.488"
+      }
+    },
+    {
+      "id": "2af69842-6abe-4209-b4b1-60befd02aff6",
+      "features": {
+        "case_id": 91027864,
+        "activity": "CLICK:일일보고",
+        "ts": "2026-11-11 21:10:16.504"
+      }
+    },
+    {
+      "id": "1b16adea-35b3-4eb8-8ac0-99fe4f4e6e8d",
+      "features": {
+        "case_id": 91027865,
+        "activity": "EVT:route_change",
+        "ts": "2026-11-11 21:10:16.507"
+      }
+    },
+    {
+      "id": "12121920-0a46-4876-a626-ad6d75f4987e",
+      "features": {
+        "case_id": 91027866,
+        "activity": "API:GET_/api/auth/me_2xx",
+        "ts": "2026-11-11 21:10:16.562"
+      }
+    },
+    {
+      "id": "e0ac64eb-891d-490f-b1ef-ac99e3aa86cd",
+      "features": {
+        "case_id": 91027867,
+        "activity": "API:GET_/api/work-reports_2xx",
+        "ts": "2026-11-11 21:10:16.583"
+      }
+    },
+    {
+      "id": "ee60ccd1-3afc-488d-9642-f9d042ac33a2",
+      "features": {
+        "case_id": 91027868,
+        "activity": "EVT:screen_change",
+        "ts": "2026-11-11 21:10:17.387"
+      }
+    },
+    {
+      "id": "8bf8fa9b-3d3e-422a-b7cf-23f71f8714df",
+      "features": {
+        "case_id": 91027869,
+        "activity": "CLICK:등록",
+        "ts": "2026-11-11 21:10:19.854"
+      }
+    },
+    {
+      "id": "8f8afc59-a777-41f1-8775-a7ac2f3abba6",
+      "features": {
+        "case_id": 91027869,
+        "activity": "EVT:popup_open",
+        "ts": "2026-11-11 21:10:19.939"
+      }
+    },
+    {
+      "id": "bcf93243-13a8-45f0-b47a-c32b4ac0fbe1",
+      "features": {
+        "case_id": 91027870,
+        "activity": "CLICK:제목",
+        "ts": "2026-11-11 21:10:20.712"
+      }
+    },
+    {
+      "id": "6d51b36e-793b-4a8d-8b3b-d969efef8b4c",
+      "features": {
+        "case_id": 91027871,
+        "activity": "EVT:paste",
+        "ts": "2026-11-11 21:10:20.880"
+      }
+    },
+    {
+      "id": "bd426b93-11fb-4b04-b657-f236cf98ecda",
+      "features": {
+        "case_id": 91027872,
+        "activity": "INPUT:제목",
+        "ts": "2026-11-11 21:10:21.189"
+      }
+    },
+    {
+      "id": "05e14e71-13a8-4c06-b436-feef81c95dae",
+      "features": {
+        "case_id": 91027873,
+        "activity": "CLICK:내용",
+        "ts": "2026-11-11 21:10:21.253"
+      }
+    },
+    {
+      "id": "8bb19ae9-ec3a-4fa8-930f-3ab928dc7839",
+      "features": {
+        "case_id": 91027874,
+        "activity": "EVT:paste",
+        "ts": "2026-11-11 21:10:21.376"
+      }
+    },
+    {
+      "id": "d1906761-fa0e-40ce-a486-6c47f270e0d5",
+      "features": {
+        "case_id": 91027869,
+        "activity": "EVT:popup_structure",
+        "ts": "2026-11-11 21:10:22.208"
+      }
+    },
+    {
+      "id": "f87e6a94-f4ef-45b3-99ad-18a08c7d6f94",
+      "features": {
+        "case_id": 91027875,
+        "activity": "INPUT:내용",
+        "ts": "2026-11-11 21:10:22.288"
+      }
+    },
+    {
+      "id": "b7b9753e-0d56-4504-8345-677b0bc8e9e0",
+      "features": {
+        "case_id": 91027876,
+        "activity": "CLICK:저장",
+        "ts": "2026-11-11 21:10:22.372"
+      }
+    },
+    {
+      "id": "fda32e4a-2aac-4f2b-bf01-4e177a86d082",
+      "features": {
+        "case_id": 91027876,
+        "activity": "EVT:popup_open",
+        "ts": "2026-11-11 21:10:22.402"
+      }
+    },
+    {
+      "id": "2ed6aad9-d23b-44b4-b656-a8cfaf7a3bcb",
+      "features": {
+        "case_id": 91027876,
+        "activity": "EVT:popup_close",
+        "ts": "2026-11-11 21:10:22.404"
+      }
+    },
+    {
+      "id": "7055d37f-763b-4785-9417-1f8395251d6b",
+      "features": {
+        "case_id": 91027876,
+        "activity": "EVT:ui_outcome",
+        "ts": "2026-11-11 21:10:22.405"
+      }
+    },
+    {
+      "id": "012fd9c2-fec3-4aca-9d67-ba159e80a6ef",
+      "features": {
+        "case_id": 91027877,
+        "activity": "API:POST_/api/work-reports_2xx",
+        "ts": "2026-11-11 21:10:22.399"
+      }
+    },
+    {
+      "id": "28bfb07f-9b26-43b3-af3a-ebb29ec4dd4c",
+      "features": {
+        "case_id": 91027878,
+        "activity": "API:GET_/api/work-reports_2xx",
+        "ts": "2026-11-11 21:10:22.427"
+      }
+    },
+    {
+      "id": "2a1a8135-215b-4872-8f68-11de1d2334fb",
+      "features": {
+        "case_id": 91027876,
+        "activity": "EVT:popup_structure",
+        "ts": "2026-11-11 21:10:23.326"
+      }
+    },
+    {
+      "id": "15b1a374-2735-4832-add2-124feca9f42b",
+      "features": {
+        "case_id": 91027879,
+        "activity": "CLICK:확인",
+        "ts": "2026-11-11 21:10:23.539"
+      }
+    },
+    {
+      "id": "020a7fde-4dab-4cbc-9b7a-75648ba378f9",
+      "features": {
+        "case_id": 91027879,
+        "activity": "EVT:popup_close",
+        "ts": "2026-11-11 21:10:23.623"
+      }
+    },
+    {
+      "id": "e54448d9-3aee-4e98-a94a-0bfdaa27e2f0",
+      "features": {
+        "case_id": 91027880,
+        "activity": "CLICK:주간보고",
+        "ts": "2026-11-11 21:10:25.095"
+      }
+    },
+    {
+      "id": "7743408d-e3c4-4946-a0b4-714cad8affa1",
+      "features": {
+        "case_id": 91027881,
+        "activity": "EVT:route_change",
+        "ts": "2026-11-11 21:10:25.098"
+      }
+    },
+    {
+      "id": "9e6e6ed5-0e60-49d6-9b05-2acb3ad141b5",
+      "features": {
+        "case_id": 91027882,
+        "activity": "API:GET_/api/work-reports_2xx",
+        "ts": "2026-11-11 21:10:25.145"
+      }
+    },
+    {
+      "id": "a6a42b47-1c17-471c-b20d-1f61c6ea7c5e",
+      "features": {
+        "case_id": 91027883,
+        "activity": "API:GET_/api/auth/me_2xx",
+        "ts": "2026-11-11 21:10:25.152"
+      }
+    },
+    {
+      "id": "d113644e-490f-4844-ad82-2211b7ca19af",
+      "features": {
+        "case_id": 91027884,
+        "activity": "EVT:screen_change",
+        "ts": "2026-11-11 21:10:25.948"
+      }
+    },
+    {
+      "id": "af21686f-3db4-4a12-8bb1-3e654b354857",
+      "features": {
+        "case_id": 91027885,
+        "activity": "CLICK:등록",
+        "ts": "2026-11-11 21:10:26.928"
+      }
+    },
+    {
+      "id": "f286e1e9-e538-4ad0-aef7-d98e4f33385d",
+      "features": {
+        "case_id": 91027885,
+        "activity": "EVT:popup_open",
+        "ts": "2026-11-11 21:10:27.014"
+      }
+    },
+    {
+      "id": "773f599b-db5d-49f0-8125-c5ed9f5d3df6",
+      "features": {
+        "case_id": 91027886,
+        "activity": "CLICK:제목",
+        "ts": "2026-11-11 21:10:27.723"
+      }
+    },
+    {
+      "id": "e652a8bc-ebb4-4f3c-99eb-e225e5da62c0",
+      "features": {
+        "case_id": 91027887,
+        "activity": "CLICK:2026.11.11 (수)",
+        "ts": "2026-11-11 21:10:28.515"
+      }
+    },
+    {
+      "id": "a6eb6d27-8169-48b9-b95e-9a72afa9e071",
+      "features": {
+        "case_id": 91027887,
+        "activity": "EVT:popup_open",
+        "ts": "2026-11-11 21:10:28.605"
+      }
+    },
+    {
+      "id": "a924e51e-fc03-4bb2-91e2-193f09d83505",
+      "features": {
+        "case_id": 91027885,
+        "activity": "EVT:popup_structure",
+        "ts": "2026-11-11 21:10:29.471"
+      }
+    },
+    {
+      "id": "df233f32-86ea-4e72-961a-c54981091e5c",
+      "features": {
+        "case_id": 91027887,
+        "activity": "EVT:popup_structure",
+        "ts": "2026-11-11 21:10:29.484"
+      }
+    },
+    {
+      "id": "8f9cb34f-8330-4b49-a6de-8eccf4ae48b0",
+      "features": {
+        "case_id": 91027888,
+        "activity": "CLICK:2026-11-02",
+        "ts": "2026-11-11 21:10:31.663"
+      }
+    },
+    {
+      "id": "09da058a-d195-44b8-90c2-2b6247694346",
+      "features": {
+        "case_id": 91027888,
+        "activity": "EVT:popup_close",
+        "ts": "2026-11-11 21:10:31.750"
+      }
+    },
+    {
+      "id": "9eff1204-135e-43f9-8761-6930e01f0aef",
+      "features": {
+        "case_id": 91027889,
+        "activity": "CLICK:제목",
+        "ts": "2026-11-11 21:10:32.212"
+      }
+    },
+    {
+      "id": "13f2a6c3-2734-4be7-9bf6-f1fe99eebc3b",
+      "features": {
+        "case_id": 91027890,
+        "activity": "CLICK:제목",
+        "ts": "2026-11-11 21:10:32.817"
+      }
+    },
+    {
+      "id": "3ccf1751-1299-4680-ae5c-98902a797c65",
+      "features": {
+        "case_id": 91027891,
+        "activity": "EVT:paste",
+        "ts": "2026-11-11 21:10:33.011"
+      }
+    },
+    {
+      "id": "3fa5b539-0f8f-490a-9b4f-f0133eeda506",
+      "features": {
+        "case_id": 91027892,
+        "activity": "INPUT:제목",
+        "ts": "2026-11-11 21:10:33.163"
+      }
+    },
+    {
+      "id": "c8a37b84-d476-4736-b30e-a311d0487f37",
+      "features": {
+        "case_id": 91027893,
+        "activity": "CLICK:내용",
+        "ts": "2026-11-11 21:10:33.263"
+      }
+    },
+    {
+      "id": "78f8f321-cf54-4bec-bfd3-8c66ec169062",
+      "features": {
+        "case_id": 91027894,
+        "activity": "EVT:paste",
+        "ts": "2026-11-11 21:10:33.354"
+      }
+    },
+    {
+      "id": "3ad65691-6a50-4b53-9066-9af669f1e485",
+      "features": {
+        "case_id": 91027895,
+        "activity": "INPUT:내용",
+        "ts": "2026-11-11 21:10:34.049"
+      }
+    },
+    {
+      "id": "1ff0acb7-f143-41fe-ac1a-0580412f48e1",
+      "features": {
+        "case_id": 91027896,
+        "activity": "CLICK:저장",
+        "ts": "2026-11-11 21:10:34.133"
+      }
+    },
+    {
+      "id": "b92f0aac-f8c9-47b1-b63d-0cc5dba385ca",
+      "features": {
+        "case_id": 91027896,
+        "activity": "EVT:popup_open",
+        "ts": "2026-11-11 21:10:34.177"
+      }
+    },
+    {
+      "id": "cea91515-861f-4906-989c-05ff1339f57e",
+      "features": {
+        "case_id": 91027896,
+        "activity": "EVT:popup_close",
+        "ts": "2026-11-11 21:10:34.180"
+      }
+    },
+    {
+      "id": "912f3a73-9fc8-48a8-87d1-6533a02ee5ce",
+      "features": {
+        "case_id": 91027896,
+        "activity": "EVT:ui_outcome",
+        "ts": "2026-11-11 21:10:34.181"
+      }
+    },
+    {
+      "id": "86f343e5-ffd5-43f1-a7cb-ec0db21388e0",
+      "features": {
+        "case_id": 91027897,
+        "activity": "API:POST_/api/work-reports_2xx",
+        "ts": "2026-11-11 21:10:34.175"
+      }
+    },
+    {
+      "id": "d0de73dc-4562-4c18-909e-d8ef77293444",
+      "features": {
+        "case_id": 91027898,
+        "activity": "API:GET_/api/work-reports_2xx",
+        "ts": "2026-11-11 21:10:34.207"
+      }
+    },
+    {
+      "id": "8fb54b5a-5785-41c4-a4f6-fc80b2992d29",
+      "features": {
+        "case_id": 91027896,
+        "activity": "EVT:popup_structure",
+        "ts": "2026-11-11 21:10:35.089"
+      }
+    },
+    {
+      "id": "a9438065-0343-4dda-875d-42b06b56edc2",
+      "features": {
+        "case_id": 91027899,
+        "activity": "CLICK:확인",
+        "ts": "2026-11-11 21:10:35.116"
+      }
+    },
+    {
+      "id": "d7cd2430-6fae-45d5-8312-28a43e659b7a",
+      "features": {
+        "case_id": 91027899,
+        "activity": "EVT:popup_close",
+        "ts": "2026-11-11 21:10:35.201"
+      }
+    },
+    {
+      "id": "24fbd78f-d41b-469d-8da4-483fa461b91d",
+      "features": {
+        "case_id": 91027900,
+        "activity": "CLICK:월간보고",
+        "ts": "2026-11-11 21:10:36.053"
+      }
+    },
+    {
+      "id": "415fe079-0ac4-4b32-9544-e0128a6604c5",
+      "features": {
+        "case_id": 91027901,
+        "activity": "EVT:route_change",
+        "ts": "2026-11-11 21:10:36.056"
+      }
+    },
+    {
+      "id": "841d38dd-470e-480c-b72f-7193f84f9ba5",
+      "features": {
+        "case_id": 91027902,
+        "activity": "API:GET_/api/work-reports_2xx",
+        "ts": "2026-11-11 21:10:36.082"
+      }
+    },
+    {
+      "id": "fc1d195f-3a46-4388-aa86-c0f003bd38b5",
+      "features": {
+        "case_id": 91027903,
+        "activity": "API:GET_/api/auth/me_2xx",
+        "ts": "2026-11-11 21:10:36.094"
+      }
+    },
+    {
+      "id": "47e511cf-0da4-43d2-bc72-3fad6c1622ad",
+      "features": {
+        "case_id": 91027904,
+        "activity": "EVT:screen_change",
+        "ts": "2026-11-11 21:10:36.885"
+      }
+    },
+    {
+      "id": "d15998e3-a049-4de7-b658-2434da34169e",
+      "features": {
+        "case_id": 91027905,
+        "activity": "CLICK:등록",
+        "ts": "2026-11-11 21:10:38.269"
+      }
+    },
+    {
+      "id": "c16ea369-fe21-4c4d-b7af-ff392b790e2a",
+      "features": {
+        "case_id": 91027905,
+        "activity": "EVT:popup_open",
+        "ts": "2026-11-11 21:10:38.355"
+      }
+    },
+    {
+      "id": "eea04a61-3d8c-42e2-a9f8-b671b2c9e8be",
+      "features": {
+        "case_id": 91027905,
+        "activity": "EVT:popup_structure",
+        "ts": "2026-11-11 21:10:39.223"
+      }
+    },
+    {
+      "id": "c75283fc-cecf-4fb3-9959-1a67f0df39d9",
+      "features": {
+        "case_id": 91027906,
+        "activity": "CLICK:2026.11.11 (수)",
+        "ts": "2026-11-11 21:10:39.418"
+      }
+    },
+    {
+      "id": "ae0a1b6b-6596-49da-af07-54a7d1901790",
+      "features": {
+        "case_id": 91027906,
+        "activity": "EVT:popup_open",
+        "ts": "2026-11-11 21:10:39.503"
+      }
+    },
+    {
+      "id": "e5cdbd65-45b0-45c9-94bb-e9ec39476dc8",
+      "features": {
+        "case_id": 91027906,
+        "activity": "EVT:popup_structure",
+        "ts": "2026-11-11 21:10:40.373"
+      }
+    },
+    {
+      "id": "7248d6e5-ce78-419b-8f3e-ca0287958ec5",
+      "features": {
+        "case_id": 91027907,
+        "activity": "CLICK:2026-11-30",
+        "ts": "2026-11-11 21:10:40.753"
+      }
+    },
+    {
+      "id": "00bcdb19-4a72-40ce-8558-7d167552c529",
+      "features": {
+        "case_id": 91027907,
+        "activity": "EVT:popup_close",
+        "ts": "2026-11-11 21:10:40.836"
+      }
+    },
+    {
+      "id": "b06e10d8-388c-4396-b116-a3406ef418ab",
+      "features": {
+        "case_id": 91027908,
+        "activity": "CLICK:div",
+        "ts": "2026-11-11 21:10:41.354"
+      }
+    },
+    {
+      "id": "109eff11-35fd-4639-a2d2-89fb99b34064",
+      "features": {
+        "case_id": 91027909,
+        "activity": "CLICK:제목",
+        "ts": "2026-11-11 21:10:41.620"
+      }
+    },
+    {
+      "id": "3d3c8081-e97c-4b42-94ac-b26b52f4f3e1",
+      "features": {
+        "case_id": 91027910,
+        "activity": "EVT:paste",
+        "ts": "2026-11-11 21:10:41.858"
+      }
+    },
+    {
+      "id": "d1f7667a-6008-45cd-b8cf-aef84a72630f",
+      "features": {
+        "case_id": 91027911,
+        "activity": "INPUT:제목",
+        "ts": "2026-11-11 21:10:42.004"
+      }
+    },
+    {
+      "id": "53b47026-ac42-4f5a-bcce-a5b6621264d7",
+      "features": {
+        "case_id": 91027912,
+        "activity": "CLICK:내용",
+        "ts": "2026-11-11 21:10:42.088"
+      }
+    },
+    {
+      "id": "7c9988c5-31c5-492c-8afa-7a198e8f172f",
+      "features": {
+        "case_id": 91027913,
+        "activity": "EVT:paste",
+        "ts": "2026-11-11 21:10:42.206"
+      }
+    },
+    {
+      "id": "bd55b366-8d58-44bd-abe7-54139ad4fa26",
+      "features": {
+        "case_id": 91027914,
+        "activity": "INPUT:내용",
+        "ts": "2026-11-11 21:10:42.942"
+      }
+    },
+    {
+      "id": "ed195869-dd8a-44f6-a9a2-8ce539ff4a4d",
+      "features": {
+        "case_id": 91027915,
+        "activity": "CLICK:저장",
+        "ts": "2026-11-11 21:10:43.022"
+      }
+    },
+    {
+      "id": "46280ba0-32f6-46f6-bc17-31d32888a6ee",
+      "features": {
+        "case_id": 91027915,
+        "activity": "EVT:popup_open",
+        "ts": "2026-11-11 21:10:43.100"
+      }
+    },
+    {
+      "id": "0febd0ab-2ec8-48df-a909-dc171335cc67",
+      "features": {
+        "case_id": 91027915,
+        "activity": "EVT:popup_close",
+        "ts": "2026-11-11 21:10:43.102"
+      }
+    },
+    {
+      "id": "84ea7ef3-fca2-474b-aca0-44cdbd5af6ba",
+      "features": {
+        "case_id": 91027915,
+        "activity": "EVT:ui_outcome",
+        "ts": "2026-11-11 21:10:43.102"
+      }
+    },
+    {
+      "id": "4bf401ff-c4b4-4c7e-8406-eb364d2b6c93",
+      "features": {
+        "case_id": 91027916,
+        "activity": "API:POST_/api/work-reports_2xx",
+        "ts": "2026-11-11 21:10:43.098"
+      }
+    },
+    {
+      "id": "55b2290f-bc78-4d85-9331-fc9c4a115713",
+      "features": {
+        "case_id": 91027917,
+        "activity": "API:GET_/api/work-reports_2xx",
+        "ts": "2026-11-11 21:10:43.134"
+      }
+    },
+    {
+      "id": "2e03b6f7-2bc5-42cb-8144-dea916300dd6",
+      "features": {
+        "case_id": 91027918,
+        "activity": "CLICK:확인",
+        "ts": "2026-11-11 21:10:43.973"
+      }
+    },
+    {
+      "id": "269f628a-2260-4ded-b778-a2190a68dd85",
+      "features": {
+        "case_id": 91027918,
+        "activity": "EVT:popup_close",
+        "ts": "2026-11-11 21:10:44.057"
+      }
+    },
+    {
+      "id": "f2569a51-e4c9-41ff-93b9-f722e48ae7c4",
+      "features": {
+        "case_id": 91027919,
+        "activity": "CLICK:명함 관리",
+        "ts": "2026-11-11 21:10:45.013"
+      }
+    },
+    {
+      "id": "5edc1027-70f3-4b89-8d02-56526c7b4c52",
+      "features": {
+        "case_id": 91027920,
+        "activity": "EVT:route_change",
+        "ts": "2026-11-11 21:10:45.015"
+      }
+    },
+    {
+      "id": "f2957b09-3e23-48ec-be5c-dc76bfad3f54",
+      "features": {
+        "case_id": 91027921,
+        "activity": "API:GET_/api/business-cards_2xx",
+        "ts": "2026-11-11 21:10:45.052"
+      }
+    },
+    {
+      "id": "ed6120a5-0e69-4ca1-be76-f3089141d976",
+      "features": {
+        "case_id": 91027922,
+        "activity": "API:GET_/api/auth/me_2xx",
+        "ts": "2026-11-11 21:10:45.064"
+      }
+    },
+    {
+      "id": "74fb773a-3682-4605-b4a9-34d4505b6802",
+      "features": {
+        "case_id": 91027923,
+        "activity": "EVT:screen_change",
+        "ts": "2026-11-11 21:10:45.857"
+      }
+    },
+    {
+      "id": "170b9350-91ae-48a5-aa72-0d31038a3836",
+      "features": {
+        "case_id": 91027924,
+        "activity": "CLICK:등록",
+        "ts": "2026-11-11 21:10:47.110"
+      }
+    },
+    {
+      "id": "0cb09f88-ed90-46ab-8c8d-5e7f47905d42",
+      "features": {
+        "case_id": 91027924,
+        "activity": "EVT:popup_open",
+        "ts": "2026-11-11 21:10:47.198"
+      }
+    },
+    {
+      "id": "395ef66f-3763-4f4e-92b3-6440a0c8e866",
+      "features": {
+        "case_id": 91027924,
+        "activity": "EVT:popup_structure",
+        "ts": "2026-11-11 21:10:48.064"
+      }
+    },
+    {
+      "id": "42f4f4da-56dd-4582-aa63-5885fc237299",
+      "features": {
+        "case_id": 91027925,
+        "activity": "CLICK:회사명",
+        "ts": "2026-11-11 21:10:48.463"
+      }
+    },
+    {
+      "id": "47750eb1-c6dd-4773-864d-ef713eb300cd",
+      "features": {
+        "case_id": 91027926,
+        "activity": "EVT:paste",
+        "ts": "2026-11-11 21:10:53.984"
+      }
+    },
+    {
+      "id": "5b560c47-28c0-47ab-bb16-962434dc1f92",
+      "features": {
+        "case_id": 91027927,
+        "activity": "INPUT:회사명",
+        "ts": "2026-11-11 21:10:54.798"
+      }
+    },
+    {
+      "id": "a31cdad3-5f2e-448e-acf8-dc9b097e4882",
+      "features": {
+        "case_id": 91027928,
+        "activity": "CLICK:이름",
+        "ts": "2026-11-11 21:10:54.881"
+      }
+    },
+    {
+      "id": "06b7af48-1c66-452f-a48b-00fb1fdf4000",
+      "features": {
+        "case_id": 91027929,
+        "activity": "INPUT:이름",
+        "ts": "2026-11-11 21:10:58.123"
+      }
+    },
+    {
+      "id": "e34e53df-c109-4970-9993-339087538d63",
+      "features": {
+        "case_id": 91027930,
+        "activity": "CLICK:부서",
+        "ts": "2026-11-11 21:10:58.217"
+      }
+    },
+    {
+      "id": "22adc597-37c1-4b3f-b43e-4af3112081f7",
+      "features": {
+        "case_id": 91027931,
+        "activity": "INPUT:부서",
+        "ts": "2026-11-11 21:11:00.255"
+      }
+    },
+    {
+      "id": "3c9c9808-02e2-42d4-b298-186a02feb403",
+      "features": {
+        "case_id": 91027932,
+        "activity": "CLICK:직급",
+        "ts": "2026-11-11 21:11:00.336"
+      }
+    },
+    {
+      "id": "599d31ea-7a4e-4559-bbf9-1f3910763ead",
+      "features": {
+        "case_id": 91027933,
+        "activity": "INPUT:직급",
+        "ts": "2026-11-11 21:11:02.261"
+      }
+    },
+    {
+      "id": "779e705a-53a3-4526-a433-8da12d86bf56",
+      "features": {
+        "case_id": 91027934,
+        "activity": "CLICK:전화번호",
+        "ts": "2026-11-11 21:11:02.370"
+      }
+    },
+    {
+      "id": "99d72961-9050-4864-a1d3-898d82d99d2c",
+      "features": {
+        "case_id": 91027935,
+        "activity": "INPUT:전화번호",
+        "ts": "2026-11-11 21:11:05.892"
+      }
+    },
+    {
+      "id": "11c84c1d-d128-4e1b-ba4d-01b3182b7ba2",
+      "features": {
+        "case_id": 91027936,
+        "activity": "CLICK:이메일 주소",
+        "ts": "2026-11-11 21:11:06.000"
+      }
+    },
+    {
+      "id": "790b60e1-8bfa-453a-a39e-67bccb7e720f",
+      "features": {
+        "case_id": 91027937,
+        "activity": "INPUT:이메일 주소",
+        "ts": "2026-11-11 21:11:21.573"
+      }
+    },
+    {
+      "id": "8ffca0ad-da11-4d8f-9fcb-2df6fe9601fa",
+      "features": {
+        "case_id": 91027938,
+        "activity": "CLICK:기타",
+        "ts": "2026-11-11 21:11:21.653"
+      }
+    },
+    {
+      "id": "70686f2c-0eac-4a95-8e8c-b7343658c07e",
+      "features": {
+        "case_id": 91027939,
+        "activity": "EVT:paste",
+        "ts": "2026-11-11 21:11:21.843"
+      }
+    },
+    {
+      "id": "44f96a3a-d3cc-4c7c-809c-d7d1a8f41637",
+      "features": {
+        "case_id": 91027940,
+        "activity": "INPUT:기타",
+        "ts": "2026-11-11 21:11:24.156"
+      }
+    },
+    {
+      "id": "25addd0a-04c8-48c2-889d-240299b653e2",
+      "features": {
+        "case_id": 91027941,
+        "activity": "CLICK:회사 주소",
+        "ts": "2026-11-11 21:11:24.254"
+      }
+    },
+    {
+      "id": "23adf111-ed1e-4b79-9ee4-b82985919f87",
+      "features": {
+        "case_id": 91027942,
+        "activity": "EVT:paste",
+        "ts": "2026-11-11 21:11:24.561"
+      }
+    },
+    {
+      "id": "08455c63-d838-4bb7-a04a-41176e6dd7cb",
+      "features": {
+        "case_id": 91027943,
+        "activity": "INPUT:회사 주소",
+        "ts": "2026-11-11 21:11:25.842"
+      }
+    },
+    {
+      "id": "50d69831-917c-4a5b-a2ab-84e7bd36658f",
+      "features": {
+        "case_id": 91027944,
+        "activity": "CLICK:저장",
+        "ts": "2026-11-11 21:11:25.923"
+      }
+    },
+    {
+      "id": "5b82ee9e-72cb-44cb-b91a-57e3a3ff92c3",
+      "features": {
+        "case_id": 91027945,
+        "activity": "API:POST_/api/business-cards_2xx",
+        "ts": "2026-11-11 21:11:25.965"
+      }
+    },
+    {
+      "id": "a5c70b7e-e61a-40ba-8a7b-97e5c36b3553",
+      "features": {
+        "case_id": 91027946,
+        "activity": "API:GET_/api/business-cards_2xx",
+        "ts": "2026-11-11 21:11:25.981"
+      }
+    },
+    {
+      "id": "875f1bff-47bd-4293-9206-5f849184b1b0",
+      "features": {
+        "case_id": 91027944,
+        "activity": "EVT:popup_open",
+        "ts": "2026-11-11 21:11:26.064"
+      }
+    },
+    {
+      "id": "3f5d1d3a-432c-4a5c-8c33-7297bdecdd7e",
+      "features": {
+        "case_id": 91027944,
+        "activity": "EVT:popup_close",
+        "ts": "2026-11-11 21:11:26.066"
+      }
+    },
+    {
+      "id": "e1bb20f4-ce6a-4e2d-8739-e96cf6376459",
+      "features": {
+        "case_id": 91027944,
+        "activity": "EVT:popup_structure",
+        "ts": "2026-11-11 21:11:26.877"
+      }
+    },
+    {
+      "id": "69ee1c34-e63d-4511-9c4c-46cfd8f0c411",
+      "features": {
+        "case_id": 91027947,
+        "activity": "CLICK:확인",
+        "ts": "2026-11-11 21:11:26.990"
+      }
+    },
+    {
+      "id": "76b7d3d2-5bfa-448d-affb-4ba301a13265",
+      "features": {
+        "case_id": 91027947,
+        "activity": "EVT:popup_close",
+        "ts": "2026-11-11 21:11:27.073"
+      }
+    },
+    {
+      "id": "5ae2fae9-01db-4dca-af91-5c69c253aab0",
+      "features": {
+        "case_id": 91027948,
+        "activity": "CLICK:거래처 정보 관리",
+        "ts": "2026-11-11 21:11:28.146"
+      }
+    },
+    {
+      "id": "8f14198b-525d-4e77-bc2d-cec85b762049",
+      "features": {
+        "case_id": 91027949,
+        "activity": "EVT:route_change",
+        "ts": "2026-11-11 21:11:28.149"
+      }
+    },
+    {
+      "id": "8bea9520-626c-4478-a1d9-6f35c9ebfbb3",
+      "features": {
+        "case_id": 91027950,
+        "activity": "API:GET_/api/auth/me_2xx",
+        "ts": "2026-11-11 21:11:28.179"
+      }
+    },
+    {
+      "id": "959717ba-e85a-46b6-9081-08b218a92d64",
+      "features": {
+        "case_id": 91027951,
+        "activity": "API:GET_/api/clients_2xx",
+        "ts": "2026-11-11 21:11:28.198"
+      }
+    },
+    {
+      "id": "1ca579df-5f64-4044-9355-7b97e8b77973",
+      "features": {
+        "case_id": 91027952,
+        "activity": "EVT:screen_change",
+        "ts": "2026-11-11 21:11:29.003"
+      }
+    },
+    {
+      "id": "d59f061a-9e64-4836-a46e-28ccb44418c4",
+      "features": {
+        "case_id": 91027953,
+        "activity": "CLICK:등록",
+        "ts": "2026-11-11 21:11:32.296"
+      }
+    },
+    {
+      "id": "ae3b2964-4cc8-4ea1-8a6d-48103c9d2bcc",
+      "features": {
+        "case_id": 91027953,
+        "activity": "EVT:popup_open",
+        "ts": "2026-11-11 21:11:32.381"
+      }
+    },
+    {
+      "id": "d45b866a-5dcd-45c6-928a-0524b941afce",
+      "features": {
+        "case_id": 91027953,
+        "activity": "EVT:popup_structure",
+        "ts": "2026-11-11 21:11:33.252"
+      }
+    },
+    {
+      "id": "09f601b7-4385-468d-9261-c8eb5f478c75",
+      "features": {
+        "case_id": 91027954,
+        "activity": "CLICK:회사명",
+        "ts": "2026-11-11 21:11:33.414"
+      }
+    },
+    {
+      "id": "47586e76-a2fd-4103-9e12-134204ea8582",
+      "features": {
+        "case_id": 91027955,
+        "activity": "INPUT:회사명",
+        "ts": "2026-11-11 21:11:39.020"
+      }
+    },
+    {
+      "id": "b0ee654e-651e-41bc-bd06-3282279fcdaa",
+      "features": {
+        "case_id": 91027956,
+        "activity": "CLICK:대표자명",
+        "ts": "2026-11-11 21:11:39.133"
+      }
+    },
+    {
+      "id": "3d49aaa7-063b-436c-833f-ad789e23a970",
+      "features": {
+        "case_id": 91027957,
+        "activity": "INPUT:대표자명",
+        "ts": "2026-11-11 21:11:42.321"
+      }
+    },
+    {
+      "id": "1fc646b1-e7ed-433d-981c-8db6c858338f",
+      "features": {
+        "case_id": 91027958,
+        "activity": "CLICK:대표 솔루션",
+        "ts": "2026-11-11 21:11:42.402"
+      }
+    },
+    {
+      "id": "3961d2f2-c388-42cf-afa8-b59ae9bab2c3",
+      "features": {
+        "case_id": 91027959,
+        "activity": "INPUT:대표 솔루션",
+        "ts": "2026-11-11 21:11:45.400"
+      }
+    },
+    {
+      "id": "e98ea6b0-cd53-4f05-8457-b454f28036ed",
+      "features": {
+        "case_id": 91027960,
+        "activity": "INPUT:대표 전화번호",
+        "ts": "2026-11-11 21:11:49.061"
+      }
+    },
+    {
+      "id": "06c6c5ac-5b78-4eaa-a0b7-70176351a5ec",
+      "features": {
+        "case_id": 91027961,
+        "activity": "CLICK:회사 주소",
+        "ts": "2026-11-11 21:11:49.143"
+      }
+    },
+    {
+      "id": "4bc8285e-7169-40a4-9d13-ad8f7bd95d41",
+      "features": {
+        "case_id": 91027962,
+        "activity": "EVT:paste",
+        "ts": "2026-11-11 21:11:50.215"
+      }
+    },
+    {
+      "id": "c9085813-a486-4ca8-a2e2-bc8300875333",
+      "features": {
+        "case_id": 91027963,
+        "activity": "INPUT:회사 주소",
+        "ts": "2026-11-11 21:11:50.578"
+      }
+    },
+    {
+      "id": "a0390f65-30e6-40fc-b846-f36d4df682de",
+      "features": {
+        "case_id": 91027964,
+        "activity": "CLICK:대표 이메일 주소",
+        "ts": "2026-11-11 21:11:50.694"
+      }
+    },
+    {
+      "id": "4dd4363e-3f9e-4243-be59-f5cc919d3403",
+      "features": {
+        "case_id": 91027965,
+        "activity": "INPUT:대표 이메일 주소",
+        "ts": "2026-11-11 21:11:59.185"
+      }
+    },
+    {
+      "id": "3be1ffc7-932a-43f3-8084-ef14f888586b",
+      "features": {
+        "case_id": 91027966,
+        "activity": "CLICK:저장",
+        "ts": "2026-11-11 21:11:59.267"
+      }
+    },
+    {
+      "id": "a19aa0bc-7186-45aa-ad93-92e22e580a53",
+      "features": {
+        "case_id": 91027967,
+        "activity": "API:POST_/api/clients_2xx",
+        "ts": "2026-11-11 21:11:59.317"
+      }
+    },
+    {
+      "id": "e5daee7a-9e56-4c4a-a76e-b1370381fe75",
+      "features": {
+        "case_id": 91027968,
+        "activity": "API:GET_/api/clients_2xx",
+        "ts": "2026-11-11 21:11:59.333"
+      }
+    },
+    {
+      "id": "c83d1c7a-f391-4229-b872-c8d3e3101021",
+      "features": {
+        "case_id": 91027966,
+        "activity": "EVT:popup_open",
+        "ts": "2026-11-11 21:11:59.415"
+      }
+    },
+    {
+      "id": "20a710fc-7c01-41c4-8efe-b06935f4ca50",
+      "features": {
+        "case_id": 91027966,
+        "activity": "EVT:popup_close",
+        "ts": "2026-11-11 21:11:59.417"
+      }
+    },
+    {
+      "id": "cfa39f56-971f-4ea7-b033-87060be2c4e5",
+      "features": {
+        "case_id": 91027966,
+        "activity": "EVT:popup_structure",
+        "ts": "2026-11-11 21:12:00.220"
+      }
+    },
+    {
+      "id": "56b9f769-f52f-4301-bbc5-2f4117047cc4",
+      "features": {
+        "case_id": 91027969,
+        "activity": "CLICK:확인",
+        "ts": "2026-11-11 21:12:00.333"
+      }
+    },
+    {
+      "id": "aa711dc2-9eac-418e-bb54-86cd30704d75",
+      "features": {
+        "case_id": 91027969,
+        "activity": "EVT:popup_close",
+        "ts": "2026-11-11 21:12:00.416"
+      }
+    },
+    {
+      "id": "6e0590c2-f30b-45db-b0f3-90d975707fac",
+      "features": {
+        "case_id": 91027970,
+        "activity": "CLICK:div",
+        "ts": "2026-11-11 21:12:02.671"
+      }
+    },
+    {
+      "id": "d45d792c-deab-4624-a551-89304cec8eea",
+      "features": {
+        "case_id": 91027971,
+        "activity": "CLICK:자산 관리",
+        "ts": "2026-11-11 21:12:03.173"
+      }
+    },
+    {
+      "id": "d03dfd60-5f89-46a3-a876-d49e185e305e",
+      "features": {
+        "case_id": 91027972,
+        "activity": "EVT:route_change",
+        "ts": "2026-11-11 21:12:03.176"
+      }
+    },
+    {
+      "id": "7fe5ba0f-cb77-4c25-ae11-8cfa33b1556c",
+      "features": {
+        "case_id": 91027973,
+        "activity": "API:GET_/api/auth/me_2xx",
+        "ts": "2026-11-11 21:12:03.197"
+      }
+    },
+    {
+      "id": "c12316de-2168-47d0-84c6-831a6007d2ee",
+      "features": {
+        "case_id": 91027974,
+        "activity": "API:GET_/api/assets_2xx",
+        "ts": "2026-11-11 21:12:03.212"
+      }
+    },
+    {
+      "id": "efd169fd-6147-4a4f-a927-34eb0319e5d4",
+      "features": {
+        "case_id": 91027975,
+        "activity": "EVT:screen_change",
+        "ts": "2026-11-11 21:12:04.017"
+      }
+    },
+    {
+      "id": "97d9d51e-21ed-4bea-a2db-72f45e17f9b5",
+      "features": {
+        "case_id": 91027976,
+        "activity": "CLICK:등록",
+        "ts": "2026-11-11 21:12:04.841"
+      }
+    },
+    {
+      "id": "a55e3049-dad1-4afe-a09d-ff81217c50a4",
+      "features": {
+        "case_id": 91027976,
+        "activity": "EVT:popup_open",
+        "ts": "2026-11-11 21:12:04.926"
+      }
+    },
+    {
+      "id": "0677c13f-9ce6-4486-88e0-25d3e8c4b027",
+      "features": {
+        "case_id": 91027976,
+        "activity": "EVT:popup_structure",
+        "ts": "2026-11-11 21:12:05.794"
+      }
+    },
+    {
+      "id": "054df974-18c5-41b2-83e3-240cb15a1328",
+      "features": {
+        "case_id": 91027977,
+        "activity": "CLICK:구분",
+        "ts": "2026-11-11 21:12:06.090"
+      }
+    },
+    {
+      "id": "2ece6353-57d6-49e0-b7de-19e353e85cc8",
+      "features": {
+        "case_id": 91027978,
+        "activity": "INPUT:구분",
+        "ts": "2026-11-11 21:12:07.761"
+      }
+    },
+    {
+      "id": "7ba02742-7e3a-4e4f-8589-a4e73d6cdfdb",
+      "features": {
+        "case_id": 91027979,
+        "activity": "CLICK:구분",
+        "ts": "2026-11-11 21:12:07.762"
+      }
+    },
+    {
+      "id": "d57c12b5-4877-48f4-b1ee-07e7eaf3621c",
+      "features": {
+        "case_id": 91027980,
+        "activity": "CLICK:자산명",
+        "ts": "2026-11-11 21:12:08.341"
+      }
+    },
+    {
+      "id": "ff55a3fa-db64-4d7d-85fd-70310a454a25",
+      "features": {
+        "case_id": 91027981,
+        "activity": "INPUT:자산명",
+        "ts": "2026-11-11 21:12:10.117"
+      }
+    },
+    {
+      "id": "2623dffe-520a-4ff2-af58-1a923da02889",
+      "features": {
+        "case_id": 91027982,
+        "activity": "INPUT:자산 요약",
+        "ts": "2026-11-11 21:12:11.690"
+      }
+    },
+    {
+      "id": "88449df2-0dfb-4ca4-b8c4-5a620f978553",
+      "features": {
+        "case_id": 91027983,
+        "activity": "EVT:paste",
+        "ts": "2026-11-11 21:12:12.251"
+      }
+    },
+    {
+      "id": "2e33bb1b-ce91-4aec-92f0-77d0fa45a9ef",
+      "features": {
+        "case_id": 91027984,
+        "activity": "INPUT:상세 내용",
+        "ts": "2026-11-11 21:12:13.696"
+      }
+    },
+    {
+      "id": "4da7e235-3592-4e97-a59b-bbd860ce0fd7",
+      "features": {
+        "case_id": 91027985,
+        "activity": "CLICK:저장",
+        "ts": "2026-11-11 21:12:13.798"
+      }
+    },
+    {
+      "id": "216fbd0b-7bc6-4c5a-9720-ed9c548e606c",
+      "features": {
+        "case_id": 91027986,
+        "activity": "API:POST_/api/assets_2xx",
+        "ts": "2026-11-11 21:12:13.828"
+      }
+    },
+    {
+      "id": "3b2ece64-9a7f-4555-bf23-9e32a34352db",
+      "features": {
+        "case_id": 91027987,
+        "activity": "API:GET_/api/assets_2xx",
+        "ts": "2026-11-11 21:12:13.848"
+      }
+    },
+    {
+      "id": "c3a1d3c4-d77e-4ea7-a2f0-78e333a09ce9",
+      "features": {
+        "case_id": 91027985,
+        "activity": "EVT:popup_open",
+        "ts": "2026-11-11 21:12:13.931"
+      }
+    },
+    {
+      "id": "58c1158a-d177-42b5-991a-db9d9edab576",
+      "features": {
+        "case_id": 91027985,
+        "activity": "EVT:popup_close",
+        "ts": "2026-11-11 21:12:13.933"
+      }
+    },
+    {
+      "id": "92da3b37-5836-4921-8ce1-e351f4e4df7c",
+      "features": {
+        "case_id": 91027985,
+        "activity": "EVT:popup_structure",
+        "ts": "2026-11-11 21:12:14.753"
+      }
+    },
+    {
+      "id": "5277efac-a5f0-4ff3-bcce-798627d8eddc",
+      "features": {
+        "case_id": 91027988,
+        "activity": "CLICK:확인",
+        "ts": "2026-11-11 21:12:14.795"
+      }
+    },
+    {
+      "id": "1a3b981f-3fb4-4ff3-8159-fb1c47ea58e5",
+      "features": {
+        "case_id": 91027988,
+        "activity": "EVT:popup_close",
+        "ts": "2026-11-11 21:12:14.878"
+      }
+    },
+    {
+      "id": "ddf74e43-a7ee-4a64-886d-c8372bbe4a24",
+      "features": {
+        "case_id": 91027988,
+        "activity": "EVT:page_close",
+        "ts": "2026-11-11 21:12:16.348"
+      }
+    },
+    {
+      "id": "8e08307c-5f51-44ae-b078-b126a3b8a3a7",
+      "features": {
+        "case_id": 91027989,
+        "activity": "EVT:collector_boot",
+        "ts": "2026-11-11 21:36:45.064"
+      }
+    },
+    {
+      "id": "10555d32-7c13-4cee-858c-4dcfee7270e0",
+      "features": {
+        "case_id": 91027990,
+        "activity": "NAV:/rbem",
+        "ts": "2026-11-11 21:36:45.078"
+      }
+    },
+    {
+      "id": "420e6b40-2b9d-4181-b3d7-6d89d894a801",
+      "features": {
+        "case_id": 91027991,
+        "activity": "INPUT:아이디",
+        "ts": "2026-11-11 21:36:45.742"
+      }
+    },
+    {
+      "id": "2be4d355-5288-4da3-ba79-17e3389a803a",
+      "features": {
+        "case_id": 91027992,
+        "activity": "INPUT:비밀번호",
+        "ts": "2026-11-11 21:36:45.747"
+      }
+    },
+    {
+      "id": "c65a4517-5066-4b42-8944-e78301822d79",
+      "features": {
+        "case_id": 91027993,
+        "activity": "CLICK:로그인",
+        "ts": "2026-11-11 21:36:45.820"
+      }
+    },
+    {
+      "id": "d2f89229-9c51-482c-9523-fc0abada7768",
+      "features": {
+        "case_id": 91027993,
+        "activity": "SUBMIT:Rainbow",
+        "ts": "2026-11-11 21:36:45.822"
+      }
+    },
+    {
+      "id": "868217a2-9d7c-455a-94eb-5095e8d28272",
+      "features": {
+        "case_id": 91027994,
+        "activity": "EVT:route_change",
+        "ts": "2026-11-11 21:36:45.995"
+      }
+    },
+    {
+      "id": "53fce6e4-8961-48f8-a670-81b57766ac18",
+      "features": {
+        "case_id": 91027995,
+        "activity": "API:POST_/api/auth/login_2xx",
+        "ts": "2026-11-11 21:36:45.995"
+      }
+    },
+    {
+      "id": "3b556e22-3cf9-4728-aa91-6a72dc4d34c8",
+      "features": {
+        "case_id": 91027996,
+        "activity": "API:GET_/api/auth/me_2xx",
+        "ts": "2026-11-11 21:36:46.047"
+      }
+    },
+    {
+      "id": "b43bf937-ab8a-42ea-9adb-04e553ed31ec",
+      "features": {
+        "case_id": 91027997,
+        "activity": "API:GET_/api/auth/me_2xx",
+        "ts": "2026-11-11 21:36:46.343"
+      }
+    },
+    {
+      "id": "a03b5e62-63ac-43e0-919a-5c71cfeebd63",
+      "features": {
+        "case_id": 91027998,
+        "activity": "EVT:screen_change",
+        "ts": "2026-11-11 21:36:47.146"
+      }
+    },
+    {
+      "id": "b2339214-a5b7-44ab-9fd2-b634ba764ece",
+      "features": {
+        "case_id": 91027994,
+        "activity": "EVT:page_close",
+        "ts": "2026-11-11 21:36:47.220"
+      }
+    },
+    {
+      "id": "f2d4185e-17a9-4878-ae08-747d3d70783f",
+      "features": {
+        "case_id": 91027999,
+        "activity": "CLICK:일정 관리",
+        "ts": "2026-11-11 21:36:59.276"
+      }
+    },
+    {
+      "id": "4ef2e023-c43f-4ade-879e-5e07842078fd",
+      "features": {
+        "case_id": 91027999,
+        "activity": "EVT:route_change",
+        "ts": "2026-11-11 21:36:59.277"
+      }
+    },
+    {
+      "id": "4719689f-c545-4696-abc4-b2d5c831682f",
+      "features": {
+        "case_id": 91028000,
+        "activity": "API:GET_/api/schedules/viewers_2xx",
+        "ts": "2026-11-11 21:36:59.324"
+      }
+    },
+    {
+      "id": "1c227fcb-6594-4ef9-acd9-5d67489fc653",
+      "features": {
+        "case_id": 91028001,
+        "activity": "API:GET_/api/schedules_2xx",
+        "ts": "2026-11-11 21:36:59.347"
+      }
+    },
+    {
+      "id": "1df76927-6c22-4a43-82c7-290a13d6fec9",
+      "features": {
+        "case_id": 91028002,
+        "activity": "EVT:screen_change",
+        "ts": "2026-11-11 21:37:00.151"
+      }
+    },
+    {
+      "id": "65cac5d4-21f3-40b9-af8f-27e83f553931",
+      "features": {
+        "case_id": 91028003,
+        "activity": "CLICK:KTL-7C91-CU02-TITLE",
+        "ts": "2026-11-11 21:37:00.597"
+      }
+    },
+    {
+      "id": "27730ad5-eec0-4d50-a25c-de7ea4cf7c4b",
+      "features": {
+        "case_id": 91028003,
+        "activity": "EVT:popup_open",
+        "ts": "2026-11-11 21:37:00.689"
+      }
+    },
+    {
+      "id": "21d410cc-0122-46c2-99fe-3e4d35bc167d",
+      "features": {
+        "case_id": 91028004,
+        "activity": "EVT:screen_change",
+        "ts": "2026-11-11 21:37:01.408"
+      }
+    },
+    {
+      "id": "18057eff-5375-4115-913f-aeb58b1aae2d",
+      "features": {
+        "case_id": 91028003,
+        "activity": "EVT:popup_structure",
+        "ts": "2026-11-11 21:37:01.551"
+      }
+    },
+    {
+      "id": "03e178e4-9cbb-4f28-add7-6470a3021da7",
+      "features": {
+        "case_id": 91028005,
+        "activity": "CLICK:확인",
+        "ts": "2026-11-11 21:37:02.663"
+      }
+    },
+    {
+      "id": "dae988f0-978c-433b-b62d-02c542633def",
+      "features": {
+        "case_id": 91028005,
+        "activity": "SUBMIT:Rainbow",
+        "ts": "2026-11-11 21:37:02.667"
+      }
+    },
+    {
+      "id": "d7cfd013-5a4b-4579-9f36-ef55be1d7c5c",
+      "features": {
+        "case_id": 91028006,
+        "activity": "API:PATCH_/api/schedules/16_2xx",
+        "ts": "2026-11-11 21:37:02.688"
+      }
+    },
+    {
+      "id": "a87a65b7-477e-4531-848f-ba21b0242a09",
+      "features": {
+        "case_id": 91028007,
+        "activity": "API:GET_/api/schedules_2xx",
+        "ts": "2026-11-11 21:37:02.709"
+      }
+    },
+    {
+      "id": "b50a6603-031a-4ccd-985d-53da87e1869f",
+      "features": {
+        "case_id": 91028005,
+        "activity": "EVT:popup_close",
+        "ts": "2026-11-11 21:37:02.791"
+      }
+    },
+    {
+      "id": "1f3dbbc9-0270-49a3-87be-a2b7efa270ea",
+      "features": {
+        "case_id": 91028008,
+        "activity": "CLICK:KTL-CU02-FIX-7c91e6ab",
+        "ts": "2026-11-11 21:37:03.255"
+      }
+    },
+    {
+      "id": "465201a6-5ad3-42eb-98c8-f614d987b19e",
+      "features": {
+        "case_id": 91028008,
+        "activity": "EVT:popup_open",
+        "ts": "2026-11-11 21:37:03.342"
+      }
+    },
+    {
+      "id": "d95d49a0-217f-4604-9d61-9536e1fb2aa6",
+      "features": {
+        "case_id": 91028009,
+        "activity": "CLICK:확인",
+        "ts": "2026-11-11 21:37:04.098"
+      }
+    },
+    {
+      "id": "8b1186f9-5759-4955-8aa7-e627bab00939",
+      "features": {
+        "case_id": 91028009,
+        "activity": "SUBMIT:Rainbow",
+        "ts": "2026-11-11 21:37:04.101"
+      }
+    },
+    {
+      "id": "04d005e3-53c0-49d4-90f1-607d3e0f9d17",
+      "features": {
+        "case_id": 91028010,
+        "activity": "API:PATCH_/api/schedules/18_2xx",
+        "ts": "2026-11-11 21:37:04.133"
+      }
+    },
+    {
+      "id": "216868ab-f730-4a2c-a9b4-e25813b3feac",
+      "features": {
+        "case_id": 91028011,
+        "activity": "API:GET_/api/schedules_2xx",
+        "ts": "2026-11-11 21:37:04.152"
+      }
+    },
+    {
+      "id": "bc73a578-e106-4cf9-9b26-7836cd57ab42",
+      "features": {
+        "case_id": 91028009,
+        "activity": "EVT:popup_close",
+        "ts": "2026-11-11 21:37:04.235"
+      }
+    },
+    {
+      "id": "a606f460-7b1d-4a28-91e8-72e4c2609600",
+      "features": {
+        "case_id": 91028012,
+        "activity": "CLICK:KTL-7C91-CU02-TITLE-P3-CREATION-20261110-FULL",
+        "ts": "2026-11-11 21:37:07.955"
+      }
+    },
+    {
+      "id": "b00bc89c-d12f-454a-a282-5dcd98539705",
+      "features": {
+        "case_id": 91028012,
+        "activity": "EVT:popup_open",
+        "ts": "2026-11-11 21:37:08.043"
+      }
+    },
+    {
+      "id": "b0bb90d0-952a-4a11-85f8-ac9b0a4e5b86",
+      "features": {
+        "case_id": 91028013,
+        "activity": "EVT:screen_change",
+        "ts": "2026-11-11 21:37:08.765"
+      }
+    },
+    {
+      "id": "f3e98d4b-6959-48bd-8c49-9f5dbf026d30",
+      "features": {
+        "case_id": 91028014,
+        "activity": "CLICK:확인",
+        "ts": "2026-11-11 21:37:08.769"
+      }
+    },
+    {
+      "id": "904a9f19-b6a4-4602-a9e4-e98b815e2cc0",
+      "features": {
+        "case_id": 91028014,
+        "activity": "SUBMIT:Rainbow",
+        "ts": "2026-11-11 21:37:08.773"
+      }
+    },
+    {
+      "id": "ccbc7da4-d5fd-400c-8215-eae998fa38e8",
+      "features": {
+        "case_id": 91028015,
+        "activity": "API:PATCH_/api/schedules/28_2xx",
+        "ts": "2026-11-11 21:37:08.794"
+      }
+    },
+    {
+      "id": "e1710b0d-5c7f-457c-9248-942e6532da50",
+      "features": {
+        "case_id": 91028016,
+        "activity": "API:GET_/api/schedules_2xx",
+        "ts": "2026-11-11 21:37:08.813"
+      }
+    },
+    {
+      "id": "259b1334-89dd-4c39-b237-195e5a5ca987",
+      "features": {
+        "case_id": 91028014,
+        "activity": "EVT:popup_close",
+        "ts": "2026-11-11 21:37:08.895"
+      }
+    },
+    {
+      "id": "336d644b-0c27-465e-84da-b42bbdb245b6",
+      "features": {
+        "case_id": 91028017,
+        "activity": "CLICK:일정 관리",
+        "ts": "2026-11-11 21:37:10.821"
+      }
+    },
+    {
+      "id": "31316f5c-3536-4c73-8f45-f9c0b42d6d65",
+      "features": {
+        "case_id": 91028018,
+        "activity": "CLICK:KTL_테스트_1111",
+        "ts": "2026-11-11 21:37:13.648"
+      }
+    },
+    {
+      "id": "f1f8dcbf-ef38-448c-be17-7972d7bc37f0",
+      "features": {
+        "case_id": 91028018,
+        "activity": "EVT:popup_open",
+        "ts": "2026-11-11 21:37:13.737"
+      }
+    },
+    {
+      "id": "5b17f7f6-2e06-4034-9363-4f23b978eb72",
+      "features": {
+        "case_id": 91028019,
+        "activity": "EVT:screen_change",
+        "ts": "2026-11-11 21:37:14.457"
+      }
+    },
+    {
+      "id": "f67b14e7-a120-45ce-99b9-b260c103a6f5",
+      "features": {
+        "case_id": 91028018,
+        "activity": "EVT:popup_structure",
+        "ts": "2026-11-11 21:37:14.603"
+      }
+    },
+    {
+      "id": "936570a5-3536-4c44-8dad-11a25260155d",
+      "features": {
+        "case_id": 91028020,
+        "activity": "CLICK:확인",
+        "ts": "2026-11-11 21:37:15.292"
+      }
+    },
+    {
+      "id": "76d612ca-a387-42b9-8bed-3b50717a6cae",
+      "features": {
+        "case_id": 91028020,
+        "activity": "SUBMIT:Rainbow",
+        "ts": "2026-11-11 21:37:15.297"
+      }
+    },
+    {
+      "id": "0e0b64a6-18c5-4ef8-8fdf-c6eb1bb2398c",
+      "features": {
+        "case_id": 91028021,
+        "activity": "API:PATCH_/api/schedules/32_2xx",
+        "ts": "2026-11-11 21:37:15.341"
+      }
+    },
+    {
+      "id": "cbefa6ec-7441-4ef4-aab8-f50ff1e4f67f",
+      "features": {
+        "case_id": 91028022,
+        "activity": "API:GET_/api/schedules_2xx",
+        "ts": "2026-11-11 21:37:15.360"
+      }
+    },
+    {
+      "id": "de7a9253-5270-4d73-9203-82d6225acfe4",
+      "features": {
+        "case_id": 91028020,
+        "activity": "EVT:popup_close",
+        "ts": "2026-11-11 21:37:15.442"
+      }
+    },
+    {
+      "id": "993ba492-eecf-47ed-ad5b-fcc0b920476c",
+      "features": {
+        "case_id": 91028023,
+        "activity": "CLICK:일정 관리",
+        "ts": "2026-11-11 21:37:19.497"
+      }
+    },
+    {
+      "id": "dc60256a-af42-4d90-ba6a-76e0e0b40a3f",
+      "features": {
+        "case_id": 91028024,
+        "activity": "CLICK:업무 관리",
+        "ts": "2026-11-11 21:37:24.917"
+      }
+    },
+    {
+      "id": "2a7ae57c-b398-4b80-9416-36356dd0c182",
+      "features": {
+        "case_id": 91028025,
+        "activity": "CLICK:일일보고",
+        "ts": "2026-11-11 21:37:25.653"
+      }
+    },
+    {
+      "id": "ff713e2a-ab5c-4673-afd3-fc464477ffd1",
+      "features": {
+        "case_id": 91028025,
+        "activity": "EVT:route_change",
+        "ts": "2026-11-11 21:37:25.656"
+      }
+    },
+    {
+      "id": "cbe29bf1-a279-46cb-b69c-ce9ef0a80a63",
+      "features": {
+        "case_id": 91028026,
+        "activity": "API:GET_/api/auth/me_2xx",
+        "ts": "2026-11-11 21:37:25.727"
+      }
+    },
+    {
+      "id": "5dd91dde-8908-4fcd-a74d-546e42355de8",
+      "features": {
+        "case_id": 91028027,
+        "activity": "API:GET_/api/work-reports_2xx",
+        "ts": "2026-11-11 21:37:25.729"
+      }
+    },
+    {
+      "id": "c666d148-aae1-4e58-b6de-f4fb941ee0cf",
+      "features": {
+        "case_id": 91028028,
+        "activity": "EVT:screen_change",
+        "ts": "2026-11-11 21:37:26.533"
+      }
+    },
+    {
+      "id": "4cbf484c-bd4d-40dd-8f3e-d34e45031646",
+      "features": {
+        "case_id": 91028029,
+        "activity": "CLICK:명함 관리",
+        "ts": "2026-11-11 21:37:27.952"
+      }
+    },
+    {
+      "id": "9d4d2214-8a16-41ed-aa5b-9fbca68e9f01",
+      "features": {
+        "case_id": 91028030,
+        "activity": "EVT:route_change",
+        "ts": "2026-11-11 21:37:27.955"
+      }
+    },
+    {
+      "id": "1e9cee87-f645-495d-a985-962cd18c76cb",
+      "features": {
+        "case_id": 91028031,
+        "activity": "API:GET_/api/auth/me_2xx",
+        "ts": "2026-11-11 21:37:27.990"
+      }
+    },
+    {
+      "id": "b8269dcd-fd8a-4c91-9ad3-9293b50f873d",
+      "features": {
+        "case_id": 91028032,
+        "activity": "API:GET_/api/business-cards_2xx",
+        "ts": "2026-11-11 21:37:27.992"
+      }
+    },
+    {
+      "id": "24e3ad3f-d75c-4b33-9f4d-007c32b6c4f0",
+      "features": {
+        "case_id": 91028033,
+        "activity": "EVT:screen_change",
+        "ts": "2026-11-11 21:37:28.795"
+      }
+    },
+    {
+      "id": "6ed3ea27-f4d3-4516-8a5a-d0e4df98fa30",
+      "features": {
+        "case_id": 91028034,
+        "activity": "CLICK:회사명",
+        "ts": "2026-11-11 21:37:29.510"
+      }
+    },
+    {
+      "id": "dd824030-12c3-484f-8366-ce41b9daee05",
+      "features": {
+        "case_id": 91028035,
+        "activity": "CLICK:김 * 영",
+        "ts": "2026-11-11 21:37:30.170"
+      }
+    },
+    {
+      "id": "63e2d015-a05c-45b4-96ce-6891e33f5739",
+      "features": {
+        "case_id": 91028036,
+        "activity": "API:GET_/api/business-cards/13_2xx",
+        "ts": "2026-11-11 21:37:30.205"
+      }
+    },
+    {
+      "id": "fc507b8d-d9e4-45be-86b3-8b6b6d9a5f14",
+      "features": {
+        "case_id": 91028035,
+        "activity": "EVT:popup_open",
+        "ts": "2026-11-11 21:37:30.288"
+      }
+    },
+    {
+      "id": "9243b7ae-c589-4368-99e6-f2369e5e9855",
+      "features": {
+        "case_id": 91028035,
+        "activity": "EVT:popup_structure",
+        "ts": "2026-11-11 21:37:31.126"
+      }
+    },
+    {
+      "id": "2d71f27b-6a72-4e6d-acdf-daccadb58392",
+      "features": {
+        "case_id": 91028037,
+        "activity": "CLICK:명함 상세 닫기",
+        "ts": "2026-11-11 21:37:31.672"
+      }
+    },
+    {
+      "id": "f62df441-d8e5-42ae-a078-af3598dfa8b1",
+      "features": {
+        "case_id": 91028037,
+        "activity": "EVT:popup_close",
+        "ts": "2026-11-11 21:37:31.759"
+      }
+    },
+    {
+      "id": "358ef869-0bc4-40e4-90c7-f24c4196b797",
+      "features": {
+        "case_id": 91028038,
+        "activity": "CLICK:명함 관리",
+        "ts": "2026-11-11 21:37:34.696"
+      }
+    },
+    {
+      "id": "cfacf54f-fa72-4f60-bbb9-595c0f287213",
+      "features": {
+        "case_id": 91028039,
+        "activity": "CLICK:주간보고",
+        "ts": "2026-11-11 21:37:36.878"
+      }
+    },
+    {
+      "id": "b65fc17e-7c80-4e89-8bab-718776513575",
+      "features": {
+        "case_id": 91028039,
+        "activity": "EVT:route_change",
+        "ts": "2026-11-11 21:37:36.882"
+      }
+    },
+    {
+      "id": "2aea751e-9b7a-4b49-88e4-f563a6cc11ce",
+      "features": {
+        "case_id": 91028040,
+        "activity": "API:GET_/api/work-reports_2xx",
+        "ts": "2026-11-11 21:37:36.932"
+      }
+    },
+    {
+      "id": "e3b3f904-5b31-4ae5-bdf6-becd95823e42",
+      "features": {
+        "case_id": 91028041,
+        "activity": "API:GET_/api/auth/me_2xx",
+        "ts": "2026-11-11 21:37:36.932"
+      }
+    },
+    {
+      "id": "b5fd0d9f-8329-4a75-9d49-f14c90008b63",
+      "features": {
+        "case_id": 91028042,
+        "activity": "EVT:screen_change",
+        "ts": "2026-11-11 21:37:37.736"
+      }
+    },
+    {
+      "id": "444ee9a3-588b-45c3-bd83-6e20061ada45",
+      "features": {
+        "case_id": 91028043,
+        "activity": "CLICK:제목",
+        "ts": "2026-11-11 21:37:38.734"
+      }
+    },
+    {
+      "id": "45207d63-0e89-472f-b360-edf31b3c127b",
+      "features": {
+        "case_id": 91028044,
+        "activity": "CLICK:26-11 2주차 KTL 테스트_1108",
+        "ts": "2026-11-11 21:37:39.093"
+      }
+    },
+    {
+      "id": "654a448c-04a9-491c-b92a-7540aa1f47b8",
+      "features": {
+        "case_id": 91028045,
+        "activity": "API:GET_/api/work-reports/25_2xx",
+        "ts": "2026-11-11 21:37:39.112"
+      }
+    },
+    {
+      "id": "af4bd005-17c8-4530-8065-34ccf734337e",
+      "features": {
+        "case_id": 91028044,
+        "activity": "EVT:popup_open",
+        "ts": "2026-11-11 21:37:39.194"
+      }
+    },
+    {
+      "id": "b237c0d2-b4e3-4a1f-9875-42e863d1d9ea",
+      "features": {
+        "case_id": 91028044,
+        "activity": "EVT:popup_structure",
+        "ts": "2026-11-11 21:37:40.048"
+      }
+    },
+    {
+      "id": "26edb121-c81c-4cc8-9877-86039a4e0694",
+      "features": {
+        "case_id": 91028046,
+        "activity": "CLICK:상세 닫기",
+        "ts": "2026-11-11 21:37:47.635"
+      }
+    },
+    {
+      "id": "5982d797-7937-4693-a8b2-2b06ccb38931",
+      "features": {
+        "case_id": 91028046,
+        "activity": "EVT:popup_close",
+        "ts": "2026-11-11 21:37:47.722"
+      }
+    },
+    {
+      "id": "ee5aaaac-1072-4c69-86d2-70bee8f931f8",
+      "features": {
+        "case_id": 91028047,
+        "activity": "CLICK:등록",
+        "ts": "2026-11-11 21:37:48.418"
+      }
+    },
+    {
+      "id": "7669c4b7-7010-4ce9-8bc7-687141bff32c",
+      "features": {
+        "case_id": 91028047,
+        "activity": "EVT:popup_open",
+        "ts": "2026-11-11 21:37:48.505"
+      }
+    },
+    {
+      "id": "9240d92f-b214-4390-8c04-0c39a9eed61c",
+      "features": {
+        "case_id": 91028047,
+        "activity": "EVT:popup_structure",
+        "ts": "2026-11-11 21:37:49.372"
+      }
+    },
+    {
+      "id": "e5054cb9-0164-48cd-8836-80923f681d8b",
+      "features": {
+        "case_id": 91028048,
+        "activity": "CLICK:업무보고 모달 닫기",
+        "ts": "2026-11-11 21:37:50.339"
+      }
+    },
+    {
+      "id": "1313a1ab-761a-4b18-a2fb-8c56b59e9eba",
+      "features": {
+        "case_id": 91028048,
+        "activity": "EVT:popup_close",
+        "ts": "2026-11-11 21:37:50.424"
+      }
+    },
+    {
+      "id": "058affd9-f52b-4794-a5d2-c4baf6a5a166",
+      "features": {
+        "case_id": 91028049,
+        "activity": "CLICK:명함 관리",
+        "ts": "2026-11-11 21:37:52.107"
+      }
+    },
+    {
+      "id": "b9f440ee-d548-470c-937f-bd20ec7d382e",
+      "features": {
+        "case_id": 91028047,
+        "activity": "EVT:route_change",
+        "ts": "2026-11-11 21:37:52.109"
+      }
+    },
+    {
+      "id": "35c061ee-3af3-4e69-8ca0-37a698bf3451",
+      "features": {
+        "case_id": 91028050,
+        "activity": "API:GET_/api/auth/me_2xx",
+        "ts": "2026-11-11 21:37:52.154"
+      }
+    },
+    {
+      "id": "2c26a46f-2f71-4dbd-b6bd-f2cad237ed9a",
+      "features": {
+        "case_id": 91028051,
+        "activity": "API:GET_/api/business-cards_2xx",
+        "ts": "2026-11-11 21:37:52.156"
+      }
+    },
+    {
+      "id": "966a1203-a3e9-4e37-be4a-51d184ebe02d",
+      "features": {
+        "case_id": 91028052,
+        "activity": "EVT:screen_change",
+        "ts": "2026-11-11 21:37:52.960"
+      }
+    },
+    {
+      "id": "5e9a7965-544e-4384-a200-2d4af5343b63",
+      "features": {
+        "case_id": 91028053,
+        "activity": "CLICK:일일보고",
+        "ts": "2026-11-11 21:37:54.761"
+      }
+    },
+    {
+      "id": "07e84f7b-faca-4137-b4d7-3fcb8d335e5d",
+      "features": {
+        "case_id": 91028054,
+        "activity": "EVT:route_change",
+        "ts": "2026-11-11 21:37:54.764"
+      }
+    },
+    {
+      "id": "7c95b5be-7604-4ff0-9fc9-e28f98b14fcb",
+      "features": {
+        "case_id": 91028055,
+        "activity": "API:GET_/api/auth/me_2xx",
+        "ts": "2026-11-11 21:37:54.803"
+      }
+    },
+    {
+      "id": "a1923113-198e-44a7-88cf-ced82dddda9f",
+      "features": {
+        "case_id": 91028056,
+        "activity": "API:GET_/api/work-reports_2xx",
+        "ts": "2026-11-11 21:37:54.805"
+      }
+    },
+    {
+      "id": "a7e42bf0-ceb2-40b4-9869-773c5f759c47",
+      "features": {
+        "case_id": 91028057,
+        "activity": "EVT:screen_change",
+        "ts": "2026-11-11 21:37:55.608"
+      }
+    },
+    {
+      "id": "f188af9c-3301-4beb-8b60-ea462aa53d3e",
+      "features": {
+        "case_id": 91028058,
+        "activity": "CLICK:등록",
+        "ts": "2026-11-11 21:37:56.643"
+      }
+    },
+    {
+      "id": "4e716fc8-e7cc-416b-9545-3d7f30b8dd6b",
+      "features": {
+        "case_id": 91028058,
+        "activity": "EVT:popup_open",
+        "ts": "2026-11-11 21:37:56.728"
+      }
+    },
+    {
+      "id": "1a155b57-8b05-45c3-a12e-dd9f714c1ec4",
+      "features": {
+        "case_id": 91028058,
+        "activity": "EVT:popup_structure",
+        "ts": "2026-11-11 21:37:57.596"
+      }
+    },
+    {
+      "id": "a71aa73e-b3a9-45e0-97e6-babc10924629",
+      "features": {
+        "case_id": 91028059,
+        "activity": "CLICK:제목",
+        "ts": "2026-11-11 21:37:57.725"
+      }
+    },
+    {
+      "id": "6d566752-8018-4d78-947f-6df4f8bec24d",
+      "features": {
+        "case_id": 91028060,
+        "activity": "EVT:paste",
+        "ts": "2026-11-11 21:37:58.440"
+      }
+    },
+    {
+      "id": "a08bda6b-2fe3-419e-9075-ad3fb42374ce",
+      "features": {
+        "case_id": 91028061,
+        "activity": "INPUT:제목",
+        "ts": "2026-11-11 21:38:07.255"
+      }
+    },
+    {
+      "id": "b1ce6fbd-7aa5-4ec7-9d5c-12cb546191a1",
+      "features": {
+        "case_id": 91028062,
+        "activity": "CLICK:내용",
+        "ts": "2026-11-11 21:38:07.300"
+      }
+    },
+    {
+      "id": "3f980116-5adf-41ed-adc7-37cb6c0ffd98",
+      "features": {
+        "case_id": 91028063,
+        "activity": "CLICK:제목",
+        "ts": "2026-11-11 21:38:07.601"
+      }
+    },
+    {
+      "id": "01b6de6d-552d-4366-b84d-a423f9756c85",
+      "features": {
+        "case_id": 91028064,
+        "activity": "CLICK:제목",
+        "ts": "2026-11-11 21:38:07.750"
+      }
+    },
+    {
+      "id": "67a05167-127b-4eb3-80f7-6fd83966c7b7",
+      "features": {
+        "case_id": 91028065,
+        "activity": "CLICK:제목",
+        "ts": "2026-11-11 21:38:07.901"
+      }
+    },
+    {
+      "id": "41bf1e04-a6f7-4362-ab80-8b85dd33dcf2",
+      "features": {
+        "case_id": 91028066,
+        "activity": "CLICK:내용",
+        "ts": "2026-11-11 21:38:08.252"
+      }
+    },
+    {
+      "id": "e502c5c6-b179-4ec5-9e91-63c91fd524e8",
+      "features": {
+        "case_id": 91028067,
+        "activity": "EVT:paste",
+        "ts": "2026-11-11 21:38:08.362"
+      }
+    },
+    {
+      "id": "8e7822f3-6dc3-4a5c-8e0b-7c8a9b052e87",
+      "features": {
+        "case_id": 91028068,
+        "activity": "INPUT:내용",
+        "ts": "2026-11-11 21:38:09.621"
+      }
+    },
+    {
+      "id": "7a8a17ca-f8e3-47bc-8175-7652e568e4e9",
+      "features": {
+        "case_id": 91028069,
+        "activity": "CLICK:업무보고 모달 닫기",
+        "ts": "2026-11-11 21:38:09.710"
+      }
+    },
+    {
+      "id": "0c991ee9-c8d4-4577-a49d-b07dd4b05312",
+      "features": {
+        "case_id": 91028069,
+        "activity": "EVT:popup_close",
+        "ts": "2026-11-11 21:38:09.793"
+      }
+    },
+    {
+      "id": "632b9977-106e-45be-ae70-5c49cb54fad6",
+      "features": {
+        "case_id": 91028070,
+        "activity": "CLICK:명함 관리",
+        "ts": "2026-11-11 21:38:10.757"
+      }
+    },
+    {
+      "id": "66996f0f-834e-48ff-a586-3b141dac9a69",
+      "features": {
+        "case_id": 91028070,
+        "activity": "EVT:route_change",
+        "ts": "2026-11-11 21:38:10.760"
+      }
+    },
+    {
+      "id": "acf64ff1-ba12-4847-97d9-074ba3722ebb",
+      "features": {
+        "case_id": 91028071,
+        "activity": "API:GET_/api/auth/me_2xx",
+        "ts": "2026-11-11 21:38:10.810"
+      }
+    },
+    {
+      "id": "069aa6be-e448-434a-8db6-001c271a0d75",
+      "features": {
+        "case_id": 91028072,
+        "activity": "API:GET_/api/business-cards_2xx",
+        "ts": "2026-11-11 21:38:10.812"
+      }
+    },
+    {
+      "id": "b1256803-88c0-4a19-968a-b6da82237d7b",
+      "features": {
+        "case_id": 91028073,
+        "activity": "EVT:screen_change",
+        "ts": "2026-11-11 21:38:11.616"
+      }
+    },
+    {
+      "id": "55502204-21a4-4323-8f0c-3d88c2038aa1",
+      "features": {
+        "case_id": 91028074,
+        "activity": "EVT:route_change",
+        "ts": "2026-11-11 21:38:12.933"
+      }
+    },
+    {
+      "id": "8c469c8d-87b4-4026-b52b-65af706cda66",
+      "features": {
+        "case_id": 91028075,
+        "activity": "API:GET_/api/auth/me_2xx",
+        "ts": "2026-11-11 21:38:12.961"
+      }
+    },
+    {
+      "id": "6338f4ea-1084-46f2-ba87-1054888d38e1",
+      "features": {
+        "case_id": 91028076,
+        "activity": "API:GET_/api/work-reports_2xx",
+        "ts": "2026-11-11 21:38:12.963"
+      }
+    },
+    {
+      "id": "8a8e6f28-5135-4c41-ba6a-8d89ede4f754",
+      "features": {
+        "case_id": 91028077,
+        "activity": "EVT:screen_change",
+        "ts": "2026-11-11 21:38:13.767"
+      }
+    },
+    {
+      "id": "4ba82ff8-eb42-4f3e-b93d-891a6bc3f1f1",
+      "features": {
+        "case_id": 91028078,
+        "activity": "CLICK:등록",
+        "ts": "2026-11-11 21:38:14.624"
+      }
+    },
+    {
+      "id": "a47cafd7-3e51-4a45-9ee9-3ec1c65f2e75",
+      "features": {
+        "case_id": 91028078,
+        "activity": "EVT:popup_open",
+        "ts": "2026-11-11 21:38:14.710"
+      }
+    },
+    {
+      "id": "0cf546a4-a7b5-43f7-b4d2-93c863dfad42",
+      "features": {
+        "case_id": 91028079,
+        "activity": "CLICK:내용",
+        "ts": "2026-11-11 21:38:15.144"
+      }
+    },
+    {
+      "id": "ae02157a-ca96-43b7-819e-090128dce00c",
+      "features": {
+        "case_id": 91028080,
+        "activity": "CLICK:제목",
+        "ts": "2026-11-11 21:38:15.558"
+      }
+    },
+    {
+      "id": "f7d892d6-8ff2-49a5-9976-fa3938ddd56c",
+      "features": {
+        "case_id": 91028081,
+        "activity": "EVT:paste",
+        "ts": "2026-11-11 21:38:15.679"
+      }
+    },
+    {
+      "id": "493f8071-b483-420b-b8bd-733e0365a321",
+      "features": {
+        "case_id": 91028082,
+        "activity": "INPUT:제목",
+        "ts": "2026-11-11 21:38:15.809"
+      }
+    },
+    {
+      "id": "c85004cf-0dd2-4dbd-8931-9fb3468a0933",
+      "features": {
+        "case_id": 91028083,
+        "activity": "CLICK:내용",
+        "ts": "2026-11-11 21:38:15.879"
+      }
+    },
+    {
+      "id": "331e3540-3619-4987-8358-112a0a2a9bee",
+      "features": {
+        "case_id": 91028084,
+        "activity": "EVT:paste",
+        "ts": "2026-11-11 21:38:15.975"
+      }
+    },
+    {
+      "id": "fb8f70fd-6896-412e-ac9d-c079a5d93171",
+      "features": {
+        "case_id": 91028085,
+        "activity": "INPUT:내용",
+        "ts": "2026-11-11 21:38:16.710"
+      }
+    },
+    {
+      "id": "13f44623-b047-4d9b-99ed-d29b0d97c693",
+      "features": {
+        "case_id": 91028086,
+        "activity": "CLICK:등록자 : 테스트 날짜 : 2026.11.11 (수)",
+        "ts": "2026-11-11 21:38:16.794"
+      }
+    },
+    {
+      "id": "0173b6b6-1f5c-4e45-9668-f00f97ccb9c1",
+      "features": {
+        "case_id": 91028078,
+        "activity": "EVT:popup_structure",
+        "ts": "2026-11-11 21:38:16.830"
+      }
+    },
+    {
+      "id": "5fac5cc7-bf04-4fc1-98fe-e733e912b59a",
+      "features": {
+        "case_id": 91028087,
+        "activity": "CLICK:2026.11.11 (수)",
+        "ts": "2026-11-11 21:38:17.092"
+      }
+    },
+    {
+      "id": "c482df1d-0b8e-476b-ac4a-45c14da53e8d",
+      "features": {
+        "case_id": 91028086,
+        "activity": "EVT:popup_open",
+        "ts": "2026-11-11 21:38:17.099"
+      }
+    },
+    {
+      "id": "bdba8c1a-af74-4837-aa5e-9a687c077b58",
+      "features": {
+        "case_id": 91028088,
+        "activity": "CLICK:2026-11-11",
+        "ts": "2026-11-11 21:38:18.028"
+      }
+    },
+    {
+      "id": "af2ad4bc-c412-4164-b269-28ab455b1c50",
+      "features": {
+        "case_id": 91028088,
+        "activity": "EVT:popup_close",
+        "ts": "2026-11-11 21:38:18.114"
+      }
+    },
+    {
+      "id": "5d752ece-8f07-43f5-b45a-0f9f6cd3b9c4",
+      "features": {
+        "case_id": 91028089,
+        "activity": "CLICK:저장",
+        "ts": "2026-11-11 21:38:18.929"
+      }
+    },
+    {
+      "id": "369bc63b-0f94-4f0f-b8fb-7c87c11aeaf9",
+      "features": {
+        "case_id": 91028089,
+        "activity": "EVT:popup_open",
+        "ts": "2026-11-11 21:38:18.980"
+      }
+    },
+    {
+      "id": "8a08b4cc-c899-4a1e-a24d-fbf05ad09304",
+      "features": {
+        "case_id": 91028089,
+        "activity": "EVT:popup_close",
+        "ts": "2026-11-11 21:38:18.984"
+      }
+    },
+    {
+      "id": "452426e8-56ff-49a0-8303-65be202ad5c5",
+      "features": {
+        "case_id": 91028089,
+        "activity": "EVT:ui_outcome",
+        "ts": "2026-11-11 21:38:18.986"
+      }
+    },
+    {
+      "id": "a0aefebe-73ac-455e-a288-6be30c10f8cf",
+      "features": {
+        "case_id": 91028090,
+        "activity": "API:POST_/api/work-reports_2xx",
+        "ts": "2026-11-11 21:38:18.977"
+      }
+    },
+    {
+      "id": "8bdf7cad-a446-4811-a7fe-5fa076ce186e",
+      "features": {
+        "case_id": 91028091,
+        "activity": "API:GET_/api/work-reports_2xx",
+        "ts": "2026-11-11 21:38:19.016"
+      }
+    },
+    {
+      "id": "859dda17-86d2-41b2-b655-916fe7921c48",
+      "features": {
+        "case_id": 91028089,
+        "activity": "EVT:popup_structure",
+        "ts": "2026-11-11 21:38:19.884"
+      }
+    },
+    {
+      "id": "e9606a8e-6e22-4f7b-9540-3ef001fb4619",
+      "features": {
+        "case_id": 91028092,
+        "activity": "CLICK:확인",
+        "ts": "2026-11-11 21:38:19.995"
+      }
+    },
+    {
+      "id": "2389abaf-4270-491c-9286-c19403eca84b",
+      "features": {
+        "case_id": 91028092,
+        "activity": "EVT:popup_close",
+        "ts": "2026-11-11 21:38:20.078"
+      }
+    },
+    {
+      "id": "8f82b2b7-73fc-4b8c-b57b-e86db0f440fe",
+      "features": {
+        "case_id": 91028092,
+        "activity": "EVT:page_close",
+        "ts": "2026-11-11 21:38:29.307"
+      }
+    },
+    {
+      "id": "d0b5e344-9595-4aa4-8c3c-f6a772e5faef",
+      "features": {
+        "case_id": 91028093,
+        "activity": "EVT:collector_boot",
+        "ts": "2026-11-11 22:27:29.635"
+      }
+    },
+    {
+      "id": "f2256c57-488f-4da6-8b61-660d19e05453",
+      "features": {
+        "case_id": 91028094,
+        "activity": "NAV:/rbem",
+        "ts": "2026-11-11 22:27:29.651"
+      }
+    },
+    {
+      "id": "dd8abfdf-9c36-43bc-9680-b637e6183502",
+      "features": {
+        "case_id": 91028095,
+        "activity": "INPUT:아이디",
+        "ts": "2026-11-11 22:27:31.026"
+      }
+    },
+    {
+      "id": "c926ee6a-6e32-48c6-a0ed-c9c1b6d6d5e2",
+      "features": {
+        "case_id": 91028096,
+        "activity": "INPUT:비밀번호",
+        "ts": "2026-11-11 22:27:31.029"
+      }
+    },
+    {
+      "id": "b6c44b63-580f-4ebc-867f-e23f430edafe",
+      "features": {
+        "case_id": 91028097,
+        "activity": "CLICK:로그인",
+        "ts": "2026-11-11 22:27:31.074"
+      }
+    },
+    {
+      "id": "058e2261-231c-4832-9f5c-23acfacd9563",
+      "features": {
+        "case_id": 91028097,
+        "activity": "SUBMIT:Rainbow",
+        "ts": "2026-11-11 22:27:31.076"
+      }
+    },
+    {
+      "id": "a7a8c027-5be0-4f68-a4f7-3d17d8f96d2e",
+      "features": {
+        "case_id": 91028098,
+        "activity": "EVT:route_change",
+        "ts": "2026-11-11 22:27:31.257"
+      }
+    },
+    {
+      "id": "ff55bfa2-eeeb-4d93-a484-c6995d758f1d",
+      "features": {
+        "case_id": 91028099,
+        "activity": "API:POST_/api/auth/login_2xx",
+        "ts": "2026-11-11 22:27:31.257"
+      }
+    },
+    {
+      "id": "2c12c355-8323-4cd8-9fa3-d2d475c55f93",
+      "features": {
+        "case_id": 91028100,
+        "activity": "API:GET_/api/auth/me_2xx",
+        "ts": "2026-11-11 22:27:31.328"
+      }
+    },
+    {
+      "id": "6b5579aa-88ff-4d92-b89c-c8254bfcf8f5",
+      "features": {
+        "case_id": 91028101,
+        "activity": "API:GET_/api/auth/me_2xx",
+        "ts": "2026-11-11 22:27:31.612"
+      }
+    },
+    {
+      "id": "55c77712-42eb-4fa9-8246-e5a22418b02d",
+      "features": {
+        "case_id": 91028102,
+        "activity": "EVT:screen_change",
+        "ts": "2026-11-11 22:27:32.415"
+      }
+    },
+    {
+      "id": "73c2c7a7-11a0-4fdc-9c67-8f600ab42aff",
+      "features": {
+        "case_id": 91028103,
+        "activity": "CLICK:일반 정보",
+        "ts": "2026-11-11 22:27:34.799"
+      }
+    },
+    {
+      "id": "d5d8bbef-ec8d-45e4-83e3-ce00ec750a8f",
+      "features": {
+        "case_id": 91028104,
+        "activity": "CLICK:ul",
+        "ts": "2026-11-11 22:27:37.549"
+      }
+    },
+    {
+      "id": "19f6e748-e108-426c-bd51-6387e8ab406a",
+      "features": {
+        "case_id": 91028105,
+        "activity": "CLICK:일정 관리",
+        "ts": "2026-11-11 22:27:37.980"
+      }
+    },
+    {
+      "id": "ed071a66-0852-4022-8cb0-89727d7a051b",
+      "features": {
+        "case_id": 91028105,
+        "activity": "EVT:route_change",
+        "ts": "2026-11-11 22:27:37.981"
+      }
+    },
+    {
+      "id": "577cd83c-c284-4ab1-8814-fa1e6be6a8d3",
+      "features": {
+        "case_id": 91028106,
+        "activity": "API:GET_/api/schedules/viewers_2xx",
+        "ts": "2026-11-11 22:27:38.025"
+      }
+    },
+    {
+      "id": "f267364f-a9f2-40c6-b808-b58038b7ad66",
+      "features": {
+        "case_id": 91028107,
+        "activity": "API:GET_/api/schedules_2xx",
+        "ts": "2026-11-11 22:27:38.048"
+      }
+    },
+    {
+      "id": "ee0abdc5-cf0d-4298-821e-cd3cead259a5",
+      "features": {
+        "case_id": 91028108,
+        "activity": "EVT:screen_change",
+        "ts": "2026-11-11 22:27:38.852"
+      }
+    },
+    {
+      "id": "d502a534-c76e-48b4-a81e-f2fde6b6f07f",
+      "features": {
+        "case_id": 91028109,
+        "activity": "CLICK:6",
+        "ts": "2026-11-11 22:27:40.821"
+      }
+    },
+    {
+      "id": "4d62730e-f5bb-4609-8eb2-bf95563f8b82",
+      "features": {
+        "case_id": 91028109,
+        "activity": "EVT:popup_open",
+        "ts": "2026-11-11 22:27:40.916"
+      }
+    },
+    {
+      "id": "57897097-536a-457e-9215-687378c976d0",
+      "features": {
+        "case_id": 91028109,
+        "activity": "EVT:popup_structure",
+        "ts": "2026-11-11 22:27:41.778"
+      }
+    },
+    {
+      "id": "1bbd68bf-a49e-441d-8e5a-e1a48adc42c1",
+      "features": {
+        "case_id": 91028110,
+        "activity": "CLICK:제목",
+        "ts": "2026-11-11 22:27:41.941"
+      }
+    },
+    {
+      "id": "6f0dfde3-9594-4b28-85f1-bc7f1b158ce1",
+      "features": {
+        "case_id": 91028111,
+        "activity": "CLICK:제목",
+        "ts": "2026-11-11 22:27:45.353"
+      }
+    },
+    {
+      "id": "e67b3638-eb57-4822-8163-0310ab39c969",
+      "features": {
+        "case_id": 91028112,
+        "activity": "CLICK:제목",
+        "ts": "2026-11-11 22:27:47.422"
+      }
+    },
+    {
+      "id": "69044b66-7dd2-4cba-a403-7dbff039953d",
+      "features": {
+        "case_id": 91028113,
+        "activity": "CLICK:제목",
+        "ts": "2026-11-11 22:27:58.598"
+      }
+    },
+    {
+      "id": "2acf909a-1edc-4e9e-b576-e78d2a317d4e",
+      "features": {
+        "case_id": 91028114,
+        "activity": "CLICK:제목",
+        "ts": "2026-11-11 22:27:58.764"
+      }
+    },
+    {
+      "id": "35f43c3f-4a58-4ca1-9e9f-af6262f603fe",
+      "features": {
+        "case_id": 91028115,
+        "activity": "CLICK:제목",
+        "ts": "2026-11-11 22:27:58.931"
+      }
+    },
+    {
+      "id": "0d020dd1-d015-4d1e-87bb-e317ac4cac39",
+      "features": {
+        "case_id": 91028116,
+        "activity": "INPUT:제목",
+        "ts": "2026-11-11 22:27:59.247"
+      }
+    },
+    {
+      "id": "48bed094-b34c-4fda-a23b-4ab1a23fe17f",
+      "features": {
+        "case_id": 91028117,
+        "activity": "CLICK:내용",
+        "ts": "2026-11-11 22:27:59.363"
+      }
+    },
+    {
+      "id": "5771dbaf-952e-4676-90a9-5bceb58961c7",
+      "features": {
+        "case_id": 91028118,
+        "activity": "EVT:paste",
+        "ts": "2026-11-11 22:27:59.434"
+      }
+    },
+    {
+      "id": "e1fc6317-065e-4b6e-9bfb-b9bb31b30de2",
+      "features": {
+        "case_id": 91028119,
+        "activity": "CLICK:내용",
+        "ts": "2026-11-11 22:28:02.551"
+      }
+    },
+    {
+      "id": "57ae1475-36e7-43e2-9d36-bed7bd493ba8",
+      "features": {
+        "case_id": 91028120,
+        "activity": "CLICK:내용",
+        "ts": "2026-11-11 22:28:02.716"
+      }
+    },
+    {
+      "id": "c09f7c77-266e-4128-9ccf-57dce270329f",
+      "features": {
+        "case_id": 91028121,
+        "activity": "CLICK:내용",
+        "ts": "2026-11-11 22:28:02.866"
+      }
+    },
+    {
+      "id": "83d9fa05-076d-4c9d-97bc-bf3667944a77",
+      "features": {
+        "case_id": 91028122,
+        "activity": "CLICK:내용",
+        "ts": "2026-11-11 22:28:04.052"
+      }
+    },
+    {
+      "id": "a45b7683-fdf7-4586-bf32-d604e8e3ab04",
+      "features": {
+        "case_id": 91028123,
+        "activity": "CLICK:제목",
+        "ts": "2026-11-11 22:28:04.737"
+      }
+    },
+    {
+      "id": "41b8eef1-f4c6-4950-a2cc-5252521585b7",
+      "features": {
+        "case_id": 91028124,
+        "activity": "CLICK:내용",
+        "ts": "2026-11-11 22:28:05.086"
+      }
+    },
+    {
+      "id": "faa9bcd5-3d41-4159-8678-3893c7f25914",
+      "features": {
+        "case_id": 91028125,
+        "activity": "CLICK:내용",
+        "ts": "2026-11-11 22:28:06.154"
+      }
+    },
+    {
+      "id": "cea6a71c-310d-4af5-94d3-376da2acc6df",
+      "features": {
+        "case_id": 91028126,
+        "activity": "EVT:paste",
+        "ts": "2026-11-11 22:28:07.471"
+      }
+    },
+    {
+      "id": "ec171718-ef36-4400-a4ed-3195ac86fedd",
+      "features": {
+        "case_id": 91028127,
+        "activity": "INPUT:내용",
+        "ts": "2026-11-11 22:28:09.507"
+      }
+    },
+    {
+      "id": "48380b4e-b80e-426a-b2a3-9e0a10b5f5bb",
+      "features": {
+        "case_id": 91028128,
+        "activity": "CLICK:등록",
+        "ts": "2026-11-11 22:28:09.605"
+      }
+    },
+    {
+      "id": "76157312-a140-48b1-a8f1-d81599c6bae1",
+      "features": {
+        "case_id": 91028128,
+        "activity": "SUBMIT:Rainbow",
+        "ts": "2026-11-11 22:28:09.609"
+      }
+    },
+    {
+      "id": "a06bc0ae-9fc9-45dc-97d1-399e702cd165",
+      "features": {
+        "case_id": 91028129,
+        "activity": "API:POST_/api/schedules_2xx",
+        "ts": "2026-11-11 22:28:09.656"
+      }
+    },
+    {
+      "id": "fcc19324-85c3-4498-b055-989e430378d3",
+      "features": {
+        "case_id": 91028130,
+        "activity": "API:GET_/api/schedules_2xx",
+        "ts": "2026-11-11 22:28:09.675"
+      }
+    },
+    {
+      "id": "a0adf404-6831-42e3-ba94-e8ee84ec3bb5",
+      "features": {
+        "case_id": 91028128,
+        "activity": "EVT:popup_close",
+        "ts": "2026-11-11 22:28:09.758"
+      }
+    },
+    {
+      "id": "6b0f377e-f7c2-4435-bc96-c219fe98df15",
+      "features": {
+        "case_id": 91028131,
+        "activity": "CLICK:7",
+        "ts": "2026-11-11 22:28:14.568"
+      }
+    },
+    {
+      "id": "f094afcd-1c9a-4c60-b642-f8318ef24f2f",
+      "features": {
+        "case_id": 91028131,
+        "activity": "EVT:popup_open",
+        "ts": "2026-11-11 22:28:14.656"
+      }
+    },
+    {
+      "id": "e2f80a19-685e-4ad8-b426-0d31c6451ce9",
+      "features": {
+        "case_id": 91028132,
+        "activity": "CLICK:div",
+        "ts": "2026-11-11 22:28:14.725"
+      }
+    },
+    {
+      "id": "f93036c6-8958-4875-8515-5bfa0775430f",
+      "features": {
+        "case_id": 91028133,
+        "activity": "CLICK:제목",
+        "ts": "2026-11-11 22:28:15.597"
+      }
+    },
+    {
+      "id": "b3d65aa3-7f3e-4ed7-8823-a829813e0e1c",
+      "features": {
+        "case_id": 91028131,
+        "activity": "EVT:popup_structure",
+        "ts": "2026-11-11 22:28:15.679"
+      }
+    },
+    {
+      "id": "9606e0b8-eda7-4949-a553-66bebb2115e6",
+      "features": {
+        "case_id": 91028134,
+        "activity": "CLICK:내용",
+        "ts": "2026-11-11 22:28:17.128"
+      }
+    },
+    {
+      "id": "2f8bcc4a-60d5-43c5-901c-b36e15b645c2",
+      "features": {
+        "case_id": 91028135,
+        "activity": "CLICK:제목",
+        "ts": "2026-11-11 22:28:17.762"
+      }
+    },
+    {
+      "id": "4404d825-5de7-4fa1-b5c9-2edb16f3b1f0",
+      "features": {
+        "case_id": 91028136,
+        "activity": "EVT:paste",
+        "ts": "2026-11-11 22:28:18.234"
+      }
+    },
+    {
+      "id": "2619a608-854c-4151-99ea-e4159a4a02da",
+      "features": {
+        "case_id": 91028137,
+        "activity": "CLICK:제목",
+        "ts": "2026-11-11 22:28:20.881"
+      }
+    },
+    {
+      "id": "9ef1abd1-1c6d-4df9-a03b-4b9e326e8554",
+      "features": {
+        "case_id": 91028138,
+        "activity": "CLICK:제목",
+        "ts": "2026-11-11 22:28:21.097"
+      }
+    },
+    {
+      "id": "d6148eea-904d-49c3-a1b2-0601d33d2340",
+      "features": {
+        "case_id": 91028139,
+        "activity": "CLICK:제목",
+        "ts": "2026-11-11 22:28:21.297"
+      }
+    },
+    {
+      "id": "187e2d69-c10e-4a02-ad04-db8d2ed2059c",
+      "features": {
+        "case_id": 91028140,
+        "activity": "INPUT:제목",
+        "ts": "2026-11-11 22:28:22.084"
+      }
+    },
+    {
+      "id": "8d1a133f-0d1e-420b-a778-7bfcee1586a2",
+      "features": {
+        "case_id": 91028141,
+        "activity": "CLICK:내용",
+        "ts": "2026-11-11 22:28:22.164"
+      }
+    },
+    {
+      "id": "8960d735-7f6f-4802-9d8d-d6472daef3d0",
+      "features": {
+        "case_id": 91028142,
+        "activity": "CLICK:제목",
+        "ts": "2026-11-11 22:28:23.133"
+      }
+    },
+    {
+      "id": "f9fe6a0f-44a3-463f-8cf4-15fc40a24491",
+      "features": {
+        "case_id": 91028143,
+        "activity": "CLICK:내용",
+        "ts": "2026-11-11 22:28:23.484"
+      }
+    },
+    {
+      "id": "682e8740-1bb9-458e-8d94-69ff7c9006ee",
+      "features": {
+        "case_id": 91028144,
+        "activity": "EVT:paste",
+        "ts": "2026-11-11 22:28:24.477"
+      }
+    },
+    {
+      "id": "d48a9493-f8d8-4a28-9afe-0112ef71591f",
+      "features": {
+        "case_id": 91028145,
+        "activity": "INPUT:내용",
+        "ts": "2026-11-11 22:28:25.751"
+      }
+    },
+    {
+      "id": "e40fc53f-f786-44f4-abef-13c3fe388a52",
+      "features": {
+        "case_id": 91028146,
+        "activity": "CLICK:등록",
+        "ts": "2026-11-11 22:28:25.834"
+      }
+    },
+    {
+      "id": "7c7c69da-2c15-488d-9b6a-1d6d58b54ea5",
+      "features": {
+        "case_id": 91028146,
+        "activity": "SUBMIT:Rainbow",
+        "ts": "2026-11-11 22:28:25.838"
+      }
+    },
+    {
+      "id": "c6403ddb-1488-4142-bda9-63a0213623e1",
+      "features": {
+        "case_id": 91028147,
+        "activity": "API:POST_/api/schedules_2xx",
+        "ts": "2026-11-11 22:28:25.882"
+      }
+    },
+    {
+      "id": "9b82accc-926f-48fb-91e0-645e678a6925",
+      "features": {
+        "case_id": 91028148,
+        "activity": "API:GET_/api/schedules_2xx",
+        "ts": "2026-11-11 22:28:25.899"
+      }
+    },
+    {
+      "id": "60957b99-f76b-4da1-bfc3-2e91592ef4f7",
+      "features": {
+        "case_id": 91028146,
+        "activity": "EVT:popup_close",
+        "ts": "2026-11-11 22:28:25.981"
+      }
+    },
+    {
+      "id": "3394c0ca-cccc-42d1-ad9f-f0a8e8b48f7c",
+      "features": {
+        "case_id": 91028149,
+        "activity": "EVT:page_close",
+        "ts": "2026-11-11 22:28:28.909"
+      }
+    }
+  ]
+}

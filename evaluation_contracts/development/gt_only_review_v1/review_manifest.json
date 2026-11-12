@@ -1,0 +1,43 @@
+{
+  "actual_score_computed": false,
+  "files": {
+    "build_gt_only_review.py": "269743a4917007ffab12e8ed83a36927e88dd6ba5c9698d6307db397dc6ceb22",
+    "procedure_review.csv": "ad140a05318fb01ad11d07e5c6e312d7531e1fee6e747a6de3f223b0b7062905",
+    "review_rules.json": "83f24a143135e5743aad7fe48ca064e5ee9efb54a8e4e46dda968ad51a6e1dbe",
+    "source_extracted_text.txt": "9d5f6e82315c3fd52067a19768670740668d292995ee945dbc978260dd49db2d",
+    "source_library_read.json": "1b8e464fb7ff16be2648e9e69c6d95c7dffd0887c9aa3cba82c7a1c3bd608af3",
+    "summary.json": "f8bd12f6c77d27111b316d0209b17ea34307f776b51d4cdaac814b19b650025a",
+    "td04_semantic_partial.json": "f15f66a92083fbdd93078db707702e03f8240f5ad3f863d7afb2608bb032e124"
+  },
+  "full_schema_ready_steps": 0,
+  "independent_verification": "PENDING",
+  "input_policy": "TD04_ORIGINAL_TEXT_AND_GENERIC_TAXONOMY_ONLY",
+  "measurement_ready": false,
+  "never_inputs": [
+    "generated maps",
+    "raw events",
+    "provenance logs",
+    "model output",
+    "match results",
+    "scores"
+  ],
+  "not_for_evaluator_input": true,
+  "replaces_current_gt": false,
+  "required_count": 27,
+  "reviewer_limitation": "Current review reads only GT/source/taxonomy. This conversation includes prior development history; no claim of a fresh historically blinded reviewer.",
+  "run_mode": "DEVELOPMENT",
+  "source_binary_materialization_status": "DOWNLOAD_FAILED; Library full text read completed",
+  "source_binary_sha256": null,
+  "source_file_id": "file_000000001ce481f7922faf61fe45e3d1",
+  "source_gt_path": "/Users/sooeunkim/workspace/RainbowKTL/evaluation_contracts/development/m02_td04_v1.json",
+  "source_gt_sha256": "19922ea39a42c756e9f951cee85ce5b4c6dae0db2d0d31591ad2a2ef636d6578",
+  "source_library_file_id": "libfile_c2a2dfa848208191858b10e091047e17",
+  "source_name": "디딤돌_업무흐름_20개 (1).pdf",
+  "source_size_bytes": 69585,
+  "source_supported_actions": 14,
+  "source_version_id": null,
+  "stage": "GT_ONLY_REVIEW_BEFORE_REMEASUREMENT",
+  "typed_screens_resolved": 0,
+  "typed_screens_unresolved": 27,
+  "unresolved_actions": 13
+}

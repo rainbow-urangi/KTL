@@ -1,0 +1,78 @@
+{
+  "schema_version": 1,
+  "role": "descriptive snapshot metadata; not a new runtime setting",
+  "original_standalone_config_existed": false,
+  "runtime_changed": false,
+  "input_allowlist": [
+    "event_id",
+    "session_id",
+    "event_time",
+    "event_type",
+    "interaction_type",
+    "element_tag",
+    "api_method",
+    "api_status_code",
+    "api_path",
+    "page_url",
+    "page_title",
+    "target_selector"
+  ],
+  "input_privacy": "No raw input_data/element_text/task_name/BU/repetition/GT features; only allowlisted static page titles",
+  "logical_loader_order": [
+    "source_dataset",
+    "session_id",
+    "event_time",
+    "event_id"
+  ],
+  "raw_csv_order": [
+    "session_id",
+    "event_time",
+    "event_id"
+  ],
+  "state_reset": "source session only; not execution boundary",
+  "time_parsing": "datetime.fromisoformat(event_time.replace(Z,+00:00)).timestamp(); naive timestamps use host local timezone; capture Asia/Seoul validation environment explicitly",
+  "normalization": "Existing v1 UUID/numeric/date/timestamp/long-hex token -> :id; URL query/fragment removed; code snapshot authoritative",
+  "hashing": "signed SHA-256; static categorical/structural tokens and character 3..5 grams",
+  "base_input_dimension": 396,
+  "additional_input_dimension": 32,
+  "total_input_dimension": 428,
+  "missing_values": "raw field default empty string; unallowlisted title -> <redacted-title>; role fallback unknown",
+  "temporal": {
+    "inactivity_seconds": 20,
+    "density_window_seconds": 10,
+    "gap_scale": "min(log1p(gap)/8,1)",
+    "elapsed_scale": "min(log1p(elapsed)/10,1)",
+    "density_scale": "min(density/20,1)",
+    "since_close_scale": "min(events_since_close/20,1); missing=1"
+  },
+  "offline": true,
+  "offline_lookahead_seconds": 1.0,
+  "offline_lookahead_events": 3,
+  "lookahead_stops_at_next_user_action": true,
+  "lifecycle_window_seconds": 10,
+  "nonstarting_events": [
+    "page_close",
+    "collector_boot",
+    "popup_structure"
+  ],
+  "safe_page_titles": [
+    "Rainbow"
+  ],
+  "runtime_model_config": {
+    "path": "model/workflow_candidate_v1_2/validation_snapshot/artifacts/model_config.json",
+    "sha256": "d9f5903ed26dd5423385b701a3af408257b57e8c3dc543b9111682641edadab1"
+  },
+  "runtime_feature_config": {
+    "path": "model/workflow_candidate_v1_2/validation_snapshot/artifacts/feature_config.json",
+    "sha256": "3afa6136ea7620fea719be4b35308c6282bb5aa7575b0238c3920bdd6fa307f4"
+  },
+  "implementation_files": {
+    "model/workflow_candidate_v1/src/data.py": "fb6c3c640b352cc7c959e8b521014de1aa1c469b9324f80b0f1767f7c6154246",
+    "model/workflow_candidate_v1/src/features.py": "6862e229d04de687a4e5640a95c704c58e00e87122fbe8fc490ab25dfe34c160",
+    "model/workflow_candidate_v1/src/infer.py": "25aa82d11e9a318368c543520169af158f8b011e65ed027dfdcaeb51e1a66a35",
+    "model/workflow_candidate_v1_1/src/infer.py": "242d75eb7027da5ed3c2a11fc777f952fc7383ae8d177d3297b1d67e4a095ca3",
+    "model/workflow_candidate_v1_1/src/representation.py": "8d72c7853f93edf0746b163951f3942a7a66c4b8454fc6fed10d58fee92db766",
+    "model/workflow_candidate_v1_2/src/features.py": "edd09015959f8000f134065df0dc4f3c73a05492241ebb738b4c0a3c844e426b",
+    "model/workflow_candidate_v1_2/src/infer.py": "14e0daf28f19cbd84c2b78cc4f7d19539181c917cc4570b7396959ebbc08c9ec"
+  }
+}

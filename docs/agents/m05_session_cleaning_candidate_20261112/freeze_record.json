@@ -1,0 +1,8 @@
+{
+  "freeze_path": "evaluation_contracts/development/m05_session_cleaning_frozen_v2/freeze.json",
+  "freeze_sha256": "077eb74cb94c998fd2bdb3d304ad1eaf1a22c6881c794979926042c5dd975931",
+  "verification_script_path": "evaluation_contracts/development/m05_session_cleaning_frozen_v2/verify_freeze.py",
+  "verification_script_sha256": "7d601891951642ee11fdf1f4939cac23c27c98356ba75c5af606947a0ca254d3",
+  "scope": "DEVELOPMENT_ONLY_EXISTING_LOCKED20_FULL417",
+  "status": "FROZEN_FOR_DEVELOPMENT_REPRODUCTION_WITH_KNOWN_LIMITATION"
+}

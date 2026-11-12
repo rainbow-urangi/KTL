@@ -1,0 +1,126 @@
+{
+  "failures": [
+    {
+      "event_id": "cddde329-1a9d-456d-925c-9d38dbc7816c",
+      "category": "noise",
+      "features": {
+        "case_id": 91027837,
+        "activity": "EVT:collector_boot",
+        "ts": "2026-11-11 21:09:46.818"
+      },
+      "case_event_count": 1,
+      "cause": "COLLECTOR_BOOT_NOT_IN_FROZEN_DROP_RULES"
+    },
+    {
+      "event_id": "215fe929-63e1-46d5-9c31-e7008b403fbd",
+      "category": "repeated_action",
+      "features": {
+        "case_id": 91027854,
+        "activity": "CLICK:제목",
+        "ts": "2026-11-11 21:10:09.260"
+      },
+      "case_event_count": 1,
+      "cause": "REPEATED_CLICK_IN_SINGLE_EVENT_CASE_OUTSIDE_CASE_LOCAL_RLE_SCOPE"
+    },
+    {
+      "event_id": "885531a6-3cb7-4ac9-9035-86160605f408",
+      "category": "repeated_action",
+      "features": {
+        "case_id": 91027855,
+        "activity": "CLICK:제목",
+        "ts": "2026-11-11 21:10:09.378"
+      },
+      "case_event_count": 1,
+      "cause": "REPEATED_CLICK_IN_SINGLE_EVENT_CASE_OUTSIDE_CASE_LOCAL_RLE_SCOPE"
+    },
+    {
+      "event_id": "8e08307c-5f51-44ae-b078-b126a3b8a3a7",
+      "category": "noise",
+      "features": {
+        "case_id": 91027989,
+        "activity": "EVT:collector_boot",
+        "ts": "2026-11-11 21:36:45.064"
+      },
+      "case_event_count": 1,
+      "cause": "COLLECTOR_BOOT_NOT_IN_FROZEN_DROP_RULES"
+    },
+    {
+      "event_id": "13f2a6c3-2734-4be7-9bf6-f1fe99eebc3b",
+      "category": "repeated_action",
+      "features": {
+        "case_id": 91027890,
+        "activity": "CLICK:제목",
+        "ts": "2026-11-11 21:10:32.817"
+      },
+      "case_event_count": 1,
+      "cause": "REPEATED_CLICK_IN_SINGLE_EVENT_CASE_OUTSIDE_CASE_LOCAL_RLE_SCOPE"
+    },
+    {
+      "event_id": "336d644b-0c27-465e-84da-b42bbdb245b6",
+      "category": "repeated_action",
+      "features": {
+        "case_id": 91028017,
+        "activity": "CLICK:일정 관리",
+        "ts": "2026-11-11 21:37:10.821"
+      },
+      "case_event_count": 1,
+      "cause": "REPEATED_CLICK_IN_SINGLE_EVENT_CASE_OUTSIDE_CASE_LOCAL_RLE_SCOPE"
+    },
+    {
+      "event_id": "993ba492-eecf-47ed-ad5b-fcc0b920476c",
+      "category": "repeated_action",
+      "features": {
+        "case_id": 91028023,
+        "activity": "CLICK:일정 관리",
+        "ts": "2026-11-11 21:37:19.497"
+      },
+      "case_event_count": 1,
+      "cause": "REPEATED_CLICK_IN_SINGLE_EVENT_CASE_OUTSIDE_CASE_LOCAL_RLE_SCOPE"
+    },
+    {
+      "event_id": "358ef869-0bc4-40e4-90c7-f24c4196b797",
+      "category": "repeated_action",
+      "features": {
+        "case_id": 91028038,
+        "activity": "CLICK:명함 관리",
+        "ts": "2026-11-11 21:37:34.696"
+      },
+      "case_event_count": 1,
+      "cause": "REPEATED_CLICK_IN_SINGLE_EVENT_CASE_OUTSIDE_CASE_LOCAL_RLE_SCOPE"
+    },
+    {
+      "event_id": "2acf909a-1edc-4e9e-b576-e78d2a317d4e",
+      "category": "repeated_action",
+      "features": {
+        "case_id": 91028114,
+        "activity": "CLICK:제목",
+        "ts": "2026-11-11 22:27:58.764"
+      },
+      "case_event_count": 1,
+      "cause": "REPEATED_CLICK_IN_SINGLE_EVENT_CASE_OUTSIDE_CASE_LOCAL_RLE_SCOPE"
+    },
+    {
+      "event_id": "faa9bcd5-3d41-4159-8678-3893c7f25914",
+      "category": "repeated_action",
+      "features": {
+        "case_id": 91028125,
+        "activity": "CLICK:내용",
+        "ts": "2026-11-11 22:28:06.154"
+      },
+      "case_event_count": 1,
+      "cause": "REPEATED_CLICK_IN_SINGLE_EVENT_CASE_OUTSIDE_CASE_LOCAL_RLE_SCOPE"
+    }
+  ],
+  "category_counts": {
+    "noise": 2,
+    "repeated_action": 8
+  },
+  "full_cases": 313,
+  "engine_changed": false,
+  "proposal_only": [
+    "Separate generic collector lifecycle-noise policy from business events",
+    "Review valid cleaning sequence boundary/context contract; do not merge cases merely to improve score",
+    "Non-adjacent redundant menu reopening requires semantic/state-aware criteria, not just consecutive token RLE"
+  ],
+  "approval_required_before_engine_change": true
+}

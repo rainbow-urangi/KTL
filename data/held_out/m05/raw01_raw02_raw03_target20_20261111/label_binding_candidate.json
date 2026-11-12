@@ -1,0 +1,17 @@
+{
+  "target_labels_sha256": "3057c8c9e020f0a156b65df66a4284c8b51f219c174032a9e5c89c95746a9750",
+  "target_selection_sha256": "220e050bff2d9be0852debd62992f759b4787e3413c11eb897ef3fa797eef7ec",
+  "raw_sequence_sha256": "2c82ddb91814246ab22c584f8cd78d12821c080faf6377611143d83ab46009ad",
+  "normalized_input_sha256": "8c855f793ee411a309a3b86d06f08203f33ecbe6b010d7ccb55bec985bda7855",
+  "source_lock": {
+    "path": "docs/agents/m05_raw03_attested_label_lock_20261111/target_label_lock.json",
+    "sha256": "ad553f26834c14995ae31b38b4a884f4875585e0a81b0dd168507e652810b156"
+  },
+  "source_lock_created_at_utc": "2026-11-11T13:47:09.237438+00:00",
+  "binding_prepared_at_utc": "2026-11-11T13:58:13.975721+00:00",
+  "locked_at_utc": null,
+  "prediction_blind": null,
+  "labeler": null,
+  "status": "BLOCKED_UNTIL_SOURCE_ATTRIBUTION_AND_ACCESS_COVERAGE_VERIFIED",
+  "note": "This preparer binds existing labels to unchanged full context. It does not act as a new independent labeler or retroactively certify blindness."
+}

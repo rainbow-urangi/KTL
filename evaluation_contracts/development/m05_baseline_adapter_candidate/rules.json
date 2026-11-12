@@ -1,0 +1,12 @@
+{
+  "rule_version": "existing-dataset-cleaning-event-adapter-v1",
+  "engine_type": "existing_deterministic_rules",
+  "cleaning_source": {
+    "path": "dataset_original.py",
+    "sha256": "fcefa464a7e21ef72d1d5e2bd31eac10b88337434032a0f0aa3e0a77f9250efe"
+  },
+  "sequence_contract": "case_id grouping, timestamp stable sorting, drop then consecutive activity RLE; complete sequence context required",
+  "scope": "DEVELOPMENT_FUNCTIONAL_ONLY",
+  "source_original": "/Users/sooeunkim/workspace/AI-model/dataset.py",
+  "frozen": false
+}

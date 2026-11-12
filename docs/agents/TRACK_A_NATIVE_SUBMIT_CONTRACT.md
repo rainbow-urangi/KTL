@@ -1,0 +1,9 @@
+# Track A native-submit candidate — rules fixed before generation
+
+The baseline M02 DEVELOPMENT result and its manifest/gate are immutable. This isolated candidate addresses one metadata preservation gap established in the pre-code analysis. No shared server/frontend, baseline serializer/comparator, model, official definitions or API routes are edited.
+
+A native event.action=submit with captured element_tag=form and exact original raw_payload.submitter_text matching one existing generic SAVE/REGISTER/UPDATE verb is a directly observed COMMIT. It is not a form-opening action and needs no inferred preceding click. Copy only exact top-level raw_payload submitter_text/submitter_selector/form_id/form_name plus original relation_context identity/strategy into allowlisted metadata; never copy the entire raw_payload or input values.
+
+Only a standalone unresolved native-submit canonical intent may be relabeled. Same generated_step_id, process/workflow, source event/node IDs, order and scope are preserved. A submit already explicitly included in a same-kind write is evidence only. If a fallback submit has already been consumed into another intent, or recorded action conflicts with its existing owner, this candidate fails closed instead of creating/reusing causality or dropping the event. Unknown submitter verbs/form types remain unresolved. No completion evidence is inferred and no existing metadata value is replaced.
+
+Apply to all raw records/businesses using the unchanged generic lexicon. No GT words/counts/business IDs/matching/score or prediction labels are inputs. Original frozen comparison contract stays unchanged. New candidate output/transport rules and dependencies are hash-bound independently of mutable shared web files. A dedicated independent PASS is required before any GT comparison; this task stops before remeasurement. Shared web integration requires its own later snapshot/verification once other tracks finish.

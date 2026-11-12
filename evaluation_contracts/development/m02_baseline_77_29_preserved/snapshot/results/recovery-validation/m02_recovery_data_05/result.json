@@ -1,0 +1,228 @@
+{
+  "excluded_from_task_scope": [
+    {
+      "dataset": "m02_recovery_data_04",
+      "reason": "login prelude, retained in model input and generated scope audit",
+      "source": "raw rows90949-90959"
+    },
+    {
+      "dataset": "m02_recovery_data_05",
+      "reason": "boot/page/API prelude before first menu; preserved in full model input and generated scope audit",
+      "source": "raw rows91087-91090"
+    }
+  ],
+  "overall": {
+    "accuracy": 64.51612903225806,
+    "completeness": 92.5925925925926,
+    "generated": 31,
+    "matched": 20,
+    "required": 27,
+    "satisfied": 25,
+    "score": 77.28981596002805,
+    "target_met": true
+  },
+  "per_business_unit": {
+    "BU03": {
+      "accuracy": 27.272727272727273,
+      "completeness": 60.0,
+      "generated": 11,
+      "matched": 3,
+      "required": 5,
+      "satisfied": 3,
+      "score": 40.45199174779453,
+      "target_met": false
+    },
+    "BU07": {
+      "accuracy": 80.0,
+      "completeness": 100.0,
+      "generated": 5,
+      "matched": 4,
+      "required": 6,
+      "satisfied": 6,
+      "score": 89.44271909999159,
+      "target_met": true
+    },
+    "BU09": {
+      "accuracy": 83.33333333333333,
+      "completeness": 100.0,
+      "generated": 6,
+      "matched": 5,
+      "required": 6,
+      "satisfied": 6,
+      "score": 91.28709291752767,
+      "target_met": true
+    },
+    "BU17": {
+      "accuracy": 80.0,
+      "completeness": 100.0,
+      "generated": 5,
+      "matched": 4,
+      "required": 5,
+      "satisfied": 5,
+      "score": 89.44271909999159,
+      "target_met": true
+    },
+    "BU20": {
+      "accuracy": 100.0,
+      "completeness": 100.0,
+      "generated": 4,
+      "matched": 4,
+      "required": 5,
+      "satisfied": 5,
+      "score": 100.0,
+      "target_met": true
+    }
+  },
+  "per_execution": [
+    {
+      "accuracy": 83.33333333333333,
+      "business_unit_id": "BU09",
+      "completeness": 100.0,
+      "dataset": "m02_recovery_data_05",
+      "execution_id": "05-BU09",
+      "generated_count": 6,
+      "included_required_count": 6,
+      "matched_count": 5,
+      "missing": [],
+      "missing_count": 0,
+      "required_count": 6,
+      "score": 91.28709291752767,
+      "status": "COMPLETED",
+      "unmatched_count": 1,
+      "week_selection_status": "Actual date-picker selection with verified weekly registration context; original intent chronology preserved"
+    },
+    {
+      "accuracy": 27.272727272727273,
+      "business_unit_id": "BU03",
+      "completeness": 60.0,
+      "dataset": "m02_recovery_data_04",
+      "execution_id": "04-BU03",
+      "generated_count": 11,
+      "included_required_count": 3,
+      "matched_count": 3,
+      "missing": [
+        "일정 입력",
+        "종료"
+      ],
+      "missing_count": 2,
+      "required_count": 5,
+      "score": 40.45199174779453,
+      "status": "COMPLETED_WITH_MISSING_EVIDENCE",
+      "unmatched_count": 8,
+      "week_selection_status": null
+    },
+    {
+      "accuracy": 80.0,
+      "business_unit_id": "BU07",
+      "completeness": 100.0,
+      "dataset": "m02_recovery_data_01",
+      "execution_id": "RECOVERY-E02",
+      "generated_count": 5,
+      "included_required_count": 6,
+      "matched_count": 4,
+      "missing": [],
+      "missing_count": 0,
+      "required_count": 6,
+      "score": 89.44271909999159,
+      "status": "COMPLETED",
+      "unmatched_count": 1,
+      "week_selection_status": null
+    },
+    {
+      "accuracy": 80.0,
+      "business_unit_id": "BU17",
+      "completeness": 100.0,
+      "dataset": "m02_recovery_data_01",
+      "execution_id": "RECOVERY-E04",
+      "generated_count": 5,
+      "included_required_count": 5,
+      "matched_count": 4,
+      "missing": [],
+      "missing_count": 0,
+      "required_count": 5,
+      "score": 89.44271909999159,
+      "status": "COMPLETED",
+      "unmatched_count": 1,
+      "week_selection_status": null
+    },
+    {
+      "accuracy": 100.0,
+      "business_unit_id": "BU20",
+      "completeness": 100.0,
+      "dataset": "m02_recovery_data_01",
+      "execution_id": "RECOVERY-E05",
+      "generated_count": 4,
+      "included_required_count": 5,
+      "matched_count": 4,
+      "missing": [],
+      "missing_count": 0,
+      "required_count": 5,
+      "score": 100.0,
+      "status": "COMPLETED",
+      "unmatched_count": 0,
+      "week_selection_status": null
+    }
+  ],
+  "scope": "Recovery04 BU03, recovery05 BU09, recovery01 BU07/BU17/BU20 exactly one execution each; prior BU09 excluded; no best-instance choice",
+  "scope01": {
+    "all_generated_steps": 29,
+    "mixed_count": 0,
+    "out_of_scope_count": 0,
+    "ownership_counts": {
+      "ASSIGNED": 29
+    },
+    "per_business_unit": {
+      "BU03": 10,
+      "BU07": 5,
+      "BU09": 5,
+      "BU17": 5,
+      "BU20": 4
+    },
+    "policy": "EXPLICIT_START_END_ANCHORS; MISSING_END_NOT_INFERRED; MIXED_COUNT_ONCE_INELIGIBLE",
+    "target_units": [
+      "BU03",
+      "BU07",
+      "BU09",
+      "BU17",
+      "BU20"
+    ],
+    "total_generated_steps": 29,
+    "unassigned_count": 0
+  },
+  "scope03": {
+    "all_generated_steps": 21,
+    "mixed_count": 0,
+    "out_of_scope_count": 0,
+    "ownership_counts": {
+      "ASSIGNED": 11,
+      "UNASSIGNED": 10
+    },
+    "per_business_unit": {
+      "BU03": 11
+    },
+    "policy": "EXPLICIT_START_END_ANCHORS; MISSING_END_NOT_INFERRED; MIXED_COUNT_ONCE_INELIGIBLE",
+    "target_units": [
+      "BU03"
+    ],
+    "total_generated_steps": 11,
+    "unassigned_count": 10
+  },
+  "scope05": {
+    "all_generated_steps": 6,
+    "mixed_count": 0,
+    "out_of_scope_count": 0,
+    "ownership_counts": {
+      "ASSIGNED": 6
+    },
+    "per_business_unit": {
+      "BU09": 6
+    },
+    "policy": "EXPLICIT_START_END_ANCHORS; MISSING_END_NOT_INFERRED; MIXED_COUNT_ONCE_INELIGIBLE",
+    "target_units": [
+      "BU09"
+    ],
+    "total_generated_steps": 6,
+    "unassigned_count": 0
+  },
+  "status": "DEVELOPMENT_EXACT_FIVE_EXECUTIONS_NOT_OFFICIAL"
+}

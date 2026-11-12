@@ -18,7 +18,10 @@ class IntegrationSandboxTests(unittest.TestCase):
     def setUp(self):
         self.temp=tempfile.TemporaryDirectory();self.root=Path(self.temp.name)
         (self.root/'backend').mkdir()
-        shutil.copy(ROOT/'backend/config.json',self.root/'backend/config.json')
+        config=json.loads((ROOT/'backend/config.json').read_text())
+        # Temporary sandbox deliberately tests missing-adapter behavior by default.
+        config.pop('m03_real_generator',None)
+        (self.root/'backend/config.json').write_text(json.dumps(config))
         shutil.copytree(ROOT/'frontend',self.root/'frontend')
         shutil.copytree(ROOT/'data/evaluation/mock-dataset-01',self.root/'data/evaluation/mock-dataset-01')
         self.server=ThreadingHTTPServer(('127.0.0.1',0),make_handler(Service(self.root)))
@@ -79,3 +82,37 @@ class IntegrationSandboxTests(unittest.TestCase):
         self.assertEqual(self.request('POST','/api/m03/generate',request)[1],raw)
         self.assertEqual(self.request('POST','/api/m03/generate',dict(request,run_mode='OFFICIAL'))[0],422)
         self.assertEqual(self.request('POST','/api/m03/generate',dict(request,generator_mode='REAL'))[0],503)
+
+    def test_real_generation_http_with_existing_binding_contract(self):
+        snapshot={'processes':[{'canonical_instance_id':'WF-synthetic','source_process_id':'PM-synthetic',
+            'business_steps':[{'action_type':'INPUT','target':'Synthetic field','step_order':1,
+                'resolution_status':'RESOLVED','source_event_ids':['event-synthetic'],
+                'source_node_ids':['node-synthetic'],'generated_step_id':'step-synthetic'}]}]}
+        path=self.root/'observed.json';path.write_text(json.dumps(snapshot))
+        config_path=self.root/'backend/config.json';config=json.loads(config_path.read_text())
+        config['m03_real_generator']={'snapshot_path':'observed.json','snapshot_sha256':digest(path)}
+        config_path.write_text(json.dumps(config))
+        request={'business_unit_id':'DEV-synthetic','workflow_id':'WF-synthetic','generator_mode':'REAL'}
+        status,raw=self.request('POST','/api/m03/generate',request);body=json.loads(raw)
+        self.assertEqual(status,200,body);self.assertEqual(body['status'],'SUCCESS')
+        self.assertFalse(body['synthetic']);self.assertEqual(body['generator_mode'],'REAL')
+        self.assertEqual(body['generator_version'],'m03-observed-business-steps-v1.1-menu-enter')
+        self.assertEqual(body['steps'][0]['source_event_ids'],['event-synthetic'])
+        self.assertEqual(self.request('POST','/api/m03/generate',request)[1],raw)
+        self.assertEqual(self.request('POST','/api/m03/generate',dict(request,workflow_id='unknown'))[0],422)
+        self.assertEqual(self.request('POST','/api/m03/generate',dict(request,run_mode='OFFICIAL'))[0],422)
+        self.assertFalse((self.root/'results').exists())
+
+    def test_default_real_binding_matches_preserved_diagnostic_source(self):
+        # Read-only integrity check, not a re-evaluation of the historical ten cases.
+        config=json.loads((ROOT/'backend/config.json').read_text())
+        previous=ROOT/'results/development/m03_current_semantics_20261109'
+        self.assertEqual(config['m03_real_generator'],json.loads((previous/'config.json').read_text())['m03_real_generator'])
+        binding=config['m03_real_generator']
+        self.assertEqual(digest(ROOT/binding['snapshot_path']),binding['snapshot_sha256'])
+        manifest=json.loads((previous/'manifest.json').read_text())
+        # Historical schema/input stay frozen; generator has the explicitly approved MENU_ENTER change.
+        self.assertEqual(digest(ROOT/'backend/m03_real_generator.py'),
+                         'dd52a52e0ca98a9f4c94ed32d62d1e6c3eb9dc9d8b97b3f48b519d9ff21a7914')
+        for name in ('evaluation_contracts/m03-scenario.schema.json',):
+            self.assertEqual(digest(ROOT/name),manifest['generator_evaluator_schema_sha256'][name])

@@ -1,0 +1,25 @@
+{
+  "status": "PASS",
+  "run_id": "DEV-M03-20261112T083848-c882d6a3a2d6",
+  "success": 9,
+  "failure": 1,
+  "total": 10,
+  "score": 90,
+  "failed_business_units": [
+    "BU03"
+  ],
+  "evidence_sha256": "4a1bc41e8b1ebe54d8cf34f01f8887472b65c3006603be3bf805e12b71782e65",
+  "freeze_manifest_sha256": "e2432a56e075fc6ae186c824d37316d7072d17f8a611edc7d78bf1ae671c9b95",
+  "frozen_core_files_unchanged": 42,
+  "allowed_transport_change": [
+    "backend/server.py"
+  ],
+  "exact_scenarios_equal_previous_frozen": true,
+  "browser_verification": "NOT_RUN_USER_MANUAL",
+  "current_hashes": {
+    "backend/m03_main_web.py": "660364af9f3762bf7d4279342ded778f2622c55030aa848d131a2555c2e0a0c9",
+    "backend/server.py": "b881e3f7f8378885ef384a91a9aeb0bfd8bab5eb03a9652dc850631192e6b816",
+    "backend/measurement_ui.py": "6e707158caace91f7af58b04080f54d4b25b383defa712a497a80f4185da7252",
+    "frontend/app.js": "ed670c68812b18cb6e68a08cf0a00106f570730b56a329ef40b9b7322ae1ad1b"
+  }
+}

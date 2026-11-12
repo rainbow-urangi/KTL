@@ -1,0 +1,89 @@
+{
+  "dataset_id": "raw01_raw02_raw03_target20_20261111",
+  "scope": "COMPLETE_SESSIONS_AND_TASKS",
+  "collection_started_at_utc": "2026-11-11T12:09:46.818000+00:00",
+  "collection_ended_at_utc": "2026-11-11T13:28:28.909000+00:00",
+  "collector_id": "extension_generic_row_bridge",
+  "collector_version": "2026-08-03-workflow-context-prod-v1; extension 0.1.20",
+  "timezone": "Asia/Seoul",
+  "completion_reason": "Each supplied session terminates with page_close and contiguous event_sequence. Independent export authority remains pending.",
+  "event_count": 417,
+  "raw_files": [
+    {
+      "path": "data/held_out/m05/raw01_raw02_raw03_target20_20261111/raw/raw_01/events.csv",
+      "sha256": "8a797dadcd8341b39e1ce96487eaaafe8995a62dabce3d027495c0f34382b8b4",
+      "row_count": 203,
+      "column_mapping": {
+        "event_type": "event_type",
+        "interaction_type": "interaction_type",
+        "page_url": "page_url",
+        "page_title": "page_title",
+        "api_path": "api_path",
+        "api_method": "api_method",
+        "api_status_code": "api_status_code",
+        "element_tag": "element_tag",
+        "associated_label": "associated_label",
+        "element_text": "element_text",
+        "case_id": "task_id",
+        "source_event_pk": "event_id",
+        "ts": "event_time"
+      }
+    },
+    {
+      "path": "data/held_out/m05/raw01_raw02_raw03_target20_20261111/raw/raw_02/events.csv",
+      "sha256": "06a86358ada46c3b04c905c018af6004624348a214e210047633da4e28773b50",
+      "row_count": 147,
+      "column_mapping": {
+        "event_type": "event_type",
+        "interaction_type": "interaction_type",
+        "page_url": "page_url",
+        "page_title": "page_title",
+        "api_path": "api_path",
+        "api_method": "api_method",
+        "api_status_code": "api_status_code",
+        "element_tag": "element_tag",
+        "associated_label": "associated_label",
+        "element_text": "element_text",
+        "case_id": "task_id",
+        "source_event_pk": "event_id",
+        "ts": "event_time"
+      }
+    },
+    {
+      "path": "data/held_out/m05/raw01_raw02_raw03_target20_20261111/raw/raw_03/events.csv",
+      "sha256": "c7b699fb540a2f7f67b5b218dbfd0df53b41fe8d4ccac3922b73a7842d1057f8",
+      "row_count": 67,
+      "column_mapping": {
+        "event_type": "event_type",
+        "interaction_type": "interaction_type",
+        "page_url": "page_url",
+        "page_title": "page_title",
+        "api_path": "api_path",
+        "api_method": "api_method",
+        "api_status_code": "api_status_code",
+        "element_tag": "element_tag",
+        "associated_label": "associated_label",
+        "element_text": "element_text",
+        "case_id": "task_id",
+        "source_event_pk": "event_id",
+        "ts": "event_time"
+      }
+    }
+  ],
+  "sessions": {
+    "path": "data/held_out/m05/raw01_raw02_raw03_target20_20261111/sessions.json",
+    "sha256": "2acef3fad154e55a4e9139a94889f86cc4cf6112bc0e6430fc563128019e3591"
+  },
+  "tasks": {
+    "path": "data/held_out/m05/raw01_raw02_raw03_target20_20261111/tasks.json",
+    "sha256": "7e6c9c6f6d201874785c3859ce3d73a030bde51dc7cdf706a7453a883dd22921"
+  },
+  "clock_evidence": {
+    "path": "data/held_out/m05/raw01_raw02_raw03_target20_20261111/clock_evidence.json",
+    "sha256": "f6a993629aef3a8d079dc28b1e6325ec8b2b9da00bf2c9a8e4f5279d8b5d8ed8"
+  },
+  "export_evidence": {
+    "path": "data/held_out/m05/raw01_raw02_raw03_target20_20261111/export_evidence.json",
+    "sha256": "a7d0dfb003ee1e057305cc0867224d41724ce52f772bf69240e7357ff815e67f"
+  }
+}

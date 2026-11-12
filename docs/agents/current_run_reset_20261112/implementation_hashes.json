@@ -1,0 +1,5 @@
+{
+  "frontend/app.js": "a510d4a787646ee5f37135231a8f4c9c58818a8710f357554b5daf5222922505",
+  "tests/test_frontend.cjs": "691738bfc22faecd5d2047cf8e433e87ea8b7381d580ebf2e2e06d1a4cac8534",
+  "tests/test_measurement_ui.py": "f9ee7480c73f5e23d1d0449d0bd91e6d361313ee4171f4c5f3313aa7cdd3d453"
+}

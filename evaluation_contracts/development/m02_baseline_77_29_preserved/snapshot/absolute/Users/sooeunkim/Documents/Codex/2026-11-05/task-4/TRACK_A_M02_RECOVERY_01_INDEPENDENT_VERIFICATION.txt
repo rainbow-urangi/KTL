@@ -1,0 +1,164 @@
+Track A M02-RECOVERY-01 independent verification — 2026-11-05
+OVERALL VERDICT: PASS_WITH_WARNINGS.
+Isolated native-submit producer/gate implementation:PASS for exact manifest
+f3447df9f978496014cd1fed57b8973b0a1e49f78e3f03687b1fe346a2ba53b7.
+Shared web integration:NOT APPROVED/PENDING separate integration snapshot+gate.
+No actual GT comparison,remeasurement,new score/new missing count or stored run.
+No baseline/model/GT/serializer/comparison/server/frontend files modified by verifier.
+No current deployment lookup,OFFICIAL generation or actualM06/M03 execution.
+
+1. Baseline remains18.49000654084097%DEVELOPMENT,not a new score.
+Original resultDEV-M02-20261105T084527-7d686ab6b2be hash independently matches
+31baceba2573abfeb3643d95c5e23d91a96bd59f9f6034d69a79b6adf61aa5e8.
+Original manifestd00201019debb6f7488c3dae9123f08bb4c15cf4d762244180d0b5b4ab2616b8
+unchanged. Counts4/26direct and6/27included source obligations remain saved baseline.
+No guard/hash was updated to make a changed runtime masquerade as the old baseline.
+
+2. All21missing-item analysis independently checked against persisted baselineCSV.
+Exact required-ID set,labels,baseline missing reasons and every cited raw ID match.
+Primary mutually exclusive inventory is internally correct:
+ EXISTING_RAW_EVIDENCE_RECOVERABLE1;PROCESS_MAP_LOGIC_FIX0;BOUNDARY_MODEL_REQUIRED0;
+ RAW_DATA_MISSING3;USER/KTL_CLARIFICATION_REQUIRED17.
+These are diagnostic classifications,not mathematically disjoint causal explanations:
+some input items ALSO need report-context proof;primary grouping avoids double counts.
+No evidence establishes mandatory boundary-model retraining.0meansnot established,
+not proof no future model issue could exist. GTwas read in this expressly post-hoc
+analysis;it is not passed into the recovery producer. Historical blindness/creation
+order cannot be cryptographically certified from local report timestamps alone.
+
+Per missing step — source finding and independent classification:
+BU03-S01 일정관리:Q1;actual earlier menu gesture precedes fixed start(calendar click).
+BU03-S02 날짜 선택:direct semantics unproven;numeric12/11calendar cells exist but grid
+ column labels conflict(5existing-event text/4),input_contextempty,no selected-date ID.
+BU03-S03 일정 입력:Q3(primary),plus unproven form/context;actual title/content edits exist.
+BU03-S04 등록:existingnative submitter metadata recovery1;not a promised new GT hit.
+BU03-S05 종료:normal completion evidence unproven;POST201/GET200fallback,unresolved
+ close,no reflected-object identity/cause-linked successful auto-close or successUI.
+BU07-S01 일일보고:Q1;rawmenu click61 precedes executionstart72register.
+BU07-S02 등록:Q2;register exists,reportleaf identity not authoritatively grounded.
+BU07-S03 내용 입력:Q3primary,alsoQ2;actual field/form edits retained.
+BU07-S04 저장:Q2;rawSAVE exists,parent menu업무 관리 notreportleaf equivalence.
+BU07-S05 완료 확인:Q2;causal successUI exists,no newclick is required;write context blocks.
+BU07-S06 종료:Q2;samecontext issue,not a new question about user's definedend meaning.
+BU09-S01 주간보고:Q1;rawmenu click96 precedes fixedexecution107register.
+BU09-S02 등록:Q2;directregister/form evidence exists,contextidentity pending.
+BU09-S03 대상 주차 선택:direct event/state not recorded in inspected fixed execution;
+ no default-to-selection inference or invented step. Current absence is proof gap.
+BU09-S04 내용 입력:Q3primary,alsoQ2;actual title/content field edits preserved.
+BU09-S05 저장:Q2;SAVEexists,parent-vs-reportleaf identity pending.
+BU09-S06 완료 확인:Q2;completion exists but cannot rescue unmatched context write.
+BU17-S01 거래처 정보 관리:Q1;menugesture189 precedes executionstart200register.
+BU17-S03 테스트 거래처 정보 입력:Q3;whole-form object거래처 정보 vs literaltestqualifier;
+7field edits preserved,not an automatic substitute answer from raw fields.
+BU20-S01 자산관리:Q1;menugesture224 precedes executionstart235register.
+BU20-S03 테스트 자산 정보 입력:Q3;whole-form object자산 정보 vs sourcequalifier;5fields.
+
+Source-backed counts,without forecasting scores:
+Unconditional NO-RETRAINING metadata/intent restoration candidate1(BU03-S04).
+Confirmed future additional GT matches:NOT MEASURED,not guaranteed1.
+Conditional source/definition review17;not17promised solutions or an upper-bound score.
+Direct evidence gaps3;not missing allclicks or proof a model must be retrained.
+A small generic serializer recovery implements the1data-loss correction;do not count
+it again as PROCESS_MAP_LOGIC_FIX1. Remaining17may still fail after clarification.
+
+3. Three common questions,not17per-step score-dependent exceptions.
+Q1(5entryrequirements):Does a first named screen/menu mean a STARTING CONTEXT
+precondition that may already be satisfied,or a new independent navigation action
+inside EVERY fixed execution? If precondition,define how its original required
+obligation is evidenced;do not simply delete it or move earlier events from another
+execution to make a hit. This is a real source-role definition question if no existing
+GT specification settles it. Earlier nav events are confirmed outside each range.
+Q2(7primary report requirements):What AUTHORITATIVE COLLECTION-TIME specification
+establishes logical identity of reportleaf일일보고/주간보고 and captured forms
+일일업무/주간업무 under parent업무 관리? This is primarily a need for historical
+identity evidence/owner declaration,not user discretion to invent helpful aliases.
+Current deployment,URLtranslation and next-event/fallback references cannot establish
+it retroactively. This can also affect the2report INPUTs assignedQ3.
+Q3(5inputrequirements):What is the declared whole-form/business-object/required-field
+coverage for each logical input procedure,and is테스트 a data qualifier rather than
+part of action/object identity? Preserve originalGTtext/obligations and distinguish
+canonical business-object meaning from auxiliary field-label lookup. Do not strip
+prefix/addaliases after checking matches. Existing authoritative definitions should
+be consulted before asking owner/KTL;no source says every choice requires a newKTLrule.
+No newend-definition question,27physical-screen demand,threshold or model decision.
+
+4. Native candidate source/implementation independently verified.
+Rawevente69dc460-395e-4fe3-b113-9d9521e2224c hasactualtagform,event.actionsubmit,
+raw_payload.submitter_text등록 and a recorded formbuttonselector. Root element_text
+empty. form_id/form_name are recordednull,not invented IDs. Original relation_context
+is submit_recent_action_fallback to earlierclick492d6a89...;candidate preserves that
+strategy/reference but DOES NOT attach it as a new causal edge.
+
+recover(sourceSnapshot,originalRows) twice equals frozenbusiness_steps
+0380a7c253daf975e541b3e147814e70bf673cb5450348e8a5b873b5387fc2f2.
+ExactlyONEcanonical semantic correction:
+ BA-e69dc460... UNRESOLVED/UNKNOWN/emptytarget→REGISTER/COMMIT/등록.
+All65intentIDs,source events/nodes,order,map,workflow,context,fields,completion evidence
+unchanged. Previous semantics retained. Native 로그인 and확인 remain unrecognized
+writes,metadataonly. No fullraw_payload,password/input values,GT/score payload copied.
+Generic exact preexistingSAVE/REGISTER/UPDATElexicon,realnativeformsubmit,unambiguous
+own intent required;fallback already consumed or conflicting owner failsclosed.
+No BU IDs,event IDs,GTlabels/counts,calendar rule,newcompletion inference or score
+threshold is a rule input. The raw verb itself—not a GT-derived target—is recovered.
+A COMMITintent represents submitted action,not proof of successful normal completion.
+
+Scope regenerated byte-identicalaf709b4037ed1f51a627de96161905b63652e6708169d32ef30bce3c54932e3b.
+Counts unchanged65=26target+32outside+7UNASSIGNED,mixed0;13/4/3/3/3target.
+Nativeaudit3,preview627rows;allgenerated evidence exactly matches restoredraw ledger;
+native_submit field and fallback strategy CSVround-trip exact. Before/after fullstep
+diff records metadata additions and single semantic recovery;no baseline overwrite.
+Comparisoncontract7daa0578feb752960f6edf64d42b853024b92812a0209e1ada81fca268301d8a,
+GTroles183c9021f66adca49a235229cededfa6c25d047727d604cb9de30784c4286d31 unchanged.
+All model38file hashes matchb9c69f7088f7d6abd5e0e21b569e69be50b099265bc8e9dd99eda07042bd0504;
+no weights/threshold/features/clustering/inference/training/final-freeze change.
+
+5. Shared TrackB/C impact and safe integration.
+Current hashes independently match development observation:
+serverdd41318d29e9e9bb6782439547b05a9945dfc493d71c6434438a633bb2b4a37a,
+frontenda4f44f7182c3d082219bf99000336f7342288358d639b2ea15fb41fee8ea12a6.
+Original expectedserver780b0316...andfrontend13e68994...differ. Existing baseline
+verify() correctly FAILS atFrozen abstraction dependency changed:backend/server.py.
+That invalidates use of originalgate on this SHARED runtime;it does NOT erase the
+stored18.49result or justify editing expectedhashes. Observed changes concern shared
+M06routing/catalog/input-selector/display;M02run dispatch is unchanged under synthetic
+sentinel comparison. This audit did not invoke actualM06/M03 or metricrun.
+
+Exact privateTRACK_A_BASELINE_RUNTIME independently passesALLoriginal baseline hash
+checks,using preserved/reconstructed EXACToldserver/frontendbytes. No GT score was
+called there. Absolute source file references remain originalverifiedpaths;private
+runtime is not claimed a portable release or proof every integrated UI branch works.
+
+TrackAcandidate has no web routing changes;its explicit dependency set covers actual
+pure producer/comparator/gate dependencies,withshared_web_integration_pending=True.
+Excluding server/frontend is honest for isolated execution,NOT a waiver of their
+hashes for a web-integrated measurement. An isolated PASS must not label sharedweb
+ready or allow overwriting original baseline gate/manifest/results.
+
+Safe integration sequence:finish/review shared changes;retain immutablebaseline and
+its exact runtime;create a SEPARATELY NAMED combined integration manifest binding all
+actual current server/frontend/catalog/router/storage/config plus candidate sources
+and data/model;run synthetic M02catalog/selection/dispatch/UI/CSV isolation tests and
+TrackB/C routing regressions without running metrics;independently approve newcombined
+hash/gate;only then perform separately authorized measurement. A later shared edit
+invalidates that newintegrationhash. Do not silently mutatef344...or originald002...
+into a combined snapshot. No step/alias/count may be adjusted to improve baseline.
+
+6. Independent regression / no remeasurement.
+PYTHONDONTWRITEBYTECODE=1 python3 -m unittest discover -s tests -v
+290tests OK17.973s;/tmp/track-a-independent-tests.txt.
+node --test tests/test_frontend.cjs:24DOMchecksPASS;/tmp/track-a-independent-front.txt.
+Includes genericnativeverbs,nonwrite verbs,nonform/nonsubmit,fallback consumed,
+conflicting owner,ambiguous map,provenance/no-input mutation/determinism/secret exclusion,
+CSV andnative-specific gate/tampering tests. Old/newM02dispatch compared with synthetic
+sentinel;no real evaluator/model/storage calls. No new actual metric measured by audit.
+With actualevaluatepatched tothrow,candidateassess returnsNone/PENDING_TRACK_A_VERIFICATION
+and627rows. No comparator call;candidategate was absent throughout validation.
+
+Gate/report scope:
+Isolatednative-submit code/source contract is PASS;overallPASS_WITH_WARNINGS because
+17source/role questions,3proof gaps andsharedintegration remain. A native-specific
+PASS gate may bind ONLYf344...withnative_submit_recovery_checkPASS and explicit
+shared_web_integration_checkPENDING. It does NOT authorize using oldbaselinegate on
+changedsharedcode or activating a web result without integrationverification.
+No GTcomparison/recalculation performed. Baseline18.49remains soleactualM02result.
+No predicted score gain,model research,OFFICIAL promotion orM06/M03 work inTrackAaudit.

@@ -32,5 +32,9 @@
       "manifest": "data/evaluation/mock-dataset-01/data_manifest.json",
       "run_mode": "REFERENCE"
     }
+  },
+  "m03_real_generator": {
+    "snapshot_path": "results/development/m03_current_semantics_20261109/business_steps.json",
+    "snapshot_sha256": "86b1e77c8ca4ec365806d7d145d99ffa802bc097347b3db16ed9b3f600503f39"
   }
 }

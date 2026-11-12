@@ -58,13 +58,46 @@ class Service:
         result = []
         for key, (name, dataset, count, operator) in METRICS.items():
             source = self.source(mode, config); prepared = self.prepare(source, key)
+            legacy_prepared = dict(prepared)
+            if key == 'M02' and mode == 'DEVELOPMENT' and (self.root / 'data/development/current_site_unseen_validation_v1/m02_frozen_output/manifest.json').is_file():
+                from .m02_candidate import assess, DATASET
+                try:
+                    candidate, _ = assess(self.root)
+                    prepared = {'status':candidate['status'], 'details':candidate['details'], 'dataset_id':DATASET}
+                except (EvaluationError, OSError, ValueError, KeyError, TypeError) as exc:
+                    prepared = {'status':'ERROR', 'details':{'missing':[str(exc)]}, 'error':str(exc), 'dataset_id':DATASET}
+            if key == 'M06' and mode == 'DEVELOPMENT':
+                from .m06_candidate import prepare as prepare_m06
+                prepared = prepare_m06(self.root)
+            if key == 'M05' and mode == 'DEVELOPMENT':
+                from .m05_main_web import readiness
+                prepared = readiness(self.root)
             latest_path = self.root / "results" / mode.lower() / ("latest-" + key + ".json")
             latest = read_json(latest_path) if latest_path.exists() else None
             if key in INTEGRATIONS and latest and latest.get('status') == 'COMPLETED':
                 prepared.update(status='COMPLETED',details={'external_result_received':True})
-            result.append({"metric_id": key, "metric_name": name, "dataset": source.dataset_id,
-                           "expected_sample_count": count, "target": config["targets"].get(key),
+            recovery_option = []
+            if key == 'M02' and mode == 'DEVELOPMENT':
+                from .m02_recovery_candidate import DATASET as RECOVERY_DATASET, prepare as prepare_recovery
+                recovery = prepare_recovery(self.root)
+                recovery_option = [{"id": RECOVERY_DATASET, "label": "Recovery 5종 · v1.2.1 · DEVELOPMENT",
+                    "ready": True, "readiness": dict(status=recovery["status"], details=recovery["details"],
+                        error=recovery.get("error"), dataset=RECOVERY_DATASET)}]
+            if key == 'M05' and mode == 'DEVELOPMENT' and latest and latest.get('dataset_id') != prepared.get('dataset_id'):
+                latest = None
+            result.append({"metric_id": key, "metric_name": name, "dataset": prepared.get("dataset_id", source.dataset_id),
+                           "expected_sample_count": (20 if key == "M05" and mode == "DEVELOPMENT" else count), "target": config["targets"].get(key),
                            "operator": operator, "latest": latest, "status": prepared["status"],
+                           "input_options": (recovery_option + [{"id":"v1_2_1_unseen_m02_development", "label":"Frozen v1.2.1 · 20종 · DEVELOPMENT", "ready":(self.root / "data/development/current_site_unseen_validation_v1/m02_frozen_output/manifest.json").is_file(),
+                                               "readiness":dict(status=prepared["status"], details=prepared["details"], error=prepared.get("error"), dataset=prepared.get("dataset_id", source.dataset_id))},
+                                              {"id":"", "label":"Legacy current_site_dev_01 · V6.2",
+                                               "readiness":dict(status=legacy_prepared["status"], details=legacy_prepared["details"], error=legacy_prepared.get("error"), dataset=source.dataset_id)}]
+                                             if key == 'M02' and mode == 'DEVELOPMENT' else
+                                             ([{"id":"v1_2_1_unseen_m06_development", "label":"Frozen v1.2.1 embedding + labels · DEVELOPMENT", "ready":True,
+                                                "readiness":dict(status=prepared["status"],details=prepared["details"],error=prepared.get("error"),dataset=prepared.get("dataset_id"))},
+                                               {"id":"", "label":"Legacy V6.2 model runner · DEVELOPMENT",
+                                                "readiness":dict(status=legacy_prepared["status"],details=legacy_prepared["details"],dataset=source.dataset_id)}]
+                                              if key == 'M06' and mode == 'DEVELOPMENT' else [])),
                            "details": prepared["details"], "error": prepared.get("error")})
         return {"run_mode": mode, "metrics": result, "model": {"version": "V6.2", "frozen": True, "reference_counts": REFERENCE}}
 
@@ -73,12 +106,34 @@ class Service:
         with self.lock:
             return ingest(self.root, self.config(), metric, payload)
 
-    def run(self, metric, mode="REFERENCE"):
+    def run(self, metric, mode="REFERENCE", dataset_id=None):
         require(mode in MODES and metric in METRICS, "Invalid mode or metric")
         if not self.lock.acquire(blocking=False):
             raise EvaluationError("An evaluation is already running", "RUNNING")
         try:
             config = self.config(); source = self.source(mode, config)
+            if metric == 'M02' and mode == 'DEVELOPMENT' and dataset_id == 'm02_recovery_data_05_exact_five':
+                from .m02_main_web import run as run_m02
+                return run_m02(self.root, config)
+            if metric == 'M03' and mode == 'DEVELOPMENT' and dataset_id == 'm03_final_10_frozen_20261112':
+                from .m03_main_web import run as run_m03
+                return run_m03(self.root, config)
+            if metric == 'M05' and mode == 'DEVELOPMENT':
+                from .m05_main_web import run as run_m05, DATASET as M05_DATASET
+                require(dataset_id in (None, M05_DATASET), 'Unknown M05 dataset')
+                return run_m05(self.root, config)
+            if metric == 'M06' and mode == 'DEVELOPMENT' and dataset_id is not None:
+                from .m06_candidate import DATASET as M06_DATASET, run as run_m06
+                require(dataset_id == M06_DATASET, 'Unknown M06 dataset selection')
+                return run_m06(self.root, config)
+            if metric == 'M02' and mode == 'DEVELOPMENT' and dataset_id == 'm02_recovery_data_01':
+                from .m02_recovery_candidate import run as run_recovery
+                return run_recovery(self.root, config)
+            if dataset_id is not None:
+                from .m02_candidate import DATASET, run as run_candidate
+                require(metric == 'M02' and mode == 'DEVELOPMENT' and dataset_id == DATASET,
+                        'Unknown dataset selection for metric/mode')
+                return run_candidate(self.root, config)
             if metric in INTEGRATIONS:
                 latest=self.root/'results'/mode.lower()/('latest-'+metric+'.json')
                 if latest.exists() and read_json(latest).get('status')=='COMPLETED':
@@ -191,6 +246,16 @@ def make_handler(service):
                 return self.reply(403, {"error": "Local same-origin access required"})
             path = urlparse(self.path).path
             try:
+                if path == "/api/measurement":
+                    from .measurement_ui import catalog
+                    return self.reply(200, catalog(service))
+                active = re.fullmatch(r"/api/measurement/(m02|m03)/(evidence.csv|result.json)", path)
+                if active:
+                    from .measurement_ui import stored_file
+                    file = stored_file(service.root, active[1].upper(), active[2])
+                    if not file or not file.is_file():
+                        return self.reply(404, {"error": "Result not found"})
+                    return self.reply(200, file.read_bytes(), "text/csv; charset=utf-8" if active[2].endswith("csv") else "application/json; charset=utf-8", active[2].endswith("csv"))
                 if path == "/api/evaluations":
                     return self.reply(200, service.catalog(parse_qs(urlparse(self.path).query).get("mode", ["REFERENCE"])[0]))
                 match = re.fullmatch(r"/api/evaluations/(m0[1-7])/runs/((?:REF|EVAL|DEV)-M0[1-7]-[0-9]{8}T[0-9]{6}-[0-9a-f]{12})/(evidence.csv|result.json|run_manifest.json|received_payload.json)", path)
@@ -245,7 +310,8 @@ def make_handler(service):
             if self.headers.get("Content-Length", "0") != "0" or self.headers.get("Transfer-Encoding"):
                 return self.reply(400, {"error": "This endpoint takes no request body"})
             try:
-                result = service.run(match[1].upper(), parse_qs(urlparse(self.path).query).get("mode", ["REFERENCE"])[0])
+                query = parse_qs(urlparse(self.path).query)
+                result = service.run(match[1].upper(), query.get("mode", ["REFERENCE"])[0], query.get("dataset_id", [None])[0])
                 code = 422 if result["status"] == "ERROR" else 200
                 self.reply(code, result)
             except EvaluationError as exc:

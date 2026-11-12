@@ -1,0 +1,1736 @@
+[
+  {
+    "process_model_id": "PM-014",
+    "node_id": "PM-014-N001",
+    "action": "page_entry",
+    "http_method": "",
+    "normalized_endpoint": "",
+    "page_path": "/rbem",
+    "target_role": "html",
+    "source_event_evidence": [
+      "b46dc043-660b-460f-9fa2-34308c035a55"
+    ]
+  },
+  {
+    "process_model_id": "PM-014",
+    "node_id": "PM-014-N002",
+    "action": "input",
+    "http_method": "",
+    "normalized_endpoint": "",
+    "page_path": "/rbem",
+    "target_role": "input_control",
+    "source_event_evidence": [
+      "e63a9df6-6046-4542-912e-1a6afd54136b",
+      "8d0f8a16-bf72-430c-a126-e1c01c90bb96"
+    ]
+  },
+  {
+    "process_model_id": "PM-014",
+    "node_id": "PM-014-N003",
+    "action": "selection",
+    "http_method": "",
+    "normalized_endpoint": "",
+    "page_path": "/rbem",
+    "target_role": "button",
+    "source_event_evidence": [
+      "065abd30-51fc-4df9-8ba6-ebd052ab51bf"
+    ]
+  },
+  {
+    "process_model_id": "PM-014",
+    "node_id": "PM-014-N004",
+    "action": "submit_save",
+    "http_method": "",
+    "normalized_endpoint": "",
+    "page_path": "/rbem",
+    "target_role": "form",
+    "source_event_evidence": [
+      "690d3e08-9098-4749-90b4-1f55563c5524"
+    ]
+  },
+  {
+    "process_model_id": "PM-014",
+    "node_id": "PM-014-N005",
+    "action": "api_confirmation",
+    "http_method": "POST",
+    "normalized_endpoint": "/api/auth/login",
+    "page_path": "/mypage",
+    "target_role": "/api/auth/login",
+    "source_event_evidence": [
+      "174c0196-6255-40db-a043-0321a12a778b"
+    ]
+  },
+  {
+    "process_model_id": "PM-014",
+    "node_id": "PM-014-N006",
+    "action": "page_entry",
+    "http_method": "",
+    "normalized_endpoint": "",
+    "page_path": "/mypage",
+    "target_role": "html",
+    "source_event_evidence": [
+      "1d026465-bceb-4bb1-8eb8-ade0d9eda09e"
+    ]
+  },
+  {
+    "process_model_id": "PM-014",
+    "node_id": "PM-014-N007",
+    "action": "api_confirmation",
+    "http_method": "GET",
+    "normalized_endpoint": "/api/auth/me",
+    "page_path": "/mypage",
+    "target_role": "/api/auth/me",
+    "source_event_evidence": [
+      "31812db5-e6f1-4d85-9cb9-d1f8a011714d",
+      "e7326777-ce03-40aa-ad18-9398ae56d1c0"
+    ]
+  },
+  {
+    "process_model_id": "PM-015",
+    "node_id": "PM-015-N001",
+    "action": "page_entry",
+    "http_method": "",
+    "normalized_endpoint": "",
+    "page_path": "/mypage",
+    "target_role": "navigation",
+    "source_event_evidence": [
+      "cfd2f406-f9c4-4e4e-9350-722bf77a856f",
+      "532eacb3-8c78-49f8-a574-7bf091a4e7d5"
+    ]
+  },
+  {
+    "process_model_id": "PM-015",
+    "node_id": "PM-015-N002",
+    "action": "page_entry",
+    "http_method": "",
+    "normalized_endpoint": "",
+    "page_path": "/mypage/personal-info",
+    "target_role": "html",
+    "source_event_evidence": [
+      "5beda9a2-6dfc-4b9c-a1fb-847bc727d6be"
+    ]
+  },
+  {
+    "process_model_id": "PM-015",
+    "node_id": "PM-015-N003",
+    "action": "api_confirmation",
+    "http_method": "GET",
+    "normalized_endpoint": "/api/auth/me",
+    "page_path": "/mypage/personal-info",
+    "target_role": "/api/auth/me",
+    "source_event_evidence": [
+      "be79421e-8688-4cc1-a180-7df2b8f5659a"
+    ]
+  },
+  {
+    "process_model_id": "PM-020",
+    "node_id": "PM-020-N001",
+    "action": "page_entry",
+    "http_method": "",
+    "normalized_endpoint": "",
+    "page_path": "/mypage/personal-info",
+    "target_role": "navigation",
+    "source_event_evidence": [
+      "caa42e4c-26bd-4171-a351-7e92e353a0fc"
+    ]
+  },
+  {
+    "process_model_id": "PM-020",
+    "node_id": "PM-020-N002",
+    "action": "page_entry",
+    "http_method": "",
+    "normalized_endpoint": "",
+    "page_path": "/mypage/schedule",
+    "target_role": "html",
+    "source_event_evidence": [
+      "15db8088-0f5a-4109-95de-230f40ffb63f"
+    ]
+  },
+  {
+    "process_model_id": "PM-020",
+    "node_id": "PM-020-N003",
+    "action": "api_confirmation",
+    "http_method": "GET",
+    "normalized_endpoint": "/api/schedules/viewers",
+    "page_path": "/mypage/schedule",
+    "target_role": "/api/schedules/viewers",
+    "source_event_evidence": [
+      "a96b3503-c820-4591-a67d-6a7ffa01745e"
+    ]
+  },
+  {
+    "process_model_id": "PM-020",
+    "node_id": "PM-020-N004",
+    "action": "api_confirmation",
+    "http_method": "GET",
+    "normalized_endpoint": "/api/schedules",
+    "page_path": "/mypage/schedule",
+    "target_role": "/api/schedules",
+    "source_event_evidence": [
+      "37063227-9a9b-417d-83d2-db4c8dcc9697",
+      "088c247d-fac5-445a-86fb-e69c0842a546",
+      "c6b9793e-bb3f-4477-878e-846efcf06fa1"
+    ]
+  },
+  {
+    "process_model_id": "PM-020",
+    "node_id": "PM-020-N005",
+    "action": "selection",
+    "http_method": "",
+    "normalized_endpoint": "",
+    "page_path": "/mypage/schedule",
+    "target_role": "item",
+    "source_event_evidence": [
+      "cffa3461-7afe-4643-9b47-9c009ecd4b68"
+    ]
+  },
+  {
+    "process_model_id": "PM-020",
+    "node_id": "PM-020-N006",
+    "action": "detail_open",
+    "http_method": "",
+    "normalized_endpoint": "",
+    "page_path": "/mypage/schedule",
+    "target_role": "dialog_control",
+    "source_event_evidence": [
+      "0d60f23e-7163-48b7-adce-ab1074fc1f35",
+      "96c375c7-73e8-4ac9-bbe7-d09ac7c1de2d"
+    ]
+  },
+  {
+    "process_model_id": "PM-020",
+    "node_id": "PM-020-N007",
+    "action": "selection",
+    "http_method": "",
+    "normalized_endpoint": "",
+    "page_path": "/mypage/schedule",
+    "target_role": "div",
+    "source_event_evidence": [
+      "b8ed42f9-d2aa-40bc-8ba6-c6bee5756314",
+      "ab2f8807-4fee-4ef3-898a-105bf12f28dd",
+      "c35b4b88-2257-40f4-ac0e-770136ce0e02",
+      "fdfbfa98-394d-476a-88e6-e9a0d1113cd8",
+      "cc5c965f-bb67-45fd-bec6-50be2ed20824",
+      "7a257ad4-760a-4225-bf50-b610345ae818",
+      "da23380d-3521-4f5b-b563-1053ec1988ad",
+      "ddc68f94-5574-4a9a-b172-6db26232487e",
+      "da221db9-4c86-4284-a9a1-e15ef77f4bc0",
+      "492d6a89-4871-4c45-945f-cccd3d7b4f8c"
+    ]
+  },
+  {
+    "process_model_id": "PM-020",
+    "node_id": "PM-020-N008",
+    "action": "submit_save",
+    "http_method": "",
+    "normalized_endpoint": "",
+    "page_path": "/mypage/schedule",
+    "target_role": "dialog_control",
+    "source_event_evidence": [
+      "964aacdd-1977-47ee-9d1f-f026b74433bb",
+      "e69dc460-395e-4fe3-b113-9d9521e2224c"
+    ]
+  },
+  {
+    "process_model_id": "PM-020",
+    "node_id": "PM-020-N009",
+    "action": "api_confirmation",
+    "http_method": "PATCH",
+    "normalized_endpoint": "/api/schedules/:id",
+    "page_path": "/mypage/schedule",
+    "target_role": "/api/schedules/:id",
+    "source_event_evidence": [
+      "49f17aaf-2ce0-4db0-aeee-cfcffffc44f1"
+    ]
+  },
+  {
+    "process_model_id": "PM-020",
+    "node_id": "PM-020-N010",
+    "action": "detail_close",
+    "http_method": "",
+    "normalized_endpoint": "",
+    "page_path": "/mypage/schedule",
+    "target_role": "dialog_control",
+    "source_event_evidence": [
+      "2617fd1a-5040-4df6-a662-c2bedafda078",
+      "edab49e4-c82f-4584-9979-2175aa0d564e"
+    ]
+  },
+  {
+    "process_model_id": "PM-020",
+    "node_id": "PM-020-N011",
+    "action": "input",
+    "http_method": "",
+    "normalized_endpoint": "",
+    "page_path": "/mypage/schedule",
+    "target_role": "input_control",
+    "source_event_evidence": [
+      "ce6ba3d6-0e7d-4a76-aba9-c439dec592c6",
+      "e9765f07-e848-4741-9548-635595e6ba8d",
+      "5d55b008-468e-42fa-a273-cd7c2b20ade4"
+    ]
+  },
+  {
+    "process_model_id": "PM-020",
+    "node_id": "PM-020-N012",
+    "action": "api_confirmation",
+    "http_method": "POST",
+    "normalized_endpoint": "/api/schedules",
+    "page_path": "/mypage/schedule",
+    "target_role": "/api/schedules",
+    "source_event_evidence": [
+      "9e9f49cc-f917-45be-b7bf-8819fb05e0c1"
+    ]
+  },
+  {
+    "process_model_id": "PM-011",
+    "node_id": "PM-011-N001",
+    "action": "page_entry",
+    "http_method": "",
+    "normalized_endpoint": "",
+    "page_path": "/mypage/schedule",
+    "target_role": "navigation",
+    "source_event_evidence": [
+      "136897a5-42a0-4ec2-b9d6-a24bedee05f6",
+      "95a710b5-2e41-43cf-888e-a14bf1245ccf"
+    ]
+  },
+  {
+    "process_model_id": "PM-011",
+    "node_id": "PM-011-N002",
+    "action": "page_entry",
+    "http_method": "",
+    "normalized_endpoint": "",
+    "page_path": "/mypage/work/overview",
+    "target_role": "html",
+    "source_event_evidence": [
+      "a298925c-a03f-4d05-8fdf-d93cd8c5fa86"
+    ]
+  },
+  {
+    "process_model_id": "PM-011",
+    "node_id": "PM-011-N003",
+    "action": "api_confirmation",
+    "http_method": "GET",
+    "normalized_endpoint": "/api/work-reports",
+    "page_path": "/mypage/work/overview",
+    "target_role": "/api/work-reports",
+    "source_event_evidence": [
+      "a07d4125-c91f-421a-98a6-8452fc5fbabc"
+    ]
+  },
+  {
+    "process_model_id": "PM-011",
+    "node_id": "PM-011-N004",
+    "action": "api_confirmation",
+    "http_method": "GET",
+    "normalized_endpoint": "/api/auth/me",
+    "page_path": "/mypage/work/overview",
+    "target_role": "/api/auth/me",
+    "source_event_evidence": [
+      "0766e61d-bd25-4d15-86ce-d02f91929802"
+    ]
+  },
+  {
+    "process_model_id": "PM-021",
+    "node_id": "PM-021-N001",
+    "action": "selection",
+    "http_method": "",
+    "normalized_endpoint": "",
+    "page_path": "/mypage/work/overview",
+    "target_role": "item",
+    "source_event_evidence": [
+      "36c8982b-3633-4172-9ef2-d1bbb3a2895f"
+    ]
+  },
+  {
+    "process_model_id": "PM-021",
+    "node_id": "PM-021-N002",
+    "action": "api_confirmation",
+    "http_method": "GET",
+    "normalized_endpoint": "/api/work-reports/:id",
+    "page_path": "/mypage/work/overview",
+    "target_role": "/api/work-reports/:id",
+    "source_event_evidence": [
+      "2940b3d9-2850-4155-a81e-8edc9bb907d8"
+    ]
+  },
+  {
+    "process_model_id": "PM-021",
+    "node_id": "PM-021-N003",
+    "action": "detail_open",
+    "http_method": "",
+    "normalized_endpoint": "",
+    "page_path": "/mypage/work/overview",
+    "target_role": "dialog_control",
+    "source_event_evidence": [
+      "33cbcb09-1d80-440a-a6b7-acae508236ec"
+    ]
+  },
+  {
+    "process_model_id": "PM-021",
+    "node_id": "PM-021-N004",
+    "action": "selection",
+    "http_method": "",
+    "normalized_endpoint": "",
+    "page_path": "/mypage/work/overview",
+    "target_role": "dialog_control",
+    "source_event_evidence": [
+      "c6515df3-eddf-4562-800f-a53bfafd49c8"
+    ]
+  },
+  {
+    "process_model_id": "PM-021",
+    "node_id": "PM-021-N005",
+    "action": "detail_close",
+    "http_method": "",
+    "normalized_endpoint": "",
+    "page_path": "/mypage/work/overview",
+    "target_role": "dialog_control",
+    "source_event_evidence": [
+      "ba358ec3-f31a-44e8-ab8c-3fc1cd254e75"
+    ]
+  },
+  {
+    "process_model_id": "PM-018",
+    "node_id": "PM-018-N001",
+    "action": "page_entry",
+    "http_method": "",
+    "normalized_endpoint": "",
+    "page_path": "/mypage/work/overview",
+    "target_role": "navigation",
+    "source_event_evidence": [
+      "be408ce6-d13b-4cbf-8e98-bffa600bf8c8"
+    ]
+  },
+  {
+    "process_model_id": "PM-018",
+    "node_id": "PM-018-N002",
+    "action": "page_entry",
+    "http_method": "",
+    "normalized_endpoint": "",
+    "page_path": "/mypage/work/daily",
+    "target_role": "html",
+    "source_event_evidence": [
+      "a2184d83-379d-4665-9e29-f0f938de98ca"
+    ]
+  },
+  {
+    "process_model_id": "PM-018",
+    "node_id": "PM-018-N003",
+    "action": "api_confirmation",
+    "http_method": "GET",
+    "normalized_endpoint": "/api/auth/me",
+    "page_path": "/mypage/work/daily",
+    "target_role": "/api/auth/me",
+    "source_event_evidence": [
+      "f077564b-4a37-4e3b-b45f-7f751c0f5b6d"
+    ]
+  },
+  {
+    "process_model_id": "PM-018",
+    "node_id": "PM-018-N004",
+    "action": "api_confirmation",
+    "http_method": "GET",
+    "normalized_endpoint": "/api/work-reports",
+    "page_path": "/mypage/work/daily",
+    "target_role": "/api/work-reports",
+    "source_event_evidence": [
+      "3fde26cf-913f-4e71-8278-0798269221c9"
+    ]
+  },
+  {
+    "process_model_id": "PM-018",
+    "node_id": "PM-018-N005",
+    "action": "selection",
+    "http_method": "",
+    "normalized_endpoint": "",
+    "page_path": "/mypage/work/daily",
+    "target_role": "item",
+    "source_event_evidence": [
+      "8ea83b5e-86a0-4210-b2b0-5b0e7db37287"
+    ]
+  },
+  {
+    "process_model_id": "PM-018",
+    "node_id": "PM-018-N006",
+    "action": "api_confirmation",
+    "http_method": "GET",
+    "normalized_endpoint": "/api/work-reports/:id",
+    "page_path": "/mypage/work/daily",
+    "target_role": "/api/work-reports/:id",
+    "source_event_evidence": [
+      "62c3bd48-fabb-433c-8a24-af0e785e981e"
+    ]
+  },
+  {
+    "process_model_id": "PM-018",
+    "node_id": "PM-018-N007",
+    "action": "detail_open",
+    "http_method": "",
+    "normalized_endpoint": "",
+    "page_path": "/mypage/work/daily",
+    "target_role": "dialog_control",
+    "source_event_evidence": [
+      "0b39db5a-7973-4ff1-a9c8-adcf9fbf81e1"
+    ]
+  },
+  {
+    "process_model_id": "PM-018",
+    "node_id": "PM-018-N008",
+    "action": "selection",
+    "http_method": "",
+    "normalized_endpoint": "",
+    "page_path": "/mypage/work/daily",
+    "target_role": "dialog_control",
+    "source_event_evidence": [
+      "5f962278-a1a3-4c7c-8959-7eb0ad62fbc7"
+    ]
+  },
+  {
+    "process_model_id": "PM-018",
+    "node_id": "PM-018-N009",
+    "action": "detail_close",
+    "http_method": "",
+    "normalized_endpoint": "",
+    "page_path": "/mypage/work/daily",
+    "target_role": "dialog_control",
+    "source_event_evidence": [
+      "4b19a662-75a8-4b26-8166-f88cc61d0fd2"
+    ]
+  },
+  {
+    "process_model_id": "PM-010",
+    "node_id": "PM-010-N001",
+    "action": "selection",
+    "http_method": "",
+    "normalized_endpoint": "",
+    "page_path": "/mypage/work/daily",
+    "target_role": "button",
+    "source_event_evidence": [
+      "ea48ae0b-8f2b-4325-b53b-390be82d559c"
+    ]
+  },
+  {
+    "process_model_id": "PM-010",
+    "node_id": "PM-010-N002",
+    "action": "detail_open",
+    "http_method": "",
+    "normalized_endpoint": "",
+    "page_path": "/mypage/work/daily",
+    "target_role": "dialog_control",
+    "source_event_evidence": [
+      "a260425f-1c62-43a6-80fe-498117c296d1",
+      "ea57e1e5-48a0-4684-9538-363017278329"
+    ]
+  },
+  {
+    "process_model_id": "PM-010",
+    "node_id": "PM-010-N003",
+    "action": "selection",
+    "http_method": "",
+    "normalized_endpoint": "",
+    "page_path": "/mypage/work/daily",
+    "target_role": "input_control",
+    "source_event_evidence": [
+      "0231f117-fc97-4ac2-8f6b-2a4a86ff9c10",
+      "e56062a5-f1c8-43e7-88f5-4c111542443b",
+      "24d45806-7777-4167-902f-d642f0b466df",
+      "91447470-7364-4f87-8491-77385e509e74",
+      "c1f22f3b-f14c-424c-971f-6007dd27ca40",
+      "9a8e8c48-ac8f-47cc-b6c7-67aa3650914c",
+      "1681e427-7f1c-4047-ae8e-fcb4acda9874",
+      "ec0355a0-ac07-4a8d-bd97-651cafcb0f15"
+    ]
+  },
+  {
+    "process_model_id": "PM-010",
+    "node_id": "PM-010-N004",
+    "action": "input",
+    "http_method": "",
+    "normalized_endpoint": "",
+    "page_path": "/mypage/work/daily",
+    "target_role": "input_control",
+    "source_event_evidence": [
+      "f0359bd8-b302-4948-a07f-919ac3db6590",
+      "9dd9dd91-a8e9-410c-b423-4f54c21f5853",
+      "ec29cdfb-39fc-47af-a3b7-8d28beaeaa5b"
+    ]
+  },
+  {
+    "process_model_id": "PM-010",
+    "node_id": "PM-010-N005",
+    "action": "selection",
+    "http_method": "",
+    "normalized_endpoint": "",
+    "page_path": "/mypage/work/daily",
+    "target_role": "dialog_control",
+    "source_event_evidence": [
+      "73768b2d-82e0-4dbb-927f-0a244348bd2f",
+      "47531a7d-d70a-4024-ba69-8ff1084b9fd0",
+      "ab76eee2-0912-49c0-8211-3e9761acc377"
+    ]
+  },
+  {
+    "process_model_id": "PM-010",
+    "node_id": "PM-010-N006",
+    "action": "api_confirmation",
+    "http_method": "POST",
+    "normalized_endpoint": "/api/work-reports",
+    "page_path": "/mypage/work/daily",
+    "target_role": "/api/work-reports",
+    "source_event_evidence": [
+      "ccf16d00-8848-48dc-81dc-7ceff66cf468"
+    ]
+  },
+  {
+    "process_model_id": "PM-010",
+    "node_id": "PM-010-N007",
+    "action": "detail_close",
+    "http_method": "",
+    "normalized_endpoint": "",
+    "page_path": "/mypage/work/daily",
+    "target_role": "dialog_control",
+    "source_event_evidence": [
+      "52b84952-7a65-4bee-bc1f-2301cd850a75",
+      "a57b3a6e-f796-435c-8dd4-035421e0531b"
+    ]
+  },
+  {
+    "process_model_id": "PM-010",
+    "node_id": "PM-010-N008",
+    "action": "api_confirmation",
+    "http_method": "GET",
+    "normalized_endpoint": "/api/work-reports",
+    "page_path": "/mypage/work/daily",
+    "target_role": "/api/work-reports",
+    "source_event_evidence": [
+      "fec2ecc3-3d16-4406-a1b9-05a5dfc968ae"
+    ]
+  },
+  {
+    "process_model_id": "PM-001",
+    "node_id": "PM-001-N001",
+    "action": "page_entry",
+    "http_method": "",
+    "normalized_endpoint": "",
+    "page_path": "/mypage/work/daily",
+    "target_role": "navigation",
+    "source_event_evidence": [
+      "bf22dec9-dbcc-41ae-a3b0-533bc057abfc"
+    ]
+  },
+  {
+    "process_model_id": "PM-001",
+    "node_id": "PM-001-N002",
+    "action": "page_entry",
+    "http_method": "",
+    "normalized_endpoint": "",
+    "page_path": "/mypage/work/weekly",
+    "target_role": "html",
+    "source_event_evidence": [
+      "7916f4d9-b7cf-4634-8ec4-5417c324b8e4"
+    ]
+  },
+  {
+    "process_model_id": "PM-001",
+    "node_id": "PM-001-N003",
+    "action": "api_confirmation",
+    "http_method": "GET",
+    "normalized_endpoint": "/api/work-reports",
+    "page_path": "/mypage/work/weekly",
+    "target_role": "/api/work-reports",
+    "source_event_evidence": [
+      "c04a0d4e-be00-4663-8934-35330dbec0ec"
+    ]
+  },
+  {
+    "process_model_id": "PM-001",
+    "node_id": "PM-001-N004",
+    "action": "api_confirmation",
+    "http_method": "GET",
+    "normalized_endpoint": "/api/auth/me",
+    "page_path": "/mypage/work/weekly",
+    "target_role": "/api/auth/me",
+    "source_event_evidence": [
+      "96a33ce2-6aa4-4f2f-b018-a86af9254414"
+    ]
+  },
+  {
+    "process_model_id": "PM-001",
+    "node_id": "PM-001-N005",
+    "action": "selection",
+    "http_method": "",
+    "normalized_endpoint": "",
+    "page_path": "/mypage/work/weekly",
+    "target_role": "item",
+    "source_event_evidence": [
+      "1ff1e68c-5dc0-4c96-86c4-48a99cb4ed4b"
+    ]
+  },
+  {
+    "process_model_id": "PM-001",
+    "node_id": "PM-001-N006",
+    "action": "api_confirmation",
+    "http_method": "GET",
+    "normalized_endpoint": "/api/work-reports/:id",
+    "page_path": "/mypage/work/weekly",
+    "target_role": "/api/work-reports/:id",
+    "source_event_evidence": [
+      "6a54eed4-c3ac-4503-b4a2-4ca723eccbf9"
+    ]
+  },
+  {
+    "process_model_id": "PM-001",
+    "node_id": "PM-001-N007",
+    "action": "detail_open",
+    "http_method": "",
+    "normalized_endpoint": "",
+    "page_path": "/mypage/work/weekly",
+    "target_role": "dialog_control",
+    "source_event_evidence": [
+      "c2a2b18e-1dbf-46ff-9fc6-d268bf88c310"
+    ]
+  },
+  {
+    "process_model_id": "PM-001",
+    "node_id": "PM-001-N008",
+    "action": "selection",
+    "http_method": "",
+    "normalized_endpoint": "",
+    "page_path": "/mypage/work/weekly",
+    "target_role": "dialog_control",
+    "source_event_evidence": [
+      "3691fb15-b5c9-4792-9c4d-5c36d1d85341"
+    ]
+  },
+  {
+    "process_model_id": "PM-001",
+    "node_id": "PM-001-N009",
+    "action": "detail_close",
+    "http_method": "",
+    "normalized_endpoint": "",
+    "page_path": "/mypage/work/weekly",
+    "target_role": "dialog_control",
+    "source_event_evidence": [
+      "1bbedd1b-82fa-4321-90fa-9a32a76db3a3"
+    ]
+  },
+  {
+    "process_model_id": "PM-019",
+    "node_id": "PM-019-N001",
+    "action": "selection",
+    "http_method": "",
+    "normalized_endpoint": "",
+    "page_path": "/mypage/work/weekly",
+    "target_role": "button",
+    "source_event_evidence": [
+      "14bc0dce-0909-48fc-8e6e-53f4bbd6bbbb"
+    ]
+  },
+  {
+    "process_model_id": "PM-019",
+    "node_id": "PM-019-N002",
+    "action": "detail_open",
+    "http_method": "",
+    "normalized_endpoint": "",
+    "page_path": "/mypage/work/weekly",
+    "target_role": "dialog_control",
+    "source_event_evidence": [
+      "79b4d729-3a0e-484c-8b77-d19fe591b069",
+      "155e93c4-d7ff-4c61-9b02-b8e8a5a63966"
+    ]
+  },
+  {
+    "process_model_id": "PM-019",
+    "node_id": "PM-019-N003",
+    "action": "selection",
+    "http_method": "",
+    "normalized_endpoint": "",
+    "page_path": "/mypage/work/weekly",
+    "target_role": "input_control",
+    "source_event_evidence": [
+      "50335038-e8fd-4321-b0c2-4a70025be414",
+      "8381fb33-c5bf-4136-8d39-8e41d0ac229d",
+      "a96d6101-5542-49ef-a179-4d50225937dc",
+      "c6ba4423-c9b0-483c-9682-e38f26bc6c7a",
+      "1a277e9d-1432-4a17-9627-c99f06f58d84"
+    ]
+  },
+  {
+    "process_model_id": "PM-019",
+    "node_id": "PM-019-N004",
+    "action": "input",
+    "http_method": "",
+    "normalized_endpoint": "",
+    "page_path": "/mypage/work/weekly",
+    "target_role": "input_control",
+    "source_event_evidence": [
+      "278b45ba-9b1c-4883-b5de-b18fee8e4f4c",
+      "86ff307a-de96-4778-8c07-562247e3ea04",
+      "8dd81299-f565-4186-b605-1468d98e8635"
+    ]
+  },
+  {
+    "process_model_id": "PM-019",
+    "node_id": "PM-019-N005",
+    "action": "selection",
+    "http_method": "",
+    "normalized_endpoint": "",
+    "page_path": "/mypage/work/weekly",
+    "target_role": "dialog_control",
+    "source_event_evidence": [
+      "7c723f8f-9972-4c10-b619-1d38f0dd3fbf",
+      "cbf09dad-6f90-4261-94a5-10c7175e9597"
+    ]
+  },
+  {
+    "process_model_id": "PM-019",
+    "node_id": "PM-019-N006",
+    "action": "api_confirmation",
+    "http_method": "POST",
+    "normalized_endpoint": "/api/work-reports",
+    "page_path": "/mypage/work/weekly",
+    "target_role": "/api/work-reports",
+    "source_event_evidence": [
+      "59bb5733-db55-4f34-9389-3e916c8c13e3"
+    ]
+  },
+  {
+    "process_model_id": "PM-019",
+    "node_id": "PM-019-N007",
+    "action": "detail_close",
+    "http_method": "",
+    "normalized_endpoint": "",
+    "page_path": "/mypage/work/weekly",
+    "target_role": "dialog_control",
+    "source_event_evidence": [
+      "f9488c7d-785f-411e-b43e-d3dffaace444",
+      "8045c5e2-f8d2-464a-88a0-88ae85656a25"
+    ]
+  },
+  {
+    "process_model_id": "PM-019",
+    "node_id": "PM-019-N008",
+    "action": "api_confirmation",
+    "http_method": "GET",
+    "normalized_endpoint": "/api/work-reports",
+    "page_path": "/mypage/work/weekly",
+    "target_role": "/api/work-reports",
+    "source_event_evidence": [
+      "83502385-34ac-4bad-851c-dc8cb162e580"
+    ]
+  },
+  {
+    "process_model_id": "PM-001",
+    "node_id": "PM-001-N010",
+    "action": "page_entry",
+    "http_method": "",
+    "normalized_endpoint": "",
+    "page_path": "/mypage/work/weekly",
+    "target_role": "navigation",
+    "source_event_evidence": [
+      "413486ab-9be0-46fa-b628-a66d5494ade1"
+    ]
+  },
+  {
+    "process_model_id": "PM-001",
+    "node_id": "PM-001-N011",
+    "action": "page_entry",
+    "http_method": "",
+    "normalized_endpoint": "",
+    "page_path": "/mypage/work/monthly",
+    "target_role": "html",
+    "source_event_evidence": [
+      "fc9ffe75-c71a-4f3d-b54d-360ba24b082e"
+    ]
+  },
+  {
+    "process_model_id": "PM-001",
+    "node_id": "PM-001-N012",
+    "action": "api_confirmation",
+    "http_method": "GET",
+    "normalized_endpoint": "/api/work-reports",
+    "page_path": "/mypage/work/monthly",
+    "target_role": "/api/work-reports",
+    "source_event_evidence": [
+      "57151007-f35e-44cb-9bf6-3d23b8bcf147"
+    ]
+  },
+  {
+    "process_model_id": "PM-001",
+    "node_id": "PM-001-N013",
+    "action": "api_confirmation",
+    "http_method": "GET",
+    "normalized_endpoint": "/api/auth/me",
+    "page_path": "/mypage/work/monthly",
+    "target_role": "/api/auth/me",
+    "source_event_evidence": [
+      "795ef729-a975-485a-88ad-0edb16370a46"
+    ]
+  },
+  {
+    "process_model_id": "PM-001",
+    "node_id": "PM-001-N014",
+    "action": "selection",
+    "http_method": "",
+    "normalized_endpoint": "",
+    "page_path": "/mypage/work/monthly",
+    "target_role": "item",
+    "source_event_evidence": [
+      "9d1e1e45-d5df-4e1b-9715-deb1b6d5a154"
+    ]
+  },
+  {
+    "process_model_id": "PM-001",
+    "node_id": "PM-001-N015",
+    "action": "api_confirmation",
+    "http_method": "GET",
+    "normalized_endpoint": "/api/work-reports/:id",
+    "page_path": "/mypage/work/monthly",
+    "target_role": "/api/work-reports/:id",
+    "source_event_evidence": [
+      "55e78a14-3d70-4750-a440-ad52fdcfea38"
+    ]
+  },
+  {
+    "process_model_id": "PM-001",
+    "node_id": "PM-001-N016",
+    "action": "detail_open",
+    "http_method": "",
+    "normalized_endpoint": "",
+    "page_path": "/mypage/work/monthly",
+    "target_role": "dialog_control",
+    "source_event_evidence": [
+      "0ee12617-f517-433e-acf5-c5c74ac1444d"
+    ]
+  },
+  {
+    "process_model_id": "PM-001",
+    "node_id": "PM-001-N017",
+    "action": "selection",
+    "http_method": "",
+    "normalized_endpoint": "",
+    "page_path": "/mypage/work/monthly",
+    "target_role": "dialog_control",
+    "source_event_evidence": [
+      "6a11f798-cf11-4adb-8994-0d4c7bf9540d"
+    ]
+  },
+  {
+    "process_model_id": "PM-001",
+    "node_id": "PM-001-N018",
+    "action": "detail_close",
+    "http_method": "",
+    "normalized_endpoint": "",
+    "page_path": "/mypage/work/monthly",
+    "target_role": "dialog_control",
+    "source_event_evidence": [
+      "c732a9b0-b5e1-48eb-8fcd-520d9dbca504"
+    ]
+  },
+  {
+    "process_model_id": "PM-009",
+    "node_id": "PM-009-N001",
+    "action": "selection",
+    "http_method": "",
+    "normalized_endpoint": "",
+    "page_path": "/mypage/work/monthly",
+    "target_role": "button",
+    "source_event_evidence": [
+      "37081bf2-8656-472c-911a-6574bee0a921"
+    ]
+  },
+  {
+    "process_model_id": "PM-009",
+    "node_id": "PM-009-N002",
+    "action": "detail_open",
+    "http_method": "",
+    "normalized_endpoint": "",
+    "page_path": "/mypage/work/monthly",
+    "target_role": "dialog_control",
+    "source_event_evidence": [
+      "db7c4931-7759-477a-b28d-048bf53ed57d",
+      "78331631-1607-48cc-ba8d-d6ef17743a48"
+    ]
+  },
+  {
+    "process_model_id": "PM-009",
+    "node_id": "PM-009-N003",
+    "action": "selection",
+    "http_method": "",
+    "normalized_endpoint": "",
+    "page_path": "/mypage/work/monthly",
+    "target_role": "input_control",
+    "source_event_evidence": [
+      "4dce24cc-82f8-40bb-a0cc-f272e676a201",
+      "d16b0f3c-9ae0-4c3b-ab51-8e6a8188c964",
+      "27cec491-c530-49f1-a726-427f2608a0ee",
+      "498a19c8-ed15-4add-be4c-158157314d2d",
+      "da3368a6-d221-4e42-b12f-801559b5d115"
+    ]
+  },
+  {
+    "process_model_id": "PM-009",
+    "node_id": "PM-009-N004",
+    "action": "input",
+    "http_method": "",
+    "normalized_endpoint": "",
+    "page_path": "/mypage/work/monthly",
+    "target_role": "input_control",
+    "source_event_evidence": [
+      "c3bbf534-b908-4739-b633-658bdc9535bb",
+      "5c1b51b4-e9e3-41ee-beb8-65b00e53d2f6",
+      "c949a463-75c0-4a86-a002-cb494f3116f4",
+      "898f1bb4-5493-40a7-895f-1c77cc0b773f"
+    ]
+  },
+  {
+    "process_model_id": "PM-009",
+    "node_id": "PM-009-N005",
+    "action": "selection",
+    "http_method": "",
+    "normalized_endpoint": "",
+    "page_path": "/mypage/work/monthly",
+    "target_role": "dialog_control",
+    "source_event_evidence": [
+      "05173480-7dca-44f8-b8f9-48ae7b4336f0",
+      "f359c32d-5e57-4241-a38e-e0d5d1879e38"
+    ]
+  },
+  {
+    "process_model_id": "PM-009",
+    "node_id": "PM-009-N006",
+    "action": "api_confirmation",
+    "http_method": "POST",
+    "normalized_endpoint": "/api/work-reports",
+    "page_path": "/mypage/work/monthly",
+    "target_role": "/api/work-reports",
+    "source_event_evidence": [
+      "48a813aa-4b95-495b-a9fd-714b13da83dc"
+    ]
+  },
+  {
+    "process_model_id": "PM-009",
+    "node_id": "PM-009-N007",
+    "action": "detail_close",
+    "http_method": "",
+    "normalized_endpoint": "",
+    "page_path": "/mypage/work/monthly",
+    "target_role": "dialog_control",
+    "source_event_evidence": [
+      "00149e11-9d8e-4927-af27-ba7f7f90f4a6",
+      "ad06eeb1-7368-4e7c-a42a-b8eec8bbd781"
+    ]
+  },
+  {
+    "process_model_id": "PM-009",
+    "node_id": "PM-009-N008",
+    "action": "api_confirmation",
+    "http_method": "GET",
+    "normalized_endpoint": "/api/work-reports",
+    "page_path": "/mypage/work/monthly",
+    "target_role": "/api/work-reports",
+    "source_event_evidence": [
+      "e09aaf73-be25-4ec1-bfe5-e2b7ac783afd"
+    ]
+  },
+  {
+    "process_model_id": "PM-017",
+    "node_id": "PM-017-N001",
+    "action": "page_entry",
+    "http_method": "",
+    "normalized_endpoint": "",
+    "page_path": "/mypage/work/monthly",
+    "target_role": "navigation",
+    "source_event_evidence": [
+      "2951eb0d-2ebc-49d0-b710-38d7ed3ca1b1"
+    ]
+  },
+  {
+    "process_model_id": "PM-017",
+    "node_id": "PM-017-N002",
+    "action": "page_entry",
+    "http_method": "",
+    "normalized_endpoint": "",
+    "page_path": "/mypage/cards",
+    "target_role": "html",
+    "source_event_evidence": [
+      "43a8b7a5-19b1-4dde-9479-138d97f14f74"
+    ]
+  },
+  {
+    "process_model_id": "PM-017",
+    "node_id": "PM-017-N003",
+    "action": "api_confirmation",
+    "http_method": "GET",
+    "normalized_endpoint": "/api/business-cards",
+    "page_path": "/mypage/cards",
+    "target_role": "/api/business-cards",
+    "source_event_evidence": [
+      "e29407dc-4ab1-435e-b6ba-80c8e1e1df45"
+    ]
+  },
+  {
+    "process_model_id": "PM-017",
+    "node_id": "PM-017-N004",
+    "action": "api_confirmation",
+    "http_method": "GET",
+    "normalized_endpoint": "/api/auth/me",
+    "page_path": "/mypage/cards",
+    "target_role": "/api/auth/me",
+    "source_event_evidence": [
+      "8cce6117-66aa-4b19-81e1-4d47bf93e6df"
+    ]
+  },
+  {
+    "process_model_id": "PM-012",
+    "node_id": "PM-012-N001",
+    "action": "selection",
+    "http_method": "",
+    "normalized_endpoint": "",
+    "page_path": "/mypage/cards",
+    "target_role": "item",
+    "source_event_evidence": [
+      "350db9a3-0762-41b4-9dc2-bdca346223df"
+    ]
+  },
+  {
+    "process_model_id": "PM-012",
+    "node_id": "PM-012-N002",
+    "action": "api_confirmation",
+    "http_method": "GET",
+    "normalized_endpoint": "/api/business-cards/:id",
+    "page_path": "/mypage/cards",
+    "target_role": "/api/business-cards/:id",
+    "source_event_evidence": [
+      "49f4fb0b-54ce-4848-bdbe-a4e4c1dd2535"
+    ]
+  },
+  {
+    "process_model_id": "PM-012",
+    "node_id": "PM-012-N003",
+    "action": "detail_open",
+    "http_method": "",
+    "normalized_endpoint": "",
+    "page_path": "/mypage/cards",
+    "target_role": "dialog_control",
+    "source_event_evidence": [
+      "8160ff77-412a-477b-aae5-61b6cbc3e13b"
+    ]
+  },
+  {
+    "process_model_id": "PM-012",
+    "node_id": "PM-012-N004",
+    "action": "selection",
+    "http_method": "",
+    "normalized_endpoint": "",
+    "page_path": "/mypage/cards",
+    "target_role": "dialog_control",
+    "source_event_evidence": [
+      "56401850-4851-4c07-b837-834e92c0cd13"
+    ]
+  },
+  {
+    "process_model_id": "PM-012",
+    "node_id": "PM-012-N005",
+    "action": "detail_close",
+    "http_method": "",
+    "normalized_endpoint": "",
+    "page_path": "/mypage/cards",
+    "target_role": "dialog_control",
+    "source_event_evidence": [
+      "5c9c81a0-d772-41ef-a6d8-3e3c1db72607"
+    ]
+  },
+  {
+    "process_model_id": "PM-013",
+    "node_id": "PM-013-N001",
+    "action": "selection",
+    "http_method": "",
+    "normalized_endpoint": "",
+    "page_path": "/mypage/cards",
+    "target_role": "button",
+    "source_event_evidence": [
+      "3bd18604-c047-4cf2-bb48-e961e3f383c9"
+    ]
+  },
+  {
+    "process_model_id": "PM-013",
+    "node_id": "PM-013-N002",
+    "action": "detail_open",
+    "http_method": "",
+    "normalized_endpoint": "",
+    "page_path": "/mypage/cards",
+    "target_role": "dialog_control",
+    "source_event_evidence": [
+      "090f9575-3c0a-47a3-b538-21916ddc8842",
+      "14999321-cfab-451a-ab20-33a964ce3ea8"
+    ]
+  },
+  {
+    "process_model_id": "PM-013",
+    "node_id": "PM-013-N003",
+    "action": "selection",
+    "http_method": "",
+    "normalized_endpoint": "",
+    "page_path": "/mypage/cards",
+    "target_role": "input_control",
+    "source_event_evidence": [
+      "d22db733-e6d4-4908-abcb-e42d9b8d5759",
+      "69f933ac-eccc-48e0-b9a3-3f5d801af8a2",
+      "520374c8-fbac-47cb-add8-7ae9e0500d84"
+    ]
+  },
+  {
+    "process_model_id": "PM-013",
+    "node_id": "PM-013-N004",
+    "action": "input",
+    "http_method": "",
+    "normalized_endpoint": "",
+    "page_path": "/mypage/cards",
+    "target_role": "input_control",
+    "source_event_evidence": [
+      "1d87a045-01ea-4827-8aa9-b32693c8ceb3",
+      "be92d845-f4d9-4454-98b9-6280e9acd492",
+      "29bb57ca-54b7-4098-b5f6-48df8492fe07",
+      "20295fa9-56ee-492f-bc1e-9e0417bdaa65",
+      "210ac0b3-f89c-4104-9676-7ae179d83127",
+      "467ee496-0f98-416e-af7c-619a412da07d",
+      "80dac2b1-9045-46ee-8dc3-555b6ceeb62c"
+    ]
+  },
+  {
+    "process_model_id": "PM-013",
+    "node_id": "PM-013-N005",
+    "action": "selection",
+    "http_method": "",
+    "normalized_endpoint": "",
+    "page_path": "/mypage/cards",
+    "target_role": "dialog_control",
+    "source_event_evidence": [
+      "c4c879bf-2bc1-4d17-a75f-b3a0aeb39b1a"
+    ]
+  },
+  {
+    "process_model_id": "PM-013",
+    "node_id": "PM-013-N006",
+    "action": "api_confirmation",
+    "http_method": "POST",
+    "normalized_endpoint": "/api/business-cards",
+    "page_path": "/mypage/cards",
+    "target_role": "/api/business-cards",
+    "source_event_evidence": [
+      "09468a78-6148-4540-ab75-e9814955ace5"
+    ]
+  },
+  {
+    "process_model_id": "PM-013",
+    "node_id": "PM-013-N007",
+    "action": "api_confirmation",
+    "http_method": "GET",
+    "normalized_endpoint": "/api/business-cards",
+    "page_path": "/mypage/cards",
+    "target_role": "/api/business-cards",
+    "source_event_evidence": [
+      "bd3fe88c-4e95-4928-8fc8-4e638038b2e1"
+    ]
+  },
+  {
+    "process_model_id": "PM-013",
+    "node_id": "PM-013-N008",
+    "action": "detail_close",
+    "http_method": "",
+    "normalized_endpoint": "",
+    "page_path": "/mypage/cards",
+    "target_role": "dialog_control",
+    "source_event_evidence": [
+      "47ae02a2-946a-45b1-9d1a-b9380db01559"
+    ]
+  },
+  {
+    "process_model_id": "PM-005",
+    "node_id": "PM-005-N001",
+    "action": "selection",
+    "http_method": "",
+    "normalized_endpoint": "",
+    "page_path": "/mypage/cards",
+    "target_role": "dialog_control",
+    "source_event_evidence": [
+      "8e6ee271-dab8-456b-99a4-7210afc6ce58"
+    ]
+  },
+  {
+    "process_model_id": "PM-005",
+    "node_id": "PM-005-N002",
+    "action": "detail_close",
+    "http_method": "",
+    "normalized_endpoint": "",
+    "page_path": "/mypage/cards",
+    "target_role": "dialog_control",
+    "source_event_evidence": [
+      "2152b3d9-89c3-4682-a5fd-760922d88cd7"
+    ]
+  },
+  {
+    "process_model_id": "PM-016",
+    "node_id": "PM-016-N001",
+    "action": "page_entry",
+    "http_method": "",
+    "normalized_endpoint": "",
+    "page_path": "/mypage/cards",
+    "target_role": "navigation",
+    "source_event_evidence": [
+      "65abfa01-5073-4a87-b21d-914f68a087a4",
+      "35b55edc-8864-4978-9110-59bb7becc45b"
+    ]
+  },
+  {
+    "process_model_id": "PM-016",
+    "node_id": "PM-016-N002",
+    "action": "page_entry",
+    "http_method": "",
+    "normalized_endpoint": "",
+    "page_path": "/mypage/clients",
+    "target_role": "html",
+    "source_event_evidence": [
+      "b5f8b646-e5f9-409e-bdef-a69721bf50da"
+    ]
+  },
+  {
+    "process_model_id": "PM-016",
+    "node_id": "PM-016-N003",
+    "action": "api_confirmation",
+    "http_method": "GET",
+    "normalized_endpoint": "/api/auth/me",
+    "page_path": "/mypage/clients",
+    "target_role": "/api/auth/me",
+    "source_event_evidence": [
+      "e8abf6be-3963-4402-b7b5-5219b3a19691"
+    ]
+  },
+  {
+    "process_model_id": "PM-016",
+    "node_id": "PM-016-N004",
+    "action": "api_confirmation",
+    "http_method": "GET",
+    "normalized_endpoint": "/api/clients",
+    "page_path": "/mypage/clients",
+    "target_role": "/api/clients",
+    "source_event_evidence": [
+      "f9e1c9b7-3901-4118-ac7e-4b539590b6f4"
+    ]
+  },
+  {
+    "process_model_id": "PM-006",
+    "node_id": "PM-006-N001",
+    "action": "selection",
+    "http_method": "",
+    "normalized_endpoint": "",
+    "page_path": "/mypage/clients",
+    "target_role": "item",
+    "source_event_evidence": [
+      "5bae25f1-ed30-4924-99dd-ce0e8605b41c"
+    ]
+  },
+  {
+    "process_model_id": "PM-006",
+    "node_id": "PM-006-N002",
+    "action": "api_confirmation",
+    "http_method": "GET",
+    "normalized_endpoint": "/api/clients/:id",
+    "page_path": "/mypage/clients",
+    "target_role": "/api/clients/:id",
+    "source_event_evidence": [
+      "efd724d1-5108-4000-8761-a82a74688dc9"
+    ]
+  },
+  {
+    "process_model_id": "PM-006",
+    "node_id": "PM-006-N003",
+    "action": "detail_open",
+    "http_method": "",
+    "normalized_endpoint": "",
+    "page_path": "/mypage/clients",
+    "target_role": "dialog_control",
+    "source_event_evidence": [
+      "0acd0dd8-41d9-4d4a-a2b8-77e011d58ca4"
+    ]
+  },
+  {
+    "process_model_id": "PM-006",
+    "node_id": "PM-006-N004",
+    "action": "selection",
+    "http_method": "",
+    "normalized_endpoint": "",
+    "page_path": "/mypage/clients",
+    "target_role": "dialog_control",
+    "source_event_evidence": [
+      "1562c025-cf16-404b-bd89-f32cabc4e3ce"
+    ]
+  },
+  {
+    "process_model_id": "PM-006",
+    "node_id": "PM-006-N005",
+    "action": "detail_close",
+    "http_method": "",
+    "normalized_endpoint": "",
+    "page_path": "/mypage/clients",
+    "target_role": "dialog_control",
+    "source_event_evidence": [
+      "1e0f8de8-1311-4940-a344-807fbabe122d"
+    ]
+  },
+  {
+    "process_model_id": "PM-007",
+    "node_id": "PM-007-N001",
+    "action": "selection",
+    "http_method": "",
+    "normalized_endpoint": "",
+    "page_path": "/mypage/clients",
+    "target_role": "button",
+    "source_event_evidence": [
+      "7044f392-59bf-4388-8414-75a295a799d8"
+    ]
+  },
+  {
+    "process_model_id": "PM-007",
+    "node_id": "PM-007-N002",
+    "action": "detail_open",
+    "http_method": "",
+    "normalized_endpoint": "",
+    "page_path": "/mypage/clients",
+    "target_role": "dialog_control",
+    "source_event_evidence": [
+      "6bf58bbd-75a7-4ae8-9cfb-c206b9c96ea5",
+      "1a122856-9dd0-40d8-a352-a11398a3bbce"
+    ]
+  },
+  {
+    "process_model_id": "PM-007",
+    "node_id": "PM-007-N003",
+    "action": "selection",
+    "http_method": "",
+    "normalized_endpoint": "",
+    "page_path": "/mypage/clients",
+    "target_role": "input_control",
+    "source_event_evidence": [
+      "64eb1cc7-02a8-4eae-9c95-1a7dd9dbf134",
+      "97d3fbf2-bbe7-4f97-b9fd-ad4255c21da1",
+      "c8ae7c35-2b57-4c5f-a051-33567c7ce933",
+      "2657a25d-f75b-49ce-ac37-3a7e8b1a8da4",
+      "1618e4ae-2901-4456-9ff8-6fd2aee609eb",
+      "147a4bd9-e80c-4fae-b739-f25b2e81c26f",
+      "b9f09cf0-b9ee-4bff-b281-62042eae6b1f"
+    ]
+  },
+  {
+    "process_model_id": "PM-007",
+    "node_id": "PM-007-N004",
+    "action": "input",
+    "http_method": "",
+    "normalized_endpoint": "",
+    "page_path": "/mypage/clients",
+    "target_role": "input_control",
+    "source_event_evidence": [
+      "503f8212-e262-472e-bbd9-f68897e1df8d",
+      "5b597b41-91a6-49d3-86de-8ee82f7375dd",
+      "1c3a9bc3-acea-4aff-aa57-fc38b09d3c89",
+      "b7c7bb26-53d7-47da-999a-904612ffeed6",
+      "2bab6876-daa3-4005-a1df-d7ce11a43cc2",
+      "cb1f74e0-026d-4e7d-8939-e5fcd78bc9b3",
+      "5b582732-7c91-4f10-b9b6-22c3312a8830"
+    ]
+  },
+  {
+    "process_model_id": "PM-007",
+    "node_id": "PM-007-N005",
+    "action": "selection",
+    "http_method": "",
+    "normalized_endpoint": "",
+    "page_path": "/mypage/clients",
+    "target_role": "dialog_control",
+    "source_event_evidence": [
+      "766db913-7583-4686-a519-165bfb1be3b8"
+    ]
+  },
+  {
+    "process_model_id": "PM-007",
+    "node_id": "PM-007-N006",
+    "action": "api_confirmation",
+    "http_method": "POST",
+    "normalized_endpoint": "/api/clients",
+    "page_path": "/mypage/clients",
+    "target_role": "/api/clients",
+    "source_event_evidence": [
+      "704cd525-4b10-41a8-8b26-04377a7a30b5"
+    ]
+  },
+  {
+    "process_model_id": "PM-007",
+    "node_id": "PM-007-N007",
+    "action": "api_confirmation",
+    "http_method": "GET",
+    "normalized_endpoint": "/api/clients",
+    "page_path": "/mypage/clients",
+    "target_role": "/api/clients",
+    "source_event_evidence": [
+      "d7fd6b4c-fc92-448e-8afc-f5e549637f09"
+    ]
+  },
+  {
+    "process_model_id": "PM-007",
+    "node_id": "PM-007-N008",
+    "action": "detail_close",
+    "http_method": "",
+    "normalized_endpoint": "",
+    "page_path": "/mypage/clients",
+    "target_role": "dialog_control",
+    "source_event_evidence": [
+      "2dc235c1-3d7c-4d7a-b7ed-1c8a53419f3e"
+    ]
+  },
+  {
+    "process_model_id": "PM-008",
+    "node_id": "PM-008-N001",
+    "action": "selection",
+    "http_method": "",
+    "normalized_endpoint": "",
+    "page_path": "/mypage/clients",
+    "target_role": "dialog_control",
+    "source_event_evidence": [
+      "8d4bc681-d35d-41f0-a2ac-eb21b9ead738"
+    ]
+  },
+  {
+    "process_model_id": "PM-008",
+    "node_id": "PM-008-N002",
+    "action": "detail_close",
+    "http_method": "",
+    "normalized_endpoint": "",
+    "page_path": "/mypage/clients",
+    "target_role": "dialog_control",
+    "source_event_evidence": [
+      "d960f949-f18a-4250-adcf-ff48c736c726"
+    ]
+  },
+  {
+    "process_model_id": "PM-003",
+    "node_id": "PM-003-N001",
+    "action": "page_entry",
+    "http_method": "",
+    "normalized_endpoint": "",
+    "page_path": "/mypage/clients",
+    "target_role": "navigation",
+    "source_event_evidence": [
+      "4cd55d30-8dad-45e8-9912-3e48801881b5"
+    ]
+  },
+  {
+    "process_model_id": "PM-003",
+    "node_id": "PM-003-N002",
+    "action": "page_entry",
+    "http_method": "",
+    "normalized_endpoint": "",
+    "page_path": "/mypage/assets",
+    "target_role": "html",
+    "source_event_evidence": [
+      "b5521988-2ad9-4e10-bfba-373518fe2bee"
+    ]
+  },
+  {
+    "process_model_id": "PM-003",
+    "node_id": "PM-003-N003",
+    "action": "api_confirmation",
+    "http_method": "GET",
+    "normalized_endpoint": "/api/auth/me",
+    "page_path": "/mypage/assets",
+    "target_role": "/api/auth/me",
+    "source_event_evidence": [
+      "e46a7f6e-fd8e-4614-95e0-94e37bed101c"
+    ]
+  },
+  {
+    "process_model_id": "PM-003",
+    "node_id": "PM-003-N004",
+    "action": "api_confirmation",
+    "http_method": "GET",
+    "normalized_endpoint": "/api/assets",
+    "page_path": "/mypage/assets",
+    "target_role": "/api/assets",
+    "source_event_evidence": [
+      "b4e2b565-c044-4c00-a811-dcd8bac28542"
+    ]
+  },
+  {
+    "process_model_id": "PM-004",
+    "node_id": "PM-004-N001",
+    "action": "selection",
+    "http_method": "",
+    "normalized_endpoint": "",
+    "page_path": "/mypage/assets",
+    "target_role": "item",
+    "source_event_evidence": [
+      "15be6284-bc93-4353-8ae8-84dd01f30402"
+    ]
+  },
+  {
+    "process_model_id": "PM-004",
+    "node_id": "PM-004-N002",
+    "action": "api_confirmation",
+    "http_method": "GET",
+    "normalized_endpoint": "/api/assets/:id",
+    "page_path": "/mypage/assets",
+    "target_role": "/api/assets/:id",
+    "source_event_evidence": [
+      "f6142a2d-4512-416a-9d5a-8c7ef461b280"
+    ]
+  },
+  {
+    "process_model_id": "PM-004",
+    "node_id": "PM-004-N003",
+    "action": "detail_open",
+    "http_method": "",
+    "normalized_endpoint": "",
+    "page_path": "/mypage/assets",
+    "target_role": "dialog_control",
+    "source_event_evidence": [
+      "b97881ba-4aa9-49e1-9b31-d2e517a4677a"
+    ]
+  },
+  {
+    "process_model_id": "PM-004",
+    "node_id": "PM-004-N004",
+    "action": "selection",
+    "http_method": "",
+    "normalized_endpoint": "",
+    "page_path": "/mypage/assets",
+    "target_role": "dialog_control",
+    "source_event_evidence": [
+      "90e51f00-a925-4939-a099-ba7ae1dbe692"
+    ]
+  },
+  {
+    "process_model_id": "PM-004",
+    "node_id": "PM-004-N005",
+    "action": "detail_close",
+    "http_method": "",
+    "normalized_endpoint": "",
+    "page_path": "/mypage/assets",
+    "target_role": "dialog_control",
+    "source_event_evidence": [
+      "065212aa-1d0f-4ecd-ac05-d1bc9fd1735e"
+    ]
+  },
+  {
+    "process_model_id": "PM-002",
+    "node_id": "PM-002-N001",
+    "action": "selection",
+    "http_method": "",
+    "normalized_endpoint": "",
+    "page_path": "/mypage/assets",
+    "target_role": "button",
+    "source_event_evidence": [
+      "bb60320e-884c-467a-8534-4fa7d4d04960"
+    ]
+  },
+  {
+    "process_model_id": "PM-002",
+    "node_id": "PM-002-N002",
+    "action": "detail_open",
+    "http_method": "",
+    "normalized_endpoint": "",
+    "page_path": "/mypage/assets",
+    "target_role": "dialog_control",
+    "source_event_evidence": [
+      "a54eb101-7311-48a1-93be-07cf5a9c1db3",
+      "fe01d4a6-2b0e-4ee5-9bf3-cb52a6068ace"
+    ]
+  },
+  {
+    "process_model_id": "PM-002",
+    "node_id": "PM-002-N003",
+    "action": "selection",
+    "http_method": "",
+    "normalized_endpoint": "",
+    "page_path": "/mypage/assets",
+    "target_role": "input_control",
+    "source_event_evidence": [
+      "39d9a95a-96e2-421e-b70b-c6a381033b30",
+      "9deb43e5-95c6-480d-918e-88dc933192b8",
+      "fa66387b-b054-4424-9a6d-6ed8ee6178e5",
+      "00a10e87-f184-4043-a183-cd1765bd4577",
+      "0448ba8a-d632-47ad-a1b7-71166af3b1b5",
+      "6e0b502d-1703-4ce2-81a0-e2473ef98e90",
+      "f6e3f5d4-b4ac-4dd9-8cc8-b58721229920",
+      "c81f166f-d9b6-4d4a-9e67-2b10c349aa81",
+      "ea437a4a-0e17-4d06-94d0-0d022a92ea66"
+    ]
+  },
+  {
+    "process_model_id": "PM-002",
+    "node_id": "PM-002-N004",
+    "action": "input",
+    "http_method": "",
+    "normalized_endpoint": "",
+    "page_path": "/mypage/assets",
+    "target_role": "input_control",
+    "source_event_evidence": [
+      "16f7fb55-a8d7-40e2-924f-d50ad1f986e9",
+      "6a8b404a-d86d-4bc3-bec0-2a75e6a64d56",
+      "45d1aecc-3740-4d13-8a14-f0e29c98802d",
+      "19567137-32b1-4afe-a9ab-6cbb33f9f6dd",
+      "5376617d-e8cf-456e-afa5-436d324f72c5"
+    ]
+  },
+  {
+    "process_model_id": "PM-002",
+    "node_id": "PM-002-N005",
+    "action": "selection",
+    "http_method": "",
+    "normalized_endpoint": "",
+    "page_path": "/mypage/assets",
+    "target_role": "dialog_control",
+    "source_event_evidence": [
+      "c23b3cc7-3ca9-41fd-b50c-2f4164b1c321",
+      "72b42bf0-474c-4126-b812-28e153a6e2d9"
+    ]
+  },
+  {
+    "process_model_id": "PM-002",
+    "node_id": "PM-002-N006",
+    "action": "api_confirmation",
+    "http_method": "POST",
+    "normalized_endpoint": "/api/assets",
+    "page_path": "/mypage/assets",
+    "target_role": "/api/assets",
+    "source_event_evidence": [
+      "18ee2708-05d3-4ec8-849f-fa731542072f"
+    ]
+  },
+  {
+    "process_model_id": "PM-002",
+    "node_id": "PM-002-N007",
+    "action": "api_confirmation",
+    "http_method": "GET",
+    "normalized_endpoint": "/api/assets",
+    "page_path": "/mypage/assets",
+    "target_role": "/api/assets",
+    "source_event_evidence": [
+      "6971bebf-7442-43b3-8836-6ad29ffdd037"
+    ]
+  },
+  {
+    "process_model_id": "PM-002",
+    "node_id": "PM-002-N008",
+    "action": "detail_close",
+    "http_method": "",
+    "normalized_endpoint": "",
+    "page_path": "/mypage/assets",
+    "target_role": "dialog_control",
+    "source_event_evidence": [
+      "11bd574c-36c2-4a1a-afba-45de82a6fa7f",
+      "e3c7dbb4-95e2-44c1-8110-acc9f2b2dc86"
+    ]
+  }
+]

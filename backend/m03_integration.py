@@ -1,6 +1,7 @@
 """M03 생성 계약 및 중앙 시나리오 검증. Mock은 실제 모델을 호출하지 않습니다."""
 import hashlib
 from .evaluators import require, call_adapter
+from .api_validation import require_string_enum
 
 
 def nonempty(value):
@@ -51,15 +52,21 @@ def generate(root,config,payload):
     require(set(payload)<= {'business_unit_id','workflow_id','run_mode','generator_mode'},'Unsupported generation request field')
     for k in ('business_unit_id','workflow_id'):require(nonempty(payload.get(k)),'Required field: '+k)
     mode=payload.get('run_mode','DEVELOPMENT');engine=payload.get('generator_mode','MOCK')
-    require(mode in {'REFERENCE','DEVELOPMENT','OFFICIAL'},'Invalid run_mode')
-    require(engine in {'MOCK','REAL'},'generator_mode must be MOCK or REAL')
+    require_string_enum(mode, {'REFERENCE','DEVELOPMENT','OFFICIAL'}, 'run_mode', 'Invalid run_mode')
+    require_string_enum(engine, {'MOCK','REAL'}, 'generator_mode', 'generator_mode must be MOCK or REAL')
     if engine=='MOCK':
         require(mode!='OFFICIAL','Mock generation cannot be OFFICIAL')
         identity=hashlib.sha256((payload['business_unit_id']+'\0'+payload['workflow_id']).encode()).hexdigest()[:12]
         result=dict(business_unit_id=payload['business_unit_id'],workflow_id=payload['workflow_id'],scenario_id='MOCK-SCN-'+identity,status='SUCCESS',
                     steps=[dict(order=1,action='open',target='mock workflow screen'),dict(order=2,action='click',target='mock action control')],description='합성 UI 연동 예시이며 실제 업무 시나리오가 아닙니다.')
     else:
-        result=call_adapter(config,'scenario_generation',{k:payload[k] for k in ('business_unit_id','workflow_id')},root)
+        if config.get('m03_real_generator') is not None:
+            from .m03_real_generator import generate_observed
+            result=generate_observed(root,config,payload)
+        else:
+            result=call_adapter(config,'scenario_generation',{k:payload[k] for k in ('business_unit_id','workflow_id')},root)
+        require(isinstance(result,dict),'Invalid generation response')
+        require_string_enum(result.get('status'), {'SUCCESS','FAILED'}, 'status', 'Invalid generation response')
         require(result.get('business_unit_id')==payload['business_unit_id'] and result.get('workflow_id')==payload['workflow_id'],'Generator identity mismatch')
         require(result.get('status') in {'SUCCESS','FAILED'} and nonempty(result.get('scenario_id')) and isinstance(result.get('steps'),list),'Invalid generation response')
         if result['status']=='SUCCESS':require(validate_scenario_result(result)['success'],'Generator returned an invalid successful scenario')

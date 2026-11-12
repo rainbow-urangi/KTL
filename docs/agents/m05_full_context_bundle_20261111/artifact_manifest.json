@@ -1,0 +1,175 @@
+{
+  "created_at_utc": "2026-11-11T13:58:13.975721+00:00",
+  "status": "PREPARED_BLOCKED",
+  "files": [
+    {
+      "path": "data/held_out/m05/raw01_raw02_raw03_target20_20261111/clock_evidence.json",
+      "sha256": "f6a993629aef3a8d079dc28b1e6325ec8b2b9da00bf2c9a8e4f5279d8b5d8ed8"
+    },
+    {
+      "path": "data/held_out/m05/raw01_raw02_raw03_target20_20261111/collection.json",
+      "sha256": "edebb0093a936b9e3de1747ffc94c55ae0122466c59a1734f5e0ebb952392ad2"
+    },
+    {
+      "path": "data/held_out/m05/raw01_raw02_raw03_target20_20261111/export_evidence.json",
+      "sha256": "a7d0dfb003ee1e057305cc0867224d41724ce52f772bf69240e7357ff815e67f"
+    },
+    {
+      "path": "data/held_out/m05/raw01_raw02_raw03_target20_20261111/history/development_inventory.json",
+      "sha256": "1e9a5e64aec91d1c457c4d638fc17ba61f9d2b22c54a996ce2ddf27e2edae085"
+    },
+    {
+      "path": "data/held_out/m05/raw01_raw02_raw03_target20_20261111/history/source_history_reconciliation.json",
+      "sha256": "c263769a2164209ad3e77212b5c657345076010199f68607a203aa74452c299d"
+    },
+    {
+      "path": "data/held_out/m05/raw01_raw02_raw03_target20_20261111/history/training_inventory.json",
+      "sha256": "4649acbbacd3c1be1eb01ccb78d3fe3e3f9cf325336f59c59b68ec95c0ad1adb"
+    },
+    {
+      "path": "data/held_out/m05/raw01_raw02_raw03_target20_20261111/label_binding_candidate.json",
+      "sha256": "b8500a69ed468d64e682f22b6d380d4a6961f1d414dab7a999523b9ab07db77b"
+    },
+    {
+      "path": "data/held_out/m05/raw01_raw02_raw03_target20_20261111/manifest.json",
+      "sha256": "8e048e425d9cb789a5ba19bbf6b2b48005c787ede4d6b018aa9927f285fd647a"
+    },
+    {
+      "path": "data/held_out/m05/raw01_raw02_raw03_target20_20261111/normalization_provenance.json",
+      "sha256": "aa31e14f6ecd46247fbfb2aa95880171f08ace4404eb552e0bfc14bbb12d1016"
+    },
+    {
+      "path": "data/held_out/m05/raw01_raw02_raw03_target20_20261111/normalized_input_PREPARATION_ONLY.json",
+      "sha256": "13d1b7c4b94b678d59df3a1006512ff1be77d9c3316337d52dbc266ab10af6dc"
+    },
+    {
+      "path": "data/held_out/m05/raw01_raw02_raw03_target20_20261111/prediction_access_audit.INCOMPLETE.json",
+      "sha256": "c87a27610ffc27e422e0509f25bfbe42380804d0a4cdb9c487991bc349f7f66a"
+    },
+    {
+      "path": "data/held_out/m05/raw01_raw02_raw03_target20_20261111/raw/raw_01/events.csv",
+      "sha256": "8a797dadcd8341b39e1ce96487eaaafe8995a62dabce3d027495c0f34382b8b4"
+    },
+    {
+      "path": "data/held_out/m05/raw01_raw02_raw03_target20_20261111/raw/raw_02/events.csv",
+      "sha256": "06a86358ada46c3b04c905c018af6004624348a214e210047633da4e28773b50"
+    },
+    {
+      "path": "data/held_out/m05/raw01_raw02_raw03_target20_20261111/raw/raw_03/events.csv",
+      "sha256": "c7b699fb540a2f7f67b5b218dbfd0df53b41fe8d4ccac3922b73a7842d1057f8"
+    },
+    {
+      "path": "data/held_out/m05/raw01_raw02_raw03_target20_20261111/sessions.json",
+      "sha256": "2acef3fad154e55a4e9139a94889f86cc4cf6112bc0e6430fc563128019e3591"
+    },
+    {
+      "path": "data/held_out/m05/raw01_raw02_raw03_target20_20261111/source_copy_bindings.json",
+      "sha256": "bd3f41e3fc42bc0533aa0070ad475e5bdf631b316ad91adbb5d26c92f3a15d87"
+    },
+    {
+      "path": "data/held_out/m05/raw01_raw02_raw03_target20_20261111/source_label_lock/README.md",
+      "sha256": "9788fbd8c672210dff76d03dac2bacae6658f732462b4e052e46d82962680bb3"
+    },
+    {
+      "path": "data/held_out/m05/raw01_raw02_raw03_target20_20261111/source_label_lock/additional_label_evidence.json",
+      "sha256": "242381171788f6ea6b9d48b09cfbbf152507ffe9be3c3bf51d5f3a7ccf781cfc"
+    },
+    {
+      "path": "data/held_out/m05/raw01_raw02_raw03_target20_20261111/source_label_lock/build_lock.py",
+      "sha256": "dca3d477d3a3dc00182d35a7fc70127dab32165b6d4daa94c86c4a7ffce1083f"
+    },
+    {
+      "path": "data/held_out/m05/raw01_raw02_raw03_target20_20261111/source_label_lock/gate_report.json",
+      "sha256": "3346dc9296dcce8e6e1546a2721bd5f52b06c6a932a12dc7d9bad704732477ba"
+    },
+    {
+      "path": "data/held_out/m05/raw01_raw02_raw03_target20_20261111/source_label_lock/prior18_preserved.csv",
+      "sha256": "387dac12d451f199bd226ae11c8289eae35f5b8c11dff0d95f40e49a1fe14583"
+    },
+    {
+      "path": "data/held_out/m05/raw01_raw02_raw03_target20_20261111/source_label_lock/target_label_lock.json",
+      "sha256": "ad553f26834c14995ae31b38b4a884f4875585e0a81b0dd168507e652810b156"
+    },
+    {
+      "path": "data/held_out/m05/raw01_raw02_raw03_target20_20261111/source_label_lock/target_label_lock.sha256",
+      "sha256": "e82d1aed7b37ca25a6e06c3d8e7c2228a9bc73a9785237d4b9f6f8df01759f82"
+    },
+    {
+      "path": "data/held_out/m05/raw01_raw02_raw03_target20_20261111/source_label_lock/target_labels20.csv",
+      "sha256": "88f48576253211e47f8a39a857734e031d30a9bdbcf4da619e58fdd11cf3ceea"
+    },
+    {
+      "path": "data/held_out/m05/raw01_raw02_raw03_target20_20261111/source_label_lock/user_attestation.json",
+      "sha256": "51ac6de99be373248d62a56df1e12379b5cee602181e491335d391f770ed035c"
+    },
+    {
+      "path": "data/held_out/m05/raw01_raw02_raw03_target20_20261111/source_label_lock/verify_lock.py",
+      "sha256": "2ce7ea0819f9143d42b8202726c07949d56f18c440ec78bbde2ef719d72d458c"
+    },
+    {
+      "path": "data/held_out/m05/raw01_raw02_raw03_target20_20261111/source_metadata/raw_01/sessions.csv",
+      "sha256": "247856007334e9237085077b950e127b6720f9f98db5cdeaab5876e7299fac62"
+    },
+    {
+      "path": "data/held_out/m05/raw01_raw02_raw03_target20_20261111/source_metadata/raw_01/tasks.csv",
+      "sha256": "f8c82493004d429d5ebd2f824275f3d617b716172a77bcb283d9cce8c6747924"
+    },
+    {
+      "path": "data/held_out/m05/raw01_raw02_raw03_target20_20261111/source_metadata/raw_02/sessions.csv",
+      "sha256": "d7f16a298060dbae1aecd2876e63f9f2e706234d901d8a74c1ba5da6a6ba9a00"
+    },
+    {
+      "path": "data/held_out/m05/raw01_raw02_raw03_target20_20261111/source_metadata/raw_02/tasks.csv",
+      "sha256": "656c9c0c640095acda82e391e47d1a1e9e3fd30ca4f41c7c5ca40a62881a9536"
+    },
+    {
+      "path": "data/held_out/m05/raw01_raw02_raw03_target20_20261111/source_metadata/raw_03/sessions.csv",
+      "sha256": "d8bfc3c7ecad5082c72979eaa0f247baf5da2d594d5cc6db140d9c7bdf68d5fc"
+    },
+    {
+      "path": "data/held_out/m05/raw01_raw02_raw03_target20_20261111/source_metadata/raw_03/tasks.csv",
+      "sha256": "f1113a5093b6520ecc083de3ef45721989082f5f9b7a973e89df8a3433ee117c"
+    },
+    {
+      "path": "data/held_out/m05/raw01_raw02_raw03_target20_20261111/target_label_mapping.json",
+      "sha256": "655bc50206616670e5af06c4c381d4c0076db7c03cd51f74307fff8589bbbe01"
+    },
+    {
+      "path": "data/held_out/m05/raw01_raw02_raw03_target20_20261111/target_labels.schema_candidate.csv",
+      "sha256": "3057c8c9e020f0a156b65df66a4284c8b51f219c174032a9e5c89c95746a9750"
+    },
+    {
+      "path": "data/held_out/m05/raw01_raw02_raw03_target20_20261111/target_selection.json",
+      "sha256": "220e050bff2d9be0852debd62992f759b4787e3413c11eb897ef3fa797eef7ec"
+    },
+    {
+      "path": "data/held_out/m05/raw01_raw02_raw03_target20_20261111/tasks.json",
+      "sha256": "7e6c9c6f6d201874785c3859ce3d73a030bde51dc7cdf706a7453a883dd22921"
+    },
+    {
+      "path": "data/held_out/m05/raw01_raw02_raw03_target20_20261111/timestamp_proof_rows.json",
+      "sha256": "dbdb76ca3dffdecf7a8d038c02322abed60585e691a1c02202ae33f403472209"
+    },
+    {
+      "path": "docs/agents/m05_full_context_bundle_20261111/README.md",
+      "sha256": "1396d554bc4bb797664a7e9b4aec3cfb8904d46e7b2b3742c8a63541fbcb05bd"
+    },
+    {
+      "path": "docs/agents/m05_full_context_bundle_20261111/build_bundle.py",
+      "sha256": "81c67cadaf6bad50d8b4f90f0ddd59f95016d443d97eac6f9c1bb8efcf5280a1"
+    },
+    {
+      "path": "docs/agents/m05_full_context_bundle_20261111/preparation_report.json",
+      "sha256": "67f1e4c0c9b976b2f6c0500eb65840df13c951ab1d81245812ffcdfba75d48d8"
+    },
+    {
+      "path": "docs/agents/m05_full_context_bundle_20261111/protected_after.json",
+      "sha256": "9232ffac682205ac3fd3059191701764034df6831936fad0a19f5bcb6a4b0b42"
+    },
+    {
+      "path": "docs/agents/m05_full_context_bundle_20261111/protected_before.json",
+      "sha256": "9232ffac682205ac3fd3059191701764034df6831936fad0a19f5bcb6a4b0b42"
+    }
+  ],
+  "note": "This artifact inventory excludes itself. It is not independent approval."
+}

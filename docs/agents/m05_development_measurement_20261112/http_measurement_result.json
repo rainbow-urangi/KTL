@@ -1,0 +1,29 @@
+{
+  "status": "COMPLETE",
+  "run_mode": "DEVELOPMENT",
+  "official_pass": null,
+  "total": 20,
+  "REMOVE": 10,
+  "KEEP": 10,
+  "TP": 0,
+  "FP": 0,
+  "FN": 10,
+  "TN": 10,
+  "precision": 0,
+  "recall": 0.0,
+  "f1": 0.0,
+  "target": 0.79,
+  "passed": false,
+  "evaluation_eligibility": "USER_AUTHORIZED_DEVELOPMENT_EXISTING_LOCKED_TARGETS",
+  "held_out_evidence_status": "INSUFFICIENT_NOT_BLOCKING_FOR_THIS_DEVELOPMENT",
+  "limitations": [
+    "Historical training/development and prediction access coverage incomplete",
+    "Per-label attribution/timestamps incomplete",
+    "User authorization is not KTL acceptance or strict held-out certification"
+  ],
+  "full_event_count": 417,
+  "context_event_count": 397,
+  "target_event_count": 20,
+  "run_id": "17c2d026e82515776864efab58802ed616364c18ef83686117adedb1b1974274",
+  "csv_recalculation": "PASS"
+}

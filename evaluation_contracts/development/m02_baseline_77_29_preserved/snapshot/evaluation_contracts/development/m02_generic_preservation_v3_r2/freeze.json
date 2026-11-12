@@ -1,0 +1,8 @@
+{
+  "frozen_at": "2026-11-08T13:10:02.500279+00:00",
+  "independent_verification_sha256": "7042bf670e425b0ec7583137f181d5df14cb72c2b3be7857db96d8b33f73ca65",
+  "reason": "Exact independent PASS; same five executions once; no subsequent tuning authorized",
+  "run_mode": "DEVELOPMENT",
+  "snapshot_manifest_sha256": "b3537ec756be0b6fbf63e7fc8a23428fb26f9ad8c0564a61e336f9f899ff8a41",
+  "status": "FROZEN"
+}
