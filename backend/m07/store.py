@@ -17,7 +17,7 @@ from ..integration_store import ingest
 from ..m03_integration import validate_scenario_result
 from ..m03_management import scenario_deleted
 from ..m04.store import M04Manager, _RunLock, _encoded, _masked, _now, _sha
-from .generator import PROMPT_VERSION, GenerationError, generate, readiness, settings
+from .generator import PROMPT_VERSION, GenerationError, generate, prompt_metadata, readiness, settings
 from .prepared import read_codes
 from .provider_state import ProviderState
 
@@ -72,9 +72,12 @@ class M07Manager(M04Manager):
         denominator = 20 if job.get('meeting_protocol') is True else len(cases)
         attempted = sum(c.get('generation_http_attempted') is True for c in cases)
         unknown = sum(c.get('generation_invoked') is True and c.get('generation_http_attempted') is None for c in cases)
-        completed = job['status'] == 'COMPLETED' and len(cases) == denominator and attempted == denominator and not unknown
-        pending = job['status'] in ACTIVE or job['status'] == 'GENERATED' and attempted == len(cases) and not unknown
-        measurement = dict(version=1, evaluation_status='COMPLETED' if completed else 'PENDING' if pending else 'NOT_READY',
+        terminal = {'PASS', 'FAIL', 'ERROR', 'TIMEOUT', 'SKIPPED'}
+        finished = all(all(c.get(key) in terminal for key in
+                          ('generation_status', 'syntax_status', 'execution_status')) for c in cases)
+        completed = (job['status'] == 'COMPLETED' and len(cases) == denominator
+                     and attempted == denominator and not unknown and finished)
+        measurement = dict(version=1, evaluation_status='COMPLETED' if completed else 'NOT_READY',
                            registered_count=len(cases), provider_http_attempt_count=attempted,
                            provider_http_unknown_count=unknown,
                            not_attempted_count=sum(c.get('generation_http_attempted') is False for c in cases),
@@ -85,6 +88,13 @@ class M07Manager(M04Manager):
                            generation_percent=None, syntax_percent=None, integrated_percent=None, browser_percent=None,
                            syntax_target_percent=80, syntax_target_met=None,
                            integrated_reference_target_percent=80, integrated_reference_target_met=None, official_pass=None)
+        measurement.update(denominator=denominator, denominator_policy='REGISTERED_INPUT_COUNT',
+                           formulas=dict(generation='generated_code_count / registered_count * 100',
+                                         syntax='syntax_pass_count / registered_count * 100',
+                                         integrated='both_pass_count / registered_count * 100',
+                                         browser='execution_pass_count / browser_started_count * 100'),
+                           official_formula='both_pass_count / 20 * 100',
+                           legacy_formula='both_pass_count / generated_code_count * 100')
         measurement.update({key: counts[key] for key in ('generated_code_count', 'syntax_pass_count', 'execution_pass_count', 'both_pass_count')})
         if job.get('meeting_protocol') is True:
             measurement.update(denominator=20, denominator_policy='MEETING_FIXED_20', required_count=20)
@@ -123,6 +133,7 @@ class M07Manager(M04Manager):
         job['provider_stop'] = deepcopy(state)
         for case in cases:
             case.update(generation_status='SKIPPED', syntax_status='SKIPPED', execution_status='SKIPPED', status='SKIPPED',
+                        execution_preparation_status='SKIPPED',
                         generation_invoked=False, generation_http_attempted=False, provider_response_observed=False,
                         not_attempted_reason=state.get('reason') or 'HTTP_429_STOP',
                         error='Provider 제한으로 요청하지 않았습니다.')
@@ -151,6 +162,8 @@ class M07Manager(M04Manager):
             for key in ('generation_status', 'syntax_status', 'execution_status', 'status'):
                 if case[key] in {'PENDING', 'RUNNING'}:
                     case[key] = 'SKIPPED'
+            if case.get('execution_preparation_status') in {'PENDING', 'RUNNING'}:
+                case['execution_preparation_status'] = 'SKIPPED'
         job.update(status='INTERRUPTED', completed_at=_now(), error=reason, result=None)
         self._log(job, None, reason)
         self._save(job)
@@ -240,7 +253,7 @@ class M07Manager(M04Manager):
         refs = [dict(m03_run_id=None, scenario_id=row['scenario']['scenario_id']) for row in items]
         sources = [(ref, row['scenario'], False) for ref, row in zip(refs, items)]
         inputs = [self._execution_inputs(row['scenario']) for row in items]
-        return self._create_sources(sources, inputs, {}, False, meeting_items=items)
+        return self._create_sources(sources, inputs, {}, False, meeting_items=items, meeting_payload=payload)
 
     def prepare_workflows(self, payload):
         from .workflows import prepare_batch
@@ -356,7 +369,8 @@ class M07Manager(M04Manager):
         prepared_inputs = [self._execution_inputs(source, ref['m03_run_id']) for ref, source, _ in sources]
         return self._create_sources(sources, prepared_inputs, registered, prepared_request)
 
-    def _create_sources(self, sources, prepared_inputs, registered, prepared_request, *, workflows=None, meeting_items=None):
+    def _create_sources(self, sources, prepared_inputs, registered, prepared_request, *, workflows=None, meeting_items=None,
+                        meeting_payload=None):
         with self.lock:
             run_lock = self._global_lock()
             if not run_lock:
@@ -367,7 +381,9 @@ class M07Manager(M04Manager):
                 self._session_claim(self._session_kind, identity)
                 folder = self._safe(self.execution_directory / identity)
                 folder.mkdir()
+                generation_config = deepcopy(self.config_provider()) if not prepared_request else None
                 cases = []
+                generation_specs = []
                 for index, ((ref, source, synthetic), prepared) in enumerate(zip(sources, prepared_inputs), 1):
                     contract = prepared['contract']
                     case_id = 'CASE-' + str(index).zfill(3)
@@ -387,6 +403,7 @@ class M07Manager(M04Manager):
                                       execution_scenario_sha256=_sha(execution_raw), execution_context_revision_id=prepared['revision_id'],
                                       business_step_required=True,
                                       generation_status='PENDING', syntax_status='PENDING', execution_status='PENDING',
+                                      execution_preparation_status='PENDING',
                                       final_status='PENDING', steps=[], error=None))
                     if meeting_items is not None:
                         item = meeting_items[index - 1]
@@ -395,6 +412,17 @@ class M07Manager(M04Manager):
                             output.write(item_raw)
                         cases[-1].update(source_kind='MEETING_SCENARIO_INPUT', input_id=item['input_id'],
                                          meeting_input_sha256=_sha(item_raw), code_source='LLM')
+                    if not prepared_request:
+                        generation_input = dict(prepared['scenario'], execution_contract=contract)
+                        if meeting_items is not None:
+                            generation_input['meeting_protocol'] = True
+                        plan = prompt_metadata(self.root, generation_config, generation_input)
+                        generation_specs.append(plan)
+                        plan_raw = _encoded(plan)
+                        with (case_dir / 'generation_plan.json').open('xb') as output:
+                            output.write(plan_raw)
+                        cases[-1].update(generation_plan_sha256=_sha(plan_raw),
+                                         planned_model=plan['requested_model'], planned_prompt_version=plan['prompt_version'])
                     if prepared.get('execution_plan') is not None:
                         plan_raw = _encoded(prepared['execution_plan'])
                         (case_dir / 'execution_plan.json').write_bytes(plan_raw)
@@ -432,17 +460,38 @@ class M07Manager(M04Manager):
                     job.update(code_source='PREPARED', generated_by_llm=False)
                 else:
                     job.update(measurement_version=1, provider_model=settings(self.root, self.config_provider())['model'])
+                    fixed_keys = ('requested_model', 'prompt_version', 'max_attempts', 'generation_timeout_seconds', 'endpoint', 'store')
+                    if any(any(plan[key] != generation_specs[0][key] for key in fixed_keys) for plan in generation_specs):
+                        raise EvaluationError('입력 고정 중 생성 설정이 변경됐습니다. 새 회차로 준비하세요.', 'NOT_READY')
+                    if self.generator is generate and generation_specs[0]['requested_model'] != job['provider_model']:
+                        raise EvaluationError('입력 고정 중 모델 설정이 변경됐습니다. 새 회차로 준비하세요.', 'NOT_READY')
                 if workflows is not None:
                     job.update(source_kind='RBEM_PREPARED_WORKFLOW', browser='chrome',
                                workflow_ids=list(dict.fromkeys(item['scenario']['workflow_id'] for item in workflows)))
                 if meeting_items is not None:
-                    batch_raw = _encoded({'items': [item['source_raw'] for item in meeting_items]})
+                    from .trial import describe_trial
+                    payload = deepcopy(meeting_payload)
+                    batch_raw = _encoded(payload)
                     with (folder / 'meeting_inputs.json').open('xb') as output:
                         output.write(batch_raw)
                     job.update(meeting_protocol=True, measurement_protocol='M07_MEETING_20_V1',
                                required_count=20, target_percent=80, code_source='LLM',
                                source_kind='MEETING_LLM_BATCH', meeting_inputs_sha256=_sha(batch_raw),
                                model_display_name=self.config_provider().get('m07', {}).get('model_display_name', 'GPT 루나'))
+                    if (len({case['planned_model'] for case in cases}) != 1
+                            or len({case['planned_prompt_version'] for case in cases}) != 1):
+                        raise EvaluationError('모델 또는 프롬프트가 입력 고정 중 변경됐습니다. 새 회차로 준비하세요.', 'NOT_READY')
+                    policy = describe_trial(payload, meeting_items, job['provider_model'], cases[0]['planned_prompt_version'])
+                    policy.update(fixed_at=job['started_at'],
+                                  generation_plans=[dict(case_id=case['case_id'], input_id=case['input_id'],
+                                                         sha256=case['generation_plan_sha256']) for case in cases])
+                    policy_raw = _encoded(policy)
+                    with (folder / 'trial_policy.json').open('xb') as output:
+                        output.write(policy_raw)
+                    job.update(trial_policy=policy, trial_policy_sha256=_sha(policy_raw))
+                    batch_by_input = {row['input_id']: row['batch_id'] for row in policy['inputs']}
+                    for case in cases:
+                        case['batch_id'] = batch_by_input[case['input_id']]
                 job.update(visible_browser=True, action_delay_ms=350, keep_open_seconds=3)
                 if getattr(self, 'session', None) is not None:
                     job['server_session_id'] = self.session.id
@@ -516,6 +565,7 @@ class M07Manager(M04Manager):
                           ('execution_scenario.json', 'execution_scenario_sha256'),
                           ('execution_contract.json', 'execution_contract_sha256'),
                            ('execution_plan.json', 'execution_plan_sha256'),
+                           ('generation_plan.json', 'generation_plan_sha256'),
                           ('prepared_code.py', 'source_file_sha256'),
                           ('prepared_source.json', 'prepared_source_sha256'),
                           ('meeting_input.json', 'meeting_input_sha256')):
@@ -558,11 +608,31 @@ class M07Manager(M04Manager):
                     and case.get('source_scenario_sha256') == _sha(_encoded(item['scenario']))
                     and case.get('meeting_input_sha256') == _sha(_encoded(item['source_raw'])),
                     '20개 입력과 사례·실행 조건의 연결이 다릅니다.')
+        if job.get('trial_policy_sha256'):
+            folder = self._job_path(job['execution_id']).parent
+            policy_raw = self._safe(folder / 'trial_policy.json').read_bytes()
+            require(_sha(policy_raw) == job['trial_policy_sha256'], '시험 정책 원본 SHA-256이 다릅니다.')
+            policy = json.loads(policy_raw)
+            require(policy == job.get('trial_policy') and len(policy['inputs']) == len(job['cases']),
+                    '사전 고정 시험 정책과 작업 기록이 다릅니다.')
+            for row, plan, case in zip(policy['inputs'], policy['generation_plans'], job['cases']):
+                require(row['input_id'] == case['input_id'] and row['batch_id'] == case.get('batch_id')
+                        and plan['case_id'] == case['case_id'] and plan['input_id'] == case['input_id']
+                        and plan['sha256'] == case.get('generation_plan_sha256'),
+                        '고정 배치·입력과 생성 계획의 연결이 다릅니다.')
 
     def _generate(self, job):
         job['status'] = 'GENERATING'
         self._save(job)
         config = self.config_provider()
+        # Verify the whole fixed input before the first billable request.
+        try:
+            for case in job['cases']:
+                self._check(job, case)
+        except Exception as exc:
+            job['generation_stop'] = dict(reason='FIXED_INPUT_INTEGRITY_ERROR', stopped_at=_now())
+            self._interrupt(job, '사전 고정 입력·생성 계획 검증 실패: ' + _masked(exc))
+            return
         for index, case in enumerate(job['cases']):
             if self._cancelled(job['execution_id']):
                 self._interrupt(job, '사용자 생성 중단')
@@ -576,6 +646,11 @@ class M07Manager(M04Manager):
             self._save(job)
             try:
                 self._check(job, case)
+            except Exception as exc:
+                job['generation_stop'] = dict(reason='FIXED_INPUT_INTEGRITY_ERROR', stopped_at=_now())
+                self._interrupt(job, '고정 자료가 변경돼 남은 요청을 중단했습니다: ' + _masked(exc))
+                return
+            try:
                 if job.get('code_source') == 'PREPARED':
                     raw = self._case_path(job, case, 'prepared_code.py').read_bytes()
                     with self._case_path(job, case, 'script.py').open('xb') as output:
@@ -593,7 +668,11 @@ class M07Manager(M04Manager):
                 if job.get('meeting_protocol') is True:
                     generation_input['meeting_protocol'] = True
                 case.update(generation_invoked=True, generation_http_attempted=None, provider_response_observed=None)
-                value = self.generator(self.root, config, generation_input)
+                if self.generator is generate and case.get('generation_plan_sha256'):
+                    expected = self._json(self._case_path(job, case, 'generation_plan.json'))
+                    value = self.generator(self.root, config, generation_input, expected_metadata=expected)
+                else:
+                    value = self.generator(self.root, config, generation_input)
                 self._transport(case, value)
                 code = value['code'].encode('utf-8')
                 require(0 < len(code) <= 262144 and value.get('generated_by_llm') is True, 'LLM 생성 원본 근거가 필요합니다.')
@@ -628,11 +707,18 @@ class M07Manager(M04Manager):
                             state = self._provider_current(job.get('provider_model'))
                         self._skip_provider_cases(job, job['cases'][index + 1:], state)
                 case.update(generation_status='ERROR', syntax_status='SKIPPED', execution_status='SKIPPED',
-                            status='SKIPPED', error=_masked(exc))
+                            execution_preparation_status='SKIPPED', status='SKIPPED', error=_masked(exc))
+                if isinstance(exc, GenerationError) and exc.evidence.get('response', {}).get('status') == 'GENERATION_SPEC_CHANGED':
+                    job['generation_stop'] = dict(reason='GENERATION_SPEC_CHANGED', stopped_at=_now())
+                    for remaining in job['cases'][index + 1:]:
+                        remaining.update(generation_status='SKIPPED', syntax_status='SKIPPED', execution_status='SKIPPED',
+                                         execution_preparation_status='SKIPPED', status='SKIPPED',
+                                         generation_invoked=False, generation_http_attempted=False, provider_response_observed=False,
+                                         not_attempted_reason='GENERATION_SPEC_CHANGED', error='생성 설정이 변경돼 요청하지 않았습니다. 새 회차로 시작하세요.')
                 self._log(job, case['case_id'], case['error'])
             case['generation_completed_at'] = _now()
             self._save(job)
-            if job.get('provider_stop'):
+            if job.get('provider_stop') or job.get('generation_stop'):
                 break
         if self._cancelled(job['execution_id']):
             self._interrupt(job, '사용자 생성 중단')
@@ -648,11 +734,13 @@ class M07Manager(M04Manager):
             if job.get('meeting_protocol') is True:
                 self._check_meeting_inputs(job)
                 archive.writestr('meeting_inputs.json', self._safe(self._job_path(job['execution_id']).parent / 'meeting_inputs.json').read_bytes())
+                if job.get('trial_policy_sha256'):
+                    archive.writestr('trial_policy.json', self._safe(self._job_path(job['execution_id']).parent / 'trial_policy.json').read_bytes())
             for case in job['cases']:
                 self._check(job, case)
                 for name in ('source_scenario.json', 'execution_scenario.json', 'execution_contract.json', 'execution_plan.json', 'script.py',
                              'response.json', 'prompt.json', 'prepared_code.py', 'prepared_source.json',
-                             'workflow_definition.json', 'workflow_parameters.json', 'meeting_input.json'):
+                             'workflow_definition.json', 'workflow_parameters.json', 'meeting_input.json', 'generation_plan.json'):
                     path = self._case_path(job, case, name)
                     if path.exists():
                         archive.writestr(case['case_id'] + '/' + name, path.read_bytes())
@@ -680,6 +768,7 @@ class M07Manager(M04Manager):
                 tree = ast.parse(checked_code, filename='script.py')
             except (SyntaxError, UnicodeError, ValueError) as exc:
                 case.update(syntax_status='FAIL', execution_status='SKIPPED', status='SKIPPED',
+                            execution_preparation_status='SKIPPED',
                             error='Python 문법 오류' + (' (행 ' + str(exc.lineno) + ')' if isinstance(exc, SyntaxError) else ''))
                 self._save(job)
                 continue
@@ -688,10 +777,12 @@ class M07Manager(M04Manager):
                           or (isinstance(node, ast.ImportFrom) and (node.module or '').split('.')[0] == 'selenium') for node in ast.walk(tree))
             if (not imports or not any(isinstance(node, ast.Assert) for node in ast.walk(tree))
                     or not _scenario_declared(tree, case['scenario_id'])):
-                case.update(status='SKIPPED', error='Selenium import, 일치하는 SCENARIO_ID 및 기대 결과 assert가 필요합니다.')
+                case.update(status='SKIPPED', execution_preparation_status='FAIL',
+                            error='Selenium import, 일치하는 SCENARIO_ID 및 기대 결과 assert가 필요합니다.')
                 self._save(job)
                 continue
             try:
+                case['execution_preparation_status'] = 'PASS'
                 self._run_case(job, case)
                 if (case.get('business_step_required') and case['status'] == 'PASS'
                         and (case.get('business_step_complete') is not True or case.get('independent_checks_passed') is not True)):
@@ -736,17 +827,18 @@ class M07Manager(M04Manager):
             self._check(job, case)
         folder = self._job_path(job['execution_id']).parent
         hashes = {str((folder / name).relative_to(self.root)).replace('\\', '/'): _sha((folder / name).read_bytes())
-                  for name in ('meeting_inputs.json', 'code.zip')}
+                   for name in ('meeting_inputs.json', 'code.zip', *(['trial_policy.json'] if job.get('trial_policy_sha256') else []))}
         counts = deepcopy(job['counts'])
         score = 100 * counts['both_pass_count'] / 20
-        rows = [{key: case.get(key) for key in ('case_id', 'input_id', 'scenario_id', 'generation_status',
+        rows = [{key: case.get(key) for key in ('case_id', 'input_id', 'batch_id', 'scenario_id', 'generation_status',
                 'syntax_status', 'execution_status', 'final_status', 'code_sha256', 'validation_code_sha256',
                 'meeting_input_sha256', 'model', 'request_id', 'error')} for case in job['cases']]
         details = dict(measurement_protocol='M07_MEETING_20_V1', denominator_policy='MEETING_FIXED_20',
                        denominator=20, formula='both_pass_count / 20 * 100', raw_counts=counts,
                        generated_by_llm=counts['generated_code_count'] > 0, actual_llm_request_count=20,
                        measurement=deepcopy(measurement),
-                       meeting_inputs_sha256=job['meeting_inputs_sha256'], archive_sha256=job['archive_sha256'])
+                       meeting_inputs_sha256=job['meeting_inputs_sha256'], archive_sha256=job['archive_sha256'],
+                       trial_policy=deepcopy(job.get('trial_policy')), trial_policy_sha256=job.get('trial_policy_sha256'))
         received = dict(generation_id=job['generation_id'], run_mode='DEVELOPMENT', code_source='LLM',
                         counts=counts, cases=deepcopy(job['cases']), details=deepcopy(details))
         result = dict(status='COMPLETED', source_type='DEVELOPMENT', score=score, sample_count=20,

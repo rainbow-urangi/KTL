@@ -171,6 +171,22 @@ class CU02PreparationTests(unittest.TestCase):
             isinstance(call, ast.Call) and isinstance(call.func, ast.Attribute) and call.func.attr == 'quit'
             for statement in node.finalbody for call in ast.walk(statement)) for node in ast.walk(ast.parse(source))))
 
+    def test_registration_pins_new_native_post_response_and_uses_public_selenium_submit(self):
+        result = cu02.prepare(inputs())
+        self.assertEqual(result['definition']['version'], 'cu02-schedule-registration-v4-native-submit')
+        self.assertEqual(result['contract']['steps'][3]['checks'][0],
+                         dict(kind='native_submit_response', method='POST', api_origin=cu02.TARGET_ORIGIN,
+                              api_path='/api/schedules', expected_status=201))
+        self.assertEqual(result['contract'], prepare_contract(result['scenario']))
+        tree = ast.parse(result['code'])
+        registration = next(node for node in ast.walk(tree) if isinstance(node, ast.With)
+                            and isinstance(node.items[0].context_expr, ast.Call)
+                            and ast.literal_eval(node.items[0].context_expr.args[0]) == 4)
+        self.assertEqual([node.func.attr for node in ast.walk(registration)
+                          if isinstance(node, ast.Call) and isinstance(node.func, ast.Attribute)
+                          and node.func.attr in {'click', 'submit'}], ['submit'])
+        self.assertIn("options.set_capability('goog:loggingPrefs', {'performance': 'ALL'})", result['code'])
+
     def test_initial_and_expected_states_are_fixed_before_the_script_runs(self):
         result = cu02.prepare(inputs())
         states = result['definition']['expected_states']
@@ -257,15 +273,13 @@ class CU02ScriptHydrationTests(unittest.TestCase):
                     self.driver.actions.append('input-' + self.kind)
 
             def click(self):
+                if self.kind == 'create-submit':
+                    raise AssertionError('Registration requires native submit, not a click')
                 driver = self.driver
                 driver.actions.append(self.kind)
                 if self.kind == 'date-number':
                     driver.modal, driver.values = 'create', {'title': '', 'description': ''}
                     driver.values.update(initial_values or {})
-                elif self.kind == 'create-submit':
-                    if driver.modal != 'create' or driver.values != {key: data[key] for key in ('title', 'description')}:
-                        raise AssertionError('Only the populated new-registration form may submit')
-                    driver.saved, driver.modal = dict(driver.values), None
                 elif self.kind == 'saved-event':
                     driver.modal, driver.edit_reads = 'edit', {'title': 0, 'description': 0}
                 elif self.kind == 'close':
@@ -274,6 +288,14 @@ class CU02ScriptHydrationTests(unittest.TestCase):
                     driver.modal = None
                 else:
                     raise AssertionError('Unexpected synthetic native click')
+
+            def submit(self):
+                driver = self.driver
+                if (self.kind != 'create-submit' or driver.modal != 'create'
+                        or driver.values != {key: data[key] for key in ('title', 'description')}):
+                    raise AssertionError('Only the populated new-registration form may submit')
+                driver.actions.append(self.kind)
+                driver.saved, driver.modal = dict(driver.values), None
 
         class Driver:
             def __init__(self):
@@ -392,6 +414,7 @@ class CU02ScriptHydrationTests(unittest.TestCase):
             return AuthResponse()
 
         def create_driver(**kwargs):
+            self.assertEqual(kwargs['options'].capabilities.get('goog:loggingPrefs'), {'performance': 'ALL'})
             driver.created += 1
             driver.actions.append('create-browser')
             if not driver.auth_requests:
@@ -420,8 +443,14 @@ class CU02ScriptHydrationTests(unittest.TestCase):
                 raise TimeoutError('Synthetic condition never became true')
 
         class Options:
+            def __init__(self):
+                self.capabilities = {}
+
             def add_argument(self, value):
                 pass
+
+            def set_capability(self, name, value):
+                self.capabilities[name] = value
 
         @contextmanager
         def business_step(order):

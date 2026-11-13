@@ -270,4 +270,79 @@ test('retired pages and changed server sessions cannot accept a pending batch re
     assert.equal(h.evaluate('m04View.execution'),null);assert.equal(h.posts('/api/development/m04/cu02/evaluations').length,1);
   }
 });
+test('code preparation is collapsed and existing preparation actions stay inside it before fixed-code execution',async()=>{
+  const h=harness();await settle();const html=h.element('#app').innerHTML;
+  assert.match(html,/<details id="m04-code-preparation" class="m04-code-preparation">/);
+  const start=html.indexOf('<details id="m04-code-preparation"'),execution=html.indexOf('<h2 class="m04-execute-heading">');
+  for(const id of ['m04-cu02-panel','m04-m01-panel','m04-web-prepare','m04-register','m04-file']) {
+    assert.ok(html.indexOf('id="'+id+'"')>start);assert.ok(html.indexOf('id="'+id+'"')<execution);
+  }
+  assert.ok(html.indexOf('id="m04-start"')>execution);
+  assert.match(html,/개발용 전체 업무 10회 반복 · 확인 항목 10개와 구분/);
+  assert.match(html,/공식 평가 1건의 단위는 제시기준서/);
+  assert.ok(h.calls.every(call=>call.method==='GET'),'opening the page must not run code or GPT');
+});
+test('planned steps and checks retain their denominator through pending and failed stages',async()=>{
+  const h=harness();await settle();
+  const cases=[{status:'RUNNING',required_step_count:5,expected_check_count:8,steps:[
+    {status:'PASS',check_results:[{status:'PASS'},{status:'PASS'}]},
+    {status:'FAIL',check_results:[{status:'FAIL'}]},
+    ...Array.from({length:3},()=>({status:'PENDING',check_results:[]}))]}];
+  h.context.syntheticCases=cases;const html=h.evaluate('m04ProgressSummary(syntheticCases)');
+  assert.match(html,/업무 단계<\/label><strong>처리 2 \/ 5/);assert.match(html,/확인 항목<\/label><strong>처리 3 \/ 8/);
+  assert.match(html,/스크립트 기준 성공률·공식 평가 분모와 별도로/);
+  assert.doesNotMatch(html,/처리 2 \/ 2|처리 3 \/ 3/);
+  delete cases[0].required_step_count;h.context.syntheticCases=cases;
+  assert.match(h.evaluate('m04ProgressSummary(syntheticCases)'),/업무 단계<\/label><strong>처리 2 \/ 예정 수 미보관/);
+});
+test('terminal unchecked conditions are processed separately and never remain pending or become successful checks',async()=>{
+  const h=harness();await settle();h.context.syntheticCases=[{required_step_count:1,expected_check_count:4,steps:[{status:'FAIL',check_results:[
+    {status:'PASS'},{status:'NOT_CHECKED'},{status:'NOT_CHECKED'},{status:'PENDING'}]}]}];
+  const html=h.evaluate('m04ProgressSummary(syntheticCases)');
+  assert.match(html,/확인 항목<\/label><strong>처리 3 \/ 4/);
+  assert.match(html,/검사 완료 1 · 성공 1 · 미확인 2 · 대기·실행 중 1/);
+  assert.equal(h.evaluate('m04CaseName("NOT_CHECKED")'),'미확인');
+  h.context.syntheticStep={check_results:[{kind:'value',status:'NOT_CHECKED',expected:'Synthetic',observed:null,observation_status:'NOT_RECORDED'}]};
+  const table=h.evaluate('m04CheckTable(syntheticStep)');assert.match(table,/미확인/);assert.match(table,/관측값 미보관/);assert.doesNotMatch(table,/확인 대기/);
+});
+test('expectation-observation table shows recorded values and never fabricates observations from PASS',async()=>{
+  const h=harness();await settle();h.context.syntheticStep={check_results:[
+    {index:1,kind:'value',status:'PASS',expected:'<img src=x onerror=bad()>',observed:'<script>bad()</script>',comparison_mode:'EXACT',observation_status:'RECORDED'},
+    {index:2,kind:'value',status:'PASS',expected:'',observed:'',comparison_mode:'EXACT',observation_status:'RECORDED'},
+    {index:3,kind:'visible',status:'PASS',expected:true,observed:false,comparison_mode:'VISIBILITY',observation_status:'RECORDED'},
+    {index:4,kind:'count',status:'PENDING',expected:0,observed:null,observation_status:'PENDING'},
+    {index:5,kind:'value',status:'PASS',expected:'[REDACTED]',observed:null,observation_status:'REDACTED'},
+    {index:6,kind:'count',status:'FAIL',expected:2,observed:null,observation_status:'NOT_RECORDED'},
+    {index:7,kind:'text_contains',status:'PASS',expected:'Synthetic',observed:{matched_token:true,text_length:20},comparison_mode:'CONTAINS',observation_status:'PARTIAL'}]};
+  const html=h.evaluate('m04CheckTable(syntheticStep)');
+  assert.match(html,/사전 기대값·조건/);assert.match(html,/실제 관측값·상태/);assert.match(html,/판정/);
+  assert.match(html,/&lt;img src=x onerror=bad\(\)&gt;/);assert.match(html,/&lt;script&gt;bad\(\)&lt;\/script&gt;/);
+  assert.doesNotMatch(html,/<script>|<img src=x/);assert.match(html,/>공백<\/td>/);assert.match(html,/>false<small>/);
+  assert.match(html,/확인 대기/);assert.match(html,/입력값 비공개/);assert.match(html,/관측값 미보관/);
+  assert.match(html,/matched_token/);assert.match(html,/PARTIAL/);
+  h.context.syntheticStep={status:'PASS'};assert.match(h.evaluate('m04CheckTable(syntheticStep)'),/단계 PASS만으로 실제 값을 복원하지 않습니다/);
+});
+test('result keeps code provenance and an observed replay warning even on PASS',async()=>{
+  const h=harness();await settle();
+  const sources=[['M01_OBSERVED_REPLAY','M01 수집 동작 · 관측 재생'],['CU02_SCHEDULE_REGISTRATION','CU02 템플릿'],
+    ['M07_PREPARED_SCRIPT','PREPARED · 준비 코드'],['M07_GENERATED_SCRIPT','M03 시나리오 → GPT'],['UPLOADED_FIXED_SCRIPT','외부 Python 등록']];
+  for(const [source_kind,label] of sources){h.context.syntheticRow={status:'PASS',source_kind};assert.match(h.evaluate('m04CaseSource(syntheticRow)'),new RegExp(label));}
+  const record={...job('COMPLETED'),cases:[{status:'PASS',case_id:'CASE-001',source_kind:'M01_OBSERVED_REPLAY',required_step_count:2,expected_check_count:1,step_evidence_mode:'BUSINESS_STEPS',steps:[]}],result:{score:100}};
+  h.context.syntheticJob=record;h.evaluate('m04View.execution=syntheticJob;m04View.resultSource="execution";paintM04Execution()');
+  assert.match(h.element('#m04-cases').innerHTML,/독립적인 업무 정답 통과로 해석하지 않습니다/);
+  assert.match(h.element('#m04-result').innerHTML,/100%/);assert.match(h.element('#m04-result').innerHTML,/공식 시험성적 아님/);
+  assert.match(h.element('#m04-progress-label').textContent,/스크립트 1\/1건 완료/);
+});
+test('business checks and current before-after captures open by default while raw traces stay collapsed',async()=>{
+  const h=harness();await settle();h.context.syntheticRow={execution_id:EXEC,case_id:'CASE-001',step_evidence_mode:'BUSINESS_STEPS',required_step_count:5,
+    steps:[{sequence:1,action:'navigate',target:'synthetic screen',status:'PASS'}],action_logs:[{sequence:1,action:'GET',status:'PASS'}]};
+  const html=h.evaluate('m04StepDetails(syntheticRow)');assert.match(html,/<details class="m04-business-steps" open>/);
+  assert.match(html,/<details class="m04-screenshots" open>/);assert.match(html,/<details class="m04-traces">/);
+  assert.match(html,/성공 단계 1 \/ 5/);assert.match(html,/관측값 미보관/);assert.match(html,/캡처되지 않음/);
+});
+test('external result view clears local business and check progress',async()=>{
+  const h=harness();await settle();h.element('#m04-business-progress').innerHTML='previous local checks';
+  await h.context.selectM04Result(RESULT);assert.equal(h.element('#m04-business-progress').innerHTML,'');
+  assert.match(h.element('#m04-progress-label').textContent,/이 화면에서 실행한 기록과 구분/);
+});
 (async()=>{for(const item of tests){await item.run();console.log('PASS '+item.name);}console.log(tests.length+' M04 CU02 and background runner UI groups passed');})().catch(error=>{console.error(error);process.exitCode=1;});

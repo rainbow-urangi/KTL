@@ -37,14 +37,22 @@ const useful=s=>typeof s==='string' && !!s.trim() &&
   !/^[*＊⋆★☆✱✳✴✻✼❋\s]+$/u.test(s);
 const read=(e,p)=>p==='value'?e.value:e.innerText;
 const left=qa(arguments[0]);
-if(left.length!==1 || !shown(left[0]) || !permitted(left[0],arguments[1])) return false;
+const observed={left_count:left.length};
+const done=passed=>arguments[5]?{passed,observed,observation_status:observed.redacted?'REDACTED':'RECORDED'}:passed;
+if(left.length!==1 || !shown(left[0])) return done(false);
+if(!permitted(left[0],arguments[1])) {observed.redacted=true;return done(false);}
 const a=read(left[0],arguments[1]);
-if(!useful(a)) return false;
-if(arguments[4]==='nonempty') return true;
+observed.left_nonempty=useful(a);
+if(!useful(a)) return done(false);
+if(arguments[4]==='nonempty') return done(true);
 const right=qa(arguments[2]);
-if(right.length!==1 || left[0]===right[0] || !shown(right[0]) || !permitted(right[0],arguments[3])) return false;
+observed.right_count=right.length;
+if(right.length!==1 || left[0]===right[0] || !shown(right[0])) return done(false);
+if(!permitted(right[0],arguments[3])) {observed.redacted=true;return done(false);}
 const b=read(right[0],arguments[3]);
-return useful(b) && a.trim()===b.trim();"""
+observed.right_nonempty=useful(b);
+observed.equal=useful(b) && a.trim()===b.trim();
+return done(observed.equal);"""
 _EMPTY_TEXT = ['표시할 명함 정보가 없습니다.', '검색 결과가 없습니다', '조회된 명함이 없습니다',
                '등록된 명함이 없습니다', '데이터가 없습니다']
 _AUTH_TARGET = re.compile(r'password|passwd|pwd|secret|token|auth|cookie|login[\W_]*id|user[\W_]*name|비밀번호|비번|아이디', re.I)
@@ -54,6 +62,66 @@ _CREDENTIAL_LITERAL = re.compile(r'\bBearer\s+\S|\b(?:password|passwd|pwd|secret
 _TRUTH_KEYS = {'ground_truth', 'groundtruth', 'expected_events', 'expected_label', 'gt_steps',
                'gt_label', 'evaluation_pairing', 'match_result', 'official_pass'}
 _CREDENTIAL_KEY = re.compile(r'(?:password|passwd|pwd|secret|(?:access[_-]?|refresh[_-]?)?token|authorization|cookie|api[_-]?key)', re.I)
+_PRIVATE_OBSERVATION = re.compile(r'\bBearer\s+\S+|\b(?:password|passwd|pwd|secret|(?:access[_-]?|refresh[_-]?)?token|authorization|cookie|api[_-]?key)\s*[:=]\s*\S+|\beyJ[A-Za-z0-9_-]+\.[A-Za-z0-9_-]+\.[A-Za-z0-9_-]+|\bsk-[A-Za-z0-9_-]{12,}', re.I)
+_PERSONAL_OBSERVATION = re.compile(r'[\w.+-]+@[\w.-]+\.[A-Za-z]{2,}|(?<!\d)(?:\+?82[- .]?)?0?1[016789][- .]?\d{3,4}[- .]?\d{4}(?!\d)|(?<!\d)\d{6}[- ]?[1-8]\d{6}(?!\d)')
+_COMPARISON_MODES = dict(visible='VISIBILITY', focus='FOCUS', value='EXACT', text_equals='EXACT',
+                         text_contains='CONTAINS', count='COUNT', text_count='TEXT_COUNT', url_path='PATH_EXACT',
+                         nonempty='NONEMPTY', text_equals_target='RELATIONAL', cards_search='API_AND_DOM',
+                         cards_state='DOM_AND_PRIOR_API', native_submit_response='NATIVE_SUBMIT_WINDOW')
+
+
+def _observed_url(match):
+    try:
+        return urlsplit(match.group()).path or '/'
+    except ValueError:
+        return '[REDACTED_URL]'
+
+
+def _observation_value(value):
+    # 비교 근거의 최소값·개인정보 마스킹
+    if value is None or type(value) in (bool, int):
+        return value
+    if type(value) is float:
+        return value if math.isfinite(value) else None
+    if isinstance(value, str):
+        if _PRIVATE_OBSERVATION.search(value):
+            return '[REDACTED]'
+        safe = _PERSONAL_OBSERVATION.sub('[REDACTED]', value)
+        safe = _URL_LITERAL.sub(_observed_url, safe)
+        return safe if len(safe) <= 160 else dict(value=safe[:160], length=len(safe), truncated=True)
+    if isinstance(value, dict):
+        return {str(key)[:64]: _observation_value(item) for key, item in list(value.items())[:24]
+                if not _CREDENTIAL_KEY.search(str(key))}
+    if isinstance(value, list):
+        return [_observation_value(item) for item in value[:20]]
+    return None
+
+
+def _expected_observation(condition):
+    kind = condition['kind']
+    if kind == 'native_submit_response':
+        return dict(method=condition['method'], path=condition['api_path'],
+                    http_status=condition['expected_status'], loading_finished=True,
+                    matching_request_count=1, native_submit_succeeded=True)
+    if kind in {'cards_search', 'cards_state'}:
+        return dict(keyword=condition['keyword'], search_type=condition['search_type'],
+                    table_visible=True, loading=False, category_values_match=True,
+                    rows_match_api=True, http_status=200 if kind == 'cards_search' else None)
+    if kind == 'text_equals_target':
+        return dict(left_nonempty=True, right_nonempty=True, equal=True)
+    if kind == 'nonempty':
+        return dict(left_nonempty=True)
+    if kind == 'text_count':
+        return dict(text=condition['expected'], count=condition['count'])
+    return condition.get('expected')
+
+
+def planned_check_results(conditions):
+    # 실행 전 확인 항목과 비교 기준
+    return [dict(check_index=index, kind=condition['kind'], status='PENDING',
+                 expected=_observation_value(_expected_observation(condition)), observed=None,
+                 comparison_mode=_COMPARISON_MODES.get(condition['kind'], 'UNSUPPORTED'),
+                 observation_status='NOT_RECORDED') for index, condition in enumerate(conditions, 1)]
 
 
 def _require(condition, message):
@@ -485,6 +553,7 @@ class RuntimeChecks:
         self.target_action = False
         self.network = None
         self.summaries = {}
+        self._cards_observation = None
 
     def _raw(self, driver, name, params=None):
         return self.raw_execute(driver, name, params or {}).get('value')
@@ -616,13 +685,16 @@ class RuntimeChecks:
             except (KeyError, TypeError, ValueError):
                 continue
 
-    def _simple(self, driver, condition):
+    def _simple(self, driver, condition, observation=False):
         kind = condition['kind']
         if kind in {'text_equals_target', 'nonempty'}:
-            return self._js(driver, _RELATIONAL_CHECK_SCRIPT, condition['target']['value'], condition['property'],
-                            condition.get('other_target', {}).get('value'), condition.get('other_property'), kind) is True
+            result = self._js(driver, _RELATIONAL_CHECK_SCRIPT, condition['target']['value'], condition['property'],
+                              condition.get('other_target', {}).get('value'), condition.get('other_property'), kind, observation)
+            return result if observation else result is True
         if kind == 'url_path':
-            return urlsplit(self._raw(driver, 'getCurrentUrl')).path == condition['expected']
+            actual = urlsplit(self._raw(driver, 'getCurrentUrl')).path
+            passed = actual == condition['expected']
+            return dict(passed=passed, observed=actual, observation_status='RECORDED') if observation else passed
         selector, expected = condition['target']['value'], condition['expected']
         script = """const items=[...document.querySelectorAll(arguments[0])], expected=arguments[1];
 const e=items[0], visible=x=>{
@@ -632,18 +704,35 @@ const e=items[0], visible=x=>{
   }
   return true;
 };
-switch(arguments[2]) {
-case 'visible': return expected ? items.length===1 && visible(e) : !items.some(visible);
-case 'focus': return (!!e && document.activeElement===e)===expected;
-case 'value': return !!e && e.value===expected;
-case 'text_equals': return !!e && e.innerText.trim()===expected;
-case 'text_contains': return !!e && e.innerText.includes(expected);
-case 'count': return items.length===expected;
-case 'text_count': return items.filter(x=>visible(x) && typeof x.innerText==='string' && x.innerText.trim()===expected).length===arguments[3];
-} return false;"""
-        if kind == 'text_count':
-            return self._js(driver, script, selector, expected, kind, condition['count']) is True
-        return self._js(driver, script, selector, expected, kind) is True
+const kind=arguments[2], detail=arguments[4];
+const done=(passed,observed,status='RECORDED')=>detail?{passed,observed,observation_status:status}:passed;
+const safe=e=>{
+  const attr=name=>String(typeof e.getAttribute==='function'?e.getAttribute(name)||'':e[name]||'');
+  const identity=attr('id')+' '+attr('name');
+  return !['password','hidden'].includes(attr('type').toLowerCase()) &&
+    !/password|passwd|pwd|secret|token|auth|cookie|login[\\W_]*id|user[\\W_]*name|비밀번호|비번|아이디/i.test(identity) &&
+    !attr('autocomplete').toLowerCase().split(/\\s+/).some(v=>['username','current-password','new-password','one-time-code'].includes(v));
+};
+const excerpt=value=>{
+  if(typeof value!=='string')return null;
+  if(/\\bBearer\\s+\\S+|(?:password|passwd|pwd|secret|token|authorization|cookie|api[_-]?key)\\s*[:=]\\s*\\S+|\\beyJ[A-Za-z0-9_-]+\\.[A-Za-z0-9_-]+\\.[A-Za-z0-9_-]+|\\bsk-[A-Za-z0-9_-]{12,}/i.test(value))return '[REDACTED]';
+  const clean=value.replace(/[\\w.+-]+@[\\w.-]+\\.[A-Za-z]{2,}/g,'[REDACTED]')
+    .replace(/(?:\\+?82[- .]?)?0?1[016789][- .]?\\d{3,4}[- .]?\\d{4}/g,'[REDACTED]')
+    .replace(/\\d{6}[- ]?[1-8]\\d{6}/g,'[REDACTED]')
+    .replace(/(?:https?|file):\\/\\/[^\\s"'<>]+/gi,'[REDACTED_URL]');
+  return clean.length<=160?clean:{value:clean.slice(0,160),length:clean.length,truncated:true};
+};
+switch(kind) {
+case 'visible': {const count=items.filter(visible).length;return done(expected?items.length===1&&count===1:count===0,{matched_count:items.length,visible_count:count});}
+case 'focus': {const actual=!!e&&document.activeElement===e;return done(actual===expected,actual);}
+case 'value': {const pass=!!e&&e.value===expected;return done(pass,!e?null:!detail?null:safe(e)?excerpt(e.value):'[REDACTED]',!e?'NOT_RECORDED':detail&&!safe(e)?'REDACTED':'RECORDED');}
+case 'text_equals': {const pass=!!e&&e.innerText.trim()===expected;return done(pass,!e?null:!detail?null:safe(e)?excerpt(e.innerText.trim()):'[REDACTED]',!e?'NOT_RECORDED':detail&&!safe(e)?'REDACTED':'RECORDED');}
+case 'text_contains': {const pass=!!e&&e.innerText.includes(expected);return done(pass,e?{match_found:pass,text_length:e.innerText.length}:null,e?'RECORDED':'NOT_RECORDED');}
+case 'count': return done(items.length===expected,items.length);
+case 'text_count': {const count=items.filter(x=>visible(x)&&typeof x.innerText==='string'&&x.innerText.trim()===expected).length;return done(count===arguments[3],count);}
+} return done(false,null,'NOT_RECORDED');"""
+        result = self._js(driver, script, selector, expected, kind, condition.get('count'), observation)
+        return result if observation else result is True
 
     def _cards_state(self, driver, condition, summary):
         state = self._js(driver, """const q=s=>document.querySelector(s), qa=s=>[...document.querySelectorAll(s)];
@@ -656,6 +745,16 @@ empty:qa(arguments[5]).some(e=>visible(e) && arguments[6].some(t=>e.innerText.in
                          condition['search_input']['value'], condition['search_type_target']['value'],
                          condition['table']['value'], condition['rows']['value'],
                          condition['category_cells']['value'], condition['empty_state']['value'], condition['empty_text'])
+        if isinstance(state, dict):
+            # 명함 본문·분류 문자열 대신 비교에 필요한 상태만 보관
+            self._cards_observation = dict(self._cards_observation or {},
+                keyword_matches=state.get('keyword') == condition['keyword'],
+                search_type_matches=state.get('type') == condition['search_type'],
+                table_visible=state.get('visible') is True, loading=state.get('loading') is True,
+                rows=state.get('rows') if type(state.get('rows')) is int else None,
+                api_rows=len(summary['categories']), api_total=summary['total'],
+                category_values_match=state.get('categories') == summary['categories'],
+                empty_state_visible=state.get('empty') is True)
         if (not isinstance(state, dict) or state.get('keyword') != condition['keyword']
                 or state.get('type') != condition['search_type'] or state.get('visible') is not True
                 or state.get('loading') is True or state.get('rows') != len(summary['categories'])
@@ -664,6 +763,7 @@ empty:qa(arguments[5]).some(e=>visible(e) && arguments[6].some(t=>e.innerText.in
         return bool(summary['categories']) or summary['total'] == 0 and state.get('empty') is True
 
     def _cards(self, driver, condition):
+        self._cards_observation = None
         key = (condition.get('api_origin'), condition['api_path'], condition['keyword'])
         if condition['kind'] == 'cards_state':
             summary = self.summaries.get(key)
@@ -671,6 +771,11 @@ empty:qa(arguments[5]).some(e=>visible(e) && arguments[6].some(t=>e.innerText.in
         if not self.network or not self.network['armed'] or self.network.get('error'):
             return False
         self._drain(driver)
+        self._cards_observation = dict(matching_request_count=len(self.network['requests']),
+                                      completed_request_count=sum(
+                                          record.get('complete') is True and not record.get('failed')
+                                          and record.get('status') == 200
+                                          for record in self.network['requests'].values()))
         for identity, record in self.network['requests'].items():
             if not record['complete'] or record['failed'] or record['status'] != 200:
                 continue
@@ -689,6 +794,9 @@ empty:qa(arguments[5]).some(e=>visible(e) && arguments[6].some(t=>e.innerText.in
                 if condition['keyword'] and not all(condition['keyword'].casefold() in category.casefold() for category in categories):
                     continue
                 summary = dict(categories=categories, total=pagination['total'])
+                self._cards_observation.update(http_status=record['status'],
+                                               response_finished=record['complete'],
+                                               request_id_sha256=hashlib.sha256(str(identity).encode()).hexdigest())
                 if self._cards_state(driver, condition, summary):
                     self.summaries[key] = summary
                     return True
@@ -696,6 +804,27 @@ empty:qa(arguments[5]).some(e=>visible(e) && arguments[6].some(t=>e.innerText.in
                 # 본문과 개인정보를 오류 문자열이나 evidence에 포함하지 않는다.
                 continue
         return False
+
+    def _expectation(self, condition):
+        return _expected_observation(condition)
+
+    def _check_evidence(self, index, condition, passed, observation):
+        kind = condition['kind']
+        recorded = observation if isinstance(observation, dict) else {}
+        observed = _observation_value(recorded.get('observed'))
+        status = recorded.get('observation_status', 'NOT_RECORDED')
+        if status not in {'RECORDED', 'REDACTED', 'PARTIAL', 'NOT_RECORDED'}:
+            status = 'NOT_RECORDED'
+        if status == 'NOT_RECORDED':
+            observed = None
+        serialized = json.dumps(observed, ensure_ascii=False)
+        if '[REDACTED' in serialized:
+            status = 'REDACTED'
+        elif '"truncated": true' in serialized:
+            status = 'PARTIAL'
+        return dict(check_index=index, kind=kind, status='PASS' if passed else 'FAIL',
+                    expected=_observation_value(self._expectation(condition)), observed=observed,
+                    comparison_mode=_COMPARISON_MODES.get(kind, 'UNSUPPORTED'), observation_status=status)
 
     def finish(self, drivers):
         definition = self.current
@@ -708,21 +837,39 @@ empty:qa(arguments[5]).some(e=>visible(e) && arguments[6].some(t=>e.innerText.in
                 return False, '계약 target에 대응하는 실제 브라우저 동작이 없습니다.', evidence
             for index, condition in enumerate(definition['checks'], 1):
                 passed = False
+                observation = None
                 limit = time.monotonic() + 2
                 while True:
                     try:
                         if condition['kind'] == 'native_submit_response':
                             self._drain(driver)
                             passed = not self.network['error'] and self.network['native'].receipt() is not None
+                            native = self.network['native']
+                            receipt = native.receipt()
+                            diagnostic = native.diagnostic()
+                            detail = {key: value for key, value in diagnostic.items()
+                                      if key not in {'method', 'path', 'expected_http_status'}}
+                            detail['loading_finished'] = True if receipt is not None else None
+                            if receipt is not None:
+                                detail.update(receipt)
+                            observation = dict(observed=detail,
+                                               observation_status='RECORDED' if receipt else 'PARTIAL')
+                        elif condition['kind'] in {'cards_search', 'cards_state'}:
+                            passed = self._cards(driver, condition)
+                            observation = dict(observed=self._cards_observation,
+                                               observation_status='RECORDED' if passed else 'PARTIAL'
+                                               if self._cards_observation is not None else 'NOT_RECORDED')
                         else:
-                            passed = (self._cards(driver, condition) if condition['kind'] in {'cards_search', 'cards_state'}
-                                      else self._simple(driver, condition))
+                            observation = self._simple(driver, condition, observation=True)
+                            passed = (observation.get('passed') is True if isinstance(observation, dict)
+                                      else observation is True)
                     except Exception:
                         passed = False
+                        observation = None
                     if passed or time.monotonic() >= limit:
                         break
                     time.sleep(.05)
-                item = dict(check_index=index, kind=condition['kind'], status='PASS' if passed else 'FAIL')
+                item = self._check_evidence(index, condition, passed, observation)
                 if condition['kind'] == 'native_submit_response' and passed:
                     item['network'] = self.network['native'].receipt()
                 elif condition['kind'] == 'native_submit_response':

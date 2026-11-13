@@ -11,7 +11,7 @@ import zipfile
 
 from backend.evaluators import EvaluationError
 from backend.m04 import cu02_evaluation
-from backend.m04.store import M04Manager, _encoded, _screenshot_records
+from backend.m04.store import M04Manager, _encoded, _screenshot_records, _merge_step
 from backend.session import RuntimeSession
 
 
@@ -60,6 +60,12 @@ class CU02EvaluationTests(unittest.TestCase):
             with zipfile.ZipFile(self.root / 'data/evaluation' / job['dataset_id'] / 'scripts.zip') as archive:
                 self.assertEqual(archive.read('cu02_evaluation.json'), raw)
                 for row, case in zip(job['cu02_evaluation']['cases'], job['cases']):
+                    self.assertEqual(case['required_step_count'], 5)
+                    self.assertEqual(len(case['steps']), 5)
+                    self.assertEqual(case['expected_check_count'], sum(len(step['check_results']) for step in case['steps']))
+                    self.assertTrue(all(step['status'] == 'PENDING' for step in case['steps']))
+                    self.assertTrue(all(check['status'] == 'PENDING' and check['observed'] is None
+                                        for step in case['steps'] for check in step['check_results']))
                     self.assertEqual(json.loads(archive.read(case['case_id'] + '/cu02_parameters.json')), row['expected'])
                     self.assertEqual(archive.read(case['case_id'] + '/script.py'),
                                      (folder / case['case_id'] / 'script.py').read_bytes())
@@ -172,6 +178,35 @@ class CU02EvaluationTests(unittest.TestCase):
         for number in (True, 0, -1, 1001, '2'):
             with self.subTest(position=number), self.assertRaises(EvaluationError):
                 _screenshot_records([dict(record, business_step_order=number)])
+
+    def test_started_and_failed_steps_keep_fixed_checks_and_actual_values(self):
+        job = self.prepare_without_worker()['execution']
+        planned = deepcopy(job['cases'][0]['steps'][2])
+        started = _merge_step(planned, dict(status='RUNNING', check_results=[]))
+        self.assertEqual(started['check_results'], planned['check_results'])
+        actual = dict(started['check_results'][0], status='FAIL', observed='SYNTHETIC WRONG VALUE',
+                      observation_status='RECORDED')
+        finished = _merge_step(started, dict(status='FAIL', check_results=[actual]))
+        self.assertEqual(len(finished['check_results']), len(planned['check_results']))
+        self.assertEqual(finished['check_results'][0]['observed'], 'SYNTHETIC WRONG VALUE')
+        self.assertTrue(all(row['status'] == 'NOT_CHECKED' for row in finished['check_results'][1:]))
+        self.assertIsNone(planned['check_results'][0]['observed'])
+
+    def test_interrupted_execution_keeps_all_planned_items_without_successes(self):
+        job = self.prepare_without_worker()['execution']
+        case = job['cases'][0]
+        case.update(status='RUNNING', started_at=STAMP)
+        case['steps'][0]['status'] = 'RUNNING'
+        self.manager._interrupted_case(case, 'SYNTHETIC INTERRUPTION')
+        self.manager._counts(job)
+        self.assertEqual(case['status'], 'FAIL')
+        self.assertEqual(len(case['steps']), case['required_step_count'])
+        self.assertEqual(case['steps'][0]['status'], 'FAIL')
+        self.assertTrue(all(step['status'] == 'SKIPPED' for step in case['steps'][1:]))
+        self.assertTrue(all(check['status'] == 'NOT_CHECKED' and check['observed'] is None
+                            for step in case['steps'] for check in step['check_results']))
+        self.assertEqual(job['counts']['total_execution_count'], 10)
+        self.assertEqual(job['counts']['successful_execution_count'], 0)
 
 
 if __name__ == '__main__':

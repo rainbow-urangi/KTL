@@ -12,6 +12,7 @@ from urllib.parse import urlsplit
 from ..evaluators import EvaluationError, require
 from ..m03_integration import validate_scenario_result
 from ..m04.checks import prepare_contract, validate_source_data
+from .trial import normalize_policy
 
 
 REQUIRED_COUNT = 20
@@ -131,13 +132,13 @@ def _behavior_key(scenario, contract):
 
 
 def prepare_batch(payload):
-    """20개 독립 입력을 검증하고 원본 의미를 보존한 행을 반환한다.
+    """20개 입력과 사전 회차를 검증하고 원본 의미를 보존한 행을 반환한다.
 
     `source_raw`는 업로드한 `{input_id, scenario}` 행의 독립 복사본이다.
     정규화 계약은 별도 실행 준비 단계가 보관하며 원본에 덮어쓰지 않는다.
     """
     _json_input(payload)
-    require(isinstance(payload, dict) and set(payload) == {'items'}, 'M07 일괄 입력은 {items: [...]} 형식이어야 합니다.')
+    policy = normalize_policy(payload)
     items = payload['items']
     require(isinstance(items, list) and len(items) == REQUIRED_COUNT, '서로 다른 시나리오 입력을 정확히 20건 등록하세요.')
     require(len(json.dumps(payload, ensure_ascii=False, allow_nan=False).encode('utf-8')) <= MAX_BATCH_BYTES,
@@ -146,19 +147,28 @@ def prepare_batch(payload):
         validate_source_data(payload, strict_literals=True)
     except ValueError as exc:
         raise EvaluationError('시나리오에 인증정보ㆍ평가 정답을 넣을 수 없습니다: ' + str(exc), 'ERROR') from None
-    result, input_ids, scenario_ids, behaviors = [], set(), set(), set()
+    assignment = {identity: batch['batch_id'] for batch in policy['batches'] for identity in batch['input_ids']}
+    result, input_ids, scenario_ids, behaviors = [], set(), {}, {}
+    sources = {}
     for position, row in enumerate(items, 1):
         require(isinstance(row, dict) and set(row) == {'input_id', 'scenario'}, '각 입력에는 input_id와 scenario만 지정하세요.')
         input_id = _text(row['input_id'], 'input_id')
         contract = _scenario(row['scenario'], position)
         scenario_id = row['scenario']['scenario_id']
         behavior = _behavior_key(row['scenario'], contract)
-        require(input_id not in input_ids and scenario_id not in scenario_ids,
-                'input_id와 scenario_id는 20건 모두 서로 달라야 합니다.')
-        require(behavior not in behaviors, 'ID나 이름만 바꾼 동일 실행 입력은 별도 시나리오로 집계할 수 없습니다.')
+        batch_id = assignment[input_id]
+        batch_scenarios = scenario_ids.setdefault(batch_id, set())
+        batch_behaviors = behaviors.setdefault(batch_id, set())
+        require(input_id not in input_ids and scenario_id not in batch_scenarios,
+                'input_id는 전체에서, scenario_id는 같은 회차에서 서로 달라야 합니다.')
+        require(behavior not in batch_behaviors, '같은 회차에서 ID나 이름만 바꾼 동일 실행을 중복 집계할 수 없습니다.')
+        source = json.dumps(row['scenario'], ensure_ascii=False, sort_keys=True, allow_nan=False)
+        require(scenario_id not in sources or sources[scenario_id] == source,
+                '회차에서 재사용하는 scenario_id는 전체 시나리오 원본이 같아야 합니다.')
         input_ids.add(input_id)
-        scenario_ids.add(scenario_id)
-        behaviors.add(behavior)
+        batch_scenarios.add(scenario_id)
+        batch_behaviors.add(behavior)
+        sources[scenario_id] = source
         result.append(dict(input_id=input_id, scenario=deepcopy(row['scenario']), source_raw=deepcopy(row)))
     return result
 
@@ -202,17 +212,25 @@ def schema():
         preconditions=dict(type='array', maxItems=20, items=dict(type='string', minLength=1, maxLength=2000)),
         screenshot_checkpoints=dict(type='object', required=['before', 'after'], additionalProperties=False,
                                     properties=dict(before=dict(type='integer', minimum=1), after=dict(type='integer', minimum=1)))))
+    trial_policy = dict(type='object', additionalProperties=False, required=['batches'], properties=dict(
+        batches=dict(type='array', minItems=1, maxItems=REQUIRED_COUNT, items=dict(
+            type='object', additionalProperties=False, required=['batch_id', 'input_ids'],
+            properties=dict(batch_id=text, input_ids=dict(type='array', minItems=1,
+                            maxItems=REQUIRED_COUNT, uniqueItems=True, items=text))))))
     input_schema = dict(type='object', additionalProperties=False, required=['items'], properties=dict(
         items=dict(type='array', minItems=REQUIRED_COUNT, maxItems=REQUIRED_COUNT,
                    items=dict(type='object', additionalProperties=False, required=['input_id', 'scenario'],
-                              properties=dict(input_id=text, scenario=scenario)))))
+                              properties=dict(input_id=text, scenario=scenario))), trial_policy=trial_policy))
     return dict(version=1, source_kind=SOURCE_KIND, required_count=REQUIRED_COUNT, target_percent=TARGET_PERCENT,
                 denominator=REQUIRED_COUNT, browser='chrome', source_document=deepcopy(SOURCE_DOCUMENT),
                 max_batch_bytes=MAX_BATCH_BYTES, input_schema=input_schema, example_item=deepcopy(placeholder),
                 fields=dict(items='20개 {input_id, scenario} 행',
+                            trial_policy='선택: batches[{batch_id,input_ids}]. 원본 순서대로 20개 input_id를 정확히 한 번씩 지정',
                             scenario_required=sorted(_SCENARIO_REQUIRED), scenario_optional=sorted(_SCENARIO_OPTIONAL),
                             step_required=['order', 'action', 'target', 'expected_result'],
                             contract='version=1, scenario_id, steps[{order, action, target, checks}]'),
                 example=dict(items=[placeholder]), example_only=True,
-                notice='예시는 작성 형식만 보여줍니다. 실제 URLㆍ선택자ㆍ기대 결과를 확인한 서로 다른 시나리오 20건을 준비하세요. '
+                notice='예시는 작성 형식만 보여줍니다. 기본 입력은 서로 다른 시나리오 20건입니다. '
+                       '같은 시나리오를 두 회차로 시험하려면 trial_policy를 사전에 명시하고 input_id 20개를 각각 고정하세요. '
+                       '실제 URLㆍ선택자ㆍ기대 결과는 실행 전에 확인하세요. '
                        '입력 등록은 M03 산출물 또는 공식 승인 증빙을 의미하지 않습니다.')

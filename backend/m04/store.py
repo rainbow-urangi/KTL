@@ -48,6 +48,51 @@ def _masked(value):
     return text[:4000]
 
 
+def _planned_steps(scenario, contract):
+    # 실행 전 단계와 확인 항목 고정
+    from .checks import planned_check_results
+    conditions = {step['order']: step['checks'] for step in contract['steps']}
+    return [dict(sequence=step['order'], step_id=step.get('step_id'),
+                 action=_masked(step['action']), target=_masked(step['target']),
+                 expected_result=_masked(step['expected_result']), status='PENDING',
+                 check_results=planned_check_results(conditions[step['order']]))
+            for step in scenario['steps']]
+
+
+def _merge_step(planned, observed):
+    # 고정 항목에 실제 관측 결과 연결
+    result = dict(planned, **{key: value for key, value in observed.items() if key != 'check_results'})
+    expected = planned.get('check_results', [])
+    if not expected:
+        result['check_results'] = deepcopy(observed.get('check_results', []))
+        return result
+    received = {row.get('check_index'): row for row in observed.get('check_results', []) if isinstance(row, dict)}
+    results = []
+    for definition in expected:
+        row = deepcopy(definition)
+        actual = received.get(row.get('check_index'))
+        if actual is not None and actual.get('kind') == row.get('kind'):
+            row.update(actual)
+        elif result.get('status') not in {'PENDING', 'RUNNING'} and row.get('status') == 'PENDING':
+            row['status'] = 'NOT_CHECKED'
+        results.append(row)
+    result['check_results'] = results
+    return result
+
+
+def _finish_pending_steps(case):
+    # 중단과 오류의 미실행 항목 보존
+    for step in case.get('steps', []):
+        if step.get('status') == 'RUNNING':
+            step.update(status='FAIL', error=case.get('error') or '단계 실행 중단', completed_at=case.get('completed_at'))
+        elif step.get('status') == 'PENDING':
+            step.update(status='SKIPPED', error='필수 단계 미실행')
+        if step.get('status') not in {'PENDING', 'RUNNING'}:
+            for check in step.get('check_results', []):
+                if check.get('status') == 'PENDING':
+                    check['status'] = 'NOT_CHECKED'
+
+
 SCREENSHOT_POLICY = 'text-and-images-masked-v1'
 SCREENSHOT_NOTICE = '문자·이미지가 마스킹된 실행 화면입니다. 판정은 독립 DOM/API 검사로 확인하며 이미지 일치 점수를 계산하지 않습니다.'
 
@@ -868,7 +913,8 @@ class M04Manager:
                     cases.append(dict(case_id=case_id, script_id=metadata['script_id'], scenario_id=metadata['scenario_id'],
                                       scenario_name=metadata['scenario_name'], script_name=metadata['filename'], sha256=metadata['sha256'],
                                       fixed_at=metadata['fixed_at'], source_m03_run_id=metadata['source_m03_run_id'],
-                                      source_synthetic=metadata['source_synthetic'], status='PENDING', steps=[], action_logs=[],
+                                      source_synthetic=metadata['source_synthetic'], status='PENDING',
+                                      steps=_planned_steps(prepared['scenario'], contract) if prepared else [], action_logs=[],
                                       business_step_required=metadata.get('business_step_required', False),
                                       execution_contract_sha256=contract_hash,
                                       execution_scenario_sha256=execution_scenario_hash,
@@ -877,9 +923,13 @@ class M04Manager:
                                       step_evidence_mode=metadata.get('step_evidence_mode', 'LEGACY_TRACE'),
                                       source_scenario_sha256=metadata.get('source_scenario_sha256'),
                                       generated_by_llm=metadata.get('generated_by_llm'),
+                                      source_kind=metadata.get('source_kind'), code_source=metadata.get('code_source'),
                                       llm_generation_evidence_available=metadata.get('llm_generation_evidence_available', False),
                                       source_m07_generation_id=metadata.get('source_m07_generation_id'),
                                       source_m07_case_id=metadata.get('source_m07_case_id')))
+                    if prepared:
+                        cases[-1].update(required_step_count=len(cases[-1]['steps']),
+                                         expected_check_count=sum(len(step['check_results']) for step in cases[-1]['steps']))
                     if plan_hash is not None:
                         cases[-1]['execution_plan_sha256'] = plan_hash
                     if metadata.get('code_source') == 'PREPARED':
@@ -960,6 +1010,7 @@ class M04Manager:
                         case['failed_step'] = step.get('sequence')
                     if not case.get('failure_selector'):
                         case['failure_selector'] = step.get('failure_selector') or step.get('actual_selector')
+        _finish_pending_steps(case)
 
     @staticmethod
     def _counts(job):
@@ -1032,6 +1083,10 @@ class M04Manager:
             checks = self._safe(self.root / 'backend/m04/checks.py')
             if checks.is_file():
                 case['checks_sha256'] = _sha(checks.read_bytes())
+            if not case.get('steps'):
+                case['steps'] = _planned_steps(self._json(execution_scenario), self._json(contract))
+                case['required_step_count'] = len(case['steps'])
+                case['expected_check_count'] = sum(len(step['check_results']) for step in case['steps'])
         case.setdefault('action_logs', [])
         process = subprocess.Popen(command,
                                    cwd=script.parent, stdin=subprocess.DEVNULL, stdout=subprocess.PIPE, stderr=subprocess.STDOUT,
@@ -1102,7 +1157,7 @@ class M04Manager:
                     destination = case['steps'] if event['event'].startswith('business_step') else case['action_logs']
                     existing = next((row for row in destination if event['event'].startswith('business_step') and row.get('sequence') == cleaned.get('sequence')), None)
                     if existing is not None:
-                        existing.update(cleaned)
+                        existing.update(_merge_step(existing, cleaned))
                     elif len(destination) < 1000:
                         destination.append(cleaned)
                     if event['event'] == 'step' and not case.get('business_step_required') and len(case['steps']) < 500:
@@ -1160,11 +1215,16 @@ class M04Manager:
                              and terminal.get('execution_contract_sha256') == case['execution_contract_sha256'])
                 evidence = terminal.get('business_steps')
                 if terminal.get('step_evidence_mode') == 'BUSINESS_STEPS' and isinstance(evidence, list):
-                    case['steps'] = [{key: _masked(value) if isinstance(value, str) else value for key, value in step.items()}
-                                     for step in evidence if isinstance(step, dict)][:500]
+                    received = [{key: _masked(value) if isinstance(value, str) else value for key, value in step.items()}
+                                for step in evidence if isinstance(step, dict)][:500]
+                    if case.get('expected_check_count') is not None:
+                        by_order = {step.get('sequence'): step for step in received}
+                        case['steps'] = [_merge_step(step, by_order.get(step.get('sequence'), {})) for step in case['steps']]
+                    else:
+                        case['steps'] = received
                 for key in ('step_evidence_mode', 'business_step_complete', 'independent_checks_passed', 'required_step_count', 'success_step_count', 'failed_step', 'error_message', 'failure_selector'):
                     value = terminal.get(key)
-                    if key != 'step_evidence_mode' or value is not None:
+                    if value is not None:
                         case[key] = _masked(value) if isinstance(value, str) else value
                 status = 'PASS' if valid else 'FAIL' if status == 'FAIL' and returncode == 1 else 'ERROR'
                 case.update(status=status, assertion_count=assertions, passed_assertion_count=passed,
@@ -1200,6 +1260,7 @@ class M04Manager:
                 if failed:
                     case['failed_step'] = failed['sequence']
             case.update(execution_id=job['execution_id'], start_time=case.get('started_at'), end_time=case.get('completed_at'))
+            _finish_pending_steps(case)
             if case.get('status') != 'PASS' and not case.get('error_message'):
                 case['error_message'] = case.get('error')
             case['runtime_ms'] = case['duration_ms']
@@ -1317,6 +1378,7 @@ class M04Manager:
                     self._run_case(job, case)
                 except Exception as exc:
                     case.update(status='ERROR', error=_masked(exc), completed_at=_now())
+                    _finish_pending_steps(case)
                     self._log(job, case['case_id'], case['error'])
                     self._counts(job)
                     self._save(job)
@@ -1333,6 +1395,7 @@ class M04Manager:
             for case in job['cases']:
                 if case['status'] in {'PENDING', 'RUNNING'}:
                     case.update(status='SKIPPED', error='실행 기록 저장 오류')
+                    _finish_pending_steps(case)
             self._counts(job)
             try:
                 self._save(job)
@@ -1376,6 +1439,8 @@ class M04Manager:
                 records += [('browser_trace', step) for step in case.get('action_logs', case.get('steps', []))]
                 for record_type, step in records:
                     row = dict(step, execution_id=job['execution_id'], case_id=case['case_id'], scenario_id=case['scenario_id'], record_type=record_type)
+                    if isinstance(row.get('check_results'), list):
+                        row['check_results'] = json.dumps(row['check_results'], ensure_ascii=False, allow_nan=False)
                     writer.writerow({key: "'" + value if isinstance(value, str) and value.lstrip().startswith(('=', '+', '-', '@')) else value
                                      for key, value in row.items()})
             return buffer.getvalue().encode('utf-8-sig'), 'text/csv; charset=utf-8'

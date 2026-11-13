@@ -58,11 +58,11 @@ function renderM07(metric) {
     <section class="page-heading"><div><p class="eyebrow">M07 / DEVELOPMENT</p><h1>${labels.M07}</h1><p class="subtitle">${esc(metric.metric_name||'LLM Generated Code Validation')}</p></div><span class="badge neutral m07-browser">Chrome</span></section>
     <div class="m07-mode-bar"><p class="subtitle">입력 20건 · 실제 LLM 생성 · 별도 문법·실행 검사</p><button id="m07-refresh" class="m07-secondary" type="button">새로고침</button></div>
     <section id="m07-meeting-panel" class="evaluation-panel m07-panel"><div class="panel-heading"><h2>시험 입력 20건</h2><span id="m07-meeting-count" class="badge neutral">0 / 20건</span></div>
-      <div class="dataset-grid"><div><label>LLM 연결</label><strong id="m07-meeting-ready">확인 중…</strong></div><div><label>생성 방식</label><strong>입력별 1회 · 총 20건</strong></div><div><label>통과 기준</label><strong>16 / 20건 · 80%</strong></div></div>
+      <div class="dataset-grid"><div><label>LLM 연결</label><strong id="m07-meeting-ready">확인 중…</strong></div><div><label>생성 방식</label><strong>입력별 1회 · 총 20건</strong></div><div><label>문법 기준</label><strong>16 / 20건 · 80%</strong></div></div>
       <p id="m07-meeting-environment" class="subtitle"></p><div id="m07-meeting-provider" role="status"></div>
       <label for="m07-meeting-input">시험 입력 20건 (JSON)</label><textarea id="m07-meeting-input" rows="9" class="m07-json-input" aria-label="시험 입력 20건 JSON" spellcheck="false"></textarea>
       <div class="m07-actions"><label>JSON 파일<input id="m07-meeting-file" type="file" accept=".json,application/json" aria-label="시험 입력 20건 JSON 파일"></label><button id="m07-meeting-draft" class="m07-secondary" type="button">입력 초안 불러오기</button><button id="m07-meeting-check" class="m07-secondary" type="button">입력 확인</button><button id="m07-meeting-generate" type="button" disabled>LLM 코드 20건 생성</button></div>
-      <p id="m07-meeting-status" class="subtitle" role="status"></p><details class="m07-step-detail"><summary>입력 형식과 실행 조건</summary><p class="subtitle">서로 다른 시나리오 20건을 배열로 입력합니다. 각 입력에는 input_id와 scenario가 필요하며, scenario에 단계별 조작·대상·입력값·기대 결과와 execution_contract를 지정합니다. 실제 요소와 확인 조건은 사전에 정하고 인증정보·토큰·평가 정답을 넣지 마세요. 생성 후 검사 버튼으로 Chrome 실행을 시작합니다.</p><pre id="m07-meeting-schema"></pre></details>
+      <p id="m07-meeting-status" class="subtitle" role="status"></p><details class="m07-step-detail"><summary>입력 형식과 실행 조건</summary><p class="subtitle">고유한 input_id를 가진 시험 입력 20건을 items 배열로 입력합니다. 입력 20건은 업무 20종을 뜻하지 않습니다. 같은 시나리오를 반복하려면 trial_policy.batches에 배치 ID와 각 input_id 목록을 명시하세요. 정책이 없으면 기존처럼 중복 시나리오를 허용하지 않습니다. scenario에 단계별 조작·대상·입력값·기대 결과와 execution_contract를 지정하고 인증정보·토큰·평가 정답을 넣지 마세요. 생성 후 검사 버튼으로 Chrome 실행을 시작합니다.</p><pre id="m07-meeting-schema"></pre></details>
     </section>
     <details id="m07-auxiliary" class="evaluation-panel m07-panel m07-auxiliary" ${query.get('m03_run_id')?'open':''}><summary>M03 연결·준비 코드 (보조 도구)</summary><p class="subtitle">M03 연결과 PREPARED 코드는 별도 개발 기록입니다. 위의 실제 LLM 20건 시험을 대신하지 않습니다.</p><div class="m07-source-tabs" role="group" aria-label="보조 코드 준비 방식"><button id="m07-mode-meeting" type="button" aria-pressed="true">시험 입력 20건</button><button id="m07-mode-llm" type="button" aria-pressed="false">M03 연결</button><button id="m07-mode-prepared" type="button" aria-pressed="false">준비 코드 · PREPARED</button></div>
     <section id="m07-workflow-panel" class="m07-panel" hidden><div class="panel-heading"><h2>준비 코드 · PREPARED</h2><span id="m07-workflow-count" class="badge neutral">선택 0건</span></div>
@@ -103,7 +103,7 @@ function renderM07(metric) {
     </section>`;
   document.querySelector('#m07-generate').addEventListener('click',startM07);
   for(const mode of ['meeting','prepared','llm']) document.querySelector('#m07-mode-'+mode).addEventListener('click',()=>selectM07Mode(mode));
-  document.querySelector('#m07-meeting-input').addEventListener('input',()=>{m07View.meeting.items=[];m07View.meeting.validText=null;m07View.meeting.message='입력이 변경되었습니다. 입력 확인 후 코드를 생성하세요.';paintM07Meeting();});
+  document.querySelector('#m07-meeting-input').addEventListener('input',()=>{m07View.meeting.items=[];m07View.meeting.trialPolicy=undefined;m07View.meeting.validText=null;m07View.meeting.message='입력이 변경되었습니다. 입력 확인 후 코드를 생성하세요.';paintM07Meeting();});
   document.querySelector('#m07-meeting-check').addEventListener('click',checkM07MeetingInput);
   document.querySelector('#m07-meeting-generate').addEventListener('click',startM07Meeting);
   document.querySelector('#m07-meeting-file').addEventListener('change',loadM07MeetingFile);
@@ -203,12 +203,26 @@ function m07Canonical(value) {
   if(value&&typeof value==='object') return Object.fromEntries(Object.keys(value).sort().filter(key=>!['scenario_id','scenario_name'].includes(key)).map(key=>[key,m07Canonical(value[key])]));
   return value;
 }
-function parseM07MeetingInput(text) {
+function parseM07MeetingDocument(text) {
   if(new TextEncoder().encode(text).length>262144)throw new Error('시험 입력은 256 KiB 이하로 입력하세요.');
   let value;try {value=JSON.parse(text);}catch {throw new Error('시험 입력의 JSON 형식을 확인하세요.');}
   const items=Array.isArray(value)?value:value?.items;
-  if(!Array.isArray(items)||items.length!==20)throw new Error('서로 다른 시험 입력을 정확히 20건 등록하세요.');
-  const ids=new Set(),scenarios=new Set(),contents=new Set();
+  if(!Array.isArray(items)||items.length!==20)throw new Error('고유한 시험 입력을 정확히 20건 등록하세요.');
+  const trialPolicy=Array.isArray(value)?undefined:value?.trial_policy,batchByInput=new Map();
+  if(trialPolicy!==undefined) {
+    if(!trialPolicy||typeof trialPolicy!=='object'||Array.isArray(trialPolicy)||Object.keys(trialPolicy).some(key=>key!=='batches')||!Array.isArray(trialPolicy.batches)||!trialPolicy.batches.length)throw new Error('trial_policy.batches에 배치와 입력 ID 목록만 지정하세요.');
+    const batchIds=new Set();
+    for(const batch of trialPolicy.batches) {
+      if(!batch||typeof batch!=='object'||Array.isArray(batch)||Object.keys(batch).some(key=>!['batch_id','input_ids'].includes(key))||typeof batch.batch_id!=='string'||!batch.batch_id.trim()||batchIds.has(batch.batch_id)||!Array.isArray(batch.input_ids)||!batch.input_ids.length)throw new Error('배치 ID는 고유해야 하며 각 배치에 input_ids가 필요합니다.');
+      batchIds.add(batch.batch_id);
+      for(const id of batch.input_ids) {
+        if(typeof id!=='string'||!id.trim()||batchByInput.has(id))throw new Error('각 input_id는 한 배치에 한 번만 지정하세요.');
+        batchByInput.set(id,batch.batch_id);
+      }
+    }
+    if(batchByInput.size!==20)throw new Error('배치 정책에 고유한 input_id 20건을 모두 지정하세요.');
+  }
+  const ids=new Set(),scenarios=new Map(),contents=new Map();
   for(let index=0;index<items.length;index++) {
     const item=items[index],scenario=item?.scenario,prefix=`입력 ${index+1}: `;
     if(!item||typeof item!=='object'||Array.isArray(item)||typeof item.input_id!=='string'||!item.input_id.trim())throw new Error(prefix+'고유한 input_id가 필요합니다.');
@@ -216,26 +230,32 @@ function parseM07MeetingInput(text) {
     if(['scenario_id','scenario_name','business_unit_id','workflow_id'].some(key=>typeof scenario[key]!=='string'||!scenario[key].trim()))throw new Error(prefix+'시나리오 ID·이름·업무 ID·흐름 ID가 필요합니다.');
     if(!Array.isArray(scenario.steps)||!scenario.steps.length||scenario.steps.some(step=>!step||typeof step!=='object'||Array.isArray(step)||!Number.isInteger(step.order)||typeof step.action!=='string'||!step.action.trim()||typeof step.target!=='string'||!step.target.trim()))throw new Error(prefix+'steps에 순서·조작·대상을 지정하세요.');
     if(!scenario.execution_contract||typeof scenario.execution_contract!=='object'||Array.isArray(scenario.execution_contract)||!Array.isArray(scenario.execution_contract.steps)||!scenario.execution_contract.steps.length)throw new Error(prefix+'execution_contract의 대상·확인 조건을 지정하세요.');
-    if(ids.has(item.input_id)||scenarios.has(scenario.scenario_id))throw new Error(prefix+'입력 ID와 시나리오 ID는 중복할 수 없습니다.');
+    if(ids.has(item.input_id))throw new Error(prefix+'입력 ID는 중복할 수 없습니다.');
+    if(trialPolicy!==undefined&&!batchByInput.has(item.input_id))throw new Error(prefix+'배치 정책에 입력 ID가 없습니다.');
+    const batch=trialPolicy===undefined?'DEFAULT':batchByInput.get(item.input_id);
+    if(!scenarios.has(batch)){scenarios.set(batch,new Set());contents.set(batch,new Set());}
+    if(scenarios.get(batch).has(scenario.scenario_id))throw new Error(prefix+'같은 배치의 시나리오 ID는 중복할 수 없습니다.');
     const canonical=JSON.stringify(m07Canonical(scenario));
-    if(contents.has(canonical))throw new Error(prefix+'이름과 ID만 다른 동일 시나리오는 중복 입력할 수 없습니다.');
-    ids.add(item.input_id);scenarios.add(scenario.scenario_id);contents.add(canonical);
+    if(contents.get(batch).has(canonical))throw new Error(prefix+'같은 배치에서 이름과 ID만 다른 동일 시나리오는 중복 입력할 수 없습니다.');
+    ids.add(item.input_id);scenarios.get(batch).add(scenario.scenario_id);contents.get(batch).add(canonical);
   }
-  return items;
+  if(trialPolicy!==undefined&&[...batchByInput.keys()].some((id,index)=>id!==items[index].input_id))throw new Error('배치 input_ids 순서는 items 순서와 같아야 합니다.');
+  return {items,trialPolicy};
 }
+function parseM07MeetingInput(text) {return parseM07MeetingDocument(text).items;}
 function checkM07MeetingInput() {
   const state=m07View,meeting=state.meeting;
   if(state.busy||meeting.fileLoading||state.generations.some(m07Running))return false;
   const text=document.querySelector('#m07-meeting-input').value;
-  meeting.items=[];meeting.validText=null;
-  try {meeting.items=parseM07MeetingInput(text);meeting.validText=text;meeting.message='서로 다른 입력 20건을 확인했습니다. 코드 생성 시 서버가 실행 조건을 검증하고 실제 LLM에 입력별 1회 요청합니다.';}
+  meeting.items=[];meeting.trialPolicy=undefined;meeting.validText=null;
+  try {const parsed=parseM07MeetingDocument(text);meeting.items=parsed.items;meeting.trialPolicy=parsed.trialPolicy;meeting.validText=text;meeting.message=`고유한 입력 20건${parsed.trialPolicy?` · 배치 ${parsed.trialPolicy.batches.length}개`:''}을 확인했습니다. 코드 생성 시 서버가 배치·실행 조건을 검증하고 실제 LLM에 입력별 1회 요청합니다.`;}
   catch(error){meeting.message=error.message;}
   paintM07Meeting();if(!state.generation)paintM07Generation();return meeting.items.length===20;
 }
 async function loadM07MeetingFile(event) {
   const state=m07View,meeting=state.meeting,token=m07RequestNumber,file=event.target.files?.[0];
   if(!file||state.busy||meeting.fileLoading||state.generations.some(m07Running))return;
-  meeting.items=[];meeting.validText=null;meeting.fileLoading=true;meeting.message='시험 입력 파일을 읽고 있습니다…';paintM07Meeting();
+  meeting.items=[];meeting.trialPolicy=undefined;meeting.validText=null;meeting.fileLoading=true;meeting.message='시험 입력 파일을 읽고 있습니다…';paintM07Meeting();
   try {
     if(file.size>262144)throw new Error('JSON 파일은 256 KiB 이하로 선택하세요.');
     const text=await file.text();if(!m07Active(token)||m07View!==state)return;
@@ -252,8 +272,8 @@ async function loadM07MeetingDraft() {
     const value=await m07Json('/api/development/m07/meeting-input-draft');
     if(!m07Active(token)||m07View!==state)return;
     if(value.draft!==true||!Array.isArray(value.items)||value.items.length!==20)throw new Error('검토용 입력 초안의 출처와 20건 구성을 확인하세요.');
-    const text=JSON.stringify({items:value.items},null,2);
-    meeting.items=parseM07MeetingInput(text);meeting.validText=text;document.querySelector('#m07-meeting-input').value=text;
+    const text=JSON.stringify({items:value.items,...(value.trial_policy===undefined?{}:{trial_policy:value.trial_policy})},null,2),parsed=parseM07MeetingDocument(text);
+    meeting.items=parsed.items;meeting.trialPolicy=parsed.trialPolicy;meeting.validText=text;document.querySelector('#m07-meeting-input').value=text;
     meeting.message=(value.description||'업무별 두 변형으로 구성한 검토용 초안입니다. 시험 입력으로 자동 확정하지 않습니다.')+' 대상·입력값·기대 결과를 검토하고 코드 생성 버튼으로 시작하세요.';
     if(!state.generation)paintM07Generation();
   } catch(error){if(m07Active(token)&&m07View===state)meeting.message=error.message;}
@@ -280,13 +300,14 @@ function paintM07Meeting() {
 async function startM07Meeting() {
   if(!m07MeetingCanGenerate()||!checkM07MeetingInput())return;
   const state=m07View,token=m07RequestNumber,items=JSON.parse(JSON.stringify(state.meeting.items));
+  const trialPolicy=state.meeting.trialPolicy===undefined?undefined:JSON.parse(JSON.stringify(state.meeting.trialPolicy));
   state.busy=true;paintM07();m07Status('20건의 입력을 검증하고 실제 LLM 코드 생성을 요청하고 있습니다…');
   try {
-    const data=await m07Json('/api/development/m07/meeting-generations',{items});
+    const data=await m07Json('/api/development/m07/meeting-generations',{items,...(trialPolicy===undefined?{}:{trial_policy:trialPolicy})});
     if(!m07Active(token)||m07View!==state)return;
     const job=data.generation;
     if(job?.meeting_protocol!==true||job.code_source==='PREPARED'||job.generated_by_llm===false||!Array.isArray(job.cases)||job.cases.length!==20
-      ||job.cases.some((row,index)=>row.scenario_id!==items[index].scenario.scenario_id))throw new Error('실제 LLM 20건 생성 작업의 입력과 출처를 확인하세요. 작업 이력에서 다시 확인할 수 있습니다.');
+      ||job.cases.some((row,index)=>row.input_id!==items[index].input_id||row.scenario_id!==items[index].scenario.scenario_id))throw new Error('실제 LLM 20건 생성 작업의 입력과 출처를 확인하세요. 작업 이력에서 다시 확인할 수 있습니다.');
     ++state.selection;acceptM07Generation(job);scheduleM07Poll(token);m07Status('실제 LLM에 입력별 1회씩 코드 생성을 요청합니다. 생성이 끝나면 별도 검사 버튼을 누르세요.');
   } catch(error){if(m07Active(token)&&m07View===state)m07Status(error.message);}
   finally {if(m07Active(token)&&m07View===state){state.busy=false;paintM07();}}
@@ -580,26 +601,28 @@ async function saveM07ExecutionContext() {
 }
 function m07Measurement(job,counts) {
   const value=job?.measurement;
-  if(job?.meeting_protocol) {
-    const cases=job.cases||[],terminal=status=>['PASS','FAIL','ERROR','TIMEOUT','SKIPPED'].includes(status);
-    const both=cases.filter(row=>row.generation_status==='PASS'&&row.syntax_status==='PASS'&&row.execution_status==='PASS'&&row.final_status==='PASS').length;
-    const ready=job.status==='COMPLETED'&&cases.length===20&&value?.evaluation_status==='COMPLETED'&&value.registered_count===20
-      &&value.provider_http_attempt_count===20&&value.provider_http_unknown_count===0&&cases.every(row=>terminal(row.generation_status)&&terminal(row.syntax_status)&&terminal(row.execution_status));
-    return {...value,...counts,version:1,registered_count:20,both_pass_count:both,evaluation_status:ready?'COMPLETED':'NOT_READY',
-      generation_percent:ready?counts.generated_code_count/20*100:null,syntax_percent:ready?counts.syntax_pass_count/20*100:null,
-      integrated_percent:ready?both/20*100:null,syntax_target_percent:80,syntax_target_met:ready?counts.syntax_pass_count>=16:null,
-      integrated_reference_target_percent:80,integrated_reference_target_met:ready?both>=16:null};
-  }
-  if(value?.version===1) return value;
   const cases=job?.cases||[],registered=Math.max(cases.length,Number.isInteger(job?.counts?.generation_request_count)?job.counts.generation_request_count:0,counts.generated_code_count);
-  const ready=!!job?.result&&job?.status==='COMPLETED'&&registered>0&&counts.generated_code_count===registered&&cases.length===registered
-    &&cases.every(row=>['PASS','FAIL','ERROR','TIMEOUT','SKIPPED'].includes(row.syntax_status)&&['PASS','FAIL','ERROR','TIMEOUT','SKIPPED'].includes(row.execution_status));
-  return {version:0,evaluation_status:ready?'COMPLETED':'NOT_READY',registered_count:registered,provider_http_attempt_count:null,
-    provider_http_unknown_count:registered,not_attempted_count:null,...counts,
-    generation_percent:ready?100*counts.generated_code_count/registered:null,syntax_percent:ready?100*counts.syntax_pass_count/registered:null,
-    integrated_percent:ready?100*counts.both_pass_count/registered:null,syntax_target_percent:80,
-    syntax_target_met:ready?100*counts.syntax_pass_count/registered>=80:null,integrated_reference_target_percent:80,
-    integrated_reference_target_met:ready?100*counts.both_pass_count/registered>=80:null};
+  const terminal=status=>['PASS','FAIL','ERROR','TIMEOUT','SKIPPED'].includes(status);
+  const ready=value?.version===1&&value.evaluation_status==='COMPLETED'&&job?.status==='COMPLETED'
+    &&Number.isInteger(value.registered_count)&&value.registered_count>0&&cases.length===value.registered_count
+    &&(!job.meeting_protocol||value.registered_count===20)&&value.provider_http_attempt_count===value.registered_count
+    &&value.provider_http_unknown_count===0&&value.not_attempted_count===0
+    &&cases.every(row=>terminal(row.generation_status)&&terminal(row.syntax_status)&&terminal(row.execution_status)&&terminal(row.final_status));
+  const result=value?.version===1?{...counts,...value}:{...counts,version:0,registered_count:registered,provider_http_attempt_count:null,
+    provider_http_unknown_count:registered,not_attempted_count:null,syntax_target_percent:80,integrated_reference_target_percent:80};
+  result.evaluation_status=ready?'COMPLETED':'NOT_READY';
+  // Rates and verdicts come from the server. Counts never promote a partial or historical record to a complete measurement.
+  for(const key of ['generation_percent','syntax_percent','integrated_percent','browser_percent']) {
+    if(!ready||typeof result[key]!=='number'||!Number.isFinite(result[key])||result[key]<0||result[key]>100)result[key]=null;
+  }
+  if(!Number.isInteger(result.browser_started_count)||result.browser_started_count<=0)result.browser_percent=null;
+  for(const key of ['syntax_target_met','integrated_reference_target_met'])if(!ready||typeof result[key]!=='boolean')result[key]=null;
+  return result;
+}
+function m07TrialPolicy(job) {
+  const policy=job?.trial_policy;if(!policy||typeof policy!=='object'||Array.isArray(policy))return '';
+  const count=value=>Number.isInteger(value)&&value>=0?esc(value):'확인 불가';
+  return `<details class="m07-step-detail" data-m07-trial-policy><summary>시험 입력 ${count(policy.input_count)}건 · 업무 종류 ${count(policy.business_unit_count)}종 · 시나리오 ${count(policy.distinct_scenario_count)}종 · 배치 ${count(policy.batch_count)}개</summary><p class="run-meta">모델 ${esc(policy.model||'확인 불가')} · 프롬프트 ${esc(policy.prompt_version||'확인 불가')}</p><p class="subtitle">입력 건수와 업무 종류는 별도 집계입니다. 배치 간 같은 시나리오의 반복은 저장된 시험 정책에 따릅니다.</p>${Array.isArray(policy.batches)?`<p class="run-meta">${policy.batches.map(batch=>`${esc(batch.batch_id)}: ${Array.isArray(batch.input_ids)?batch.input_ids.length:'확인 불가'}건`).join(' · ')}</p>`:''}<p class="run-meta">입력별 최대 시도 ${count(policy.max_attempts_per_input)}회 · 자동 재시도 ${count(policy.automatic_retry_count)}회 · HTTP429 후 남은 요청 중단 ${policy.stop_remaining_on_http_429===true?'예':policy.stop_remaining_on_http_429===false?'아니요':'확인 불가'}</p></details>`;
 }
 function m07MeasurementEvidence(job,counts,result) {
   const value=m07Measurement(job,counts),ready=value.evaluation_status==='COMPLETED';
@@ -608,16 +631,17 @@ function m07MeasurementEvidence(job,counts,result) {
   const verdict=met=>!ready||met==null?'판정 대기':met?'기준 충족':'기준 미달';
   const fields=[['등록 요청','registered_count'],['실제 HTTP 시도','provider_http_attempt_count'],['시도 근거 미확인','provider_http_unknown_count'],['생성 코드','generated_code_count'],['문법 통과','syntax_pass_count'],['실제 브라우저 시작','browser_started_count'],['실행 통과','execution_pass_count'],['문법·실행 모두 통과','both_pass_count'],['미시도','not_attempted_count']];
   const legacy=job?.legacy_result||result;
-  return `<div class="panel-heading"><h2>등록 요청 기준 측정</h2><span class="badge neutral">${esc(value.evaluation_status||'NOT_READY')}</span></div><div class="result-grid m07-summary">${fields.map(([label,key])=>`<div><label>${label}</label><strong data-m07-summary="${key}">${job?count(value[key]):'—'}</strong></div>`).join('')}<div><label>생성 성공률 · 등록 수 분모</label><strong data-m07-rate="generation">${percent(value.generation_percent)}</strong></div><div><label>문법 통과율 · 등록 수 분모</label><strong data-m07-rate="syntax">${percent(value.syntax_percent)}</strong></div><div><label>최종 성공률 · 문법·실행 모두 통과</label><strong data-m07-rate="integrated">${percent(value.integrated_percent)}</strong></div><div><label>목표 ≥ ${score(value.integrated_reference_target_percent??80,'M07')}</label><strong>${verdict(value.integrated_reference_target_met)}</strong></div></div><p class="subtitle">생성·문법·통합의 각 통과 건수 / 등록 요청 ${job?count(value.registered_count):'—'}건 × 100 · DEVELOPMENT · 공식 시험성적 아님</p>${!ready?'<p class="notice">등록 작업이 미완료이거나 실제 시도 근거가 부족합니다. 표시 건수는 중간 진행이며 최종 비율과 판정은 대기(null)입니다.</p>':''}${value.version===0&&job?'<p class="run-meta">이전 기록에는 실제 HTTP 시도·미시도 집계가 없습니다. 생성 시작시각으로 실제 호출 수를 추정하지 않습니다.</p>':''}${legacy&&!job?.meeting_protocol?`<details class="m07-step-detail" data-m07-legacy-result><summary>생성코드 수 분모의 이전 부분 결과</summary><p class="run-meta">저장 점수 ${score(legacy.score,'M07')} · ${esc(legacy.run_id||'이전 기록')}${legacy.threshold_met!=null?' · '+(legacy.threshold_met?'기준 충족':'기준 미달'):''}</p><p class="subtitle">저장된 결과는 변경하지 않았습니다. 이 비율을 등록 전체의 완료·품질 판정으로 사용하지 않습니다.</p></details>`:''}`;
+  return `<div class="panel-heading"><h2>등록 요청 기준 측정</h2><span class="badge neutral">${esc(value.evaluation_status||'NOT_READY')}</span></div><div class="result-grid m07-summary">${fields.map(([label,key])=>`<div><label>${label}</label><strong data-m07-summary="${key}">${job?count(value[key]):'—'}</strong></div>`).join('')}<div><label>생성 성공률 · 등록 수 분모</label><strong data-m07-rate="generation">${percent(value.generation_percent)}</strong></div><div><label>문법 통과율 · 등록 수 분모</label><strong data-m07-rate="syntax">${percent(value.syntax_percent)}</strong></div><div><label>문법·실행 통합률 · 등록 수 분모</label><strong data-m07-rate="integrated">${percent(value.integrated_percent)}</strong></div><div><label>브라우저 실행 성공률 · 실제 시작 수 분모</label><strong data-m07-rate="browser">${percent(value.browser_percent)}</strong></div><div><label>회의 문법 기준 ≥ ${score(value.syntax_target_percent??80,'M07')}</label><strong>${verdict(value.syntax_target_met)}</strong></div><div><label>공식 통합 계약 (개발 참고) ≥ ${score(value.integrated_reference_target_percent??80,'M07')}</label><strong>${verdict(value.integrated_reference_target_met)}</strong></div></div><p class="subtitle">생성률 = 생성 코드 / 등록 요청 ${job?count(value.registered_count):'—'}건 × 100 · 문법률 = 문법 통과 / 등록 요청 수 × 100 · 통합률 = 문법·실행 모두 통과 / 등록 요청 수 × 100 · 브라우저 성공률 = 실행 통과 / 실제 브라우저 시작 ${job?count(value.browser_started_count):'—'}건 × 100 (시작 0건은 null) · DEVELOPMENT · 공식 시험성적 아님</p>${!ready?'<p class="notice">등록 작업이 미완료이거나 실제 시도 근거가 부족합니다. 표시 건수는 중간 진행이며 최종 비율과 판정은 대기(null)입니다.</p>':''}${value.version===0&&job?'<p class="run-meta">이전 기록에는 실제 HTTP 시도·미시도 집계가 없습니다. 생성 시작시각으로 실제 호출 수를 추정하지 않습니다.</p>':''}${legacy&&!job?.meeting_protocol?`<details class="m07-step-detail" data-m07-legacy-result><summary>생성코드 수 분모의 이전 부분 결과</summary><p class="run-meta">저장 점수 ${score(legacy.score,'M07')} · ${esc(legacy.run_id||'이전 기록')}${legacy.threshold_met!=null?' · '+(legacy.threshold_met?'기준 충족':'기준 미달'):''}</p><p class="subtitle">이전 산식 = 문법·실행 모두 통과 / 실제 생성 코드 수 × 100. 저장된 결과는 변경하지 않았습니다. 이 비율을 등록 전체의 완료·품질 판정으로 사용하지 않습니다.</p></details>`:''}`;
 }
 function m07MeasurementSummary(job,counts,result) {
   const value=m07Measurement(job,counts),ready=value.evaluation_status==='COMPLETED';
   const number=key=>job&&Number.isInteger(value[key])?esc(value[key]):'—';
-  const percentage=ready&&Number.isFinite(value.integrated_percent)?score(value.integrated_percent,'M07'):'—';
-  const met=ready&&value.integrated_reference_target_met!=null?value.integrated_reference_target_met:null;
-  return `<div class="panel-heading"><h2>${job?.meeting_protocol?'실제 LLM 20건 시험 결과':'실제 LLM 생성 검사'}</h2><span class="badge ${met===true?'pass':met===false?'fail':'neutral'}">${met===true?'기준 충족':met===false?'기준 미달':'검사 대기'}</span></div>
-    <div class="result-grid m07-result-overview"><div><label>문법·실행 통합 성공률</label><strong class="large-score">${percentage}</strong></div><div><label>등록 시나리오</label><strong>${number('registered_count')}건</strong></div><div><label>문법·실행 모두 통과</label><strong>${number('both_pass_count')}건</strong></div><div><label>목표 기준</label><strong>80%</strong></div></div>
-    <p class="subtitle">${job?.meeting_protocol?'문법·실행 모두 통과한 코드 / 20건 × 100 · 16건 이상 통과 · 생성 실패와 검사 실패도 분모 20건에 포함':'문법과 실제 실행을 모두 통과한 코드 / 등록 시나리오 수 × 100 · 20건 시험 기준 16건 이상 통과'}</p>
+  const percentage=key=>ready&&typeof value[key]==='number'&&Number.isFinite(value[key])?score(value[key],'M07'):'—';
+  const met=ready&&value.syntax_target_met!=null?value.syntax_target_met:null;
+  return `<div class="panel-heading"><h2>${job?.meeting_protocol?'실제 LLM 20건 시험 결과':'실제 LLM 생성 검사'}</h2><span class="badge ${met===true?'pass':met===false?'fail':'neutral'}">${met===true?'문법 기준 충족':met===false?'문법 기준 미달':'검사 대기'}</span></div>
+    <div class="result-grid m07-result-overview"><div><label>문법 통과율 · 등록 수 분모</label><strong class="large-score" data-m07-overview="syntax">${percentage('syntax_percent')}</strong></div><div><label>문법·실행 통합률 · 등록 수 분모</label><strong data-m07-overview="integrated">${percentage('integrated_percent')}</strong></div><div><label>브라우저 실행 성공률 · 실제 시작 수 분모</label><strong data-m07-overview="browser">${percentage('browser_percent')}</strong></div><div><label>등록 시험 입력</label><strong>${number('registered_count')}건</strong></div></div>
+    <p class="subtitle">회의 문법 기준 80% · 공식 문법·실행 통합 계약 80%는 별도 기준입니다. 아래 수치는 DEVELOPMENT이며 공식 판정이 아닙니다. ${job?.meeting_protocol?'문법 통과 / 20건 × 100 · 16건 이상 통과 · 생성 실패와 검사 실패도 분모 20건에 포함':'문법 통과 / 등록 요청 수 × 100'}</p>
+    ${m07TrialPolicy(job)}
     ${!ready?'<p class="m07-inline-note">생성·검사와 요청 근거 확인이 완료되면 최종 성공률을 표시합니다.</p>':''}
     <details class="m07-step-detail m07-evidence"><summary>요청 근거와 세부 집계</summary>${m07MeasurementEvidence(job,counts,result)}</details>`;
 }
@@ -657,7 +681,7 @@ function paintM07Generation() {
       document.querySelector('#m07-progress-label').textContent=`${value.evaluation_status==='COMPLETED'?'등록 작업 측정 완료':'평가 대기 (NOT_READY)'} · 등록 ${value.registered_count}건 · 실제 HTTP 시도 ${actual}건 · 생성 ${value.generated_code_count}건${job.error?' · '+job.error:''}`;
     }
   }
-  if(!job) document.querySelector('#m07-result').innerHTML=state.mode==='meeting'?'<div class="panel-heading"><h2>실제 LLM 20건 시험 결과</h2><span class="badge neutral">검사 대기</span></div><div class="result-grid"><div><label>문법·실행 통합 성공률</label><strong class="large-score">—</strong></div><div><label>시험 입력</label><strong>20건</strong></div><div><label>모두 통과</label><strong>—</strong></div><div><label>목표 기준</label><strong>80%</strong></div></div><p class="empty">실행 결과가 이곳에 표시됩니다. 실제 LLM 코드 생성 후 별도 검사 버튼을 누르면 최종 성공률을 확인할 수 있습니다.</p>':'<div class="panel-heading"><h2>Development Result</h2></div><div class="result-grid"><div><label>코드 검사 통과율</label><strong class="large-score">—</strong></div><div><label>준비 코드</label><strong>—</strong></div><div><label>문법 통과</label><strong>—</strong></div><div><label>실행 통과</label><strong>—</strong></div></div><p class="empty">실행 결과가 이곳에 표시됩니다. 코드를 준비하고 검사하면 문법·실행 결과와 원본 근거를 확인할 수 있습니다.</p>';
+  if(!job) document.querySelector('#m07-result').innerHTML=state.mode==='meeting'?'<div class="panel-heading"><h2>실제 LLM 20건 시험 결과</h2><span class="badge neutral">검사 대기</span></div><div class="result-grid"><div><label>문법 통과율 · 등록 수 분모</label><strong class="large-score">—</strong></div><div><label>문법·실행 통합률 · 등록 수 분모</label><strong>—</strong></div><div><label>브라우저 실행 성공률 · 실제 시작 수 분모</label><strong>—</strong></div><div><label>시험 입력</label><strong>20건</strong></div></div><p class="empty">실행 결과가 이곳에 표시됩니다. 실제 LLM 코드 생성 후 별도 검사 버튼을 누르면 최종 성공률을 확인할 수 있습니다.</p>':'<div class="panel-heading"><h2>Development Result</h2></div><div class="result-grid"><div><label>코드 검사 통과율</label><strong class="large-score">—</strong></div><div><label>준비 코드</label><strong>—</strong></div><div><label>문법 통과</label><strong>—</strong></div><div><label>실행 통과</label><strong>—</strong></div></div><p class="empty">실행 결과가 이곳에 표시됩니다. 코드를 준비하고 검사하면 문법·실행 결과와 원본 근거를 확인할 수 있습니다.</p>';
   const meeting=job?.meeting_protocol||!job&&state.mode==='meeting';
   document.querySelector('#m07-cases').innerHTML=(meeting?m07MeetingTable(job):'')+(cases.length?cases.map(row=>{
     const open=state.openCode.has(row.case_id),code=state.code.get(row.case_id),canRead=row.generation_status==='PASS'||!!row.code_sha256;

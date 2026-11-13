@@ -166,7 +166,7 @@ class MeetingRunnerTests(unittest.TestCase):
         self.assertEqual(job['measurement_protocol'], 'M07_MEETING_20_V1')
         self.assertEqual(job['code_source'], 'LLM')
         self.assertEqual(job['measurement']['denominator'], 20)
-        self.assertEqual(job['measurement']['evaluation_status'], 'PENDING')
+        self.assertEqual(job['measurement']['evaluation_status'], 'NOT_READY')
         self.assertFalse((self.root / 'results').exists())
         folder = self.folder(job)
         raw_archive = (folder / 'code.zip').read_bytes()

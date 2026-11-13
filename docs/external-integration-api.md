@@ -101,11 +101,17 @@ OFFICIAL: 사전 고정한 Selenium/Python script 10건, 각 1회 실행. `offic
 
 M07 기본 화면은 회의록의 **독립 입력 20건 → 실제 LLM 생성 → 별도 문법·실행 검사 → 20행 PASS/FAIL·성공률** 흐름입니다. `GET /api/development/m07/meeting-context`는 정확한 수량 20, 목표 80%, 입력 형식·단일 작성 예시·Chrome/로그인/LLM 준비 여부를 반환합니다. 모델 표시명 `GPT 루나`와 실제 API 모델 ID는 구분하며 인증값은 반환하지 않습니다. 미설정이면 업무 컴퓨터의 연결 설정이 필요하다고 표시합니다.
 
-`POST /api/development/m07/meeting-generations`는 최대 256 KiB의 `{items:[{input_id,scenario}, ...20개]}`를 받습니다. `scenario`에는 `scenario_id`, `scenario_name`, `business_unit_id`, `workflow_id`, `steps`, `execution_contract`가 필요하며 설명·사전조건·마스킹 화면 기록 단계는 선택입니다. 각 단계에 동작·대상·기대 결과를 지정하고 입력/선택 단계는 실제 `value`, 이동 단계는 `url`을 지정합니다. 서로 다른 입력·시나리오 ID와 실제 실행 내용이 구분된 20건이어야 하며 동일 내용을 ID만 바꾸어 복제하거나 코드·판정·GT·가짜 M03 증빙을 넣으면 거부합니다. URL·CSS·검사 조건은 실제 앱 근거로 사전에 확정합니다.
+`POST /api/development/m07/meeting-generations`는 최대 256 KiB의 `{items:[{input_id,scenario}, ...20개]}`를 받습니다. `scenario`에는 `scenario_id`, `scenario_name`, `business_unit_id`, `workflow_id`, `steps`, `execution_contract`가 필요하며 설명·사전조건·마스킹 화면 기록 단계는 선택입니다. 각 단계에 동작·대상·기대 결과를 지정하고 입력/선택 단계는 실제 `value`, 이동 단계는 `url`을 지정합니다. 기본 입력은 서로 다른 입력·시나리오 ID와 실제 실행 내용이 구분된 20건입니다. 코드·판정·GT·가짜 M03 증빙을 입력하지 않습니다. URL·CSS·검사 조건은 실제 앱 근거로 사전에 확정합니다.
+
+같은 10개 업무를 두 배치에서 각각 한 번 요청하려면 선택 `trial_policy.batches`를 지정합니다. 구조는 `{items:[...20개],trial_policy:{batches:[{batch_id:"B1",input_ids:[...앞 10개 ID]},{batch_id:"B2",input_ids:[...뒤 10개 ID]}]}}`입니다. 전체 input_id는 20개 모두 고유해야 하고 배치의 ID 목록은 입력 순서대로 전체를 정확히 한 번 포함해야 합니다. 같은 배치 내부의 중복 시나리오·실행은 거부합니다. 서로 다른 배치에서는 같은 시나리오를 재사용할 수 있지만 같은 scenario_id의 원본 전체는 같아야 합니다. 시험 입력 20건과 업무 종류 10개를 구분하며 이를 서로 다른 업무 20종의 공식 시험으로 표현하지 않습니다.
+
+새 회차는 첫 HTTP 호출 전에 `trial_policy.json`과 모든 사례의 `generation_plan.json`을 고정합니다. 입력 ID·순서·배치·업무/시나리오 수, 원본 SHA, 모델·프롬프트 버전, 실제 instructions/input, timeout, 입력당 최대 호출 1회·자동 재시도 0회·첫 429 이후 중단 조건을 보관하고 코드 archive에도 넣습니다. 실제 생성기는 호출 직전 이 계획과 현재 모델·프롬프트·계약·설정을 비교합니다. 변경 시 HTTP 미시도로 기록하고 남은 입력도 요청하지 않으며 새 회차를 요구합니다. API 키는 고정 자료에 저장하지 않습니다.
 
 응답 202 `{generation}`은 `meeting_protocol=true`, `measurement_protocol=M07_MEETING_20_V1`, `required_count=20`, `code_source=LLM`, `source_kind=MEETING_LLM_BATCH`입니다. 생성 전에 입력 20건과 계약을 고정하며 각 사례에 `input_id`, `meeting_input_sha256`, `source_m03_run_id=null`을 기록합니다. 입력별 LLM 요청 1회씩 수행하고 원본 응답·프롬프트·코드를 보관합니다. 이 경로는 직접 등록한 입력이며 M03 산출물을 만들지 않습니다. 기존 코드 조회 API는 실제 LLM 원본에도 `code_base64`, `identity_verification`을 제공해 화면·고정 원본·검사 코드가 동일한지 검증합니다.
 
 별도 `POST /api/development/m07/generations/{id}/validate`(본문 `{}`)로 생성 원본을 문법 검사한 후 Chrome에서 실행합니다. 실제 LLM 코드는 `ktl_runtime.authenticated_chrome()`으로 창 생성 전 인증된 Chrome을 얻고, 첫 업무 `driver.get()` 직후 `complete_authentication(driver)`을 호출해 세션 bootstrap을 제거합니다. 도우미는 인증·브라우저 초기화만 제공하며 업무 조작·판정은 생성 코드가 수행합니다. 문법·실행을 모두 통과한 경우만 최종 PASS입니다. 요청한 20건의 실제 HTTP 근거와 검사가 완료되면 `both_pass_count / 20 × 100`으로 중앙 결과를 보관합니다. 생성 성공이 19건이어도 16건 통과는 80%입니다. 20건 모두 실제 요청 후 실패한 경우는 0%, 공급자 제한 등으로 미시도·근거 불명이 남으면 `NOT_READY`, 점수 `null`입니다. 기존 생성 성공 건수 분모의 개발 평가기를 회의용 판정에 사용하지 않습니다.
+
+DEVELOPMENT 화면은 문법률(`syntax_pass_count / registered_count`), 생성·문법·실행 통합률(`both_pass_count / registered_count`), 브라우저 실행 성공률(`execution_pass_count / browser_started_count`)을 구분합니다. 모두 백분율이며 실제 HTTP 시도와 생성·문법·실행 상태가 전부 종결된 작업에서만 최종 비율을 표시합니다. 종결된 생성 오류·문법 실패·실행 준비 거부도 등록 분모에 남고, 미시도·확인 불가·검사 미종결이면 `NOT_READY`와 null입니다. 브라우저 시작이 0이면 브라우저 비율만 null입니다. 공식 both 분모20 계약과 생성 코드 수 분모의 과거 평가 산식은 유지합니다. 신규 개발 문법률 80% 충족을 공식 합격으로 표시하지 않습니다.
 
 `GET /api/development/m07/meeting-input-draft`는 `{draft:true,approved_for_official:false,description,items:[20개]}`를 반환합니다. PDF의 10업무에서 다른 입력값·기존 조회 행을 구성한 **검토용 초안**입니다. 자동으로 시험 목록을 확정하거나 생성·실행하지 않습니다. 사용자가 명시적으로 불러와 내용을 검토한 후 실제 생성 버튼을 사용합니다. 모든 회의용 개발 결과는 `official_pass=null`이며 실제 업무 PC LLM 연결·실행을 대신한 증빙으로 표시하지 않습니다.
 

@@ -3,7 +3,7 @@ let m04View=null;
 let m04RequestNumber=0;
 let m04PollTimer=null;
 let m04PrepPollTimer=null;
-const m04Names={QUEUED:'실행 대기',RUNNING:'실행 중',COMPLETED:'실행 완료',INTERRUPTED:'실행 중단',PENDING:'대기',PASS:'성공',FAIL:'실패',ERROR:'오류',TIMEOUT:'시간 초과',SKIPPED:'미실행'};
+const m04Names={QUEUED:'실행 대기',RUNNING:'실행 중',COMPLETED:'실행 완료',INTERRUPTED:'실행 중단',PENDING:'대기',PASS:'성공',FAIL:'실패',ERROR:'오류',TIMEOUT:'시간 초과',SKIPPED:'미실행',NOT_CHECKED:'미확인'};
 const m04ExecutionId=id=>/^M04-RUN-[0-9a-f]{32}$/.test(id||'');
 const m04ScriptId=id=>/^[0-9a-f]{32}$/.test(id||'');
 const m04ResultId=id=>/^DEV-M04-[0-9]{8}T[0-9]{6}-[0-9a-f]{12}$/.test(id||'');
@@ -76,11 +76,12 @@ function renderM04(metric) {
   m04View.visibleBrowser=true;
   document.title='DEVELOPMENT · M04 · Rainbow';
   app.innerHTML=`${banner('고정 Selenium/Python 스크립트 실행')}<a class="back" href="${link('/')}">← 전체 평가</a>
-    <section class="page-heading"><div><p class="eyebrow">M04 / DEVELOPMENT</p><h1>${labels.M04}</h1><p class="subtitle">시나리오로 코드를 준비하고 원본을 고정한 뒤, 별도로 실행합니다.</p></div><span class="badge neutral">로컬 실행</span></section>
+    <section class="page-heading"><div><p class="eyebrow">M04 / DEVELOPMENT</p><h1>${labels.M04}</h1><p class="subtitle">고정한 코드를 선택해 실제 업무를 실행하고, 항목별 기대 결과와 관측 결과를 비교합니다.</p></div><span class="badge neutral">로컬 실행</span></section>
     <section class="evaluation-panel m04-panel"><div class="panel-heading"><h2>입력 및 현재 준비 상태</h2><button id="m04-refresh" class="m04-secondary" type="button">새로고침</button></div>
       <div class="dataset-grid"><div><label>실행 환경</label><strong id="m04-ready">확인 중…</strong></div><div><label>선택한 스크립트</label><strong id="m04-selected-count">0건</strong></div><div><label>M04 목표값</label><strong>≥ ${score(metric.target,'M04')}</strong></div></div>
+      <details id="m04-code-preparation" class="m04-code-preparation"><summary>실행 코드 준비</summary><p class="subtitle">고정 코드가 없을 때만 펼쳐 준비하세요. 코드 준비와 실제 브라우저 실행은 별도 동작입니다.</p>
       <div id="m04-cu02-panel" class="m04-cu02"><h2>CU02 · 일정 등록</h2><p class="subtitle">일정관리 → 날짜 선택 → 일정 입력 → 등록 → 종료</p><p id="m04-cu02-login" class="subtitle" role="status">로그인 준비 상태 확인 중…</p><div class="m04-cu02-fields"><label>등록 날짜<input id="m04-cu02-date" type="date" required></label><label>실행 브라우저<select id="m04-cu02-browser"><option value="chrome">Google Chrome</option><option value="edge">Microsoft Edge</option></select></label><label class="m04-cu02-title">일정 제목 · 10건 평가에서는 제목 앞부분으로 사용<input id="m04-cu02-title" type="text" maxlength="120" required autocomplete="off"><small>10건 평가는 105자까지 입력할 수 있으며, 각 제목에 평가 ID와 번호가 붙습니다.</small></label><label class="m04-cu02-description">일정 내용<textarea id="m04-cu02-description" rows="3" maxlength="2000"></textarea></label></div>
-        <div class="m04-cu02-policy"><strong>평가 1건 = 일정 1건 등록부터 재조회 확인까지</strong><p>10건 평가 실행을 누르면 위 날짜·내용으로 제목이 서로 다른 일정 10건을 실제 등록합니다. 고정한 스크립트 10개를 각각 한 번 실행하고, 9건 이상 성공하면 목표 90%를 달성합니다.</p><p>실행 전에는 신규등록 화면의 제목·내용이 비었는지 확인하고, 실행 후에는 저장한 일정을 다시 열어 입력값과 비교합니다. 전후 화면과 항목별 확인 결과를 실행 기록에 남깁니다.</p></div>
+        <div class="m04-cu02-policy"><strong>개발용 전체 업무 10회 반복 · 확인 항목 10개와 구분</strong><p>10건 평가 실행을 누르면 위 날짜·내용으로 제목이 서로 다른 일정 10건을 실제 등록합니다. 일정 1건의 등록부터 재조회까지를 1회로 세며, 고정 스크립트 10개를 각각 한 번 실행합니다. 9회 이상 성공하면 이 개발 반복 실행의 성공률이 90%입니다. 공식 평가 1건의 단위는 제시기준서의 확정 기준을 따릅니다.</p><p>실행 전에는 신규등록 화면의 제목·내용이 비었는지 확인하고, 실행 후에는 저장한 일정을 다시 열어 입력값과 비교합니다. 전후 화면과 항목별 확인 결과를 실행 기록에 남깁니다.</p></div>
         <div class="m04-run-actions"><button id="m04-cu02-evaluate" type="button" disabled>CU02 10건 평가 실행</button><button id="m04-cu02-prepare" class="m04-secondary" type="button" disabled>단건 실행 준비</button></div><p id="m04-cu02-status" class="subtitle" role="status"></p><p class="subtitle">단건 실행 준비는 스크립트만 만듭니다. 단건 확인은 아래 선택 스크립트 실행을 누르세요. 로그인은 창을 띄우기 전에 처리합니다.</p></div>
       <div id="m04-m01-panel" class="m04-m01"><h2>M01 수집 동작</h2><p class="subtitle">수집한 CSV의 동작을 고정 스크립트로 가져옵니다. 가져오기만으로 브라우저를 실행하지 않습니다.</p><label>수집 CSV<select id="m04-m01-dataset" aria-label="재현할 수집 CSV"></select></label><div id="m04-m01-fields"></div><p id="m04-m01-status" class="subtitle" role="status"></p><button id="m04-m01-import" class="m04-secondary" type="button" disabled>M01 동작 가져오기</button></div>
       <div id="m04-web-prepare" class="m04-prep"><h2>1. 시나리오로 코드 준비</h2><p class="subtitle">코드 생성은 GPT 요청을 보냅니다. 원본 확인·M04 고정·브라우저 실행은 각각 별도 동작입니다.</p>
@@ -91,13 +92,15 @@ function renderM04(metric) {
         <button id="m04-prep-fix" class="m04-secondary" type="button" disabled>확인한 원본을 M04에 고정</button>
       </div>
       <details class="m04-advanced"><summary>고급 기능 · 외부 Python 파일 등록</summary><p class="subtitle">이미 준비한 .py 파일을 원본 그대로 등록할 때 사용합니다.</p><div id="m04-scenario"></div><div class="run-row"><p>선택한 Python 파일을 이 PC에서 실행합니다.<br>등록한 원본은 수정하지 않고 보관합니다.</p><button id="m04-register" class="m04-secondary" type="button" disabled>스크립트 등록</button><input id="m04-file" type="file" accept=".py" hidden></div></details>
-      <h2 class="m04-execute-heading">2. 고정한 코드 선택·실행</h2><p class="subtitle">여러 번 준비한 코드를 최대 10건 선택할 수 있습니다. 실행 버튼을 눌러야 브라우저가 시작됩니다.</p>
+      </details>
+      <h2 class="m04-execute-heading">고정한 코드 선택·실행</h2><p class="subtitle">최대 10건을 선택하고 선택 스크립트 실행을 누르세요. 실행 후 아래에서 항목별 기대·관측·판정과 전후 화면을 확인합니다.</p>
       <div id="m04-scripts"></div><div class="m04-run-actions"><button id="m04-start" type="button" disabled>선택 스크립트 실행</button><button id="m04-cancel" class="m04-secondary" type="button" disabled>실행 중단</button><label class="m04-visible-option"><input id="m04-visible-browser" type="checkbox" checked>새 창으로 실행</label></div><p class="subtitle">브라우저 새 창에서 동작을 보여주고 종료 화면을 15초 표시합니다.</p>
       <p id="m04-status" role="status">등록 스크립트와 실행 이력을 확인하고 있습니다…</p>
     </section>
     <section id="m04-result" class="result-panel"></section>
     <section class="result-panel m04-panel"><div class="panel-heading"><h2>실행 기록</h2><label class="m04-history-label">실행 이력<select id="m04-history" aria-label="실행 이력"></select></label></div>
       <div id="m04-progress-label" class="subtitle">실행 기록 대기</div><progress id="m04-progress" max="1" value="0" aria-label="스크립트 실행 진행률"></progress>
+      <div id="m04-business-progress" class="m04-business-progress"></div>
       <div id="m04-cases"></div><details class="m04-log" open><summary>실행 로그</summary><pre id="m04-logs">실행 로그가 없습니다.</pre></details><div id="m04-downloads" class="m04-downloads"></div>
     </section>`;
   document.querySelector('#m04-register').addEventListener('click',()=>{const input=document.querySelector('#m04-file');input.value='';input.click();});
@@ -611,6 +614,29 @@ async function cancelM04Preparation() {
 function m04ScriptAllowed(script) {
   return script.business_step_required===true&&script.execution_ready!==false&&(!m04View.locked||(script.scenario_id===m04View.scenario?.scenario_id&&script.source_m03_run_id===m04View.scenarioRun));
 }
+function m04Source(row) {
+  if(row.source_kind==='M01_OBSERVED_REPLAY') return 'M01 수집 동작 · 관측 재생';
+  if(row.source_kind==='CU02_SCHEDULE_REGISTRATION') return 'CU02 템플릿';
+  if(row.code_source==='PREPARED'||row.source_kind==='M07_PREPARED_SCRIPT') return 'PREPARED · 준비 코드';
+  if(row.source_kind==='M07_GENERATED_SCRIPT'||row.generated_by_llm===true) return 'M03 시나리오 → GPT';
+  if(row.source_kind==='UPLOADED_FIXED_SCRIPT') return '외부 Python 등록';
+  return '출처 정보 미보관';
+}
+function m04CaseSource(row) {
+  return `<p class="m04-source"><strong>코드 출처: ${esc(m04Source(row))}</strong>${row.source_kind==='M01_OBSERVED_REPLAY'?'<span class="notice">관측 동작 재생의 성공입니다. 독립적인 업무 정답 통과로 해석하지 않습니다.</span>':''}</p>`;
+}
+function m04ProgressSummary(cases) {
+  if(!cases.length) return '';
+  const steps=cases.flatMap(row=>Array.isArray(row.steps)?row.steps:[]);
+  const checks=steps.flatMap(step=>Array.isArray(step.check_results)?step.check_results:[]);
+  const total=(field)=>cases.every(row=>Number.isInteger(row[field])&&row[field]>=0)?cases.reduce((sum,row)=>sum+row[field],0):null;
+  const cell=(name,records,planned)=>{
+    const passed=records.filter(row=>row.status==='PASS').length,checked=records.filter(row=>['PASS','FAIL','ERROR','TIMEOUT'].includes(row.status)).length;
+    const unchecked=records.filter(row=>['NOT_CHECKED','SKIPPED'].includes(row.status)).length,processed=checked+unchecked;
+    return `<div><label>${name}</label><strong>처리 ${processed} / ${planned==null?'예정 수 미보관':planned}</strong><span>검사 완료 ${checked} · 성공 ${passed} · 미확인 ${unchecked}${planned!=null?` · 대기·실행 중 ${Math.max(0,planned-processed)}`:''}</span>${planned!=null?`<progress max="${Math.max(1,planned)}" value="${processed}" aria-label="${name} 진행률"></progress>`:''}</div>`;
+  };
+  return `<div class="m04-detail-progress">${cell('업무 단계',steps,total('required_step_count'))}${cell('확인 항목',checks,total('expected_check_count'))}</div><p class="subtitle">단계·확인 항목 집계는 실행 근거 확인용입니다. 스크립트 기준 성공률·공식 평가 분모와 별도로 표시합니다.</p>`;
+}
 function paintM04() {
   const state=m04View,job=state.execution,active=m04Running(job),blocked=state.busy||m04PrepBlocking()||state.executions.some(m04Running);
   const ready=state.readiness?.selenium&&(state.readiness?.chrome||state.readiness?.edge);
@@ -628,7 +654,7 @@ function paintM04() {
   document.querySelector('#m04-history').disabled=state.busy;
   document.querySelector('#m04-scripts').innerHTML=state.scripts.length?`<div class="m04-script-list">${state.scripts.map(script=>{
     const allowed=m04ScriptAllowed(script),open=state.openCode.has(script.script_id),code=state.code.get(script.script_id);
-    return `<article class="m04-script"><label class="m04-script-select"><input type="checkbox" data-script-id="${esc(script.script_id)}" ${state.selected.has(script.script_id)?'checked':''} ${blocked||!allowed?'disabled':''}><span><strong>${esc(script.filename)}</strong><small>${esc(script.scenario_name||script.scenario_id)}${script.source_kind==='M01_OBSERVED_REPLAY'?' · M01 수집 동작':''}${script.source_synthetic?' · 샘플 시나리오 연결':''}${script.business_step_required!==true?' · 기존 원시 기록용 코드':script.execution_ready===false?' · '+esc(script.execution_notice||'실행 조건 준비 필요'):!allowed?' · 다른 시나리오':''}</small></span></label><button class="m04-code-button" type="button" data-script-code="${esc(script.script_id)}" aria-expanded="${open}">${open?'코드 접기':'코드 보기'}</button>${open?`<div class="m04-code"><p class="run-meta">고정 시각: ${esc(script.fixed_at)}<br>SHA-256: ${esc(script.sha256)}</p><pre>${esc(code??'원본 코드를 불러오는 중…')}</pre></div>`:''}</article>`;
+    return `<article class="m04-script"><label class="m04-script-select"><input type="checkbox" data-script-id="${esc(script.script_id)}" ${state.selected.has(script.script_id)?'checked':''} ${blocked||!allowed?'disabled':''}><span><strong>${esc(script.filename)}</strong><small>${esc(script.scenario_name||script.scenario_id)} · ${esc(m04Source(script))}${script.source_synthetic?' · 샘플 시나리오 연결':''}${script.business_step_required!==true?' · 기존 원시 기록용 코드':script.execution_ready===false?' · '+esc(script.execution_notice||'실행 조건 준비 필요'):!allowed?' · 다른 시나리오':''}</small></span></label><button class="m04-code-button" type="button" data-script-code="${esc(script.script_id)}" aria-expanded="${open}">${open?'코드 접기':'코드 보기'}</button>${open?`<div class="m04-code"><p class="run-meta">고정 시각: ${esc(script.fixed_at)}<br>SHA-256: ${esc(script.sha256)}</p><pre>${esc(code??'원본 코드를 불러오는 중…')}</pre></div>`:''}</article>`;
   }).join('')}</div>`:'<p class="empty">등록된 실행 스크립트가 없습니다.</p>';
   const resultIds=[...new Set([state.externalRunId,state.metric.latest?.metric_id==='M04'&&state.metric.latest?.run_mode==='DEVELOPMENT'?state.metric.latest.run_id:null].filter(m04ResultId))];
   document.querySelector('#m04-history').innerHTML=`<option value="">실행 이력 선택</option>${resultIds.map(id=>`<option value="result:${id}" ${state.resultSource==='external'&&state.externalRunId===id?'selected':''}>API 접수 결과 · ${esc(id)}</option>`).join('')}${state.executions.map(row=>`<option value="${esc(row.execution_id)}" ${state.resultSource==='execution'&&row.execution_id===job?.execution_id?'selected':''}>${esc(row.started_at||row.created_at||row.execution_id)} · ${esc(m04CaseName(row.status))}</option>`).join('')}`;
@@ -642,9 +668,10 @@ function paintM04Execution() {
   const job=m04View.execution,cases=Array.isArray(job?.cases)?job.cases:[],result=job?.status==='COMPLETED'?job.result:null,counts=job?.counts||{};
   const done=cases.filter(row=>!['PENDING','RUNNING'].includes(row.status)).length;
   document.querySelector('#m04-progress').max=Math.max(1,cases.length);document.querySelector('#m04-progress').value=done;
-  document.querySelector('#m04-progress-label').textContent=job?`${m04CaseName(job.status)} · ${done}/${cases.length}건${job.error?' · '+job.error:''}`:'실행 기록 대기';
+  document.querySelector('#m04-progress-label').textContent=job?`스크립트 ${done}/${cases.length}건 완료 · ${m04CaseName(job.status)}${job.error?' · '+job.error:''}`:'실행 기록 대기';
+  document.querySelector('#m04-business-progress').innerHTML=m04ProgressSummary(cases);
   document.querySelector('#m04-result').innerHTML=`<div class="panel-heading"><h2>Development Result</h2>${result?.evidence_file?`<a class="download" href="${esc(m04Artifact(job.execution_id,'report.json'))}" download>실행 보고서 ↓</a>`:''}</div><div class="result-grid"><div><label>자동 실행 성공률</label><strong class="large-score">${score(result?.score,'M04')}</strong></div><div><label>정상 완료 테스트</label><strong>${esc(counts.successful_execution_count??'—')}</strong></div><div><label>전체 실행 테스트</label><strong>${esc(counts.total_execution_count??'—')}</strong></div><div><label>실행 상태</label><strong>${esc(job?m04CaseName(job.status):'미실행')}</strong></div></div><p class="subtitle">정상 완료 테스트 수 / 전체 자동 실행 테스트 수 × 100 · 실패는 분모에 포함합니다.</p>${m04Cu02Summary(job,cases,result)}${result?`<p class="run-meta">${esc(result.run_id)} · DEVELOPMENT · 공식 시험성적 아님</p>`:'<p class="subtitle">실행과 평가가 완료되면 성공률을 표시합니다.</p>'}`;
-  document.querySelector('#m04-cases').innerHTML=cases.length?`<p class="run-meta">실행 ID: ${esc(job.execution_id)}</p><div class="table-scroll"><table><thead><tr><th>스크립트</th><th>시나리오</th><th>상태·업무 단계</th><th>실행 시각·소요 시간</th><th>반환 코드</th></tr></thead><tbody>${cases.map(row=>`<tr><td>${esc(row.script_name||row.script_id)}</td><td>${esc(row.scenario_id)}</td><td><span class="badge ${row.status==='PASS'?'pass':['FAIL','ERROR','TIMEOUT'].includes(row.status)?'fail':'neutral'}">${esc(m04CaseName(row.status))}</span>${row.error_message||row.error?`<p>${esc(row.error_message||row.error)}</p>`:''}${m04Cu02Expectation(row,job.cu02_evaluation)}${m04StepDetails(row)}</td><td><span>${esc(row.started_at||'—')}</span><br><span>${esc(row.completed_at||'—')}</span><br>${row.duration_ms==null?'—':esc(row.duration_ms)+' ms'}</td><td>${esc(row.returncode??'—')}</td></tr>`).join('')}</tbody></table></div>`:'<p class="empty">실행하면 스크립트별 상태와 업무 단계가 표시됩니다.</p>';
+  document.querySelector('#m04-cases').innerHTML=cases.length?`<p class="run-meta">실행 ID: ${esc(job.execution_id)}</p><div class="m04-execution-cases">${cases.map(row=>`<article class="m04-execution-case"><div class="panel-heading"><div><h3>${esc(row.script_name||row.script_id)}</h3><p class="run-meta">${esc(row.case_id)} · ${esc(row.scenario_id)}</p></div><span class="badge ${row.status==='PASS'?'pass':['FAIL','ERROR','TIMEOUT'].includes(row.status)?'fail':'neutral'}">${esc(m04CaseName(row.status))}</span></div>${m04CaseSource(row)}<p class="run-meta">시작: ${esc(row.started_at||'미시작')} · 종료: ${esc(row.completed_at||'—')} · 소요: ${row.duration_ms==null?'—':esc(row.duration_ms)+' ms'} · 반환 코드: ${esc(row.returncode??'—')}</p>${row.error_message||row.error?`<p class="notice">${esc(row.error_message||row.error)}</p>`:''}${m04Cu02Expectation(row,job.cu02_evaluation)}${m04StepDetails(row)}</article>`).join('')}</div>`:'<p class="empty">실행하면 스크립트별 상태와 업무 단계가 표시됩니다.</p>';
   document.querySelector('#m04-logs').textContent=Array.isArray(job?.logs)&&job.logs.length?job.logs.map(row=>`${row.time||''}${row.case_id?' ['+row.case_id+']':''} ${row.message||''}`).join('\n'):'실행 로그가 없습니다.';
   document.querySelector('#m04-downloads').innerHTML=job?['report.json','log.jsonl','steps.csv','scripts.zip','screenshots.zip'].map((name,index)=>`<a class="download" href="${m04Artifact(job.execution_id,name)}" download>${['실행 보고서','전체 로그','단계 기록 CSV','고정 스크립트 원본','마스킹된 실행 화면'][index]} ↓</a>`).join(''):'';
 }
@@ -659,7 +686,7 @@ function m04Cu02Summary(job,cases,result) {
   const verdict=confirmed?`<span class="badge ${passed>=9?'pass':'fail'}">${passed>=9?'개발 목표 달성':'개발 목표 미달'}</span>`
     :`<span class="badge neutral">${m04Running(job)?'집계 중':'판정 확인 필요'}</span>`;
   return `<div class="m04-cu02-summary"><div class="panel-heading"><h3>CU02 일정 등록 · 10건 평가</h3>${verdict}</div>
-    <p class="subtitle">일정 1건을 등록하고 재조회까지 확인하면 평가 1건입니다. 업무 단계 5개를 5건으로 집계하지 않습니다.</p>
+    <p class="subtitle">개발용 전체 업무 10회 반복입니다. 일정 1건 등록·재조회를 1회로 세며, 확인 항목 10개와 다릅니다. 업무 단계 5개를 5건으로 집계하지 않습니다. 공식 평가 단위는 제시기준서에서 확정합니다.</p>
     <div class="m04-cu02-counts"><div><label>전체</label><strong>10건</strong></div><div><label>성공</label><strong>${passed}건</strong></div><div><label>실패·오류·미실행</label><strong>${failed}건</strong></div><div><label>실행 중</label><strong>${running}건</strong></div><div><label>대기·확인 필요</label><strong>${pending}건</strong></div></div>
     <p class="subtitle">목표 90% · 9/10건 이상 성공${confirmed?' · 최종 성공률 '+esc(score(result.score,'M04')):' · 10건 실행과 결과 저장이 완료되면 최종 판정합니다.'}</p><p class="run-meta">평가 ID: ${esc(evaluation.evaluation_id)}</p></div>`;
 }
@@ -677,6 +704,7 @@ function paintM04Result() {
   const provided=value=>value==null?'미제공':typeof value==='object'?JSON.stringify(value,null,2):String(value);
   const logs=raw?.details?.logs??raw?.evidence?.logs;
   document.querySelector('#m04-progress').max=1;document.querySelector('#m04-progress').value=result?1:0;
+  document.querySelector('#m04-business-progress').innerHTML='';
   document.querySelector('#m04-progress-label').textContent=result?'API 결과 접수 완료 · 이 화면에서 실행한 기록과 구분합니다.':m04View.externalError?'접수 결과 확인 실패':'API 접수 결과를 불러오는 중…';
   document.querySelector('#m04-result').innerHTML=`<div class="panel-heading"><h2>Development Result</h2></div><div class="result-grid"><div><label>자동 실행 성공률</label><strong class="large-score">${score(result?.score,'M04')}</strong></div><div><label>정상 완료 테스트</label><strong>${esc(counts.successful_execution_count??counts.passed_execution_count??'—')}</strong></div><div><label>전체 실행 테스트</label><strong>${esc(counts.total_execution_count??'—')}</strong></div><div><label>결과 출처</label><strong>외부 API 접수</strong></div></div><p class="subtitle">정상 완료 테스트 수 / 전체 자동 실행 테스트 수 × 100 · 실패는 분모에 포함합니다.</p>${result?`<p class="run-meta">${esc(result.run_id)} · DEVELOPMENT · 공식 시험성적 아님</p><p class="run-meta">데이터셋: ${esc(result.dataset_id)} · 원실행 ID: ${esc(raw.external_run_id)}<br>출처: ${esc(raw.source_module)} · ${esc(raw.source_version)} · 제출 시각: ${esc(raw.submitted_at)}</p>`:''}`;
   document.querySelector('#m04-cases').innerHTML=cases.length?`<div class="table-scroll"><table><thead><tr><th>케이스</th><th>시나리오</th><th>제공 상태</th><th>실패 단계</th><th>제공 근거</th></tr></thead><tbody>${cases.map(row=>`<tr><td>${esc(row.case_id)}</td><td>${esc(provided(row.scenario_id))}</td><td>${esc(m04CaseName(row.status))}</td><td>${esc(provided(row.failed_step))}</td><td><details><summary>접수 케이스 원문</summary><pre>${esc(JSON.stringify(row,null,2))}</pre></details></td></tr>`).join('')}</tbody></table></div>`:result?'<p class="empty">개별 케이스는 제공되지 않았습니다. 접수된 집계 건수만 표시합니다.</p>':'<p class="empty">접수 원본 확인 전입니다.</p>';
@@ -709,7 +737,7 @@ function m04ScreenDetails(row) {
   const id=row.execution_id||m04View?.execution?.execution_id,caseId=row.case_id;
   const valid=m04ExecutionId(id)&&/^CASE-[0-9]{3}$/.test(caseId||'');
   const records=Array.isArray(row.screenshots)?row.screenshots:[];
-  return `<details class="m04-screenshots"><summary>실행 전·후 화면</summary><p class="subtitle">문자·이미지가 마스킹된 실행 화면입니다. 판정은 독립 DOM/API 검사로 확인하며 이미지 일치 점수를 계산하지 않습니다.</p><div class="m04-screenshot-pair">${['before','after'].map((phase,index)=>{
+  return `<details class="m04-screenshots" open><summary>실행 전·후 화면</summary><p class="subtitle">문자·이미지가 마스킹된 실행 화면입니다. 입력값과 판정 근거는 위 확인 항목 표에서 확인하세요. 이미지 일치 점수는 계산하지 않습니다.</p><div class="m04-screenshot-pair">${['before','after'].map((phase,index)=>{
     const record=records.find(item=>item.phase===phase),captured=valid&&record?.status==='CAPTURED'&&record?.file===phase+'.png'&&record?.policy==='text-and-images-masked-v1';
     const url=captured?`/api/development/m04/executions/${id}/screenshots/${caseId}/${phase}.png`:null;
     const cu02=captured&&row.source_kind==='CU02_SCHEDULE_REGISTRATION'&&row.workflow_id==='CU02'
@@ -718,10 +746,29 @@ function m04ScreenDetails(row) {
     return `<article><strong>${caption}</strong>${url?`<a href="${url}" target="_blank" rel="noopener"><img src="${url}" loading="lazy" alt="문자와 이미지가 마스킹된 ${caption}"></a><p class="run-meta">${esc(record.captured_at||'')}</p>`:`<p class="subtitle">캡처되지 않음${record?.reason?' · '+esc(record.reason):' · 저장된 화면 근거 없음'}</p>`}</article>`;
   }).join('')}</div></details>`;
 }
+function m04EvidenceValue(value) {
+  if(value===undefined) return '미보관';
+  if(value===null) return 'null';
+  if(value==='') return '공백';
+  const text=typeof value==='object'?JSON.stringify(value):String(value);
+  return text.length>2000?text.slice(0,2000)+'…':text;
+}
+function m04CheckTable(step) {
+  const checks=Array.isArray(step.check_results)?step.check_results:[];
+  if(!checks.length) return '<p class="subtitle">확인 항목별 관측값 미보관 · 단계 PASS만으로 실제 값을 복원하지 않습니다.</p>';
+  return `<div class="table-scroll"><table class="m04-check-table"><thead><tr><th>확인 항목</th><th>사전 기대값·조건</th><th>실제 관측값·상태</th><th>판정</th><th>근거</th></tr></thead><tbody>${checks.map((check,index)=>{
+    const status=check.status||'PENDING';
+    const pending=['PENDING','RUNNING'].includes(status);
+    const recorded=Object.hasOwn(check,'observed')&&check.observed!==null&&check.observation_status!=='NOT_RECORDED';
+    const observed=pending?'확인 대기':recorded?m04EvidenceValue(check.observed):check.observation_status==='REDACTED'?'입력값 비공개':'관측값 미보관';
+    return `<tr><td>${esc(check.check_index??check.index??index+1)} · ${esc(check.kind||'유형 미보관')}</td><td>${esc(m04EvidenceValue(check.expected))}</td><td>${esc(observed)}${check.observation_status?`<small>${esc(check.observation_status)}</small>`:''}</td><td><span class="badge ${status==='PASS'?'pass':['FAIL','ERROR','TIMEOUT'].includes(status)?'fail':'neutral'}">${esc(m04CaseName(status))}</span></td><td>${check.comparison_mode?esc(check.comparison_mode):'비교 방식 미보관'}${check.error?`<p>${esc(check.error)}</p>`:''}</td></tr>`;
+  }).join('')}</tbody></table></div>`;
+}
 function m04StepDetails(row) {
   const strict=row.step_evidence_mode==='BUSINESS_STEPS',steps=Array.isArray(row.steps)?row.steps:[];
   const traces=Array.isArray(row.action_logs)?row.action_logs:strict?[]:steps;
-  const business=strict?`<p>성공 단계 ${esc(row.success_step_count??steps.filter(step=>step.status==='PASS').length)} / ${esc(row.required_step_count??steps.length)}</p>${row.failed_step!=null?`<p>실패 단계: ${esc(row.failed_step)}</p>`:''}${row.failure_selector?`<p>실패 선택자: <code>${esc(row.failure_selector)}</code></p>`:''}<details><summary>업무 단계 ${steps.length}건</summary><ol class="m04-steps">${steps.map(step=>`<li><strong>${esc(step.sequence)} · ${esc(step.action)}</strong> ${esc(step.target)} <span>${esc(m04CaseName(step.status))}</span><span>기대 결과: ${esc(typeof step.expected_result==='object'?JSON.stringify(step.expected_result):step.expected_result||'—')}</span>${step.failure_selector?`<span>실패 선택자: <code>${esc(step.failure_selector)}</code></span>`:''}${step.error?`<span>${esc(step.error)}</span>`:''}</li>`).join('')}</ol></details>`:'<p class="subtitle">기존 스크립트 · 업무 단계별 완료 근거 없음</p>';
+  const planned=Number.isInteger(row.required_step_count)?row.required_step_count:null;
+  const business=strict?`<p>성공 단계 ${esc(row.success_step_count??steps.filter(step=>step.status==='PASS').length)} / ${esc(planned??'예정 수 미보관')}</p>${row.failed_step!=null?`<p>실패 단계: ${esc(row.failed_step)}</p>`:''}${row.failure_selector?`<p>실패 선택자: <code>${esc(row.failure_selector)}</code></p>`:''}<details class="m04-business-steps" open><summary>업무 단계 ${planned??steps.length}건 · 기대·관측·판정</summary><ol class="m04-steps">${steps.map(step=>`<li><div class="m04-step-heading"><strong>${esc(step.sequence)} · ${esc(step.action)}</strong> <span class="badge ${step.status==='PASS'?'pass':['FAIL','ERROR','TIMEOUT'].includes(step.status)?'fail':'neutral'}">${esc(m04CaseName(step.status))}</span></div><p>대상: <code>${esc(step.target)}</code></p><p>기대 결과: ${esc(m04EvidenceValue(step.expected_result))}</p>${m04CheckTable(step)}${step.failure_selector?`<p>실패 선택자: <code>${esc(step.failure_selector)}</code></p>`:''}${step.error?`<p class="notice">${esc(step.error)}</p>`:''}</li>`).join('')}</ol></details>`:'<p class="subtitle">기존 스크립트 · 업무 단계별 완료 근거 없음</p>';
   return business+m04ScreenDetails(row)+(traces.length?`<details class="m04-traces"><summary>브라우저·assert 원시 기록 ${traces.length}건</summary><ol class="m04-steps">${traces.map(step=>`<li><strong>${esc(step.sequence)} · ${esc(step.action)}</strong> ${esc(step.target)} <span>${esc(m04CaseName(step.status))}${step.selector?' · '+esc(step.selector):''}</span>${step.error?`<span>${esc(step.error)}</span>`:''}</li>`).join('')}</ol></details>`:'');
 }
 async function readM04Code(id) {

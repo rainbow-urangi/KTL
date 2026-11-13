@@ -14,7 +14,7 @@ from ..evaluators import require
 
 
 WORKFLOW_ID = 'CU02'
-VERSION = 'cu02-schedule-registration-v3-state-evidence'
+VERSION = 'cu02-schedule-registration-v4-native-submit'
 TARGET_ORIGIN = 'https://rainbowlab.ai.kr'
 TARGET_URL = TARGET_ORIGIN + '/mypage/schedule'
 PROCEDURES = ['일정관리', '날짜 선택', '일정 입력', '등록', '종료']
@@ -105,7 +105,7 @@ def prepare(payload):
     actions = [('open', TARGET_URL, '일정관리 화면과 대상 월을 확인한다'),
                ('click', date_target, '선택 날짜의 신규 업무 등록 창에서 제목과 내용이 비어 있는지 확인한다'),
                ('input', TITLE, '새 시험 제목과 내용이 입력되었는지 확인한다'),
-               ('submit', SUBMIT, '등록 후 대상 날짜에 새 일정이 표시되는지 확인한다'),
+               ('submit', SUBMIT, 'native submit 후 새 일정 POST 201 응답·전송 완료와 대상 날짜의 일정을 확인한다'),
                ('verify', event_target, '재조회 후 저장된 제목과 내용을 확인하고 창을 닫는다')]
     steps = [dict(order=i, action=action, target=target, expected_result=expected,
                   **({'url': target} if action == 'open' else {}))
@@ -116,7 +116,9 @@ def prepare(payload):
               [dict(kind='visible', target=css(MODAL), expected=True), dict(kind='text_equals', target=css(MODAL + ' h2'), expected='업무 등록'),
                dict(kind='value', target=css(TITLE), expected=''), dict(kind='value', target=css(DESCRIPTION), expected='')],
               [dict(kind='value', target=css(TITLE), expected=values['title']), dict(kind='value', target=css(DESCRIPTION), expected=values['description'])],
-              [dict(kind='visible', target=css(MODAL), expected=False), exact(1)],
+              [dict(kind='native_submit_response', method='POST', api_origin=TARGET_ORIGIN,
+                    api_path='/api/schedules', expected_status=201),
+               dict(kind='visible', target=css(MODAL), expected=False), exact(1)],
               [dict(kind='url_path', expected='/mypage/schedule'), dict(kind='visible', target=css(MODAL), expected=False), exact(1)]]
     contract = dict(version=1, scenario_id=scenario_id, steps=[dict(order=step['order'], action=step['action'],
         target={'url': TARGET_URL} if step['action'] == 'open' else css(step['target']), checks=conditions)
@@ -279,6 +281,7 @@ try:
     print('로그인을 완료했습니다. 일정관리 화면을 준비합니다.')
     options = webdriver.EdgeOptions() if DATA['browser'] == 'edge' else webdriver.ChromeOptions()
     options.add_argument('--window-size=1440,1100')
+    options.set_capability('goog:loggingPrefs', {'performance': 'ALL'})
     driver = webdriver.Edge(options=options) if DATA['browser'] == 'edge' else webdriver.Chrome(options=options)
     driver.set_page_load_timeout(40)
     wait = WebDriverWait(driver, 25)
@@ -324,7 +327,8 @@ try:
 
     with business_step(4):
         assert read(DATA['modal'] + ' h2') == '업무 등록'
-        click(DATA['submit_target'])
+        button = wait.until(lambda _: one(DATA['submit_target']))
+        button.submit()
         assert wait.until(lambda _: modal_closed())
         assert wait.until(lambda _: len(matching_events()) == 1), '등록 후 대상 날짜의 일정이 확인되지 않습니다.'
 

@@ -28,7 +28,7 @@ function meetingJob(items=meetingItems(),status='QUEUED') {
   });
   return {generation_id:'M07-GEN-'+'d'.repeat(32),meeting_protocol:true,required_count:20,measurement_protocol:'M07_MEETING_20_V1',code_source:'LLM',source_kind:'MEETING_LLM_BATCH',generated_by_llm:true,status,cases,
     counts:{generation_request_count:20,generated_code_count:status==='QUEUED'?0:20,syntax_pass_count:0,execution_pass_count:0,both_pass_count:0},logs:[],
-    measurement:{version:1,evaluation_status:'NOT_READY',registered_count:20,provider_http_attempt_count:status==='QUEUED'?0:20,provider_http_unknown_count:0}};
+    measurement:{version:1,evaluation_status:'NOT_READY',registered_count:20,provider_http_attempt_count:status==='QUEUED'?0:20,provider_http_unknown_count:0,not_attempted_count:status==='QUEUED'?20:0}};
 }
 function preparedJob(ids=['CU02'],each=2) {
   const cases=[];
@@ -226,7 +226,7 @@ test('a queued prepared job opens the first original once when polling reaches G
   }});
   await h.start();await h.evaluate('prepareM07Workflows()');
   assert.equal(h.calls.filter(row=>/\/codes\//.test(row.url)).length,0);assert.match(h.node('#m07-workflow-status').textContent,/준비 중/);
-  await h.poll();await tick();assert.equal(h.calls.filter(row=>/\/codes\//.test(row.url)).length,1);
+  await h.poll();await h.evaluate('m07View.autoPreviewRequests.get(m07View.generation.generation_id)');assert.equal(h.calls.filter(row=>/\/codes\//.test(row.url)).length,1);
   assert.equal(h.evaluate('m07View.codeProof.size'),1);assert.match(h.node('#m07-cases').innerHTML,/SCENARIO_ID/);
   assert.match(h.node('#m07-workflow-status').textContent,/원본 코드를 준비했습니다/);
   await h.evaluate("readM07Code('CASE-001')");assert.equal(h.evaluate("m07View.openCode.has('CASE-001')"),false);
@@ -266,13 +266,15 @@ test('automatic preview hash failures remain visible instead of being overwritte
   assert.match(h.node('#m07-status').textContent,/SHA-256/);assert.match(h.node('#m07-workflow-status').textContent,/다시 확인/);
   assert.equal(h.evaluate("m07View.openCode.has('CASE-001')"),false);
 });
-function setMeetingInput(h,items=meetingItems()) {h.node('#m07-meeting-input').value=JSON.stringify({items});return h.evaluate('checkM07MeetingInput()');}
+function setMeetingInput(h,items=meetingItems(),trialPolicy) {h.node('#m07-meeting-input').value=JSON.stringify({items,...(trialPolicy===undefined?{}:{trial_policy:trialPolicy})});return h.evaluate('checkM07MeetingInput()');}
 const configuredMeeting=()=>({...clone(meetingContext),readiness:{...meetingContext.readiness,configured:true,model:'synthetic-model-id'}});
 function completedMeeting(passed=16) {
   const job=meetingJob(meetingItems(),'COMPLETED');
   job.cases.forEach((row,index)=>Object.assign(row,{syntax_status:index<passed?'PASS':'FAIL',execution_status:index<passed?'PASS':'SKIPPED',final_status:index<passed?'PASS':'FAIL'}));
   Object.assign(job.counts,{syntax_pass_count:passed,execution_pass_count:passed,both_pass_count:passed});
-  Object.assign(job.measurement,{evaluation_status:'COMPLETED',integrated_percent:100,both_pass_count:20});
+  Object.assign(job.measurement,{evaluation_status:'COMPLETED',generated_code_count:20,syntax_pass_count:passed,execution_pass_count:passed,both_pass_count:passed,
+    browser_started_count:passed,generation_percent:100,syntax_percent:passed*5,integrated_percent:passed*5,browser_percent:passed?100:null,
+    syntax_target_percent:80,syntax_target_met:passed>=16,integrated_reference_target_percent:80,integrated_reference_target_met:passed>=16});
   job.result={score:100,run_id:job.generation_id};return job;
 }
 test('twenty structured inputs produce one explicit batch request and never trigger validation automatically',async()=>{
@@ -282,7 +284,7 @@ test('twenty structured inputs produce one explicit batch request and never trig
   assert.deepEqual(h.posts('/api/development/m07/meeting-generations')[0].body,{items:meetingItems()});
   assert.equal(h.posts().filter(row=>row.url.endsWith('/validate')).length,0);assert.equal(h.posts('/api/development/m07/workflows/prepare').length,0);
   assert.equal(h.evaluate('m07View.generation.meeting_protocol'),true);assert.equal((h.node('#m07-cases').innerHTML.match(/data-m07-result-row=/g)||[]).length,20);
-  assert.match(h.node('#m07-result').innerHTML,/최종 성공률|완료되면/);
+  assert.match(h.node('#m07-result').innerHTML,/문법 통과율|완료되면/);
 });
 test('meeting input count, duplicate identity, duplicate content and missing execution conditions are rejected',async()=>{
   const h=harness({meetingContext:configuredMeeting()});await h.start();
@@ -328,7 +330,7 @@ test('meeting generation response identities must match all twenty submitted inp
 test('completed meeting score is fixed at sixteen of twenty and fifteen passes fails the eighty percent target',async()=>{
   for(const [passed,expected,verdict]of [[16,'80.00%','기준 충족'],[15,'75.00%','기준 미달']]){
     const h=harness({meetingContext:configuredMeeting()});await h.start();h.context.syntheticJob=completedMeeting(passed);h.evaluate('acceptM07Generation(syntheticJob)');
-    assert.match(h.node('#m07-result').innerHTML,new RegExp('class="large-score">'+expected));assert.match(h.node('#m07-result').innerHTML,new RegExp(verdict));
+    assert.match(h.node('#m07-result').innerHTML,new RegExp('data-m07-overview="syntax">'+expected));assert.match(h.node('#m07-result').innerHTML,new RegExp(verdict));
     assert.match(h.node('#m07-result').innerHTML,/실패도 분모 20건에 포함/);assert.equal((h.node('#m07-cases').innerHTML.match(/data-m07-result-row=/g)||[]).length,20);
     assert.ok(!h.node('#m07-export').innerHTML.includes('M04에 고정 등록'));assert.equal(h.node('#m07-cases').innerHTML.includes('data-m07-export'),false);
   }
@@ -336,14 +338,19 @@ test('completed meeting score is fixed at sixteen of twenty and fifteen passes f
 test('generation failures remain in the twenty case denominator and syntax PASS alone cannot produce a final PASS',async()=>{
   const h=harness({meetingContext:configuredMeeting()});await h.start();const job=completedMeeting(16);
   Object.assign(job.cases[19],{generation_status:'FAIL',syntax_status:'SKIPPED',execution_status:'SKIPPED',final_status:'FAIL'});job.counts.generated_code_count=19;
-  h.context.syntheticJob=job;h.evaluate('acceptM07Generation(syntheticJob)');assert.match(h.node('#m07-result').innerHTML,/class="large-score">80.00%/);
-  Object.assign(job.cases[15],{syntax_status:'PASS',execution_status:'FAIL',final_status:'PASS'});h.context.syntheticJob=job;h.evaluate('acceptM07Generation(syntheticJob)');
-  assert.match(h.node('#m07-result').innerHTML,/class="large-score">75.00%/);
+  Object.assign(job.measurement,{generated_code_count:19,generation_percent:95});
+  h.context.syntheticJob=job;h.evaluate('acceptM07Generation(syntheticJob)');assert.match(h.node('#m07-result').innerHTML,/data-m07-overview="integrated">80.00%/);
+  Object.assign(job.cases[15],{syntax_status:'PASS',execution_status:'FAIL',final_status:'FAIL'});
+  Object.assign(job.measurement,{execution_pass_count:15,both_pass_count:15,integrated_percent:75,browser_percent:93.75,integrated_reference_target_met:false});
+  h.context.syntheticJob=job;h.evaluate('acceptM07Generation(syntheticJob)');
+  assert.match(h.node('#m07-result').innerHTML,/data-m07-overview="integrated">75.00%/);
+  assert.match(h.node('#m07-result').innerHTML,/data-m07-overview="syntax">80.00%/);
 });
 test('incomplete work or missing HTTP attempt evidence keeps the final score pending even with a stored success percentage',async()=>{
-  for(const mutate of [job=>job.status='VALIDATING',job=>job.measurement.provider_http_attempt_count=19,job=>job.measurement.provider_http_unknown_count=1,job=>job.cases[19].execution_status='PENDING']){
+  for(const mutate of [job=>job.status='VALIDATING',job=>job.measurement.evaluation_status='NOT_READY',job=>job.measurement.provider_http_attempt_count=19,job=>job.measurement.provider_http_unknown_count=1,job=>job.measurement.not_attempted_count=1,job=>job.cases[19].execution_status='PENDING',job=>job.cases[19].syntax_status='RUNNING',job=>job.cases[19].final_status='PENDING']){
     const h=harness({meetingContext:configuredMeeting()});await h.start();const job=completedMeeting(20);mutate(job);h.context.syntheticJob=job;h.evaluate('acceptM07Generation(syntheticJob)');
-    assert.match(h.node('#m07-result').innerHTML,/class="large-score">—/);assert.ok(!h.node('#m07-result').innerHTML.includes('100.00%'));assert.match(h.node('#m07-result').innerHTML,/검사 대기/);
+    assert.match(h.node('#m07-result').innerHTML,/data-m07-overview="syntax">—/);assert.match(h.node('#m07-result').innerHTML,/data-m07-overview="integrated">—/);assert.match(h.node('#m07-result').innerHTML,/data-m07-overview="browser">—/);
+    assert.ok(!h.node('#m07-result').innerHTML.includes('100.00%'));assert.match(h.node('#m07-result').innerHTML,/검사 대기/);
   }
 });
 test('actual meeting code uses exact hash verification and separate validation with meeting readiness',async()=>{
@@ -360,5 +367,83 @@ test('late file or batch replies cannot modify a retired page and all twenty tab
   await tick();h.context.location.pathname='/metrics/m01';release();await pending;assert.equal(h.evaluate('m07View.meeting.items.length'),0);
   const safe=harness();await safe.start();const job=meetingJob(meetingItems(),'GENERATED');job.cases[0].scenario_name='<img src=x onerror=x>';safe.context.syntheticJob=job;safe.evaluate('acceptM07Generation(syntheticJob)');
   assert.ok(!safe.node('#m07-cases').innerHTML.includes('<img'));assert.match(safe.node('#m07-cases').innerHTML,/&lt;img/);
+});
+function repeatedMeeting() {
+  const first=meetingItems().slice(0,10);
+  first.forEach((row,index)=>row.scenario.business_unit_id='SYNTHETIC-BUSINESS-'+index);
+  const items=[...first,...first.map((row,index)=>({...clone(row),input_id:'SYNTHETIC-REPEAT-'+index}))];
+  return {items,trial_policy:{batches:[{batch_id:'FIRST',input_ids:items.slice(0,10).map(row=>row.input_id)},{batch_id:'SECOND',input_ids:items.slice(10).map(row=>row.input_id)}]}};
+}
+test('explicit two batch policy permits ten scenarios to be reused as twenty uniquely identified inputs and preserves the exact payload',async()=>{
+  const payload=repeatedMeeting(),h=harness({meetingContext:configuredMeeting()});await h.start();
+  assert.equal(setMeetingInput(h,payload.items),false);
+  assert.equal(setMeetingInput(h,payload.items,payload.trial_policy),true);
+  await h.evaluate('startM07Meeting()');assert.deepEqual(h.posts('/api/development/m07/meeting-generations')[0].body,payload);
+  assert.equal(h.evaluate('m07View.generation.cases.length'),20);assert.equal(h.posts().filter(row=>row.url.endsWith('/validate')).length,0);
+  assert.match(h.node('#app').innerHTML,/입력 20건은 업무 20종을 뜻하지 않습니다/);
+});
+test('explicit batches reject missing, repeated, reordered or unknown input identities and same batch scenario duplication',async()=>{
+  const invalid=[];
+  for(const mutate of [value=>value.items[19].input_id=value.items[0].input_id,
+    value=>value.trial_policy.batches[1].input_ids.pop(),
+    value=>value.trial_policy.batches[1].input_ids[0]=value.items[0].input_id,
+    value=>value.trial_policy.batches[1].input_ids[0]='UNKNOWN',
+    value=>value.trial_policy.batches[0].input_ids.reverse(),
+    value=>value.trial_policy.batches[1].batch_id='FIRST',
+    value=>value.trial_policy.model='UNAPPROVED',
+    value=>value.items[1].scenario=clone(value.items[0].scenario)]) {
+    const value=repeatedMeeting();mutate(value);invalid.push(value);
+  }
+  const h=harness({meetingContext:configuredMeeting()});await h.start();
+  for(const value of invalid){assert.equal(setMeetingInput(h,value.items,value.trial_policy),false);await h.evaluate('startM07Meeting()');}
+  assert.equal(h.posts().length,0);
+});
+test('explicit policy survives reviewed draft loading but textarea edits discard the old policy confirmation',async()=>{
+  const payload=repeatedMeeting(),h=harness({meetingContext:configuredMeeting(),fetch:async call=>{if(call.url.endsWith('/meeting-input-draft'))return {draft:true,...payload};}});
+  await h.start();await h.evaluate('loadM07MeetingDraft()');assert.deepEqual(JSON.parse(h.node('#m07-meeting-input').value),payload);
+  assert.equal(h.evaluate('m07View.meeting.trialPolicy.batches.length'),2);assert.equal(h.posts().length,0);
+  h.node('#m07-meeting-input').listeners.input();assert.equal(h.evaluate('m07View.meeting.trialPolicy'),undefined);assert.equal(h.node('#m07-meeting-generate').disabled,true);
+});
+test('matching scenario ids cannot hide a reordered input identity in the generation response',async()=>{
+  const payload=repeatedMeeting(),job=meetingJob(payload.items);job.cases[10].input_id=payload.items[0].input_id;
+  const h=harness({meetingContext:configuredMeeting(),fetch:async call=>{if(call.url.endsWith('/meeting-generations'))return {generation:job};}});
+  await h.start();setMeetingInput(h,payload.items,payload.trial_policy);await h.evaluate('startM07Meeting()');
+  assert.equal(h.evaluate('m07View.generation'),null);assert.match(h.node('#m07-status').textContent,/입력과 출처/);
+});
+test('registered syntax and integrated rates and actual browser success use distinct server measurements and formulas',async()=>{
+  const h=harness();await h.start();const job=completedMeeting(16);
+  Object.assign(job.measurement,{both_pass_count:10,execution_pass_count:10,browser_started_count:12,integrated_percent:50,browser_percent:100*10/12,integrated_reference_target_met:false});
+  h.context.syntheticJob=job;h.evaluate('acceptM07Generation(syntheticJob)');const html=h.node('#m07-result').innerHTML;
+  assert.match(html,/data-m07-overview="syntax">80.00%/);assert.match(html,/data-m07-overview="integrated">50.00%/);assert.match(html,/data-m07-overview="browser">83.33%/);
+  assert.match(html,/문법 기준 충족/);assert.match(html,/공식 통합 계약 \(개발 참고\)/);assert.match(html,/공식 문법·실행 통합 계약 80%/);
+  assert.match(html,/문법률 = 문법 통과 \/ 등록 요청 수/);assert.match(html,/브라우저 성공률 = 실행 통과 \/ 실제 브라우저 시작 12건/);
+  // Different synthetic server values demonstrate that presentation does not recreate percentages from local case counts.
+  assert.equal(h.evaluate('m07Measurement(m07View.generation,m07View.generation.counts).integrated_percent'),50);
+});
+test('zero started browsers and legacy generated denominator results never become a complete registered success rate',async()=>{
+  const h=harness();await h.start();const job=completedMeeting(0);job.measurement.browser_percent=0;h.context.syntheticJob=job;h.evaluate('acceptM07Generation(syntheticJob)');
+  assert.match(h.node('#m07-result').innerHTML,/data-m07-overview="browser">—/);assert.match(h.node('#m07-result').innerHTML,/시작 0건은 null/);
+  const legacy=completedMeeting(20);legacy.meeting_protocol=false;delete legacy.measurement;legacy.counts.generation_request_count=20;legacy.cases=legacy.cases.slice(0,2);
+  Object.assign(legacy.counts,{generated_code_count:2,syntax_pass_count:2,execution_pass_count:2,both_pass_count:2});h.context.syntheticJob=legacy;h.evaluate('acceptM07Generation(syntheticJob)');
+  const html=h.node('#m07-result').innerHTML;assert.match(html,/data-m07-overview="syntax">—/);assert.match(html,/data-m07-overview="integrated">—/);assert.match(html,/NOT_READY/);
+  assert.match(html,/생성코드 수 분모의 이전 부분 결과/);assert.match(html,/저장 점수 100.00%/);assert.match(html,/이전 산식 = 문법·실행 모두 통과 \/ 실제 생성 코드 수/);
+  assert.equal(h.evaluate('m07View.generation.result.score'),100);
+});
+test('saved trial policy identifies twenty inputs, ten businesses and two batches without inferring missing model or prompt metadata',async()=>{
+  const h=harness();await h.start();const job=completedMeeting(16),payload=repeatedMeeting();
+  job.trial_policy={input_count:20,business_unit_count:10,distinct_scenario_count:10,batch_count:2,model:'<model>',prompt_version:'<prompt>',batches:payload.trial_policy.batches,max_attempts_per_input:1,automatic_retry_count:0,stop_remaining_on_http_429:true};
+  h.context.syntheticJob=job;h.evaluate('acceptM07Generation(syntheticJob)');const html=h.node('#m07-result').innerHTML;
+  assert.match(html,/시험 입력 20건 · 업무 종류 10종 · 시나리오 10종 · 배치 2개/);assert.match(html,/모델 &lt;model&gt; · 프롬프트 &lt;prompt&gt;/);
+  assert.match(html,/입력별 최대 시도 1회 · 자동 재시도 0회 · HTTP429 후 남은 요청 중단 예/);assert.ok(!html.includes('<model>'));
+  delete job.trial_policy;h.context.syntheticJob=job;h.evaluate('acceptM07Generation(syntheticJob)');assert.ok(!h.node('#m07-result').innerHTML.includes('data-m07-trial-policy'));
+});
+test('ten registered inputs with three actual attempts two generated and seven unattempted remain separate pending counts',async()=>{
+  const h=harness();await h.start();const job=completedMeeting(20);job.meeting_protocol=false;job.cases=job.cases.slice(0,10);
+  Object.assign(job.counts,{generation_request_count:10,generated_code_count:2,syntax_pass_count:2,execution_pass_count:2,both_pass_count:2});
+  Object.assign(job.measurement,{evaluation_status:'NOT_READY',registered_count:10,provider_http_attempt_count:3,not_attempted_count:7,generated_code_count:2,syntax_pass_count:2,execution_pass_count:2,both_pass_count:2,browser_started_count:2});job.result=null;
+  const before=JSON.stringify(job);h.context.syntheticJob=job;h.evaluate('acceptM07Generation(syntheticJob)');const html=h.node('#m07-result').innerHTML;
+  for(const [key,value] of Object.entries({registered_count:10,provider_http_attempt_count:3,not_attempted_count:7,generated_code_count:2}))assert.match(html,new RegExp('data-m07-summary="'+key+'">'+value+'<'));
+  for(const rate of ['syntax','integrated','browser'])assert.match(html,new RegExp('data-m07-overview="'+rate+'">—<'));
+  assert.ok(!html.includes('100.00%'));assert.equal(JSON.stringify(job),before);assert.equal(h.posts().length,0);
 });
 (async()=>{for(const [name,run]of tests){await run();console.log('PASS '+name);}console.log(tests.length+' M07 meeting and prepared workflow UI groups passed');})().catch(error=>{console.error(error);process.exitCode=1;});

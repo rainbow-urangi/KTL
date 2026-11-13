@@ -82,8 +82,10 @@ class TextCountRuntimeTests(unittest.TestCase):
             completed = subprocess.run([NODE, '-e', NODE_DOM], input=json.dumps(payload),
                                        capture_output=True, encoding='utf-8', check=True)
             returned = json.loads(completed.stdout)
-            if set(returned) != {'result'} or type(returned['result']) is not bool:
-                raise AssertionError('text_count must return only a boolean')
+            observation = len(args) > 4 and args[4] is True
+            valid = isinstance(returned.get('result'), dict) if observation else type(returned.get('result')) is bool
+            if set(returned) != {'result'} or not valid:
+                raise AssertionError('text_count must return a boolean or an explicitly requested observation')
             return returned['result']
 
         checker._js = run
@@ -128,7 +130,7 @@ class TextCountRuntimeTests(unittest.TestCase):
     def test_missing_inner_text_is_not_an_exact_text_match(self):
         self.assertTrue(self.check(0, nodes=dict(a={}), selectors={LOCATOR['value']: ['a']}))
 
-    def test_finish_records_only_status_and_rejects_existing_or_duplicate_title(self):
+    def test_finish_records_actual_count_and_rejects_existing_or_duplicate_title(self):
         for requested, ids in ((0, ['a']), (1, ['a', 'b'])):
             with self.subTest(requested=requested, ids=ids):
                 checker, _ = self.checker(requested, nodes=dict(a=dict(innerText=TITLE), b=dict(innerText=TITLE)),
@@ -140,8 +142,12 @@ class TextCountRuntimeTests(unittest.TestCase):
                     passed, error, evidence = checker.finish([driver])
                 self.assertFalse(passed)
                 self.assertEqual(error, '독립 기대 결과 검사 실패: text_count')
-                self.assertEqual(evidence, [dict(check_index=1, kind='text_count', status='FAIL')])
-                self.assertNotIn(TITLE, json.dumps(evidence))
+                self.assertEqual(len(evidence), 1)
+                self.assertEqual({key: evidence[0][key] for key in ('check_index', 'kind', 'status')},
+                                 dict(check_index=1, kind='text_count', status='FAIL'))
+                self.assertEqual(evidence[0]['expected'], dict(text=TITLE, count=requested))
+                self.assertEqual(evidence[0]['observed'], len(ids))
+                self.assertNotIn(TITLE, json.dumps(evidence[0]['observed']))
 
 
 if __name__ == '__main__':

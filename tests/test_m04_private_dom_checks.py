@@ -49,8 +49,10 @@ def dom_check(script, args, *, nodes=None, selectors=None):
     result = subprocess.run([NODE, '-e', NODE_DOM], input=json.dumps(payload), capture_output=True,
                             encoding='utf-8', check=True)
     returned = json.loads(result.stdout)
-    if set(returned) != {'result'} or type(returned['result']) is not bool:
-        raise AssertionError('Private DOM comparison must return only a boolean')
+    observation = len(args) > 5 and args[5] is True
+    valid = isinstance(returned.get('result'), dict) if observation else type(returned.get('result')) is bool
+    if set(returned) != {'result'} or not valid:
+        raise AssertionError('Private DOM comparison must return a boolean or comparison metadata')
     return returned['result']
 
 
@@ -156,7 +158,7 @@ class PrivateDOMRuntimeTests(unittest.TestCase):
                                         selected=dict(innerText='Business content')))
                 self.assertTrue(self.checker(condition, **state)._simple(object(), condition))
 
-    def test_runner_evidence_contains_only_boolean_status_without_dom_values(self):
+    def test_runner_evidence_contains_comparison_metadata_without_dom_values(self):
         condition = equality()
         checker = self.checker(condition)
         driver = object()
@@ -165,7 +167,11 @@ class PrivateDOMRuntimeTests(unittest.TestCase):
         passed, error, evidence = checker.finish([driver])
         self.assertTrue(passed)
         self.assertIsNone(error)
-        self.assertEqual(evidence, [dict(check_index=1, kind='text_equals_target', status='PASS')])
+        self.assertEqual(len(evidence), 1)
+        self.assertEqual({key: evidence[0][key] for key in ('check_index', 'kind', 'status')},
+                         dict(check_index=1, kind='text_equals_target', status='PASS'))
+        self.assertTrue(evidence[0]['observed']['equal'])
+        self.assertEqual(evidence[0]['observation_status'], 'RECORDED')
         self.assertNotIn('Synthetic private title', json.dumps(evidence))
 
     @unittest.skipUnless(HELPER.is_file(), 'Local PREPARED evidence builder is not installed')

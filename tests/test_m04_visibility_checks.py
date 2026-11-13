@@ -27,8 +27,10 @@ def predicate(script, args, nodes, selected):
     result = subprocess.run([NODE, '-e', NODE_DOM], input=json.dumps(payload),
                             capture_output=True, encoding='utf-8', check=True)
     returned = json.loads(result.stdout)
-    if set(returned) != {'result'} or type(returned['result']) is not bool:
-        raise AssertionError('The visibility predicate must return only a boolean')
+    observation = len(args) > 4 and args[4] is True
+    valid = isinstance(returned.get('result'), dict) if observation else type(returned.get('result')) is bool
+    if set(returned) != {'result'} or not valid:
+        raise AssertionError('The predicate must return a boolean or an explicitly requested observation')
     return returned['result']
 
 
@@ -103,9 +105,13 @@ class VisibilityChecksTests(unittest.TestCase):
             passed, error, evidence = checker.finish([driver])
         self.assertFalse(passed)
         self.assertEqual(error, '독립 기대 결과 검사 실패: visible')
-        self.assertEqual(evidence, [dict(check_index=1, kind='visible', status='FAIL')])
+        self.assertEqual(len(evidence), 1)
+        self.assertEqual({key: evidence[0][key] for key in ('check_index', 'kind', 'status')},
+                         dict(check_index=1, kind='visible', status='FAIL'))
+        self.assertEqual(evidence[0]['expected'], False)
+        self.assertEqual(evidence[0]['observed'], dict(matched_count=2, visible_count=1))
 
-    def test_runtime_records_only_boolean_outcome_for_unique_visible_match(self):
+    def test_runtime_records_boolean_outcome_and_observed_visible_count(self):
         checker, _ = self.checker(True)
         driver = object()
         checker.raw_execute = lambda *args: None
@@ -113,7 +119,11 @@ class VisibilityChecksTests(unittest.TestCase):
         passed, error, evidence = checker.finish([driver])
         self.assertTrue(passed)
         self.assertIsNone(error)
-        self.assertEqual(evidence, [dict(check_index=1, kind='visible', status='PASS')])
+        self.assertEqual(len(evidence), 1)
+        self.assertEqual({key: evidence[0][key] for key in ('check_index', 'kind', 'status')},
+                         dict(check_index=1, kind='visible', status='PASS'))
+        self.assertEqual(evidence[0]['observed'], dict(matched_count=1, visible_count=1))
+        self.assertEqual(evidence[0]['observation_status'], 'RECORDED')
 
 
 if __name__ == '__main__':

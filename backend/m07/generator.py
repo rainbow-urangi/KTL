@@ -32,8 +32,8 @@ SECONDS_HEADERS = frozenset({'retry-after', 'x-ratelimit-reset-requests',
 
 
 class GenerationError(EvaluationError):
-    def __init__(self, message, evidence):
-        super().__init__(message)
+    def __init__(self, message, evidence, *, status='NOT_CONFIGURED'):
+        super().__init__(message, status)
         self.evidence = evidence
 
 
@@ -288,21 +288,60 @@ def prompt(scenario, config):
     return instructions, json.dumps(prompt_input, ensure_ascii=False, allow_nan=False)
 
 
-def generate(root, config, scenario):
+def _metadata_bytes(value):
+    return json.dumps(value, ensure_ascii=False, sort_keys=True, separators=(',', ':'),
+                      allow_nan=False).encode('utf-8')
+
+
+def _prompt_metadata(value, config, scenario):
+    instructions, text = prompt(scenario, config)
+    prompt_version = MEETING_PROMPT_VERSION if scenario.get('meeting_protocol') is True else PROMPT_VERSION
+    timeout = config.get('m07', {}).get('generation_timeout_seconds', 120)
+    require(type(timeout) in (int, float) and 1 <= timeout <= 300, 'M07 생성 제한시간은 1~300초입니다.')
+    result = dict(schema_version=1, requested_model=value['model'], prompt_version=prompt_version,
+                  instructions=instructions, input=text,
+                  instructions_sha256=hashlib.sha256(instructions.encode('utf-8')).hexdigest(),
+                  input_sha256=hashlib.sha256(text.encode('utf-8')).hexdigest(),
+                  max_attempts=MAX_ATTEMPTS, generation_timeout_seconds=timeout,
+                  endpoint='https://api.openai.com/v1/responses', store=False)
+    result['generation_spec_sha256'] = hashlib.sha256(_metadata_bytes(result)).hexdigest()
+    return result
+
+
+def prompt_metadata(root, config, scenario):
+    """Freeze public request inputs without HTTP or retaining the API key.
+
+    Missing credentials/model do not prevent offline planning. Actual generation
+    still requires both. This hash is distinct from the archived prompt.json SHA.
+    """
+    return _prompt_metadata(settings(root, config), config, scenario)
+
+
+def generate(root, config, scenario, *, expected_metadata=None):
     value = settings(root, config)
     if not value['api_key'] or not value['model']:
         raise EvaluationError('OpenAI API 키와 KTL_M07_MODEL 설정이 필요합니다.', 'NOT_CONFIGURED')
-    instructions, text = prompt(scenario, config)
-    prompt_version = MEETING_PROMPT_VERSION if scenario.get('meeting_protocol') is True else PROMPT_VERSION
-    body = dict(model=value['model'], instructions=instructions, input=text, store=False)
+    metadata = _prompt_metadata(value, config, scenario)
+    instructions, text, prompt_version = (metadata[key] for key in ('instructions', 'input', 'prompt_version'))
     evidence = dict(model=value['model'], requested_model=value['model'], prompt_version=prompt_version,
                     instructions=instructions, input=text, request_id=None, max_attempts=MAX_ATTEMPTS,
+                    generation_spec_sha256=metadata['generation_spec_sha256'],
                     http_request_attempted=False, provider_response_observed=False)
-    request = urllib.request.Request('https://api.openai.com/v1/responses',
+    if expected_metadata is not None:
+        try:
+            matches = isinstance(expected_metadata, dict) and _metadata_bytes(expected_metadata) == _metadata_bytes(metadata)
+        except (TypeError, ValueError, RecursionError):
+            matches = False
+        if not matches:
+            response = dict(status='GENERATION_SPEC_CHANGED')
+            evidence.update(response=response, response_bytes=_metadata_bytes(response))
+            raise GenerationError('사전에 고정한 M07 모델·프롬프트·호출 설정이 변경됐습니다. 새 회차로 시작하세요.',
+                                  evidence, status='NOT_READY')
+    body = dict(model=value['model'], instructions=instructions, input=text, store=metadata['store'])
+    request = urllib.request.Request(metadata['endpoint'],
                                      data=json.dumps(body, ensure_ascii=False).encode('utf-8'),
                                      headers={'Authorization': 'Bearer ' + value['api_key'], 'Content-Type': 'application/json'})
-    timeout = config.get('m07', {}).get('generation_timeout_seconds', 120)
-    require(type(timeout) in (int, float) and 1 <= timeout <= 300, 'M07 생성 제한시간은 1~300초입니다.')
+    timeout = metadata['generation_timeout_seconds']
     try:
         evidence['http_request_attempted'] = True
         with urllib.request.urlopen(request, timeout=timeout) as response:
@@ -354,4 +393,5 @@ def generate(root, config, scenario):
     return dict(code=code, response=result, response_bytes=raw, request_id=result.get('id'),
                 model=result.get('model', value['model']), requested_model=value['model'],
                 prompt_version=prompt_version, instructions=instructions, input=text,
+                generation_spec_sha256=metadata['generation_spec_sha256'],
                 generated_by_llm=True, http_request_attempted=True, provider_response_observed=True)
