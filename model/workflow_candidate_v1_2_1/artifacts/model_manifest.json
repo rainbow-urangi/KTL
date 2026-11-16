@@ -1,0 +1,24 @@
+{
+  "model_id": "workflow_candidate_v1_2",
+  "mode": "DEVELOPMENT",
+  "adopt_boundary_candidate": true,
+  "artifact_sha256": {
+    "model.pt": "1832314d23fa44962eb17fc85d5000477476aed7e0508ee9fd8ed93a869f741e",
+    "feature_config.json": "3afa6136ea7620fea719be4b35308c6282bb5aa7575b0238c3920bdd6fa307f4",
+    "representation_config.json": "4afebc4ff99debf62c6d8d16d830783275d57feed681c2c955cd35c8f0995296",
+    "training_manifest.json": "4a60515741c355b7e973c109379090a281447718aa20911f0a088f4640156a91",
+    "representation_encoder_config.json": "40bf3ea8701abcbd5ba1ee624d50386788c34062cdf850cba2374d9f3dddf4b3",
+    "representation_encoder.pt": "86c77fa404223f97f4cf512244405d199cb7f2f76d2bb05b8886fbcf529eb7cf",
+    "model_config.json": "d9f5903ed26dd5423385b701a3af408257b57e8c3dc543b9111682641edadab1"
+  },
+  "code_sha256": {
+    "src/run.py": "f90a5a03106d3b70f551d6d0515067bb20d836d757a220d4e5926f2f10d52b55",
+    "src/neural.py": "2865d1879768b2860676a8746fc155a08e68142018edbdb576724daecbf7d132",
+    "src/process_map.py": "bc1deca85a407feaf2957fbba31f82779003b93199181c3d3112d3aadf55be8f",
+    "src/adapter.py": "0d6e26e95b046c98923b39934f7606ddeac41753a3e1a47ff18957a71e1dadb6",
+    "src/features.py": "edd09015959f8000f134065df0dc4f3c73a05492241ebb738b4c0a3c844e426b",
+    "src/failures.py": "19a9b0704eb05d736367b4eeeb658c730fc1fc0e1469c87ef810d10b0e56f12e",
+    "src/infer.py": "14e0daf28f19cbd84c2b78cc4f7d19539181c917cc4570b7396959ebbc08c9ec",
+    "src/report.py": "28fdbb90cdc3a562fffe52b2e89b123a7a9b63ebb000e878619e268c2a372bdf"
+  }
+}

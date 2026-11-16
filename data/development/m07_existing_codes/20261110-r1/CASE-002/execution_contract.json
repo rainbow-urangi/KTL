@@ -1,0 +1,204 @@
+{
+  "scenario_id": "CANON-SCN-2c33f8e8ccba60410e7f4993",
+  "steps": [
+    {
+      "action": "navigate",
+      "checks": [
+        {
+          "expected": "/mypage/schedule",
+          "kind": "url_path"
+        },
+        {
+          "expected": true,
+          "kind": "visible",
+          "target": {
+            "by": "css selector",
+            "value": ".schedule-page .monthly-calendar"
+          }
+        }
+      ],
+      "order": 1,
+      "target": {
+        "url": "https://rainbowlab.ai.kr/mypage/schedule"
+      }
+    },
+    {
+      "action": "click",
+      "checks": [
+        {
+          "expected": true,
+          "kind": "visible",
+          "target": {
+            "by": "css selector",
+            "value": ".schedule-modal"
+          }
+        },
+        {
+          "expected": 0,
+          "kind": "count",
+          "target": {
+            "by": "css selector",
+            "value": ".schedule-modal__delete-button"
+          }
+        },
+        {
+          "expected": "업무 등록",
+          "kind": "text_equals",
+          "target": {
+            "by": "css selector",
+            "value": ".schedule-modal__head h2"
+          }
+        },
+        {
+          "expected": "",
+          "kind": "value",
+          "target": {
+            "by": "css selector",
+            "value": "#schedule-title"
+          }
+        },
+        {
+          "expected": "",
+          "kind": "value",
+          "target": {
+            "by": "css selector",
+            "value": "#schedule-description"
+          }
+        }
+      ],
+      "order": 2,
+      "target": {
+        "by": "css selector",
+        "value": ".monthly-calendar__cell:nth-child(9) .monthly-calendar__date-number"
+      }
+    },
+    {
+      "action": "verify",
+      "checks": [
+        {
+          "expected": true,
+          "kind": "visible",
+          "target": {
+            "by": "css selector",
+            "value": ".schedule-modal"
+          }
+        }
+      ],
+      "order": 3,
+      "target": {
+        "by": "css selector",
+        "value": ".schedule-modal"
+      }
+    },
+    {
+      "action": "input",
+      "checks": [
+        {
+          "expected": "KTL-7C91-CU02-TITLE-P3-GPT-20261110-R1",
+          "kind": "value",
+          "target": {
+            "by": "css selector",
+            "value": "#schedule-title"
+          }
+        }
+      ],
+      "order": 4,
+      "target": {
+        "by": "css selector",
+        "value": "#schedule-title"
+      }
+    },
+    {
+      "action": "input",
+      "checks": [
+        {
+          "expected": "KTL-7C91-CU02 new schedule description-P3-GPT-20261110-R1",
+          "kind": "value",
+          "target": {
+            "by": "css selector",
+            "value": "#schedule-description"
+          }
+        }
+      ],
+      "order": 5,
+      "target": {
+        "by": "css selector",
+        "value": "#schedule-description"
+      }
+    },
+    {
+      "action": "submit",
+      "checks": [
+        {
+          "expected": false,
+          "kind": "visible",
+          "target": {
+            "by": "css selector",
+            "value": ".schedule-modal"
+          }
+        },
+        {
+          "expected": "KTL-7C91-CU02-TITLE-P3-GPT-20261110-R1",
+          "kind": "text_contains",
+          "target": {
+            "by": "css selector",
+            "value": ".schedule-page .monthly-calendar"
+          }
+        }
+      ],
+      "order": 6,
+      "target": {
+        "by": "css selector",
+        "value": "div > main.mypage > div.mypage-layout > section.mypage-content > div.schedule-modal:nth-of-type(2) > form.schedule-modal__panel"
+      }
+    },
+    {
+      "action": "verify",
+      "checks": [
+        {
+          "expected": false,
+          "kind": "visible",
+          "target": {
+            "by": "css selector",
+            "value": ".schedule-modal"
+          }
+        }
+      ],
+      "order": 7,
+      "target": {
+        "by": "css selector",
+        "value": ".schedule-modal"
+      }
+    },
+    {
+      "action": "navigate",
+      "checks": [
+        {
+          "expected": "/mypage/schedule",
+          "kind": "url_path"
+        },
+        {
+          "expected": true,
+          "kind": "visible",
+          "target": {
+            "by": "css selector",
+            "value": ".schedule-page .monthly-calendar"
+          }
+        },
+        {
+          "expected": "KTL-7C91-CU02-TITLE-P3-GPT-20261110-R1",
+          "kind": "text_contains",
+          "target": {
+            "by": "css selector",
+            "value": ".schedule-page .monthly-calendar"
+          }
+        }
+      ],
+      "order": 8,
+      "target": {
+        "url": "https://rainbowlab.ai.kr/mypage/schedule"
+      }
+    }
+  ],
+  "version": 1
+}

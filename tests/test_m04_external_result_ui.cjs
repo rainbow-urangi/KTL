@@ -12,6 +12,14 @@ const clone=value=>JSON.parse(JSON.stringify(value));
 const settle=async()=>{for(let i=0;i<18;i++)await new Promise(resolve=>setImmediate(resolve));};
 const response=(data,status=200)=>({ok:status>=200&&status<300,status,json:async()=>data});
 const deferred=()=>{let resolve;const promise=new Promise(done=>{resolve=done;});return {promise,resolve};};
+function detailAncestors(html,id) {
+  const offset=html.indexOf(`id="${id}"`);assert.notEqual(offset,-1,'missing DOM contract '+id);
+  const stack=[];
+  for(const match of html.slice(0,offset).matchAll(/<\/?details\b[^>]*>/gi)) {
+    if(/^<\//.test(match[0]))stack.pop();else stack.push(match[0]);
+  }
+  return stack;
+}
 function fixture(id=RUN,{cases=true,logs=true}={}) {
   const payload={run_mode:'DEVELOPMENT',dataset_id:'synthetic-fixed-scripts',external_run_id:'synthetic-external-run',
     source_module:'synthetic-api-engine',source_version:'fixture-v1',submitted_at:'2026-11-12T12:00:00+00:00',
@@ -49,6 +57,7 @@ function harness({latest=fixture().result,query='',jobs=[],records=[fixture()],s
       if(url==='/api/development/m04/scripts')return response({run_mode:'DEVELOPMENT',scripts:[],readiness:{selenium:false,chrome:false}});
       if(url==='/api/development/m04/executions')return response({executions:state.jobs});
       if(url==='/api/development/m03/runs')return response({runs:[]});
+      if(url.startsWith('/api/development/m04/m03-scenarios'))return response({run_mode:'DEVELOPMENT',m03_run_id:null,runs:[],scenarios:[],readiness:{selenium:false,chrome:false,login_configured:false}});
       if(url==='/api/development/m07/context')return response({run_mode:'DEVELOPMENT',scenarios:[]});
       if(url==='/api/development/m07/generations')return response({generations:[]});
       if(url.startsWith('/api/development/m04/executions/'))return response({execution:state.jobs.find(job=>url.endsWith(job.execution_id))});
@@ -66,11 +75,30 @@ async function test(name,fn){await fn();results.push(name);console.log('PASS '+n
   await test('latest API result uses server score and submitted denominator without Runner job',async()=>{
     const h=harness();await settle();
     assert.match(h.element('#m04-result').innerHTML,/37\.50%/);
-    assert.match(h.element('#m04-result').innerHTML,/外部|외부 API 접수/);
-    assert.match(h.element('#m04-result').innerHTML,/전체 실행 테스트<\/label><strong>2/);
+    assert.match(h.element('#m04-result').innerHTML,/외부 API 접수/);
+    assert.match(h.element('#m04-result').innerHTML,/전체<\/label><strong>2/);
+    assert.match(h.element('#m04-result').innerHTML,/부분 실행 2건 · 10건 전체 시험의 완료 결과가 아닙니다/);
     assert.equal(vm.runInContext('m04View.execution',h.context),null);
     assert.equal(h.element('#m04-start').disabled,true);
     assert.ok(h.state.sessionChecks>0);h.noMutations();
+  });
+  await test('external summary stays visible while history cases logs and provenance remain in closed execution detail',async()=>{
+    const h=harness();await settle();const html=h.element('#app').innerHTML;
+    assert.deepEqual(detailAncestors(html,'m04-result'),[]);
+    assert.deepEqual(detailAncestors(html,'m04-quick-start'),[],'M03 runner stays in the single primary input panel');
+    const optional=detailAncestors(html,'m04-start').find(tag=>tag.includes('id="m04-code-preparation"'));
+    assert.ok(optional);assert.doesNotMatch(optional,/\sopen(?:\s|=|>)/);
+    assert.equal(h.element('#m04-quick-start').disabled,true,'unavailable runtime cannot run from an external result view');
+    assert.equal(h.element('#m04-result').hidden,false);assert.match(h.element('#m04-result').innerHTML,/37\.50%/);
+    for(const id of ['m04-history','m04-business-progress','m04-cases','m04-logs','m04-result-notes']) {
+      const parent=detailAncestors(html,id).find(tag=>tag.includes('id="m04-execution-details"'));
+      assert.ok(parent,id+' must remain available under execution detail');assert.doesNotMatch(parent,/\sopen(?:\s|=|>)/);
+    }
+    assert.match(h.element('#m04-cases').innerHTML,/CASE-002/);
+    assert.ok(h.element('#m04-logs').textContent.includes('<script>log</script>'));
+    assert.match(h.element('#m04-result-notes').innerHTML,/공식 시험성적 아님/);
+    assert.equal(h.element('#m04-live-progress').hidden,true);
+    assert.equal(h.element('#m04-start').disabled,true);h.noMutations();
   });
   await test('only supplied cases, failure step and escaped evidence are rendered',async()=>{
     const h=harness();await settle();const html=h.element('#m04-cases').innerHTML;
@@ -78,7 +106,7 @@ async function test(name,fn){await fn();results.push(name);console.log('PASS '+n
     assert.match(html,/&lt;script&gt;bad&lt;\/script&gt;/);assert.ok(!html.includes('<script>bad'));
     assert.ok(h.element('#m04-logs').textContent.includes('<script>log</script>'));
     assert.ok(!html.includes('실행 전·후 화면'),'no fabricated screenshot or business step evidence');
-    assert.match(h.element('#m04-downloads').innerHTML,/&lt;img src=x onerror=bad&gt;/);h.noMutations();
+    assert.match(h.element('#m04-result-notes').innerHTML,/&lt;img src=x onerror=bad&gt;/);h.noMutations();
   });
   await test('counts-only result does not invent cases, failed steps or logs',async()=>{
     const data=fixture(RUN,{cases:false,logs:false}),h=harness({latest:data.result,records:[data]});await settle();
@@ -94,12 +122,12 @@ async function test(name,fn){await fn();results.push(name);console.log('PASS '+n
   });
   await test('reload restores external run with GET only even when a newer latest exists',async()=>{
     const next=fixture(NEXT),h=harness({latest:next.result,query:'&run_id='+RUN,records:[fixture(),next]});await settle();
-    assert.match(h.element('#m04-result').innerHTML,new RegExp(RUN));assert.ok(h.state.url.includes('run_id='+RUN));h.noMutations();
+    assert.match(h.element('#m04-result-notes').innerHTML,new RegExp(RUN));assert.ok(h.state.url.includes('run_id='+RUN));h.noMutations();
   });
   await test('refresh reads current catalog and selects newly accepted external result',async()=>{
     const next=fixture(NEXT),h=harness({records:[fixture(),next]});await settle();h.state.metric={...h.state.metric,latest:next.result};
     await h.click('#m04-refresh');await settle();
-    assert.match(h.element('#m04-result').innerHTML,new RegExp(NEXT));
+    assert.match(h.element('#m04-result-notes').innerHTML,new RegExp(NEXT));
     assert.equal(h.calls.filter(call=>call.url==='/api/evaluations?mode=DEVELOPMENT').length,1);h.noMutations();
   });
   const job={execution_id:EXECUTION,status:'COMPLETED',cases:[{case_id:'LOCAL',status:'PASS'}],counts:{total_execution_count:1,successful_execution_count:1},logs:[],result:{run_id:'local-synthetic',score:88}};
@@ -116,7 +144,8 @@ async function test(name,fn){await fn();results.push(name);console.log('PASS '+n
   });
   await test('active Runner remains the default and cannot be started twice',async()=>{
     const h=harness({jobs:[{...job,status:'RUNNING',result:null}]});await settle();
-    assert.match(h.element('#m04-result').innerHTML,/large-score">—/);assert.equal(h.element('#m04-start').disabled,true);
+    assert.equal(h.element('#m04-result').hidden,true);assert.doesNotMatch(h.element('#m04-result').innerHTML,/large-score">\d/);
+    assert.equal(h.element('#m04-live-progress').hidden,false);assert.equal(h.element('#m04-start').disabled,true);
     assert.equal(h.calls.some(call=>call.url===h.context.m04ResultArtifact(RUN)),false);h.noMutations();
   });
   await test('wrong result identity and nonnumeric score do not display success',async()=>{

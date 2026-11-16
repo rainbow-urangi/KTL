@@ -1,0 +1,17 @@
+{
+  "status": "PASS",
+  "run_id": "DEV-M02-20261112T063000-70d56362b4e9",
+  "accuracy": 64.51612903225806,
+  "completeness": 92.5925925925926,
+  "score": 77.28981596002805,
+  "counts": [
+    31,
+    20,
+    25,
+    27
+  ],
+  "evidence_sha256": "105f5ab3fff0f21013d9923828df4d4e2f18919ff593659a8800a2313361240d",
+  "csv_recalculation": "PASS",
+  "browser_click": "NOT_PERFORMED_USER_OWNED",
+  "method": "동결 프로세스맵을 기존 evaluator로 재평가합니다. 모델 재추론은 하지 않습니다."
+}

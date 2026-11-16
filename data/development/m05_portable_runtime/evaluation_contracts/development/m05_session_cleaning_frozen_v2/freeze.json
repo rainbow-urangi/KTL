@@ -1,0 +1,89 @@
+{
+  "schema_version": "m05-development-reproduction-freeze-v2",
+  "status": "FROZEN_FOR_DEVELOPMENT_REPRODUCTION_WITH_KNOWN_LIMITATION",
+  "frozen_at_utc": "2026-11-12T05:07:36.851023+00:00",
+  "scope": "DEVELOPMENT_ONLY_EXISTING_LOCKED20_FULL417",
+  "official_ready": false,
+  "official_pass": null,
+  "rule_version": "session-context-cleaning-v2",
+  "independent_verification": {
+    "measurement_status": "PASS",
+    "source": "Parent coordination report delivered 2026-11-12 after separate Verification Task",
+    "source_type": "INTERNAL_VERIFICATION_REPORT_NOT_A_SEPARATE_REPOSITORY_ARTIFACT",
+    "repository_report_path": null,
+    "finding": "Current click has_api=True may still be removed by repetition predicates. Generic safety limitation; no impact on this run REMOVE8 according to independent review.",
+    "decision": "No additional code/rule tuning. Freeze this exact candidate solely for DEVELOPMENT reproducibility; broader official readiness not asserted."
+  },
+  "known_limitations": [
+    "Repetition predicates do not universally guard current click has_api=True; a business/API-bearing click could be incorrectly removed on other inputs. No effect on this measured REMOVE8 per independent review.",
+    "Actual browser button-click verification not performed; HTTP endpoint, displayed response data and CSV exact bytes checked.",
+    "Same dataset used for development improvement; not a new held-out generalization estimate or KTL official acceptance.",
+    "Unknown field state remains KEEP; FN3 retained without changing targets or labels."
+  ],
+  "immutable_implementation_artifacts": [
+    {
+      "path": "backend/m05_session_cleaning.py",
+      "sha256": "277b1070b550d58c6de9b497e151e4686bfcb6c6a3c58de471bf28ea398268c8"
+    },
+    {
+      "path": "backend/m05_session_candidate.py",
+      "sha256": "d23ece3d0bccb289da3968f521a8407e77954878f7d6c8331189d8660f7a27a4"
+    },
+    {
+      "path": "backend/m05_session_candidate_web.py",
+      "sha256": "7261dbb0bcf8f8b9dcd7ada08a3184e88bfd877ce936418dbef88eebd1188941"
+    },
+    {
+      "path": "evaluation_contracts/development/m05_session_cleaning_candidate/engine.json",
+      "sha256": "499f5f1f13188e1856fbf094e718cae4154f313f41fa8bae8696962b5b0df862"
+    },
+    {
+      "path": "evaluation_contracts/development/m05_session_cleaning_candidate/rules.json",
+      "sha256": "ed8e9f911f8cae1b260e9742be6ba75dfa35f2f7ed13a3a401de8022528629c8"
+    },
+    {
+      "path": "tests/test_m05_session_cleaning.py",
+      "sha256": "324b00820aed655384f8459a16c0ce73cf1e469e247b595ffcf481a6da77798d"
+    }
+  ],
+  "baseline_freeze": {
+    "path": "evaluation_contracts/development/m05_baseline_frozen_v1/freeze.json",
+    "sha256": "23fde29b22c23976ccf02760f58b2c2490f3e5b054c385193fc7c463f5f00d10",
+    "unchanged": true
+  },
+  "protected_originals_and_labels": {
+    "manifest_path": "docs/agents/m05_session_cleaning_candidate_20261112/protected_before.json",
+    "manifest_sha256": "9aef5f100284131e72f66b5c2a14cefefd2657a3be668f75b68d31e137dba134",
+    "count": 78,
+    "verified_unchanged": true
+  },
+  "measurement": {
+    "run_directory": "results/development/m05_full_context/538f253c49816ede31831e052e8e42519c9c26768e130e096f925f0474e0a7bf",
+    "run_manifest_sha256": "252db8a7a002555217b1117e89eed170126ce53412b1c44c74c78c20978d8868",
+    "evidence_csv_sha256": "7def6d910c6f374d98b7383c9489d7b6b51178dc9a2fedba7687351a624351ff",
+    "result_sha256": "52c2bce34e8858fab2db3c68b943868c0e9c511840f1ba7459d5810477a6aac9",
+    "full_count": 417,
+    "target_count": 20,
+    "context_count": 397,
+    "status": "PASS",
+    "run_mode": "DEVELOPMENT",
+    "official_pass": null,
+    "TP": 7,
+    "FP": 0,
+    "FN": 3,
+    "TN": 10,
+    "precision": 1.0,
+    "recall": 0.7,
+    "f1": 0.8235294117647058,
+    "passed": true
+  },
+  "regression": {
+    "tests": 439,
+    "status": "PASS",
+    "log_path": "docs/agents/m05_session_cleaning_candidate_20261112/regression.log",
+    "log_sha256": "9165cfcaf175cef247dcf270c7263940e8310505a7fe4c51f36ad2e013b996be"
+  },
+  "rollback": "Original baseline files/config/service are unchanged. Stop using v2 candidate service; no raw/GT/result deletion needed.",
+  "additional_tuning": "STOPPED",
+  "engine_code_changed_for_freeze": false
+}

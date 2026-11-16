@@ -1,0 +1,8 @@
+{
+  "frontend/app.js": "d01211b9c482feec6e581b1f746cff08261fd1f68aa8d23b9d4722d76290fa07",
+  "frontend/index.html": "907165ef7402f20e5303339f6588ae1fb579bc00cb771fce9b47c27a629453ac",
+  "backend/measurement_ui.py": "bd4a293cb03cc945f74c474bb0034b2fc569706ef835ece3e5044029a1f12dae",
+  "backend/server.py": "3b445bb225a4009e8f20f0cb01ddcf774796a2825091c188c34d6725d251a90e",
+  "tests/test_frontend.cjs": "70d35e745562a09b236c1310f127c0127aba7a9963a59b116e942e74b7b2d76e",
+  "tests/test_measurement_ui.py": "d2caa6d6178b01028fcd9ab3c49f4a6e173f1670ea9c15ac6012d030c3141aeb"
+}

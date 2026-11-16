@@ -1,0 +1,42 @@
+[
+  {
+    "business_unit_id": "BU03",
+    "measurement_ready": false,
+    "required_count": 5,
+    "source_supported_actions": 3,
+    "typed_screens_resolved": 0,
+    "unresolved_actions": 2
+  },
+  {
+    "business_unit_id": "BU07",
+    "measurement_ready": false,
+    "required_count": 6,
+    "source_supported_actions": 3,
+    "typed_screens_resolved": 0,
+    "unresolved_actions": 3
+  },
+  {
+    "business_unit_id": "BU09",
+    "measurement_ready": false,
+    "required_count": 6,
+    "source_supported_actions": 4,
+    "typed_screens_resolved": 0,
+    "unresolved_actions": 2
+  },
+  {
+    "business_unit_id": "BU17",
+    "measurement_ready": false,
+    "required_count": 5,
+    "source_supported_actions": 2,
+    "typed_screens_resolved": 0,
+    "unresolved_actions": 3
+  },
+  {
+    "business_unit_id": "BU20",
+    "measurement_ready": false,
+    "required_count": 5,
+    "source_supported_actions": 2,
+    "typed_screens_resolved": 0,
+    "unresolved_actions": 3
+  }
+]

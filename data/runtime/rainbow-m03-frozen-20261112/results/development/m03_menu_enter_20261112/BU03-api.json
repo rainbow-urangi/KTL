@@ -1,0 +1,211 @@
+{
+  "request": {
+    "business_unit_id": "BU03",
+    "workflow_id": "WF-0003",
+    "generator_mode": "REAL",
+    "run_mode": "DEVELOPMENT"
+  },
+  "http_status": 200,
+  "response": {
+    "business_unit_id": "BU03",
+    "workflow_id": "WF-0003",
+    "scenario_id": "REAL-SCN-32336cc011a16dc0ad55",
+    "status": "FAILED",
+    "steps": [
+      {
+        "order": 1,
+        "action": "NAVIGATE",
+        "target": "일정 관리",
+        "source_step_id": "BA-caa42e4c-26bd-4171-a351-7e92e353a0fc",
+        "source_event_ids": [
+          "caa42e4c-26bd-4171-a351-7e92e353a0fc"
+        ],
+        "source_node_ids": [
+          "PM-020-N001"
+        ],
+        "page_context": "/mypage/personal-info",
+        "fields": [],
+        "http_evidence": [],
+        "completion_evidence": [],
+        "serializer_rule_id": "BA-TREE-MENU"
+      },
+      {
+        "order": 2,
+        "action": "DETAIL_OPEN",
+        "target": "레인보우 정기미팅_1014_03",
+        "source_step_id": "BA-cffa3461-7afe-4643-9b47-9c009ecd4b68",
+        "source_event_ids": [
+          "cffa3461-7afe-4643-9b47-9c009ecd4b68"
+        ],
+        "source_node_ids": [
+          "PM-020-N005"
+        ],
+        "page_context": "/mypage/schedule",
+        "fields": [],
+        "http_evidence": [],
+        "completion_evidence": [],
+        "serializer_rule_id": "BA-DIRECT-INTENT"
+      },
+      {
+        "order": 7,
+        "action": "INPUT",
+        "target": "업무",
+        "source_step_id": "BA-ce6ba3d6-0e7d-4a76-aba9-c439dec592c6",
+        "source_event_ids": [
+          "96c375c7-73e8-4ac9-bbe7-d09ac7c1de2d",
+          "ce6ba3d6-0e7d-4a76-aba9-c439dec592c6"
+        ],
+        "source_node_ids": [
+          "PM-020-N006",
+          "PM-020-N011"
+        ],
+        "page_context": "/mypage/schedule",
+        "fields": [
+          {
+            "label": "제목",
+            "id": "schedule-title",
+            "name": null,
+            "value_type": "text",
+            "selector": "#schedule-title",
+            "source_event_id": "ce6ba3d6-0e7d-4a76-aba9-c439dec592c6",
+            "source_node_ids": [
+              "PM-020-N011"
+            ]
+          }
+        ],
+        "http_evidence": [],
+        "completion_evidence": [],
+        "serializer_rule_id": "BA-INPUT-FORM"
+      },
+      {
+        "order": 14,
+        "action": "INPUT",
+        "target": "업무",
+        "source_step_id": "BA-e9765f07-e848-4741-9548-635595e6ba8d",
+        "source_event_ids": [
+          "96c375c7-73e8-4ac9-bbe7-d09ac7c1de2d",
+          "e9765f07-e848-4741-9548-635595e6ba8d",
+          "5d55b008-468e-42fa-a273-cd7c2b20ade4"
+        ],
+        "source_node_ids": [
+          "PM-020-N006",
+          "PM-020-N011"
+        ],
+        "page_context": "/mypage/schedule",
+        "fields": [
+          {
+            "label": "내용",
+            "id": "schedule-description",
+            "name": null,
+            "value_type": null,
+            "selector": "#schedule-description",
+            "source_event_id": "e9765f07-e848-4741-9548-635595e6ba8d",
+            "source_node_ids": [
+              "PM-020-N011"
+            ]
+          },
+          {
+            "label": "내용",
+            "id": "schedule-description",
+            "name": null,
+            "value_type": null,
+            "selector": "#schedule-description",
+            "source_event_id": "5d55b008-468e-42fa-a273-cd7c2b20ade4",
+            "source_node_ids": [
+              "PM-020-N011"
+            ]
+          }
+        ],
+        "http_evidence": [],
+        "completion_evidence": [],
+        "serializer_rule_id": "BA-INPUT-FORM"
+      },
+      {
+        "order": 16,
+        "action": "REGISTER",
+        "target": "등록",
+        "source_step_id": "BA-e69dc460-395e-4fe3-b113-9d9521e2224c",
+        "source_event_ids": [
+          "96c375c7-73e8-4ac9-bbe7-d09ac7c1de2d",
+          "e69dc460-395e-4fe3-b113-9d9521e2224c"
+        ],
+        "source_node_ids": [
+          "PM-020-N006",
+          "PM-020-N008"
+        ],
+        "page_context": "/mypage/schedule",
+        "fields": [],
+        "http_evidence": [],
+        "completion_evidence": [],
+        "serializer_rule_id": "TRACK-A-RECORDED-NATIVE-SUBMIT"
+      }
+    ],
+    "issues": [
+      {
+        "order": 3,
+        "source_step_id": "BA-b8ed42f9-d2aa-40bc-8ba6-c6bee5756314",
+        "reason": "UNRESOLVED_OR_UNSUPPORTED_OBSERVED_STEP"
+      },
+      {
+        "order": 4,
+        "source_step_id": "BA-964aacdd-1977-47ee-9d1f-f026b74433bb",
+        "reason": "UNRESOLVED_OR_UNSUPPORTED_OBSERVED_STEP"
+      },
+      {
+        "order": 5,
+        "source_step_id": "BA-ab2f8807-4fee-4ef3-898a-105bf12f28dd",
+        "reason": "UNRESOLVED_OR_UNSUPPORTED_OBSERVED_STEP"
+      },
+      {
+        "order": 6,
+        "source_step_id": "BA-c35b4b88-2257-40f4-ac0e-770136ce0e02",
+        "reason": "UNRESOLVED_OR_UNSUPPORTED_OBSERVED_STEP"
+      },
+      {
+        "order": 8,
+        "source_step_id": "BA-fdfbfa98-394d-476a-88e6-e9a0d1113cd8",
+        "reason": "UNRESOLVED_OR_UNSUPPORTED_OBSERVED_STEP"
+      },
+      {
+        "order": 9,
+        "source_step_id": "BA-cc5c965f-bb67-45fd-bec6-50be2ed20824",
+        "reason": "UNRESOLVED_OR_UNSUPPORTED_OBSERVED_STEP"
+      },
+      {
+        "order": 10,
+        "source_step_id": "BA-7a257ad4-760a-4225-bf50-b610345ae818",
+        "reason": "UNRESOLVED_OR_UNSUPPORTED_OBSERVED_STEP"
+      },
+      {
+        "order": 11,
+        "source_step_id": "BA-da23380d-3521-4f5b-b563-1053ec1988ad",
+        "reason": "UNRESOLVED_OR_UNSUPPORTED_OBSERVED_STEP"
+      },
+      {
+        "order": 12,
+        "source_step_id": "BA-ddc68f94-5574-4a9a-b172-6db26232487e",
+        "reason": "UNRESOLVED_OR_UNSUPPORTED_OBSERVED_STEP"
+      },
+      {
+        "order": 13,
+        "source_step_id": "BA-da221db9-4c86-4284-a9a1-e15ef77f4bc0",
+        "reason": "UNRESOLVED_OR_UNSUPPORTED_OBSERVED_STEP"
+      },
+      {
+        "order": 15,
+        "source_step_id": "BA-492d6a89-4871-4c45-945f-cccd3d7b4f8c",
+        "reason": "UNRESOLVED_OR_UNSUPPORTED_OBSERVED_STEP"
+      }
+    ],
+    "generator_version": "m03-observed-business-steps-v1.1-menu-enter",
+    "source_process_id": "PM-020",
+    "source_snapshot_sha256": "86b1e77c8ca4ec365806d7d145d99ffa802bc097347b3db16ed9b3f600503f39",
+    "readiness_only": true,
+    "run_mode": "DEVELOPMENT",
+    "generator_mode": "REAL",
+    "synthetic": false,
+    "official_pass": null
+  },
+  "started_at": "2026-11-12T08:25:59.260873+00:00",
+  "completed_at": "2026-11-12T08:25:59.274552+00:00"
+}

@@ -26,6 +26,18 @@ ACTIVE = {'QUEUED', 'GENERATING', 'VALIDATING'}
 M03_ID = re.compile(r'DEV-M03-\d{8}T\d{6}-[a-f0-9]{12}')
 
 
+def _automatic_validation_policy():
+    return dict(enabled=True, max_attempts=1,
+                stages=['SYNTAX', 'EXECUTION_PREPARATION', 'EXECUTION'],
+                browser_not_ready='PRESERVE_SYNTAX_NOT_READY',
+                retry_on_unavailable_browser=False)
+
+
+def _pending_automatic_validation(job):
+    return (job.get('auto_validate') is True and job.get('status') == 'GENERATED'
+            and job.get('validation_attempt_count', 0) == 0)
+
+
 def _scenario_declared(tree, identity):
     for node in tree.body:
         if isinstance(node, (ast.Assign, ast.AnnAssign)):
@@ -59,7 +71,7 @@ class M07Manager(M04Manager):
             if job['status'] == 'VALIDATING' and case['syntax_status'] == 'PASS':
                 case['execution_status'] = case['status']
             passed = all(case[key] == 'PASS' for key in ('generation_status', 'syntax_status', 'execution_status'))
-            case['final_status'] = 'PASS' if passed else 'PENDING' if any(case[key] in {'PENDING', 'RUNNING'}
+            case['final_status'] = 'PASS' if passed else 'PENDING' if any(case[key] in {'PENDING', 'RUNNING', 'NOT_READY'}
                                         for key in ('generation_status', 'syntax_status', 'execution_status')) else 'FAIL'
         self._counts(job)
         self._measurement(job)
@@ -165,6 +177,8 @@ class M07Manager(M04Manager):
             if case.get('execution_preparation_status') in {'PENDING', 'RUNNING'}:
                 case['execution_preparation_status'] = 'SKIPPED'
         job.update(status='INTERRUPTED', completed_at=_now(), error=reason, result=None)
+        if job.get('auto_validate') is True:
+            job['automatic_phase'] = 'INTERRUPTED'
         self._log(job, None, reason)
         self._save(job)
 
@@ -178,7 +192,7 @@ class M07Manager(M04Manager):
                     if not self._session_has(self._session_kind, path.parent.name):
                         continue
                     job = self._json(path)
-                    if job.get('status') in ACTIVE:
+                    if job.get('status') in ACTIVE or _pending_automatic_validation(job):
                         self._interrupt(job, '이전 작업이 중단되어 점수를 계산하지 않았습니다.')
             finally:
                 lock.close()
@@ -243,8 +257,9 @@ class M07Manager(M04Manager):
         return dict(schema(), run_mode='DEVELOPMENT', measurement_protocol='M07_MEETING_20_V1', readiness=ready,
                     provider_state=self._provider_current())
 
-    def create_meeting(self, payload):
+    def create_meeting(self, payload, *, auto_validate=False):
         from .meeting import prepare_batch
+        require(type(auto_validate) is bool, 'auto_validate는 boolean이어야 합니다.')
         items = prepare_batch(payload)
         if not readiness(self.root, self.config_provider())['configured'] and self.generator is generate:
             raise EvaluationError('업무 컴퓨터의 API 키와 실제 모델 ID를 연결하세요. 실행하지 않은 결과는 생성하지 않습니다.', 'NOT_CONFIGURED')
@@ -253,7 +268,8 @@ class M07Manager(M04Manager):
         refs = [dict(m03_run_id=None, scenario_id=row['scenario']['scenario_id']) for row in items]
         sources = [(ref, row['scenario'], False) for ref, row in zip(refs, items)]
         inputs = [self._execution_inputs(row['scenario']) for row in items]
-        return self._create_sources(sources, inputs, {}, False, meeting_items=items, meeting_payload=payload)
+        return self._create_sources(sources, inputs, {}, False, meeting_items=items, meeting_payload=payload,
+                                    auto_validate=auto_validate)
 
     def prepare_workflows(self, payload):
         from .workflows import prepare_batch
@@ -370,7 +386,7 @@ class M07Manager(M04Manager):
         return self._create_sources(sources, prepared_inputs, registered, prepared_request)
 
     def _create_sources(self, sources, prepared_inputs, registered, prepared_request, *, workflows=None, meeting_items=None,
-                        meeting_payload=None):
+                        meeting_payload=None, auto_validate=False):
         with self.lock:
             run_lock = self._global_lock()
             if not run_lock:
@@ -485,6 +501,9 @@ class M07Manager(M04Manager):
                     policy.update(fixed_at=job['started_at'],
                                   generation_plans=[dict(case_id=case['case_id'], input_id=case['input_id'],
                                                          sha256=case['generation_plan_sha256']) for case in cases])
+                    if auto_validate:
+                        policy['automatic_validation'] = _automatic_validation_policy()
+                        job.update(auto_validate=True, validation_attempt_count=0, automatic_phase='GENERATION')
                     policy_raw = _encoded(policy)
                     with (folder / 'trial_policy.json').open('xb') as output:
                         output.write(policy_raw)
@@ -507,7 +526,7 @@ class M07Manager(M04Manager):
             if not self._session_has(self._session_kind, path.parent.name):
                 continue
             job = self._json(path)
-            if job.get('status') in ACTIVE:
+            if job.get('status') in ACTIVE or _pending_automatic_validation(job):
                 self._interrupt(job, '이전 작업이 중단되어 점수를 계산하지 않았습니다.')
 
     def _launch(self, identity, phase, run_lock, browser_lock=None):
@@ -551,7 +570,7 @@ class M07Manager(M04Manager):
     def cancel(self, identity):
         with self.lock:
             job = self._job(identity)
-            if job['status'] in ACTIVE:
+            if job['status'] in ACTIVE or _pending_automatic_validation(job):
                 self._safe(self._job_path(identity).parent / 'cancel.request').touch(exist_ok=True)
                 job['cancel_requested'] = True
             return {'generation': self._public_job(job)}
@@ -608,6 +627,15 @@ class M07Manager(M04Manager):
                     and case.get('source_scenario_sha256') == _sha(_encoded(item['scenario']))
                     and case.get('meeting_input_sha256') == _sha(_encoded(item['source_raw'])),
                     '20개 입력과 사례·실행 조건의 연결이 다릅니다.')
+        automatic = ('auto_validate' in job or 'automatic_phase' in job or 'validation_attempt_count' in job
+                     or isinstance(job.get('trial_policy'), dict) and 'automatic_validation' in job['trial_policy'])
+        if automatic:
+            require(job.get('auto_validate') is True
+                    and isinstance(job.get('trial_policy_sha256'), str)
+                    and re.fullmatch(r'[a-f0-9]{64}', job['trial_policy_sha256'])
+                    and isinstance(job.get('trial_policy'), dict)
+                    and job['trial_policy'].get('automatic_validation') == _automatic_validation_policy(),
+                    '자동 검사에는 사전 고정 정책 원본과 SHA-256이 필요합니다.')
         if job.get('trial_policy_sha256'):
             folder = self._job_path(job['execution_id']).parent
             policy_raw = self._safe(folder / 'trial_policy.json').read_bytes()
@@ -615,6 +643,10 @@ class M07Manager(M04Manager):
             policy = json.loads(policy_raw)
             require(policy == job.get('trial_policy') and len(policy['inputs']) == len(job['cases']),
                     '사전 고정 시험 정책과 작업 기록이 다릅니다.')
+            if job.get('auto_validate') is True or 'automatic_validation' in policy:
+                require(job.get('auto_validate') is True
+                        and policy.get('automatic_validation') == _automatic_validation_policy(),
+                        '사전 고정 자동 검사 정책과 작업 기록이 다릅니다.')
             for row, plan, case in zip(policy['inputs'], policy['generation_plans'], job['cases']):
                 require(row['input_id'] == case['input_id'] and row['batch_id'] == case.get('batch_id')
                         and plan['case_id'] == case['case_id'] and plan['input_id'] == case['input_id']
@@ -749,37 +781,116 @@ class M07Manager(M04Manager):
             output.write(raw)
         job['archive_sha256'] = _sha(raw)
 
-    def _validate(self, job):
+    def _validation_archive(self, job):
         if job.get('meeting_protocol') is True:
             self._check_meeting_inputs(job)
         archive = self._safe(self._job_path(job['execution_id']).parent / 'code.zip').read_bytes()
         require(_sha(archive) == job['archive_sha256'], '생성 원본 묶음 SHA-256 불일치')
+        return archive
+
+    def _prepare_validation_case(self, job, case):
+        self._check(job, case)
+        checked_code = self._case_path(job, case, 'script.py').read_bytes()
+        case['validation_code_sha256'] = _sha(checked_code)
+        require(case['validation_code_sha256'] == case['code_sha256'], '화면 코드와 문법 검사 원본이 다릅니다.')
+        try:
+            tree = ast.parse(checked_code, filename='script.py')
+            # Produce a code object only; never import or execute generated code here.
+            compile(tree, 'script.py', 'exec', dont_inherit=True)
+        except (SyntaxError, UnicodeError, ValueError) as exc:
+            case.update(syntax_status='FAIL', execution_status='SKIPPED', status='SKIPPED',
+                        execution_preparation_status='SKIPPED',
+                        error='Python 문법 오류' + (' (행 ' + str(exc.lineno) + ')' if isinstance(exc, SyntaxError) else ''))
+            self._save(job)
+            return False
+        case['syntax_status'] = 'PASS'
+        imports = any((isinstance(node, ast.Import) and any(a.name.split('.')[0] == 'selenium' for a in node.names))
+                      or (isinstance(node, ast.ImportFrom) and (node.module or '').split('.')[0] == 'selenium') for node in ast.walk(tree))
+        if (not imports or not any(isinstance(node, ast.Assert) for node in ast.walk(tree))
+                or not _scenario_declared(tree, case['scenario_id'])):
+            case.update(status='SKIPPED', execution_status='SKIPPED', execution_preparation_status='FAIL',
+                        error='Selenium import, 일치하는 SCENARIO_ID 및 기대 결과 assert가 필요합니다.')
+            self._save(job)
+            return False
+        case['execution_preparation_status'] = 'PASS'
+        self._save(job)
+        return True
+
+    def _automatic_execution_unavailable(self, job, reason):
+        for case in job['cases']:
+            if (case['generation_status'] == 'PASS' and case['syntax_status'] == 'PASS'
+                    and case.get('execution_preparation_status') == 'PASS'):
+                case.update(status='NOT_READY', execution_status='NOT_READY',
+                            execution_preparation_status='NOT_READY', error=reason)
+        job.update(status='COMPLETED', completed_at=_now(), automatic_phase='NOT_READY',
+                   error=reason, result=None)
+        self._save(job)
+
+    def _automatic_validate(self, job):
+        require(job.get('auto_validate') is True and job.get('validation_attempt_count', 0) == 0,
+                '자동 검사는 사전에 지정한 작업에서 한 번만 수행합니다.')
+        if self._cancelled(job['execution_id']):
+            self._interrupt(job, '사용자 검사 중단')
+            return
+        job.update(status='VALIDATING', validation_started_at=_now(), validation_attempt_count=1,
+                   automatic_phase='SYNTAX')
+        self._save(job)
+        self._validation_archive(job)
+        # Inspect every generated original before testing browser readiness. A
+        # missing browser must not erase independent Python syntax evidence.
+        for case in job['cases']:
+            if self._cancelled(job['execution_id']):
+                self._interrupt(job, '사용자 검사 중단')
+                return
+            if case['generation_status'] == 'PASS':
+                self._prepare_validation_case(job, case)
+        if self._cancelled(job['execution_id']):
+            self._interrupt(job, '사용자 검사 중단')
+            return
+        candidates = [case for case in job['cases'] if case['generation_status'] == 'PASS'
+                      and case['syntax_status'] == 'PASS' and case.get('execution_preparation_status') == 'PASS']
+        if not candidates:
+            self._validate(job, syntax_prepared=True)
+            return
+        try:
+            ready = self._readiness()
+            available = ready.get('selenium') is True and ready.get('chrome') is True
+            reason = ready.get('message') or 'Selenium과 Chrome 실행 환경이 준비되지 않았습니다.'
+        except Exception as exc:
+            available, reason = False, '실행 환경을 확인하지 못했습니다: ' + _masked(exc)
+        if self._cancelled(job['execution_id']):
+            self._interrupt(job, '사용자 검사 중단')
+            return
+        if not available:
+            self._automatic_execution_unavailable(job, reason)
+            return
+        lock_dir = self._safe(self.root / 'data/development/m04_runner')
+        lock_dir.mkdir(parents=True, exist_ok=True)
+        browser_lock = _RunLock(self._safe(lock_dir / 'runner.lock'))
+        if not browser_lock.acquire():
+            self._automatic_execution_unavailable(job, '다른 Selenium 실행이 진행 중이라 자동 실행하지 않았습니다.')
+            return
+        try:
+            job['automatic_phase'] = 'EXECUTION'
+            self._save(job)
+            self._validate(job, syntax_prepared=True)
+        finally:
+            browser_lock.close()
+
+    def _validate(self, job, *, syntax_prepared=False):
+        archive = self._validation_archive(job)
         for case in job['cases']:
             if self._cancelled(job['execution_id']):
                 self._interrupt(job, '사용자 검사 중단')
                 return
             if case['generation_status'] != 'PASS':
                 continue
-            self._check(job, case)
-            checked_code = self._case_path(job, case, 'script.py').read_bytes()
-            case['validation_code_sha256'] = _sha(checked_code)
-            require(case['validation_code_sha256'] == case['code_sha256'], '화면 코드와 문법 검사 원본이 다릅니다.')
-            try:
-                tree = ast.parse(checked_code, filename='script.py')
-            except (SyntaxError, UnicodeError, ValueError) as exc:
-                case.update(syntax_status='FAIL', execution_status='SKIPPED', status='SKIPPED',
-                            execution_preparation_status='SKIPPED',
-                            error='Python 문법 오류' + (' (행 ' + str(exc.lineno) + ')' if isinstance(exc, SyntaxError) else ''))
-                self._save(job)
-                continue
-            case['syntax_status'] = 'PASS'
-            imports = any((isinstance(node, ast.Import) and any(a.name.split('.')[0] == 'selenium' for a in node.names))
-                          or (isinstance(node, ast.ImportFrom) and (node.module or '').split('.')[0] == 'selenium') for node in ast.walk(tree))
-            if (not imports or not any(isinstance(node, ast.Assert) for node in ast.walk(tree))
-                    or not _scenario_declared(tree, case['scenario_id'])):
-                case.update(status='SKIPPED', execution_preparation_status='FAIL',
-                            error='Selenium import, 일치하는 SCENARIO_ID 및 기대 결과 assert가 필요합니다.')
-                self._save(job)
+            if syntax_prepared:
+                self._check(job, case)
+                require(case.get('validation_code_sha256') == case['code_sha256'], '문법 검사 원본 SHA-256 불일치')
+                if case['syntax_status'] != 'PASS' or case.get('execution_preparation_status') != 'PASS':
+                    continue
+            elif not self._prepare_validation_case(job, case):
                 continue
             try:
                 case['execution_preparation_status'] = 'PASS'
@@ -812,6 +923,8 @@ class M07Manager(M04Manager):
         else:
             job['result'] = None
             job['error'] = '전체 등록 요청의 HTTP 시도 근거 또는 생성 코드가 없어 점수를 계산할 수 없습니다.'
+        if job.get('auto_validate') is True:
+            job['automatic_phase'] = 'COMPLETED' if ready else 'NOT_READY'
         self._save(job)
 
     def _evaluate_meeting(self, job, archive):
@@ -892,9 +1005,16 @@ class M07Manager(M04Manager):
     def _work(self, identity, phase, run_lock, browser_lock):
         job = self._job(identity)
         try:
-            self._generate(job) if phase == 'generate' else self._validate(job)
+            if phase == 'generate':
+                self._generate(job)
+                if _pending_automatic_validation(job):
+                    self._automatic_validate(job)
+            else:
+                self._validate(job)
         except BaseException as exc:
             job.update(status='ERROR', completed_at=_now(), error=_masked(exc), result=None)
+            if job.get('auto_validate') is True:
+                job['automatic_phase'] = 'ERROR'
             self._save(job)
         finally:
             self._active = None

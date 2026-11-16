@@ -1,0 +1,23 @@
+{
+  "cleaning_model_version": "existing-dataset-cleaning-event-adapter-v1",
+  "model_artifact": {
+    "path": "/Users/sooeunkim/workspace/RainbowKTL/evaluation_contracts/development/m05_baseline_adapter_candidate/rules.json",
+    "sha256": "4209905e8112c92c79450d935030e4e80c5334f4212584c45ace5f5b6103d4c3"
+  },
+  "adapter_artifact": {
+    "path": "/Users/sooeunkim/workspace/RainbowKTL/backend/m05_baseline_adapter.py",
+    "sha256": "e66c97b4a8a93f529f3778ed2c6f11202c65b1d53179d7d3c9d018e787e62d21"
+  },
+  "interpreter_artifact": {
+    "path": "/Library/Frameworks/Python.framework/Versions/3.10/bin/python3.10",
+    "sha256": "6d79f1a4ec08239d2e901db97d35962b300d4431393d7b502ba00f5c1df30dd0"
+  },
+  "adapters": {
+    "cleaning": [
+      "/Library/Frameworks/Python.framework/Versions/3.10/bin/python3.10",
+      "/Users/sooeunkim/workspace/RainbowKTL/backend/m05_baseline_adapter.py",
+      "--model",
+      "/Users/sooeunkim/workspace/RainbowKTL/evaluation_contracts/development/m05_baseline_adapter_candidate/rules.json"
+    ]
+  }
+}

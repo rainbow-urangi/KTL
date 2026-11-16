@@ -21,6 +21,8 @@ class IntegrationSandboxTests(unittest.TestCase):
         config=json.loads((ROOT/'backend/config.json').read_text(encoding='utf-8'))
         config['m03']={'generator_mode':'MOCK'}
         config['adapters']['scenario_generation']=[]
+        # Keep the synthetic sandbox independent of both real-generator paths.
+        config.pop('m03_real_generator',None)
         (self.root/'backend/config.json').write_text(json.dumps(config),encoding='utf-8')
         shutil.copytree(ROOT/'frontend',self.root/'frontend')
         shutil.copytree(ROOT/'data/evaluation/mock-dataset-01',self.root/'data/evaluation/mock-dataset-01')
@@ -97,3 +99,45 @@ class IntegrationSandboxTests(unittest.TestCase):
         self.assertNotEqual(second['origin_generation_id'],body['origin_generation_id'])
         self.assertEqual(self.request('POST','/api/m03/generate',dict(request,run_mode='OFFICIAL'))[0],422)
         self.assertEqual(self.request('POST','/api/m03/generate',dict(request,generator_mode='REAL'))[0],503)
+
+    def test_real_generation_http_with_existing_binding_contract(self):
+        snapshot={'processes':[{'canonical_instance_id':'WF-synthetic','source_process_id':'PM-synthetic',
+            'business_steps':[{'action_type':'INPUT','target':'Synthetic field','step_order':1,
+                'resolution_status':'RESOLVED','source_event_ids':['event-synthetic'],
+                'source_node_ids':['node-synthetic'],'generated_step_id':'step-synthetic'}]}]}
+        path=self.root/'observed.json';path.write_text(json.dumps(snapshot))
+        config_path=self.root/'backend/config.json';config=json.loads(config_path.read_text())
+        config['m03_real_generator']={'snapshot_path':'observed.json','snapshot_sha256':digest(path)}
+        config_path.write_text(json.dumps(config))
+        request={'business_unit_id':'DEV-synthetic','workflow_id':'WF-synthetic','generator_mode':'REAL'}
+        status,raw=self.request('POST','/api/m03/generate',request);body=json.loads(raw)
+        self.assertEqual(status,200,body);self.assertEqual(body['status'],'SUCCESS')
+        self.assertFalse(body['synthetic']);self.assertEqual(body['generator_mode'],'REAL')
+        self.assertEqual(body['generator_version'],'m03-observed-business-steps-v1.1-menu-enter')
+        self.assertEqual(body['steps'][0]['source_event_ids'],['event-synthetic'])
+        second_status,second_raw=self.request('POST','/api/m03/generate',request)
+        second=json.loads(second_raw)
+        self.assertEqual(second_status,200)
+        self.assertEqual(second['scenario_id'],body['scenario_id'])
+        self.assertEqual(second['steps'],body['steps'])
+        self.assertNotEqual(second['origin_generation_id'],body['origin_generation_id'])
+        self.assertEqual(self.request('POST','/api/m03/generate',dict(request,workflow_id='unknown'))[0],422)
+        self.assertEqual(self.request('POST','/api/m03/generate',dict(request,run_mode='OFFICIAL'))[0],422)
+        for result in (body,second):
+            receipt=self.root/'results/m03_generations'/result['origin_generation_id']/'receipt.json'
+            self.assertEqual(json.loads(receipt.read_text(encoding='utf-8'))['status'],'COMPLETED')
+        self.assertFalse((self.root/'results/development').exists())
+
+    def test_default_real_binding_matches_preserved_diagnostic_source(self):
+        # Read-only integrity check, not a re-evaluation of the historical ten cases.
+        config=json.loads((ROOT/'backend/config.json').read_text())
+        previous=ROOT/'results/development/m03_current_semantics_20261109'
+        self.assertEqual(config['m03_real_generator'],json.loads((previous/'config.json').read_text())['m03_real_generator'])
+        binding=config['m03_real_generator']
+        self.assertEqual(digest(ROOT/binding['snapshot_path']),binding['snapshot_sha256'])
+        manifest=json.loads((previous/'manifest.json').read_text())
+        # Historical schema/input stay frozen; generator has the explicitly approved MENU_ENTER change.
+        self.assertEqual(digest(ROOT/'backend/m03_real_generator.py'),
+                         'dd52a52e0ca98a9f4c94ed32d62d1e6c3eb9dc9d8b97b3f48b519d9ff21a7914')
+        for name in ('evaluation_contracts/m03-scenario.schema.json',):
+            self.assertEqual(digest(ROOT/name),manifest['generator_evaluator_schema_sha256'][name])

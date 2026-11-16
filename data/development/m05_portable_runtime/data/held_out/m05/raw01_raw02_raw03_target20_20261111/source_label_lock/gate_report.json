@@ -1,0 +1,27 @@
+{
+  "created_at_utc": "2026-11-11T13:47:09.237438+00:00",
+  "label_status": "LOCKED_KEEP10_REMOVE10",
+  "evaluation_status": "BLOCKED_HELD_OUT_AUDIT_AND_INDEPENDENT_VERIFICATION",
+  "label_evidence": "18 existing labels plus raw03 title26 and description37. New labels depend on direct retrospective user confirmation plus raw context, not raw-only values.",
+  "gates": {
+    "raw_integrity": "PASS_67_EVENTS_57_TASKS_1_SESSION",
+    "prior_artifact_hashes": "PASS_UNCHANGED",
+    "available_history17_nonoverlap": "PASS_WITHIN_RECORDED_SCOPE",
+    "source_after_recorded_freeze": "PASS",
+    "current_engine_freeze_reverification": "SEPARATE_NOT_PERFORMED_BY_BLIND_LABELER",
+    "complete_training_development_history": "UNVERIFIED",
+    "actual_engine_feature_content_nonoverlap": "UNVERIFIED",
+    "independent_label_lock_verification": "PENDING",
+    "evaluation_authorized_or_ready": false
+  },
+  "held_out_declared_true": false,
+  "training_nonuse_declared_false": false,
+  "development_nonuse_declared_false": false,
+  "prediction_files_read": false,
+  "engine_or_adapter_read_or_executed": false,
+  "prediction_executions_by_this_review": 0,
+  "metrics_generated": false,
+  "official_result": false,
+  "earlier_paste_course": "UNKNOWN; no assertion of failed insertion or deletion.",
+  "scope_limitation": "No engine-facing evaluation manifest or features are built here. Full raw01/02/03 context must remain intact for a later authorized one-shot evaluation after gates pass."
+}

@@ -1,0 +1,89 @@
+test_case_isolation_and_order (test_m05_baseline_adapter.M05BaselineAdapterTests) ... ok
+test_generated_sequences_exact_equivalence (test_m05_baseline_adapter.M05BaselineAdapterTests) ... ok
+test_invalid_and_gt_rejected (test_m05_baseline_adapter.M05BaselineAdapterTests) ... ok
+test_no_min_length_or_truncation (test_m05_baseline_adapter.M05BaselineAdapterTests) ... ok
+test_prefix_empty (test_m05_baseline_adapter.M05BaselineAdapterTests) ... ok
+test_rules_and_link (test_m05_baseline_adapter.M05BaselineAdapterTests) ... ok
+test_real_frozen_artifacts_unchanged (test_m05_full_context.FrozenIntegrityTests) ... ok
+test_approval_is_exact_and_reviewer_independent (test_m05_full_context.M05FullContextTests) ... ok
+test_bad_predictions_persist_attempt_without_score (test_m05_full_context.M05FullContextTests) ... ok
+test_case_collision_and_row_loss (test_m05_full_context.M05FullContextTests) ... ok
+test_changed_approval_cannot_reopen_exposed_input (test_m05_full_context.M05FullContextTests) ... ok
+test_contract_and_provenance_fail_closed (test_m05_full_context.M05FullContextTests) ... ok
+test_csv_all_keep_zero_denominator_and_tampering (test_m05_full_context.M05FullContextTests) ... ok
+test_full_context_effect_and_single_batch_csv (test_m05_full_context.M05FullContextTests) ... ok
+test_full_sequence_preserved_and_targets_separate (test_m05_full_context.M05FullContextTests) ... ok
+test_history_overlap_or_stale_registry_rejected (test_m05_full_context.M05FullContextTests) ... ok
+test_history_overlap_reconciled_source_is_rejected (test_m05_full_context.M05FullContextTests) ... ok
+test_invalid_remove_categories_block_before_prediction (test_m05_full_context.M05FullContextTests) ... ok
+test_locked_content_tamper_blocks (test_m05_full_context.M05FullContextTests) ... ok
+test_missing_approval_blocks_before_adapter_and_score (test_m05_full_context.M05FullContextTests) ... ok
+test_missing_independent_logs_or_changed_label_lock (test_m05_full_context.M05FullContextTests) ... ok
+test_missing_or_duplicate_targets_and_keep_category (test_m05_full_context.M05FullContextTests) ... ok
+test_no_quota_contract_and_web_copy (test_m05_full_context.M05FullContextTests) ... ok
+test_no_quota_run_preserves_binary_scoring_and_csv_verification (test_m05_full_context.M05FullContextTests) ... ok
+test_omitted_context_file_rejected (test_m05_full_context.M05FullContextTests) ... ok
+test_output_id_validation_and_category_independence (test_m05_full_context.M05FullContextTests) ... ok
+test_postfreeze_and_completeness (test_m05_full_context.M05FullContextTests) ... ok
+test_remove_category_distributions_have_no_quotas (test_m05_full_context.M05FullContextTests) ... ok
+test_web_blocks_missing_bundle_and_lists_new_schema (test_m05_full_context.M05FullContextTests) ... 127.0.0.1 - - [11/Nov/2026 22:08:46] "GET /datasets HTTP/1.1" 200 -
+127.0.0.1 - - [11/Nov/2026 22:08:46] "POST /validate HTTP/1.1" 200 -
+127.0.0.1 - - [11/Nov/2026 22:08:46] "POST /validate HTTP/1.1" 422 -
+127.0.0.1 - - [11/Nov/2026 22:08:46] "GET /evidence.csv HTTP/1.1" 404 -
+ok
+test_web_measure_download_and_repeated_click (test_m05_full_context.M05FullContextTests) ... 127.0.0.1 - - [11/Nov/2026 22:08:46] "POST /measure HTTP/1.1" 200 -
+127.0.0.1 - - [11/Nov/2026 22:08:46] "GET /runs/6e791dbe0723190a6cf462a895fce9dff9cedc92488641970d2f757d9d041e2d/evidence.csv HTTP/1.1" 200 -
+127.0.0.1 - - [11/Nov/2026 22:08:46] "POST /measure HTTP/1.1" 422 -
+127.0.0.1 - - [11/Nov/2026 22:08:46] "GET /runs/6e791dbe0723190a6cf462a895fce9dff9cedc92488641970d2f757d9d041e2d/evidence.csv HTTP/1.1" 404 -
+ok
+test_confusion_csv_determinism (test_m05_heldout.M05HeldOutTests) ... ok
+test_contract (test_m05_heldout.M05HeldOutTests) ... ok
+test_empty_history_and_empty_audit_rejected (test_m05_heldout.M05HeldOutTests) ... ok
+test_engine_argv_binding (test_m05_heldout.M05HeldOutTests) ... ok
+test_invalid (test_m05_heldout.M05HeldOutTests) ... ok
+test_leakage (test_m05_heldout.M05HeldOutTests) ... ok
+test_no_proof_no_score (test_m05_heldout.M05HeldOutTests) ... ok
+test_predictions_rejected (test_m05_heldout.M05HeldOutTests) ... ok
+test_source_reconciliation_and_independent_approval (test_m05_heldout.M05HeldOutTests) ... ok
+test_threshold (test_m05_heldout.M05HeldOutTests) ... ok
+test_ui_contract (test_m05_heldout.M05HeldOutTests) ... ok
+test_authority_cannot_escape_bundle (test_m05_timestamp_evidence.TimestampBundleTests) ... ok
+test_authority_requires_identity_binding_and_substantive_record (test_m05_timestamp_evidence.TimestampBundleTests) ... ok
+test_authority_supports_no_payload_and_requires_hash_verified_sources (test_m05_timestamp_evidence.TimestampBundleTests) ... ok
+test_collection_timezone_alone_never_authorizes_naive_rows (test_m05_timestamp_evidence.TimestampBundleTests) ... ok
+test_complete_sequence_keeps_frozen_features_and_raw_bytes (test_m05_timestamp_evidence.TimestampBundleTests) ... ok
+test_no_sources_or_authority_fails (test_m05_timestamp_evidence.TimestampBundleTests) ... ok
+test_policy_hash_and_exact_raw_binding_required (test_m05_timestamp_evidence.TimestampBundleTests) ... ok
+test_policy_schema_paths_and_timezone_conflicts_fail (test_m05_timestamp_evidence.TimestampBundleTests) ... ok
+test_postfreeze_is_still_checked_on_resolved_utc (test_m05_timestamp_evidence.TimestampBundleTests) ... ok
+test_session_and_task_use_resolved_utc_and_still_enforce_bounds (test_m05_timestamp_evidence.TimestampBundleTests) ... ok
+test_timestamp_conflict_blocks_before_adapter_or_score (test_m05_timestamp_evidence.TimestampBundleTests) ... ok
+test_arbitrary_decimal_precision_never_rounds_away (test_m05_timestamp_evidence.TimestampResolutionTests) ... ok
+test_authority_without_payload (test_m05_timestamp_evidence.TimestampResolutionTests) ... ok
+test_aware_offset_must_match_declared_exporter_timezone (test_m05_timestamp_evidence.TimestampResolutionTests) ... ok
+test_aware_raw_cannot_override_conflicting_payload (test_m05_timestamp_evidence.TimestampResolutionTests) ... ok
+test_aware_without_policy_is_unchanged (test_m05_timestamp_evidence.TimestampResolutionTests) ... ok
+test_decimal_comma_is_lossless_and_runtime_independent (test_m05_timestamp_evidence.TimestampResolutionTests) ... ok
+test_dst_gap_and_ambiguous_fold_fail_without_utc (test_m05_timestamp_evidence.TimestampResolutionTests) ... ok
+test_epoch_only_and_iso_only_are_supported (test_m05_timestamp_evidence.TimestampResolutionTests) ... ok
+test_epoch_units_and_precision (test_m05_timestamp_evidence.TimestampResolutionTests) ... ok
+test_export_offset_or_calendar_mismatch_fails (test_m05_timestamp_evidence.TimestampResolutionTests) ... ok
+test_json_decimal_precision_is_also_exact (test_m05_timestamp_evidence.TimestampResolutionTests) ... ok
+test_malformed_explicit_offsets_never_normalize (test_m05_timestamp_evidence.TimestampResolutionTests) ... ok
+test_missing_invalid_duplicate_json_and_missing_configured_field_fail (test_m05_timestamp_evidence.TimestampResolutionTests) ... ok
+test_naive_payload_never_inherits_export_timezone (test_m05_timestamp_evidence.TimestampResolutionTests) ... ok
+test_naive_without_policy_fails_closed (test_m05_timestamp_evidence.TimestampResolutionTests) ... ok
+test_non_korean_zone_and_fixed_offset_are_generic (test_m05_timestamp_evidence.TimestampResolutionTests) ... ok
+test_payload_identity_must_match_event_and_session (test_m05_timestamp_evidence.TimestampResolutionTests) ... ok
+test_payload_iso_submicrosecond_precision_never_truncates (test_m05_timestamp_evidence.TimestampResolutionTests) ... ok
+test_payload_sources_must_all_agree (test_m05_timestamp_evidence.TimestampResolutionTests) ... ok
+test_payload_utc_epoch_and_naive_kst_reconcile_without_mutation (test_m05_timestamp_evidence.TimestampResolutionTests) ... ok
+test_raw_iso_submicrosecond_precision_never_truncates (test_m05_timestamp_evidence.TimestampResolutionTests) ... ok
+test_timezone_abbreviation_unknown_or_invalid_offset_fails (test_m05_timestamp_evidence.TimestampResolutionTests) ... ok
+test_unsupported_offset_precision_and_short_time_fail (test_m05_timestamp_evidence.TimestampResolutionTests) ... ok
+test_utc_payload_disambiguates_dst_fold (test_m05_timestamp_evidence.TimestampResolutionTests) ... ok
+
+----------------------------------------------------------------------
+Ran 76 tests in 8.687s
+
+OK

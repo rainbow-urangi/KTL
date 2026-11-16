@@ -1,0 +1,110 @@
+{
+  "mode": "DEVELOPMENT",
+  "official": false,
+  "files": {
+    "tasks.csv": {
+      "sha256": "d6b73977e71d566868e29f9836c95fb1bb48a3c61afc3ef418cb959ffae4e3c4",
+      "row_count": 92,
+      "schema": [
+        "id",
+        "session_id",
+        "task_name",
+        "status",
+        "start_time",
+        "end_time",
+        "duration_ms",
+        "step_id"
+      ]
+    },
+    "collection_order.txt": {
+      "sha256": "4cb876666655ff150ed32c5d1c15fc95766af54a1a1b2bbcf369cf0c718bf191",
+      "row_count": null,
+      "schema": null
+    },
+    "events.csv": {
+      "sha256": "15f35162f6b1235a51ac2a220667bfbee9d191313e9e4b1324daafd3a7b95fb1",
+      "row_count": 122,
+      "schema": [
+        "id",
+        "event_id",
+        "session_id",
+        "task_id",
+        "workflow_index",
+        "step_duration_ms",
+        "workflow_key",
+        "workflow_outcome",
+        "event_time",
+        "event_type",
+        "page_url",
+        "target_selector",
+        "locators_json",
+        "data_testid",
+        "element_tag",
+        "selector_xpath",
+        "interaction_type",
+        "input_data",
+        "api_path",
+        "api_method",
+        "api_status_code",
+        "page_title",
+        "element_text",
+        "associated_label",
+        "api_latency_ms"
+      ]
+    },
+    "sessions.csv": {
+      "sha256": "9e9035cac5b73a185f418a9727f334cda52677e25a2b4782fb2a92c8a59588b3",
+      "row_count": 1,
+      "schema": [
+        "id",
+        "user_id",
+        "tenant_id",
+        "start_time",
+        "end_time",
+        "user_agent",
+        "browser_id",
+        "viewport_size",
+        "viewport_width",
+        "viewport_height",
+        "ip_address"
+      ]
+    }
+  },
+  "collection_order": "1. BU03 일정 등록\n2. BU07 일일보고 작성\n3. BU09 주간보고 작성\n4. BU17 거래처 등록\n5. BU20 자산 등록",
+  "session_count": 1,
+  "event_count": 122,
+  "task_count": 92,
+  "duplicate_event_identifiers": {
+    "id": [],
+    "event_id": []
+  },
+  "identical_row_duplicate_count": 0,
+  "timestamp_inversions": [
+    {
+      "previous_id": "90689",
+      "event_id": "90690",
+      "previous_time": "2026-11-08 19:05:42.940",
+      "event_time": "2026-11-08 19:05:42.933"
+    },
+    {
+      "previous_id": "90712",
+      "event_id": "90713",
+      "previous_time": "2026-11-08 19:05:50.266",
+      "event_time": "2026-11-08 19:05:50.261"
+    }
+  ],
+  "integrity_errors": [],
+  "task_statuses": {
+    "COMPLETED": 92
+  },
+  "execution_count": 5,
+  "execution_manifest_source": "RAW_ONLY_NO_MODEL",
+  "execution_all_menu_starts": false,
+  "inference_order_policy": "Frozen infer_csv sorts event_time/event_id; raw CSV unchanged. Downstream raw serializer preserves CSV order.",
+  "failure_cancel_retry": "No failure/cancel/retry observed; one POST 201 per business attempt.",
+  "warnings": [
+    "BU03 initial menu click absent; already on schedule page",
+    "BU03 explicit success UI absent; HTTP 201 is not fabricated UI evidence",
+    "No daily date change or weekly target-week selection event observed"
+  ]
+}

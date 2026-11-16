@@ -107,7 +107,8 @@ return {ok:true};
 
 
 class Observer:
-    def __init__(self, script, output, scenario=None, required=False, contract=None, contract_sha256=None):
+    def __init__(self, script, output, scenario=None, required=False, contract=None, contract_sha256=None, *,
+                 visible_browser=False):
         self.script = script
         self.filename = os.path.normcase(str(script))
         self.output = output
@@ -130,6 +131,7 @@ class Observer:
         self.last_failed_target = None
         self.raw_execute = None
         self.screenshots = {}
+        self.visible_browser = visible_browser
         self.scenario = scenario if isinstance(scenario, dict) else {}
         self.expected_steps = self.scenario.get('steps', [])
         if not isinstance(self.expected_steps, list):
@@ -170,6 +172,80 @@ class Observer:
                 or self.current_step['sequence'] != self.screenshot_checkpoints[phase]):
             raise RuntimeError('사전에 고정한 업무 단계에서만 실행 화면을 기록할 수 있습니다.')
         self.capture_screen(phase, checkpoint=True)
+
+    def _restore_visible_window(self, driver):
+        def command(name, params):
+            return self.raw_execute(driver, name, params).get('value')
+
+        def cdp(name, params=None):
+            return command('executeCdpCommand', dict(cmd=name, params=params or {}))
+
+        visibility = command('w3cExecuteScript', dict(script='return document.visibilityState;', args=[]))
+        if visibility == 'visible':
+            return
+        if visibility != 'hidden':
+            raise RuntimeError('visible_browser_restore_unverified')
+        window = cdp('Browser.getWindowForTarget')
+        if not isinstance(window, dict) or type(window.get('windowId')) is not int:
+            raise RuntimeError('visible_browser_restore_unverified')
+        bounds = window.get('bounds')
+        if (not isinstance(bounds, dict) or bounds.get('windowState') not in {'normal', 'maximized', 'fullscreen'}
+                or any(type(bounds.get(key)) is not int for key in ('left', 'top', 'width', 'height'))
+                or bounds['width'] <= 0 or bounds['height'] <= 0):
+            raise RuntimeError('visible_browser_restore_unverified')
+        window_id = window['windowId']
+        geometry = {key: bounds[key] for key in ('left', 'top', 'width', 'height')}
+        original_state = bounds['windowState']
+        failed = False
+        deadline = time.monotonic() + 2
+
+        def wait_for(predicate):
+            while True:
+                if predicate():
+                    return True
+                if time.monotonic() >= deadline:
+                    return False
+                time.sleep(.05)
+
+        def has_window_state(expected):
+            current = cdp('Browser.getWindowForTarget')
+            return (isinstance(current, dict) and current.get('windowId') == window_id
+                    and isinstance(current.get('bounds'), dict)
+                    and current['bounds'].get('windowState') == expected)
+
+        def restored_visible():
+            restored = cdp('Browser.getWindowForTarget')
+            return (isinstance(restored, dict) and restored.get('windowId') == window_id
+                    and isinstance(restored.get('bounds'), dict)
+                    and all(restored['bounds'].get(key) == value for key, value in geometry.items())
+                    and restored['bounds'].get('windowState') == original_state
+                    and command('w3cExecuteScript', dict(script='return document.visibilityState;', args=[])) == 'visible')
+
+        # Only this target's own browser window is changed. Always attempt every
+        # restoration command, even when minimizing or an earlier restore fails.
+        restored_bounds = [dict(windowState='normal'), geometry]
+        if original_state != 'normal':
+            restored_bounds.append(dict(windowState=original_state))
+        try:
+            cdp('Browser.setWindowBounds', dict(windowId=window_id, bounds=dict(windowState='minimized')))
+            if not wait_for(lambda: has_window_state('minimized')):
+                failed = True
+        except BaseException:
+            failed = True
+        finally:
+            for value in restored_bounds:
+                try:
+                    cdp('Browser.setWindowBounds', dict(windowId=window_id, bounds=value))
+                except BaseException:
+                    failed = True
+            try:
+                cdp('Page.bringToFront')
+                if not wait_for(restored_visible):
+                    failed = True
+            except BaseException:
+                failed = True
+        if failed:
+            raise RuntimeError('visible_browser_restore_unverified')
 
     def capture_screen(self, phase, driver=None, final=False, checkpoint=False):
         if phase in self.screenshots:
@@ -239,16 +315,26 @@ class Observer:
             record['reason'] = reason if re.fullmatch(r'[a-z_]{1,60}', reason) else 'capture_or_mask_unavailable'
             raw = None
         finally:
-            try:
-                if frozen:
+            if frozen:
+                try:
                     self.raw_execute(driver, 'executeCdpCommand', dict(cmd='Page.setWebLifecycleState', params=dict(state='active')))
-                if applied:
+                except BaseException:
+                    raw = None
+                    record['reason'] = 'browser_lifecycle_restore_unverified'
+            if applied:
+                try:
                     cleaned = self.raw_execute(driver, 'w3cExecuteScript', dict(script=_SCREENSHOT_MASK, args=[token, 'remove'])).get('value')
                     if not isinstance(cleaned, dict) or cleaned.get('ok') is not True:
                         raise RuntimeError('mask_cleanup_unverified')
-            except BaseException:
-                raw = None
-                record['reason'] = 'mask_cleanup_unverified'
+                except BaseException:
+                    raw = None
+                    record['reason'] = 'mask_cleanup_unverified'
+            if frozen and self.visible_browser:
+                try:
+                    self._restore_visible_window(driver)
+                except BaseException:
+                    raw = None
+                    record['reason'] = 'visible_browser_restore_unverified'
         if raw is not None:
             target = self.script.parent / (phase + '.png')
             try:
@@ -512,7 +598,8 @@ def execute(script, scenario=None, required=False, contract=None, contract_sha25
             visible_browser=False, action_delay_ms=0, keep_open_seconds=0):
     _presentation_options(visible_browser, action_delay_ms, keep_open_seconds)
     load_login_settings()
-    observer = Observer(script, sys.stdout, scenario, required, contract=contract, contract_sha256=contract_sha256)
+    observer = Observer(script, sys.stdout, scenario, required, contract=contract, contract_sha256=contract_sha256,
+                        visible_browser=visible_browser)
     runtime = types.ModuleType('ktl_runtime')
     runtime.business_step = observer.business_step
     runtime.capture_evidence = observer.capture_evidence

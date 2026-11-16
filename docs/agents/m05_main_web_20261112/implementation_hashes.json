@@ -1,0 +1,7 @@
+{
+  "backend/m05_main_web.py": "fa149b56dee9ade2ce25ff1b4298a552e9347e81483d0a81f89cca90ce9bf6f3",
+  "backend/server.py": "b08804ac9435d82ad173236bc017d2ddfed414c07703bb4f82841e6e937f48bb",
+  "frontend/app.js": "c092650e6299622b7a0adddbf99f628ae5200bbbfcfa818f12f2244c6b975bb6",
+  "tests/test_m05_main_web.py": "3041f472c7327d6bb321cb7b6f05140075fa8528b146fcbc0cc02b39f15327a8",
+  "tests/test_frontend.cjs": "26cfbfd11331437ae69cdebbe8d2e12fd058e5f73726a44910d2d4b5ba822542"
+}

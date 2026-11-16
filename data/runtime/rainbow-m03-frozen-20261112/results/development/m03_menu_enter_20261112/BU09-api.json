@@ -1,0 +1,139 @@
+{
+  "request": {
+    "business_unit_id": "BU09",
+    "workflow_id": "WF-0009",
+    "generator_mode": "REAL",
+    "run_mode": "DEVELOPMENT"
+  },
+  "http_status": 200,
+  "response": {
+    "business_unit_id": "BU09",
+    "workflow_id": "WF-0009",
+    "scenario_id": "REAL-SCN-4a6bd38e040074e9f203",
+    "status": "SUCCESS",
+    "steps": [
+      {
+        "order": 1,
+        "action": "REGISTER",
+        "target": "등록",
+        "source_step_id": "BA-14bc0dce-0909-48fc-8e6e-53f4bbd6bbbb",
+        "source_event_ids": [
+          "14bc0dce-0909-48fc-8e6e-53f4bbd6bbbb",
+          "79b4d729-3a0e-484c-8b77-d19fe591b069"
+        ],
+        "source_node_ids": [
+          "PM-019-N001",
+          "PM-019-N002"
+        ],
+        "page_context": "/mypage/work/weekly",
+        "fields": [],
+        "http_evidence": [],
+        "completion_evidence": [],
+        "serializer_rule_id": "BA-VALIDATED-FORM-OPENER"
+      },
+      {
+        "order": 2,
+        "action": "INPUT",
+        "target": "주간업무",
+        "source_step_id": "BA-278b45ba-9b1c-4883-b5de-b18fee8e4f4c",
+        "source_event_ids": [
+          "79b4d729-3a0e-484c-8b77-d19fe591b069",
+          "278b45ba-9b1c-4883-b5de-b18fee8e4f4c",
+          "86ff307a-de96-4778-8c07-562247e3ea04",
+          "8dd81299-f565-4186-b605-1468d98e8635"
+        ],
+        "source_node_ids": [
+          "PM-019-N002",
+          "PM-019-N004"
+        ],
+        "page_context": "/mypage/work/weekly",
+        "fields": [
+          {
+            "label": "제목",
+            "id": "daily-report-create-title-input",
+            "name": null,
+            "value_type": "text",
+            "selector": "#daily-report-create-title-input",
+            "source_event_id": "278b45ba-9b1c-4883-b5de-b18fee8e4f4c",
+            "source_node_ids": [
+              "PM-019-N004"
+            ]
+          },
+          {
+            "label": "내용",
+            "id": "daily-report-create-content-input",
+            "name": null,
+            "value_type": null,
+            "selector": "#daily-report-create-content-input",
+            "source_event_id": "86ff307a-de96-4778-8c07-562247e3ea04",
+            "source_node_ids": [
+              "PM-019-N004"
+            ]
+          },
+          {
+            "label": "내용",
+            "id": "daily-report-create-content-input",
+            "name": null,
+            "value_type": null,
+            "selector": "#daily-report-create-content-input",
+            "source_event_id": "8dd81299-f565-4186-b605-1468d98e8635",
+            "source_node_ids": [
+              "PM-019-N004"
+            ]
+          }
+        ],
+        "http_evidence": [],
+        "completion_evidence": [],
+        "serializer_rule_id": "BA-INPUT-FORM"
+      },
+      {
+        "order": 3,
+        "action": "SAVE",
+        "target": "저장",
+        "source_step_id": "BA-7c723f8f-9972-4c10-b619-1d38f0dd3fbf",
+        "source_event_ids": [
+          "79b4d729-3a0e-484c-8b77-d19fe591b069",
+          "7c723f8f-9972-4c10-b619-1d38f0dd3fbf",
+          "155e93c4-d7ff-4c61-9b02-b8e8a5a63966",
+          "ba2450b3-f4d6-4c87-b927-09de30130c3e",
+          "cbf09dad-6f90-4261-94a5-10c7175e9597"
+        ],
+        "source_node_ids": [
+          "PM-019-N002",
+          "PM-019-N005"
+        ],
+        "page_context": "/mypage/work/weekly",
+        "fields": [],
+        "http_evidence": [],
+        "completion_evidence": [
+          {
+            "source_event_id": "155e93c4-d7ff-4c61-9b02-b8e8a5a63966",
+            "raw_order": 118,
+            "kind": "SUCCESS_POPUP",
+            "message": "주간업무가 저장되었습니다. 목록에서 등록한 게시물을 확인할 수 있습니다.",
+            "causal_rule": "EXPLICIT_CAUSAL_ID"
+          },
+          {
+            "source_event_id": "ba2450b3-f4d6-4c87-b927-09de30130c3e",
+            "raw_order": 120,
+            "kind": "UI_OUTCOME",
+            "message": "주간업무가 저장되었습니다.목록에서 등록한 게시물을 확인할 수 있습니다.",
+            "causal_rule": "EXPLICIT_CAUSAL_ID"
+          }
+        ],
+        "serializer_rule_id": "BA-LINKED-SUCCESS-ACK"
+      }
+    ],
+    "issues": [],
+    "generator_version": "m03-observed-business-steps-v1.1-menu-enter",
+    "source_process_id": "PM-019",
+    "source_snapshot_sha256": "86b1e77c8ca4ec365806d7d145d99ffa802bc097347b3db16ed9b3f600503f39",
+    "readiness_only": true,
+    "run_mode": "DEVELOPMENT",
+    "generator_mode": "REAL",
+    "synthetic": false,
+    "official_pass": null
+  },
+  "started_at": "2026-11-12T08:25:59.301789+00:00",
+  "completed_at": "2026-11-12T08:25:59.314710+00:00"
+}

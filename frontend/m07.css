@@ -2,6 +2,7 @@
   min-width: 0;
 }
 
+.m07-simple [hidden],
 .m07-panel[hidden],
 #m07-workflow-extra[hidden] {
   display: none !important;
@@ -22,38 +23,7 @@
   margin: 20px 0 0;
 }
 
-.m07-mode-bar {
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-  flex-wrap: wrap;
-  gap: 12px;
-  margin: 0 0 20px;
-}
-
-.m07-source-tabs {
-  display: flex;
-  flex-wrap: wrap;
-  gap: 8px;
-}
-
-.m07-source-tabs button {
-  padding: 10px 16px;
-  border: 1px solid var(--line);
-  background: #fff;
-  color: #18263b;
-  font-size: 12px;
-  font-weight: 400;
-}
-
-.m07-source-tabs button[aria-pressed=true] {
-  border-color: #203354;
-  background: #203354;
-  color: #fff;
-}
-
-.m07-panel button:disabled,
-.m07-mode-bar button:disabled {
+.m07-panel button:disabled {
   cursor: not-allowed;
 }
 
@@ -565,6 +535,206 @@
   white-space: nowrap;
 }
 
+.m07-simple .page-heading {
+  align-items: flex-start;
+  gap: 20px;
+}
+
+.m07-simple .m07-development {
+  margin-left: 8px;
+  color: var(--muted);
+  font-size: 10px;
+  font-weight: 400;
+  letter-spacing: .04em;
+}
+
+.m07-simple .m07-primary-actions {
+  display: flex;
+  align-items: flex-end;
+  flex-wrap: wrap;
+  gap: 10px;
+  margin: 20px 0 0;
+}
+
+.m07-simple .m07-file-label {
+  display: grid;
+  gap: 8px;
+  min-width: 0;
+  max-width: 360px;
+  flex: 1 1 280px;
+  margin: 0;
+}
+
+.m07-simple .m07-file-label input {
+  width: 100%;
+  min-width: 0;
+  min-height: 40px;
+  box-sizing: border-box;
+  padding: 10px;
+  border: 1px solid var(--line);
+  border-radius: 5px;
+  background: #fff;
+  font: inherit;
+}
+
+.m07-simple .m07-primary-actions > button {
+  min-height: 40px;
+  padding: 10px 14px;
+  font-size: 12px;
+  white-space: nowrap;
+}
+
+.m07-simple .m07-primary-actions > [hidden] {
+  display: none !important;
+}
+
+.m07-simple .m07-file-label input::file-selector-button {
+  margin-right: 10px;
+  border: 0;
+  background: transparent;
+  color: #456395;
+  font: inherit;
+  cursor: pointer;
+}
+
+.m07-simple #m07-meeting-issue:empty {
+  display: none;
+}
+
+.m07-simple #m07-input-details,
+.m07-simple .m07-auxiliary {
+  border-top: 1px solid var(--line);
+  padding-top: 18px;
+}
+
+.m07-simple #m07-case-results[hidden],
+.m07-simple #m07-evidence-panel[hidden],
+.m07-simple #m07-evidence-link[hidden] {
+  display: none !important;
+}
+
+.m07-simple .m07-result-overview {
+  grid-template-columns: 1.3fr 1fr;
+  padding-bottom: 20px;
+}
+
+.m07-simple #m07-result .empty {
+  margin: 0;
+  padding: 16px 0;
+  text-align: left;
+  font-size: 12px;
+  line-height: 1.8;
+}
+
+.m07-simple #m07-case-results,
+.m07-simple #m07-existing-cases {
+  margin-top: 20px;
+  border-top: 1px solid var(--line);
+  padding-top: 4px;
+}
+
+.m07-simple #m07-case-results .m07-table-wrap,
+.m07-simple #m07-existing-cases .m07-table-wrap {
+  margin-top: 16px;
+  max-height: 510px;
+  overflow: auto;
+  border: 1px solid var(--line);
+  border-radius: 6px;
+}
+
+.m07-simple #m07-progress-label {
+  margin: 10px 0 0;
+}
+
+.m07-simple .m07-log,
+.m07-simple #m07-evidence-panel {
+  margin-top: 18px;
+}
+
+.m07-simple #m07-input-details > summary,
+.m07-simple #m07-evidence-panel > summary,
+.m07-simple .m07-evidence > summary,
+.m07-simple .m07-log > summary {
+  width: fit-content;
+  color: var(--muted);
+  font-size: 12px;
+  line-height: 1.7;
+  cursor: pointer;
+}
+
+.m07-simple .m07-case-table button {
+  padding: 7px 10px;
+  font-size: 11px;
+  white-space: nowrap;
+}
+
+.m07-simple .m07-case-table tr.m07-selected-row {
+  background: #f5f7fa;
+}
+
+.m07-simple .m07-case-table td:last-child {
+  white-space: nowrap;
+}
+
+.m07-simple #m07-cases:empty {
+  display: none;
+}
+
+.m07-simple #m07-cases > .m07-case {
+  margin-top: 20px;
+  padding: 20px;
+  border: 1px solid var(--line);
+  border-radius: 5px;
+}
+
+.m07-simple .m07-code pre {
+  overflow: auto;
+}
+
+.m07-simple #m07-input-details > label {
+  margin-top: 22px;
+}
+
+.m07-simple #m07-evidence-panel .m07-downloads {
+  margin-top: 0;
+}
+
+.m07-simple #m07-result .large-score,
+.m07-simple #m07-existing-result .large-score {
+  font-size: 34px;
+  line-height: 1.2;
+}
+
+.m07-existing .page-heading {
+  padding-bottom: 22px;
+}
+
+.m07-simple #m07-existing-cases .m07-case-table .m07-step-detail {
+  margin-top: 0;
+}
+
+.m07-simple #m07-existing-cases .m07-case-table summary {
+  display: inline-block;
+  padding: 7px 10px;
+  border: 1px solid var(--line);
+  border-radius: 6px;
+  background: #fff;
+  color: #456395;
+  font-size: 11px;
+  list-style: none;
+  cursor: pointer;
+}
+
+.m07-simple #m07-existing-cases .m07-case-table summary::-webkit-details-marker {
+  display: none;
+}
+
+.m07-simple .m07-source-label {
+  display: grid;
+  gap: 6px;
+  max-width: 400px;
+}
+
 @media (max-width: 960px) {
   .m07-result-overview {
     grid-template-columns: repeat(2, minmax(0, 1fr));
@@ -575,7 +745,34 @@
   }
 }
 
+.m07-simple .m07-count-display {
+  display: none !important;
+}
+
 @media (max-width: 760px) {
+  .m07-simple .page-heading {
+    flex-wrap: wrap;
+  }
+
+  .m07-simple .m07-primary-actions > button,
+  .m07-simple .m07-file-label {
+    width: 100%;
+    max-width: none;
+    flex-basis: 100%;
+  }
+
+  .m07-simple #m07-cases > .m07-case {
+    padding: 16px 12px;
+  }
+
+  .m07-simple .m07-result-overview {
+    grid-template-columns: 1fr 1fr;
+    row-gap: 20px;
+  }
+
+  .m07-simple .m07-result-overview > div:first-child {
+    grid-column: 1 / -1;
+  }
   .m07-panel .panel-heading {
     align-items: flex-start;
     flex-wrap: wrap;

@@ -19,3 +19,21 @@ model/workflow_candidate_v1_2/artifacts/model_manifest.json text eol=crlf
 
 # The development canonical manifest pins these files byte-for-byte.
 data/evaluation/m03-canonical-development-*/** -text
+
+# Preserved evaluation bundles pin exact source/data bytes, including newlines.
+evaluation_contracts/development/m02_baseline_77_29_preserved/** -text
+evaluation_contracts/development/m02_recovery_rules_v1/** -text
+data/runtime/rainbow-m03-frozen-20261112/** -text
+data/evaluation/rainbow-m03-frozen-20261112/** -text
+data/development/m05_portable_runtime/** -text
+data/development/current_site_unseen_validation_v1/m06_frozen_output/** -text
+results/development/m03_current_semantics_20261109/business_steps.json -text
+
+# Runtime manifests also pin host inputs, transport sources and preserved GPT code.
+data/evaluation/m05_heldout_raw_*/** -text
+data/held_out/m05/raw01_raw02_raw03_target20_20261111/** -text
+backend/m05_portable.py -text
+backend/paths.py -text
+AI-model/** -text
+model/workflow_candidate_v1_2_1/** -text
+data/development/m07_existing_codes/** -text

@@ -1,0 +1,321 @@
+id,label,remove_reason,duplicate_of_event_id,activity,case_id,source_row_index,source_csv,source_sha256
+1f359a3a-7ddb-448d-a182-bc996c123124,KEEP,,,EVT:collector_boot,91025575,0,data/evaluation/current_site_dev_02/events.csv,bc4c25d22db7de7ba176a14e77af2451f9b45338d1a2f3135fa70597694205d0
+7aff7fc1-f6bf-46bb-bbca-d6f5edb39d9f,KEEP,,,NAV:/mypage,91025576,1,data/evaluation/current_site_dev_02/events.csv,bc4c25d22db7de7ba176a14e77af2451f9b45338d1a2f3135fa70597694205d0
+4ed05d56-efa6-47aa-84be-80c765321649,KEEP,,,API:GET_/api/auth/me_2xx,91025577,2,data/evaluation/current_site_dev_02/events.csv,bc4c25d22db7de7ba176a14e77af2451f9b45338d1a2f3135fa70597694205d0
+99036073-d54b-483d-9919-fd23cabdaff7,KEEP,,,API:GET_/api/auth/me_2xx,91025578,3,data/evaluation/current_site_dev_02/events.csv,bc4c25d22db7de7ba176a14e77af2451f9b45338d1a2f3135fa70597694205d0
+2c3ac9b9-1192-4bf4-b861-202efa307ab0,KEEP,,,CLICK:일반 정보,91025579,4,data/evaluation/current_site_dev_02/events.csv,bc4c25d22db7de7ba176a14e77af2451f9b45338d1a2f3135fa70597694205d0
+93d5e47e-2d3b-440a-ab37-098fdef49975,KEEP,,,CLICK:개인정보,91025580,5,data/evaluation/current_site_dev_02/events.csv,bc4c25d22db7de7ba176a14e77af2451f9b45338d1a2f3135fa70597694205d0
+bc3d965e-1d9d-4b2f-90b3-d18a93e0e561,KEEP,,,EVT:route_change,91025580,6,data/evaluation/current_site_dev_02/events.csv,bc4c25d22db7de7ba176a14e77af2451f9b45338d1a2f3135fa70597694205d0
+db58617b-5b97-40d7-85cd-0fc1d65063eb,KEEP,,,API:GET_/api/auth/me_2xx,91025581,7,data/evaluation/current_site_dev_02/events.csv,bc4c25d22db7de7ba176a14e77af2451f9b45338d1a2f3135fa70597694205d0
+cf76651b-c6a7-48a3-b938-5f74a0c6407f,KEEP,,,EVT:screen_change,91025582,8,data/evaluation/current_site_dev_02/events.csv,bc4c25d22db7de7ba176a14e77af2451f9b45338d1a2f3135fa70597694205d0
+6db7914d-e8f8-4bc0-a525-c534257bae8f,KEEP,,,CLICK:조직도/담당업무,91025583,9,data/evaluation/current_site_dev_02/events.csv,bc4c25d22db7de7ba176a14e77af2451f9b45338d1a2f3135fa70597694205d0
+cbb9cc5c-f039-4515-a910-69862bdc9411,KEEP,,,CLICK:조직도/담당업무,91025584,10,data/evaluation/current_site_dev_02/events.csv,bc4c25d22db7de7ba176a14e77af2451f9b45338d1a2f3135fa70597694205d0
+0ee03a7e-eede-4e41-9501-ca770dce5b30,KEEP,,,EVT:route_change,91025584,11,data/evaluation/current_site_dev_02/events.csv,bc4c25d22db7de7ba176a14e77af2451f9b45338d1a2f3135fa70597694205d0
+4a415fae-783f-4322-9e90-5a10ab492015,KEEP,,,API:GET_/api/users/employees_4xx,91025585,12,data/evaluation/current_site_dev_02/events.csv,bc4c25d22db7de7ba176a14e77af2451f9b45338d1a2f3135fa70597694205d0
+0f147bbb-cb99-43e2-846e-8455c76fcffd,KEEP,,,EVT:screen_change,91025586,13,data/evaluation/current_site_dev_02/events.csv,bc4c25d22db7de7ba176a14e77af2451f9b45338d1a2f3135fa70597694205d0
+e58de207-fd65-45a7-8d8d-2de2e7b406c2,KEEP,,,CLICK:담당업무,91025587,14,data/evaluation/current_site_dev_02/events.csv,bc4c25d22db7de7ba176a14e77af2451f9b45338d1a2f3135fa70597694205d0
+120c6c60-775b-454f-8fd9-6ba8d78b1c29,KEEP,,,CLICK:조직도,91025588,15,data/evaluation/current_site_dev_02/events.csv,bc4c25d22db7de7ba176a14e77af2451f9b45338d1a2f3135fa70597694205d0
+cd1e66e3-6c74-4fee-936b-f0730fd9e1cd,KEEP,,,CLICK:공지사항,91025589,16,data/evaluation/current_site_dev_02/events.csv,bc4c25d22db7de7ba176a14e77af2451f9b45338d1a2f3135fa70597694205d0
+ebc0a44a-1a39-4683-b9cb-657b4bf4118f,KEEP,,,EVT:route_change,91025589,17,data/evaluation/current_site_dev_02/events.csv,bc4c25d22db7de7ba176a14e77af2451f9b45338d1a2f3135fa70597694205d0
+46c750db-436a-449d-b914-3e5d8e08fe60,KEEP,,,API:GET_/api/notices_2xx,91025590,18,data/evaluation/current_site_dev_02/events.csv,bc4c25d22db7de7ba176a14e77af2451f9b45338d1a2f3135fa70597694205d0
+2583fa1c-7a78-4e12-ae66-d3c543469609,KEEP,,,EVT:screen_change,91025591,19,data/evaluation/current_site_dev_02/events.csv,bc4c25d22db7de7ba176a14e77af2451f9b45338d1a2f3135fa70597694205d0
+4159935f-d8aa-46b3-a6be-466cf72ec29a,KEEP,,,CLICK:검색어를 입력하세요,91025592,20,data/evaluation/current_site_dev_02/events.csv,bc4c25d22db7de7ba176a14e77af2451f9b45338d1a2f3135fa70597694205d0
+6f75487f-a9b8-4752-a736-171a8c6eed04,KEEP,,,INPUT:검색어를 입력하세요,91025593,21,data/evaluation/current_site_dev_02/events.csv,bc4c25d22db7de7ba176a14e77af2451f9b45338d1a2f3135fa70597694205d0
+7c05f4cf-7ffd-44a2-8267-524e08aa10e6,KEEP,,,CLICK:검색,91025594,22,data/evaluation/current_site_dev_02/events.csv,bc4c25d22db7de7ba176a14e77af2451f9b45338d1a2f3135fa70597694205d0
+35813349-b115-48d0-b42e-2f1a33e3e458,KEEP,,,EVT:route_change,91025594,23,data/evaluation/current_site_dev_02/events.csv,bc4c25d22db7de7ba176a14e77af2451f9b45338d1a2f3135fa70597694205d0
+361c78db-b9c2-42d9-8230-c8c053c4d5fb,KEEP,,,API:GET_/api/notices_2xx,91025595,24,data/evaluation/current_site_dev_02/events.csv,bc4c25d22db7de7ba176a14e77af2451f9b45338d1a2f3135fa70597694205d0
+9fa1f78f-1731-40b3-8939-18b3ca858126,KEEP,,,EVT:screen_change,91025596,25,data/evaluation/current_site_dev_02/events.csv,bc4c25d22db7de7ba176a14e77af2451f9b45338d1a2f3135fa70597694205d0
+5c59443c-58ca-46ab-8f8c-76419563b7a7,KEEP,,,CLICK:일정 관리,91025597,26,data/evaluation/current_site_dev_02/events.csv,bc4c25d22db7de7ba176a14e77af2451f9b45338d1a2f3135fa70597694205d0
+2cfb297e-b850-433a-ae42-bcd4160dff6b,KEEP,,,EVT:route_change,91025597,27,data/evaluation/current_site_dev_02/events.csv,bc4c25d22db7de7ba176a14e77af2451f9b45338d1a2f3135fa70597694205d0
+1bfe847c-fd9e-4311-9ab7-55b7569153ab,KEEP,,,API:GET_/api/schedules/viewers_2xx,91025598,28,data/evaluation/current_site_dev_02/events.csv,bc4c25d22db7de7ba176a14e77af2451f9b45338d1a2f3135fa70597694205d0
+503d7962-b2f6-4963-90fb-1aaa79d26171,KEEP,,,API:GET_/api/schedules_2xx,91025599,29,data/evaluation/current_site_dev_02/events.csv,bc4c25d22db7de7ba176a14e77af2451f9b45338d1a2f3135fa70597694205d0
+c55a4d2c-c79f-4189-b5dc-4763e8c97392,KEEP,,,EVT:screen_change,91025600,30,data/evaluation/current_site_dev_02/events.csv,bc4c25d22db7de7ba176a14e77af2451f9b45338d1a2f3135fa70597694205d0
+b347d683-2596-4a83-b9b5-bc8ffaeb60fc,KEEP,,,CLICK:1,91025601,31,data/evaluation/current_site_dev_02/events.csv,bc4c25d22db7de7ba176a14e77af2451f9b45338d1a2f3135fa70597694205d0
+683ef0b4-63e9-46f7-8e24-30d1383974d8,KEEP,,,EVT:popup_open,91025601,32,data/evaluation/current_site_dev_02/events.csv,bc4c25d22db7de7ba176a14e77af2451f9b45338d1a2f3135fa70597694205d0
+49d07a24-2527-42ec-a137-0a20b47ab9f6,KEEP,,,EVT:popup_structure,91025601,33,data/evaluation/current_site_dev_02/events.csv,bc4c25d22db7de7ba176a14e77af2451f9b45338d1a2f3135fa70597694205d0
+aaf71e54-a45c-4b7d-a64b-1adc6d3896d6,KEEP,,,CLICK:닫기,91025602,34,data/evaluation/current_site_dev_02/events.csv,bc4c25d22db7de7ba176a14e77af2451f9b45338d1a2f3135fa70597694205d0
+12c4b690-105a-476c-ac09-efb209e0ffb0,KEEP,,,EVT:popup_close,91025602,35,data/evaluation/current_site_dev_02/events.csv,bc4c25d22db7de7ba176a14e77af2451f9b45338d1a2f3135fa70597694205d0
+431316db-9518-439d-8c6d-f09dc7d5a2bd,KEEP,,,CLICK:KTL 미팅,91025603,36,data/evaluation/current_site_dev_02/events.csv,bc4c25d22db7de7ba176a14e77af2451f9b45338d1a2f3135fa70597694205d0
+985d97f2-2be0-436c-97d8-ac2e6ce0794f,KEEP,,,EVT:popup_open,91025603,37,data/evaluation/current_site_dev_02/events.csv,bc4c25d22db7de7ba176a14e77af2451f9b45338d1a2f3135fa70597694205d0
+6eab0efe-6f3a-486e-8ac7-27501e06958a,KEEP,,,EVT:screen_change,91025604,38,data/evaluation/current_site_dev_02/events.csv,bc4c25d22db7de7ba176a14e77af2451f9b45338d1a2f3135fa70597694205d0
+7f5069a0-4fd3-4619-93d0-a4d870eef4c8,KEEP,,,EVT:popup_structure,91025603,39,data/evaluation/current_site_dev_02/events.csv,bc4c25d22db7de7ba176a14e77af2451f9b45338d1a2f3135fa70597694205d0
+f883d27c-6bb7-4094-9652-399e42e1c7a5,KEEP,,,CLICK:2,91025605,40,data/evaluation/current_site_dev_02/events.csv,bc4c25d22db7de7ba176a14e77af2451f9b45338d1a2f3135fa70597694205d0
+0e1abb34-8fd5-41d7-909a-4905e9b37f45,KEEP,,,SUBMIT:Rainbow,91025605,41,data/evaluation/current_site_dev_02/events.csv,bc4c25d22db7de7ba176a14e77af2451f9b45338d1a2f3135fa70597694205d0
+e27d8f71-7b90-441b-9ef6-5731b2c31df1,KEEP,,,API:PATCH_/api/schedules/4_2xx,91025606,42,data/evaluation/current_site_dev_02/events.csv,bc4c25d22db7de7ba176a14e77af2451f9b45338d1a2f3135fa70597694205d0
+818f22e8-76a4-4d10-b901-2d4cb3286afd,KEEP,,,API:GET_/api/schedules_2xx,91025607,43,data/evaluation/current_site_dev_02/events.csv,bc4c25d22db7de7ba176a14e77af2451f9b45338d1a2f3135fa70597694205d0
+dc014ee2-6d92-4358-8649-a7563e2fa112,KEEP,,,EVT:popup_close,91025608,44,data/evaluation/current_site_dev_02/events.csv,bc4c25d22db7de7ba176a14e77af2451f9b45338d1a2f3135fa70597694205d0
+91539ba5-6f21-46d7-b99d-8248d3712418,KEEP,,,CLICK:1,91025609,45,data/evaluation/current_site_dev_02/events.csv,bc4c25d22db7de7ba176a14e77af2451f9b45338d1a2f3135fa70597694205d0
+e22b5ba6-e712-44ad-b714-fe3c7a53da10,KEEP,,,EVT:popup_open,91025609,46,data/evaluation/current_site_dev_02/events.csv,bc4c25d22db7de7ba176a14e77af2451f9b45338d1a2f3135fa70597694205d0
+2bf81b7a-23b0-4f18-a3c2-dca904ff19c4,KEEP,,,EVT:popup_structure,91025609,47,data/evaluation/current_site_dev_02/events.csv,bc4c25d22db7de7ba176a14e77af2451f9b45338d1a2f3135fa70597694205d0
+a74c7f94-7194-4a84-8437-4fec06bd2437,KEEP,,,CLICK:30,91025610,48,data/evaluation/current_site_dev_02/events.csv,bc4c25d22db7de7ba176a14e77af2451f9b45338d1a2f3135fa70597694205d0
+c860cfd1-d3a7-42d1-9a96-4fe3fdd111de,KEEP,,,CLICK:30,91025611,49,data/evaluation/current_site_dev_02/events.csv,bc4c25d22db7de7ba176a14e77af2451f9b45338d1a2f3135fa70597694205d0
+2305775e-940c-4cba-8d6c-abcf4b5aeb90,KEEP,,,CLICK:30,91025612,50,data/evaluation/current_site_dev_02/events.csv,bc4c25d22db7de7ba176a14e77af2451f9b45338d1a2f3135fa70597694205d0
+e9d10b7f-8200-426a-8717-7b89876bebc3,KEEP,,,CLICK:30,91025613,51,data/evaluation/current_site_dev_02/events.csv,bc4c25d22db7de7ba176a14e77af2451f9b45338d1a2f3135fa70597694205d0
+f2076b2a-3723-436a-994b-ecdab9b452cb,KEEP,,,INPUT:제목,91025614,52,data/evaluation/current_site_dev_02/events.csv,bc4c25d22db7de7ba176a14e77af2451f9b45338d1a2f3135fa70597694205d0
+bbb8a44d-e4f0-4bff-a908-744e6baef6cd,KEEP,,,CLICK:30,91025615,53,data/evaluation/current_site_dev_02/events.csv,bc4c25d22db7de7ba176a14e77af2451f9b45338d1a2f3135fa70597694205d0
+95ba5b36-24d1-4a78-a204-7a66b447dc10,KEEP,,,EVT:paste,91025616,54,data/evaluation/current_site_dev_02/events.csv,bc4c25d22db7de7ba176a14e77af2451f9b45338d1a2f3135fa70597694205d0
+6a49f2ee-2091-4bee-bf13-a58c6abfbccf,KEEP,,,INPUT:내용,91025617,55,data/evaluation/current_site_dev_02/events.csv,bc4c25d22db7de7ba176a14e77af2451f9b45338d1a2f3135fa70597694205d0
+3a9fcaee-1cca-4f49-b91e-3fccf05cfa75,KEEP,,,CLICK:1,91025618,56,data/evaluation/current_site_dev_02/events.csv,bc4c25d22db7de7ba176a14e77af2451f9b45338d1a2f3135fa70597694205d0
+885a25de-fb01-4be7-ac7a-a2ecc76218f4,KEEP,,,INPUT:제목,91025619,57,data/evaluation/current_site_dev_02/events.csv,bc4c25d22db7de7ba176a14e77af2451f9b45338d1a2f3135fa70597694205d0
+948a671a-2dff-43d0-8c24-53c28980e81e,KEEP,,,CLICK:1,91025620,58,data/evaluation/current_site_dev_02/events.csv,bc4c25d22db7de7ba176a14e77af2451f9b45338d1a2f3135fa70597694205d0
+1504f814-6978-46b3-9e34-e9dfde4db5fe,KEEP,,,EVT:paste,91025621,59,data/evaluation/current_site_dev_02/events.csv,bc4c25d22db7de7ba176a14e77af2451f9b45338d1a2f3135fa70597694205d0
+b456bb59-b535-4807-9f83-9c5e58643f95,KEEP,,,CLICK:30,91025622,60,data/evaluation/current_site_dev_02/events.csv,bc4c25d22db7de7ba176a14e77af2451f9b45338d1a2f3135fa70597694205d0
+90f93df0-5072-4542-a0c0-c5e4559ba232,KEEP,,,INPUT:내용,91025623,61,data/evaluation/current_site_dev_02/events.csv,bc4c25d22db7de7ba176a14e77af2451f9b45338d1a2f3135fa70597694205d0
+df7ef0db-b0b3-4d9a-9492-3c83260fe833,KEEP,,,CLICK:3,91025624,62,data/evaluation/current_site_dev_02/events.csv,bc4c25d22db7de7ba176a14e77af2451f9b45338d1a2f3135fa70597694205d0
+3b9942ba-5f54-41d4-a7d8-a2ffa2ea9da3,KEEP,,,SUBMIT:Rainbow,91025624,63,data/evaluation/current_site_dev_02/events.csv,bc4c25d22db7de7ba176a14e77af2451f9b45338d1a2f3135fa70597694205d0
+dc3fa803-32d6-4905-8929-e48288343942,KEEP,,,API:POST_/api/schedules_2xx,91025625,64,data/evaluation/current_site_dev_02/events.csv,bc4c25d22db7de7ba176a14e77af2451f9b45338d1a2f3135fa70597694205d0
+0c349881-5903-4caa-82f7-280f4d9f3708,KEEP,,,API:GET_/api/schedules_2xx,91025626,65,data/evaluation/current_site_dev_02/events.csv,bc4c25d22db7de7ba176a14e77af2451f9b45338d1a2f3135fa70597694205d0
+0373ed85-aa22-4c53-bdff-e64f30fc9cf0,KEEP,,,EVT:popup_close,91025627,66,data/evaluation/current_site_dev_02/events.csv,bc4c25d22db7de7ba176a14e77af2451f9b45338d1a2f3135fa70597694205d0
+023ccbf7-0c6c-42c2-9c03-1a83a06bffc4,KEEP,,,CLICK:업무 관리,91025628,67,data/evaluation/current_site_dev_02/events.csv,bc4c25d22db7de7ba176a14e77af2451f9b45338d1a2f3135fa70597694205d0
+8baeb612-a0e3-4ed1-bdc0-fb28d89dc4a0,KEEP,,,CLICK:전체 업무 관리,91025629,68,data/evaluation/current_site_dev_02/events.csv,bc4c25d22db7de7ba176a14e77af2451f9b45338d1a2f3135fa70597694205d0
+cf64c7e3-c43b-4bad-b3c5-138943460324,KEEP,,,EVT:route_change,91025629,69,data/evaluation/current_site_dev_02/events.csv,bc4c25d22db7de7ba176a14e77af2451f9b45338d1a2f3135fa70597694205d0
+a9921b0c-a7de-4ba3-ac86-fcdaf53ad4d0,KEEP,,,API:GET_/api/auth/me_2xx,91025630,70,data/evaluation/current_site_dev_02/events.csv,bc4c25d22db7de7ba176a14e77af2451f9b45338d1a2f3135fa70597694205d0
+dae2cce0-3d84-4c9c-860a-943398881404,KEEP,,,API:GET_/api/work-reports_2xx,91025631,71,data/evaluation/current_site_dev_02/events.csv,bc4c25d22db7de7ba176a14e77af2451f9b45338d1a2f3135fa70597694205d0
+eac6ff87-3b43-43a5-9c61-e7326d9b0ce3,KEEP,,,EVT:screen_change,91025632,72,data/evaluation/current_site_dev_02/events.csv,bc4c25d22db7de7ba176a14e77af2451f9b45338d1a2f3135fa70597694205d0
+9818e695-5428-4c31-88ea-2a4072efdfa8,KEEP,,,CLICK:검색어를 입력하세요,91025633,73,data/evaluation/current_site_dev_02/events.csv,bc4c25d22db7de7ba176a14e77af2451f9b45338d1a2f3135fa70597694205d0
+74ae4031-ec8f-4622-9cf1-3606bfa4e3d7,KEEP,,,INPUT:검색어를 입력하세요,91025634,74,data/evaluation/current_site_dev_02/events.csv,bc4c25d22db7de7ba176a14e77af2451f9b45338d1a2f3135fa70597694205d0
+167692cc-f878-49a4-b182-1007f7080bf3,KEEP,,,CLICK:검색,91025635,75,data/evaluation/current_site_dev_02/events.csv,bc4c25d22db7de7ba176a14e77af2451f9b45338d1a2f3135fa70597694205d0
+705f59ed-28fb-422f-b160-a3bf32652d93,KEEP,,,API:GET_/api/work-reports_2xx,91025636,76,data/evaluation/current_site_dev_02/events.csv,bc4c25d22db7de7ba176a14e77af2451f9b45338d1a2f3135fa70597694205d0
+429886bd-8f6d-4a2f-8a94-f0d5a214d799,KEEP,,,CLICK:일일보고,91025637,77,data/evaluation/current_site_dev_02/events.csv,bc4c25d22db7de7ba176a14e77af2451f9b45338d1a2f3135fa70597694205d0
+a5e070dd-b6bc-46f3-b7f9-09489173f470,KEEP,,,EVT:route_change,91025637,78,data/evaluation/current_site_dev_02/events.csv,bc4c25d22db7de7ba176a14e77af2451f9b45338d1a2f3135fa70597694205d0
+b81d1c8f-3159-4797-bd8e-57b1d7bdb55b,KEEP,,,API:GET_/api/auth/me_2xx,91025638,79,data/evaluation/current_site_dev_02/events.csv,bc4c25d22db7de7ba176a14e77af2451f9b45338d1a2f3135fa70597694205d0
+5d7dc9a2-c50e-4155-8dff-e441cdc7cf8e,KEEP,,,API:GET_/api/work-reports_2xx,91025639,80,data/evaluation/current_site_dev_02/events.csv,bc4c25d22db7de7ba176a14e77af2451f9b45338d1a2f3135fa70597694205d0
+e809e6f0-61d8-4645-b216-6eb5dd96dbd5,KEEP,,,EVT:screen_change,91025640,81,data/evaluation/current_site_dev_02/events.csv,bc4c25d22db7de7ba176a14e77af2451f9b45338d1a2f3135fa70597694205d0
+491e1a11-40be-464b-86c8-6ecffcef1fdd,KEEP,,,CLICK:검색어를 입력하세요,91025641,82,data/evaluation/current_site_dev_02/events.csv,bc4c25d22db7de7ba176a14e77af2451f9b45338d1a2f3135fa70597694205d0
+a7488158-02c0-4ae8-bb64-e202b0917f11,KEEP,,,INPUT:검색어를 입력하세요,91025642,83,data/evaluation/current_site_dev_02/events.csv,bc4c25d22db7de7ba176a14e77af2451f9b45338d1a2f3135fa70597694205d0
+deee439f-9d03-496e-86b6-c12e28a58d73,KEEP,,,CLICK:검색,91025643,84,data/evaluation/current_site_dev_02/events.csv,bc4c25d22db7de7ba176a14e77af2451f9b45338d1a2f3135fa70597694205d0
+e87b6cd0-54ad-45e9-9618-08fbb7b00210,KEEP,,,API:GET_/api/work-reports_2xx,91025644,85,data/evaluation/current_site_dev_02/events.csv,bc4c25d22db7de7ba176a14e77af2451f9b45338d1a2f3135fa70597694205d0
+84e0e662-a327-49e3-8d68-5f69099edb23,KEEP,,,CLICK:등록,91025645,86,data/evaluation/current_site_dev_02/events.csv,bc4c25d22db7de7ba176a14e77af2451f9b45338d1a2f3135fa70597694205d0
+6f9d91ba-9d53-4ea0-bd93-c7f3e7d1c89b,KEEP,,,EVT:popup_open,91025645,87,data/evaluation/current_site_dev_02/events.csv,bc4c25d22db7de7ba176a14e77af2451f9b45338d1a2f3135fa70597694205d0
+1fc4f508-9b00-4592-9ba7-945bdfede76d,KEEP,,,EVT:popup_structure,91025645,88,data/evaluation/current_site_dev_02/events.csv,bc4c25d22db7de7ba176a14e77af2451f9b45338d1a2f3135fa70597694205d0
+68079496-e733-4559-87e6-10ad43d4cbb1,KEEP,,,CLICK:제목,91025646,89,data/evaluation/current_site_dev_02/events.csv,bc4c25d22db7de7ba176a14e77af2451f9b45338d1a2f3135fa70597694205d0
+88e26a77-6ef6-48e3-a3ba-a6d496c654e0,KEEP,,,CLICK:제목,91025647,90,data/evaluation/current_site_dev_02/events.csv,bc4c25d22db7de7ba176a14e77af2451f9b45338d1a2f3135fa70597694205d0
+afc9dfb4-d3fe-44e1-acb7-ae4d369912d8,KEEP,,,CLICK:제목,91025648,91,data/evaluation/current_site_dev_02/events.csv,bc4c25d22db7de7ba176a14e77af2451f9b45338d1a2f3135fa70597694205d0
+92c92e45-7e65-4499-ade8-42f8e4e1a815,KEEP,,,CLICK:제목,91025649,92,data/evaluation/current_site_dev_02/events.csv,bc4c25d22db7de7ba176a14e77af2451f9b45338d1a2f3135fa70597694205d0
+882a89c5-673a-47e3-b88a-e0fcb1b96b8b,KEEP,,,INPUT:제목,91025650,93,data/evaluation/current_site_dev_02/events.csv,bc4c25d22db7de7ba176a14e77af2451f9b45338d1a2f3135fa70597694205d0
+a42c9093-ee43-4cfe-87ec-a6fa5280c6c5,KEEP,,,CLICK:내용,91025651,94,data/evaluation/current_site_dev_02/events.csv,bc4c25d22db7de7ba176a14e77af2451f9b45338d1a2f3135fa70597694205d0
+d6a1120a-0be7-4b92-97f2-45da69d77155,KEEP,,,EVT:paste,91025652,95,data/evaluation/current_site_dev_02/events.csv,bc4c25d22db7de7ba176a14e77af2451f9b45338d1a2f3135fa70597694205d0
+0f0349c1-8b1a-4745-8928-968e8b809af2,KEEP,,,CLICK:내용,91025653,96,data/evaluation/current_site_dev_02/events.csv,bc4c25d22db7de7ba176a14e77af2451f9b45338d1a2f3135fa70597694205d0
+619be295-f2bc-4cb0-9a19-64ac38a11272,KEEP,,,INPUT:내용,91025654,97,data/evaluation/current_site_dev_02/events.csv,bc4c25d22db7de7ba176a14e77af2451f9b45338d1a2f3135fa70597694205d0
+0b7b1631-c8a9-42b7-b552-7b1050663771,KEEP,,,CLICK:저장,91025655,98,data/evaluation/current_site_dev_02/events.csv,bc4c25d22db7de7ba176a14e77af2451f9b45338d1a2f3135fa70597694205d0
+9292e611-df78-4682-8f2a-0251e99b447a,KEEP,,,EVT:popup_open,91025655,99,data/evaluation/current_site_dev_02/events.csv,bc4c25d22db7de7ba176a14e77af2451f9b45338d1a2f3135fa70597694205d0
+c54833d3-7a43-427c-be2c-1c132e972138,KEEP,,,EVT:popup_close,91025655,100,data/evaluation/current_site_dev_02/events.csv,bc4c25d22db7de7ba176a14e77af2451f9b45338d1a2f3135fa70597694205d0
+c849f45c-b080-4ccb-a5b9-3c55fda7484c,KEEP,,,EVT:ui_outcome,91025655,101,data/evaluation/current_site_dev_02/events.csv,bc4c25d22db7de7ba176a14e77af2451f9b45338d1a2f3135fa70597694205d0
+9af430da-f62a-43b5-9570-b29d0b4a7e2b,KEEP,,,API:POST_/api/work-reports_2xx,91025656,102,data/evaluation/current_site_dev_02/events.csv,bc4c25d22db7de7ba176a14e77af2451f9b45338d1a2f3135fa70597694205d0
+30700541-d4e8-4515-9e7f-0f5782bc2282,KEEP,,,API:GET_/api/work-reports_2xx,91025657,103,data/evaluation/current_site_dev_02/events.csv,bc4c25d22db7de7ba176a14e77af2451f9b45338d1a2f3135fa70597694205d0
+d83144de-8439-41da-86f1-596664612870,KEEP,,,EVT:popup_structure,91025655,104,data/evaluation/current_site_dev_02/events.csv,bc4c25d22db7de7ba176a14e77af2451f9b45338d1a2f3135fa70597694205d0
+ee0f0280-a08b-42a1-82ed-684eadddeb5f,KEEP,,,CLICK:확인,91025658,105,data/evaluation/current_site_dev_02/events.csv,bc4c25d22db7de7ba176a14e77af2451f9b45338d1a2f3135fa70597694205d0
+9fc9e9ef-2616-42cd-9b58-905333ed4e4a,KEEP,,,EVT:popup_close,91025658,106,data/evaluation/current_site_dev_02/events.csv,bc4c25d22db7de7ba176a14e77af2451f9b45338d1a2f3135fa70597694205d0
+0b76d3a0-855c-457e-919e-ec33ef21c21d,KEEP,,,CLICK:주간보고,91025659,107,data/evaluation/current_site_dev_02/events.csv,bc4c25d22db7de7ba176a14e77af2451f9b45338d1a2f3135fa70597694205d0
+966f70c0-5bc2-4077-9784-aef68d0ef8e0,KEEP,,,EVT:route_change,91025658,108,data/evaluation/current_site_dev_02/events.csv,bc4c25d22db7de7ba176a14e77af2451f9b45338d1a2f3135fa70597694205d0
+da0ea7ee-3980-4916-842d-d25354d136be,KEEP,,,API:GET_/api/auth/me_2xx,91025660,109,data/evaluation/current_site_dev_02/events.csv,bc4c25d22db7de7ba176a14e77af2451f9b45338d1a2f3135fa70597694205d0
+69d93c3d-0864-4f25-8eba-25c4cfeed189,KEEP,,,API:GET_/api/work-reports_2xx,91025661,110,data/evaluation/current_site_dev_02/events.csv,bc4c25d22db7de7ba176a14e77af2451f9b45338d1a2f3135fa70597694205d0
+1669be28-c622-4939-a65c-625e2071f5d1,KEEP,,,EVT:screen_change,91025662,111,data/evaluation/current_site_dev_02/events.csv,bc4c25d22db7de7ba176a14e77af2451f9b45338d1a2f3135fa70597694205d0
+f97776c2-1419-4581-8ade-3575bedc5cb0,KEEP,,,CLICK:검색어를 입력하세요,91025663,112,data/evaluation/current_site_dev_02/events.csv,bc4c25d22db7de7ba176a14e77af2451f9b45338d1a2f3135fa70597694205d0
+964137c9-9059-4b17-b8c3-c0f85160d52d,KEEP,,,INPUT:검색어를 입력하세요,91025664,113,data/evaluation/current_site_dev_02/events.csv,bc4c25d22db7de7ba176a14e77af2451f9b45338d1a2f3135fa70597694205d0
+9ac9374d-3059-49b1-925a-a0c8370efdf8,KEEP,,,API:GET_/api/work-reports_2xx,91025665,114,data/evaluation/current_site_dev_02/events.csv,bc4c25d22db7de7ba176a14e77af2451f9b45338d1a2f3135fa70597694205d0
+90c36ff2-2dd7-425a-87c3-1fc3e411da6e,KEEP,,,API:GET_/api/work-reports_2xx,91025666,115,data/evaluation/current_site_dev_02/events.csv,bc4c25d22db7de7ba176a14e77af2451f9b45338d1a2f3135fa70597694205d0
+6ed2e64b-7814-43a5-be00-8458958c3a3b,KEEP,,,CLICK:등록,91025667,116,data/evaluation/current_site_dev_02/events.csv,bc4c25d22db7de7ba176a14e77af2451f9b45338d1a2f3135fa70597694205d0
+13e727c1-879b-4ff1-8641-a59a648b0354,KEEP,,,EVT:popup_open,91025667,117,data/evaluation/current_site_dev_02/events.csv,bc4c25d22db7de7ba176a14e77af2451f9b45338d1a2f3135fa70597694205d0
+a3d440bb-532d-476c-9b35-a24687fc52fc,KEEP,,,EVT:popup_structure,91025667,118,data/evaluation/current_site_dev_02/events.csv,bc4c25d22db7de7ba176a14e77af2451f9b45338d1a2f3135fa70597694205d0
+1d9ecd87-0129-4462-ba15-2c13691b421f,KEEP,,,CLICK:2026.10.09 (금),91025668,119,data/evaluation/current_site_dev_02/events.csv,bc4c25d22db7de7ba176a14e77af2451f9b45338d1a2f3135fa70597694205d0
+30b088d9-0f71-4619-957e-25dd3c2fa407,KEEP,,,EVT:popup_open,91025668,120,data/evaluation/current_site_dev_02/events.csv,bc4c25d22db7de7ba176a14e77af2451f9b45338d1a2f3135fa70597694205d0
+3a486e16-98a5-4897-bd1a-a1965acf5b82,KEEP,,,EVT:popup_structure,91025668,121,data/evaluation/current_site_dev_02/events.csv,bc4c25d22db7de7ba176a14e77af2451f9b45338d1a2f3135fa70597694205d0
+e3f357ae-31ee-419f-ad18-bac42d3fb4e7,KEEP,,,CLICK:이전 달,91025669,122,data/evaluation/current_site_dev_02/events.csv,bc4c25d22db7de7ba176a14e77af2451f9b45338d1a2f3135fa70597694205d0
+4e0f5f08-0bbc-47ae-a2b1-620da3df091e,KEEP,,,CLICK:2026-09-21,91025670,123,data/evaluation/current_site_dev_02/events.csv,bc4c25d22db7de7ba176a14e77af2451f9b45338d1a2f3135fa70597694205d0
+4481f170-92aa-4e78-818b-98dadc6d7caf,KEEP,,,EVT:popup_close,91025670,124,data/evaluation/current_site_dev_02/events.csv,bc4c25d22db7de7ba176a14e77af2451f9b45338d1a2f3135fa70597694205d0
+0db13847-bb3d-4d1f-879a-e33485aaa44f,KEEP,,,CLICK:제목,91025671,125,data/evaluation/current_site_dev_02/events.csv,bc4c25d22db7de7ba176a14e77af2451f9b45338d1a2f3135fa70597694205d0
+4938faa2-8f1e-4367-b352-280152a2b5dd,KEEP,,,INPUT:제목,91025672,126,data/evaluation/current_site_dev_02/events.csv,bc4c25d22db7de7ba176a14e77af2451f9b45338d1a2f3135fa70597694205d0
+41a19b04-5276-436c-ac8b-5492a27be9f9,KEEP,,,CLICK:내용,91025673,127,data/evaluation/current_site_dev_02/events.csv,bc4c25d22db7de7ba176a14e77af2451f9b45338d1a2f3135fa70597694205d0
+c5ec2f72-1869-4be2-8fac-6f82a6ac91f1,KEEP,,,EVT:paste,91025674,128,data/evaluation/current_site_dev_02/events.csv,bc4c25d22db7de7ba176a14e77af2451f9b45338d1a2f3135fa70597694205d0
+d5d5efbe-eb3c-41d8-bb73-02ac11d88dda,KEEP,,,INPUT:내용,91025675,129,data/evaluation/current_site_dev_02/events.csv,bc4c25d22db7de7ba176a14e77af2451f9b45338d1a2f3135fa70597694205d0
+899d0fe0-9de3-41e9-9092-ebacf1333493,KEEP,,,CLICK:저장,91025676,130,data/evaluation/current_site_dev_02/events.csv,bc4c25d22db7de7ba176a14e77af2451f9b45338d1a2f3135fa70597694205d0
+cd6995ad-0c7f-438d-9d24-c88e2595bf2e,KEEP,,,EVT:popup_open,91025676,131,data/evaluation/current_site_dev_02/events.csv,bc4c25d22db7de7ba176a14e77af2451f9b45338d1a2f3135fa70597694205d0
+c48fca06-4e9e-4c77-9700-a4af163be0b5,KEEP,,,EVT:popup_close,91025676,132,data/evaluation/current_site_dev_02/events.csv,bc4c25d22db7de7ba176a14e77af2451f9b45338d1a2f3135fa70597694205d0
+a2df586c-54c0-4313-9d27-49d6a79cb052,KEEP,,,EVT:ui_outcome,91025676,133,data/evaluation/current_site_dev_02/events.csv,bc4c25d22db7de7ba176a14e77af2451f9b45338d1a2f3135fa70597694205d0
+ebc582a5-5341-4ec2-818f-c6a987955c1b,KEEP,,,API:POST_/api/work-reports_2xx,91025677,134,data/evaluation/current_site_dev_02/events.csv,bc4c25d22db7de7ba176a14e77af2451f9b45338d1a2f3135fa70597694205d0
+b684c6d1-f2ce-4113-adbe-ad180c417a75,KEEP,,,API:GET_/api/work-reports_2xx,91025678,135,data/evaluation/current_site_dev_02/events.csv,bc4c25d22db7de7ba176a14e77af2451f9b45338d1a2f3135fa70597694205d0
+3fe10f61-253c-411d-8c3e-8716d1670535,KEEP,,,EVT:popup_structure,91025676,136,data/evaluation/current_site_dev_02/events.csv,bc4c25d22db7de7ba176a14e77af2451f9b45338d1a2f3135fa70597694205d0
+47ef420e-9766-4b89-a3e3-09a41fadba75,KEEP,,,CLICK:확인,91025679,137,data/evaluation/current_site_dev_02/events.csv,bc4c25d22db7de7ba176a14e77af2451f9b45338d1a2f3135fa70597694205d0
+3260e842-f57b-4444-8792-cd9def485ae8,KEEP,,,EVT:popup_close,91025679,138,data/evaluation/current_site_dev_02/events.csv,bc4c25d22db7de7ba176a14e77af2451f9b45338d1a2f3135fa70597694205d0
+303cc87a-1208-4f3e-9cb2-d20548b334da,KEEP,,,CLICK:월간보고,91025680,139,data/evaluation/current_site_dev_02/events.csv,bc4c25d22db7de7ba176a14e77af2451f9b45338d1a2f3135fa70597694205d0
+c6ee95bc-fc72-4c6c-a742-540e10299407,KEEP,,,EVT:route_change,91025681,140,data/evaluation/current_site_dev_02/events.csv,bc4c25d22db7de7ba176a14e77af2451f9b45338d1a2f3135fa70597694205d0
+7cb21662-e296-44df-9864-44b16d99bd3c,KEEP,,,API:GET_/api/auth/me_2xx,91025682,141,data/evaluation/current_site_dev_02/events.csv,bc4c25d22db7de7ba176a14e77af2451f9b45338d1a2f3135fa70597694205d0
+58e21d9f-928b-4ca6-9a7b-6cca71a9883d,KEEP,,,API:GET_/api/work-reports_2xx,91025683,142,data/evaluation/current_site_dev_02/events.csv,bc4c25d22db7de7ba176a14e77af2451f9b45338d1a2f3135fa70597694205d0
+37351eb3-0fc4-4a34-9dd0-57fd7db001b1,KEEP,,,EVT:screen_change,91025684,143,data/evaluation/current_site_dev_02/events.csv,bc4c25d22db7de7ba176a14e77af2451f9b45338d1a2f3135fa70597694205d0
+6d732ffd-5928-4c21-b2df-1b13cde38597,KEEP,,,CLICK:검색어를 입력하세요,91025685,144,data/evaluation/current_site_dev_02/events.csv,bc4c25d22db7de7ba176a14e77af2451f9b45338d1a2f3135fa70597694205d0
+6ec05783-7ea4-48ce-9d32-ab9fa0238d5f,KEEP,,,INPUT:검색어를 입력하세요,91025686,145,data/evaluation/current_site_dev_02/events.csv,bc4c25d22db7de7ba176a14e77af2451f9b45338d1a2f3135fa70597694205d0
+9cacc940-4379-4d11-9f97-a63674be4a8a,KEEP,,,CLICK:검색,91025687,146,data/evaluation/current_site_dev_02/events.csv,bc4c25d22db7de7ba176a14e77af2451f9b45338d1a2f3135fa70597694205d0
+36aa829b-df8e-4e22-a9ec-2335f2250a22,KEEP,,,API:GET_/api/work-reports_2xx,91025688,147,data/evaluation/current_site_dev_02/events.csv,bc4c25d22db7de7ba176a14e77af2451f9b45338d1a2f3135fa70597694205d0
+0ec4d77f-f0d5-4373-a396-9d425face45f,KEEP,,,CLICK:등록,91025689,148,data/evaluation/current_site_dev_02/events.csv,bc4c25d22db7de7ba176a14e77af2451f9b45338d1a2f3135fa70597694205d0
+70d703d5-eb2b-41dd-aae8-9b0b7704a010,KEEP,,,EVT:popup_open,91025689,149,data/evaluation/current_site_dev_02/events.csv,bc4c25d22db7de7ba176a14e77af2451f9b45338d1a2f3135fa70597694205d0
+12f3e942-15ba-4741-8095-f8891df11b1f,KEEP,,,EVT:popup_structure,91025689,150,data/evaluation/current_site_dev_02/events.csv,bc4c25d22db7de7ba176a14e77af2451f9b45338d1a2f3135fa70597694205d0
+7a77b58a-dbee-49cc-a78d-b490c90d7ef7,KEEP,,,CLICK:2026.10.09 (금),91025690,151,data/evaluation/current_site_dev_02/events.csv,bc4c25d22db7de7ba176a14e77af2451f9b45338d1a2f3135fa70597694205d0
+c42d0532-897b-4031-86e9-0267dc2391c1,KEEP,,,EVT:popup_open,91025690,152,data/evaluation/current_site_dev_02/events.csv,bc4c25d22db7de7ba176a14e77af2451f9b45338d1a2f3135fa70597694205d0
+57cf4a94-4a7f-4530-8b9f-b5e7dab94f6c,KEEP,,,EVT:popup_structure,91025690,153,data/evaluation/current_site_dev_02/events.csv,bc4c25d22db7de7ba176a14e77af2451f9b45338d1a2f3135fa70597694205d0
+1b4963ee-1cc9-4c55-98ae-e1bbaec1644a,KEEP,,,CLICK:이전 달,91025691,154,data/evaluation/current_site_dev_02/events.csv,bc4c25d22db7de7ba176a14e77af2451f9b45338d1a2f3135fa70597694205d0
+67097175-d558-40e9-a201-d5cbb315e593,KEEP,,,CLICK:이전 달,91025692,155,data/evaluation/current_site_dev_02/events.csv,bc4c25d22db7de7ba176a14e77af2451f9b45338d1a2f3135fa70597694205d0
+cb064329-5bdc-44fc-b915-0974bacd747f,KEEP,,,CLICK:2026-08-31,91025693,156,data/evaluation/current_site_dev_02/events.csv,bc4c25d22db7de7ba176a14e77af2451f9b45338d1a2f3135fa70597694205d0
+8d6ccdc3-b76e-4f0f-a5a5-b7e22aed6af2,KEEP,,,EVT:popup_close,91025693,157,data/evaluation/current_site_dev_02/events.csv,bc4c25d22db7de7ba176a14e77af2451f9b45338d1a2f3135fa70597694205d0
+e605c526-d5b8-48a7-97cf-c547797f3fb7,KEEP,,,CLICK:제목,91025694,158,data/evaluation/current_site_dev_02/events.csv,bc4c25d22db7de7ba176a14e77af2451f9b45338d1a2f3135fa70597694205d0
+8c8b8487-4569-4da4-ab49-bc6367c609e0,KEEP,,,CLICK:제목,91025695,159,data/evaluation/current_site_dev_02/events.csv,bc4c25d22db7de7ba176a14e77af2451f9b45338d1a2f3135fa70597694205d0
+6edd7bf0-de9a-4ebb-9743-4609d6c0fcf3,KEEP,,,CLICK:제목,91025696,160,data/evaluation/current_site_dev_02/events.csv,bc4c25d22db7de7ba176a14e77af2451f9b45338d1a2f3135fa70597694205d0
+459b5032-bf26-404f-a0c1-02e14fbcd0bc,KEEP,,,CLICK:제목,91025697,161,data/evaluation/current_site_dev_02/events.csv,bc4c25d22db7de7ba176a14e77af2451f9b45338d1a2f3135fa70597694205d0
+80f18099-2e22-4846-bf15-600ef06341dd,KEEP,,,CLICK:제목,91025698,162,data/evaluation/current_site_dev_02/events.csv,bc4c25d22db7de7ba176a14e77af2451f9b45338d1a2f3135fa70597694205d0
+1fa560af-7b2d-4d7b-9f68-13f69f0fc9e8,KEEP,,,CLICK:제목,91025699,163,data/evaluation/current_site_dev_02/events.csv,bc4c25d22db7de7ba176a14e77af2451f9b45338d1a2f3135fa70597694205d0
+e8670a70-b2c4-4913-9344-5b1b8e8d7264,KEEP,,,CLICK:제목,91025700,164,data/evaluation/current_site_dev_02/events.csv,bc4c25d22db7de7ba176a14e77af2451f9b45338d1a2f3135fa70597694205d0
+0c5f7218-c512-4752-937f-e1adeb3ab613,KEEP,,,CLICK:제목,91025701,165,data/evaluation/current_site_dev_02/events.csv,bc4c25d22db7de7ba176a14e77af2451f9b45338d1a2f3135fa70597694205d0
+54480fcb-9dfb-48f9-a531-212395367e51,KEEP,,,CLICK:제목,91025702,166,data/evaluation/current_site_dev_02/events.csv,bc4c25d22db7de7ba176a14e77af2451f9b45338d1a2f3135fa70597694205d0
+6434914c-402f-4496-ae22-b6aa6728e9c3,KEEP,,,CLICK:제목,91025703,167,data/evaluation/current_site_dev_02/events.csv,bc4c25d22db7de7ba176a14e77af2451f9b45338d1a2f3135fa70597694205d0
+2b656bb7-6b8b-49a9-9b7a-6794d39504e6,KEEP,,,INPUT:제목,91025704,168,data/evaluation/current_site_dev_02/events.csv,bc4c25d22db7de7ba176a14e77af2451f9b45338d1a2f3135fa70597694205d0
+d45ba0e1-4a88-41b3-a52a-9eae4068987f,KEEP,,,CLICK:내용,91025705,169,data/evaluation/current_site_dev_02/events.csv,bc4c25d22db7de7ba176a14e77af2451f9b45338d1a2f3135fa70597694205d0
+91463205-8662-4289-af29-3cbbd8c01298,KEEP,,,EVT:paste,91025706,170,data/evaluation/current_site_dev_02/events.csv,bc4c25d22db7de7ba176a14e77af2451f9b45338d1a2f3135fa70597694205d0
+19aae010-7532-4cfe-8afc-aaf7f93e7361,KEEP,,,INPUT:내용,91025707,171,data/evaluation/current_site_dev_02/events.csv,bc4c25d22db7de7ba176a14e77af2451f9b45338d1a2f3135fa70597694205d0
+d5ab1caa-d763-4d30-957f-18378dd9a4e2,KEEP,,,CLICK:저장,91025708,172,data/evaluation/current_site_dev_02/events.csv,bc4c25d22db7de7ba176a14e77af2451f9b45338d1a2f3135fa70597694205d0
+91c63bd5-903e-4019-9dc0-1151e04ddc9c,KEEP,,,EVT:popup_open,91025708,173,data/evaluation/current_site_dev_02/events.csv,bc4c25d22db7de7ba176a14e77af2451f9b45338d1a2f3135fa70597694205d0
+1232bc0f-f11a-4ec3-a516-65a8e174f909,KEEP,,,EVT:popup_close,91025708,174,data/evaluation/current_site_dev_02/events.csv,bc4c25d22db7de7ba176a14e77af2451f9b45338d1a2f3135fa70597694205d0
+f834ccf2-3e22-4865-a883-7b16307c8f4d,KEEP,,,EVT:ui_outcome,91025708,175,data/evaluation/current_site_dev_02/events.csv,bc4c25d22db7de7ba176a14e77af2451f9b45338d1a2f3135fa70597694205d0
+14f8b8a6-b2d8-4497-8021-8c2ed7a8e307,KEEP,,,API:POST_/api/work-reports_2xx,91025709,176,data/evaluation/current_site_dev_02/events.csv,bc4c25d22db7de7ba176a14e77af2451f9b45338d1a2f3135fa70597694205d0
+78521a6b-081f-4c18-83a3-7060eb2c6f24,KEEP,,,API:GET_/api/work-reports_2xx,91025710,177,data/evaluation/current_site_dev_02/events.csv,bc4c25d22db7de7ba176a14e77af2451f9b45338d1a2f3135fa70597694205d0
+a84416f4-54d6-49b6-b0cd-93fa74e4f95d,KEEP,,,EVT:popup_structure,91025708,178,data/evaluation/current_site_dev_02/events.csv,bc4c25d22db7de7ba176a14e77af2451f9b45338d1a2f3135fa70597694205d0
+5ce70232-fd3e-4134-af93-78cd8ac78e90,KEEP,,,CLICK:확인,91025711,179,data/evaluation/current_site_dev_02/events.csv,bc4c25d22db7de7ba176a14e77af2451f9b45338d1a2f3135fa70597694205d0
+fb02d8a6-6c78-4117-b884-4052da4ce338,KEEP,,,EVT:popup_close,91025711,180,data/evaluation/current_site_dev_02/events.csv,bc4c25d22db7de7ba176a14e77af2451f9b45338d1a2f3135fa70597694205d0
+4f730483-ab57-470f-85ae-312469dacf04,KEEP,,,CLICK:명함 관리,91025712,181,data/evaluation/current_site_dev_02/events.csv,bc4c25d22db7de7ba176a14e77af2451f9b45338d1a2f3135fa70597694205d0
+7d736fa8-777f-40dd-8b77-af451c5255f9,KEEP,,,EVT:route_change,91025711,182,data/evaluation/current_site_dev_02/events.csv,bc4c25d22db7de7ba176a14e77af2451f9b45338d1a2f3135fa70597694205d0
+4d5e5a4d-cd6e-4633-83e1-2995000d154b,KEEP,,,API:GET_/api/auth/me_2xx,91025713,183,data/evaluation/current_site_dev_02/events.csv,bc4c25d22db7de7ba176a14e77af2451f9b45338d1a2f3135fa70597694205d0
+b2285bfb-a0ee-43f6-8c43-12237720e4d8,KEEP,,,API:GET_/api/business-cards_2xx,91025714,184,data/evaluation/current_site_dev_02/events.csv,bc4c25d22db7de7ba176a14e77af2451f9b45338d1a2f3135fa70597694205d0
+830838bd-d118-4c0c-bbfb-b4743229ccea,KEEP,,,EVT:screen_change,91025715,185,data/evaluation/current_site_dev_02/events.csv,bc4c25d22db7de7ba176a14e77af2451f9b45338d1a2f3135fa70597694205d0
+8ede11c3-2c4d-404b-948e-42724812dc52,KEEP,,,CLICK:검색어를 입력하세요,91025716,186,data/evaluation/current_site_dev_02/events.csv,bc4c25d22db7de7ba176a14e77af2451f9b45338d1a2f3135fa70597694205d0
+f6fa1742-1601-41cc-a08e-09f1eab79b33,KEEP,,,INPUT:검색어를 입력하세요,91025717,187,data/evaluation/current_site_dev_02/events.csv,bc4c25d22db7de7ba176a14e77af2451f9b45338d1a2f3135fa70597694205d0
+50a7699f-e48c-410f-b262-fc9ac97b437b,KEEP,,,CLICK:검색,91025718,188,data/evaluation/current_site_dev_02/events.csv,bc4c25d22db7de7ba176a14e77af2451f9b45338d1a2f3135fa70597694205d0
+c3c7ac94-a779-46ae-bd19-f2141ef6a5c6,KEEP,,,API:GET_/api/business-cards_2xx,91025719,189,data/evaluation/current_site_dev_02/events.csv,bc4c25d22db7de7ba176a14e77af2451f9b45338d1a2f3135fa70597694205d0
+807484f1-a596-48a8-8876-26153fc4074b,KEEP,,,CLICK:등록,91025720,190,data/evaluation/current_site_dev_02/events.csv,bc4c25d22db7de7ba176a14e77af2451f9b45338d1a2f3135fa70597694205d0
+4d09b2c0-5a8d-48ac-8950-15e84102cd15,KEEP,,,EVT:popup_open,91025720,191,data/evaluation/current_site_dev_02/events.csv,bc4c25d22db7de7ba176a14e77af2451f9b45338d1a2f3135fa70597694205d0
+624fb0e1-de26-436a-a0c9-1f32935e425c,KEEP,,,EVT:popup_structure,91025720,192,data/evaluation/current_site_dev_02/events.csv,bc4c25d22db7de7ba176a14e77af2451f9b45338d1a2f3135fa70597694205d0
+10807845-fe9e-4060-8041-50876124fd69,KEEP,,,CLICK:회사명,91025721,193,data/evaluation/current_site_dev_02/events.csv,bc4c25d22db7de7ba176a14e77af2451f9b45338d1a2f3135fa70597694205d0
+2103e00d-55e9-401d-b3e3-60dea97ddbaf,KEEP,,,INPUT:회사명,91025722,194,data/evaluation/current_site_dev_02/events.csv,bc4c25d22db7de7ba176a14e77af2451f9b45338d1a2f3135fa70597694205d0
+b0c173c2-483f-4761-883f-678776401566,KEEP,,,CLICK:이름,91025723,195,data/evaluation/current_site_dev_02/events.csv,bc4c25d22db7de7ba176a14e77af2451f9b45338d1a2f3135fa70597694205d0
+65406eba-852c-4e5b-9016-34bb595f4687,KEEP,,,INPUT:이름,91025724,196,data/evaluation/current_site_dev_02/events.csv,bc4c25d22db7de7ba176a14e77af2451f9b45338d1a2f3135fa70597694205d0
+47f4bc9c-588f-462e-94da-5f8c40b9b14e,KEEP,,,CLICK:부서,91025725,197,data/evaluation/current_site_dev_02/events.csv,bc4c25d22db7de7ba176a14e77af2451f9b45338d1a2f3135fa70597694205d0
+e6924be7-d61d-4f30-9a11-195c54a832b3,KEEP,,,INPUT:부서,91025726,198,data/evaluation/current_site_dev_02/events.csv,bc4c25d22db7de7ba176a14e77af2451f9b45338d1a2f3135fa70597694205d0
+441d6445-4a0c-42a5-a65e-9eca81a22586,KEEP,,,CLICK:div,91025727,199,data/evaluation/current_site_dev_02/events.csv,bc4c25d22db7de7ba176a14e77af2451f9b45338d1a2f3135fa70597694205d0
+800335ef-8c7d-4ba1-9985-5414e2000054,KEEP,,,CLICK:직급,91025728,200,data/evaluation/current_site_dev_02/events.csv,bc4c25d22db7de7ba176a14e77af2451f9b45338d1a2f3135fa70597694205d0
+e02ce970-cc31-418e-9e37-6dd8c8e8e346,KEEP,,,INPUT:직급,91025729,201,data/evaluation/current_site_dev_02/events.csv,bc4c25d22db7de7ba176a14e77af2451f9b45338d1a2f3135fa70597694205d0
+7fe747c2-a819-425b-9c3a-1efd5feb9fcf,KEEP,,,CLICK:전화번호,91025730,202,data/evaluation/current_site_dev_02/events.csv,bc4c25d22db7de7ba176a14e77af2451f9b45338d1a2f3135fa70597694205d0
+0dab4741-9d39-4bc6-ba28-41c69540e347,KEEP,,,INPUT:전화번호,91025731,203,data/evaluation/current_site_dev_02/events.csv,bc4c25d22db7de7ba176a14e77af2451f9b45338d1a2f3135fa70597694205d0
+4706c4d9-d1c9-4f2d-8f7b-73b383af6844,KEEP,,,CLICK:이메일 주소,91025732,204,data/evaluation/current_site_dev_02/events.csv,bc4c25d22db7de7ba176a14e77af2451f9b45338d1a2f3135fa70597694205d0
+29326fb4-7c80-4836-9c20-7b31540af560,KEEP,,,INPUT:이메일 주소,91025733,205,data/evaluation/current_site_dev_02/events.csv,bc4c25d22db7de7ba176a14e77af2451f9b45338d1a2f3135fa70597694205d0
+ba899b7c-0cbc-435d-bd68-46ea8ecfbd01,KEEP,,,CLICK:회사 주소,91025734,206,data/evaluation/current_site_dev_02/events.csv,bc4c25d22db7de7ba176a14e77af2451f9b45338d1a2f3135fa70597694205d0
+633e1e46-a5c9-40c8-a556-b51563a0525a,KEEP,,,INPUT:회사 주소,91025735,207,data/evaluation/current_site_dev_02/events.csv,bc4c25d22db7de7ba176a14e77af2451f9b45338d1a2f3135fa70597694205d0
+df036e76-552c-4b5a-b203-9e538732a606,KEEP,,,CLICK:기타,91025736,208,data/evaluation/current_site_dev_02/events.csv,bc4c25d22db7de7ba176a14e77af2451f9b45338d1a2f3135fa70597694205d0
+5da53427-91e4-4f93-a4b2-ffc8a82b623a,KEEP,,,INPUT:기타,91025737,209,data/evaluation/current_site_dev_02/events.csv,bc4c25d22db7de7ba176a14e77af2451f9b45338d1a2f3135fa70597694205d0
+2147b51a-0d8f-4974-9b3c-394f2f762892,KEEP,,,CLICK:저장,91025738,210,data/evaluation/current_site_dev_02/events.csv,bc4c25d22db7de7ba176a14e77af2451f9b45338d1a2f3135fa70597694205d0
+96cf4693-b90a-491d-a66b-b6dee0d930ad,KEEP,,,API:POST_/api/business-cards_2xx,91025739,211,data/evaluation/current_site_dev_02/events.csv,bc4c25d22db7de7ba176a14e77af2451f9b45338d1a2f3135fa70597694205d0
+819d1a4a-2b0a-4998-a8ca-af0125e7694a,KEEP,,,EVT:popup_close,91025738,212,data/evaluation/current_site_dev_02/events.csv,bc4c25d22db7de7ba176a14e77af2451f9b45338d1a2f3135fa70597694205d0
+0c9502f4-28ab-4d43-a76e-aa5c033176a9,KEEP,,,API:GET_/api/business-cards_2xx,91025740,213,data/evaluation/current_site_dev_02/events.csv,bc4c25d22db7de7ba176a14e77af2451f9b45338d1a2f3135fa70597694205d0
+3c5648b7-848d-401a-98b0-aff26c1e210b,KEEP,,,EVT:popup_open,91025738,214,data/evaluation/current_site_dev_02/events.csv,bc4c25d22db7de7ba176a14e77af2451f9b45338d1a2f3135fa70597694205d0
+f482df45-3cfc-4071-98aa-f753195ea65c,KEEP,,,EVT:popup_structure,91025738,215,data/evaluation/current_site_dev_02/events.csv,bc4c25d22db7de7ba176a14e77af2451f9b45338d1a2f3135fa70597694205d0
+f480b31c-7a81-4cb4-940f-850c7b012c4f,KEEP,,,CLICK:확인,91025741,216,data/evaluation/current_site_dev_02/events.csv,bc4c25d22db7de7ba176a14e77af2451f9b45338d1a2f3135fa70597694205d0
+134d8e41-72e2-4d9c-b40d-24af3fd8037d,KEEP,,,EVT:popup_close,91025741,217,data/evaluation/current_site_dev_02/events.csv,bc4c25d22db7de7ba176a14e77af2451f9b45338d1a2f3135fa70597694205d0
+e4c7caa8-b16b-45ae-9a1a-e64917483228,KEEP,,,CLICK:검색어를 입력하세요,91025742,218,data/evaluation/current_site_dev_02/events.csv,bc4c25d22db7de7ba176a14e77af2451f9b45338d1a2f3135fa70597694205d0
+005a17de-6faf-4168-9c3d-aa920028813f,KEEP,,,CLICK:검색어를 입력하세요,91025743,219,data/evaluation/current_site_dev_02/events.csv,bc4c25d22db7de7ba176a14e77af2451f9b45338d1a2f3135fa70597694205d0
+3e393f84-8e67-48d4-81e9-0869ecfad0e4,KEEP,,,INPUT:검색어를 입력하세요,91025744,220,data/evaluation/current_site_dev_02/events.csv,bc4c25d22db7de7ba176a14e77af2451f9b45338d1a2f3135fa70597694205d0
+ce364b80-cea9-4200-a995-311b54f6f794,KEEP,,,CLICK:거래처 정보 관리,91025745,221,data/evaluation/current_site_dev_02/events.csv,bc4c25d22db7de7ba176a14e77af2451f9b45338d1a2f3135fa70597694205d0
+0e18142e-d30c-44fc-a7d5-61510b0b9f0b,KEEP,,,EVT:route_change,91025744,222,data/evaluation/current_site_dev_02/events.csv,bc4c25d22db7de7ba176a14e77af2451f9b45338d1a2f3135fa70597694205d0
+d63bf9ec-1e68-4ef0-a6e7-0649bb15c530,KEEP,,,API:GET_/api/auth/me_2xx,91025746,223,data/evaluation/current_site_dev_02/events.csv,bc4c25d22db7de7ba176a14e77af2451f9b45338d1a2f3135fa70597694205d0
+ae6f563c-233f-45a3-8fa3-12eef4425a37,KEEP,,,API:GET_/api/clients_2xx,91025747,224,data/evaluation/current_site_dev_02/events.csv,bc4c25d22db7de7ba176a14e77af2451f9b45338d1a2f3135fa70597694205d0
+4a94ebf9-82e9-434e-946e-b56da04cbdfd,KEEP,,,EVT:screen_change,91025748,225,data/evaluation/current_site_dev_02/events.csv,bc4c25d22db7de7ba176a14e77af2451f9b45338d1a2f3135fa70597694205d0
+69f49e2b-a31b-4970-9e0e-39f43183cd43,KEEP,,,CLICK:검색어를 입력하세요,91025749,226,data/evaluation/current_site_dev_02/events.csv,bc4c25d22db7de7ba176a14e77af2451f9b45338d1a2f3135fa70597694205d0
+125a1d73-4029-4925-912a-c5815b810483,KEEP,,,CLICK:검색 구분,91025750,227,data/evaluation/current_site_dev_02/events.csv,bc4c25d22db7de7ba176a14e77af2451f9b45338d1a2f3135fa70597694205d0
+b66a218f-65da-42b8-895e-f7dcbb84d7c7,KEEP,,,INPUT:검색 구분,91025751,228,data/evaluation/current_site_dev_02/events.csv,bc4c25d22db7de7ba176a14e77af2451f9b45338d1a2f3135fa70597694205d0
+a41c696e-04d4-46ed-b6ef-bdd15826442a,KEEP,,,CLICK:검색 구분,91025752,229,data/evaluation/current_site_dev_02/events.csv,bc4c25d22db7de7ba176a14e77af2451f9b45338d1a2f3135fa70597694205d0
+4473734d-54e6-4ad5-a6bf-e9f1eaedfb4a,KEEP,,,CLICK:검색어를 입력하세요,91025753,230,data/evaluation/current_site_dev_02/events.csv,bc4c25d22db7de7ba176a14e77af2451f9b45338d1a2f3135fa70597694205d0
+ef41858b-a8aa-4520-9b46-3f7536a3fb19,KEEP,,,INPUT:검색어를 입력하세요,91025754,231,data/evaluation/current_site_dev_02/events.csv,bc4c25d22db7de7ba176a14e77af2451f9b45338d1a2f3135fa70597694205d0
+74137ae3-cb50-4858-b963-f40ff8eab714,KEEP,,,API:GET_/api/clients_2xx,91025755,232,data/evaluation/current_site_dev_02/events.csv,bc4c25d22db7de7ba176a14e77af2451f9b45338d1a2f3135fa70597694205d0
+7152c3da-4616-4cbe-957f-30640f1dfe60,KEEP,,,CLICK:등록,91025756,233,data/evaluation/current_site_dev_02/events.csv,bc4c25d22db7de7ba176a14e77af2451f9b45338d1a2f3135fa70597694205d0
+5c3e10a0-7a76-49dd-8f58-e8510d42b0cd,KEEP,,,EVT:popup_open,91025756,234,data/evaluation/current_site_dev_02/events.csv,bc4c25d22db7de7ba176a14e77af2451f9b45338d1a2f3135fa70597694205d0
+f3c22ab9-9889-4abc-8b9c-f969899be4c0,KEEP,,,EVT:popup_structure,91025756,235,data/evaluation/current_site_dev_02/events.csv,bc4c25d22db7de7ba176a14e77af2451f9b45338d1a2f3135fa70597694205d0
+8f983984-3ced-4526-9875-35d6f454a1f7,KEEP,,,CLICK:구분,91025757,236,data/evaluation/current_site_dev_02/events.csv,bc4c25d22db7de7ba176a14e77af2451f9b45338d1a2f3135fa70597694205d0
+683ceb69-b733-44bc-80d0-f3d7a07546e6,KEEP,,,CLICK:회사명,91025758,237,data/evaluation/current_site_dev_02/events.csv,bc4c25d22db7de7ba176a14e77af2451f9b45338d1a2f3135fa70597694205d0
+ccd37770-6afb-4bf2-bbd8-4328b386c880,KEEP,,,INPUT:회사명,91025759,238,data/evaluation/current_site_dev_02/events.csv,bc4c25d22db7de7ba176a14e77af2451f9b45338d1a2f3135fa70597694205d0
+a850bfbe-abde-44f7-b3c7-406ad5d60cd2,KEEP,,,INPUT:대표자명,91025760,239,data/evaluation/current_site_dev_02/events.csv,bc4c25d22db7de7ba176a14e77af2451f9b45338d1a2f3135fa70597694205d0
+1dbd60bc-a8a2-4fd6-81be-f01f1f465b0a,KEEP,,,CLICK:대표 솔루션,91025761,240,data/evaluation/current_site_dev_02/events.csv,bc4c25d22db7de7ba176a14e77af2451f9b45338d1a2f3135fa70597694205d0
+30f30dd5-129b-423c-a5ff-b2518cbf242c,KEEP,,,INPUT:대표 솔루션,91025762,241,data/evaluation/current_site_dev_02/events.csv,bc4c25d22db7de7ba176a14e77af2451f9b45338d1a2f3135fa70597694205d0
+0d51fc65-ac05-4bfe-834e-79bdbf7d6237,KEEP,,,CLICK:대표 전화번호,91025763,242,data/evaluation/current_site_dev_02/events.csv,bc4c25d22db7de7ba176a14e77af2451f9b45338d1a2f3135fa70597694205d0
+eda7a844-e574-43fc-ae4a-ea0ba4ca9080,KEEP,,,INPUT:대표 전화번호,91025764,243,data/evaluation/current_site_dev_02/events.csv,bc4c25d22db7de7ba176a14e77af2451f9b45338d1a2f3135fa70597694205d0
+2f9d361f-43af-4ede-815e-344948139f0b,KEEP,,,CLICK:대표 이메일 주소,91025765,244,data/evaluation/current_site_dev_02/events.csv,bc4c25d22db7de7ba176a14e77af2451f9b45338d1a2f3135fa70597694205d0
+362fa6f5-e277-47a7-8d41-f900dbd8a01b,KEEP,,,INPUT:대표 이메일 주소,91025766,245,data/evaluation/current_site_dev_02/events.csv,bc4c25d22db7de7ba176a14e77af2451f9b45338d1a2f3135fa70597694205d0
+a706bba8-35ff-4cb2-aca4-e47b5fa80c94,KEEP,,,CLICK:회사 주소,91025767,246,data/evaluation/current_site_dev_02/events.csv,bc4c25d22db7de7ba176a14e77af2451f9b45338d1a2f3135fa70597694205d0
+1a181a15-33b4-44bb-992d-988df22a53f9,KEEP,,,INPUT:회사 주소,91025768,247,data/evaluation/current_site_dev_02/events.csv,bc4c25d22db7de7ba176a14e77af2451f9b45338d1a2f3135fa70597694205d0
+8367fc8b-44d0-4067-bf53-ac060c1f03f7,KEEP,,,CLICK:기타,91025769,248,data/evaluation/current_site_dev_02/events.csv,bc4c25d22db7de7ba176a14e77af2451f9b45338d1a2f3135fa70597694205d0
+347dc047-f1a1-4a91-96a2-6451fbf34695,KEEP,,,INPUT:기타,91025770,249,data/evaluation/current_site_dev_02/events.csv,bc4c25d22db7de7ba176a14e77af2451f9b45338d1a2f3135fa70597694205d0
+f7607636-4db1-4712-b23d-5a7802a62817,KEEP,,,CLICK:저장,91025771,250,data/evaluation/current_site_dev_02/events.csv,bc4c25d22db7de7ba176a14e77af2451f9b45338d1a2f3135fa70597694205d0
+6dd70c35-54c4-4b9c-b014-55a54fbdeaa6,KEEP,,,API:POST_/api/clients_2xx,91025772,251,data/evaluation/current_site_dev_02/events.csv,bc4c25d22db7de7ba176a14e77af2451f9b45338d1a2f3135fa70597694205d0
+844aae56-7907-454b-9f77-22d8cb48979e,KEEP,,,EVT:popup_close,91025771,252,data/evaluation/current_site_dev_02/events.csv,bc4c25d22db7de7ba176a14e77af2451f9b45338d1a2f3135fa70597694205d0
+202f4d41-fa92-4db3-89e0-c5c55538d4e7,KEEP,,,API:GET_/api/clients_2xx,91025773,253,data/evaluation/current_site_dev_02/events.csv,bc4c25d22db7de7ba176a14e77af2451f9b45338d1a2f3135fa70597694205d0
+163bb016-9ed2-4fe2-975c-734ca6e56586,KEEP,,,EVT:popup_open,91025771,254,data/evaluation/current_site_dev_02/events.csv,bc4c25d22db7de7ba176a14e77af2451f9b45338d1a2f3135fa70597694205d0
+e7dd53ad-eb88-4e19-860f-9ef2bd1e00bc,KEEP,,,EVT:popup_structure,91025771,255,data/evaluation/current_site_dev_02/events.csv,bc4c25d22db7de7ba176a14e77af2451f9b45338d1a2f3135fa70597694205d0
+5dcc0064-9e9c-40df-acca-c351b3acc93b,KEEP,,,CLICK:확인,91025774,256,data/evaluation/current_site_dev_02/events.csv,bc4c25d22db7de7ba176a14e77af2451f9b45338d1a2f3135fa70597694205d0
+1973e1ae-ddb8-430e-aed5-2b47761f340b,KEEP,,,EVT:popup_close,91025774,257,data/evaluation/current_site_dev_02/events.csv,bc4c25d22db7de7ba176a14e77af2451f9b45338d1a2f3135fa70597694205d0
+bb16456a-02f8-466b-9249-92b39cea6328,KEEP,,,CLICK:자산 관리,91025775,258,data/evaluation/current_site_dev_02/events.csv,bc4c25d22db7de7ba176a14e77af2451f9b45338d1a2f3135fa70597694205d0
+0461b346-94ff-4a88-9451-6152bf794bba,KEEP,,,EVT:route_change,91025774,259,data/evaluation/current_site_dev_02/events.csv,bc4c25d22db7de7ba176a14e77af2451f9b45338d1a2f3135fa70597694205d0
+15d1cba2-3474-4cf5-8229-8a021c272eb2,KEEP,,,API:GET_/api/assets_2xx,91025776,260,data/evaluation/current_site_dev_02/events.csv,bc4c25d22db7de7ba176a14e77af2451f9b45338d1a2f3135fa70597694205d0
+d3fd2ec9-71c7-4558-ae68-10a922f5b99e,KEEP,,,API:GET_/api/auth/me_2xx,91025777,261,data/evaluation/current_site_dev_02/events.csv,bc4c25d22db7de7ba176a14e77af2451f9b45338d1a2f3135fa70597694205d0
+cba72ee1-2e5e-4332-9ad0-1250e7a70137,KEEP,,,EVT:screen_change,91025778,262,data/evaluation/current_site_dev_02/events.csv,bc4c25d22db7de7ba176a14e77af2451f9b45338d1a2f3135fa70597694205d0
+737a3633-bde6-44e6-92ac-04e6e2e79d81,KEEP,,,CLICK:검색 구분,91025779,263,data/evaluation/current_site_dev_02/events.csv,bc4c25d22db7de7ba176a14e77af2451f9b45338d1a2f3135fa70597694205d0
+9b0a82f1-d900-4c72-9b14-ec61ee9622e0,KEEP,,,INPUT:검색 구분,91025780,264,data/evaluation/current_site_dev_02/events.csv,bc4c25d22db7de7ba176a14e77af2451f9b45338d1a2f3135fa70597694205d0
+4a1520a5-4748-4657-8dc9-c764016c66a2,KEEP,,,CLICK:검색 구분,91025781,265,data/evaluation/current_site_dev_02/events.csv,bc4c25d22db7de7ba176a14e77af2451f9b45338d1a2f3135fa70597694205d0
+b6779492-e4ef-4f3e-a0b5-2c18ed42bff4,KEEP,,,CLICK:검색어를 입력하세요,91025782,266,data/evaluation/current_site_dev_02/events.csv,bc4c25d22db7de7ba176a14e77af2451f9b45338d1a2f3135fa70597694205d0
+9d16cc2f-beac-43d0-b737-a6f97fac85ad,KEEP,,,INPUT:검색어를 입력하세요,91025783,267,data/evaluation/current_site_dev_02/events.csv,bc4c25d22db7de7ba176a14e77af2451f9b45338d1a2f3135fa70597694205d0
+862bb92e-42a3-41ed-9ddb-79fc3e473a64,KEEP,,,API:GET_/api/assets_2xx,91025784,268,data/evaluation/current_site_dev_02/events.csv,bc4c25d22db7de7ba176a14e77af2451f9b45338d1a2f3135fa70597694205d0
+d34f4897-d30a-4ff6-aafa-333f3e8de0fc,KEEP,,,CLICK:div,91025785,269,data/evaluation/current_site_dev_02/events.csv,bc4c25d22db7de7ba176a14e77af2451f9b45338d1a2f3135fa70597694205d0
+fd1e5399-b9de-4c98-b041-8d7e53520853,KEEP,,,CLICK:등록,91025786,270,data/evaluation/current_site_dev_02/events.csv,bc4c25d22db7de7ba176a14e77af2451f9b45338d1a2f3135fa70597694205d0
+d041a71d-486b-4a14-b5f1-3c5cc0a91909,KEEP,,,EVT:popup_open,91025786,271,data/evaluation/current_site_dev_02/events.csv,bc4c25d22db7de7ba176a14e77af2451f9b45338d1a2f3135fa70597694205d0
+2852ef2f-4ddf-4570-9ad6-7840e33a0772,KEEP,,,EVT:popup_structure,91025786,272,data/evaluation/current_site_dev_02/events.csv,bc4c25d22db7de7ba176a14e77af2451f9b45338d1a2f3135fa70597694205d0
+35f84c66-23b0-4d52-b90a-2ae909c53570,KEEP,,,CLICK:구분,91025787,273,data/evaluation/current_site_dev_02/events.csv,bc4c25d22db7de7ba176a14e77af2451f9b45338d1a2f3135fa70597694205d0
+d5b541b9-3e09-490d-9a91-730cdc4cb412,KEEP,,,INPUT:구분,91025788,274,data/evaluation/current_site_dev_02/events.csv,bc4c25d22db7de7ba176a14e77af2451f9b45338d1a2f3135fa70597694205d0
+b6f71324-9e17-4ea2-9ee5-afe702bd6bf1,KEEP,,,CLICK:구분,91025789,275,data/evaluation/current_site_dev_02/events.csv,bc4c25d22db7de7ba176a14e77af2451f9b45338d1a2f3135fa70597694205d0
+f02daa2b-f152-44ce-af32-6cdbafed00f0,KEEP,,,CLICK:자산명,91025790,276,data/evaluation/current_site_dev_02/events.csv,bc4c25d22db7de7ba176a14e77af2451f9b45338d1a2f3135fa70597694205d0
+33336d7f-651d-420f-8458-7be48c4236ef,KEEP,,,INPUT:자산명,91025791,277,data/evaluation/current_site_dev_02/events.csv,bc4c25d22db7de7ba176a14e77af2451f9b45338d1a2f3135fa70597694205d0
+417ac878-dd2d-43b7-8e1d-e82050063b77,KEEP,,,CLICK:자산 요약,91025792,278,data/evaluation/current_site_dev_02/events.csv,bc4c25d22db7de7ba176a14e77af2451f9b45338d1a2f3135fa70597694205d0
+457e301e-99a0-44fe-b186-7e0cac391632,KEEP,,,CLICK:자산 요약,91025793,279,data/evaluation/current_site_dev_02/events.csv,bc4c25d22db7de7ba176a14e77af2451f9b45338d1a2f3135fa70597694205d0
+ad22d28b-09e7-429b-9ee2-0916ac2625bb,KEEP,,,INPUT:자산 요약,91025794,280,data/evaluation/current_site_dev_02/events.csv,bc4c25d22db7de7ba176a14e77af2451f9b45338d1a2f3135fa70597694205d0
+46ecf325-235b-43b3-8078-4ea6837b48bc,KEEP,,,CLICK:상세 내용,91025795,281,data/evaluation/current_site_dev_02/events.csv,bc4c25d22db7de7ba176a14e77af2451f9b45338d1a2f3135fa70597694205d0
+ae8a2374-82b9-4f69-867e-d9d87e5eed8c,KEEP,,,INPUT:상세 내용,91025796,282,data/evaluation/current_site_dev_02/events.csv,bc4c25d22db7de7ba176a14e77af2451f9b45338d1a2f3135fa70597694205d0
+b3a29f38-f3c1-4a1f-837a-1e7ba1103e2c,KEEP,,,CLICK:저장,91025797,283,data/evaluation/current_site_dev_02/events.csv,bc4c25d22db7de7ba176a14e77af2451f9b45338d1a2f3135fa70597694205d0
+78e733d9-53d1-4936-b609-1c019aed1275,KEEP,,,API:POST_/api/assets_2xx,91025798,284,data/evaluation/current_site_dev_02/events.csv,bc4c25d22db7de7ba176a14e77af2451f9b45338d1a2f3135fa70597694205d0
+db34d460-ba53-4ad2-b087-5975cc593381,KEEP,,,EVT:popup_close,91025797,285,data/evaluation/current_site_dev_02/events.csv,bc4c25d22db7de7ba176a14e77af2451f9b45338d1a2f3135fa70597694205d0
+038053a6-1f55-4fe2-b78b-ec803c6d0332,KEEP,,,API:GET_/api/assets_2xx,91025799,286,data/evaluation/current_site_dev_02/events.csv,bc4c25d22db7de7ba176a14e77af2451f9b45338d1a2f3135fa70597694205d0
+6cc319f2-3d13-48ea-8809-fafe41ff2e15,KEEP,,,EVT:popup_open,91025797,287,data/evaluation/current_site_dev_02/events.csv,bc4c25d22db7de7ba176a14e77af2451f9b45338d1a2f3135fa70597694205d0
+e403f46a-0e3e-43d6-a23f-718bd7f014d8,KEEP,,,EVT:popup_structure,91025797,288,data/evaluation/current_site_dev_02/events.csv,bc4c25d22db7de7ba176a14e77af2451f9b45338d1a2f3135fa70597694205d0
+c93ad5ab-8d6d-4523-a27e-2ebb48132bc8,KEEP,,,CLICK:확인,91025800,289,data/evaluation/current_site_dev_02/events.csv,bc4c25d22db7de7ba176a14e77af2451f9b45338d1a2f3135fa70597694205d0
+9867aebb-c4d6-4681-9f67-c265ba5279e3,KEEP,,,EVT:popup_close,91025800,290,data/evaluation/current_site_dev_02/events.csv,bc4c25d22db7de7ba176a14e77af2451f9b45338d1a2f3135fa70597694205d0
+6949d72b-c70d-4c7c-93fa-5bd8b9a13ec6,KEEP,,,CLICK:일정 관리,91025801,291,data/evaluation/current_site_dev_02/events.csv,bc4c25d22db7de7ba176a14e77af2451f9b45338d1a2f3135fa70597694205d0
+cddc58ff-8630-4e9a-8176-38f88a4d219b,KEEP,,,EVT:route_change,91025801,292,data/evaluation/current_site_dev_02/events.csv,bc4c25d22db7de7ba176a14e77af2451f9b45338d1a2f3135fa70597694205d0
+1039545f-aa10-40d3-84d9-00e9e14752ea,KEEP,,,API:GET_/api/schedules/viewers_2xx,91025802,293,data/evaluation/current_site_dev_02/events.csv,bc4c25d22db7de7ba176a14e77af2451f9b45338d1a2f3135fa70597694205d0
+3c00d81b-bd00-4fb5-bf88-57a59d136661,KEEP,,,API:GET_/api/schedules_2xx,91025803,294,data/evaluation/current_site_dev_02/events.csv,bc4c25d22db7de7ba176a14e77af2451f9b45338d1a2f3135fa70597694205d0
+5bb61f40-846a-4e1e-81f6-cad4b7a24b5e,KEEP,,,EVT:screen_change,91025804,295,data/evaluation/current_site_dev_02/events.csv,bc4c25d22db7de7ba176a14e77af2451f9b45338d1a2f3135fa70597694205d0
+6dd92df7-9ae2-418b-9ef1-7d6be8060451,KEEP,,,CLICK:1,91025805,296,data/evaluation/current_site_dev_02/events.csv,bc4c25d22db7de7ba176a14e77af2451f9b45338d1a2f3135fa70597694205d0
+422db69e-8598-44b6-9bf1-759416215845,KEEP,,,EVT:popup_open,91025805,297,data/evaluation/current_site_dev_02/events.csv,bc4c25d22db7de7ba176a14e77af2451f9b45338d1a2f3135fa70597694205d0
+98db1bb6-9140-4b93-93e7-8b4b9ccbd01f,KEEP,,,EVT:popup_structure,91025805,298,data/evaluation/current_site_dev_02/events.csv,bc4c25d22db7de7ba176a14e77af2451f9b45338d1a2f3135fa70597694205d0
+9f962e05-6d3a-4751-9054-784228ba8658,KEEP,,,CLICK:닫기,91025806,299,data/evaluation/current_site_dev_02/events.csv,bc4c25d22db7de7ba176a14e77af2451f9b45338d1a2f3135fa70597694205d0
+eca49dac-9fca-4035-8212-e432937a9025,KEEP,,,EVT:popup_close,91025806,300,data/evaluation/current_site_dev_02/events.csv,bc4c25d22db7de7ba176a14e77af2451f9b45338d1a2f3135fa70597694205d0
+1824207c-e892-4cb7-b9a6-91d5b4268270,KEEP,,,CLICK:1,91025807,301,data/evaluation/current_site_dev_02/events.csv,bc4c25d22db7de7ba176a14e77af2451f9b45338d1a2f3135fa70597694205d0
+61fab564-59c7-4e89-a0a5-4b7ac3428ae8,KEEP,,,EVT:popup_open,91025807,302,data/evaluation/current_site_dev_02/events.csv,bc4c25d22db7de7ba176a14e77af2451f9b45338d1a2f3135fa70597694205d0
+095395c7-6e2a-410b-a901-8e09e6dba1b7,KEEP,,,EVT:popup_structure,91025807,303,data/evaluation/current_site_dev_02/events.csv,bc4c25d22db7de7ba176a14e77af2451f9b45338d1a2f3135fa70597694205d0
+e647d22f-d35d-4c39-afb2-6386b2ef449d,KEEP,,,CLICK:2,91025808,304,data/evaluation/current_site_dev_02/events.csv,bc4c25d22db7de7ba176a14e77af2451f9b45338d1a2f3135fa70597694205d0
+0b3e4161-024d-4882-bbf0-d211a9ac13f5,KEEP,,,EVT:popup_close,91025808,305,data/evaluation/current_site_dev_02/events.csv,bc4c25d22db7de7ba176a14e77af2451f9b45338d1a2f3135fa70597694205d0
+b6ed96d5-972d-4157-baa1-ded74bbb0436,KEEP,,,CLICK:자산 관리,91025809,306,data/evaluation/current_site_dev_02/events.csv,bc4c25d22db7de7ba176a14e77af2451f9b45338d1a2f3135fa70597694205d0
+dc08fef9-7b5a-45e3-b167-aaf9189b1c14,KEEP,,,EVT:route_change,91025809,307,data/evaluation/current_site_dev_02/events.csv,bc4c25d22db7de7ba176a14e77af2451f9b45338d1a2f3135fa70597694205d0
+484cf3dc-59ab-40b2-b0cb-c1b09b3c412e,KEEP,,,API:GET_/api/auth/me_2xx,91025810,308,data/evaluation/current_site_dev_02/events.csv,bc4c25d22db7de7ba176a14e77af2451f9b45338d1a2f3135fa70597694205d0
+9dcfb576-d331-45cf-8173-0f64d8016a11,KEEP,,,API:GET_/api/assets_2xx,91025811,309,data/evaluation/current_site_dev_02/events.csv,bc4c25d22db7de7ba176a14e77af2451f9b45338d1a2f3135fa70597694205d0
+ffe06f7e-a21a-44b9-b164-0f97ab9901c2,KEEP,,,EVT:screen_change,91025812,310,data/evaluation/current_site_dev_02/events.csv,bc4c25d22db7de7ba176a14e77af2451f9b45338d1a2f3135fa70597694205d0
+d9f39d3a-2558-4bd4-9f3a-c4bc595bcd5d,KEEP,,,CLICK:자산명,91025813,311,data/evaluation/current_site_dev_02/events.csv,bc4c25d22db7de7ba176a14e77af2451f9b45338d1a2f3135fa70597694205d0
+ab7be1c4-aa91-4030-a412-89ff47750703,KEEP,,,CLICK:자산명,91025814,312,data/evaluation/current_site_dev_02/events.csv,bc4c25d22db7de7ba176a14e77af2451f9b45338d1a2f3135fa70597694205d0
+e50967a2-7357-4658-843b-de70209f0c34,KEEP,,,EVT:popup_open,91025814,313,data/evaluation/current_site_dev_02/events.csv,bc4c25d22db7de7ba176a14e77af2451f9b45338d1a2f3135fa70597694205d0
+404036dc-ca4b-4bad-be7c-9349744ad840,KEEP,,,API:GET_/api/assets/1_2xx,91025815,314,data/evaluation/current_site_dev_02/events.csv,bc4c25d22db7de7ba176a14e77af2451f9b45338d1a2f3135fa70597694205d0
+2c0fd4b9-1e49-458b-b055-6bd462aeb1fb,REMOVE,consecutive_same_activity,e50967a2-7357-4658-843b-de70209f0c34,EVT:popup_open,91025814,315,data/evaluation/current_site_dev_02/events.csv,bc4c25d22db7de7ba176a14e77af2451f9b45338d1a2f3135fa70597694205d0
+e90f0ca1-539a-44ca-bd94-ca7ebdeb7672,KEEP,,,EVT:popup_close,91025816,316,data/evaluation/current_site_dev_02/events.csv,bc4c25d22db7de7ba176a14e77af2451f9b45338d1a2f3135fa70597694205d0
+f334ed43-8eef-4421-b76d-f5831e3af946,KEEP,,,EVT:popup_structure,91025814,317,data/evaluation/current_site_dev_02/events.csv,bc4c25d22db7de7ba176a14e77af2451f9b45338d1a2f3135fa70597694205d0
+4c245ed1-a651-4f73-a05e-2a43ccf8e725,KEEP,,,CLICK:자산 정보 상세 닫기,91025817,318,data/evaluation/current_site_dev_02/events.csv,bc4c25d22db7de7ba176a14e77af2451f9b45338d1a2f3135fa70597694205d0
+1f3488a5-7ca0-4b4b-ba01-853e95ad4294,KEEP,,,EVT:popup_close,91025817,319,data/evaluation/current_site_dev_02/events.csv,bc4c25d22db7de7ba176a14e77af2451f9b45338d1a2f3135fa70597694205d0

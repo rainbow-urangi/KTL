@@ -1,0 +1,180 @@
+{
+  "request": {
+    "business_unit_id": "BU17",
+    "workflow_id": "WF-0018",
+    "generator_mode": "REAL",
+    "run_mode": "DEVELOPMENT"
+  },
+  "http_status": 200,
+  "response": {
+    "business_unit_id": "BU17",
+    "workflow_id": "WF-0018",
+    "scenario_id": "REAL-SCN-89614e4095b2d244ab94",
+    "status": "SUCCESS",
+    "steps": [
+      {
+        "order": 1,
+        "action": "REGISTER",
+        "target": "등록",
+        "source_step_id": "BA-7044f392-59bf-4388-8414-75a295a799d8",
+        "source_event_ids": [
+          "7044f392-59bf-4388-8414-75a295a799d8",
+          "6bf58bbd-75a7-4ae8-9cfb-c206b9c96ea5"
+        ],
+        "source_node_ids": [
+          "PM-007-N001",
+          "PM-007-N002"
+        ],
+        "page_context": "/mypage/clients",
+        "fields": [],
+        "http_evidence": [],
+        "completion_evidence": [],
+        "serializer_rule_id": "BA-VALIDATED-FORM-OPENER"
+      },
+      {
+        "order": 2,
+        "action": "INPUT",
+        "target": "거래처 정보",
+        "source_step_id": "BA-503f8212-e262-472e-bbd9-f68897e1df8d",
+        "source_event_ids": [
+          "6bf58bbd-75a7-4ae8-9cfb-c206b9c96ea5",
+          "503f8212-e262-472e-bbd9-f68897e1df8d",
+          "5b597b41-91a6-49d3-86de-8ee82f7375dd",
+          "1c3a9bc3-acea-4aff-aa57-fc38b09d3c89",
+          "b7c7bb26-53d7-47da-999a-904612ffeed6",
+          "2bab6876-daa3-4005-a1df-d7ce11a43cc2",
+          "cb1f74e0-026d-4e7d-8939-e5fcd78bc9b3",
+          "5b582732-7c91-4f10-b9b6-22c3312a8830"
+        ],
+        "source_node_ids": [
+          "PM-007-N002",
+          "PM-007-N004"
+        ],
+        "page_context": "/mypage/clients",
+        "fields": [
+          {
+            "label": "회사명",
+            "id": "",
+            "name": null,
+            "value_type": "text",
+            "selector": "div.work-report-form-modal__panel.business-card-form-modal > div.business-card-form-modal__body:nth-of-type(3) > section.business-card-form-modal__section:nth-of-type(1) > div.business-card-form-modal__grid:nth-of-type(2) > label:nth-of-type(2) > input",
+            "source_event_id": "503f8212-e262-472e-bbd9-f68897e1df8d",
+            "source_node_ids": [
+              "PM-007-N004"
+            ]
+          },
+          {
+            "label": "대표자명",
+            "id": "",
+            "name": null,
+            "value_type": "text",
+            "selector": "div.work-report-form-modal__panel.business-card-form-modal > div.business-card-form-modal__body:nth-of-type(3) > section.business-card-form-modal__section:nth-of-type(1) > div.business-card-form-modal__grid:nth-of-type(2) > label:nth-of-type(3) > input",
+            "source_event_id": "5b597b41-91a6-49d3-86de-8ee82f7375dd",
+            "source_node_ids": [
+              "PM-007-N004"
+            ]
+          },
+          {
+            "label": "대표 솔루션",
+            "id": "",
+            "name": null,
+            "value_type": "text",
+            "selector": "div.work-report-form-modal__panel.business-card-form-modal > div.business-card-form-modal__body:nth-of-type(3) > section.business-card-form-modal__section:nth-of-type(1) > div.business-card-form-modal__grid:nth-of-type(2) > label.business-card-form-modal__full:nth-of-type(4) > input",
+            "source_event_id": "1c3a9bc3-acea-4aff-aa57-fc38b09d3c89",
+            "source_node_ids": [
+              "PM-007-N004"
+            ]
+          },
+          {
+            "label": "대표 전화번호",
+            "id": "",
+            "name": null,
+            "value_type": "text",
+            "selector": "div.work-report-form-modal__panel.business-card-form-modal > div.business-card-form-modal__body:nth-of-type(3) > section.business-card-form-modal__section:nth-of-type(2) > div.business-card-form-modal__grid:nth-of-type(2) > label:nth-of-type(1) > input",
+            "source_event_id": "b7c7bb26-53d7-47da-999a-904612ffeed6",
+            "source_node_ids": [
+              "PM-007-N004"
+            ]
+          },
+          {
+            "label": "대표 이메일 주소",
+            "id": "",
+            "name": null,
+            "value_type": "text",
+            "selector": "div.work-report-form-modal__panel.business-card-form-modal > div.business-card-form-modal__body:nth-of-type(3) > section.business-card-form-modal__section:nth-of-type(2) > div.business-card-form-modal__grid:nth-of-type(2) > label:nth-of-type(2) > input",
+            "source_event_id": "2bab6876-daa3-4005-a1df-d7ce11a43cc2",
+            "source_node_ids": [
+              "PM-007-N004"
+            ]
+          },
+          {
+            "label": "대표 이메일 주소",
+            "id": "",
+            "name": null,
+            "value_type": "text",
+            "selector": "div.work-report-form-modal__panel.business-card-form-modal > div.business-card-form-modal__body:nth-of-type(3) > section.business-card-form-modal__section:nth-of-type(2) > div.business-card-form-modal__grid:nth-of-type(2) > label:nth-of-type(2) > input",
+            "source_event_id": "cb1f74e0-026d-4e7d-8939-e5fcd78bc9b3",
+            "source_node_ids": [
+              "PM-007-N004"
+            ]
+          },
+          {
+            "label": "회사 주소",
+            "id": "",
+            "name": null,
+            "value_type": "text",
+            "selector": "div.work-report-form-modal__panel.business-card-form-modal > div.business-card-form-modal__body:nth-of-type(3) > section.business-card-form-modal__section:nth-of-type(2) > div.business-card-form-modal__grid:nth-of-type(2) > label.business-card-form-modal__full:nth-of-type(3) > input",
+            "source_event_id": "5b582732-7c91-4f10-b9b6-22c3312a8830",
+            "source_node_ids": [
+              "PM-007-N004"
+            ]
+          }
+        ],
+        "http_evidence": [],
+        "completion_evidence": [],
+        "serializer_rule_id": "BA-INPUT-FORM"
+      },
+      {
+        "order": 3,
+        "action": "SAVE",
+        "target": "저장",
+        "source_step_id": "BA-766db913-7583-4686-a519-165bfb1be3b8",
+        "source_event_ids": [
+          "6bf58bbd-75a7-4ae8-9cfb-c206b9c96ea5",
+          "766db913-7583-4686-a519-165bfb1be3b8",
+          "1a122856-9dd0-40d8-a352-a11398a3bbce",
+          "8d4bc681-d35d-41f0-a2ac-eb21b9ead738"
+        ],
+        "source_node_ids": [
+          "PM-007-N002",
+          "PM-007-N005",
+          "PM-008-N001"
+        ],
+        "page_context": "/mypage/clients",
+        "fields": [],
+        "http_evidence": [],
+        "completion_evidence": [
+          {
+            "source_event_id": "1a122856-9dd0-40d8-a352-a11398a3bbce",
+            "raw_order": 219,
+            "kind": "SUCCESS_POPUP",
+            "message": "거래처 정보가 등록되었습니다. 목록에서 반영된 내용을 확인할 수 있습니다.",
+            "causal_rule": "EXPLICIT_CAUSAL_ID"
+          }
+        ],
+        "serializer_rule_id": "BA-LINKED-SUCCESS-ACK"
+      }
+    ],
+    "issues": [],
+    "generator_version": "m03-observed-business-steps-v1.1-menu-enter",
+    "source_process_id": "PM-007",
+    "source_snapshot_sha256": "86b1e77c8ca4ec365806d7d145d99ffa802bc097347b3db16ed9b3f600503f39",
+    "readiness_only": true,
+    "run_mode": "DEVELOPMENT",
+    "generator_mode": "REAL",
+    "synthetic": false,
+    "official_pass": null
+  },
+  "started_at": "2026-11-12T08:25:59.359496+00:00",
+  "completed_at": "2026-11-12T08:25:59.372562+00:00"
+}

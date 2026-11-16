@@ -1,0 +1,33 @@
+{
+  "business_unit_ids": [
+    "BU01",
+    "BU03",
+    "BU05",
+    "BU07",
+    "BU09",
+    "BU12",
+    "BU13",
+    "BU14",
+    "BU17",
+    "BU20"
+  ],
+  "data_class": "DEVELOPMENT",
+  "dataset_id": "m03_final_10_frozen_20261112",
+  "files": [
+    {
+      "path": "business_steps.json",
+      "sha256": "86b1e77c8ca4ec365806d7d145d99ffa802bc097347b3db16ed9b3f600503f39"
+    },
+    {
+      "path": "candidate.json",
+      "sha256": "c3351712b13e482389b5b3c55238a107f48ced502fd1d6f7053c3f3753c5545a"
+    }
+  ],
+  "frozen_bundle_manifest_sha256": "e2432a56e075fc6ae186c824d37316d7072d17f8a611edc7d78bf1ae671c9b95",
+  "metric_id": "M03",
+  "official": false,
+  "run_mode": "DEVELOPMENT",
+  "schema_version": "m03-observed-runtime-input-v1",
+  "source_type": "DEVELOPMENT",
+  "synthetic": false
+}

@@ -1,0 +1,95 @@
+{
+  "schema_version": "m05-scoped-independent-review-v1",
+  "reviewed_at_utc": "2026-11-11T14:07:25.131867+00:00",
+  "reviewer_type": "independent_native_review_task",
+  "review_scope": "Bounded artifact preparation, documentation/nonfrozen-contract synchronization and recorded regression verification; NOT execution approval",
+  "preparation_verdict": "PASS_BOUNDED_ARTIFACT_PREPARATION",
+  "documentation_contract_verdict": "PASS",
+  "execution_readiness": "BLOCKED",
+  "execution_approval": false,
+  "validator_error": "PRIOR_USE_DECLARATIONS_REQUIRED",
+  "preparation_checks": {
+    "artifact_manifest_hashes": 42,
+    "original_csv_copies_byte_identical": 9,
+    "original_lock_files_byte_identical": 10,
+    "raw_rows": 417,
+    "raw_source_counts": [
+      203,
+      147,
+      67
+    ],
+    "sessions": 3,
+    "task_case_groups": 313,
+    "timestamp_triplets_and_boundaries_independently_checked": 417,
+    "normalized_input_and_provenance_reproduced": true,
+    "unchanged_target_semantic_rows": 20,
+    "keep": 10,
+    "remove": 10,
+    "history_source_files": 12,
+    "history_rows_and_feature_hashes_reproduced": 34553,
+    "history_overlap": 0,
+    "reference_index_files": 3,
+    "reference_index_rows": 1838,
+    "reference_id_overlap": 0,
+    "history_completeness_proven": false
+  },
+  "hashes": {
+    "source_target_labels": "88f48576253211e47f8a39a857734e031d30a9bdbcf4da619e58fdd11cf3ceea",
+    "source_label_lock": "ad553f26834c14995ae31b38b4a884f4875585e0a81b0dd168507e652810b156",
+    "engine_freeze": "23fde29b22c23976ccf02760f58b2c2490f3e5b054c385193fc7c463f5f00d10"
+  },
+  "final_integrity": {
+    "bundle_artifacts_unchanged": 42,
+    "protected_snapshot_files_unchanged": 128,
+    "only_expected_snapshot_difference": "R&D_COMPLIANCE.md",
+    "all_three_document_before_after_hashes_verified": true,
+    "exact_document_patch_verified": true,
+    "frozen_bound_artifacts_and_active_config_verified": 18,
+    "labels_and_runtime_rules_unchanged": true,
+    "general_evidence_principle_not_event_specific_classifier_exceptions": true,
+    "source_telemetry_and_retrospective_recollection_remain_distinct": true,
+    "approval_registry_absent": true,
+    "current_matching_attempt_claim_absent": true,
+    "absence_is_not_proof_of_complete_execution_or_access_history": true
+  },
+  "regression": {
+    "status": "PASS_LOG_INDEPENDENTLY_INSPECTED",
+    "test_cases_ok": 419,
+    "elapsed_seconds": 20.449,
+    "log_path": "docs/agents/m05_attested_contract_sync_20261111/full_regression.log",
+    "log_sha256": "c43486a0cef2c31eca5e95f1948f69f884314d7ed7adf276403218338696c1de",
+    "reviewer_reran_tests": false,
+    "scope": "Regression fixtures, not real held-out evaluation evidence"
+  },
+  "remaining_blockers": [
+    "Complete training/development use-history and accountable coverage remain unproven.",
+    "Actual prediction execution/view coverage from collection through lock remains unproven.",
+    "Attributable evaluation-schema label metadata remain missing; no per-label times or human attribution were invented.",
+    "Independent source-export completeness and exact full-context execution approval remain unestablished."
+  ],
+  "evidence_refs": [
+    {
+      "path": "docs/agents/m05_full_context_bundle_20261111/artifact_manifest.json",
+      "sha256": "e7f726ae26daf2006e5466c60750d9c2e073e5911280bc706411a999982493ce"
+    },
+    {
+      "path": "docs/agents/m05_full_context_bundle_20261111/preparation_report.json",
+      "sha256": "67f1e4c0c9b976b2f6c0500eb65840df13c951ab1d81245812ffcdfba75d48d8"
+    },
+    {
+      "path": "docs/agents/m05_attested_contract_sync_20261111/change_manifest.json",
+      "sha256": "f66aae043de9e9a2032cf5d1c7919b0eabcc7ad09f9f36339b607511105153e1"
+    },
+    {
+      "path": "docs/agents/m05_attested_contract_sync_20261111/documentation_contract.patch",
+      "sha256": "bd2ba3ef9cd5623588d7465ed898330c2ae4ea3f79045c5fe6d7d5ef04369a03"
+    },
+    {
+      "path": "docs/agents/m05_attested_contract_sync_20261111/post_test_validation.json",
+      "sha256": "209b197a55159c573420eaff8f0c2d25f2ec939baa8cc8fc954d2aea1d36df4e"
+    }
+  ],
+  "reviewer_prediction_executions": 0,
+  "reviewer_score_executions": 0,
+  "note": "Only this new scoped review file is created. Original snapshots and artifacts are unchanged. This document is not an approval registry entry and does not authorize execution."
+}

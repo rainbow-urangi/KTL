@@ -1,0 +1,44 @@
+{
+  "status": "PASS",
+  "changed_files_sha256": {
+    "backend/m05_full_context.py": "94814ef48092a51f95f44b908d169d403c05c625c783c0f84fae3a00954f83c9",
+    "backend/m05_full_context_csv.py": "04738e857f64435f36533ea0a0181d10c256d86a79a6ddbbaf4df22aceb2600d",
+    "backend/m05_readiness_web.py": "93025bf7846313d05e3503d8ea1e635359cc30388619535545a1700f3ca0fe82",
+    "tests/test_m05_full_context.py": "7a683d5cdbe5febb4b670c9b2c342f3d479071588f9053119266280dcf1e70e0",
+    "evaluation_contracts/m05_user20.json": "89318f33fb23ed146e4ec58c68d802f817e893c0b2811db03636edc8e241e1d2",
+    "docs/agents/m05_full_context_implementation/README.md": "b743ace6d71a222e1266d4eac72ffaaef0d8552b3f68c7f4cbc2bc75ce4a091d",
+    "R&D_COMPLIANCE.md": "85495438ebc89fb6e6b37fed5092e61dd393e2792d4acc92e6ccf7500702799b",
+    "docs/agents/CURRENT_STATE.md": "bad46a2c6f2e17427d03941665c65bf80a4a37f972c758cebf2c199d42f58e66",
+    "docs/agents/TASK_QUEUE.md": "c6e457970c3ed2945e3b2fec5a967a947e2cb2875948d14a5653bbd8817507b1"
+  },
+  "protected_file_count": 705,
+  "protected_mismatches": [],
+  "frozen_expected_count": 19,
+  "frozen_expected_mismatches": [],
+  "validate_freeze": "PASS",
+  "freeze_sha256": "23fde29b22c23976ccf02760f58b2c2490f3e5b054c385193fc7c463f5f00d10",
+  "checks": {
+    "focused_m05": {
+      "tests": 76,
+      "status": "PASS",
+      "log_sha256": "4c79ee0a0297c23b854aa9f5d5b5172d8ad2dab6b2197d943da30fc7853344ec"
+    },
+    "full_regression": {
+      "tests": 419,
+      "status": "PASS",
+      "log_sha256": "589614cb082918902b7ee55a0f10deb3bc1f0d162cbcf37c46e901e445925860"
+    },
+    "node_check_frontend": "PASS",
+    "frontend_dom_checks": {
+      "count": 24,
+      "status": "PASS"
+    },
+    "git_diff_check": "PASS"
+  },
+  "real_raw_predictions_executed": false,
+  "real_target_labels_written": false,
+  "real_full_context_result_directory_exists": false,
+  "independent_verification": "PENDING_SEPARATE_REVIEW",
+  "source_snapshot_sha256": "4029095d03c0e1e30f6ff7abec7d88114dc2694227faf2e93b3db34fa682b359",
+  "implementation_patch_sha256": "14c03e48cae9c980d461623e255bed62c69286b610dd1bdfe812b62d5efafd80"
+}

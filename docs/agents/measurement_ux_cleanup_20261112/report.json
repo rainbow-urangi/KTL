@@ -1,0 +1,19 @@
+{
+  "status": "DEVELOPMENT_PASS_PENDING_INDEPENDENT_VERIFICATION",
+  "timestamp_utc": "2026-11-12T06:41:35.376033+00:00",
+  "protected_count": 1349,
+  "protected_changed": [],
+  "python_regression": {
+    "passed": 448
+  },
+  "synthetic_frontend_tests": "PASS",
+  "fake_clock_tests": "PASS",
+  "actual_browser_clicks": "NOT_PERFORMED_USER_RESERVED",
+  "actual_m02_remeasurement": "NOT_PERFORMED",
+  "changed_file_sha256": {
+    "frontend/app.js": "536f26e72e07bf4f97b4aea9fa594c93fc0d3f833387b26ce7779bf601749a48",
+    "frontend/style.css": "df73bb737e1e89b013e880af68bbf1cbd2996caa89756a9c7ca43e508b5302cf",
+    "tests/test_frontend.cjs": "8988ee69c00c8e1beccec1cf1533c3a6991e8ee3b9403117621e3ad7924d4c93",
+    "tests/test_measurement_delay.cjs": "3757156e8373dc9c69579e60be9b1f0c1ce5e652be07e83f2be89b61dd8207f6"
+  }
+}

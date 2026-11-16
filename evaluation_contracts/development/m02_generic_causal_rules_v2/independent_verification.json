@@ -1,0 +1,30 @@
+{
+  "verdict": "PASS",
+  "snapshot_manifest_sha256": "5265adf8b793c7692c4ecbc44b4b5280a904eb50352739619d1d9a9cf9c74151",
+  "generic_contract_check": "PASS",
+  "gt_leakage_check": "PASS",
+  "provenance_check": "PASS",
+  "regression_check": "PASS",
+  "verified_by": "independent_verify_causal_rules",
+  "verified_at": "2026-11-08T11:47:08.387889+00:00",
+  "regression": {
+    "backend_tests": 332
+  },
+  "independent_checks": [
+    "All 148 manifest dependency hashes match; model/config/raw hashes unchanged from authorized snapshot",
+    "Calendar exact opener only; no inferred date; calendar date accepted and week rejected by comparator",
+    "Composite explicit same-write 2xx plus same-form close accepted; HTTP alone, fallback, wrong owner, missing cause, contradictory or unknown responses rejected",
+    "All seven lifecycle barriers before/after API, on same/other page rejected; previous page_close and collector_boot gaps closed",
+    "Separate live success popup survives exact linked input-form close; wrong/reused popup and owner cases rejected",
+    "Recovery01 122 and recovery03 102 raw atoms preserved; attached evidence exactly matches allowlisted raw atom; source IDs and dispositions complete; deterministic generation",
+    "Recovery03 two recorded calendar clicks retained without full date inference; zero synthetic composite completions in recovery01/03",
+    "No BU-specific generation rules or GT/model prediction inputs used for generic semantics"
+  ],
+  "score_computed": false,
+  "limits": [
+    "This gate covers implementation invariants, not official KTL approval or score",
+    "Post-freeze measured pipeline and evidence export still require verification",
+    "BU09 week remains USER_ACTION_NOT_PERFORMED / RAW_EVIDENCE_MISSING",
+    "BU03 recovery03 explicit causal HTTP/form-close proof remains insufficient; no invented completion UI"
+  ]
+}

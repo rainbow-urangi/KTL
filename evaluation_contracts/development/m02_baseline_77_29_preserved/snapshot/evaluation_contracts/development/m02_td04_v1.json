@@ -1,0 +1,267 @@
+{
+  "version": "development-td04-v1",
+  "run_mode": "DEVELOPMENT",
+  "approved_for_official": false,
+  "source_library_id": "libfile_c2a2dfa848208191858b10e091047e17",
+  "source_final_sha256": "5cdfe8e0abdc6eff552f419681182d4c897a886f1df3cdc9cb5dadc75fb22768",
+  "status": "DIRECT_MAPPING_UNRESOLVED",
+  "notice": "PDF arrow-separated procedures transcribed verbatim. No technical action alias or node-evidence-to-answer promotion. Screen entry context is retained per business unit; this does not assert a separate route for every step.",
+  "processes": [
+    {
+      "id": "BU03",
+      "process_id": "BU03",
+      "business_unit_id": "BU03",
+      "business_name": "일정 등록",
+      "procedures": [
+        {
+          "id": "BU03-S01",
+          "required_step_id": "BU03-S01",
+          "label": "일정관리",
+          "menu_screen_name": "일정관리",
+          "step_order": 1,
+          "allowed_aliases": []
+        },
+        {
+          "id": "BU03-S02",
+          "required_step_id": "BU03-S02",
+          "label": "날짜 선택",
+          "menu_screen_name": "일정관리",
+          "step_order": 2,
+          "allowed_aliases": []
+        },
+        {
+          "id": "BU03-S03",
+          "required_step_id": "BU03-S03",
+          "label": "일정 입력",
+          "menu_screen_name": "일정관리",
+          "step_order": 3,
+          "allowed_aliases": []
+        },
+        {
+          "id": "BU03-S04",
+          "required_step_id": "BU03-S04",
+          "label": "등록",
+          "menu_screen_name": "일정관리",
+          "step_order": 4,
+          "allowed_aliases": []
+        },
+        {
+          "id": "BU03-S05",
+          "required_step_id": "BU03-S05",
+          "label": "종료",
+          "menu_screen_name": "일정관리",
+          "step_order": 5,
+          "allowed_aliases": []
+        }
+      ]
+    },
+    {
+      "id": "BU07",
+      "process_id": "BU07",
+      "business_unit_id": "BU07",
+      "business_name": "일일보고 작성",
+      "procedures": [
+        {
+          "id": "BU07-S01",
+          "required_step_id": "BU07-S01",
+          "label": "일일보고",
+          "menu_screen_name": "일일보고",
+          "step_order": 1,
+          "allowed_aliases": []
+        },
+        {
+          "id": "BU07-S02",
+          "required_step_id": "BU07-S02",
+          "label": "등록",
+          "menu_screen_name": "일일보고",
+          "step_order": 2,
+          "allowed_aliases": []
+        },
+        {
+          "id": "BU07-S03",
+          "required_step_id": "BU07-S03",
+          "label": "내용 입력",
+          "menu_screen_name": "일일보고",
+          "step_order": 3,
+          "allowed_aliases": []
+        },
+        {
+          "id": "BU07-S04",
+          "required_step_id": "BU07-S04",
+          "label": "저장",
+          "menu_screen_name": "일일보고",
+          "step_order": 4,
+          "allowed_aliases": []
+        },
+        {
+          "id": "BU07-S05",
+          "required_step_id": "BU07-S05",
+          "label": "완료 확인",
+          "menu_screen_name": "일일보고",
+          "step_order": 5,
+          "allowed_aliases": []
+        },
+        {
+          "id": "BU07-S06",
+          "required_step_id": "BU07-S06",
+          "label": "종료",
+          "menu_screen_name": "일일보고",
+          "step_order": 6,
+          "allowed_aliases": []
+        }
+      ]
+    },
+    {
+      "id": "BU09",
+      "process_id": "BU09",
+      "business_unit_id": "BU09",
+      "business_name": "주간보고 작성",
+      "procedures": [
+        {
+          "id": "BU09-S01",
+          "required_step_id": "BU09-S01",
+          "label": "주간보고",
+          "menu_screen_name": "주간보고",
+          "step_order": 1,
+          "allowed_aliases": []
+        },
+        {
+          "id": "BU09-S02",
+          "required_step_id": "BU09-S02",
+          "label": "등록",
+          "menu_screen_name": "주간보고",
+          "step_order": 2,
+          "allowed_aliases": []
+        },
+        {
+          "id": "BU09-S03",
+          "required_step_id": "BU09-S03",
+          "label": "대상 주차 선택",
+          "menu_screen_name": "주간보고",
+          "step_order": 3,
+          "allowed_aliases": []
+        },
+        {
+          "id": "BU09-S04",
+          "required_step_id": "BU09-S04",
+          "label": "내용 입력",
+          "menu_screen_name": "주간보고",
+          "step_order": 4,
+          "allowed_aliases": []
+        },
+        {
+          "id": "BU09-S05",
+          "required_step_id": "BU09-S05",
+          "label": "저장",
+          "menu_screen_name": "주간보고",
+          "step_order": 5,
+          "allowed_aliases": []
+        },
+        {
+          "id": "BU09-S06",
+          "required_step_id": "BU09-S06",
+          "label": "완료 확인",
+          "menu_screen_name": "주간보고",
+          "step_order": 6,
+          "allowed_aliases": []
+        }
+      ]
+    },
+    {
+      "id": "BU17",
+      "process_id": "BU17",
+      "business_unit_id": "BU17",
+      "business_name": "거래처 정보 등록",
+      "procedures": [
+        {
+          "id": "BU17-S01",
+          "required_step_id": "BU17-S01",
+          "label": "거래처 정보 관리",
+          "menu_screen_name": "거래처 정보 관리",
+          "step_order": 1,
+          "allowed_aliases": []
+        },
+        {
+          "id": "BU17-S02",
+          "required_step_id": "BU17-S02",
+          "label": "등록",
+          "menu_screen_name": "거래처 정보 관리",
+          "step_order": 2,
+          "allowed_aliases": []
+        },
+        {
+          "id": "BU17-S03",
+          "required_step_id": "BU17-S03",
+          "label": "테스트 거래처 정보 입력",
+          "menu_screen_name": "거래처 정보 관리",
+          "step_order": 3,
+          "allowed_aliases": []
+        },
+        {
+          "id": "BU17-S04",
+          "required_step_id": "BU17-S04",
+          "label": "저장",
+          "menu_screen_name": "거래처 정보 관리",
+          "step_order": 4,
+          "allowed_aliases": []
+        },
+        {
+          "id": "BU17-S05",
+          "required_step_id": "BU17-S05",
+          "label": "종료",
+          "menu_screen_name": "거래처 정보 관리",
+          "step_order": 5,
+          "allowed_aliases": []
+        }
+      ]
+    },
+    {
+      "id": "BU20",
+      "process_id": "BU20",
+      "business_unit_id": "BU20",
+      "business_name": "자산 등록",
+      "procedures": [
+        {
+          "id": "BU20-S01",
+          "required_step_id": "BU20-S01",
+          "label": "자산관리",
+          "menu_screen_name": "자산관리",
+          "step_order": 1,
+          "allowed_aliases": []
+        },
+        {
+          "id": "BU20-S02",
+          "required_step_id": "BU20-S02",
+          "label": "등록",
+          "menu_screen_name": "자산관리",
+          "step_order": 2,
+          "allowed_aliases": []
+        },
+        {
+          "id": "BU20-S03",
+          "required_step_id": "BU20-S03",
+          "label": "테스트 자산 정보 입력",
+          "menu_screen_name": "자산관리",
+          "step_order": 3,
+          "allowed_aliases": []
+        },
+        {
+          "id": "BU20-S04",
+          "required_step_id": "BU20-S04",
+          "label": "저장",
+          "menu_screen_name": "자산관리",
+          "step_order": 4,
+          "allowed_aliases": []
+        },
+        {
+          "id": "BU20-S05",
+          "required_step_id": "BU20-S05",
+          "label": "종료",
+          "menu_screen_name": "자산관리",
+          "step_order": 5,
+          "allowed_aliases": []
+        }
+      ]
+    }
+  ]
+}

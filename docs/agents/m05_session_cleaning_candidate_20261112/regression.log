@@ -1,0 +1,514 @@
+test_conservation_repeat_provenance_and_no_input_mutation (test_business_process_serializer.BusinessSerializerTests) ... ok
+test_deterministic_and_generic_across_arbitrary_business_identity (test_business_process_serializer.BusinessSerializerTests) ... ok
+test_http_only_process_retained_without_fabricated_business_step (test_business_process_serializer.BusinessSerializerTests) ... ok
+test_invalid_references_rejected (test_business_process_serializer.BusinessSerializerTests) ... ok
+test_no_gt_input_or_io_and_noncanonical_evidence_preserved (test_business_process_serializer.BusinessSerializerTests) ... ok
+test_noncanonical_instance_cannot_replace_canonical_occurrence (test_business_process_serializer.BusinessSerializerTests) ... ok
+test_occurrence_collisions_missing_and_mismatch_rejected (test_business_process_serializer.BusinessSerializerTests) ... ok
+test_partition_all_occurrences_and_preserve_unknown_http_methods (test_business_process_serializer.BusinessSerializerTests) ... ok
+test_save_http_and_close_are_separate_and_methods_preserved (test_business_process_serializer.BusinessSerializerTests) ... ok
+test_duplicate_across_modes (test_development_runner.ExternalHTTPTests) ... ok
+test_hash_mode_rejection_no_score (test_development_runner.ExternalHTTPTests) ... ok
+test_http_endpoints_validation_and_downloads (test_development_runner.ExternalHTTPTests) ... 127.0.0.1 - - [12/Nov/2026 14:03:20] "POST /api/integrations/m01/result HTTP/1.1" 201 -
+127.0.0.1 - - [12/Nov/2026 14:03:20] "GET /api/evaluations/m01/runs/DEV-M01-20261112T050320-76c922f41a2b/evidence.csv HTTP/1.1" 200 -
+127.0.0.1 - - [12/Nov/2026 14:03:20] "GET /api/evaluations/m01/runs/DEV-M01-20261112T050320-76c922f41a2b/run_manifest.json HTTP/1.1" 200 -
+127.0.0.1 - - [12/Nov/2026 14:03:20] "GET /api/evaluations/m01/runs/DEV-M01-20261112T050320-76c922f41a2b/result.json HTTP/1.1" 200 -
+127.0.0.1 - - [12/Nov/2026 14:03:20] "GET /api/evaluations/m01/runs/DEV-M01-20261112T050320-76c922f41a2b/received_payload.json HTTP/1.1" 200 -
+127.0.0.1 - - [12/Nov/2026 14:03:20] "POST /api/integrations/m01/result HTTP/1.1" 409 -
+127.0.0.1 - - [12/Nov/2026 14:03:20] "POST /api/integrations/m01/result HTTP/1.1" 422 -
+127.0.0.1 - - [12/Nov/2026 14:03:20] "POST /api/integrations/m04/result HTTP/1.1" 201 -
+127.0.0.1 - - [12/Nov/2026 14:03:20] "GET /api/evaluations/m04/runs/DEV-M04-20261112T050320-ad81676d82b6/evidence.csv HTTP/1.1" 200 -
+127.0.0.1 - - [12/Nov/2026 14:03:20] "GET /api/evaluations/m04/runs/DEV-M04-20261112T050320-ad81676d82b6/run_manifest.json HTTP/1.1" 200 -
+127.0.0.1 - - [12/Nov/2026 14:03:20] "GET /api/evaluations/m04/runs/DEV-M04-20261112T050320-ad81676d82b6/result.json HTTP/1.1" 200 -
+127.0.0.1 - - [12/Nov/2026 14:03:20] "GET /api/evaluations/m04/runs/DEV-M04-20261112T050320-ad81676d82b6/received_payload.json HTTP/1.1" 200 -
+127.0.0.1 - - [12/Nov/2026 14:03:20] "POST /api/integrations/m04/result HTTP/1.1" 409 -
+127.0.0.1 - - [12/Nov/2026 14:03:20] "POST /api/integrations/m04/result HTTP/1.1" 422 -
+127.0.0.1 - - [12/Nov/2026 14:03:20] "POST /api/integrations/m07/result HTTP/1.1" 201 -
+127.0.0.1 - - [12/Nov/2026 14:03:20] "GET /api/evaluations/m07/runs/DEV-M07-20261112T050320-c695c7378c2c/evidence.csv HTTP/1.1" 200 -
+127.0.0.1 - - [12/Nov/2026 14:03:20] "GET /api/evaluations/m07/runs/DEV-M07-20261112T050320-c695c7378c2c/run_manifest.json HTTP/1.1" 200 -
+127.0.0.1 - - [12/Nov/2026 14:03:20] "GET /api/evaluations/m07/runs/DEV-M07-20261112T050320-c695c7378c2c/result.json HTTP/1.1" 200 -
+127.0.0.1 - - [12/Nov/2026 14:03:20] "GET /api/evaluations/m07/runs/DEV-M07-20261112T050320-c695c7378c2c/received_payload.json HTTP/1.1" 200 -
+127.0.0.1 - - [12/Nov/2026 14:03:20] "POST /api/integrations/m07/result HTTP/1.1" 409 -
+127.0.0.1 - - [12/Nov/2026 14:03:20] "POST /api/integrations/m07/result HTTP/1.1" 422 -
+ok
+test_official_requires_provenance (test_development_runner.ExternalHTTPTests) ... ok
+test_persistence_provenance_duplicate_all_metrics (test_development_runner.ExternalHTTPTests) ... ok
+test_failed_cases_stay_denominator (test_development_runner.ExternalTests) ... ok
+test_invalid_counts_and_missing (test_development_runner.ExternalTests) ... ok
+test_m07_cases (test_development_runner.ExternalTests) ... ok
+test_relationships (test_development_runner.ExternalTests) ... ok
+test_scores_and_denominators (test_development_runner.ExternalTests) ... ok
+test_m02_m06_development_evidence_and_null_official (test_development_runner.PosthocTests) ... ok
+test_notebook_export_synthetic_instance (test_development_runner.PosthocTests) ... ok
+test_semantic_notebook_prefix_and_empty (test_development_runner.PosthocTests) ... ok
+test_blocked_run_persists_null_and_provenance (test_development_runner.RunnerTests) ... ok
+test_input_hash_and_count (test_development_runner.RunnerTests) ... ok
+test_no_training_or_evaluation_inputs_in_forward (test_development_runner.RunnerTests) ... ok
+test_small_dataset_no_lowered_k (test_development_runner.RunnerTests) ... ok
+test_temporal_mapping_and_ambiguity (test_development_runner.RunnerTests) ... ok
+test_unknown_is_unk_without_mutation (test_development_runner.RunnerTests) ... ok
+test_duplicate_across_modes (test_development_runner.StoreTests) ... ok
+test_hash_mode_rejection_no_score (test_development_runner.StoreTests) ... ok
+test_official_requires_provenance (test_development_runner.StoreTests) ... ok
+test_persistence_provenance_duplicate_all_metrics (test_development_runner.StoreTests) ... ok
+test_routes_modes_and_origin (test_evaluations.HTTPTests) ... 127.0.0.1 - - [12/Nov/2026 14:03:21] "GET /metrics/m01?mode=OFFICIAL HTTP/1.1" 200 -
+127.0.0.1 - - [12/Nov/2026 14:03:21] "GET /metrics/m02?mode=OFFICIAL HTTP/1.1" 200 -
+127.0.0.1 - - [12/Nov/2026 14:03:21] "GET /metrics/m03?mode=OFFICIAL HTTP/1.1" 200 -
+127.0.0.1 - - [12/Nov/2026 14:03:21] "GET /metrics/m04?mode=OFFICIAL HTTP/1.1" 200 -
+127.0.0.1 - - [12/Nov/2026 14:03:21] "GET /metrics/m05?mode=OFFICIAL HTTP/1.1" 200 -
+127.0.0.1 - - [12/Nov/2026 14:03:21] "GET /metrics/m06?mode=OFFICIAL HTTP/1.1" 200 -
+127.0.0.1 - - [12/Nov/2026 14:03:21] "GET /metrics/m07?mode=OFFICIAL HTTP/1.1" 200 -
+127.0.0.1 - - [12/Nov/2026 14:03:21] "POST /api/evaluations/m02/run?mode=OFFICIAL HTTP/1.1" 200 -
+127.0.0.1 - - [12/Nov/2026 14:03:21] "GET /api/evaluations/m02/runs/EVAL-M02-20261112T050321-31eede15d45a/evidence.csv HTTP/1.1" 200 -
+127.0.0.1 - - [12/Nov/2026 14:03:21] "GET /api/evaluations/m02/runs/EVAL-M02-20261112T050321-31eede15d45a/run_manifest.json HTTP/1.1" 200 -
+127.0.0.1 - - [12/Nov/2026 14:03:21] "GET /api/evaluations/m02/runs/EVAL-M02-20261112T050321-31eede15d45a/result.json HTTP/1.1" 200 -
+127.0.0.1 - - [12/Nov/2026 14:03:21] "GET /api/evaluations/m03/runs/EVAL-M02-20261112T050321-31eede15d45a/result.json HTTP/1.1" 404 -
+127.0.0.1 - - [12/Nov/2026 14:03:21] "POST /api/evaluations/m02/run?mode=DEV HTTP/1.1" 422 -
+127.0.0.1 - - [12/Nov/2026 14:03:21] "POST /api/evaluations/m02/run HTTP/1.1" 403 -
+127.0.0.1 - - [12/Nov/2026 14:03:21] "GET /api/evaluations?mode=OFFICIAL HTTP/1.1" 200 -
+ok
+test_cleaning_gt_not_sent (test_evaluations.PureEvaluatorTests) ... ok
+test_csv_injection (test_evaluations.PureEvaluatorTests) ... ok
+test_dbi (test_evaluations.PureEvaluatorTests) ... ok
+test_dbi_invalid (test_evaluations.PureEvaluatorTests) ... ok
+test_m02_auxiliary_and_duplicate (test_evaluations.PureEvaluatorTests) ... ok
+test_m02_empty_detection_is_not_zero (test_evaluations.PureEvaluatorTests) ... ok
+test_m02_formula (test_evaluations.PureEvaluatorTests) ... ok
+test_m02_missing_process_remains_denominator (test_evaluations.PureEvaluatorTests) ... ok
+test_m05_bad_prediction_ids (test_evaluations.PureEvaluatorTests) ... ok
+test_m05_metrics (test_evaluations.PureEvaluatorTests) ... ok
+test_scenario_contract (test_evaluations.PureEvaluatorTests) ... ok
+test_external_and_m05 (test_evaluations.SourceAndServiceTests) ... ok
+test_isolation (test_evaluations.SourceAndServiceTests) ... ok
+test_m03_preview (test_evaluations.SourceAndServiceTests) ... ok
+test_m06_partial (test_evaluations.SourceAndServiceTests) ... ok
+test_official_dev_rejected (test_evaluations.SourceAndServiceTests) ... ok
+test_official_hash_required_and_checked (test_evaluations.SourceAndServiceTests) ... ok
+test_official_path_escape (test_evaluations.SourceAndServiceTests) ... ok
+test_official_reference_copy_rejected (test_evaluations.SourceAndServiceTests) ... ok
+test_official_same_evaluator_and_pass (test_evaluations.SourceAndServiceTests) ... ok
+test_reference_loading (test_evaluations.SourceAndServiceTests) ... ok
+test_reference_manifest_and_immutability (test_evaluations.SourceAndServiceTests) ... ok
+test_reference_missing_gt (test_evaluations.SourceAndServiceTests) ... ok
+test_reference_tamper (test_evaluations.SourceAndServiceTests) ... ok
+test_running_lock (test_evaluations.SourceAndServiceTests) ... ok
+test_all_samples_real_http_counts_and_official_null (test_integration_sandbox.IntegrationSandboxTests) ... 127.0.0.1 - - [12/Nov/2026 14:03:21] "POST /api/integrations/m03/result HTTP/1.1" 201 -
+127.0.0.1 - - [12/Nov/2026 14:03:22] "POST /api/integrations/m03/result HTTP/1.1" 201 -
+127.0.0.1 - - [12/Nov/2026 14:03:22] "POST /api/integrations/m03/result HTTP/1.1" 409 -
+127.0.0.1 - - [12/Nov/2026 14:03:22] "GET /api/evaluations/m03/runs/REF-M03-20261112T050321-e3493ce5d7c9/evidence.csv HTTP/1.1" 200 -
+127.0.0.1 - - [12/Nov/2026 14:03:22] "POST /api/integrations/m04/result HTTP/1.1" 201 -
+127.0.0.1 - - [12/Nov/2026 14:03:22] "POST /api/integrations/m04/result HTTP/1.1" 201 -
+127.0.0.1 - - [12/Nov/2026 14:03:22] "POST /api/integrations/m04/result HTTP/1.1" 409 -
+127.0.0.1 - - [12/Nov/2026 14:03:22] "GET /api/evaluations/m04/runs/REF-M04-20261112T050322-6f8b1311f4ff/evidence.csv HTTP/1.1" 200 -
+127.0.0.1 - - [12/Nov/2026 14:03:22] "POST /api/integrations/m07/result HTTP/1.1" 201 -
+127.0.0.1 - - [12/Nov/2026 14:03:22] "POST /api/integrations/m07/result HTTP/1.1" 201 -
+127.0.0.1 - - [12/Nov/2026 14:03:22] "POST /api/integrations/m07/result HTTP/1.1" 409 -
+127.0.0.1 - - [12/Nov/2026 14:03:22] "GET /api/evaluations/m07/runs/REF-M07-20261112T050322-517e6ba3c181/evidence.csv HTTP/1.1" 200 -
+ok
+test_invalid_examples_and_official_rejected (test_integration_sandbox.IntegrationSandboxTests) ... 127.0.0.1 - - [12/Nov/2026 14:03:22] "POST /api/integrations/m03/result HTTP/1.1" 422 -
+127.0.0.1 - - [12/Nov/2026 14:03:22] "POST /api/integrations/m03/result HTTP/1.1" 422 -
+127.0.0.1 - - [12/Nov/2026 14:03:22] "POST /api/integrations/m04/result HTTP/1.1" 422 -
+127.0.0.1 - - [12/Nov/2026 14:03:22] "POST /api/integrations/m04/result HTTP/1.1" 422 -
+127.0.0.1 - - [12/Nov/2026 14:03:22] "POST /api/integrations/m07/result HTTP/1.1" 422 -
+127.0.0.1 - - [12/Nov/2026 14:03:22] "POST /api/integrations/m07/result HTTP/1.1" 422 -
+ok
+test_mock_generation_http (test_integration_sandbox.IntegrationSandboxTests) ... 127.0.0.1 - - [12/Nov/2026 14:03:23] "POST /api/m03/generate HTTP/1.1" 200 -
+127.0.0.1 - - [12/Nov/2026 14:03:23] "POST /api/m03/generate HTTP/1.1" 200 -
+127.0.0.1 - - [12/Nov/2026 14:03:23] "POST /api/m03/generate HTTP/1.1" 422 -
+127.0.0.1 - - [12/Nov/2026 14:03:23] "POST /api/m03/generate HTTP/1.1" 503 -
+ok
+test_page_and_assets (test_integration_sandbox.IntegrationSandboxTests) ... 127.0.0.1 - - [12/Nov/2026 14:03:23] "GET /developer/integration-api HTTP/1.1" 200 -
+127.0.0.1 - - [12/Nov/2026 14:03:23] "GET /integration-sandbox.js HTTP/1.1" 200 -
+127.0.0.1 - - [12/Nov/2026 14:03:23] "GET /integration-sandbox.css HTTP/1.1" 200 -
+127.0.0.1 - - [12/Nov/2026 14:03:23] "GET /integration-samples.json HTTP/1.1" 200 -
+ok
+test_m03_eight_of_ten (test_latest_integration.LatestIntegrationTests) ... ok
+test_m03_missing_fields_and_schema (test_latest_integration.LatestIntegrationTests) ... ok
+test_m03_official_ten_and_unique_units (test_latest_integration.LatestIntegrationTests) ... ok
+test_m03_order_and_failed_status (test_latest_integration.LatestIntegrationTests) ... ok
+test_m04_counts_alias_and_failures (test_latest_integration.LatestIntegrationTests) ... ok
+test_m07_individual_results_required_and_checked (test_latest_integration.LatestIntegrationTests) ... ok
+test_m07_official_fixed_twenty (test_latest_integration.LatestIntegrationTests) ... ok
+test_nonofficial_request_count_not_denominator (test_latest_integration.LatestIntegrationTests) ... ok
+test_official_m03_store_provenance_and_unit_set (test_latest_integration.LatestIntegrationTests) ... ok
+test_dependency_and_generated_tampering_fails_before_comparison (test_m02_business_abstraction.AbstractionGateTests) ... ok
+test_gate_precedes_gt_read_and_wrong_contract_cannot_score (test_m02_business_abstraction.AbstractionGateTests) ... ok
+test_synthetic_pass_has_separate_accuracy_and_completeness_counts (test_m02_business_abstraction.AbstractionGateTests) ... ok
+test_cross_execution_aggregate_is_mixed_not_repaired_or_duplicated (test_m02_business_abstraction.AbstractionTests) ... ok
+test_different_form_page_purpose_and_missing_identity_not_merged (test_m02_business_abstraction.AbstractionTests) ... ok
+test_different_map_same_form_not_merged (test_m02_business_abstraction.AbstractionTests) ... ok
+test_explicit_http_read_write_compatibility_and_endpoint_provenance (test_m02_business_abstraction.AbstractionTests) ... ok
+test_explicit_menu_click_preserved_auto_route_not_extra (test_m02_business_abstraction.AbstractionTests) ... ok
+test_explicit_submit_and_write_http_same_intent (test_m02_business_abstraction.AbstractionTests) ... ok
+test_failure_future_ambiguous_cross_page_and_stale_no_completion (test_m02_business_abstraction.AbstractionTests) ... ok
+test_generic_completion_applies_arbitrary_objects_not_business_ids (test_m02_business_abstraction.AbstractionTests) ... ok
+test_generic_repeated_dom_tree_is_not_a_proven_menu (test_m02_business_abstraction.AbstractionTests) ... ok
+test_input_interrupted_by_different_intent_is_not_merged (test_m02_business_abstraction.AbstractionTests) ... ok
+test_known_dynamic_form_popup_and_inner_form_separation (test_m02_business_abstraction.AbstractionTests) ... ok
+test_nonform_detail_user_intent_preserved (test_m02_business_abstraction.AbstractionTests) ... ok
+test_popup_success_attaches_to_save_no_result_check_step (test_m02_business_abstraction.AbstractionTests) ... ok
+test_purity_determinism_gt_prediction_label_and_score_invariance (test_m02_business_abstraction.AbstractionTests) ... ok
+test_read_write_and_recent_fallback_are_preserved_not_completion (test_m02_business_abstraction.AbstractionTests) ... ok
+test_route_popup_and_automatic_outcome_are_context (test_m02_business_abstraction.AbstractionTests) ... ok
+test_same_explicit_form_aggregate_fields_and_focus_not_intent (test_m02_business_abstraction.AbstractionTests) ... ok
+test_separate_write_actions_never_merged_and_stale_response_rejected (test_m02_business_abstraction.AbstractionTests) ... ok
+test_source_ids_and_all_raw_dispositions_conserved (test_m02_business_abstraction.AbstractionTests) ... ok
+test_success_ack_context_but_independent_result_check_preserved (test_m02_business_abstraction.AbstractionTests) ... ok
+test_typed_control_edit_belongs_to_known_form_but_unscoped_selection_stays_independent (test_m02_business_abstraction.AbstractionTests) ... ok
+test_unknown_user_attempt_retained_and_cancel_is_independent (test_m02_business_abstraction.AbstractionTests) ... ok
+test_a1_commit_support_cannot_borrow_other_context_input (test_m02_business_abstraction.IndependentA1A2A3Tests) ... ok
+test_a1_explicit_different_context_same_form_separates (test_m02_business_abstraction.IndependentA1A2A3Tests) ... ok
+test_a1_unknown_context_never_merge_wildcard (test_m02_business_abstraction.IndependentA1A2A3Tests) ... ok
+test_a2_interaction_conflict_cannot_be_ignored_by_completion_consumer (test_m02_business_abstraction.IndependentA1A2A3Tests) ... ok
+test_a2_invalid_opener_cannot_prove_detail_intent (test_m02_business_abstraction.IndependentA1A2A3Tests) ... ok
+test_a2_invalid_opener_never_proves_initiation (test_m02_business_abstraction.IndependentA1A2A3Tests) ... ok
+test_a2_valid_opener_initiation_and_inherited_context_have_proof (test_m02_business_abstraction.IndependentA1A2A3Tests) ... ok
+test_a3_graph_and_occurrence_only_edges_reach_csv_without_assignment (test_m02_business_abstraction.IndependentA1A2A3Tests) ... ok
+test_explicit_user_check_cannot_be_passive_state (test_m02_business_abstraction.IntentStateComparisonTests) ... ok
+test_field_list_does_not_expand_direct_whole_object_label (test_m02_business_abstraction.IntentStateComparisonTests) ... ok
+test_missing_proof_is_explicit_missing_not_null_or_success (test_m02_business_abstraction.IntentStateComparisonTests) ... ok
+test_mixed_stays_once_ineligible_denominator (test_m02_business_abstraction.IntentStateComparisonTests) ... ok
+test_physical_constraint_not_ignored (test_m02_business_abstraction.IntentStateComparisonTests) ... ok
+test_same_state_role_not_double_counted (test_m02_business_abstraction.IntentStateComparisonTests) ... ok
+test_unique_accuracy_and_distinct_intent_state_completeness (test_m02_business_abstraction.IntentStateComparisonTests) ... ok
+test_wrong_or_missing_context_not_wildcard (test_m02_business_abstraction.IntentStateComparisonTests) ... ok
+test_business_denominator_and_no_auxiliary_direct_labels (test_m02_candidate.BusinessStepAdapterTests) ... ok
+test_invalid_count_or_pairing_fails_closed (test_m02_candidate.BusinessStepAdapterTests) ... ok
+test_csv_ledger_recalculates_score_and_retains_repeat_unpaired_missing (test_m02_candidate.CandidateAssessmentTests) ... ok
+test_unresolved_mapping_never_becomes_zero_score (test_m02_candidate.CandidateAssessmentTests) ... ok
+test_validated_mapping_uses_all_maps_in_global_denominator (test_m02_candidate.CandidateAssessmentTests) ... ok
+test_auxiliary_evidence_never_creates_label (test_m02_candidate.CandidateSerializationTests) ... ok
+test_future_direct_label_supported_without_reduction (test_m02_candidate.CandidateSerializationTests) ... ok
+test_invalid_references_and_duplicate_mapping_rejected (test_m02_candidate.CandidateSerializationTests) ... ok
+test_preserves_every_occurrence_and_unpaired_map (test_m02_candidate.CandidateSerializationTests) ... ok
+test_c1_complete_assertions_reject_uncertainty_and_keep_raw (test_m02_completion.CompletionTests) ... ok
+test_c2_lifecycle_and_other_session_page_do_not_blanket_block (test_m02_completion.CompletionTests) ... ok
+test_c2_raw_unknown_submit_is_unresolved_operation (test_m02_completion.CompletionTests) ... ok
+test_c2_unclaimed_raw_write_clicks_block_stale_response (test_m02_completion.CompletionTests) ... ok
+test_end_and_inspection_match_observed_state_without_click (test_m02_completion.CompletionTests) ... ok
+test_failure_negation_future_question_not_success (test_m02_completion.CompletionTests) ... ok
+test_http_or_close_alone_never_creates_completion (test_m02_completion.CompletionTests) ... ok
+test_intervening_split_map_or_unclaimed_input_blocks_stale_outcome (test_m02_completion.CompletionTests) ... ok
+test_missing_duplicate_cross_session_page_and_future_link_stay_raw (test_m02_completion.CompletionTests) ... ok
+test_pending_operation_blocks_outcome (test_m02_completion.CompletionTests) ... ok
+test_pure_and_deterministic_preserves_old_ids_nodes_fields (test_m02_completion.CompletionTests) ... ok
+test_register_start_not_a_completed_write (test_m02_completion.CompletionTests) ... ok
+test_url_namespace_not_human_conflict_or_translation (test_m02_completion.CompletionTests) ... ok
+test_explicit_write_success_and_same_form_close (test_m02_generic_causal_recovery.CompositeCompletionTests) ... ok
+test_unproven_chain_is_never_completion (test_m02_generic_causal_recovery.CompositeCompletionTests) ... ok
+test_other_write_failure_is_not_this_write_proof (test_m02_generic_causal_recovery.ContradictoryWriteResponseTests) ... ok
+test_same_write_non_success_or_unknown_response_blocks_completion (test_m02_generic_causal_recovery.ContradictoryWriteResponseTests) ... ok
+test_all_known_lifecycle_actions_before_and_after_response (test_m02_generic_causal_recovery.ExhaustiveLifecycleBarrierTests) ... ok
+test_calendar_requires_exact_opener_and_create_form (test_m02_generic_causal_recovery.GenericCausalRecoveryTests) ... ok
+test_close_requires_exact_owner_and_live_success_identity (test_m02_generic_causal_recovery.GenericCausalRecoveryTests) ... ok
+test_direct_calendar_create_select_without_date_inference (test_m02_generic_causal_recovery.GenericCausalRecoveryTests) ... ok
+test_input_close_does_not_end_distinct_live_success_popup (test_m02_generic_causal_recovery.GenericCausalRecoveryTests) ... ok
+test_calendar_date_but_not_week_and_requires_provenance (test_m02_generic_causal_recovery.GenericContractIntegrationTests) ... ok
+test_composite_enters_success_proof_only_with_complete_chain (test_m02_generic_causal_recovery.GenericContractIntegrationTests) ... ok
+test_lifecycle_boundaries_even_on_other_page (test_m02_generic_causal_recovery.GenericContractIntegrationTests) ... ok
+test_date_needs_action_parent_and_direct_close (test_m02_generic_preservation.PreservationTests) ... ok
+test_nav_ancestry_without_expansion_proof_never_compressed (test_m02_generic_preservation.PreservationTests) ... ok
+test_parent_identity_reuse_and_missing_stack_rejected (test_m02_generic_preservation.PreservationTests) ... ok
+test_parent_survives_nested_popup (test_m02_generic_preservation.PreservationTests) ... ok
+test_same_form_cross_model_fragment_requires_unchanged_raw_lifetime (test_m02_generic_preservation.PreservationTests) ... ok
+test_sibling_export_refresh_are_independent (test_m02_generic_preservation.PreservationTests) ... ok
+test_weekly_contract_rechecks_raw_not_metadata (test_m02_generic_preservation.PreservationTests) ... ok
+test_conditional_end_unknown_returns_null_not_missing_zero (test_m02_logical.LogicalBoundaryTests) ... ok
+test_executing_dependency_sidecar_and_frozen_generated_bytes_are_bound (test_m02_logical.LogicalBoundaryTests) ... ok
+test_no_gate_or_old_v2_contract_cannot_compare (test_m02_logical.LogicalBoundaryTests) ... ok
+test_synthetic_new_pass_does_not_require_physical_gt_schema (test_m02_logical.LogicalBoundaryTests) ... ok
+test_compound_input_requires_whole_named_object_not_any_field (test_m02_logical.LogicalTests) ... ok
+test_confirm_does_not_match_completion_inspection (test_m02_logical.LogicalTests) ... ok
+test_direct_completion_inspection_after_write (test_m02_logical.LogicalTests) ... ok
+test_end_label_does_not_bypass_action_or_terminal_order (test_m02_logical.LogicalTests) ... ok
+test_end_position_alone_or_unresolved_cannot_match (test_m02_logical.LogicalTests) ... ok
+test_entry_requires_typed_entry_action_and_named_context (test_m02_logical.LogicalTests) ... ok
+test_explicit_authoritative_action_is_not_ignored (test_m02_logical.LogicalTests) ... ok
+test_explicit_final_end_control_is_sufficient_but_close_is_not (test_m02_logical.LogicalTests) ... ok
+test_explicit_physical_screen_guard_is_retained (test_m02_logical.LogicalTests) ... ok
+test_input_does_not_match_result_check_with_same_label_or_alias (test_m02_logical.LogicalTests) ... ok
+test_missing_registration_phase_is_not_a_wildcard_or_zero (test_m02_logical.LogicalTests) ... ok
+test_mixed_and_unresolved_stay_denominator_ineligible (test_m02_logical.LogicalTests) ... ok
+test_no_cross_execution_stitching_or_best_instance (test_m02_logical.LogicalTests) ... ok
+test_no_input_mutation_and_determinism (test_m02_logical.LogicalTests) ... ok
+test_no_physical_screen_is_required_if_logical_context_is_explicit (test_m02_logical.LogicalTests) ... ok
+test_order_and_one_to_one_preserved (test_m02_logical.LogicalTests) ... ok
+test_passive_outcome_cannot_supply_completion_procedure (test_m02_logical.LogicalTests) ... ok
+test_raw_label_cannot_expand_partial_field_into_compound (test_m02_logical.LogicalTests) ... ok
+test_registration_start_and_commit_have_different_phases (test_m02_logical.LogicalTests) ... ok
+test_result_check_without_known_completion_scope_is_incomparable (test_m02_logical.LogicalTests) ... ok
+test_scoped_alias_not_cross_action_and_ambiguity_rejected (test_m02_logical.LogicalTests) ... ok
+test_selection_numeric_control_not_inferred_as_date (test_m02_logical.LogicalTests) ... ok
+test_source_names_order_aliases_and_ids_conserved (test_m02_logical.LogicalTests) ... ok
+test_unknown_context_is_incomparable_not_zero (test_m02_logical.LogicalTests) ... ok
+test_unknown_gt_role_cannot_be_wildcard (test_m02_logical.LogicalTests) ... ok
+test_wrong_logical_menu_cannot_use_same_bu_as_wildcard (test_m02_logical.LogicalTests) ... ok
+test_direct_save_update_and_committed_register_support_check (test_m02_logical.SupportStateTests) ... ok
+test_explicit_different_context_can_be_ignored (test_m02_logical.SupportStateTests) ... ok
+test_ineligible_future_input_or_write_cannot_prove_start (test_m02_logical.SupportStateTests) ... ok
+test_ineligible_preceding_input_cannot_prove_commit (test_m02_logical.SupportStateTests) ... ok
+test_ineligible_save_update_or_committed_register_not_completion_proof (test_m02_logical.SupportStateTests) ... ok
+test_ineligible_write_cannot_erase_prior_input_to_prove_start (test_m02_logical.SupportStateTests) ... ok
+test_new_registration_or_pending_input_blocks_stale_earlier_save (test_m02_logical.SupportStateTests) ... ok
+test_registration_initiation_is_not_completed_write_for_check (test_m02_logical.SupportStateTests) ... ok
+test_support_write_uses_logical_not_candidate_physical_context (test_m02_logical.SupportStateTests) ... ok
+test_unknown_preceding_input_cannot_be_skipped_to_prove_start (test_m02_logical.SupportStateTests) ... ok
+test_unknown_support_context_is_not_proved_different (test_m02_logical.SupportStateTests) ... ok
+test_verified_boundary_can_remove_older_irrelevant_ambiguity (test_m02_logical.SupportStateTests) ... ok
+test_additions_only_deterministic_no_input_mutation_or_new_step (test_m02_provenance_restore.ProvenanceTests) ... ok
+test_existing_field_change_missing_identity_duplicate_rejected (test_m02_provenance_restore.ProvenanceTests) ... ok
+test_missing_fields_do_not_invent_causal_relationships (test_m02_provenance_restore.ProvenanceTests) ... ok
+test_raw_enrichment_serializer_csv_exact_same_ids_and_strategy (test_m02_provenance_restore.ProvenanceTests) ... ok
+test_dialog_opener_missing_reference_never_guessed (test_m02_recovery_rules.RecoveryRulesTests) ... ok
+test_dialog_proof_rejects_cross_page_future_and_closed_lifecycle (test_m02_recovery_rules.RecoveryRulesTests) ... ok
+test_div_dialog_form_requires_observed_containment (test_m02_recovery_rules.RecoveryRulesTests) ... ok
+test_raw_is_immutable_and_no_source_generated (test_m02_recovery_rules.RecoveryRulesTests) ... ok
+test_success_ack_cannot_use_future_popup_or_wrong_title (test_m02_recovery_rules.RecoveryRulesTests) ... ok
+test_success_ack_rejects_interactive_roles (test_m02_recovery_rules.RecoveryRulesTests) ... ok
+test_success_ack_rejects_page_input_and_lifecycle_boundaries (test_m02_recovery_rules.RecoveryRulesTests) ... ok
+test_success_text_click_is_context_only_when_linked_exact_noninteractive (test_m02_recovery_rules.RecoveryRulesTests) ... ok
+test_tree_requires_navigation_ancestry_and_exact_text (test_m02_recovery_rules.RecoveryRulesTests) ... ok
+test_unlinked_success_text_remains_unresolved (test_m02_recovery_rules.RecoveryRulesTests) ... ok
+test_catalog_lists_development_only_without_calculation (test_m02_recovery_web.RecoveryWebTests) ... ok
+test_dispatch_development_only_and_no_legacy_model (test_m02_recovery_web.RecoveryWebTests) ... ok
+test_missing_input_hash_and_wrong_mode_rejected (test_m02_recovery_web.RecoveryWebTests) ... ok
+test_requires_independent_pass_then_matching_freeze (test_m02_recovery_web.RecoveryWebTests) ... ok
+test_save_uses_existing_evidence_contract_and_stage_snapshots (test_m02_recovery_web.RecoveryWebTests) ... ok
+test_tampered_source_or_gate_fails_closed (test_m02_recovery_web.RecoveryWebTests) ... ok
+test_alias_conflict (test_m02_rules.M02NormalizationTests) ... ok
+test_alias_only_registered (test_m02_rules.M02NormalizationTests) ... ok
+test_auxiliary_alias_not_direct (test_m02_rules.M02NormalizationTests) ... ok
+test_normalization (test_m02_rules.M02NormalizationTests) ... ok
+test_one_to_one_and_scenario_isolation (test_m02_rules.M02NormalizationTests) ... ok
+test_no_best_instance_search (test_m02_rules.M02SourceTests) ... ok
+test_official_alias_hash_and_fixed_at (test_m02_rules.M02SourceTests) ... ok
+test_pairing_fixed_independent_execution_and_coverage (test_m02_rules.M02SourceTests) ... ok
+test_pairing_hash_and_invalid_instance (test_m02_rules.M02SourceTests) ... ok
+test_pairing_is_optional (test_m02_rules.M02SourceTests) ... ok
+test_pairing_selection_does_not_use_gt_labels (test_m02_rules.M02SourceTests) ... ok
+test_reference_alias_hash (test_m02_rules.M02SourceTests) ... ok
+test_reference_stored_selection_and_no_alias_file (test_m02_rules.M02SourceTests) ... ok
+test_authorized_synthetic_gt_schema_missing_returns_null (test_m02_semantic_comparator.AdapterGateTests) ... ok
+test_old_contract_cannot_open_new_gate (test_m02_semantic_comparator.AdapterGateTests) ... ok
+test_synthetic_pass_only_then_semantic_match_and_csv (test_m02_semantic_comparator.AdapterGateTests) ... ok
+test_aliases_scoped_to_action_and_screen_not_global (test_m02_semantic_comparator.ComparatorTests) ... ok
+test_ambiguous_alias_within_action_screen_blocks_measurement (test_m02_semantic_comparator.ComparatorTests) ... ok
+test_auxiliary_mixed_unresolved_never_match_but_stay_denominator (test_m02_semantic_comparator.ComparatorTests) ... ok
+test_case_sensitive_page_path_is_not_normalized_into_match (test_m02_semantic_comparator.ComparatorTests) ... ok
+test_compatible_complete_business_procedure_matches (test_m02_semantic_comparator.ComparatorTests) ... ok
+test_input_cannot_match_result_check_same_target (test_m02_semantic_comparator.ComparatorTests) ... ok
+test_missing_gt_semantics_blocks_instead_of_zero_or_guess (test_m02_semantic_comparator.ComparatorTests) ... ok
+test_order_preserved_and_one_to_one (test_m02_semantic_comparator.ComparatorTests) ... ok
+test_required_ids_and_aliases_are_scoped_per_business_process (test_m02_semantic_comparator.ComparatorTests) ... ok
+test_save_cannot_match_confirm_even_with_target_alias (test_m02_semantic_comparator.ComparatorTests) ... ok
+test_typed_screen_no_fallback_to_other_context_or_auxiliary (test_m02_semantic_comparator.ComparatorTests) ... ok
+test_wrong_screen_rejected_even_if_action_and_alias_match (test_m02_semantic_comparator.ComparatorTests) ... ok
+test_dependency_tampering_rejected (test_m02_semantic_comparator.DependencyTests) ... ok
+test_missing_dependency_or_model_binding_rejected (test_m02_semantic_comparator.DependencyTests) ... ok
+test_inventory_detects_new_runtime_file (test_m02_shared_integration.SharedIntegrationTests) ... ok
+test_new_candidate_dispatch (test_m02_shared_integration.SharedIntegrationTests) ... ok
+test_pending_never_persists (test_m02_shared_integration.SharedIntegrationTests) ... ok
+test_native_dependency_tamper_fails_closed (test_m02_track_a_native_submit.NativeCandidateGateTests) ... ok
+test_native_specific_pass_required_before_gt_read (test_m02_track_a_native_submit.NativeCandidateGateTests) ... ok
+test_synthetic_correct_native_gate_uses_unchanged_comparison_contract (test_m02_track_a_native_submit.NativeCandidateGateTests) ... ok
+test_all_existing_raw_values_and_other_intents_preserved (test_m02_track_a_native_submit.NativeSubmitTests) ... ok
+test_ambiguous_map_not_promoted_to_matching_eligible_semantics (test_m02_track_a_native_submit.NativeSubmitTests) ... ok
+test_csv_roundtrip_exact_submitter_and_fallback_metadata (test_m02_track_a_native_submit.NativeSubmitTests) ... ok
+test_exact_recorded_write_verbs_native_commit_no_click_inference (test_m02_track_a_native_submit.NativeSubmitTests) ... ok
+test_existing_conflicting_action_fails_closed (test_m02_track_a_native_submit.NativeSubmitTests) ... ok
+test_gt_score_business_payload_are_not_inputs (test_m02_track_a_native_submit.NativeSubmitTests) ... ok
+test_missing_duplicate_or_changed_raw_identity_rejected (test_m02_track_a_native_submit.NativeSubmitTests) ... ok
+test_submit_already_consumed_via_fallback_fails_closed (test_m02_track_a_native_submit.NativeSubmitTests) ... ok
+test_unknown_verb_form_type_or_non_submit_not_promoted (test_m02_track_a_native_submit.NativeSubmitTests) ... ok
+test_verified_same_kind_existing_write_no_duplicate (test_m02_track_a_native_submit.NativeSubmitTests) ... ok
+test_old_and_new_server_m02_dispatch_same_synthetic_sentinel (test_m02_track_a_native_submit.SharedDispatchTests) ... ok
+test_alias_not_url (test_m02_user_confirmed.OwnerContractTests) ... ok
+test_approved_report_popup_specializes_broad_menu (test_m02_user_confirmed.OwnerContractTests) ... ok
+test_different_execution_no_proof (test_m02_user_confirmed.OwnerContractTests) ... ok
+test_menu_alias_does_not_merge_daily_weekly (test_m02_user_confirmed.OwnerContractTests) ... ok
+test_menu_alias_is_symmetric_and_specific (test_m02_user_confirmed.OwnerContractTests) ... ok
+test_missing_success_provenance_rejected (test_m02_user_confirmed.OwnerContractTests) ... ok
+test_no_success_no_input_proof (test_m02_user_confirmed.OwnerContractTests) ... ok
+test_page_enter_not_menu (test_m02_user_confirmed.OwnerContractTests) ... ok
+test_popup_object_does_not_replace_existing_menu_context (test_m02_user_confirmed.OwnerContractTests) ... ok
+test_success_required_and_provenance_immutable (test_m02_user_confirmed.OwnerContractTests) ... ok
+test_wrong_form_no_proof (test_m02_user_confirmed.OwnerContractTests) ... ok
+test_development_eight_of_ten_retains_failures (test_m03_real_generator.RealGeneratorTests) ... ok
+test_missing_evidence_unknown_action_and_order_fail (test_m03_real_generator.RealGeneratorTests) ... ok
+test_official_and_tampered_and_unknown_workflow_rejected (test_m03_real_generator.RealGeneratorTests) ... ok
+test_provenance_requires_nonempty_array_of_nonblank_strings (test_m03_real_generator.RealGeneratorTests) ... ok
+test_real_schema_provenance_and_determinism (test_m03_real_generator.RealGeneratorTests) ... ok
+test_step_order_requires_exact_integer (test_m03_real_generator.RealGeneratorTests) ... ok
+test_case_isolation_and_order (test_m05_baseline_adapter.M05BaselineAdapterTests) ... ok
+test_generated_sequences_exact_equivalence (test_m05_baseline_adapter.M05BaselineAdapterTests) ... ok
+test_invalid_and_gt_rejected (test_m05_baseline_adapter.M05BaselineAdapterTests) ... ok
+test_no_min_length_or_truncation (test_m05_baseline_adapter.M05BaselineAdapterTests) ... ok
+test_prefix_empty (test_m05_baseline_adapter.M05BaselineAdapterTests) ... ok
+test_rules_and_link (test_m05_baseline_adapter.M05BaselineAdapterTests) ... ok
+test_binary_unknown_heldout_no_category_quota (test_m05_development_contract.DevelopmentContractTests) ... ok
+test_policy_hash_bound_not_blanket_bypass (test_m05_development_contract.DevelopmentContractTests) ... ok
+test_unauthorized_empty_heldout_rejected (test_m05_development_contract.DevelopmentContractTests) ... ok
+test_real_frozen_artifacts_unchanged (test_m05_full_context.FrozenIntegrityTests) ... ok
+test_approval_is_exact_and_reviewer_independent (test_m05_full_context.M05FullContextTests) ... ok
+test_bad_predictions_persist_attempt_without_score (test_m05_full_context.M05FullContextTests) ... ok
+test_case_collision_and_row_loss (test_m05_full_context.M05FullContextTests) ... ok
+test_changed_approval_cannot_reopen_exposed_input (test_m05_full_context.M05FullContextTests) ... ok
+test_contract_and_provenance_fail_closed (test_m05_full_context.M05FullContextTests) ... ok
+test_csv_all_keep_zero_denominator_and_tampering (test_m05_full_context.M05FullContextTests) ... ok
+test_full_context_effect_and_single_batch_csv (test_m05_full_context.M05FullContextTests) ... ok
+test_full_sequence_preserved_and_targets_separate (test_m05_full_context.M05FullContextTests) ... ok
+test_history_overlap_or_stale_registry_rejected (test_m05_full_context.M05FullContextTests) ... ok
+test_history_overlap_reconciled_source_is_rejected (test_m05_full_context.M05FullContextTests) ... ok
+test_invalid_remove_categories_block_before_prediction (test_m05_full_context.M05FullContextTests) ... ok
+test_locked_content_tamper_blocks (test_m05_full_context.M05FullContextTests) ... ok
+test_missing_approval_blocks_before_adapter_and_score (test_m05_full_context.M05FullContextTests) ... ok
+test_missing_independent_logs_or_changed_label_lock (test_m05_full_context.M05FullContextTests) ... ok
+test_missing_or_duplicate_targets_and_keep_category (test_m05_full_context.M05FullContextTests) ... ok
+test_no_quota_contract_and_web_copy (test_m05_full_context.M05FullContextTests) ... ok
+test_no_quota_run_preserves_binary_scoring_and_csv_verification (test_m05_full_context.M05FullContextTests) ... ok
+test_omitted_context_file_rejected (test_m05_full_context.M05FullContextTests) ... ok
+test_output_id_validation_and_category_independence (test_m05_full_context.M05FullContextTests) ... ok
+test_postfreeze_and_completeness (test_m05_full_context.M05FullContextTests) ... ok
+test_remove_category_distributions_have_no_quotas (test_m05_full_context.M05FullContextTests) ... ok
+test_web_blocks_missing_bundle_and_lists_new_schema (test_m05_full_context.M05FullContextTests) ... 127.0.0.1 - - [12/Nov/2026 14:03:25] "GET /datasets HTTP/1.1" 200 -
+127.0.0.1 - - [12/Nov/2026 14:03:25] "POST /validate HTTP/1.1" 200 -
+127.0.0.1 - - [12/Nov/2026 14:03:25] "POST /validate HTTP/1.1" 422 -
+127.0.0.1 - - [12/Nov/2026 14:03:25] "GET /evidence.csv HTTP/1.1" 404 -
+ok
+test_web_measure_download_and_repeated_click (test_m05_full_context.M05FullContextTests) ... 127.0.0.1 - - [12/Nov/2026 14:03:26] "POST /measure HTTP/1.1" 200 -
+127.0.0.1 - - [12/Nov/2026 14:03:26] "GET /runs/6e791dbe0723190a6cf462a895fce9dff9cedc92488641970d2f757d9d041e2d/evidence.csv HTTP/1.1" 200 -
+127.0.0.1 - - [12/Nov/2026 14:03:26] "POST /measure HTTP/1.1" 422 -
+127.0.0.1 - - [12/Nov/2026 14:03:26] "GET /runs/6e791dbe0723190a6cf462a895fce9dff9cedc92488641970d2f757d9d041e2d/evidence.csv HTTP/1.1" 404 -
+ok
+test_confusion_csv_determinism (test_m05_heldout.M05HeldOutTests) ... ok
+test_contract (test_m05_heldout.M05HeldOutTests) ... ok
+test_empty_history_and_empty_audit_rejected (test_m05_heldout.M05HeldOutTests) ... ok
+test_engine_argv_binding (test_m05_heldout.M05HeldOutTests) ... ok
+test_invalid (test_m05_heldout.M05HeldOutTests) ... ok
+test_leakage (test_m05_heldout.M05HeldOutTests) ... ok
+test_no_proof_no_score (test_m05_heldout.M05HeldOutTests) ... ok
+test_predictions_rejected (test_m05_heldout.M05HeldOutTests) ... ok
+test_source_reconciliation_and_independent_approval (test_m05_heldout.M05HeldOutTests) ... ok
+test_threshold (test_m05_heldout.M05HeldOutTests) ... ok
+test_ui_contract (test_m05_heldout.M05HeldOutTests) ... ok
+test_boot_diagnostic_only (test_m05_session_cleaning.CleaningTests) ... ok
+test_boot_with_business_outcome_kept (test_m05_session_cleaning.CleaningTests) ... ok
+test_button_not_focus (test_m05_session_cleaning.CleaningTests) ... ok
+test_checkbox_preserved (test_m05_session_cleaning.CleaningTests) ... ok
+test_chronological_and_original_order (test_m05_session_cleaning.CleaningTests) ... ok
+test_cross_task_empty_focus (test_m05_session_cleaning.CleaningTests) ... ok
+test_current_nav_after_popup_kept_original (test_m05_session_cleaning.CleaningTests) ... ok
+test_deterministic_and_no_input_mutation (test_m05_session_cleaning.CleaningTests) ... ok
+test_different_menu_identity_is_kept (test_m05_session_cleaning.CleaningTests) ... ok
+test_gt_rejected (test_m05_session_cleaning.CleaningTests) ... ok
+test_nav_refresh_is_kept (test_m05_session_cleaning.CleaningTests) ... ok
+test_no_known_destination_is_kept (test_m05_session_cleaning.CleaningTests) ... ok
+test_nonempty_or_selection_preserved (test_m05_session_cleaning.CleaningTests) ... ok
+test_session_popup_page_target_isolation (test_m05_session_cleaning.CleaningTests) ... ok
+test_slow_repeat_preserved (test_m05_session_cleaning.CleaningTests) ... ok
+test_state_change_breaks_run (test_m05_session_cleaning.CleaningTests) ... ok
+test_unknown_not_empty (test_m05_session_cleaning.CleaningTests) ... ok
+test_authority_cannot_escape_bundle (test_m05_timestamp_evidence.TimestampBundleTests) ... ok
+test_authority_requires_identity_binding_and_substantive_record (test_m05_timestamp_evidence.TimestampBundleTests) ... ok
+test_authority_supports_no_payload_and_requires_hash_verified_sources (test_m05_timestamp_evidence.TimestampBundleTests) ... ok
+test_collection_timezone_alone_never_authorizes_naive_rows (test_m05_timestamp_evidence.TimestampBundleTests) ... ok
+test_complete_sequence_keeps_frozen_features_and_raw_bytes (test_m05_timestamp_evidence.TimestampBundleTests) ... ok
+test_no_sources_or_authority_fails (test_m05_timestamp_evidence.TimestampBundleTests) ... ok
+test_policy_hash_and_exact_raw_binding_required (test_m05_timestamp_evidence.TimestampBundleTests) ... ok
+test_policy_schema_paths_and_timezone_conflicts_fail (test_m05_timestamp_evidence.TimestampBundleTests) ... ok
+test_postfreeze_is_still_checked_on_resolved_utc (test_m05_timestamp_evidence.TimestampBundleTests) ... ok
+test_session_and_task_use_resolved_utc_and_still_enforce_bounds (test_m05_timestamp_evidence.TimestampBundleTests) ... ok
+test_timestamp_conflict_blocks_before_adapter_or_score (test_m05_timestamp_evidence.TimestampBundleTests) ... ok
+test_arbitrary_decimal_precision_never_rounds_away (test_m05_timestamp_evidence.TimestampResolutionTests) ... ok
+test_authority_without_payload (test_m05_timestamp_evidence.TimestampResolutionTests) ... ok
+test_aware_offset_must_match_declared_exporter_timezone (test_m05_timestamp_evidence.TimestampResolutionTests) ... ok
+test_aware_raw_cannot_override_conflicting_payload (test_m05_timestamp_evidence.TimestampResolutionTests) ... ok
+test_aware_without_policy_is_unchanged (test_m05_timestamp_evidence.TimestampResolutionTests) ... ok
+test_decimal_comma_is_lossless_and_runtime_independent (test_m05_timestamp_evidence.TimestampResolutionTests) ... ok
+test_dst_gap_and_ambiguous_fold_fail_without_utc (test_m05_timestamp_evidence.TimestampResolutionTests) ... ok
+test_epoch_only_and_iso_only_are_supported (test_m05_timestamp_evidence.TimestampResolutionTests) ... ok
+test_epoch_units_and_precision (test_m05_timestamp_evidence.TimestampResolutionTests) ... ok
+test_export_offset_or_calendar_mismatch_fails (test_m05_timestamp_evidence.TimestampResolutionTests) ... ok
+test_json_decimal_precision_is_also_exact (test_m05_timestamp_evidence.TimestampResolutionTests) ... ok
+test_malformed_explicit_offsets_never_normalize (test_m05_timestamp_evidence.TimestampResolutionTests) ... ok
+test_missing_invalid_duplicate_json_and_missing_configured_field_fail (test_m05_timestamp_evidence.TimestampResolutionTests) ... ok
+test_naive_payload_never_inherits_export_timezone (test_m05_timestamp_evidence.TimestampResolutionTests) ... ok
+test_naive_without_policy_fails_closed (test_m05_timestamp_evidence.TimestampResolutionTests) ... ok
+test_non_korean_zone_and_fixed_offset_are_generic (test_m05_timestamp_evidence.TimestampResolutionTests) ... ok
+test_payload_identity_must_match_event_and_session (test_m05_timestamp_evidence.TimestampResolutionTests) ... ok
+test_payload_iso_submicrosecond_precision_never_truncates (test_m05_timestamp_evidence.TimestampResolutionTests) ... ok
+test_payload_sources_must_all_agree (test_m05_timestamp_evidence.TimestampResolutionTests) ... ok
+test_payload_utc_epoch_and_naive_kst_reconcile_without_mutation (test_m05_timestamp_evidence.TimestampResolutionTests) ... ok
+test_raw_iso_submicrosecond_precision_never_truncates (test_m05_timestamp_evidence.TimestampResolutionTests) ... ok
+test_timezone_abbreviation_unknown_or_invalid_offset_fails (test_m05_timestamp_evidence.TimestampResolutionTests) ... ok
+test_unsupported_offset_precision_and_short_time_fail (test_m05_timestamp_evidence.TimestampResolutionTests) ... ok
+test_utc_payload_disambiguates_dst_fold (test_m05_timestamp_evidence.TimestampResolutionTests) ... ok
+test_duplicate_ids_and_nonfinite_rejected (test_m06_candidate.FrozenM06Tests) ... ok
+test_reproducible_evidence_and_crosscheck (test_m06_candidate.FrozenM06Tests) ... ok
+test_run_never_invokes_runner_and_exports (test_m06_candidate.FrozenM06Tests) ... ok
+test_tamper_and_alignment_fail_closed (test_m06_candidate.FrozenM06Tests) ... ok
+test_bad_summary_rejected (test_m06_csv_recalculation.CSVRecalculationTests) ... ok
+test_duplicate_rejected (test_m06_csv_recalculation.CSVRecalculationTests) ... ok
+test_missing_dimension_rejected (test_m06_csv_recalculation.CSVRecalculationTests) ... ok
+test_recalculate (test_m06_csv_recalculation.CSVRecalculationTests) ... ok
+test_generated_code_denominator (test_official_compliance.OfficialComplianceTests) ... ok
+test_m01_and_m04_counts (test_official_compliance.OfficialComplianceTests) ... ok
+test_m02_m03_fixed_counts (test_official_compliance.OfficialComplianceTests) ... ok
+test_m05_heldout_false_rejected_before_adapter (test_official_compliance.OfficialComplianceTests) ... ok
+test_m06_cross_check_with_temporary_bundle (test_official_compliance.OfficialComplianceTests) ... ok
+test_official_m06_no_fallback (test_official_compliance.OfficialComplianceTests) ... ok
+test_targets (test_official_compliance.OfficialComplianceTests) ... ok
+test_gate_precedes_any_gt_access (test_semantic_enrichment.GateTests) ... ok
+test_pending_and_unbound_gate_do_not_open_gt (test_semantic_enrichment.GateTests) ... ok
+test_ambiguous_identity_never_compressed (test_semantic_enrichment.ScopeTests) ... ok
+test_determinism_and_no_mutation (test_semantic_enrichment.ScopeTests) ... ok
+test_distinct_field_split_and_conservation (test_semantic_enrichment.ScopeTests) ... ok
+test_forbidden_metadata_invariance (test_semantic_enrichment.ScopeTests) ... ok
+test_missing_raw_or_wrong_session_fails (test_semantic_enrichment.ScopeTests) ... ok
+test_mixed_once_ineligible_not_repaired (test_semantic_enrichment.ScopeTests) ... ok
+test_only_same_interaction_same_field_can_compress (test_semantic_enrichment.ScopeTests) ... ok
+test_same_label_selector_different_name_type_never_compressed (test_semantic_enrichment.ScopeTests) ... ok
+test_save_confirm_separate_and_http_method_preserved (test_semantic_enrichment.ScopeTests) ... ok
+test_scope_excludes_unrelated_preserves_split_maps (test_semantic_enrichment.ScopeTests) ... ok
+test_unassigned_and_missing_end_not_guessed (test_semantic_enrichment.ScopeTests) ... ok
+test_unknown_retained (test_semantic_enrichment.ScopeTests) ... ok
+test_ambiguous_identity_never_compressed (test_semantic_enrichment.SemanticTests) ... ok
+test_determinism_and_no_mutation (test_semantic_enrichment.SemanticTests) ... ok
+test_distinct_field_split_and_conservation (test_semantic_enrichment.SemanticTests) ... ok
+test_forbidden_metadata_invariance (test_semantic_enrichment.SemanticTests) ... ok
+test_missing_raw_or_wrong_session_fails (test_semantic_enrichment.SemanticTests) ... ok
+test_only_same_interaction_same_field_can_compress (test_semantic_enrichment.SemanticTests) ... ok
+test_same_label_selector_different_name_type_never_compressed (test_semantic_enrichment.SemanticTests) ... ok
+test_save_confirm_separate_and_http_method_preserved (test_semantic_enrichment.SemanticTests) ... ok
+test_unknown_retained (test_semantic_enrichment.SemanticTests) ... ok
+test_loader_verifies_metadata_without_inference (test_v62_runtime.LoaderTests) ... ok
+test_manifest_hashes_match_actual_files (test_v62_runtime.LoaderTests) ... ok
+test_missing_required_metadata_fails (test_v62_runtime.LoaderTests) ... ok
+test_missing_runtime_fails (test_v62_runtime.LoaderTests) ... ok
+test_missing_sidecar_hash_fails (test_v62_runtime.LoaderTests) ... ok
+test_sidecar_hash_mismatch_fails (test_v62_runtime.LoaderTests) ... ok
+test_source_hash_mismatch_fails (test_v62_runtime.LoaderTests) ... ok
+test_wrong_version_fails (test_v62_runtime.LoaderTests) ... ok
+test_checkpoint_shape_consistency (test_v62_runtime.RecoveryTests) ... ok
+test_feature_contract_excludes_evidence_and_preserves_order (test_v62_runtime.RecoveryTests) ... ok
+test_numeric_statistics_are_repeatable_and_match_saved_values (test_v62_runtime.RecoveryTests) ... ok
+test_recovered_vocabularies_equal_saved_runtime (test_v62_runtime.RecoveryTests) ... ok
+test_structural_vocabulary_exact_match (test_v62_runtime.RecoveryTests) ... ok
+test_vocab_tie_order_and_unknown_behavior (test_v62_runtime.RecoveryTests) ... ok
+test_conflicting_user_mapping (test_v62_runtime.SchemaTests) ... ok
+test_duplicate_event_id (test_v62_runtime.SchemaTests) ... ok
+test_invalid_timestamp (test_v62_runtime.SchemaTests) ... ok
+test_missing_column_and_null_id (test_v62_runtime.SchemaTests) ... ok
+test_mixed_timestamp_awareness (test_v62_runtime.SchemaTests) ... ok
+test_new_identifiers_and_missing_optional_tasks_are_valid (test_v62_runtime.SchemaTests) ... ok
+test_nullable_categories_are_distinct_from_oov (test_v62_runtime.SchemaTests) ... ok
+test_numeric_parse_and_negative_values (test_v62_runtime.SchemaTests) ... ok
+test_oov_is_reported_without_mutating_vocabulary (test_v62_runtime.SchemaTests) ... ok
+test_session_id_column_supported (test_v62_runtime.SchemaTests) ... ok
+test_tasks_optional_file_does_not_supply_model_features (test_v62_runtime.SchemaTests) ... ok
+test_unknown_session_reference (test_v62_runtime.SchemaTests) ... ok
+
+----------------------------------------------------------------------
+Ran 439 tests in 20.890s
+
+OK

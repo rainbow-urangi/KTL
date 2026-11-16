@@ -1,0 +1,74 @@
+{
+  "scope": "DEVELOPMENT_FUNCTIONAL_ONLY",
+  "score": null,
+  "held_out_created": false,
+  "datasets": [
+    {
+      "dataset": "current_site_dev_01",
+      "source_sha256": "2a041722995ac7c8a5dbcdb324c0e9f27e8e305b7ac32c9568a143b82200b367",
+      "events": 273,
+      "labels": {
+        "KEEP": 272,
+        "REMOVE": 1
+      },
+      "reasons": {
+        "consecutive_same_activity": 1
+      },
+      "cases": 190,
+      "mapping": {
+        "event_type": "event_type",
+        "interaction_type": "interaction_type",
+        "page_url": "page_url",
+        "page_title": "page_title",
+        "api_path": "api_path",
+        "api_method": "api_method",
+        "api_status_code": "api_status_code",
+        "element_tag": "element_tag",
+        "associated_label": "associated_label",
+        "element_text": "element_text",
+        "case_id": "task_id",
+        "source_event_pk": "event_id",
+        "ts": "event_time"
+      },
+      "existing_engine_equivalence": true,
+      "deterministic": true,
+      "event_id_provenance": true,
+      "cli_contract": true,
+      "prediction_sha256": "038b12fee09a70b8b3804e047a889883b8ba6b6fc2f9d6324829cd99fa1abfe1"
+    },
+    {
+      "dataset": "current_site_dev_02",
+      "source_sha256": "bc4c25d22db7de7ba176a14e77af2451f9b45338d1a2f3135fa70597694205d0",
+      "events": 320,
+      "labels": {
+        "KEEP": 319,
+        "REMOVE": 1
+      },
+      "reasons": {
+        "consecutive_same_activity": 1
+      },
+      "cases": 243,
+      "mapping": {
+        "event_type": "event_type",
+        "interaction_type": "interaction_type",
+        "page_url": "page_url",
+        "page_title": "page_title",
+        "api_path": "api_path",
+        "api_method": "api_method",
+        "api_status_code": "api_status_code",
+        "element_tag": "element_tag",
+        "associated_label": "associated_label",
+        "element_text": "element_text",
+        "case_id": "task_id",
+        "source_event_pk": "event_id",
+        "ts": "event_time"
+      },
+      "existing_engine_equivalence": true,
+      "deterministic": true,
+      "event_id_provenance": true,
+      "cli_contract": true,
+      "prediction_sha256": "afd22e0d940773335c074e92022f305a9487be0ad492c1ad2c14ee03177fc68d"
+    }
+  ],
+  "original_dataset_sha256": "fcefa464a7e21ef72d1d5e2bd31eac10b88337434032a0f0aa3e0a77f9250efe"
+}

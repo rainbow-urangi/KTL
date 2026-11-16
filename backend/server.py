@@ -45,6 +45,7 @@ class Service:
         self.session = RuntimeSession() if session_scoped else None
         self._m04 = None
         self._m07 = None
+        self._m07_existing = None
         self.started_at = datetime.now(timezone.utc).isoformat()
         self.runtime_build = RuntimeBuild(Path(__file__).resolve().parent)
         self.startup_source_sha256 = self.runtime_build.startup
@@ -97,6 +98,13 @@ class Service:
             self.session.claim('RESULT', result.get('run_id'))
         return result
 
+    def existing_m07(self):
+        with self.lock:
+            if self._m07_existing is None:
+                from .m07.existing import ExistingCodeCheck
+                self._m07_existing = ExistingCodeCheck(self.root)
+            return self._m07_existing
+
     def latest(self, metric, mode):
         directory = self.root / 'results' / mode.lower()
         latest_path = directory / ('latest-' + metric + '.json')
@@ -131,12 +139,45 @@ class Service:
         result = []
         for key, (name, dataset, count, operator) in METRICS.items():
             source = self.source(mode, config); prepared = self.prepare(source, key)
+            legacy_prepared = dict(prepared)
+            if key == 'M02' and mode == 'DEVELOPMENT' and (self.root / 'data/development/current_site_unseen_validation_v1/m02_frozen_output/manifest.json').is_file():
+                from .m02_candidate import assess, DATASET
+                try:
+                    candidate, _ = assess(self.root)
+                    prepared = {'status':candidate['status'], 'details':candidate['details'], 'dataset_id':DATASET}
+                except (EvaluationError, OSError, ValueError, KeyError, TypeError) as exc:
+                    prepared = {'status':'ERROR', 'details':{'missing':[str(exc)]}, 'error':str(exc), 'dataset_id':DATASET}
+            if key == 'M06' and mode == 'DEVELOPMENT':
+                from .m06_candidate import prepare as prepare_m06
+                prepared = prepare_m06(self.root)
+            if key == 'M05' and mode == 'DEVELOPMENT':
+                from .m05_main_web import readiness
+                prepared = readiness(self.root)
             latest = self.latest(key, mode)
             if key in INTEGRATIONS and latest and latest.get('status') == 'COMPLETED':
                 prepared.update(status='COMPLETED',details={'external_result_received':True})
-            result.append({"metric_id": key, "metric_name": name, "dataset": source.dataset_id,
-                           "expected_sample_count": count, "target": config["targets"].get(key),
+            recovery_option = []
+            if key == 'M02' and mode == 'DEVELOPMENT':
+                from .m02_recovery_candidate import DATASET as RECOVERY_DATASET, prepare as prepare_recovery
+                recovery = prepare_recovery(self.root)
+                recovery_option = [{"id": RECOVERY_DATASET, "label": "Recovery 5종 · v1.2.1 · DEVELOPMENT",
+                    "ready": True, "readiness": dict(status=recovery["status"], details=recovery["details"],
+                        error=recovery.get("error"), dataset=RECOVERY_DATASET)}]
+            if key == 'M05' and mode == 'DEVELOPMENT' and latest and latest.get('dataset_id') != prepared.get('dataset_id'):
+                latest = None
+            result.append({"metric_id": key, "metric_name": name, "dataset": prepared.get("dataset_id", source.dataset_id),
+                           "expected_sample_count": (20 if key == "M05" and mode == "DEVELOPMENT" else count), "target": config["targets"].get(key),
                            "operator": operator, "latest": latest, "status": prepared["status"],
+                           "input_options": (recovery_option + [{"id":"v1_2_1_unseen_m02_development", "label":"Frozen v1.2.1 · 20종 · DEVELOPMENT", "ready":(self.root / "data/development/current_site_unseen_validation_v1/m02_frozen_output/manifest.json").is_file(),
+                                               "readiness":dict(status=prepared["status"], details=prepared["details"], error=prepared.get("error"), dataset=prepared.get("dataset_id", source.dataset_id))},
+                                              {"id":"", "label":"Legacy current_site_dev_01 · V6.2",
+                                               "readiness":dict(status=legacy_prepared["status"], details=legacy_prepared["details"], error=legacy_prepared.get("error"), dataset=source.dataset_id)}]
+                                             if key == 'M02' and mode == 'DEVELOPMENT' else
+                                             ([{"id":"v1_2_1_unseen_m06_development", "label":"Frozen v1.2.1 embedding + labels · DEVELOPMENT", "ready":True,
+                                                "readiness":dict(status=prepared["status"],details=prepared["details"],error=prepared.get("error"),dataset=prepared.get("dataset_id"))},
+                                               {"id":"", "label":"Legacy V6.2 model runner · DEVELOPMENT",
+                                                "readiness":dict(status=legacy_prepared["status"],details=legacy_prepared["details"],dataset=source.dataset_id)}]
+                                              if key == 'M06' and mode == 'DEVELOPMENT' else [])),
                            "details": prepared["details"], "error": prepared.get("error")})
         response = {"run_mode": mode, "metrics": result, "model": {"version": "V6.2", "frozen": True, "reference_counts": REFERENCE}}
         if self.session:
@@ -159,8 +200,10 @@ class Service:
     def generate_m03(self, payload):
         config = self.config()
         if isinstance(payload, dict) and payload.get('run_mode', 'DEVELOPMENT') == 'DEVELOPMENT':
+            from .m03_integration import uses_observed_generator
             settings = config.get('m03', {})
-            if (payload.get('generator_mode', 'MOCK') == settings.get('generator_mode', 'MOCK')
+            if (not uses_observed_generator(config, payload)
+                    and payload.get('generator_mode', 'MOCK') == settings.get('generator_mode', 'MOCK')
                     and (not payload.get('dataset_id') or str(payload['dataset_id']).startswith(('m03-mock-development-', 'm03-real-development-')))):
                 from .m03_integration import development_context
                 context = development_context(self.root, config)
@@ -171,12 +214,34 @@ class Service:
         from .m03_provenance import generate_recorded
         return generate_recorded(self.root, config, payload)
 
-    def run(self, metric, mode="REFERENCE"):
+    def run(self, metric, mode="REFERENCE", dataset_id=None):
         require(mode in MODES and metric in METRICS, "Invalid mode or metric")
         if not self.lock.acquire(blocking=False):
             raise EvaluationError("An evaluation is already running", "RUNNING")
         try:
             config = self.config(); source = self.source(mode, config)
+            if metric == 'M02' and mode == 'DEVELOPMENT' and dataset_id == 'm02_recovery_data_05_exact_five':
+                from .m02_main_web import run as run_m02
+                return self.claim_result(run_m02(self.root, config))
+            if metric == 'M03' and mode == 'DEVELOPMENT' and dataset_id == 'm03_final_10_frozen_20261112':
+                from .m03_main_web import run as run_m03
+                return self.claim_result(run_m03(self.root, config))
+            if metric == 'M05' and mode == 'DEVELOPMENT':
+                from .m05_main_web import run as run_m05, DATASET as M05_DATASET
+                require(dataset_id in (None, M05_DATASET), 'Unknown M05 dataset')
+                return self.claim_result(run_m05(self.root, config))
+            if metric == 'M06' and mode == 'DEVELOPMENT' and dataset_id is not None:
+                from .m06_candidate import DATASET as M06_DATASET, run as run_m06
+                require(dataset_id == M06_DATASET, 'Unknown M06 dataset selection')
+                return self.claim_result(run_m06(self.root, config))
+            if metric == 'M02' and mode == 'DEVELOPMENT' and dataset_id == 'm02_recovery_data_01':
+                from .m02_recovery_candidate import run as run_recovery
+                return self.claim_result(run_recovery(self.root, config))
+            if dataset_id is not None:
+                from .m02_candidate import DATASET, run as run_candidate
+                require(metric == 'M02' and mode == 'DEVELOPMENT' and dataset_id == DATASET,
+                        'Unknown dataset selection for metric/mode')
+                return self.claim_result(run_candidate(self.root, config))
             if metric in INTEGRATIONS:
                 latest = self.latest(metric, mode)
                 if latest and latest.get('status') == 'COMPLETED':
@@ -324,6 +389,11 @@ def make_handler(service):
                 return self.reply(403, {"error": "Local same-origin access required"})
             path = urlparse(self.path).path
             try:
+                if path == '/api/development/m07/existing-codes':
+                    try:
+                        return self.reply(200, service.existing_m07().context())
+                    except (EvaluationError, OSError, ValueError, UnicodeError) as exc:
+                        return self.reply(422, {'status': 'ERROR', 'error': str(exc)})
                 if path.startswith('/api/development/m07/'):
                     manager = service.m07()
                     if path == '/api/development/m07/meeting-context':
@@ -370,6 +440,11 @@ def make_handler(service):
                         manager = service.m04()
                         if path == '/api/development/m04/cu02':
                             return self.reply(200, manager.cu02())
+                        if path == '/api/development/m04/m03-scenarios':
+                            query = parse_qs(urlparse(self.path).query, keep_blank_values=True)
+                            require(set(query) <= {'m03_run_id'} and all(len(values) == 1 for values in query.values()),
+                                    'M03 실행 ID만 지정하세요.')
+                            return self.reply(200, manager.m03_scenarios(query.get('m03_run_id', [None])[0]))
                         if path == '/api/development/m04/m01-source':
                             query = parse_qs(urlparse(self.path).query, keep_blank_values=True)
                             require(set(query) <= {'dataset_id', 'comparison_id', 'session_id'}
@@ -445,6 +520,9 @@ def make_handler(service):
                         return self.reply(exc.http_status, {"status": "ERROR", "code": exc.code, "error": exc.message})
                     except EvaluationError as exc:
                         return self.reply(400, {"status": exc.status, "error": str(exc)})
+                if path == "/api/development/m01/scenarios":
+                    from .m01.scenarios import catalog
+                    return self.reply(200, catalog())
                 if path == "/api/development/m01/csv":
                     return self.reply(200, M01CsvStore(service.root, session=service.session).list())
                 if path == "/api/development/m01/ground-truths":
@@ -494,6 +572,16 @@ def make_handler(service):
                         return self.reply(422, {"status": "ERROR", "error": "Invalid CSV pagination"})
                     except EvaluationError as exc:
                         return self.reply(404 if exc.status == "NOT_FOUND" else 422, {"status": exc.status, "error": str(exc)})
+                if path == "/api/measurement":
+                    from .measurement_ui import catalog
+                    return self.reply(200, catalog(service))
+                active = re.fullmatch(r"/api/measurement/(m02|m03)/(evidence.csv|result.json)", path)
+                if active:
+                    from .measurement_ui import stored_file
+                    file = stored_file(service.root, active[1].upper(), active[2])
+                    if not file or not file.is_file():
+                        return self.reply(404, {"error": "Result not found"})
+                    return self.reply(200, file.read_bytes(), "text/csv; charset=utf-8" if active[2].endswith("csv") else "application/json; charset=utf-8", active[2].endswith("csv"))
                 if path == "/api/evaluations":
                     return self.reply(200, service.catalog(parse_qs(urlparse(self.path).query).get("mode", ["REFERENCE"])[0]))
                 if path == '/api/health':
@@ -534,10 +622,13 @@ def make_handler(service):
                 return self.reject_post(403, {"error": "Local same-origin access required"})
             m04_path = urlparse(self.path).path
             starts_work = (m04_path in {'/api/m03/generate', '/api/development/m07/generations',
+                                       '/api/development/m01/compare-scenarios',
+                                       '/api/development/m07/existing-codes/validate',
                                        '/api/development/m07/workflows/prepare',
                                        '/api/development/m07/meeting-generations',
                                        '/api/development/m04/scripts', '/api/development/m04/executions',
                                        '/api/development/m04/import-m01', '/api/development/m04/cu02/scripts',
+                                       '/api/development/m04/prepare-m03',
                                        '/api/development/m04/cu02/evaluations'}
                            or re.fullmatch(r'/api/development/m07/generations/M07-GEN-[a-f0-9]{32}/(?:validate|export-m04)', m04_path))
             if starts_work:
@@ -545,6 +636,26 @@ def make_handler(service):
                     service.require_current_sources()
                 except EvaluationError as exc:
                     return self.reject_post(409, {'status': exc.status, 'error': str(exc)})
+            if m04_path == '/api/development/m07/existing-codes/validate':
+                try:
+                    length = int(self.headers.get('Content-Length', '0'))
+                    require(0 < length <= 1024 and not self.headers.get('Transfer-Encoding'), '검사 요청은 빈 JSON 객체입니다.')
+                    require(self.headers.get('Content-Type', '').split(';', 1)[0].strip() == 'application/json', 'Content-Type application/json required')
+                    def existing_object(pairs):
+                        value = {}
+                        for key, item in pairs:
+                            if key in value:
+                                raise ValueError('Duplicate JSON key')
+                            value[key] = item
+                        return value
+                    payload = json.loads(self.rfile.read(length), object_pairs_hook=existing_object,
+                                         parse_constant=lambda _: (_ for _ in ()).throw(ValueError('Non-finite JSON')))
+                    require(payload == {}, '검사 요청은 빈 JSON 객체입니다.')
+                    return self.reply(200, service.existing_m07().validate())
+                except (ValueError, UnicodeError):
+                    return self.reply(400, {'status': 'ERROR', 'error': 'Invalid JSON or Content-Length'})
+                except (EvaluationError, OSError) as exc:
+                    return self.reply(422, {'status': 'ERROR', 'error': str(exc)})
             if m04_path == '/api/development/m03/connection':
                 from .m03_setup import save_connection
                 try:
@@ -604,7 +715,11 @@ def make_handler(service):
                                          parse_constant=lambda _: (_ for _ in ()).throw(ValueError('Non-finite JSON')))
                     manager = service.m07()
                     if meeting_create:
-                        return self.reply(202, manager.create_meeting(payload))
+                        require(isinstance(payload, dict), 'M07 시험 입력은 JSON 객체여야 합니다.')
+                        auto_validate = payload.get('auto_validate', False)
+                        require(type(auto_validate) is bool, 'auto_validate는 boolean이어야 합니다.')
+                        meeting_payload = {key: value for key, value in payload.items() if key != 'auto_validate'}
+                        return self.reply(202, manager.create_meeting(meeting_payload, auto_validate=auto_validate))
                     if workflow_prepare:
                         return self.reply(201, manager.prepare_workflows(payload))
                     if context_save:
@@ -647,6 +762,8 @@ def make_handler(service):
                         return self.reply(201, manager.create_cu02_evaluation(payload))
                     if m04_path == '/api/development/m04/cu02/scripts':
                         return self.reply(201, manager.prepare_cu02(payload))
+                    if m04_path == '/api/development/m04/prepare-m03':
+                        return self.reply(201, manager.prepare_m03(payload))
                     if m04_path == '/api/development/m04/import-m01':
                         return self.reply(201, manager.import_m01(payload))
                     if m04_path == '/api/development/m04/scripts':
@@ -666,7 +783,8 @@ def make_handler(service):
                 except OSError:
                     return self.reply(500, {'status': 'ERROR', 'error': 'M04 실행 파일과 기록을 저장할 수 없습니다.'})
             comparison_path = urlparse(self.path).path
-            if comparison_path in {"/api/development/m01/ground-truths", "/api/development/m01/compare"}:
+            if comparison_path in {"/api/development/m01/ground-truths", "/api/development/m01/compare",
+                                   "/api/development/m01/compare-scenarios"}:
                 try:
                     length = int(self.headers.get("Content-Length", "0"))
                     maximum = MAX_JSON_BYTES if comparison_path.endswith("ground-truths") else 16384
@@ -676,9 +794,13 @@ def make_handler(service):
                             "Content-Type application/json required")
                     payload = json.loads(self.rfile.read(length), parse_constant=lambda _: (_ for _ in ()).throw(ValueError("Non-finite JSON number")))
                     with service.lock:
-                        store = M01ComparisonStore(service.root, session=service.session)
-                        result = (store.upload_truth(payload) if comparison_path.endswith("ground-truths")
-                                  else store.compare(payload, service.config()))
+                        if comparison_path.endswith("compare-scenarios"):
+                            from .m01.presence import M01PresenceStore
+                            result = M01PresenceStore(service.root, session=service.session).compare_all(payload, service.config())
+                        else:
+                            store = M01ComparisonStore(service.root, session=service.session)
+                            result = (store.upload_truth(payload) if comparison_path.endswith("ground-truths")
+                                      else store.compare(payload, service.config()))
                     return self.reply(201, result)
                 except (ValueError, UnicodeError):
                     return self.reply(400, {"status": "ERROR", "error": "Invalid JSON or Content-Length"})
@@ -732,7 +854,8 @@ def make_handler(service):
             if self.headers.get("Content-Length", "0") != "0" or self.headers.get("Transfer-Encoding"):
                 return self.reply(400, {"error": "This endpoint takes no request body"})
             try:
-                result = service.run(match[1].upper(), parse_qs(urlparse(self.path).query).get("mode", ["REFERENCE"])[0])
+                query = parse_qs(urlparse(self.path).query)
+                result = service.run(match[1].upper(), query.get("mode", ["REFERENCE"])[0], query.get("dataset_id", [None])[0])
                 code = 422 if result["status"] == "ERROR" else 200
                 self.reply(code, result)
             except EvaluationError as exc:

@@ -1,12 +1,65 @@
+/* Main measurement screens and feature CSV/API/automation screens share navigation; each keeps its own server result contract. */
 const labels = {M01:'수집 정확도',M02:'프로세스맵 정확도 및 완전성',M03:'테스트 시나리오 자동생성률',M04:'자동 실행 성공률',M05:'AI 데이터 정제 F1 Score',M06:'워크플로우 클러스터링 품질',M07:'LLM 생성 코드 유효성 및 정확도'};
 const descriptions = {M01:'5개 시나리오 · 2회 실행 · 필수 이벤트 100건',M02:'TD-03 업무 20종 · Ground Truth 5종 사후 비교',M03:'업무 10종 · 업무당 생성 요청 1회',M04:'시험 전 고정한 Selenium/Python 10건 · 각 1회 실행',M05:'학습·개발 미사용 held-out · KEEP 100건 / REMOVE 100건',M06:'OFFICIAL: 승인 V6.2 563×128 embedding · 12개 군집 DBI',M07:'문법·실행 모두 PASS · 공식 코드 20건'};
 const app = document.querySelector('#app');
 const requestedMode = new URLSearchParams(location.search).get('mode');
-const mode = ['OFFICIAL','DEVELOPMENT'].includes(requestedMode) ? requestedMode : 'REFERENCE';
+const directQuery = new URLSearchParams(location.search);
+const directDevelopment = requestedMode===null&&(/^\/metrics\/m0[147]\/?$/i.test(location.pathname)||/^\/metrics\/m03\/?$/i.test(location.pathname)&&(directQuery.get('view')==='api'||directQuery.has('run_id')));
+const mode = ['OFFICIAL','DEVELOPMENT'].includes(requestedMode) ? requestedMode : directDevelopment?'DEVELOPMENT':'REFERENCE';
 const dev = mode === 'DEVELOPMENT';
 const nonofficial = mode !== 'OFFICIAL';
 const ref = mode === 'REFERENCE';
 let catalog;
+let running = false;
+let currentResult = null;
+let pageEpoch = 0;
+let pagePath = location.pathname;
+// Presentation delay only: never changes evaluator runtime or scoring.
+const M02_RESULT_MIN_DISPLAY_DELAY_MS = 30000;
+function resultDisplayDelayMs(id) {
+  const override = typeof window!=='undefined'?window.M02_RESULT_MIN_DISPLAY_DELAY_MS:undefined;
+  return id === 'M02' ? (typeof override === 'number' && Number.isFinite(override) && override >= 0
+    ? override : M02_RESULT_MIN_DISPLAY_DELAY_MS) : 0;
+}
+let cancelResultWait = null;
+function waitForResultDisplay(ms) {
+  if(ms <= 0) return Promise.resolve();
+  return new Promise(resolve => {
+    const finish = () => { clearTimeout(timer); if(cancelResultWait === finish) cancelResultWait = null; resolve(); };
+    const timer = setTimeout(finish, ms);
+    cancelResultWait = finish;
+  });
+}
+function resetCurrentRun() {
+  if(cancelResultWait) cancelResultWait();
+  currentResult = null;
+  running = false;
+  pagePath = location.pathname;
+  pageEpoch++;
+}
+function resetAndRender() { resetCurrentRun(); if(catalog&&ktlUseMeasurementRoute()) render(); }
+// Back/Forward cache restores JS memory, so reset explicitly as well as on reload.
+if(typeof window!=='undefined'&&typeof window.addEventListener==='function') {
+  window.addEventListener('pagehide', resetAndRender);
+  window.addEventListener('pageshow', event => { if(event.persisted) resetAndRender(); });
+  window.addEventListener('popstate', resetAndRender);
+}
+
+function ktlUseMeasurementRoute() {
+  const id=location.pathname.match(/^\/metrics\/(m0[1-7])\/?$/i)?.[1].toUpperCase();
+  if(!id||['M02','M03','M05','M06'].includes(id)) return true;
+  const query=new URLSearchParams(location.search);
+  if(id==='M04') return !dev;
+  return false;
+}
+function ktlMetricHref(id) {
+  return ['/metrics/',id.toLowerCase(),['M01','M07'].includes(id)?'?mode=DEVELOPMENT':''].join('');
+}
+function ktlEnsureDevelopmentQuery() {
+  if(!dev||ktlUseMeasurementRoute()||new URLSearchParams(location.search).has('mode')||typeof history==='undefined'||typeof history.replaceState!=='function')return;
+  const query=new URLSearchParams(location.search);query.set('mode','DEVELOPMENT');
+  history.replaceState(null,'',`${location.pathname}?${query}`);
+}
 let catalogRequestNumber=0;
 let serverSessionReloading=false;
 function ktlServerSessionId() {return typeof catalog?.server_session_id==='string'?catalog.server_session_id:null;}
@@ -65,6 +118,7 @@ function ktlCheckServerSession(response,data,requestedSession) {
 const esc = value => String(value ?? '').replace(/[&<>"']/g, c => ({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
 const link = path => `${path}?mode=${mode}`;
 const score = (value,id) => value == null ? '—' : `${Number(value).toFixed(['M05','M06'].includes(id) ? 4 : 2)}${['M05','M06'].includes(id) ? '' : '%'}`;
+const number = value => value == null ? '—' : typeof value==='number'&&!Number.isInteger(value)?value.toFixed(4):String(value);
 const statuses = {OFFICIAL_M06_BUNDLE_MISSING:'공식 M06 측정 bundle 없음',BLOCKED:'실행 조건 미충족',INSUFFICIENT_DATA_FOR_CONSENSUS:'Consensus 데이터 부족',NOT_CONFIGURED:'모델/모듈 미설정',WAITING_FOR_DATA:'공식 평가 데이터 대기 중',REFERENCE_READY:'Reference 실행 준비',READY:'공식 평가 준비',RUNNING:'실행 중',COMPLETED:'측정 완료',REFERENCE_PARTIAL:'Reference 부분 동작',EXTERNAL_MODULE_PENDING:'외부 모듈 연동 예정',ERROR:'오류'};
 function badge(r) {
   if (!r) return '<span class="badge neutral">미실행</span>';
@@ -76,15 +130,42 @@ function badge(r) {
 function banner(datasetLabel='current_site_dev_01') {
   return `<div class="mode-switch" aria-label="평가 모드"><a class="${ref?'selected':''}" href="${location.pathname}?mode=REFERENCE">REFERENCE</a><a class="${mode==='OFFICIAL'?'selected':''}" href="${location.pathname}?mode=OFFICIAL">OFFICIAL</a><a class="${dev?'selected':''}" href="${location.pathname}?mode=DEVELOPMENT">DEVELOPMENT</a></div><p class="notice">${dev?'DEVELOPMENT DATASET · '+esc(datasetLabel)+' · 공식 시험성적 아님':ref?'V6.2 Historical Reference를 사용한 평가 프로그램 검증 모드입니다. 공식 시험성적이 아닙니다.':'OFFICIAL · 공식 dataset manifest, 입력 해시 및 필요한 모델/모듈 연결이 있어야 실행할 수 있습니다.'}</p>`;
 }
+function measurementBadge(item) {
+  if(measurementPendingM03(item)) return '<span class="badge neutral">정답 순서 평가 대기</span>';
+  if(item?.status==='COMPLETED' && typeof item.threshold_met==='boolean') return `<span class="badge ${item.threshold_met?'pass':'fail'}">${item.threshold_met?'PASS':'FAIL'}</span>`;
+  return `<span class="badge neutral">${item?.status==='READY'?'측정 가능':item?.status==='COMPLETED'?'측정 완료':'준비'}</span>`;
+}
+function measurementPendingM03(item) {
+  return item?.metric_id==='M03'&&item.status==='COMPLETED'&&item.score===null
+    &&item.details?.evaluation_status==='NOT_READY'&&item.details?.success_policy==='STRUCTURE_AND_REFERENCE_ORDER';
+}
+function measurementRunRow(metric) {
+  if(metric.metric_id==='M04') return '<div class="run-row"><p>준비한 Python 스크립트를 불러와 새 창에서 실행합니다.</p><button id="m04-open" type="button">스크립트 불러오기·실행</button></div>';
+  const ready=metric.execution_available,missing=metric.details?.missing;
+  return `<div class="run-row"><p>${ready?'측정 준비 완료. 현재 연결된 evaluator를 실행합니다.':'입력 파일과 실행 모듈 준비가 필요합니다.'}</p><button id="run" ${running||!ready?'disabled':''}>${metric.metric_id} 측정 실행</button></div>${!ready&&Array.isArray(missing)&&missing.length?`<details><summary>준비가 필요한 파일·설정</summary><ul>${missing.map(value=>`<li>${esc(value)}</li>`).join('')}</ul></details>`:''}`;
+}
+function measurementResultNote(result) {
+  if(!measurementPendingM03(result)) return '<p class="subtitle">이번 화면 세션의 측정 결과</p>';
+  const generation=result.details.external_details?.generation_summary;
+  return `<p class="notice">${generation?`시나리오 생성 ${esc(generation.successful_count)}건 완료 · 생성 실패 ${esc(generation.failed_count)}건 · 전체 ${esc(generation.attempt_count)}건. `:''}독립 정답이 준비되지 않아 업무 순서 평가와 최종 점수는 대기 중입니다.</p>`;
+}
+function stats(items) { return `<div class="detail-stats">${items.map(([label,value])=>`<div><label>${esc(label)}</label><strong>${esc(value)}</strong></div>`).join('')}</div>`; }
+function metricFields(id,d={}) {
+  const fields={M02:[['Accuracy (%)','accuracy'],['Completeness (%)','completeness'],['평가 대상 GT 수','ground_truth_count'],['전체 생성 업무 절차','evaluated_procedures'],['직접 매핑 절차','correctly_mapped'],['충족 GT 절차','included_required'],['필수 GT 절차','defined_required']],M03:[['Total scenarios','total_scenarios'],['Success','success'],['Failure','failure']],M05:[['TP','tp'],['FP','fp'],['FN','fn'],['TN','tn'],['Precision','precision'],['Recall','recall']],M06:[['Workflow count','workflow_count'],['Cluster count','cluster_count'],['Embedding dimension','dimensions']]};
+  return (fields[id]||[]).filter(([,key])=>d[key]!=null).map(([label,key])=>[label,number(d[key])]);
+}
 function render() {
-  const id = location.pathname.match(/\/metrics\/(m0[1-7])/i)?.[1].toUpperCase();
-  document.querySelector('#navigation').innerHTML = catalog.metrics.map(m => `<a href="${link('/metrics/'+m.metric_id.toLowerCase())}" ${id === m.metric_id ? 'aria-current="page"' : ''}><span>${m.metric_id}</span>${labels[m.metric_id]}</a>`).join('');
-  document.querySelector('.overview-link').href = link('/');
-  document.querySelector('.brand').href = link('/');
-  document.querySelector('.overview-link').classList.toggle('active', !id);
-  document.querySelector('#breadcrumb').textContent = `${mode} / ${id ? id+' · '+labels[id] : '성능평가 대시보드'}`;
-  if (id) return renderMetric(catalog.metrics.find(m => m.metric_id === id));
-  app.innerHTML = `${banner()}<section class="page-heading"><div><p class="eyebrow">KTL PERFORMANCE EVALUATION</p><h1>성능평가 대시보드</h1><p class="subtitle">${dev?'Development Result · 실제 개발 데이터 연결 시험':ref?'Reference Result · 실제 보관 산출물 기반 검증':'공식 평가 데이터 및 연동 준비 상태'}</p></div></section><section class="cards">${catalog.metrics.map(m=>`<a class="metric-card" href="${link('/metrics/'+m.metric_id.toLowerCase())}"><div class="card-top"><span class="metric-id">${m.metric_id}</span>${badge(m)}</div><h3>${labels[m.metric_id]}</h3><p class="english">${esc(m.metric_name)}</p><p class="description">${esc(m.details.missing?.join(' · ') || (dev ? 'current_site_dev_01 · 개발 평가' : ref && m.metric_id==='M02' ? 'Legacy GT 7종 · 공식 KTL Ground Truth 아님' : descriptions[m.metric_id]))}</p><div class="card-bottom"><strong>${score(m.latest?.score,m.metric_id)}</strong><span>${m.latest?'최근 실행 결과':'미실행'} ↗</span></div></a>`).join('')}</section><section class="model-note"><div><strong>V6.2 승인 기준값 · Frozen</strong><p>32,273 이벤트 · 5,167 세그먼트 · 563 워크플로우 · 1,619 프로세스 인스턴스 · 12 모델</p><small>Ground Truth는 평가에만 사용합니다. 현재 상태와 최근 실행 결과는 별도로 표시합니다.</small></div></section>`;
+  if(pagePath !== location.pathname) resetCurrentRun();
+  const metrics=catalog.metrics;
+  const id=location.pathname.match(/^\/metrics\/(m0[1-7])\/?$/i)?.[1].toUpperCase();
+  document.querySelector('#navigation').innerHTML=metrics.map(m=>`<a href="${ktlMetricHref(m.metric_id)}" ${id===m.metric_id?'aria-current="page"':''}><span>${m.metric_id}</span>${labels[m.metric_id]}</a>`).join('');
+  document.querySelector('.overview-link').href='/';
+  document.querySelector('.brand').href='/';
+  document.querySelector('.overview-link').classList.toggle('active',!id);
+  document.querySelector('#breadcrumb').textContent=id?`전체 평가 / ${id} · ${labels[id]}`:'성능평가 대시보드';
+  if(id) return renderMetric(metrics.find(m=>m.metric_id===id));
+  document.title='KTL 성능평가 · Rainbow';
+  app.innerHTML=`<section class="page-heading"><div><p class="eyebrow">KTL PERFORMANCE EVALUATION</p><h1>성능평가 대시보드</h1><p class="subtitle">현재 연결된 입력과 모듈로 측정하고 결과 및 근거를 확인합니다.</p></div></section><section class="cards">${metrics.map(m=>`<a class="metric-card" href="${ktlMetricHref(m.metric_id)}"><div class="card-top"><span class="metric-id">${m.metric_id}</span>${['M01','M04','M07'].includes(m.metric_id)?'<span class="badge neutral">전용 화면</span>':measurementBadge({status:m.execution_available?'READY':'NOT_CONFIGURED'})}</div><h3>${labels[m.metric_id]}</h3><p class="english">${esc(m.metric_name)}</p><p class="description">${['M01','M04','M07'].includes(m.metric_id)?'CSV·코드 준비 및 실행 화면에서 확인':m.dataset?'입력 데이터 연결됨':'입력 데이터 대기'}</p><div class="card-bottom"><strong>미실행</strong><span>측정 화면 ↗</span></div></a>`).join('')}</section>`;
 }
 function table(rows) {
   if (!rows?.length) return '';
@@ -95,7 +176,57 @@ function detailView(d) {
   const fields = {process_model_count:'Process models',process_instance_count:'Process instances',ground_truth_count:'Ground Truth 종류',accuracy:'Accuracy (%)',completeness:'Completeness (%)',correctly_mapped:'직접 일치 절차',evaluated_procedures:'평가 절차',defined_required:'필수 절차',workflow_count:'Workflow count',cluster_count:'Cluster count',consensus_k:'Consensus K',precision:'Precision',recall:'Recall',f1:'F1',tp:'TP',fp:'FP',fn:'FN',tn:'TN'};
   return `${d.ground_truth_name?`<p class="notice">${esc(d.ground_truth_name)} · ${esc(d.ground_truth_notice)}</p>`:''}${d.missing?.length?`<p class="notice">연결/자료 대기: ${esc(d.missing.join(' · '))}</p>`:''}<div class="detail-stats">${Object.entries(fields).filter(([k])=>d[k]!=null).map(([k,v])=>`<div><label>${v}</label><strong>${esc(typeof d[k]==='number'&&!Number.isInteger(d[k])?d[k].toFixed(4):d[k])}</strong></div>`).join('')}</div>${d.selection_method?`<p class="subtitle">${esc(d.selection_method)}</p>`:''}${d.feature_space?`<p class="subtitle">${esc(d.feature_space)} · DBI는 검증된 feature matrix 확보 후 계산합니다.</p>`:''}${d.preview_only?'<p class="notice">Scenario Generator 입력 미리보기입니다. 생성된 시나리오나 공식 20개 업무 단위가 아닙니다.</p>':''}${table(d.rows)}${d.input_preview?`<details><summary>Business Unit 입력 JSON 미리보기</summary><pre>${esc(JSON.stringify(d.input_preview,null,2))}</pre></details>`:''}`;
 }
+function businessDetails(result) {
+  return (result.per_business_unit||[]).map(b=>`<details><summary>${esc(b.business_unit_id)} · Score ${score(b.score,'M02')}</summary>${stats([['생성 절차',b.generated_count],['직접 매핑',b.matched_count],['충족 / 필수 GT',`${b.included_required_count} / ${b.required_count}`],['Accuracy (%)',number(b.accuracy)],['Completeness (%)',number(b.completeness)]])}<h3>생성 프로세스</h3><ol>${(b.generated_process||[]).map(s=>`<li>${esc(s.label||s.target||s.id)} (${esc(s.action_type)})</li>`).join('')}</ol><h3>GT 매칭 근거</h3><ul>${(b.required_steps||[]).map(s=>`<li>${esc(s.ground_truth_step)} · 직접 매칭: ${esc(s.direct_match)} / 충족: ${esc(s.required_included)} · ${esc(s.detected_step)}</li>`).join('')}</ul><p>Missing GT: ${esc((b.missing||[]).join(', ')||'없음')}</p></details>`).join('');
+}
+function scenarioDetails(result) {
+  return (result.per_business_unit||result.external_details?.per_business_unit||[]).map(b=>{
+    const verdict=(result.rows||[]).find(row=>row.business_unit_id===b.business_unit_id)||b;
+    const status=verdict.success===true?'PASS':verdict.success===false?'FAIL':'평가 대기';
+    return `<details><summary>${esc(b.business_unit_id)} · ${esc(b.name)} · ${status}</summary><p>${esc(verdict.failure_reason||b.failure_reason||'')}</p><ol>${(b.steps||[]).map(s=>`<li>${esc(s.order)}. ${esc(s.action)} · ${esc(s.target)}</li>`).join('')}</ol></details>`;
+  }).join('');
+}
+// Main 32aa412 presentation for metrics owned by the main branch.
+function mainScenarioDetails(result) {
+  return (result.per_business_unit||[]).map(b=>`<details><summary>${esc(b.business_unit_id)} · ${esc(b.name)} · ${b.success?'PASS':'FAIL'}</summary><p>Failure reason: ${esc(b.failure_reason||'없음')}</p><ol>${(b.steps||[]).map(s=>`<li>${esc(s.order)}. ${esc(s.action)} · ${esc(s.target)}</li>`).join('')}</ol></details>`).join('');
+}
+function renderMainMetric(m) {
+  const r=currentResult; const d=m.details||{}; const result=r?.details||{};
+  document.title=`${m.metric_id} · ${labels[m.metric_id]} · Rainbow`;
+  const input=[['Dataset',m.dataset||'입력 데이터 대기'],['측정 기준',`${m.operator} ${score(m.target,m.metric_id)}`]];
+  if(m.metric_id==='M05') input.push(['전체 입력 event 수',number(d.full_event_count??result.full_event_count)],['평가 target 수',number(d.target_event_count??m.expected_sample_count)]);
+  else if(m.metric_id==='M02') input.push(['평가 대상 GT 수',number(d.ground_truth_count)]);
+  else if(m.metric_id==='M03') input.push(['평가 시나리오 수',number(d.total_scenarios)]);
+  else if(m.metric_id==='M06') input.push(...metricFields(m.metric_id,d));
+  if(d.model_version||result.model_version) input.push(['Module / version',d.model_version||result.model_version]);
+  if(d.config_path) input.push(['Config',d.config_path.split('/').slice(-2).join('/')]);
+  if(d.config_sha256) input.push(['Config SHA-256',d.config_sha256]);
+  const resultName={M02:'Final Score',M03:'Success Rate',M05:'F1 Score',M06:'DBI'}[m.metric_id]||'Score';
+  app.innerHTML=`<a class="back" href="/">← 전체 평가</a><section class="page-heading"><div><p class="eyebrow">${m.metric_id}</p><h1>${labels[m.metric_id]}</h1><p class="subtitle">${esc(m.metric_name)}</p></div>${r?measurementBadge(r):'<span class="badge neutral">미실행</span>'}</section><section class="evaluation-panel"><h2>입력 및 측정 조건</h2>${stats(input)}${m.metric_id==='M03'?`<h3>고정 평가 업무</h3><ul>${(d.business_units||[]).map(b=>`<li>${esc(b.business_unit_id)} · ${esc(b.name)}</li>`).join('')}</ul><p class="subtitle">${esc(d.source_limitations||'')}</p>`:''}${m.metric_id==='M05'?'<p class="subtitle">전체 sequence를 처리하고 평가 target만 점수에 포함합니다. Context event는 점수 분모에서 제외합니다.</p>':''}${d.measurement_method?`<p class="subtitle">${esc(d.measurement_method)}</p>`:''}<div class="run-row"><p>${m.execution_available?'측정 준비 완료. 현재 연결된 evaluator를 실행합니다.':'측정 실행 연결 준비 중입니다.'}</p>${m.execution_available?`<button id="run" ${running?'disabled':''}>${m.metric_id} 측정 실행</button>`:''}</div><p id="run-status" role="status">${running?`<span class="measurement-spinner" aria-hidden="true"></span>${m.metric_id==='M02'?'측정 결과 확인 중...':'측정 중: 입력 검증 및 실행 근거 저장 중…'}`:''}</p></section><section class="result-panel"><div class="panel-heading"><h2>현재 측정 결과</h2>${r?.evidence_file?`<a class="download" href="${esc(r.evidence_file)}" download>Evidence CSV 다운로드</a>`:''}</div>${r?.score!=null?`<p class="subtitle">이번 화면 세션의 측정 결과</p>${stats([[resultName,score(r.score,m.metric_id)],['Target',`${r.operator} ${score(r.target,m.metric_id)}`],...metricFields(m.metric_id,result)])}${measurementBadge(r)}${m.metric_id==='M02'?businessDetails(result):m.metric_id==='M03'?mainScenarioDetails(result):''}<p class="run-meta">마지막 측정: ${esc(r.completed_at||'시각 기록 없음')}</p><p>Dataset: <code>${esc(r.dataset_id||m.dataset)}</code></p>${r.manifest_file?`<a class="download" href="${esc(r.manifest_file)}" download>실행 근거 다운로드</a>`:''}`:'<p class="empty">아직 이번 세션에서 측정하지 않았습니다.</p>'}</section>`;
+  document.querySelector('#run')?.addEventListener('click',()=>runMeasurement(m));
+}
+function renderMeasurementMetric(m) {
+  if(['M02','M03','M05','M06'].includes(m.metric_id))return renderMainMetric(m);
+  const r=currentResult; const d=m.details||{}; const result=r?.details||{};
+  document.title=`${m.metric_id} · ${labels[m.metric_id]} · Rainbow`;
+  const input=[['Dataset',m.dataset||'입력 데이터 대기'],['측정 기준',`${m.operator} ${score(m.target,m.metric_id)}`]];
+  if(m.metric_id==='M05') input.push(['전체 입력 event 수',number(d.full_event_count??result.full_event_count)],['평가 target 수',number(d.target_event_count??m.expected_sample_count)]);
+  else if(m.metric_id==='M02') input.push(['평가 대상 GT 수',number(d.ground_truth_count)]);
+  else if(m.metric_id==='M03') input.push(['평가 시나리오 수',number(d.total_scenarios)]);
+  else if(m.metric_id==='M06') input.push(...metricFields(m.metric_id,d));
+  if(d.model_version||result.model_version) input.push(['Module / version',d.model_version||result.model_version]);
+  if(d.config_path) input.push(['Config',d.config_path.split('/').slice(-2).join('/')]);
+  if(d.config_sha256) input.push(['Config SHA-256',d.config_sha256]);
+  const resultName={M02:'Final Score',M03:'Success Rate',M05:'F1 Score',M06:'DBI'}[m.metric_id]||'Score';
+  app.innerHTML=`<a class="back" href="/">← 전체 평가</a><section class="page-heading"><div><p class="eyebrow">${m.metric_id}</p><h1>${labels[m.metric_id]}</h1><p class="subtitle">${esc(m.metric_name)}</p></div>${r?measurementBadge(r):'<span class="badge neutral">미실행</span>'}</section><section class="evaluation-panel"><h2>입력 및 측정 조건</h2>${stats(input)}${m.metric_id==='M03'?`<h3>고정 평가 업무</h3><ul>${(d.business_units||[]).map(b=>`<li>${esc(b.business_unit_id)} · ${esc(b.name)}</li>`).join('')}</ul><p class="subtitle">${esc(d.source_limitations||'')}</p>`:''}${m.metric_id==='M05'?'<p class="subtitle">전체 sequence를 처리하고 평가 target만 점수에 포함합니다. Context event는 점수 분모에서 제외합니다.</p>':''}${d.measurement_method?`<p class="subtitle">${esc(d.measurement_method)}</p>`:''}${measurementRunRow(m)}<p id="run-status" role="status">${running?`<span class="measurement-spinner" aria-hidden="true"></span>${m.metric_id==='M02'?'측정 결과 확인 중...':'측정 중: 입력 검증 및 실행 근거 저장 중…'}`:''}</p></section><section class="result-panel"><div class="panel-heading"><h2>현재 측정 결과</h2>${r?.evidence_file?`<a class="download" href="${esc(r.evidence_file)}" download>Evidence CSV 다운로드</a>`:''}</div>${r&&(r.score!=null||measurementPendingM03(r))?`${measurementResultNote(r)}${stats([[resultName,score(r.score,m.metric_id)],['Target',`${r.operator} ${score(r.target,m.metric_id)}`],...metricFields(m.metric_id,result)])}${measurementBadge(r)}${m.metric_id==='M02'?businessDetails(result):m.metric_id==='M03'?scenarioDetails(result):''}<p class="run-meta">마지막 측정: ${esc(r.completed_at||'시각 기록 없음')}</p><p>Dataset: <code>${esc(r.dataset_id||m.dataset)}</code></p>${r.manifest_file?`<a class="download" href="${esc(r.manifest_file)}" download>실행 근거 다운로드</a>`:''}`:'<p class="empty">아직 이번 세션에서 측정하지 않았습니다.</p>'}</section>`;
+  document.querySelector('#run')?.addEventListener('click',()=>runMeasurement(m));
+  document.querySelector('#m04-open')?.addEventListener('click',()=>{location.href='/metrics/m04?mode=DEVELOPMENT&view=execution';});
+}
 function renderMetric(m) {
+  if(ktlUseMeasurementRoute())return renderMeasurementMetric(m);
+  return renderLegacyMetric(m);
+}
+function renderLegacyMetric(m) {
   if (dev && m.metric_id === 'M01') return renderM01Csv(m);
   if (dev && m.metric_id === 'M03') return renderM03(m);
   if (dev && m.metric_id === 'M04') return renderM04(m);
@@ -126,7 +257,7 @@ function m01ComparisonUrl(comparisonId) {
   history.replaceState(null,'',`${location.pathname}?${query.toString()}`);
 }
 function m01EmptyResult(message='CSV를 업로드하면 결과가 자동으로 표시됩니다.') {
-  return `<div class="panel-heading"><h2>Development Result</h2></div><div class="result-grid"><div><label>최종 수집정확도</label><strong class="large-score">—</strong></div><div><label>C1 필수 이벤트 수집률</label><strong>—</strong></div><div><label>C2 필수 필드 누락률</label><strong>—</strong></div><div><label>C3 유형 커버리지</label><strong>—</strong></div></div><p class="empty">${esc(message)}</p>`;
+  return `<div class="panel-heading"><h2>현재 측정 결과</h2><button class="download" type="button" disabled title="평가 결과가 생성되면 다운로드할 수 있습니다.">Evidence CSV 다운로드</button></div><div class="result-grid"><div><label>최종 수집정확도</label><strong class="large-score">—</strong></div><div><label>C1 필수 이벤트 수집률</label><strong>—</strong></div><div><label>C2 필수 필드 누락률</label><strong>—</strong></div><div><label>C3 유형 커버리지</label><strong>—</strong></div></div><p class="empty">${esc(message)}</p>`;
 }
 function openM01Upload() {
   const input=document.querySelector('#csv-file');
@@ -165,19 +296,20 @@ function invalidateM01Comparison(message='CSV를 평가합니다.') {
 function renderM01Csv(m) {
   const requestedComparisonId=new URLSearchParams(location.search).get('comparison_id');
   document.title='DEVELOPMENT · M01 · Rainbow';
-  app.innerHTML=`${banner('수집 CSV · 정답 이벤트 비교')}<a class="back" href="${link('/')}">← 전체 평가</a>
-    <section class="page-heading"><div><p class="eyebrow">M01 / DEVELOPMENT</p><h1>${labels.M01}</h1><p class="subtitle">${esc(m.metric_name)}</p></div>${badge(m)}</section>
-    <section class="evaluation-panel" id="m01-input-panel"><div class="panel-heading"><h2>입력 및 현재 준비 상태</h2></div>
-      <div class="dataset-grid"><div><label>테스트 데이터셋</label><code id="m01-dataset-name">CSV 업로드 대기</code></div><div><label>개발 데이터 입력 수</label><strong id="m01-event-count">—</strong></div><div><label>M01 목표값</label><strong>${m.target==null?'미설정':esc(m.operator||'>=')+' '+score(m.target,'M01')}</strong></div></div>
-      <div class="run-row"><p id="m01-ready-status">CSV를 업로드하면 결과가 자동으로 표시됩니다.</p><button id="m01-open-upload" type="button" class="m01-upload-button">CSV 업로드</button></div>
+  app.innerHTML=`<div class="simple-evaluation"><a class="back" href="${link('/')}">← 전체 평가</a>
+    <section class="page-heading"><div><p class="eyebrow">M01</p><h1>${labels.M01}</h1><p class="subtitle">${esc(m.metric_name)}</p></div><span class="badge neutral">개발 평가</span></section>
+    <section class="evaluation-panel" id="m01-input-panel"><div class="panel-heading"><h2>입력 및 측정 조건</h2></div>
+      <div class="dataset-grid"><div><label>테스트 데이터셋</label><code id="m01-dataset-name">CSV 업로드 대기</code></div><div><label>입력 이벤트 수</label><strong id="m01-event-count">—</strong></div><div><label>M01 목표값</label><strong>${m.target==null?'미설정':esc(m.operator||'>=')+' '+score(m.target,'M01')}</strong></div></div>
+      <div class="csv-controls simple-input-select"><label>업로드한 CSV<select id="csv-dataset"><option value="">업로드한 CSV 없음</option></select></label></div>
+      <div class="run-row"><p id="m01-ready-status">CSV를 선택하면 비교 결과가 표시됩니다.</p><button id="m01-open-upload" type="button" class="m01-upload-button">CSV 선택·비교</button></div>
       <input id="csv-file" type="file" accept=".csv,text/csv" aria-label="수집 이벤트 CSV" hidden><p id="csv-status" role="status"></p>
     </section>
     <details class="m01-detail-tools" id="m01-input-cards"><summary>상세 보기</summary><div class="m01-detail-tools-content">
       <p id="comparison-selection" class="subtitle"></p>
-      <details class="m01-input-card" id="m01-diagnostics-card"><summary><h2>CSV 진단 및 수집 이벤트 로그</h2></summary><div class="m01-card-content"><details class="m01-advanced-controls" id="m01-csv-options"><summary>파일 · 세션 설정</summary><div class="csv-controls"><label>CSV 파일<select id="csv-dataset"><option value="">업로드한 CSV 없음</option></select></label><label>조회 세션<select id="csv-session"><option value="__all__">전체 세션</option></select></label></div><label class="csv-checkbox"><input id="csv-target-mapping" type="checkbox"> 개발용 필드 대응 사용: 비어 있는 target_key를 target_selector로 검사</label><p class="subtitle">개발용 대응은 진단표에만 적용하며 최종 점수는 원본 필드로 계산합니다. 입력값·API 본문은 표시하지 않습니다.</p></details><div id="csv-diagnostics"><p class="empty">CSV를 업로드하면 이벤트 목록과 C2·C3 진단을 표시합니다.</p></div></div></details>
+      <details class="m01-input-card" id="m01-diagnostics-card"><summary><h2>CSV 진단 및 수집 이벤트 로그</h2></summary><div class="m01-card-content"><details class="m01-advanced-controls" id="m01-csv-options"><summary>세션 · 진단 설정</summary><div class="csv-controls"><label>조회 세션<select id="csv-session"><option value="__all__">전체 세션</option></select></label></div><label class="csv-checkbox"><input id="csv-target-mapping" type="checkbox"> 개발용 필드 대응 사용: 비어 있는 target_key를 target_selector로 검사</label><p class="subtitle">개발용 대응은 진단표에만 적용하며 최종 점수는 원본 필드로 계산합니다. 입력값·API 본문은 표시하지 않습니다.</p></details><div id="csv-diagnostics"><p class="empty">CSV를 업로드하면 이벤트 목록과 C2·C3 진단을 표시합니다.</p></div></div></details>
       <details class="m01-input-card" id="m01-prod-card"><summary><h2>PROD 수집 로그 조회</h2></summary><div class="m01-card-content"><p id="prod-status" role="status">조회 설정 확인 중…</p><form id="prod-search"><div class="csv-controls"><label>시작 날짜<input id="prod-from" type="date"></label><label>종료 날짜<input id="prod-to" type="date"></label><label>session_id<input id="prod-session" type="text" autocomplete="off" placeholder="정확히 일치하는 세션"></label><label>event_id<input id="prod-event" type="text" autocomplete="off" placeholder="정확히 일치하는 이벤트"></label></div><div class="run-row"><p>읽기 전용 · 양쪽 날짜를 지정하면 최대 90일, 공백이면 해당 방향의 기간 제한 없이 조회합니다.</p><button id="prod-query" type="submit">조회 / 새로고침</button></div></form><div id="prod-logs"><p class="empty">조회 버튼을 누르면 PROD DB에 적재된 이벤트를 확인합니다.</p></div></div></details>
     </div></details><p id="comparison-status" role="status"></p>
-    <section class="result-panel" id="m01-result-panel"><div id="comparison-result">${m01EmptyResult()}</div></section>`;
+    <section class="result-panel" id="m01-result-panel"><div id="comparison-result">${m01EmptyResult()}</div></section></div>`;
   document.querySelector('#m01-open-upload').addEventListener('click',openM01Upload);
   document.querySelector('#prod-search').addEventListener('submit',event=>{event.preventDefault();loadM01Prod(1);});
   document.querySelector('#csv-file').addEventListener('change',()=>{
@@ -353,6 +485,8 @@ async function evaluateM01Csv() {
   const selected=selection();
   const isCurrent=()=>requestNumber===m01AutoRequestNumber && comparisonNumber===comparisonRequestNumber && selection()===selected;
   const snapshot={dataset_id:document.querySelector('#csv-dataset').value,session_id:document.querySelector('#csv-session').value};
+  const source=csvReport?.dataset?.dataset_id===snapshot.dataset_id?csvReport:null;
+  const expectedSessions=source?new Set(snapshot.session_id==='__all__'?source.summary.sessions.map(row=>row.session_id):[snapshot.session_id]):null;
   const status=document.querySelector('#comparison-status');
   if(!snapshot.dataset_id) return false;
   m01TruthReport=null;
@@ -361,60 +495,88 @@ async function evaluateM01Csv() {
   status.textContent='CSV를 자동으로 평가하고 있습니다…';
   const candidates=[];
   try {
-    for(const preset of M01_SCENARIO_PRESETS) {
-      if(!isCurrent()) return false;
-      const candidate={preset,truth:null,result:null,status:'ERROR',error:null};
+    const fixed=await csvJson('/api/development/m01/scenarios');
+    if(!isCurrent()) return false;
+    if(typeof fixed.version!=='string' || !fixed.version || !/^[a-f0-9]{64}$/.test(fixed.sha256||'')
+      || !Array.isArray(fixed.scenarios) || fixed.scenarios.length!==20) {
+      throw new Error('사전 고정한 20개 평가 기준의 버전·해시를 확인할 수 없습니다.');
+    }
+    const scenarios=new Map();
+    for(const scenario of fixed.scenarios) {
+      if(typeof scenario.scenario_id!=='string' || !scenario.scenario_id || scenarios.has(scenario.scenario_id)
+        || !scenario.scenario_name || !scenario.scenario_version || !Array.isArray(scenario.requirements) || !scenario.requirements.length) {
+        throw new Error('사전 고정한 평가 기준에 누락 또는 중복이 있습니다.');
+      }
+      scenarios.set(scenario.scenario_id,scenario);
+    }
+    const payload={dataset_id:snapshot.dataset_id,catalog_version:fixed.version,catalog_sha256:fixed.sha256};
+    if(snapshot.session_id!=='__all__') payload.session_id=snapshot.session_id;
+    const report=await csvJson('/api/development/m01/compare-scenarios',{
+      method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify(payload),
+    });
+    if(!isCurrent()) return false;
+    const sessionCount=report.evaluated_session_count;
+    if(report.dataset_id!==snapshot.dataset_id || report.run_mode!=='DEVELOPMENT' || report.official_pass!==null
+      || report.catalog?.version!==fixed.version || report.catalog?.sha256!==fixed.sha256
+      || report.catalog?.scenario_count!==20 || report.scenario_count!==20 || report.evaluated_scenario_count!==20
+      || !Number.isInteger(sessionCount) || sessionCount<1 || sessionCount>10
+      || report.candidate_count!==20*sessionCount || !Array.isArray(report.candidates)
+      || report.candidates.length!==report.candidate_count || (snapshot.session_id!=='__all__' && sessionCount!==1)
+      || (expectedSessions && sessionCount!==expectedSessions.size)) {
+      throw new Error('비교 결과의 CSV·평가 기준·전체 평가 범위가 요청과 다릅니다.');
+    }
+    const pairs=new Set(),sessions=new Set(),comparisonIds=new Set();
+    for(const entry of report.candidates) {
+      const scenario=scenarios.get(entry?.scenario_id),candidate={...entry};
+      candidates.push(candidate);
       try {
-        const payload={scenario_name:preset.scenario_name,scenario_version:preset.scenario_version,expected_events:preset.expected_events};
-        candidate.truth=await csvJson('/api/development/m01/ground-truths',{
-          method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify(payload),
-        });
-        if(!isCurrent()) return false;
-        const truth=candidate.truth;
-        if(!truth.truth?.truth_id || truth.truth.scenario_name!==preset.scenario_name
-          || truth.truth.scenario_version!==preset.scenario_version || !Array.isArray(truth.expected)) {
-          throw new Error('평가 기준을 불러오지 못했습니다.');
+        if(!scenario || entry.preset?.business_unit_id!==entry.scenario_id
+          || entry.preset?.scenario_name!==scenario.scenario_name || entry.preset?.scenario_version!==scenario.scenario_version
+          || typeof entry.session_id!=='string' || !entry.session_id.trim()
+          || (snapshot.session_id!=='__all__' && entry.session_id!==snapshot.session_id)
+          || (expectedSessions && !expectedSessions.has(entry.session_id))) {
+          throw new Error('비교 결과의 시나리오·세션이 사전 고정한 범위와 다릅니다.');
         }
-        const request={dataset_id:snapshot.dataset_id,truth_id:truth.truth.truth_id};
-        if(snapshot.session_id!=='__all__') request.session_id=snapshot.session_id;
-        candidate.result=await csvJson('/api/development/m01/compare',{
-          method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify(request),
-        });
-        if(!isCurrent()) return false;
-        const result=candidate.result,value=result.measurement?.collection_accuracy;
-        if(result.dataset_id!==snapshot.dataset_id || result.truth_id!==truth.truth.truth_id
-          || (result.session_id??null)!==(snapshot.session_id==='__all__'?null:snapshot.session_id)) {
-          throw new Error('비교 결과의 CSV·세션·정답이 요청과 다릅니다.');
+        const pair=JSON.stringify([entry.scenario_id,entry.session_id]);
+        if(pairs.has(pair)) throw new Error('동일 시나리오·세션의 평가가 중복되었습니다.');
+        pairs.add(pair);sessions.add(entry.session_id);
+        if(entry.status!=='COMPLETED') throw new Error(entry.error||'평가를 완료하지 못했습니다.');
+        const truth=entry.truth,result=entry.result,value=result?.measurement?.collection_accuracy;
+        if(!/^[a-f0-9]{32}$/.test(truth?.truth?.truth_id||'') || !Array.isArray(truth?.expected)
+          || truth.truth.scenario_name!==scenario.scenario_name || truth.truth.scenario_version!==scenario.scenario_version
+          || truth.expected.length!==scenario.requirements.length || !/^[a-f0-9]{32}$/.test(result?.comparison_id||'')
+          || result.dataset_id!==snapshot.dataset_id || result.truth_id!==truth.truth.truth_id
+          || result.session_id!==entry.session_id || result.run_mode!=='DEVELOPMENT' || result.official_pass!==null
+          || result.summary?.official_pass!==null || result.summary?.expected_count!==scenario.requirements.length
+          || !Array.isArray(result.rows) || result.rows.length!==scenario.requirements.length
+          || (source && result.input_sha256?.collector_csv!==source.dataset.sha256)) {
+          throw new Error('비교 결과의 CSV·세션·정답 또는 필수 이벤트 근거가 요청과 다릅니다.');
         }
+        if(comparisonIds.has(result.comparison_id)) throw new Error('서로 다른 시나리오·세션의 비교 ID가 중복되었습니다.');
+        comparisonIds.add(result.comparison_id);
         if(typeof value!=='number' || !Number.isFinite(value) || value<0 || value>100) {
           throw new Error('최종 점수를 확인할 수 없습니다.');
         }
-        candidate.status='COMPLETED';
-      } catch(error) {
-        if(!isCurrent()) return false;
-        candidate.error=error.message;
-      }
-      candidates.push(candidate);
+      } catch(error) {candidate.status='ERROR';candidate.error=error.message;}
     }
-    if(!isCurrent()) return false;
+    const failures=candidates.filter(candidate=>candidate.status!=='COMPLETED');
+    if(sessions.size!==sessionCount || pairs.size!==20*sessionCount || failures.length
+      || report.completed_count!==candidates.length || report.status!=='COMPLETED') {
+      const errors=failures.map(candidate=>`${candidate.scenario_id||'확인 불가'} / ${candidate.session_id||'세션 확인 불가'}: ${candidate.error}`);
+      throw new Error(`전체 20개 기준의 세션별 평가를 완료하지 못했습니다.${errors.length?' '+errors.join(' · '):' 누락된 평가 범위를 확인하세요.'}`);
+    }
     const winner=selectM01Representative(candidates);
+    if(!winner) throw new Error('최종 점수를 확인할 수 없습니다.');
     truthDetailBusy=false;
     comparisonBusy=false;
-    if(winner) {
-      m01TruthReport=winner.truth;
-      renderM01ComparisonResult(winner.result,{...snapshot,truth_id:winner.truth.truth.truth_id});
-      m01ComparisonUrl(winner.result.comparison_id);
-    } else {
-      document.querySelector('#comparison-result').innerHTML=m01EmptyResult('평가하지 못했습니다. 오류를 확인하세요.');
-    }
-    const failures=candidates.filter(candidate=>candidate.status==='ERROR');
-    m01RememberReplaySource(winner&&!failures.length?winner.result.comparison_id:null);
-    status.textContent=failures.length
-      ?`일부 평가를 완료하지 못했습니다. ${failures.map(candidate=>`${candidate.preset.business_unit_id}: ${candidate.error}`).join(' · ')}`
-      :'비교 완료 · 정답별 실제 이벤트 ID와 판정 사유를 확인하세요.';
+    m01TruthReport=winner.truth;
+    renderM01ComparisonResult(winner.result,{...snapshot,session_id:winner.result.session_id,truth_id:winner.truth.truth.truth_id});
+    m01ComparisonUrl(winner.result.comparison_id);
+    m01RememberReplaySource(winner.result.comparison_id);
+    status.textContent='비교 완료 · 정답별 실제 이벤트 ID와 판정 사유를 확인하세요.';
     updateM01CompareButton();
     document.querySelector('#m01-result-panel').scrollIntoView?.({block:'start'});
-    return Boolean(winner);
+    return true;
   } catch(error) {
     if(isCurrent()) {
       m01RememberReplaySource(null);
@@ -478,7 +640,7 @@ function renderM01ComparisonResult(result,selected) {
   const notice=measurement?`${scopeNotice} 개발 데이터에 시험 산식을 적용한 결과이며 공식 시험 판정은 아닙니다.`:'개발용 정답 이벤트 일치율입니다. 공식 수집정확도 점수와 판정은 별도 기준으로 산출합니다.';
   const counts=measurement?.counts;
   const countDetails=counts?`<p>필수 이벤트 ${esc(counts.collected_required_event_count)} / ${esc(counts.defined_required_event_count)} · 누락 필드 ${esc(counts.missing_required_field_count)} / (${esc(counts.total_collected_events)} × ${esc(counts.required_field_count)}) · 수집 유형 ${esc(counts.collected_event_type_count)} / ${esc(counts.defined_event_type_count)}</p>`:'';
-  document.querySelector('#comparison-result').innerHTML=`<div class="panel-heading"><h2>Development Result</h2><a class="download" href="${esc(evidence)}" download>${measurement?'통합 근거 CSV':'CSV 다운로드'} ↓</a></div>${grid}<div class="m01-measurement-summary"><p class="subtitle">일치 ${esc(summary.matched_count)} / ${esc(summary.expected_count)} · 누락 ${esc(summary.missing_count)} · 추가 ${esc(summary.extra_event_count)} · 중복 ${esc(summary.duplicate_event_rows)}</p>${threshold}</div><p class="run-meta">시험 시나리오: ${esc(scenarioName)} · 정답 버전: ${esc(scenarioVersion)}</p><p class="subtitle m01-result-note">${esc(notice)}</p><details><summary>계산·매칭 근거</summary>${formula}${countDetails}${measurement?'<p id="comparison-verification" role="status">근거 CSV를 독립 검산하는 중…</p>':''}<p class="run-meta">비교 ID: ${esc(result.comparison_id)} · 수집 CSV: ${esc(selected.dataset_id)} · 정답: ${esc(selected.truth_id)} · 세션: ${esc(selected.session_id==='__all__'?'전체 세션':selected.session_id||'(session_id 공백)')}</p>${table(rows)}</details>`;
+  document.querySelector('#comparison-result').innerHTML=`<div class="panel-heading"><h2>현재 측정 결과</h2><a class="download" href="${esc(evidence)}" download>Evidence CSV 다운로드</a></div>${grid}<div class="m01-measurement-summary"><p class="subtitle">일치 ${esc(summary.matched_count)} / ${esc(summary.expected_count)} · 누락 ${esc(summary.missing_count)} · 추가 ${esc(summary.extra_event_count)} · 중복 ${esc(summary.duplicate_event_rows)}</p>${threshold}</div><details><summary>계산·매칭 근거</summary><p class="run-meta">시험 시나리오: ${esc(scenarioName)} · 정답 버전: ${esc(scenarioVersion)}</p><p class="subtitle m01-result-note">${esc(notice)}</p>${formula}${countDetails}${measurement?'<p id="comparison-verification" role="status">근거 CSV를 독립 검산하는 중…</p>':''}<p class="run-meta">비교 ID: ${esc(result.comparison_id)} · 수집 CSV: ${esc(selected.dataset_id)} · 정답: ${esc(selected.truth_id)} · 세션: ${esc(selected.session_id==='__all__'?'전체 세션':selected.session_id||'(session_id 공백)')}</p>${table(rows)}</details>`;
   if(measurement) {
     document.querySelector('#comparison-result details')?.insertAdjacentHTML?.('beforeend',`<a class="download" href="/api/development/m01/comparisons/${encodeURIComponent(result.comparison_id)}/event-results.csv" download>이벤트별 비교 결과 CSV ↓</a>`);
     loadM01Verification(result.comparison_id);
@@ -512,7 +674,7 @@ async function restoreM01Comparison(comparisonId) {
     if(requestNumber!==comparisonRequestNumber) return;
     document.querySelector('#csv-dataset').value=result.dataset_id;
     if(document.querySelector('#csv-dataset').value!==result.dataset_id) throw new Error('저장 결과에 연결된 수집 CSV를 찾을 수 없습니다.');
-    const truth=await csvJson(`/api/development/m01/ground-truths/${encodeURIComponent(result.truth_id)}`);
+    const truth=result.presence_truth||await csvJson(`/api/development/m01/ground-truths/${encodeURIComponent(result.truth_id)}`);
     if(requestNumber!==comparisonRequestNumber) return;
     if(truth.truth?.truth_id!==result.truth_id) throw new Error('저장 결과에 사용한 정답을 불러오지 못했습니다.');
     m01TruthReport=truth;
@@ -595,6 +757,7 @@ function renderM03(m) {
   m03View={scenarios:[],attempts:[],result:null,sample:false,busy:false,savedRuns:[],executions:[],deletedCount:0,managementReady:false};
   document.title='DEVELOPMENT · M03 · Rainbow';
   app.innerHTML=`${banner('시나리오 생성 API 연동')}<a class="back" href="${link('/')}">← 전체 평가</a>
+    <a class="outlined m03-api-switch" href="/metrics/m03">고정 업무 측정 →</a>
     <section class="page-heading"><div><p class="eyebrow">M03 / DEVELOPMENT</p><h1>${labels.M03}</h1><p class="subtitle">Test Scenario Generation</p></div><span class="badge neutral">API 결과 조회</span></section>
     <section class="evaluation-panel"><div class="panel-heading"><h2>입력 및 현재 준비 상태</h2></div>
       <div class="dataset-grid"><div><label>입력 데이터셋</label><code id="m03-dataset">생성 결과 대기</code></div><div><label>평가 업무 수</label><strong id="m03-total">—</strong></div><div><label>M03 목표값</label><strong>≥ ${score(m.target,'M03')}</strong></div></div>
@@ -976,6 +1139,36 @@ function downloadM03() {
   const anchor=document.createElement('a');anchor.href=url;anchor.download='m03-scenarios.json';document.body.append(anchor);anchor.click();anchor.remove();
   setTimeout(()=>URL.revokeObjectURL(url),1000);
 }
+async function runMeasurement(m) {
+  if(running || !m.execution_available) return;
+  const epoch=pageEpoch, path=location.pathname, session=ktlServerSessionId(), startedAt=performance.now();
+  currentResult=null;
+  running=true;
+  renderMeasurementMetric(m);
+  const isCurrent=()=>pageEpoch===epoch && location.pathname===path;
+  try {
+    const response=await fetch(m.execution_url,{method:'POST'}); const result=await response.json();
+    ktlCheckServerSession(response,result,session);
+    if(!isCurrent()) return;
+    if(!response.ok || !result.run_id || result.status!=='COMPLETED' ||
+       result.metric_id!==m.metric_id || !Number.isFinite(result.score)) {
+      throw new Error('측정 결과를 확인할 수 없습니다.');
+    }
+    // Successful response is ready; hold only its display until the minimum since click.
+    // Navigation cancels the pending UI wait, and stale responses never become current.
+    await waitForResultDisplay(resultDisplayDelayMs(m.metric_id) - (performance.now() - startedAt));
+    if(!isCurrent()) return;
+    // The POST response, never catalog.latest, is the current run's source of truth.
+    currentResult=result;
+    running=false;
+    renderMeasurementMetric(m);
+  } catch(error) {
+    if(error.status==='SESSION_EXPIRED'||!isCurrent()) return;
+    running=false;
+    renderMeasurementMetric(m);
+    document.querySelector('#run-status').textContent='실행에 실패했습니다. 입력 및 모듈 연결을 확인해주세요.';
+  }
+}
 async function run(id) {
   const button=document.querySelector('#run'); button.disabled=true;
   document.querySelector('#run-status').textContent='RUNNING · 입력 검증 및 실행 근거 저장 중…';
@@ -989,11 +1182,13 @@ async function run(id) {
 async function load() {
   const requestNumber=++catalogRequestNumber;
   try {
-    const response=await fetch(`/api/evaluations?mode=${mode}`);
+    ktlEnsureDevelopmentQuery();
+    const response=await fetch(ktlUseMeasurementRoute()?'/api/measurement':`/api/evaluations?mode=${mode}`);
     const data=await response.json();
     if(requestNumber!==catalogRequestNumber) return;
     if (!response.ok) throw new Error(data.error||'평가 정보 조회 실패');
-    catalog=data;serverSessionReloading=false;
+    if(!Array.isArray(data.metrics))throw new Error('평가 정보 응답 형식을 확인하세요.');
+    catalog={...data,server_session_id:data.server_session_id||response.headers?.get?.('X-KTL-Server-Session')||null};serverSessionReloading=false;
     m01ValidateReplaySource();
     render();
   } catch(error) {if(requestNumber===catalogRequestNumber) {app.innerHTML=`<p class="notice">${esc(error.message)}</p><button id="retry">다시 시도</button>`;document.querySelector('#retry').addEventListener('click',load);}}

@@ -1,0 +1,509 @@
+{
+  "actual_score_computed": false,
+  "approved_for_official": false,
+  "conditional_end_ids": [
+    "BU03-S05",
+    "BU07-S06",
+    "BU17-S05",
+    "BU20-S05"
+  ],
+  "contract": "LOGICAL_BUSINESS_PROCEDURE_V1",
+  "no_generated_input": true,
+  "original_gt_sha256": "19922ea39a42c756e9f951cee85ce5b4c6dae0db2d0d31591ad2a2ef636d6578",
+  "processes": [
+    {
+      "business_name": "일정 등록",
+      "id": "BU03",
+      "procedures": [
+        {
+          "allowed_aliases": [],
+          "declared_action_type": null,
+          "end_definition": null,
+          "logical_context": {
+            "allowed_aliases": [],
+            "name": "일정관리"
+          },
+          "logical_role": "ENTER_CONTEXT",
+          "physical_screen": null,
+          "required_step_id": "BU03-S01",
+          "rule_id": "LGT-ENTER",
+          "source_label": "일정관리",
+          "source_only": true,
+          "source_order": 1,
+          "uncertainty": null
+        },
+        {
+          "allowed_aliases": [],
+          "declared_action_type": null,
+          "end_definition": null,
+          "logical_context": {
+            "allowed_aliases": [],
+            "name": "일정관리"
+          },
+          "logical_role": "SELECT_OBJECT",
+          "physical_screen": null,
+          "required_step_id": "BU03-S02",
+          "rule_id": "LGT-SELECT",
+          "source_label": "날짜 선택",
+          "source_only": true,
+          "source_order": 2,
+          "uncertainty": null
+        },
+        {
+          "allowed_aliases": [],
+          "declared_action_type": null,
+          "end_definition": null,
+          "logical_context": {
+            "allowed_aliases": [],
+            "name": "일정관리"
+          },
+          "logical_role": "INPUT_INFORMATION",
+          "physical_screen": null,
+          "required_step_id": "BU03-S03",
+          "rule_id": "LGT-INPUT-WHOLE-OBJECT",
+          "source_label": "일정 입력",
+          "source_only": true,
+          "source_order": 3,
+          "uncertainty": null
+        },
+        {
+          "allowed_aliases": [],
+          "declared_action_type": null,
+          "end_definition": null,
+          "logical_context": {
+            "allowed_aliases": [],
+            "name": "일정관리"
+          },
+          "logical_role": "COMMIT_REGISTRATION",
+          "physical_screen": null,
+          "required_step_id": "BU03-S04",
+          "rule_id": "LGT-REGISTER-COMMIT",
+          "source_label": "등록",
+          "source_only": true,
+          "source_order": 4,
+          "uncertainty": null
+        },
+        {
+          "allowed_aliases": [],
+          "declared_action_type": null,
+          "end_definition": null,
+          "logical_context": {
+            "allowed_aliases": [],
+            "name": "일정관리"
+          },
+          "logical_role": "END_WORKFLOW",
+          "physical_screen": null,
+          "required_step_id": "BU03-S05",
+          "rule_id": "LGT-END-CONDITIONAL",
+          "source_label": "종료",
+          "source_only": true,
+          "source_order": 5,
+          "uncertainty": "END_REALIZATION_NOT_EXHAUSTIVELY_DEFINED"
+        }
+      ]
+    },
+    {
+      "business_name": "일일보고 작성",
+      "id": "BU07",
+      "procedures": [
+        {
+          "allowed_aliases": [],
+          "declared_action_type": null,
+          "end_definition": null,
+          "logical_context": {
+            "allowed_aliases": [],
+            "name": "일일보고"
+          },
+          "logical_role": "ENTER_CONTEXT",
+          "physical_screen": null,
+          "required_step_id": "BU07-S01",
+          "rule_id": "LGT-ENTER",
+          "source_label": "일일보고",
+          "source_only": true,
+          "source_order": 1,
+          "uncertainty": null
+        },
+        {
+          "allowed_aliases": [],
+          "declared_action_type": null,
+          "end_definition": null,
+          "logical_context": {
+            "allowed_aliases": [],
+            "name": "일일보고"
+          },
+          "logical_role": "INITIATE_REGISTRATION",
+          "physical_screen": null,
+          "required_step_id": "BU07-S02",
+          "rule_id": "LGT-REGISTER-INITIATE",
+          "source_label": "등록",
+          "source_only": true,
+          "source_order": 2,
+          "uncertainty": null
+        },
+        {
+          "allowed_aliases": [],
+          "declared_action_type": null,
+          "end_definition": null,
+          "logical_context": {
+            "allowed_aliases": [],
+            "name": "일일보고"
+          },
+          "logical_role": "INPUT_INFORMATION",
+          "physical_screen": null,
+          "required_step_id": "BU07-S03",
+          "rule_id": "LGT-INPUT-WHOLE-OBJECT",
+          "source_label": "내용 입력",
+          "source_only": true,
+          "source_order": 3,
+          "uncertainty": null
+        },
+        {
+          "allowed_aliases": [],
+          "declared_action_type": null,
+          "end_definition": null,
+          "logical_context": {
+            "allowed_aliases": [],
+            "name": "일일보고"
+          },
+          "logical_role": "SAVE_INFORMATION",
+          "physical_screen": null,
+          "required_step_id": "BU07-S04",
+          "rule_id": "LGT-SAVE",
+          "source_label": "저장",
+          "source_only": true,
+          "source_order": 4,
+          "uncertainty": null
+        },
+        {
+          "allowed_aliases": [],
+          "declared_action_type": null,
+          "end_definition": null,
+          "logical_context": {
+            "allowed_aliases": [],
+            "name": "일일보고"
+          },
+          "logical_role": "INSPECT_COMPLETION",
+          "physical_screen": null,
+          "required_step_id": "BU07-S05",
+          "rule_id": "LGT-CHECK",
+          "source_label": "완료 확인",
+          "source_only": true,
+          "source_order": 5,
+          "uncertainty": null
+        },
+        {
+          "allowed_aliases": [],
+          "declared_action_type": null,
+          "end_definition": null,
+          "logical_context": {
+            "allowed_aliases": [],
+            "name": "일일보고"
+          },
+          "logical_role": "END_WORKFLOW",
+          "physical_screen": null,
+          "required_step_id": "BU07-S06",
+          "rule_id": "LGT-END-CONDITIONAL",
+          "source_label": "종료",
+          "source_only": true,
+          "source_order": 6,
+          "uncertainty": "END_REALIZATION_NOT_EXHAUSTIVELY_DEFINED"
+        }
+      ]
+    },
+    {
+      "business_name": "주간보고 작성",
+      "id": "BU09",
+      "procedures": [
+        {
+          "allowed_aliases": [],
+          "declared_action_type": null,
+          "end_definition": null,
+          "logical_context": {
+            "allowed_aliases": [],
+            "name": "주간보고"
+          },
+          "logical_role": "ENTER_CONTEXT",
+          "physical_screen": null,
+          "required_step_id": "BU09-S01",
+          "rule_id": "LGT-ENTER",
+          "source_label": "주간보고",
+          "source_only": true,
+          "source_order": 1,
+          "uncertainty": null
+        },
+        {
+          "allowed_aliases": [],
+          "declared_action_type": null,
+          "end_definition": null,
+          "logical_context": {
+            "allowed_aliases": [],
+            "name": "주간보고"
+          },
+          "logical_role": "INITIATE_REGISTRATION",
+          "physical_screen": null,
+          "required_step_id": "BU09-S02",
+          "rule_id": "LGT-REGISTER-INITIATE",
+          "source_label": "등록",
+          "source_only": true,
+          "source_order": 2,
+          "uncertainty": null
+        },
+        {
+          "allowed_aliases": [],
+          "declared_action_type": null,
+          "end_definition": null,
+          "logical_context": {
+            "allowed_aliases": [],
+            "name": "주간보고"
+          },
+          "logical_role": "SELECT_OBJECT",
+          "physical_screen": null,
+          "required_step_id": "BU09-S03",
+          "rule_id": "LGT-SELECT",
+          "source_label": "대상 주차 선택",
+          "source_only": true,
+          "source_order": 3,
+          "uncertainty": null
+        },
+        {
+          "allowed_aliases": [],
+          "declared_action_type": null,
+          "end_definition": null,
+          "logical_context": {
+            "allowed_aliases": [],
+            "name": "주간보고"
+          },
+          "logical_role": "INPUT_INFORMATION",
+          "physical_screen": null,
+          "required_step_id": "BU09-S04",
+          "rule_id": "LGT-INPUT-WHOLE-OBJECT",
+          "source_label": "내용 입력",
+          "source_only": true,
+          "source_order": 4,
+          "uncertainty": null
+        },
+        {
+          "allowed_aliases": [],
+          "declared_action_type": null,
+          "end_definition": null,
+          "logical_context": {
+            "allowed_aliases": [],
+            "name": "주간보고"
+          },
+          "logical_role": "SAVE_INFORMATION",
+          "physical_screen": null,
+          "required_step_id": "BU09-S05",
+          "rule_id": "LGT-SAVE",
+          "source_label": "저장",
+          "source_only": true,
+          "source_order": 5,
+          "uncertainty": null
+        },
+        {
+          "allowed_aliases": [],
+          "declared_action_type": null,
+          "end_definition": null,
+          "logical_context": {
+            "allowed_aliases": [],
+            "name": "주간보고"
+          },
+          "logical_role": "INSPECT_COMPLETION",
+          "physical_screen": null,
+          "required_step_id": "BU09-S06",
+          "rule_id": "LGT-CHECK",
+          "source_label": "완료 확인",
+          "source_only": true,
+          "source_order": 6,
+          "uncertainty": null
+        }
+      ]
+    },
+    {
+      "business_name": "거래처 정보 등록",
+      "id": "BU17",
+      "procedures": [
+        {
+          "allowed_aliases": [],
+          "declared_action_type": null,
+          "end_definition": null,
+          "logical_context": {
+            "allowed_aliases": [],
+            "name": "거래처 정보 관리"
+          },
+          "logical_role": "ENTER_CONTEXT",
+          "physical_screen": null,
+          "required_step_id": "BU17-S01",
+          "rule_id": "LGT-ENTER",
+          "source_label": "거래처 정보 관리",
+          "source_only": true,
+          "source_order": 1,
+          "uncertainty": null
+        },
+        {
+          "allowed_aliases": [],
+          "declared_action_type": null,
+          "end_definition": null,
+          "logical_context": {
+            "allowed_aliases": [],
+            "name": "거래처 정보 관리"
+          },
+          "logical_role": "INITIATE_REGISTRATION",
+          "physical_screen": null,
+          "required_step_id": "BU17-S02",
+          "rule_id": "LGT-REGISTER-INITIATE",
+          "source_label": "등록",
+          "source_only": true,
+          "source_order": 2,
+          "uncertainty": null
+        },
+        {
+          "allowed_aliases": [],
+          "declared_action_type": null,
+          "end_definition": null,
+          "logical_context": {
+            "allowed_aliases": [],
+            "name": "거래처 정보 관리"
+          },
+          "logical_role": "INPUT_INFORMATION",
+          "physical_screen": null,
+          "required_step_id": "BU17-S03",
+          "rule_id": "LGT-INPUT-WHOLE-OBJECT",
+          "source_label": "테스트 거래처 정보 입력",
+          "source_only": true,
+          "source_order": 3,
+          "uncertainty": null
+        },
+        {
+          "allowed_aliases": [],
+          "declared_action_type": null,
+          "end_definition": null,
+          "logical_context": {
+            "allowed_aliases": [],
+            "name": "거래처 정보 관리"
+          },
+          "logical_role": "SAVE_INFORMATION",
+          "physical_screen": null,
+          "required_step_id": "BU17-S04",
+          "rule_id": "LGT-SAVE",
+          "source_label": "저장",
+          "source_only": true,
+          "source_order": 4,
+          "uncertainty": null
+        },
+        {
+          "allowed_aliases": [],
+          "declared_action_type": null,
+          "end_definition": null,
+          "logical_context": {
+            "allowed_aliases": [],
+            "name": "거래처 정보 관리"
+          },
+          "logical_role": "END_WORKFLOW",
+          "physical_screen": null,
+          "required_step_id": "BU17-S05",
+          "rule_id": "LGT-END-CONDITIONAL",
+          "source_label": "종료",
+          "source_only": true,
+          "source_order": 5,
+          "uncertainty": "END_REALIZATION_NOT_EXHAUSTIVELY_DEFINED"
+        }
+      ]
+    },
+    {
+      "business_name": "자산 등록",
+      "id": "BU20",
+      "procedures": [
+        {
+          "allowed_aliases": [],
+          "declared_action_type": null,
+          "end_definition": null,
+          "logical_context": {
+            "allowed_aliases": [],
+            "name": "자산관리"
+          },
+          "logical_role": "ENTER_CONTEXT",
+          "physical_screen": null,
+          "required_step_id": "BU20-S01",
+          "rule_id": "LGT-ENTER",
+          "source_label": "자산관리",
+          "source_only": true,
+          "source_order": 1,
+          "uncertainty": null
+        },
+        {
+          "allowed_aliases": [],
+          "declared_action_type": null,
+          "end_definition": null,
+          "logical_context": {
+            "allowed_aliases": [],
+            "name": "자산관리"
+          },
+          "logical_role": "INITIATE_REGISTRATION",
+          "physical_screen": null,
+          "required_step_id": "BU20-S02",
+          "rule_id": "LGT-REGISTER-INITIATE",
+          "source_label": "등록",
+          "source_only": true,
+          "source_order": 2,
+          "uncertainty": null
+        },
+        {
+          "allowed_aliases": [],
+          "declared_action_type": null,
+          "end_definition": null,
+          "logical_context": {
+            "allowed_aliases": [],
+            "name": "자산관리"
+          },
+          "logical_role": "INPUT_INFORMATION",
+          "physical_screen": null,
+          "required_step_id": "BU20-S03",
+          "rule_id": "LGT-INPUT-WHOLE-OBJECT",
+          "source_label": "테스트 자산 정보 입력",
+          "source_only": true,
+          "source_order": 3,
+          "uncertainty": null
+        },
+        {
+          "allowed_aliases": [],
+          "declared_action_type": null,
+          "end_definition": null,
+          "logical_context": {
+            "allowed_aliases": [],
+            "name": "자산관리"
+          },
+          "logical_role": "SAVE_INFORMATION",
+          "physical_screen": null,
+          "required_step_id": "BU20-S04",
+          "rule_id": "LGT-SAVE",
+          "source_label": "저장",
+          "source_only": true,
+          "source_order": 4,
+          "uncertainty": null
+        },
+        {
+          "allowed_aliases": [],
+          "declared_action_type": null,
+          "end_definition": null,
+          "logical_context": {
+            "allowed_aliases": [],
+            "name": "자산관리"
+          },
+          "logical_role": "END_WORKFLOW",
+          "physical_screen": null,
+          "required_step_id": "BU20-S05",
+          "rule_id": "LGT-END-CONDITIONAL",
+          "source_label": "종료",
+          "source_only": true,
+          "source_order": 5,
+          "uncertainty": "END_REALIZATION_NOT_EXHAUSTIVELY_DEFINED"
+        }
+      ]
+    }
+  ],
+  "required_count": 27,
+  "run_mode": "DEVELOPMENT",
+  "source_intent_unresolved_ids": [],
+  "source_semantics": "LOGICAL_BUSINESS_PROCEDURES_NOT_PHYSICAL_UI_BINDINGS",
+  "source_text_sha256": "9d5f6e82315c3fd52067a19768670740668d292995ee945dbc978260dd49db2d"
+}

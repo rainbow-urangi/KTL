@@ -1,0 +1,64 @@
+{
+  "schema_version": "m05-full-context-v1",
+  "dataset_id": "raw01_raw02_raw03_target20_20261111",
+  "preparation_status": "BLOCKED_EVIDENCE_INCOMPLETE_NOT_EXECUTABLE",
+  "used_for_training": null,
+  "used_for_development": null,
+  "collection": {
+    "path": "data/held_out/m05/raw01_raw02_raw03_target20_20261111/collection.json",
+    "sha256": "edebb0093a936b9e3de1747ffc94c55ae0122466c59a1734f5e0ebb952392ad2"
+  },
+  "target_labels": {
+    "path": "data/held_out/m05/raw01_raw02_raw03_target20_20261111/target_labels.schema_candidate.csv",
+    "sha256": "3057c8c9e020f0a156b65df66a4284c8b51f219c174032a9e5c89c95746a9750"
+  },
+  "target_selection": {
+    "path": "data/held_out/m05/raw01_raw02_raw03_target20_20261111/target_selection.json",
+    "sha256": "220e050bff2d9be0852debd62992f759b4787e3413c11eb897ef3fa797eef7ec"
+  },
+  "label_lock": {
+    "path": "data/held_out/m05/raw01_raw02_raw03_target20_20261111/label_binding_candidate.json",
+    "sha256": "b8500a69ed468d64e682f22b6d380d4a6961f1d414dab7a999523b9ab07db77b"
+  },
+  "prediction_access_audit": {
+    "path": "data/held_out/m05/raw01_raw02_raw03_target20_20261111/prediction_access_audit.INCOMPLETE.json",
+    "sha256": "c87a27610ffc27e422e0509f25bfbe42380804d0a4cdb9c487991bc349f7f66a"
+  },
+  "provenance": {
+    "reviewer": null,
+    "reviewed_at_utc": null,
+    "complete_history_attested": false,
+    "training_inventories": [
+      {
+        "path": "data/held_out/m05/raw01_raw02_raw03_target20_20261111/history/training_inventory.json",
+        "sha256": "4649acbbacd3c1be1eb01ccb78d3fe3e3f9cf325336f59c59b68ec95c0ad1adb"
+      }
+    ],
+    "development_inventories": [
+      {
+        "path": "data/held_out/m05/raw01_raw02_raw03_target20_20261111/history/development_inventory.json",
+        "sha256": "1e9a5e64aec91d1c457c4d638fc17ba61f9d2b22c54a996ce2ddf27e2edae085"
+      }
+    ],
+    "audit_evidence": [
+      {
+        "path": "data/held_out/m05/raw01_raw02_raw03_target20_20261111/history/source_history_reconciliation.json",
+        "sha256": "c263769a2164209ad3e77212b5c657345076010199f68607a203aa74452c299d"
+      }
+    ]
+  },
+  "original_locked_targets": {
+    "path": "data/held_out/m05/raw01_raw02_raw03_target20_20261111/source_label_lock/target_labels20.csv",
+    "sha256": "88f48576253211e47f8a39a857734e031d30a9bdbcf4da619e58fdd11cf3ceea"
+  },
+  "user_attestation": {
+    "path": "data/held_out/m05/raw01_raw02_raw03_target20_20261111/source_label_lock/user_attestation.json",
+    "sha256": "51ac6de99be373248d62a56df1e12379b5cee602181e491335d391f770ed035c"
+  },
+  "source_lock": {
+    "path": "data/held_out/m05/raw01_raw02_raw03_target20_20261111/source_label_lock/target_label_lock.json",
+    "sha256": "ad553f26834c14995ae31b38b4a884f4875585e0a81b0dd168507e652810b156"
+  },
+  "evidence_boundary": "RAW_CONTEXT_PLUS_DIRECT_USER_RECOLLECTION for the two raw03 REMOVE labels, not raw-only evidence. Source labels unchanged.",
+  "official_result": false
+}

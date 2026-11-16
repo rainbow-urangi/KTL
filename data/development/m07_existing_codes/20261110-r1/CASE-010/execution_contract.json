@@ -1,0 +1,232 @@
+{
+  "scenario_id": "CANON-SCN-29dc1c16e5cc2b8822c071d3",
+  "steps": [
+    {
+      "action": "navigate",
+      "checks": [
+        {
+          "expected": "/mypage/cards",
+          "kind": "url_path"
+        },
+        {
+          "expected": true,
+          "kind": "visible",
+          "target": {
+            "by": "css selector",
+            "value": ".business-card-page .business-card-table"
+          }
+        },
+        {
+          "expected": true,
+          "kind": "visible",
+          "target": {
+            "by": "css selector",
+            "value": ".business-card-table__title button"
+          }
+        }
+      ],
+      "order": 1,
+      "target": {
+        "url": "https://rainbowlab.ai.kr/mypage/cards"
+      }
+    },
+    {
+      "action": "click",
+      "checks": [
+        {
+          "expected": true,
+          "kind": "visible",
+          "target": {
+            "by": "css selector",
+            "value": ".business-card-form-modal"
+          }
+        }
+      ],
+      "order": 2,
+      "target": {
+        "by": "css selector",
+        "value": "div.mypage-layout > section.mypage-content > div.work-report-page.business-card-page > div.work-report-page__bottom:nth-of-type(2) > div.work-report-page__footer:nth-of-type(2) > button.work-report-page__register"
+      }
+    },
+    {
+      "action": "verify",
+      "checks": [
+        {
+          "expected": true,
+          "kind": "visible",
+          "target": {
+            "by": "css selector",
+            "value": ".business-card-form-modal"
+          }
+        }
+      ],
+      "order": 3,
+      "target": {
+        "by": "css selector",
+        "value": ".business-card-form-modal"
+      }
+    },
+    {
+      "action": "input",
+      "checks": [
+        {
+          "expected": "KTL-7c91e6ab-P2-GPT-20261110-R1",
+          "kind": "value",
+          "target": {
+            "by": "css selector",
+            "value": "div.work-report-form-modal__panel.business-card-form-modal > div.business-card-form-modal__body:nth-of-type(3) > section.business-card-form-modal__section:nth-of-type(1) > div.business-card-form-modal__grid:nth-of-type(2) > label:nth-of-type(2) > input"
+          }
+        }
+      ],
+      "order": 4,
+      "target": {
+        "by": "css selector",
+        "value": "div.work-report-form-modal__panel.business-card-form-modal > div.business-card-form-modal__body:nth-of-type(3) > section.business-card-form-modal__section:nth-of-type(1) > div.business-card-form-modal__grid:nth-of-type(2) > label:nth-of-type(2) > input"
+      }
+    },
+    {
+      "action": "input",
+      "checks": [
+        {
+          "expected": "KTL-CU10-R1-7c91e6ab-P2-GPT-20261110-R1",
+          "kind": "value",
+          "target": {
+            "by": "css selector",
+            "value": "div.work-report-form-modal__panel.business-card-form-modal > div.business-card-form-modal__body:nth-of-type(3) > section.business-card-form-modal__section:nth-of-type(1) > div.business-card-form-modal__grid:nth-of-type(2) > label:nth-of-type(3) > input"
+          }
+        }
+      ],
+      "order": 5,
+      "target": {
+        "by": "css selector",
+        "value": "div.work-report-form-modal__panel.business-card-form-modal > div.business-card-form-modal__body:nth-of-type(3) > section.business-card-form-modal__section:nth-of-type(1) > div.business-card-form-modal__grid:nth-of-type(2) > label:nth-of-type(3) > input"
+      }
+    },
+    {
+      "action": "input",
+      "checks": [
+        {
+          "expected": "010-0000-0042",
+          "kind": "value",
+          "target": {
+            "by": "css selector",
+            "value": "div.work-report-form-modal__panel.business-card-form-modal > div.business-card-form-modal__body:nth-of-type(3) > section.business-card-form-modal__section:nth-of-type(2) > div.business-card-form-modal__grid:nth-of-type(2) > label:nth-of-type(1) > input"
+          }
+        }
+      ],
+      "order": 6,
+      "target": {
+        "by": "css selector",
+        "value": "div.work-report-form-modal__panel.business-card-form-modal > div.business-card-form-modal__body:nth-of-type(3) > section.business-card-form-modal__section:nth-of-type(2) > div.business-card-form-modal__grid:nth-of-type(2) > label:nth-of-type(1) > input"
+      }
+    },
+    {
+      "action": "click",
+      "checks": [
+        {
+          "expected": false,
+          "kind": "visible",
+          "target": {
+            "by": "css selector",
+            "value": ".business-card-form-modal"
+          }
+        },
+        {
+          "expected": true,
+          "kind": "visible",
+          "target": {
+            "by": "css selector",
+            "value": ".work-report-message-modal__panel"
+          }
+        },
+        {
+          "expected": "등록되었습니다.",
+          "kind": "text_contains",
+          "target": {
+            "by": "css selector",
+            "value": ".work-report-message-modal__panel"
+          }
+        }
+      ],
+      "order": 7,
+      "target": {
+        "by": "css selector",
+        "value": "div.mypage-layout > section.mypage-content > div.work-report-form-modal:nth-of-type(2) > div.work-report-form-modal__panel.business-card-form-modal > div.work-report-form-modal__footer:nth-of-type(4) > button.work-report-form-modal__submit"
+      }
+    },
+    {
+      "action": "verify",
+      "checks": [
+        {
+          "expected": false,
+          "kind": "visible",
+          "target": {
+            "by": "css selector",
+            "value": ".business-card-form-modal"
+          }
+        }
+      ],
+      "order": 8,
+      "target": {
+        "by": "css selector",
+        "value": ".business-card-form-modal"
+      }
+    },
+    {
+      "action": "verify",
+      "checks": [
+        {
+          "expected": true,
+          "kind": "visible",
+          "target": {
+            "by": "css selector",
+            "value": ".work-report-message-modal__panel"
+          }
+        }
+      ],
+      "order": 9,
+      "target": {
+        "by": "css selector",
+        "value": ".work-report-message-modal__panel"
+      }
+    },
+    {
+      "action": "navigate",
+      "checks": [
+        {
+          "expected": "/mypage/cards",
+          "kind": "url_path"
+        },
+        {
+          "expected": true,
+          "kind": "visible",
+          "target": {
+            "by": "css selector",
+            "value": ".business-card-page .business-card-table"
+          }
+        },
+        {
+          "expected": true,
+          "kind": "visible",
+          "target": {
+            "by": "css selector",
+            "value": ".business-card-table__title button"
+          }
+        },
+        {
+          "expected": "KTL-7c91e6ab-P2-GPT-20261110-R1",
+          "kind": "text_contains",
+          "target": {
+            "by": "css selector",
+            "value": ".business-card-page .business-card-table"
+          }
+        }
+      ],
+      "order": 10,
+      "target": {
+        "url": "https://rainbowlab.ai.kr/mypage/cards"
+      }
+    }
+  ],
+  "version": 1
+}

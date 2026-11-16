@@ -23,3 +23,7 @@ data/evaluation/m07-development-*/
 # Local analysis and trial archives contain user collection data.
 data/development/uploaded_analysis/
 data/evaluation/m03-cu10-trial-*/
+
+# Recreated local execution plans and syntax-check results.
+data/development/m04_testsets/
+data/development/m07_existing_checks/

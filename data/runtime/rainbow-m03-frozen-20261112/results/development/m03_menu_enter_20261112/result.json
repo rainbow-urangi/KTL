@@ -1,0 +1,121 @@
+{
+  "status": "DEVELOPMENT_PASS",
+  "candidate_id": "M03_FINAL_10_CANDIDATE",
+  "score": 90.0,
+  "count": 10,
+  "target": 80,
+  "threshold_met": true,
+  "official_pass": null,
+  "details": {
+    "formula": "successful_scenario_count / total_business_units * 100",
+    "raw_counts": {
+      "total_business_units": 10,
+      "successful_scenario_count": 9,
+      "failed_scenario_count": 1
+    },
+    "successful_scenario_count": 9,
+    "total_scenario_count": 10,
+    "denominator": 10,
+    "schema": "evaluation_contracts/m03-scenario.schema.json",
+    "denominator_policy": "NON_OFFICIAL_SAMPLE_SIZE",
+    "external_details": {},
+    "external_evidence": {}
+  },
+  "evidence": [
+    {
+      "business_unit_id": "BU01",
+      "scenario_id": "REAL-SCN-63d098c2b7f618dd2fbb",
+      "schema_valid": true,
+      "step_order_valid": true,
+      "action_present": true,
+      "target_present": true,
+      "success": true
+    },
+    {
+      "business_unit_id": "BU03",
+      "scenario_id": "REAL-SCN-32336cc011a16dc0ad55",
+      "schema_valid": true,
+      "step_order_valid": false,
+      "action_present": true,
+      "target_present": true,
+      "success": false
+    },
+    {
+      "business_unit_id": "BU05",
+      "scenario_id": "REAL-SCN-8589622401daec6d1f6b",
+      "schema_valid": true,
+      "step_order_valid": true,
+      "action_present": true,
+      "target_present": true,
+      "success": true
+    },
+    {
+      "business_unit_id": "BU07",
+      "scenario_id": "REAL-SCN-003422561dfeca485a13",
+      "schema_valid": true,
+      "step_order_valid": true,
+      "action_present": true,
+      "target_present": true,
+      "success": true
+    },
+    {
+      "business_unit_id": "BU09",
+      "scenario_id": "REAL-SCN-4a6bd38e040074e9f203",
+      "schema_valid": true,
+      "step_order_valid": true,
+      "action_present": true,
+      "target_present": true,
+      "success": true
+    },
+    {
+      "business_unit_id": "BU12",
+      "scenario_id": "REAL-SCN-c4376abd2564435bf39c",
+      "schema_valid": true,
+      "step_order_valid": true,
+      "action_present": true,
+      "target_present": true,
+      "success": true
+    },
+    {
+      "business_unit_id": "BU13",
+      "scenario_id": "REAL-SCN-f7bd4515a23487463468",
+      "schema_valid": true,
+      "step_order_valid": true,
+      "action_present": true,
+      "target_present": true,
+      "success": true
+    },
+    {
+      "business_unit_id": "BU14",
+      "scenario_id": "REAL-SCN-479b172934bd8c24605b",
+      "schema_valid": true,
+      "step_order_valid": true,
+      "action_present": true,
+      "target_present": true,
+      "success": true
+    },
+    {
+      "business_unit_id": "BU17",
+      "scenario_id": "REAL-SCN-89614e4095b2d244ab94",
+      "schema_valid": true,
+      "step_order_valid": true,
+      "action_present": true,
+      "target_present": true,
+      "success": true
+    },
+    {
+      "business_unit_id": "BU20",
+      "scenario_id": "REAL-SCN-ae8129f3a7abc211876a",
+      "schema_valid": true,
+      "step_order_valid": true,
+      "action_present": true,
+      "target_present": true,
+      "success": true
+    }
+  ],
+  "limitations": [
+    "Frozen candidate cohort, NOT historical 6/10 cohort.",
+    "BU01/BU12 execution end ambiguous; BU03 full frozen workflow mixes BU02/03. Not official-ready.",
+    "Generation used live HTTP API. Evaluation used unchanged central evaluate_scenarios; UI not changed or clicked. No registered dataset/config changes or integration-store submission."
+  ]
+}

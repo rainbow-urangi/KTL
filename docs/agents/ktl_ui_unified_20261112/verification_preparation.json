@@ -1,0 +1,21 @@
+{
+  "changed_existing_protected_files": [
+    "backend/server.py"
+  ],
+  "checked_existing_files": 1316,
+  "m05_stored_run": "DEV-M05-20261112T055408-bbae69929a04",
+  "m05_csv_recalculation": {
+    "TP": 7,
+    "FP": 0,
+    "FN": 3,
+    "TN": 10,
+    "precision": 1.0,
+    "recall": 0.7,
+    "f1": 0.8235294117647058,
+    "passed": true
+  },
+  "frozen_m05": "PASS",
+  "M02_M03": "stored metadata only; no measurement",
+  "browser_clicks": "NOT PERFORMED per user",
+  "new_prediction": "NOT PERFORMED"
+}

@@ -1,0 +1,29 @@
+{
+  "source": "Direct user reply in the parent conversation, relayed verbatim through transcript_evidence.",
+  "message_id": null,
+  "message_timestamp": null,
+  "recorded_at_utc": "2026-11-11T13:47:09.237438+00:00",
+  "assistant_question_verbatim": "제목을 빠르게 세 번 클릭한 구간과 내용의 마지막 두 번 클릭한 구간에서, 칸이 비어 있는 상태로 글자 선택이나 커서 이동 없이 다시 누르기만 하셨나요? 내용은 그전에 붙여넣기 기록도 있는데, 첫 붙여넣기가 반영되지 않았는지 또는 중간에 지우셨는지도 기억나시면 알려주세요.",
+  "user_answer_verbatim": "목을 빠르게 세 번 클릭한 구간과 내용의 마지막 두 번 클릭한 구간에서, 칸이 비어 있는 상태로 글자 선택이나 커서 이동 없이 다시 누르기만 하셨나요? 내용은 그전에 붙여넣기 기록도 있는데, 첫 붙여넣기가 반영되지 않았는지 또는 중간에 지우셨는지도 기억나시면 알려주세요. --> 네 이런 행동을 한 것이 기억납니다.",
+  "evidence_type": "RETROSPECTIVE_USER_RECOLLECTION_NOT_RAW_TELEMETRY",
+  "scope_used": "The user confirmed recollection of the described empty-field reclicks without text selection or cursor movement in the fast title triple-click group and final description two-click group.",
+  "not_established": [
+    "Whether paste30 failed to insert or was subsequently deleted",
+    "Exact deletion or cancellation time",
+    "Raw click value or selection fields; these remain null/missing",
+    "Complete training/development nonuse"
+  ],
+  "event_mapping": {
+    "title_fast_triple_click": [
+      25,
+      26,
+      27
+    ],
+    "description_last_two_clicks": [
+      36,
+      37
+    ]
+  },
+  "mapping_basis": "Exact matching chronological groups in source raw03. The user did not supply event IDs; the reviewer mapped the described groups to their raw source positions.",
+  "boundary": "This supports the label together with raw context. It is not a claim that raw telemetry alone measured blank values at each click."
+}

@@ -1,0 +1,155 @@
+{
+  "request": {
+    "business_unit_id": "BU20",
+    "workflow_id": "WF-0022",
+    "generator_mode": "REAL",
+    "run_mode": "DEVELOPMENT"
+  },
+  "http_status": 200,
+  "response": {
+    "business_unit_id": "BU20",
+    "workflow_id": "WF-0022",
+    "scenario_id": "REAL-SCN-ae8129f3a7abc211876a",
+    "status": "SUCCESS",
+    "steps": [
+      {
+        "order": 1,
+        "action": "REGISTER",
+        "target": "등록",
+        "source_step_id": "BA-bb60320e-884c-467a-8534-4fa7d4d04960",
+        "source_event_ids": [
+          "bb60320e-884c-467a-8534-4fa7d4d04960",
+          "a54eb101-7311-48a1-93be-07cf5a9c1db3"
+        ],
+        "source_node_ids": [
+          "PM-002-N001",
+          "PM-002-N002"
+        ],
+        "page_context": "/mypage/assets",
+        "fields": [],
+        "http_evidence": [],
+        "completion_evidence": [],
+        "serializer_rule_id": "BA-VALIDATED-FORM-OPENER"
+      },
+      {
+        "order": 2,
+        "action": "INPUT",
+        "target": "자산 정보",
+        "source_step_id": "BA-16f7fb55-a8d7-40e2-924f-d50ad1f986e9",
+        "source_event_ids": [
+          "a54eb101-7311-48a1-93be-07cf5a9c1db3",
+          "16f7fb55-a8d7-40e2-924f-d50ad1f986e9",
+          "6a8b404a-d86d-4bc3-bec0-2a75e6a64d56",
+          "45d1aecc-3740-4d13-8a14-f0e29c98802d",
+          "19567137-32b1-4afe-a9ab-6cbb33f9f6dd",
+          "5376617d-e8cf-456e-afa5-436d324f72c5"
+        ],
+        "source_node_ids": [
+          "PM-002-N002",
+          "PM-002-N004"
+        ],
+        "page_context": "/mypage/assets",
+        "fields": [
+          {
+            "label": "구분",
+            "id": "",
+            "name": null,
+            "value_type": null,
+            "selector": "div.work-report-form-modal__panel.business-card-form-modal > div.business-card-form-modal__body:nth-of-type(3) > section.business-card-form-modal__section:nth-of-type(1) > div.business-card-form-modal__grid:nth-of-type(2) > label:nth-of-type(1) > select",
+            "source_event_id": "16f7fb55-a8d7-40e2-924f-d50ad1f986e9",
+            "source_node_ids": [
+              "PM-002-N004"
+            ]
+          },
+          {
+            "label": "자산명",
+            "id": "",
+            "name": null,
+            "value_type": "text",
+            "selector": "div.work-report-form-modal__panel.business-card-form-modal > div.business-card-form-modal__body:nth-of-type(3) > section.business-card-form-modal__section:nth-of-type(1) > div.business-card-form-modal__grid:nth-of-type(2) > label:nth-of-type(2) > input",
+            "source_event_id": "6a8b404a-d86d-4bc3-bec0-2a75e6a64d56",
+            "source_node_ids": [
+              "PM-002-N004"
+            ]
+          },
+          {
+            "label": "자산 요약",
+            "id": "",
+            "name": null,
+            "value_type": "text",
+            "selector": "div.work-report-form-modal__panel.business-card-form-modal > div.business-card-form-modal__body:nth-of-type(3) > section.business-card-form-modal__section:nth-of-type(1) > div.business-card-form-modal__grid:nth-of-type(2) > label.business-card-form-modal__full:nth-of-type(3) > input",
+            "source_event_id": "45d1aecc-3740-4d13-8a14-f0e29c98802d",
+            "source_node_ids": [
+              "PM-002-N004"
+            ]
+          },
+          {
+            "label": "자산 요약",
+            "id": "",
+            "name": null,
+            "value_type": "text",
+            "selector": "div.work-report-form-modal__panel.business-card-form-modal > div.business-card-form-modal__body:nth-of-type(3) > section.business-card-form-modal__section:nth-of-type(1) > div.business-card-form-modal__grid:nth-of-type(2) > label.business-card-form-modal__full:nth-of-type(3) > input",
+            "source_event_id": "19567137-32b1-4afe-a9ab-6cbb33f9f6dd",
+            "source_node_ids": [
+              "PM-002-N004"
+            ]
+          },
+          {
+            "label": "상세 내용",
+            "id": "",
+            "name": null,
+            "value_type": null,
+            "selector": "div.work-report-form-modal__panel.business-card-form-modal > div.business-card-form-modal__body:nth-of-type(3) > section.business-card-form-modal__section:nth-of-type(2) > div.business-card-form-modal__grid:nth-of-type(2) > label.business-card-form-modal__full > textarea",
+            "source_event_id": "5376617d-e8cf-456e-afa5-436d324f72c5",
+            "source_node_ids": [
+              "PM-002-N004"
+            ]
+          }
+        ],
+        "http_evidence": [],
+        "completion_evidence": [],
+        "serializer_rule_id": "BA-INPUT-FORM"
+      },
+      {
+        "order": 3,
+        "action": "SAVE",
+        "target": "저장",
+        "source_step_id": "BA-c23b3cc7-3ca9-41fd-b50c-2f4164b1c321",
+        "source_event_ids": [
+          "a54eb101-7311-48a1-93be-07cf5a9c1db3",
+          "c23b3cc7-3ca9-41fd-b50c-2f4164b1c321",
+          "fe01d4a6-2b0e-4ee5-9bf3-cb52a6068ace",
+          "72b42bf0-474c-4126-b812-28e153a6e2d9"
+        ],
+        "source_node_ids": [
+          "PM-002-N002",
+          "PM-002-N005"
+        ],
+        "page_context": "/mypage/assets",
+        "fields": [],
+        "http_evidence": [],
+        "completion_evidence": [
+          {
+            "source_event_id": "fe01d4a6-2b0e-4ee5-9bf3-cb52a6068ace",
+            "raw_order": 254,
+            "kind": "SUCCESS_POPUP",
+            "message": "자산 정보가 등록되었습니다. 목록에서 반영된 내용을 확인할 수 있습니다.",
+            "causal_rule": "EXPLICIT_CAUSAL_ID"
+          }
+        ],
+        "serializer_rule_id": "BA-LINKED-SUCCESS-ACK"
+      }
+    ],
+    "issues": [],
+    "generator_version": "m03-observed-business-steps-v1.1-menu-enter",
+    "source_process_id": "PM-002",
+    "source_snapshot_sha256": "86b1e77c8ca4ec365806d7d145d99ffa802bc097347b3db16ed9b3f600503f39",
+    "readiness_only": true,
+    "run_mode": "DEVELOPMENT",
+    "generator_mode": "REAL",
+    "synthetic": false,
+    "official_pass": null
+  },
+  "started_at": "2026-11-12T08:25:59.373287+00:00",
+  "completed_at": "2026-11-12T08:25:59.387541+00:00"
+}

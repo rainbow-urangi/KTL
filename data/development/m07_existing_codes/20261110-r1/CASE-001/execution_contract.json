@@ -1,0 +1,92 @@
+{
+  "scenario_id": "CANON-SCN-cf8da6b07b13a3147dc0d4e8",
+  "steps": [
+    {
+      "action": "navigate",
+      "checks": [
+        {
+          "expected": "/mypage/schedule",
+          "kind": "url_path"
+        },
+        {
+          "expected": true,
+          "kind": "visible",
+          "target": {
+            "by": "css selector",
+            "value": ".schedule-page .monthly-calendar"
+          }
+        },
+        {
+          "expected": true,
+          "kind": "visible",
+          "target": {
+            "by": "css selector",
+            "value": ".schedule-event__title"
+          }
+        }
+      ],
+      "order": 1,
+      "target": {
+        "url": "https://rainbowlab.ai.kr/mypage/schedule"
+      }
+    },
+    {
+      "action": "click",
+      "checks": [
+        {
+          "expected": true,
+          "kind": "visible",
+          "target": {
+            "by": "css selector",
+            "value": ".schedule-modal"
+          }
+        },
+        {
+          "kind": "text_equals_target",
+          "other_property": "text",
+          "other_target": {
+            "by": "css selector",
+            "value": "div.schedule-page > section.monthly-calendar > div.monthly-calendar__grid:nth-of-type(2) > div.monthly-calendar__cell:nth-of-type(5) > ul.monthly-calendar__events > li.schedule-event .schedule-event__title"
+          },
+          "property": "value",
+          "target": {
+            "by": "css selector",
+            "value": "#schedule-title"
+          }
+        },
+        {
+          "kind": "nonempty",
+          "property": "value",
+          "target": {
+            "by": "css selector",
+            "value": "#schedule-description"
+          }
+        }
+      ],
+      "order": 2,
+      "target": {
+        "by": "css selector",
+        "value": "div.schedule-page > section.monthly-calendar > div.monthly-calendar__grid:nth-of-type(2) > div.monthly-calendar__cell:nth-of-type(5) > ul.monthly-calendar__events > li.schedule-event"
+      }
+    },
+    {
+      "action": "verify",
+      "checks": [
+        {
+          "expected": true,
+          "kind": "visible",
+          "target": {
+            "by": "css selector",
+            "value": ".schedule-modal"
+          }
+        }
+      ],
+      "order": 3,
+      "target": {
+        "by": "css selector",
+        "value": ".schedule-modal"
+      }
+    }
+  ],
+  "version": 1
+}

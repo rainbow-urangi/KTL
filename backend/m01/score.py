@@ -17,7 +17,7 @@ from .upload import (
 
 V1_FORMAT = "m01-unified-evidence-v1"
 FORMAT = "m01-unified-evidence-v2"
-SUPPORTED_FORMATS = (V1_FORMAT, FORMAT)
+SUPPORTED_FORMATS = (V1_FORMAT, FORMAT, "m01-required-presence-evidence-v3")
 FORMULA = "0.5*C1 + 0.3*(100-C2) + 0.2*C3"
 TARGET = 65
 MATCH_FIELDS = ("interaction_type", "page_url", "data_testid", "target_selector", "api_path", "api_method")
@@ -180,6 +180,9 @@ def verify(raw, result=None):
     require(result is None or isinstance(result, dict), "Result must be a JSON object")
     try:
         reader = csv.DictReader(io.StringIO(raw.decode("utf-8-sig"), newline=""), strict=True)
+        from .presence import EVIDENCE_FIELDS as PRESENCE_FIELDS, verify as verify_presence
+        if reader.fieldnames == list(PRESENCE_FIELDS):
+            return verify_presence(raw, result)
         if reader.fieldnames == list(EVIDENCE_FIELDS):
             evidence_format = FORMAT
         elif reader.fieldnames == list(V1_EVIDENCE_FIELDS):

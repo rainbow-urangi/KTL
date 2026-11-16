@@ -1,0 +1,202 @@
+{
+  "evidence": [
+    {
+      "completion_source_event_ids": [],
+      "detected_id": "BA-345aedf5-481c-4550-8d6f-d0c89735e8de",
+      "detected_step": "주간보고",
+      "direct_match": true,
+      "ground_truth_step": "주간보고",
+      "input_completion_proof": [],
+      "match_kind": "INTENT",
+      "missing_reason": null,
+      "process_id": "BU09",
+      "required_included": true,
+      "required_logical_role": "ENTER_CONTEXT",
+      "required_step_id": "BU09-S01",
+      "source_event_ids": [
+        "345aedf5-481c-4550-8d6f-d0c89735e8de"
+      ],
+      "source_node_ids": [
+        "PM-001-N003"
+      ]
+    },
+    {
+      "completion_source_event_ids": [],
+      "detected_id": "BA-b0d7a561-2fd1-4330-a4bb-8adbaad874b9",
+      "detected_step": "등록",
+      "direct_match": true,
+      "ground_truth_step": "등록",
+      "input_completion_proof": [],
+      "match_kind": "INTENT",
+      "missing_reason": null,
+      "process_id": "BU09",
+      "required_included": true,
+      "required_logical_role": "INITIATE_REGISTRATION",
+      "required_step_id": "BU09-S02",
+      "source_event_ids": [
+        "b0d7a561-2fd1-4330-a4bb-8adbaad874b9",
+        "6c3dffa5-40fe-4396-81ed-e42633891a7d"
+      ],
+      "source_node_ids": [
+        "PM-001-N007",
+        "PM-001-N008"
+      ]
+    },
+    {
+      "completion_source_event_ids": [],
+      "detected_id": "BA-67872b06-55bb-4310-9a2f-19ab3006c7fe",
+      "detected_step": "2026-11-15",
+      "direct_match": true,
+      "ground_truth_step": "대상 주차 선택",
+      "input_completion_proof": [],
+      "match_kind": "INTENT",
+      "missing_reason": null,
+      "process_id": "BU09",
+      "required_included": true,
+      "required_logical_role": "SELECT_OBJECT",
+      "required_step_id": "BU09-S03",
+      "source_event_ids": [
+        "6c3dffa5-40fe-4396-81ed-e42633891a7d",
+        "fb0c5621-61d7-4482-ad80-07ede4912f06",
+        "1bb16c7d-4ecd-42fd-91c3-92e2dd0f0eb8",
+        "67872b06-55bb-4310-9a2f-19ab3006c7fe",
+        "a7565749-5722-41c6-9289-a669ce357d4a"
+      ],
+      "source_node_ids": [
+        "PM-001-N008",
+        "PM-001-N009",
+        "PM-001-N010"
+      ]
+    },
+    {
+      "completion_source_event_ids": [],
+      "detected_id": "BA-19f120f4-a150-418c-947c-19f1d05b9aae",
+      "detected_step": "주간업무",
+      "direct_match": true,
+      "ground_truth_step": "내용 입력",
+      "input_completion_proof": [
+        {
+          "rule": "OWNER_CONFIRMED_SUCCESS_IMPLIES_REQUIRED_FIELDS",
+          "success_source_event_ids": [
+            "36b6f856-c019-416c-932e-734438103951",
+            "71db192e-63ba-4e9d-9915-36ddfd460154"
+          ],
+          "write_step_id": "BA-410a669d-695e-49f7-86f1-7f3eea5af0f2"
+        }
+      ],
+      "match_kind": "INTENT",
+      "missing_reason": null,
+      "process_id": "BU09",
+      "required_included": true,
+      "required_logical_role": "INPUT_INFORMATION",
+      "required_step_id": "BU09-S04",
+      "source_event_ids": [
+        "6c3dffa5-40fe-4396-81ed-e42633891a7d",
+        "19f120f4-a150-418c-947c-19f1d05b9aae",
+        "84291014-5973-4e2b-a81b-fdb9f7080b75",
+        "6a9e4910-e0f0-4fda-a8e6-9293cae16f89",
+        "425dd043-149f-4877-a5d7-c24ec48b86e9"
+      ],
+      "source_node_ids": [
+        "PM-001-N008",
+        "PM-001-N012"
+      ]
+    },
+    {
+      "completion_source_event_ids": [],
+      "detected_id": "BA-410a669d-695e-49f7-86f1-7f3eea5af0f2",
+      "detected_step": "저장",
+      "direct_match": true,
+      "ground_truth_step": "저장",
+      "input_completion_proof": [],
+      "match_kind": "INTENT",
+      "missing_reason": null,
+      "process_id": "BU09",
+      "required_included": true,
+      "required_logical_role": "SAVE_INFORMATION",
+      "required_step_id": "BU09-S05",
+      "source_event_ids": [
+        "6c3dffa5-40fe-4396-81ed-e42633891a7d",
+        "410a669d-695e-49f7-86f1-7f3eea5af0f2",
+        "36b6f856-c019-416c-932e-734438103951",
+        "71db192e-63ba-4e9d-9915-36ddfd460154",
+        "e3ebebf8-b924-4223-8e24-ee03d50222f1"
+      ],
+      "source_node_ids": [
+        "PM-001-N008",
+        "PM-001-N009"
+      ]
+    },
+    {
+      "completion_source_event_ids": [
+        "36b6f856-c019-416c-932e-734438103951"
+      ],
+      "detected_id": "BA-410a669d-695e-49f7-86f1-7f3eea5af0f2",
+      "detected_step": "저장",
+      "direct_match": false,
+      "ground_truth_step": "완료 확인",
+      "input_completion_proof": [],
+      "match_kind": "STATE_ATTRIBUTE",
+      "missing_reason": null,
+      "process_id": "BU09",
+      "required_included": true,
+      "required_logical_role": "INSPECT_COMPLETION",
+      "required_step_id": "BU09-S06",
+      "source_event_ids": [
+        "6c3dffa5-40fe-4396-81ed-e42633891a7d",
+        "410a669d-695e-49f7-86f1-7f3eea5af0f2",
+        "36b6f856-c019-416c-932e-734438103951",
+        "71db192e-63ba-4e9d-9915-36ddfd460154",
+        "e3ebebf8-b924-4223-8e24-ee03d50222f1"
+      ],
+      "source_node_ids": [
+        "PM-001-N008",
+        "PM-001-N009"
+      ]
+    }
+  ],
+  "stats": {
+    "accuracy": 83.33333333333333,
+    "auxiliary_evidence_counted": false,
+    "completeness": 100.0,
+    "correctly_mapped": 5,
+    "defined_required": 6,
+    "evaluated_procedures": 6,
+    "formula": "sqrt(Accuracy * Completeness)",
+    "included_required": 6,
+    "matching_method": "M02_USER_CONFIRMED_V1",
+    "per_business_unit": [
+      {
+        "accuracy": 83.33333333333333,
+        "business_unit_id": "BU09",
+        "completeness": 100.0,
+        "generated_count": 6,
+        "included_required_count": 6,
+        "matched_count": 5,
+        "missing_count": 0,
+        "required_count": 6,
+        "score": 91.28709291752767,
+        "status": "COMPLETED",
+        "unmatched_count": 1
+      }
+    ],
+    "semantic_uncertainties": []
+  },
+  "summary": {
+    "accuracy": 83.33333333333333,
+    "business_unit_id": "BU09",
+    "completeness": 100.0,
+    "dataset": "m02_recovery_data_05",
+    "execution_id": "05-BU09",
+    "generated_count": 6,
+    "included_required_count": 6,
+    "matched_count": 5,
+    "missing": [],
+    "missing_count": 0,
+    "required_count": 6,
+    "score": 91.28709291752767,
+    "status": "COMPLETED",
+    "unmatched_count": 1,
+    "week_selection_status": "Actual date-picker selection with verified weekly registration context; original intent chronology preserved"
+  }
+}

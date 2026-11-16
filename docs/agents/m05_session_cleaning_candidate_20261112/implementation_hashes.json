@@ -1,0 +1,8 @@
+{
+  "backend/m05_session_cleaning.py": "277b1070b550d58c6de9b497e151e4686bfcb6c6a3c58de471bf28ea398268c8",
+  "backend/m05_session_candidate.py": "d23ece3d0bccb289da3968f521a8407e77954878f7d6c8331189d8660f7a27a4",
+  "backend/m05_session_candidate_web.py": "7261dbb0bcf8f8b9dcd7ada08a3184e88bfd877ce936418dbef88eebd1188941",
+  "evaluation_contracts/development/m05_session_cleaning_candidate/engine.json": "499f5f1f13188e1856fbf094e718cae4154f313f41fa8bae8696962b5b0df862",
+  "evaluation_contracts/development/m05_session_cleaning_candidate/rules.json": "ed8e9f911f8cae1b260e9742be6ba75dfa35f2f7ed13a3a401de8022528629c8",
+  "tests/test_m05_session_cleaning.py": "324b00820aed655384f8459a16c0ce73cf1e469e247b595ffcf481a6da77798d"
+}

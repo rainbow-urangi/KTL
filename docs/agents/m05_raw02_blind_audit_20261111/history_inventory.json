@@ -1,0 +1,156 @@
+{
+  "scope": "Available repository data/**/*.csv, excluding raw_01/raw_02 and prediction-related bodies. Not an external/deleted/complete historical-use certification. Raw hashes retain nested IDs/timestamps and are not engine-feature hashes.",
+  "files": [
+    {
+      "path": "data/development/current_site_20x3_v1/events.csv",
+      "sha256": "c15c7cc51bf039eae9d9feef507fb40085675838e5d217698de46d957d56483f",
+      "source_type": "event_rows",
+      "records": 879,
+      "event_id_overlap": [],
+      "session_id_overlap": [],
+      "canonical_row_overlap": [],
+      "id_excluded_raw_content_overlap": []
+    },
+    {
+      "path": "data/development/current_site_20x3_v2/execution_event_index.csv",
+      "sha256": "82181aa82384d22b4853851d8e657ea7c86d0e2565e0386bcfb684db37bbdbdb",
+      "source_type": "event_reference_index",
+      "records": 887,
+      "event_id_overlap": [],
+      "session_id_overlap": [],
+      "canonical_row_overlap": [],
+      "id_excluded_raw_content_overlap": []
+    },
+    {
+      "path": "data/development/current_site_20x3_v3/excluded_recollection_events.csv",
+      "sha256": "20a62b42bf0e6e9691b45d83af99ce75d3924e686c32e8d3c874aad5b8c2ba4d",
+      "source_type": "event_reference_index",
+      "records": 85,
+      "event_id_overlap": [],
+      "session_id_overlap": [],
+      "canonical_row_overlap": [],
+      "id_excluded_raw_content_overlap": []
+    },
+    {
+      "path": "data/development/current_site_20x3_v3/execution_event_index.csv",
+      "sha256": "cadea3c119466ee5fb30c09eb63d61c3b115b4b48c397e5c03730dbe7423d00e",
+      "source_type": "event_reference_index",
+      "records": 866,
+      "event_id_overlap": [],
+      "session_id_overlap": [],
+      "canonical_row_overlap": [],
+      "id_excluded_raw_content_overlap": []
+    },
+    {
+      "path": "data/development/current_site_recollection_01/events.csv",
+      "sha256": "ac6d40bff9ec18e38f35aba44e58f956b3b406486e11d3890e756c6d9fb60db6",
+      "source_type": "event_rows",
+      "records": 74,
+      "event_id_overlap": [],
+      "session_id_overlap": [],
+      "canonical_row_overlap": [],
+      "id_excluded_raw_content_overlap": []
+    },
+    {
+      "path": "data/development/current_site_recollection_02/events.csv",
+      "sha256": "07c90862f3e714b93ddd5f8379932884184898233984c57facaf09ef90e541e9",
+      "source_type": "event_rows",
+      "records": 122,
+      "event_id_overlap": [],
+      "session_id_overlap": [],
+      "canonical_row_overlap": [],
+      "id_excluded_raw_content_overlap": []
+    },
+    {
+      "path": "data/development/current_site_unseen_validation_v1/events.csv",
+      "sha256": "01a1aa94e5a1df4edddbb86cc8f5be0a538cd157dd11533b5bf82af1a461d746",
+      "source_type": "event_rows",
+      "records": 260,
+      "event_id_overlap": [],
+      "session_id_overlap": [],
+      "canonical_row_overlap": [],
+      "id_excluded_raw_content_overlap": []
+    },
+    {
+      "path": "data/development/m02_recovery_data_01/events.csv",
+      "sha256": "15f35162f6b1235a51ac2a220667bfbee9d191313e9e4b1324daafd3a7b95fb1",
+      "source_type": "event_rows",
+      "records": 122,
+      "event_id_overlap": [],
+      "session_id_overlap": [],
+      "canonical_row_overlap": [],
+      "id_excluded_raw_content_overlap": []
+    },
+    {
+      "path": "data/development/m02_recovery_data_02/events.csv",
+      "sha256": "174e76253ecaedf693bff2dfbbfeb37aabdb906eca620e0e88c2da7ea1502224",
+      "source_type": "event_rows",
+      "records": 29,
+      "event_id_overlap": [],
+      "session_id_overlap": [],
+      "canonical_row_overlap": [],
+      "id_excluded_raw_content_overlap": []
+    },
+    {
+      "path": "data/development/m02_recovery_data_03/events.csv",
+      "sha256": "d7bd6b4e7bc7016dd1f43398094a06f482ec0bff8783831521002619e5323910",
+      "source_type": "event_rows",
+      "records": 102,
+      "event_id_overlap": [],
+      "session_id_overlap": [],
+      "canonical_row_overlap": [],
+      "id_excluded_raw_content_overlap": []
+    },
+    {
+      "path": "data/development/m02_recovery_data_04/events.csv",
+      "sha256": "70d98ba6f4044f915ed5ab2a65442dcb4fac6bb93b27f0eb92e73b6926568ee5",
+      "source_type": "event_rows",
+      "records": 62,
+      "event_id_overlap": [],
+      "session_id_overlap": [],
+      "canonical_row_overlap": [],
+      "id_excluded_raw_content_overlap": []
+    },
+    {
+      "path": "data/development/m02_recovery_data_05/events.csv",
+      "sha256": "40bc1323fab944673a3698fa4d2d125f5d1cba49a8f059dd21b290149c6cd945",
+      "source_type": "event_rows",
+      "records": 37,
+      "event_id_overlap": [],
+      "session_id_overlap": [],
+      "canonical_row_overlap": [],
+      "id_excluded_raw_content_overlap": []
+    },
+    {
+      "path": "data/evaluation/current_site_dev_01/events.csv",
+      "sha256": "2a041722995ac7c8a5dbcdb324c0e9f27e8e305b7ac32c9568a143b82200b367",
+      "source_type": "event_rows",
+      "records": 273,
+      "event_id_overlap": [],
+      "session_id_overlap": [],
+      "canonical_row_overlap": [],
+      "id_excluded_raw_content_overlap": []
+    },
+    {
+      "path": "data/evaluation/current_site_dev_02/events.csv",
+      "sha256": "bc4c25d22db7de7ba176a14e77af2451f9b45338d1a2f3135fa70597694205d0",
+      "source_type": "event_rows",
+      "records": 320,
+      "event_id_overlap": [],
+      "session_id_overlap": [],
+      "canonical_row_overlap": [],
+      "id_excluded_raw_content_overlap": []
+    },
+    {
+      "path": "data/training/v6_2_source/events.csv",
+      "sha256": "1828ccf4b8ebf1b65b8e39ded66e174e7335c36b8725f44c38bc94be556f8c0f",
+      "source_type": "event_rows",
+      "records": 32273,
+      "event_id_overlap": [],
+      "session_id_overlap": [],
+      "canonical_row_overlap": [],
+      "id_excluded_raw_content_overlap": []
+    }
+  ],
+  "skipped": []
+}

@@ -1,0 +1,62 @@
+{
+  "request": {
+    "business_unit_id": "BU05",
+    "workflow_id": "WF-0005",
+    "generator_mode": "REAL",
+    "run_mode": "DEVELOPMENT"
+  },
+  "http_status": 200,
+  "response": {
+    "business_unit_id": "BU05",
+    "workflow_id": "WF-0005",
+    "scenario_id": "REAL-SCN-8589622401daec6d1f6b",
+    "status": "SUCCESS",
+    "steps": [
+      {
+        "order": 1,
+        "action": "DETAIL_OPEN",
+        "target": "제목",
+        "source_step_id": "BA-36c8982b-3633-4172-9ef2-d1bbb3a2895f",
+        "source_event_ids": [
+          "36c8982b-3633-4172-9ef2-d1bbb3a2895f"
+        ],
+        "source_node_ids": [
+          "PM-021-N001"
+        ],
+        "page_context": "/mypage/work/overview",
+        "fields": [],
+        "http_evidence": [],
+        "completion_evidence": [],
+        "serializer_rule_id": "BA-DIRECT-INTENT"
+      },
+      {
+        "order": 2,
+        "action": "CONFIRM",
+        "target": "확인",
+        "source_step_id": "BA-c6515df3-eddf-4562-800f-a53bfafd49c8",
+        "source_event_ids": [
+          "c6515df3-eddf-4562-800f-a53bfafd49c8"
+        ],
+        "source_node_ids": [
+          "PM-021-N004"
+        ],
+        "page_context": "/mypage/work/overview",
+        "fields": [],
+        "http_evidence": [],
+        "completion_evidence": [],
+        "serializer_rule_id": "BA-DIRECT-INTENT"
+      }
+    ],
+    "issues": [],
+    "generator_version": "m03-observed-business-steps-v1.1-menu-enter",
+    "source_process_id": "PM-021",
+    "source_snapshot_sha256": "86b1e77c8ca4ec365806d7d145d99ffa802bc097347b3db16ed9b3f600503f39",
+    "readiness_only": true,
+    "run_mode": "DEVELOPMENT",
+    "generator_mode": "REAL",
+    "synthetic": false,
+    "official_pass": null
+  },
+  "started_at": "2026-11-12T08:25:59.275415+00:00",
+  "completed_at": "2026-11-12T08:25:59.287982+00:00"
+}

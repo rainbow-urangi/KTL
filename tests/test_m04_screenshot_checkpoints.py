@@ -1,5 +1,6 @@
 """Synthetic checkpoint/capture tests; never launch a browser or contact a service."""
 import base64
+from copy import deepcopy
 import contextlib
 import io
 import json
@@ -24,11 +25,235 @@ class ScreenshotCheckpointTests(unittest.TestCase):
         self.script.write_text('assert True\n', encoding='utf-8')
         self.output = io.StringIO()
 
-    def observer(self, checkpoints=None):
+    def observer(self, checkpoints=None, *, visible_browser=False):
         scenario = dict(steps=[dict(order=order) for order in range(1, 6)])
         if checkpoints is not None:
             scenario['screenshot_checkpoints'] = checkpoints
-        return runner.Observer(self.script, self.output, scenario)
+        return runner.Observer(self.script, self.output, scenario, visible_browser=visible_browser)
+
+    def window_capture(self, *, visible_browser=True, window_state='normal', frozen_visibility='hidden',
+                       failure=None, minimize_delay=0, visible_delay=0):
+        """Model only this driver's CDP window; fake time prevents real waits."""
+        original_script = self.script.read_bytes()
+        folder = Path(self.directory.name) / ('capture-' + str(len(list(Path(self.directory.name).glob('capture-*')))))
+        folder.mkdir()
+        self.script = folder / 'synthetic.py'
+        self.script.write_bytes(original_script)
+        observer = self.observer({'before': 2, 'after': 5}, visible_browser=visible_browser)
+        driver = types.SimpleNamespace(state='DECLARED_MASKED_FORM')
+        original = dict(left=-1400, top=36, width=1280, height=900, windowState=window_state)
+        model = dict(bounds=deepcopy(original), visibility='visible', frozen=False, masked=False,
+                     minimized_at=None, brought_at=None, clock=100.0, sleeps=[], calls=[])
+
+        def execute(current, name, params=None):
+            self.assertIs(current, driver)
+            params = params or {}
+            model['calls'].append((name, deepcopy(params)))
+            if name == 'executeCdpCommand':
+                command, values = params['cmd'], params['params']
+                if command == 'DOM.getDocument':
+                    return {'value': {'root': {'nodeName': 'HTML', 'children': []}}}
+                if command == 'Page.setWebLifecycleState':
+                    if values['state'] == 'frozen':
+                        model.update(frozen=True, visibility=frozen_visibility)
+                    elif failure == 'active':
+                        raise RuntimeError('synthetic_active_failure')
+                    else:
+                        model['frozen'] = False
+                    return {'value': {}}
+                if command == 'Browser.getWindowForTarget':
+                    if failure == 'get_window':
+                        raise RuntimeError('synthetic_window_failure')
+                    if model['minimized_at'] is not None and model['brought_at'] is None:
+                        if failure == 'minimize_poll':
+                            raise RuntimeError('synthetic_minimize_poll_failure')
+                        if failure != 'minimize_timeout' and model['clock'] >= model['minimized_at'] + minimize_delay:
+                            model['bounds']['windowState'] = 'minimized'
+                    bounds = deepcopy(model['bounds'])
+                    window_id = 71
+                    if failure == 'invalid_window_id':
+                        window_id = True
+                    if failure == 'invalid_bounds':
+                        bounds['width'] = 0
+                    if model['brought_at'] is not None:
+                        if failure == 'final_window_id':
+                            window_id = 72
+                        elif failure == 'final_geometry':
+                            bounds['left'] += 1
+                        elif failure == 'final_window_state':
+                            bounds['windowState'] = 'minimized'
+                    return {'value': dict(windowId=window_id, bounds=bounds)}
+                if command == 'Browser.setWindowBounds':
+                    self.assertEqual(values['windowId'], 71, 'never touch another window')
+                    bounds = values['bounds']
+                    state = bounds.get('windowState')
+                    if state == 'minimized':
+                        model['minimized_at'] = model['clock']
+                        if failure == 'minimize':
+                            raise RuntimeError('synthetic_minimize_failure')
+                        if not minimize_delay and failure != 'minimize_timeout':
+                            model['bounds']['windowState'] = state
+                    elif state == 'normal':
+                        if failure == 'normal':
+                            raise RuntimeError('synthetic_normal_failure')
+                        model['bounds']['windowState'] = state
+                    elif state:
+                        if failure == 'original_state':
+                            raise RuntimeError('synthetic_original_state_failure')
+                        model['bounds']['windowState'] = state
+                    else:
+                        if failure == 'geometry':
+                            raise RuntimeError('synthetic_geometry_failure')
+                        model['bounds'].update(bounds)
+                    return {'value': {}}
+                if command == 'Page.bringToFront':
+                    model['brought_at'] = model['clock']
+                    if failure == 'bring_front':
+                        raise RuntimeError('synthetic_front_failure')
+                    return {'value': {}}
+                raise AssertionError('Unexpected CDP command: ' + command)
+            if name == 'w3cExecuteScript':
+                if params['script'] == 'return document.visibilityState;':
+                    if failure == 'unknown_visibility':
+                        return {'value': 'prerender'}
+                    if model['brought_at'] is not None and failure != 'final_visibility' and model['clock'] >= model['brought_at'] + visible_delay:
+                        model['visibility'] = 'visible'
+                    return {'value': model['visibility']}
+                self.assertEqual(params['script'], runner._SCREENSHOT_MASK)
+                mode = params['args'][1]
+                if mode == 'apply':
+                    model['masked'] = True
+                elif mode == 'remove':
+                    if failure == 'remove':
+                        return {'value': {'ok': False, 'reason': 'synthetic_mask_failure'}}
+                    model['masked'] = False
+                elif mode == 'check':
+                    self.assertTrue(model['masked'])
+                    if failure == 'check':
+                        return {'value': {'ok': False, 'reason': 'synthetic_mask_failure'}}
+                return {'value': {'ok': True}}
+            if name == 'screenshot':
+                self.assertTrue(model['frozen']);self.assertTrue(model['masked'])
+                return {'value': base64.b64encode(PNG).decode('ascii')}
+            raise AssertionError('Unexpected driver command: ' + name)
+
+        def sleep(seconds):
+            self.assertEqual(seconds, .05)
+            model['sleeps'].append(seconds)
+            model['clock'] += seconds
+
+        observer.drivers.append(driver)
+        observer.raw_execute = execute
+        observer.current_step = dict(sequence=2)
+        with patch.object(runner.time, 'monotonic', side_effect=lambda: model['clock']), \
+                patch.object(runner.time, 'sleep', side_effect=sleep):
+            observer.capture_evidence('before')
+        self.assertEqual(self.script.read_bytes(), original_script)
+        return observer.screenshots['before'], model, original
+
+    @staticmethod
+    def window_commands(model):
+        return [(params['cmd'], params['params']) for name, params in model['calls']
+                if name == 'executeCdpCommand' and (params['cmd'].startswith('Browser.') or params['cmd'] == 'Page.bringToFront')]
+
+    def assert_no_image(self, record):
+        self.assertEqual(record['status'], 'NOT_CAPTURED')
+        self.assertIsNone(record['file']);self.assertIsNone(record['sha256'])
+        self.assertFalse((self.script.parent / 'before.png').exists())
+
+    def test_headed_hidden_capture_restores_own_original_state_geometry_and_mask_before_png(self):
+        for state in ('normal', 'maximized', 'fullscreen'):
+            with self.subTest(state=state):
+                record, model, original = self.window_capture(window_state=state)
+                self.assertEqual(record['status'], 'CAPTURED')
+                self.assertEqual((self.script.parent / record['file']).read_bytes(), PNG)
+                self.assertEqual(model['bounds'], original)
+                self.assertEqual(model['visibility'], 'visible')
+                self.assertFalse(model['masked']);self.assertFalse(model['frozen'])
+                commands = self.window_commands(model)
+                sets = [values for name, values in commands if name == 'Browser.setWindowBounds']
+                geometry = {key: original[key] for key in ('left', 'top', 'width', 'height')}
+                expected = [dict(windowState='minimized'), dict(windowState='normal'), geometry]
+                if state != 'normal':
+                    expected.append(dict(windowState=state))
+                self.assertEqual(sets, [dict(windowId=71, bounds=value) for value in expected])
+                self.assertEqual(sum(name == 'Page.bringToFront' for name, _ in commands), 1)
+                calls = model['calls']
+                active = next(i for i, (name, values) in enumerate(calls) if name == 'executeCdpCommand'
+                              and values == dict(cmd='Page.setWebLifecycleState', params=dict(state='active')))
+                remove = next(i for i, (name, values) in enumerate(calls) if name == 'w3cExecuteScript'
+                              and values.get('args', [None])[-1] == 'remove')
+                minimize = next(i for i, (name, values) in enumerate(calls) if name == 'executeCdpCommand'
+                                and values.get('cmd') == 'Browser.setWindowBounds')
+                self.assertLess(active, remove);self.assertLess(remove, minimize)
+                self.assertEqual(model['sleeps'], [])
+
+    def test_already_visible_headed_capture_never_cycles_or_focuses_a_window(self):
+        record, model, _ = self.window_capture(frozen_visibility='visible')
+        self.assertEqual(record['status'], 'CAPTURED')
+        self.assertEqual(self.window_commands(model), [])
+        self.assertEqual(model['sleeps'], [])
+
+    def test_headless_capture_preserves_lifecycle_and_cleanup_without_window_or_visibility_commands(self):
+        record, model, _ = self.window_capture(visible_browser=False)
+        self.assertEqual(record['status'], 'CAPTURED')
+        self.assertEqual(self.window_commands(model), [])
+        self.assertFalse(any(name == 'w3cExecuteScript' and values['script'] == 'return document.visibilityState;'
+                             for name, values in model['calls']))
+        lifecycle = [values['params']['state'] for name, values in model['calls']
+                     if name == 'executeCdpCommand' and values['cmd'] == 'Page.setWebLifecycleState']
+        self.assertEqual(lifecycle, ['frozen', 'active'])
+        self.assertFalse(model['masked']);self.assertFalse(model['frozen'])
+
+    def test_active_failure_still_removes_mask_and_cannot_publish_a_png(self):
+        record, model, _ = self.window_capture(failure='active')
+        self.assert_no_image(record)
+        self.assertFalse(model['masked'])
+        self.assertEqual(record['reason'], 'browser_lifecycle_restore_unverified')
+        self.assertTrue(any(name == 'w3cExecuteScript' and values.get('args', [None])[-1] == 'remove'
+                            for name, values in model['calls']))
+
+    def test_mask_or_visibility_restoration_failure_never_publishes_a_png(self):
+        for failure in ('remove', 'get_window', 'invalid_window_id', 'invalid_bounds', 'unknown_visibility',
+                        'bring_front', 'final_visibility', 'final_window_id', 'final_geometry', 'final_window_state'):
+            with self.subTest(failure=failure):
+                record, model, _ = self.window_capture(failure=failure)
+                self.assert_no_image(record)
+                self.assertEqual(record['reason'], 'mask_cleanup_unverified' if failure == 'remove'
+                                 else 'visible_browser_restore_unverified')
+                self.assertTrue(any(name == 'w3cExecuteScript' and values.get('args', [None])[-1] == 'remove'
+                                    for name, values in model['calls']))
+
+    def test_failed_minimize_poll_and_each_restore_command_still_attempt_all_original_restore_steps(self):
+        for failure in ('minimize', 'minimize_poll', 'minimize_timeout', 'normal', 'geometry', 'original_state'):
+            with self.subTest(failure=failure):
+                record, model, original = self.window_capture(window_state='maximized', failure=failure)
+                self.assert_no_image(record)
+                self.assertFalse(model['masked'])
+                sets = [values['bounds'] for name, values in self.window_commands(model)
+                        if name == 'Browser.setWindowBounds']
+                self.assertEqual(sets, [dict(windowState='minimized'), dict(windowState='normal'),
+                                       {key: original[key] for key in ('left', 'top', 'width', 'height')},
+                                       dict(windowState='maximized')])
+                self.assertTrue(any(name == 'Page.bringToFront' for name, _ in self.window_commands(model)))
+                self.assertLessEqual(sum(model['sleeps']), 2.051)
+
+    def test_async_state_changes_are_polled_but_share_one_two_second_deadline(self):
+        record, model, _ = self.window_capture(minimize_delay=.15, visible_delay=.15)
+        self.assertEqual(record['status'], 'CAPTURED')
+        self.assertGreaterEqual(sum(model['sleeps']), .3 - 1e-8)
+        self.assertTrue(all(seconds == .05 for seconds in model['sleeps']))
+        record, model, _ = self.window_capture(minimize_delay=.6, failure='final_visibility')
+        self.assert_no_image(record)
+        self.assertGreaterEqual(sum(model['sleeps']), 2 - 1e-8)
+        self.assertLessEqual(sum(model['sleeps']), 2.051, 'final visibility must not get another two-second budget')
+
+    def test_failed_mask_check_still_restores_the_headed_window_without_publishing_a_png(self):
+        record, model, original = self.window_capture(failure='check')
+        self.assert_no_image(record)
+        self.assertEqual(model['bounds'], original)
+        self.assertEqual(model['visibility'], 'visible')
+        self.assertFalse(model['masked']);self.assertFalse(model['frozen'])
 
     def connect(self, observer, failure=None):
         calls = []

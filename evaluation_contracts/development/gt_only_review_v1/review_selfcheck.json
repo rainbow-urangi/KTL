@@ -1,0 +1,14 @@
+{
+  "deterministic_manifest": true,
+  "all_review_hashes_match": true,
+  "original_gt_unchanged": true,
+  "imports": [
+    "pathlib",
+    "copy",
+    "csv",
+    "hashlib",
+    "json",
+    "re"
+  ],
+  "no_model_or_scorer_imports": true
+}

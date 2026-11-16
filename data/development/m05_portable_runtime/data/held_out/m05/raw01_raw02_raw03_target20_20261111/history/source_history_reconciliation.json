@@ -1,0 +1,316 @@
+{
+  "method": "SOURCE_HISTORY_RECONCILIATION",
+  "raw_sequence_sha256": "2c82ddb91814246ab22c584f8cd78d12821c080faf6377611143d83ab46009ad",
+  "inventory_sha256": [
+    "4649acbbacd3c1be1eb01ccb78d3fe3e3f9cf325336f59c59b68ec95c0ad1adb",
+    "1e9a5e64aec91d1c457c4d638fc17ba61f9d2b22c54a996ce2ddf27e2edae085"
+  ],
+  "coverage_complete": false,
+  "findings": "34553 accessible historical source rows normalized with the exact frozen task_id/case_id, activity, ts mapper. Zero full-input event-ID and exact model-feature-hash overlap. Three reference indexes checked for ID overlap separately. raw01/raw02 are current full context, not historical use, and are excluded from history inventories.",
+  "per_source": [
+    {
+      "path": "data/training/v6_2_source/events.csv",
+      "sha256": "1828ccf4b8ebf1b65b8e39ded66e174e7335c36b8725f44c38bc94be556f8c0f",
+      "scope": "training",
+      "row_count": 32273,
+      "event_id_overlap": [],
+      "feature_sha256_overlap": [],
+      "column_mapping": {
+        "event_type": "event_type",
+        "interaction_type": "interaction_type",
+        "page_url": "page_url",
+        "page_title": "page_title",
+        "api_path": "api_path",
+        "api_method": "api_method",
+        "api_status_code": "api_status_code",
+        "element_tag": "element_tag",
+        "associated_label": "associated_label",
+        "element_text": "element_text",
+        "case_id": "task_id",
+        "source_event_pk": "event_id",
+        "ts": "event_time"
+      }
+    },
+    {
+      "path": "data/development/current_site_20x3_v1/events.csv",
+      "sha256": "c15c7cc51bf039eae9d9feef507fb40085675838e5d217698de46d957d56483f",
+      "scope": "development",
+      "row_count": 879,
+      "event_id_overlap": [],
+      "feature_sha256_overlap": [],
+      "column_mapping": {
+        "event_type": "event_type",
+        "interaction_type": "interaction_type",
+        "page_url": "page_url",
+        "page_title": "page_title",
+        "api_path": "api_path",
+        "api_method": "api_method",
+        "api_status_code": "api_status_code",
+        "element_tag": "element_tag",
+        "associated_label": "associated_label",
+        "element_text": "element_text",
+        "case_id": "task_id",
+        "source_event_pk": "event_id",
+        "ts": "event_time"
+      }
+    },
+    {
+      "path": "data/development/current_site_recollection_01/events.csv",
+      "sha256": "ac6d40bff9ec18e38f35aba44e58f956b3b406486e11d3890e756c6d9fb60db6",
+      "scope": "development",
+      "row_count": 74,
+      "event_id_overlap": [],
+      "feature_sha256_overlap": [],
+      "column_mapping": {
+        "event_type": "event_type",
+        "interaction_type": "interaction_type",
+        "page_url": "page_url",
+        "page_title": "page_title",
+        "api_path": "api_path",
+        "api_method": "api_method",
+        "api_status_code": "api_status_code",
+        "element_tag": "element_tag",
+        "associated_label": "associated_label",
+        "element_text": "element_text",
+        "case_id": "task_id",
+        "source_event_pk": "event_id",
+        "ts": "event_time"
+      }
+    },
+    {
+      "path": "data/development/current_site_recollection_02/events.csv",
+      "sha256": "07c90862f3e714b93ddd5f8379932884184898233984c57facaf09ef90e541e9",
+      "scope": "development",
+      "row_count": 122,
+      "event_id_overlap": [],
+      "feature_sha256_overlap": [],
+      "column_mapping": {
+        "event_type": "event_type",
+        "interaction_type": "interaction_type",
+        "page_url": "page_url",
+        "page_title": "page_title",
+        "api_path": "api_path",
+        "api_method": "api_method",
+        "api_status_code": "api_status_code",
+        "element_tag": "element_tag",
+        "associated_label": "associated_label",
+        "element_text": "element_text",
+        "case_id": "task_id",
+        "source_event_pk": "event_id",
+        "ts": "event_time"
+      }
+    },
+    {
+      "path": "data/development/current_site_unseen_validation_v1/events.csv",
+      "sha256": "01a1aa94e5a1df4edddbb86cc8f5be0a538cd157dd11533b5bf82af1a461d746",
+      "scope": "development",
+      "row_count": 260,
+      "event_id_overlap": [],
+      "feature_sha256_overlap": [],
+      "column_mapping": {
+        "event_type": "event_type",
+        "interaction_type": "interaction_type",
+        "page_url": "page_url",
+        "page_title": "page_title",
+        "api_path": "api_path",
+        "api_method": "api_method",
+        "api_status_code": "api_status_code",
+        "element_tag": "element_tag",
+        "associated_label": "associated_label",
+        "element_text": "element_text",
+        "case_id": "task_id",
+        "source_event_pk": "event_id",
+        "ts": "event_time"
+      }
+    },
+    {
+      "path": "data/development/m02_recovery_data_01/events.csv",
+      "sha256": "15f35162f6b1235a51ac2a220667bfbee9d191313e9e4b1324daafd3a7b95fb1",
+      "scope": "development",
+      "row_count": 122,
+      "event_id_overlap": [],
+      "feature_sha256_overlap": [],
+      "column_mapping": {
+        "event_type": "event_type",
+        "interaction_type": "interaction_type",
+        "page_url": "page_url",
+        "page_title": "page_title",
+        "api_path": "api_path",
+        "api_method": "api_method",
+        "api_status_code": "api_status_code",
+        "element_tag": "element_tag",
+        "associated_label": "associated_label",
+        "element_text": "element_text",
+        "case_id": "task_id",
+        "source_event_pk": "event_id",
+        "ts": "event_time"
+      }
+    },
+    {
+      "path": "data/development/m02_recovery_data_02/events.csv",
+      "sha256": "174e76253ecaedf693bff2dfbbfeb37aabdb906eca620e0e88c2da7ea1502224",
+      "scope": "development",
+      "row_count": 29,
+      "event_id_overlap": [],
+      "feature_sha256_overlap": [],
+      "column_mapping": {
+        "event_type": "event_type",
+        "interaction_type": "interaction_type",
+        "page_url": "page_url",
+        "page_title": "page_title",
+        "api_path": "api_path",
+        "api_method": "api_method",
+        "api_status_code": "api_status_code",
+        "element_tag": "element_tag",
+        "associated_label": "associated_label",
+        "element_text": "element_text",
+        "case_id": "task_id",
+        "source_event_pk": "event_id",
+        "ts": "event_time"
+      }
+    },
+    {
+      "path": "data/development/m02_recovery_data_03/events.csv",
+      "sha256": "d7bd6b4e7bc7016dd1f43398094a06f482ec0bff8783831521002619e5323910",
+      "scope": "development",
+      "row_count": 102,
+      "event_id_overlap": [],
+      "feature_sha256_overlap": [],
+      "column_mapping": {
+        "event_type": "event_type",
+        "interaction_type": "interaction_type",
+        "page_url": "page_url",
+        "page_title": "page_title",
+        "api_path": "api_path",
+        "api_method": "api_method",
+        "api_status_code": "api_status_code",
+        "element_tag": "element_tag",
+        "associated_label": "associated_label",
+        "element_text": "element_text",
+        "case_id": "task_id",
+        "source_event_pk": "event_id",
+        "ts": "event_time"
+      }
+    },
+    {
+      "path": "data/development/m02_recovery_data_04/events.csv",
+      "sha256": "70d98ba6f4044f915ed5ab2a65442dcb4fac6bb93b27f0eb92e73b6926568ee5",
+      "scope": "development",
+      "row_count": 62,
+      "event_id_overlap": [],
+      "feature_sha256_overlap": [],
+      "column_mapping": {
+        "event_type": "event_type",
+        "interaction_type": "interaction_type",
+        "page_url": "page_url",
+        "page_title": "page_title",
+        "api_path": "api_path",
+        "api_method": "api_method",
+        "api_status_code": "api_status_code",
+        "element_tag": "element_tag",
+        "associated_label": "associated_label",
+        "element_text": "element_text",
+        "case_id": "task_id",
+        "source_event_pk": "event_id",
+        "ts": "event_time"
+      }
+    },
+    {
+      "path": "data/development/m02_recovery_data_05/events.csv",
+      "sha256": "40bc1323fab944673a3698fa4d2d125f5d1cba49a8f059dd21b290149c6cd945",
+      "scope": "development",
+      "row_count": 37,
+      "event_id_overlap": [],
+      "feature_sha256_overlap": [],
+      "column_mapping": {
+        "event_type": "event_type",
+        "interaction_type": "interaction_type",
+        "page_url": "page_url",
+        "page_title": "page_title",
+        "api_path": "api_path",
+        "api_method": "api_method",
+        "api_status_code": "api_status_code",
+        "element_tag": "element_tag",
+        "associated_label": "associated_label",
+        "element_text": "element_text",
+        "case_id": "task_id",
+        "source_event_pk": "event_id",
+        "ts": "event_time"
+      }
+    },
+    {
+      "path": "data/evaluation/current_site_dev_01/events.csv",
+      "sha256": "2a041722995ac7c8a5dbcdb324c0e9f27e8e305b7ac32c9568a143b82200b367",
+      "scope": "development",
+      "row_count": 273,
+      "event_id_overlap": [],
+      "feature_sha256_overlap": [],
+      "column_mapping": {
+        "event_type": "event_type",
+        "interaction_type": "interaction_type",
+        "page_url": "page_url",
+        "page_title": "page_title",
+        "api_path": "api_path",
+        "api_method": "api_method",
+        "api_status_code": "api_status_code",
+        "element_tag": "element_tag",
+        "associated_label": "associated_label",
+        "element_text": "element_text",
+        "case_id": "task_id",
+        "source_event_pk": "event_id",
+        "ts": "event_time"
+      }
+    },
+    {
+      "path": "data/evaluation/current_site_dev_02/events.csv",
+      "sha256": "bc4c25d22db7de7ba176a14e77af2451f9b45338d1a2f3135fa70597694205d0",
+      "scope": "development",
+      "row_count": 320,
+      "event_id_overlap": [],
+      "feature_sha256_overlap": [],
+      "column_mapping": {
+        "event_type": "event_type",
+        "interaction_type": "interaction_type",
+        "page_url": "page_url",
+        "page_title": "page_title",
+        "api_path": "api_path",
+        "api_method": "api_method",
+        "api_status_code": "api_status_code",
+        "element_tag": "element_tag",
+        "associated_label": "associated_label",
+        "element_text": "element_text",
+        "case_id": "task_id",
+        "source_event_pk": "event_id",
+        "ts": "event_time"
+      }
+    }
+  ],
+  "reference_index_checks": [
+    {
+      "path": "data/development/current_site_20x3_v2/execution_event_index.csv",
+      "sha256": "82181aa82384d22b4853851d8e657ea7c86d0e2565e0386bcfb684db37bbdbdb",
+      "row_count": 887,
+      "overlap": [],
+      "checked": "event IDs only; reference index lacks frozen feature schema"
+    },
+    {
+      "path": "data/development/current_site_20x3_v3/excluded_recollection_events.csv",
+      "sha256": "20a62b42bf0e6e9691b45d83af99ce75d3924e686c32e8d3c874aad5b8c2ba4d",
+      "row_count": 85,
+      "overlap": [],
+      "checked": "event IDs only; reference index lacks frozen feature schema"
+    },
+    {
+      "path": "data/development/current_site_20x3_v3/execution_event_index.csv",
+      "sha256": "cadea3c119466ee5fb30c09eb63d61c3b115b4b48c397e5c03730dbe7423d00e",
+      "row_count": 866,
+      "overlap": [],
+      "checked": "event IDs only; reference index lacks frozen feature schema"
+    }
+  ],
+  "limitations": [
+    "Historical source-file existence and hash do not establish all actual uses.",
+    "External/deleted/undocumented/remote histories are not accounted for.",
+    "No independent completeness reviewer has supplied a signed or otherwise authoritative coverage record."
+  ]
+}

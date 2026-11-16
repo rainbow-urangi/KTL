@@ -1,0 +1,576 @@
+{
+  "business_unit_id": "CU04",
+  "canonical_kind": "CAPTURE_OBSERVED_SEQUENCE",
+  "capture_policy_sha256": "d7860cf84321a53554055bfbe3f438114ff52376b30ec6f54d5f99d100457786",
+  "data_class": "DEVELOPMENT",
+  "generated_by_llm": false,
+  "generation_method": "DETERMINISTIC_CANONICAL_ADAPTER",
+  "generator_mode": "REAL",
+  "model_inference_during_generation": false,
+  "official": false,
+  "official_pass": null,
+  "origin_generation_id": "M03-GEN-8b8d69e2d8e6408d9ecd6f842d09ef09",
+  "run_mode": "DEVELOPMENT",
+  "scenario_id": "CANON-SCN-2a5e4ff2afdac7ce10413f2d",
+  "source_canonical_instance_id": "CAPTURE-WF-3fe1432a4472",
+  "source_canonical_schema": "workflow-canonical-1.2",
+  "source_capture_manifest_sha256": "65ce10f4e25e9b3e215b1ce4004cc9df5129c5a6c59348f310d9e5ca230d6ba5",
+  "source_csv_sha256": "d6ae9aea0ea6760bac5f7e742c540f7495733be86ab1ab39d411a0eab91637d3",
+  "source_files_sha256": {
+    "data/evaluation/cu10-repair-input/CU04/canonical_workflows.json": "07bfa870fd5c80dccf5cef10e3b2777751f3f161ed7a5a81ba2710518f4bb8e0",
+    "data/evaluation/cu10-repair-input/CU04/process_models.csv": "3444f768c276bc9075c385b2f829c2be62479cd5b93d5906326b9541fb45958b"
+  },
+  "source_module": "canonical-procedure-adapter",
+  "source_process_model_id": "CAPTURE-PM-3fe1432a4472",
+  "source_process_model_ids": [
+    "PM-001"
+  ],
+  "source_session_ids": [
+    "8a19c29f-67c4-4fd7-8378-cb03d1d3d2d3",
+    "1bc0db21-4d13-48ce-a2cb-e0b1f3f29591"
+  ],
+  "source_version": "canonical-to-m03-v2-occurrences",
+  "source_workflow_ids": [
+    "WF-0003",
+    "WF-0002"
+  ],
+  "status": "SUCCESS",
+  "steps": [
+    {
+      "action": "page_entry",
+      "evidence": [
+        "20447681-5f08-4966-b47e-f9792aa8d2aa"
+      ],
+      "http_method": "",
+      "id": "PM-001-N001",
+      "node_id": "PM-001-N001",
+      "occurrence_id": "OCC-0001",
+      "order": 1,
+      "source_csv_rows": [
+        3
+      ],
+      "source_process_model_id": "PM-001",
+      "source_session_id": "8a19c29f-67c4-4fd7-8378-cb03d1d3d2d3",
+      "source_workflow_id": "WF-0003",
+      "target": "{\"normalized_endpoint\":\"\",\"page_path\":\"/mypage/work/daily\",\"role\":\"html\"}",
+      "target_details": {
+        "normalized_endpoint": "",
+        "page_path": "/mypage/work/daily",
+        "role": "html"
+      }
+    },
+    {
+      "action": "api_confirmation",
+      "evidence": [
+        "d02704b0-907d-42b9-bd94-5ae232100ec3"
+      ],
+      "http_method": "GET",
+      "id": "PM-001-N002",
+      "node_id": "PM-001-N002",
+      "occurrence_id": "OCC-0002",
+      "order": 2,
+      "source_csv_rows": [
+        4
+      ],
+      "source_process_model_id": "PM-001",
+      "source_session_id": "8a19c29f-67c4-4fd7-8378-cb03d1d3d2d3",
+      "source_workflow_id": "WF-0003",
+      "target": "{\"normalized_endpoint\":\"/api/auth/me\",\"page_path\":\"/mypage/work/daily\",\"role\":\"/api/auth/me\"}",
+      "target_details": {
+        "normalized_endpoint": "/api/auth/me",
+        "page_path": "/mypage/work/daily",
+        "role": "/api/auth/me"
+      }
+    },
+    {
+      "action": "api_confirmation",
+      "evidence": [
+        "3f8df61c-aae4-4e68-99bb-500f62685dba"
+      ],
+      "http_method": "GET",
+      "id": "PM-001-N003",
+      "node_id": "PM-001-N003",
+      "occurrence_id": "OCC-0003",
+      "order": 3,
+      "source_csv_rows": [
+        5
+      ],
+      "source_process_model_id": "PM-001",
+      "source_session_id": "8a19c29f-67c4-4fd7-8378-cb03d1d3d2d3",
+      "source_workflow_id": "WF-0003",
+      "target": "{\"normalized_endpoint\":\"/api/work-reports\",\"page_path\":\"/mypage/work/daily\",\"role\":\"/api/work-reports\"}",
+      "target_details": {
+        "normalized_endpoint": "/api/work-reports",
+        "page_path": "/mypage/work/daily",
+        "role": "/api/work-reports"
+      }
+    },
+    {
+      "action": "api_confirmation",
+      "evidence": [
+        "df297ec1-8bd7-41a6-88eb-a75e0b48c6de",
+        "f0e0c9ea-9199-44a4-8958-2f07ef05e96b"
+      ],
+      "http_method": "GET",
+      "id": "PM-001-N002",
+      "node_id": "PM-001-N002",
+      "occurrence_id": "OCC-0004",
+      "order": 4,
+      "source_csv_rows": [
+        6,
+        7
+      ],
+      "source_process_model_id": "PM-001",
+      "source_session_id": "8a19c29f-67c4-4fd7-8378-cb03d1d3d2d3",
+      "source_workflow_id": "WF-0003",
+      "target": "{\"normalized_endpoint\":\"/api/auth/me\",\"page_path\":\"/mypage/work/daily\",\"role\":\"/api/auth/me\"}",
+      "target_details": {
+        "normalized_endpoint": "/api/auth/me",
+        "page_path": "/mypage/work/daily",
+        "role": "/api/auth/me"
+      }
+    },
+    {
+      "action": "api_confirmation",
+      "evidence": [
+        "9e7cdc48-56f0-4bba-9fe1-471c8f7c3189"
+      ],
+      "http_method": "GET",
+      "id": "PM-001-N003",
+      "node_id": "PM-001-N003",
+      "occurrence_id": "OCC-0005",
+      "order": 5,
+      "source_csv_rows": [
+        8
+      ],
+      "source_process_model_id": "PM-001",
+      "source_session_id": "8a19c29f-67c4-4fd7-8378-cb03d1d3d2d3",
+      "source_workflow_id": "WF-0003",
+      "target": "{\"normalized_endpoint\":\"/api/work-reports\",\"page_path\":\"/mypage/work/daily\",\"role\":\"/api/work-reports\"}",
+      "target_details": {
+        "normalized_endpoint": "/api/work-reports",
+        "page_path": "/mypage/work/daily",
+        "role": "/api/work-reports"
+      }
+    },
+    {
+      "action": "api_confirmation",
+      "evidence": [
+        "a2de4722-1d9e-4c6c-92a0-d9c8685494a2"
+      ],
+      "http_method": "GET",
+      "id": "PM-001-N002",
+      "node_id": "PM-001-N002",
+      "occurrence_id": "OCC-0006",
+      "order": 6,
+      "source_csv_rows": [
+        9
+      ],
+      "source_process_model_id": "PM-001",
+      "source_session_id": "8a19c29f-67c4-4fd7-8378-cb03d1d3d2d3",
+      "source_workflow_id": "WF-0003",
+      "target": "{\"normalized_endpoint\":\"/api/auth/me\",\"page_path\":\"/mypage/work/daily\",\"role\":\"/api/auth/me\"}",
+      "target_details": {
+        "normalized_endpoint": "/api/auth/me",
+        "page_path": "/mypage/work/daily",
+        "role": "/api/auth/me"
+      }
+    },
+    {
+      "action": "selection",
+      "evidence": [
+        "cb91f8d4-95e3-4cbd-816b-5c6407a57ecc"
+      ],
+      "http_method": "",
+      "id": "PM-001-N004",
+      "node_id": "PM-001-N004",
+      "occurrence_id": "OCC-0007",
+      "order": 7,
+      "source_csv_rows": [
+        10
+      ],
+      "source_process_model_id": "PM-001",
+      "source_session_id": "8a19c29f-67c4-4fd7-8378-cb03d1d3d2d3",
+      "source_workflow_id": "WF-0003",
+      "target": "{\"normalized_endpoint\":\"\",\"page_path\":\"/mypage/work/daily\",\"role\":\"button\"}",
+      "target_details": {
+        "normalized_endpoint": "",
+        "page_path": "/mypage/work/daily",
+        "role": "button"
+      }
+    },
+    {
+      "action": "detail_open",
+      "evidence": [
+        "464bca0c-7ce8-48ac-9af3-3fccbc65689a"
+      ],
+      "http_method": "",
+      "id": "PM-001-N005",
+      "node_id": "PM-001-N005",
+      "occurrence_id": "OCC-0008",
+      "order": 8,
+      "source_csv_rows": [
+        11
+      ],
+      "source_process_model_id": "PM-001",
+      "source_session_id": "8a19c29f-67c4-4fd7-8378-cb03d1d3d2d3",
+      "source_workflow_id": "WF-0003",
+      "target": "{\"normalized_endpoint\":\"\",\"page_path\":\"/mypage/work/daily\",\"role\":\"dialog_control\"}",
+      "target_details": {
+        "normalized_endpoint": "",
+        "page_path": "/mypage/work/daily",
+        "role": "dialog_control"
+      }
+    },
+    {
+      "action": "selection",
+      "evidence": [
+        "2889970d-1172-4345-b0af-46867bc12ca9"
+      ],
+      "http_method": "",
+      "id": "PM-001-N006",
+      "node_id": "PM-001-N006",
+      "occurrence_id": "OCC-0009",
+      "order": 9,
+      "source_csv_rows": [
+        12
+      ],
+      "source_process_model_id": "PM-001",
+      "source_session_id": "8a19c29f-67c4-4fd7-8378-cb03d1d3d2d3",
+      "source_workflow_id": "WF-0003",
+      "target": "{\"normalized_endpoint\":\"\",\"page_path\":\"/mypage/work/daily\",\"role\":\"input_control\"}",
+      "target_details": {
+        "normalized_endpoint": "",
+        "page_path": "/mypage/work/daily",
+        "role": "input_control"
+      }
+    },
+    {
+      "action": "input",
+      "evidence": [
+        "f59ac5cf-56f7-4e42-9264-e02be84b2b18"
+      ],
+      "http_method": "",
+      "id": "PM-001-N007",
+      "node_id": "PM-001-N007",
+      "occurrence_id": "OCC-0010",
+      "order": 10,
+      "source_csv_rows": [
+        13
+      ],
+      "source_process_model_id": "PM-001",
+      "source_session_id": "8a19c29f-67c4-4fd7-8378-cb03d1d3d2d3",
+      "source_workflow_id": "WF-0003",
+      "target": "{\"normalized_endpoint\":\"\",\"page_path\":\"/mypage/work/daily\",\"role\":\"input_control\"}",
+      "target_details": {
+        "normalized_endpoint": "",
+        "page_path": "/mypage/work/daily",
+        "role": "input_control"
+      }
+    },
+    {
+      "action": "selection",
+      "evidence": [
+        "a24e450c-eca2-47f2-b4ef-55e0c8deef6b"
+      ],
+      "http_method": "",
+      "id": "PM-001-N006",
+      "node_id": "PM-001-N006",
+      "occurrence_id": "OCC-0011",
+      "order": 11,
+      "source_csv_rows": [
+        14
+      ],
+      "source_process_model_id": "PM-001",
+      "source_session_id": "8a19c29f-67c4-4fd7-8378-cb03d1d3d2d3",
+      "source_workflow_id": "WF-0003",
+      "target": "{\"normalized_endpoint\":\"\",\"page_path\":\"/mypage/work/daily\",\"role\":\"input_control\"}",
+      "target_details": {
+        "normalized_endpoint": "",
+        "page_path": "/mypage/work/daily",
+        "role": "input_control"
+      }
+    },
+    {
+      "action": "input",
+      "evidence": [
+        "03fc8c8f-bfcb-42d8-81f9-4877d65d7c90"
+      ],
+      "http_method": "",
+      "id": "PM-001-N007",
+      "node_id": "PM-001-N007",
+      "occurrence_id": "OCC-0012",
+      "order": 12,
+      "source_csv_rows": [
+        17
+      ],
+      "source_process_model_id": "PM-001",
+      "source_session_id": "8a19c29f-67c4-4fd7-8378-cb03d1d3d2d3",
+      "source_workflow_id": "WF-0003",
+      "target": "{\"normalized_endpoint\":\"\",\"page_path\":\"/mypage/work/daily\",\"role\":\"input_control\"}",
+      "target_details": {
+        "normalized_endpoint": "",
+        "page_path": "/mypage/work/daily",
+        "role": "input_control"
+      }
+    },
+    {
+      "action": "selection",
+      "evidence": [
+        "4f0e0a71-cc4d-4eae-afbf-dc6d2000c06e"
+      ],
+      "http_method": "",
+      "id": "PM-001-N008",
+      "node_id": "PM-001-N008",
+      "occurrence_id": "OCC-0013",
+      "order": 13,
+      "source_csv_rows": [
+        18
+      ],
+      "source_process_model_id": "PM-001",
+      "source_session_id": "8a19c29f-67c4-4fd7-8378-cb03d1d3d2d3",
+      "source_workflow_id": "WF-0003",
+      "target": "{\"normalized_endpoint\":\"\",\"page_path\":\"/mypage/work/daily\",\"role\":\"dialog_control\"}",
+      "target_details": {
+        "normalized_endpoint": "",
+        "page_path": "/mypage/work/daily",
+        "role": "dialog_control"
+      }
+    },
+    {
+      "action": "detail_open",
+      "evidence": [
+        "38fad105-2413-4d2b-b1b2-c3e5201be553"
+      ],
+      "http_method": "",
+      "id": "PM-001-N005",
+      "node_id": "PM-001-N005",
+      "occurrence_id": "OCC-0014",
+      "order": 14,
+      "source_csv_rows": [
+        19
+      ],
+      "source_process_model_id": "PM-001",
+      "source_session_id": "8a19c29f-67c4-4fd7-8378-cb03d1d3d2d3",
+      "source_workflow_id": "WF-0003",
+      "target": "{\"normalized_endpoint\":\"\",\"page_path\":\"/mypage/work/daily\",\"role\":\"dialog_control\"}",
+      "target_details": {
+        "normalized_endpoint": "",
+        "page_path": "/mypage/work/daily",
+        "role": "dialog_control"
+      }
+    },
+    {
+      "action": "detail_close",
+      "evidence": [
+        "3d100cfd-3f29-4d37-a38b-8cb5f01761ac"
+      ],
+      "http_method": "",
+      "id": "PM-001-N010",
+      "node_id": "PM-001-N010",
+      "occurrence_id": "OCC-0015",
+      "order": 15,
+      "source_csv_rows": [
+        20
+      ],
+      "source_process_model_id": "PM-001",
+      "source_session_id": "8a19c29f-67c4-4fd7-8378-cb03d1d3d2d3",
+      "source_workflow_id": "WF-0003",
+      "target": "{\"normalized_endpoint\":\"\",\"page_path\":\"/mypage/work/daily\",\"role\":\"dialog_control\"}",
+      "target_details": {
+        "normalized_endpoint": "",
+        "page_path": "/mypage/work/daily",
+        "role": "dialog_control"
+      }
+    },
+    {
+      "action": "api_confirmation",
+      "evidence": [
+        "51977950-0893-4d95-bf02-f83c13d1d8aa"
+      ],
+      "http_method": "POST",
+      "id": "PM-001-N009",
+      "node_id": "PM-001-N009",
+      "occurrence_id": "OCC-0016",
+      "order": 16,
+      "source_csv_rows": [
+        22
+      ],
+      "source_process_model_id": "PM-001",
+      "source_session_id": "8a19c29f-67c4-4fd7-8378-cb03d1d3d2d3",
+      "source_workflow_id": "WF-0003",
+      "target": "{\"normalized_endpoint\":\"/api/work-reports\",\"page_path\":\"/mypage/work/daily\",\"role\":\"/api/work-reports\"}",
+      "target_details": {
+        "normalized_endpoint": "/api/work-reports",
+        "page_path": "/mypage/work/daily",
+        "role": "/api/work-reports"
+      }
+    },
+    {
+      "action": "api_confirmation",
+      "evidence": [
+        "67fceb85-eb23-437d-ab72-b7273877cda1"
+      ],
+      "http_method": "GET",
+      "id": "PM-001-N003",
+      "node_id": "PM-001-N003",
+      "occurrence_id": "OCC-0017",
+      "order": 17,
+      "source_csv_rows": [
+        23
+      ],
+      "source_process_model_id": "PM-001",
+      "source_session_id": "8a19c29f-67c4-4fd7-8378-cb03d1d3d2d3",
+      "source_workflow_id": "WF-0003",
+      "target": "{\"normalized_endpoint\":\"/api/work-reports\",\"page_path\":\"/mypage/work/daily\",\"role\":\"/api/work-reports\"}",
+      "target_details": {
+        "normalized_endpoint": "/api/work-reports",
+        "page_path": "/mypage/work/daily",
+        "role": "/api/work-reports"
+      }
+    },
+    {
+      "action": "page_entry",
+      "evidence": [
+        "62ad6c56-e487-4361-8115-0d6e82e37c9a"
+      ],
+      "http_method": "",
+      "id": "PM-001-N001",
+      "node_id": "PM-001-N001",
+      "occurrence_id": "OCC-0018",
+      "order": 18,
+      "source_csv_rows": [
+        27
+      ],
+      "source_process_model_id": "PM-001",
+      "source_session_id": "1bc0db21-4d13-48ce-a2cb-e0b1f3f29591",
+      "source_workflow_id": "WF-0002",
+      "target": "{\"normalized_endpoint\":\"\",\"page_path\":\"/mypage/work/daily\",\"role\":\"html\"}",
+      "target_details": {
+        "normalized_endpoint": "",
+        "page_path": "/mypage/work/daily",
+        "role": "html"
+      }
+    },
+    {
+      "action": "api_confirmation",
+      "evidence": [
+        "468411c2-cca0-497c-95f0-323faa21c9c2"
+      ],
+      "http_method": "GET",
+      "id": "PM-001-N002",
+      "node_id": "PM-001-N002",
+      "occurrence_id": "OCC-0019",
+      "order": 19,
+      "source_csv_rows": [
+        28
+      ],
+      "source_process_model_id": "PM-001",
+      "source_session_id": "1bc0db21-4d13-48ce-a2cb-e0b1f3f29591",
+      "source_workflow_id": "WF-0002",
+      "target": "{\"normalized_endpoint\":\"/api/auth/me\",\"page_path\":\"/mypage/work/daily\",\"role\":\"/api/auth/me\"}",
+      "target_details": {
+        "normalized_endpoint": "/api/auth/me",
+        "page_path": "/mypage/work/daily",
+        "role": "/api/auth/me"
+      }
+    },
+    {
+      "action": "api_confirmation",
+      "evidence": [
+        "ac3b4a84-8abb-49d8-a252-7a1347628eaf"
+      ],
+      "http_method": "GET",
+      "id": "PM-001-N003",
+      "node_id": "PM-001-N003",
+      "occurrence_id": "OCC-0020",
+      "order": 20,
+      "source_csv_rows": [
+        29
+      ],
+      "source_process_model_id": "PM-001",
+      "source_session_id": "1bc0db21-4d13-48ce-a2cb-e0b1f3f29591",
+      "source_workflow_id": "WF-0002",
+      "target": "{\"normalized_endpoint\":\"/api/work-reports\",\"page_path\":\"/mypage/work/daily\",\"role\":\"/api/work-reports\"}",
+      "target_details": {
+        "normalized_endpoint": "/api/work-reports",
+        "page_path": "/mypage/work/daily",
+        "role": "/api/work-reports"
+      }
+    },
+    {
+      "action": "api_confirmation",
+      "evidence": [
+        "ea8d1a24-ab48-48ad-87b5-f568655f0e48",
+        "7996ae55-fc25-47d9-8200-843c3e1075f0"
+      ],
+      "http_method": "GET",
+      "id": "PM-001-N002",
+      "node_id": "PM-001-N002",
+      "occurrence_id": "OCC-0021",
+      "order": 21,
+      "source_csv_rows": [
+        30,
+        31
+      ],
+      "source_process_model_id": "PM-001",
+      "source_session_id": "1bc0db21-4d13-48ce-a2cb-e0b1f3f29591",
+      "source_workflow_id": "WF-0002",
+      "target": "{\"normalized_endpoint\":\"/api/auth/me\",\"page_path\":\"/mypage/work/daily\",\"role\":\"/api/auth/me\"}",
+      "target_details": {
+        "normalized_endpoint": "/api/auth/me",
+        "page_path": "/mypage/work/daily",
+        "role": "/api/auth/me"
+      }
+    },
+    {
+      "action": "api_confirmation",
+      "evidence": [
+        "cef57dcf-51eb-4972-9fcf-7e1e68424e1c"
+      ],
+      "http_method": "GET",
+      "id": "PM-001-N003",
+      "node_id": "PM-001-N003",
+      "occurrence_id": "OCC-0022",
+      "order": 22,
+      "source_csv_rows": [
+        32
+      ],
+      "source_process_model_id": "PM-001",
+      "source_session_id": "1bc0db21-4d13-48ce-a2cb-e0b1f3f29591",
+      "source_workflow_id": "WF-0002",
+      "target": "{\"normalized_endpoint\":\"/api/work-reports\",\"page_path\":\"/mypage/work/daily\",\"role\":\"/api/work-reports\"}",
+      "target_details": {
+        "normalized_endpoint": "/api/work-reports",
+        "page_path": "/mypage/work/daily",
+        "role": "/api/work-reports"
+      }
+    },
+    {
+      "action": "api_confirmation",
+      "evidence": [
+        "63e2dc76-d7cc-46e2-9cf9-01463c0d2a07"
+      ],
+      "http_method": "GET",
+      "id": "PM-001-N002",
+      "node_id": "PM-001-N002",
+      "occurrence_id": "OCC-0023",
+      "order": 23,
+      "source_csv_rows": [
+        33
+      ],
+      "source_process_model_id": "PM-001",
+      "source_session_id": "1bc0db21-4d13-48ce-a2cb-e0b1f3f29591",
+      "source_workflow_id": "WF-0002",
+      "target": "{\"normalized_endpoint\":\"/api/auth/me\",\"page_path\":\"/mypage/work/daily\",\"role\":\"/api/auth/me\"}",
+      "target_details": {
+        "normalized_endpoint": "/api/auth/me",
+        "page_path": "/mypage/work/daily",
+        "role": "/api/auth/me"
+      }
+    }
+  ],
+  "synthetic": false,
+  "target_representation": "COMPACT_SORTED_JSON_TARGET_V1",
+  "workflow_id": "CAPTURE-WF-3fe1432a4472"
+}

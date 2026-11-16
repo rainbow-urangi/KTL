@@ -1,0 +1,160 @@
+{
+  "evidence": [
+    {
+      "completion_source_event_ids": [],
+      "detected_id": "BA-9745dad1-ad62-4077-aa6a-dec488dc715e",
+      "detected_step": "일정 관리",
+      "direct_match": true,
+      "ground_truth_step": "일정관리",
+      "input_completion_proof": [],
+      "match_kind": "INTENT",
+      "missing_reason": null,
+      "process_id": "BU03",
+      "required_included": true,
+      "required_logical_role": "ENTER_CONTEXT",
+      "required_step_id": "BU03-S01",
+      "source_event_ids": [
+        "9745dad1-ad62-4077-aa6a-dec488dc715e"
+      ],
+      "source_node_ids": [
+        "PM-004-N001"
+      ]
+    },
+    {
+      "completion_source_event_ids": [],
+      "detected_id": "BA-00d3ca9e-9361-4824-865f-d2f947d2b766",
+      "detected_step": "3",
+      "direct_match": true,
+      "ground_truth_step": "날짜 선택",
+      "input_completion_proof": [],
+      "match_kind": "INTENT",
+      "missing_reason": null,
+      "process_id": "BU03",
+      "required_included": true,
+      "required_logical_role": "SELECT_OBJECT",
+      "required_step_id": "BU03-S02",
+      "source_event_ids": [
+        "00d3ca9e-9361-4824-865f-d2f947d2b766",
+        "e63ba76a-3df6-432c-9cf8-d6eab60f6b75"
+      ],
+      "source_node_ids": [
+        "PM-004-N005",
+        "PM-004-N006"
+      ]
+    },
+    {
+      "completion_source_event_ids": [],
+      "detected_id": "",
+      "detected_step": "",
+      "direct_match": false,
+      "ground_truth_step": "일정 입력",
+      "input_completion_proof": [],
+      "match_kind": "MISSING",
+      "missing_reason": "MISSING_SAME_FORM_SUCCESS_PROOF|UNRESOLVED_OR_MIXED_INTENT",
+      "process_id": "BU03",
+      "required_included": false,
+      "required_logical_role": "INPUT_INFORMATION",
+      "required_step_id": "BU03-S03",
+      "source_event_ids": [],
+      "source_node_ids": []
+    },
+    {
+      "completion_source_event_ids": [],
+      "detected_id": "BA-99bccc2b-a512-4b3f-9917-b947c56a53f0",
+      "detected_step": "등록",
+      "direct_match": true,
+      "ground_truth_step": "등록",
+      "input_completion_proof": [],
+      "match_kind": "INTENT",
+      "missing_reason": null,
+      "process_id": "BU03",
+      "required_included": true,
+      "required_logical_role": "COMMIT_REGISTRATION",
+      "required_step_id": "BU03-S04",
+      "source_event_ids": [
+        "e63ba76a-3df6-432c-9cf8-d6eab60f6b75",
+        "99bccc2b-a512-4b3f-9917-b947c56a53f0"
+      ],
+      "source_node_ids": [
+        "PM-004-N006",
+        "PM-004-N008"
+      ]
+    },
+    {
+      "completion_source_event_ids": [],
+      "detected_id": "",
+      "detected_step": "",
+      "direct_match": false,
+      "ground_truth_step": "종료",
+      "input_completion_proof": [],
+      "match_kind": "MISSING",
+      "missing_reason": "MISSING_MATCHED_WRITE_OR_DIRECT_COMPLETION_STATE",
+      "process_id": "BU03",
+      "required_included": false,
+      "required_logical_role": "END_WORKFLOW",
+      "required_step_id": "BU03-S05",
+      "source_event_ids": [],
+      "source_node_ids": []
+    }
+  ],
+  "stats": {
+    "accuracy": 27.272727272727273,
+    "auxiliary_evidence_counted": false,
+    "completeness": 60.0,
+    "correctly_mapped": 3,
+    "defined_required": 5,
+    "evaluated_procedures": 11,
+    "formula": "sqrt(Accuracy * Completeness)",
+    "included_required": 3,
+    "matching_method": "M02_USER_CONFIRMED_V1",
+    "per_business_unit": [
+      {
+        "accuracy": 27.272727272727273,
+        "business_unit_id": "BU03",
+        "completeness": 60.0,
+        "generated_count": 11,
+        "included_required_count": 3,
+        "matched_count": 3,
+        "missing_count": 2,
+        "required_count": 5,
+        "score": 40.45199174779453,
+        "status": "COMPLETED_WITH_MISSING_EVIDENCE",
+        "unmatched_count": 8
+      }
+    ],
+    "semantic_uncertainties": [
+      {
+        "process_id": "BU03",
+        "reason": "MISSING_SAME_FORM_SUCCESS_PROOF|UNRESOLVED_OR_MIXED_INTENT",
+        "required_step_id": "BU03-S03",
+        "treatment": "MISSING_NOT_GUESSED_SUCCESS"
+      },
+      {
+        "process_id": "BU03",
+        "reason": "MISSING_MATCHED_WRITE_OR_DIRECT_COMPLETION_STATE",
+        "required_step_id": "BU03-S05",
+        "treatment": "MISSING_NOT_GUESSED_SUCCESS"
+      }
+    ]
+  },
+  "summary": {
+    "accuracy": 27.272727272727273,
+    "business_unit_id": "BU03",
+    "completeness": 60.0,
+    "dataset": "m02_recovery_data_04",
+    "execution_id": "04-BU03",
+    "generated_count": 11,
+    "included_required_count": 3,
+    "matched_count": 3,
+    "missing": [
+      "일정 입력",
+      "종료"
+    ],
+    "missing_count": 2,
+    "required_count": 5,
+    "score": 40.45199174779453,
+    "status": "COMPLETED_WITH_MISSING_EVIDENCE",
+    "unmatched_count": 8,
+    "week_selection_status": null
+  }
+}

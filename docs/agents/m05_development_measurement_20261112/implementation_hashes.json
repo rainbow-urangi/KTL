@@ -1,0 +1,8 @@
+{
+  "backend/m05_development_contract.py": "e7ab50c398527163d85f7710cafab9e1703ed08ea19d69cbb480bfd30a0b13ed",
+  "backend/m05_full_context.py": "dc101af28ea0eb1930ad7d09b31d495ed58c13ee16492a7b80176946a080f276",
+  "backend/m05_full_context_csv.py": "34884e73fa416668d4591fb6d02da0c66629b2a0dec843644cb3f9707ed3831a",
+  "backend/m05_readiness_web.py": "c1468ec34cb821f42730e1045f3228d9d0d364816992d18fac58c7562555c784",
+  "evaluation_contracts/m05_development_authorization.json": "52f60fffe92c5c8e31c08681f64a78c7ecc15141dcffda39e186568e3cfd2ab4",
+  "tests/test_m05_development_contract.py": "344a872128daf3c9f5b23a1f4dcfee3eef1971c508fa8c9533e38e78cd85417b"
+}

@@ -1,0 +1,11 @@
+﻿business_unit_id,scenario_id,schema_valid,step_order_valid,action_present,target_present,success
+BU01,REAL-SCN-63d098c2b7f618dd2fbb,True,True,True,True,True
+BU03,REAL-SCN-32336cc011a16dc0ad55,True,False,True,True,False
+BU05,REAL-SCN-8589622401daec6d1f6b,True,True,True,True,True
+BU07,REAL-SCN-003422561dfeca485a13,True,True,True,True,True
+BU09,REAL-SCN-4a6bd38e040074e9f203,True,True,True,True,True
+BU12,REAL-SCN-c4376abd2564435bf39c,True,True,True,True,True
+BU13,REAL-SCN-f7bd4515a23487463468,True,True,True,True,True
+BU14,REAL-SCN-479b172934bd8c24605b,True,True,True,True,True
+BU17,REAL-SCN-89614e4095b2d244ab94,True,True,True,True,True
+BU20,REAL-SCN-ae8129f3a7abc211876a,True,True,True,True,True

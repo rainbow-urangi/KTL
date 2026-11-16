@@ -1,0 +1,68 @@
+{
+  "status": "IMPLEMENTED_TESTED_PENDING_INDEPENDENT_REVIEW",
+  "created_at_utc": "2026-11-11T12:55:28.512619+00:00",
+  "changed_artifacts": [
+    {
+      "path": "backend/m05_timestamp_evidence.py",
+      "sha256": "5c71cf1f048b4d8e6c2bb0eeb9617983ca438888e86729dde7f3a7bfda838678"
+    },
+    {
+      "path": "backend/m05_full_context.py",
+      "sha256": "5bfef44ad4b6bf2f855313e3f5b37c3dd0b301e3d1b0a881b475f7cad91db122"
+    },
+    {
+      "path": "tests/test_m05_timestamp_evidence.py",
+      "sha256": "22a764063667b0699d70e6d8393e4444d3f2695d4b9958855f18518accb0c791"
+    },
+    {
+      "path": "docs/agents/m05_full_context_implementation/README.md",
+      "sha256": "14f2b3fb1ae613b06c02a9ff32d85f7a2394e7bb4d53f49621f9967df69161b9"
+    },
+    {
+      "path": "docs/agents/m05_full_context_preparation/evidence.template.csv",
+      "sha256": "b9277cc862132e242ed469ab3e46dcee4bd40f7a837388a13a77e13c28080d1b"
+    }
+  ],
+  "focused_tests_passed": 35,
+  "full_regression_tests_passed": 415,
+  "raw_and_frozen_hashes_unchanged": 25,
+  "actual_heldout_predictions": 0,
+  "actual_f1": null,
+  "focused_test_runtimes": [
+    "Python 3.10.5",
+    "Python 3.12.6"
+  ],
+  "independent_review_findings_fixed": [
+    "aware exporter timezone conflict",
+    "Decimal epoch precision rounding",
+    "Python-version-dependent ISO precision truncation",
+    "malformed explicit offset normalization",
+    "Python-version-dependent decimal comma"
+  ],
+  "report_artifacts": [
+    {
+      "path": "docs/agents/m05_timestamp_evidence_20261111/README.md",
+      "sha256": "312d15bb60c6d69288291b624ad40878865d0b34e8555f76e13f9ea1a8baf49f"
+    },
+    {
+      "path": "docs/agents/m05_timestamp_evidence_20261111/focused_tests.log",
+      "sha256": "7b3f52e5011cad18c6ffb0353c40c868814354fbf9833eb9808b19d7e8583fd7"
+    },
+    {
+      "path": "docs/agents/m05_timestamp_evidence_20261111/focused_tests_python312.log",
+      "sha256": "9ddacff61146299b8c7af69e6a780159f291cd42cc7a027c4fc26134bab6d759"
+    },
+    {
+      "path": "docs/agents/m05_timestamp_evidence_20261111/full_regression.log",
+      "sha256": "90abc8d1d3f130bcf229599e0afe0b08b36f9e351d07bf0dee96dbf9249826d4"
+    },
+    {
+      "path": "docs/agents/m05_timestamp_evidence_20261111/integrity_before.json",
+      "sha256": "c8a4c7a6822b00c414f38fc41a92360f98cef06b269ad28f345d956fa6a8e489"
+    },
+    {
+      "path": "docs/agents/m05_timestamp_evidence_20261111/validation.json",
+      "sha256": "32a15c2a679510d788438da1105157f85c66d18ab3b5f56b9de9e0835e9ab642"
+    }
+  ]
+}

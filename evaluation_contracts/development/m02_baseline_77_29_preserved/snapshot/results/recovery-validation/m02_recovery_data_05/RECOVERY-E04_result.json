@@ -1,0 +1,177 @@
+{
+  "evidence": [
+    {
+      "completion_source_event_ids": [],
+      "detected_id": "BA-e5635e43-d438-42e4-870a-b8bc29634ba6",
+      "detected_step": "거래처 정보 관리",
+      "direct_match": true,
+      "ground_truth_step": "거래처 정보 관리",
+      "input_completion_proof": [],
+      "match_kind": "INTENT",
+      "missing_reason": null,
+      "process_id": "BU17",
+      "required_included": true,
+      "required_logical_role": "ENTER_CONTEXT",
+      "required_step_id": "BU17-S01",
+      "source_event_ids": [
+        "e5635e43-d438-42e4-870a-b8bc29634ba6"
+      ],
+      "source_node_ids": [
+        "PM-003-N001"
+      ]
+    },
+    {
+      "completion_source_event_ids": [],
+      "detected_id": "BA-1d1925e1-dc41-44e3-97f8-b752203efe59",
+      "detected_step": "등록",
+      "direct_match": true,
+      "ground_truth_step": "등록",
+      "input_completion_proof": [],
+      "match_kind": "INTENT",
+      "missing_reason": null,
+      "process_id": "BU17",
+      "required_included": true,
+      "required_logical_role": "INITIATE_REGISTRATION",
+      "required_step_id": "BU17-S02",
+      "source_event_ids": [
+        "1d1925e1-dc41-44e3-97f8-b752203efe59",
+        "e9fa9155-1948-4746-98e5-41152a59a93d"
+      ],
+      "source_node_ids": [
+        "PM-005-N001",
+        "PM-005-N002"
+      ]
+    },
+    {
+      "completion_source_event_ids": [],
+      "detected_id": "BA-b08a99f0-d0d0-4021-b522-3c6571481232",
+      "detected_step": "거래처 정보",
+      "direct_match": true,
+      "ground_truth_step": "테스트 거래처 정보 입력",
+      "input_completion_proof": [
+        {
+          "rule": "OWNER_CONFIRMED_SUCCESS_IMPLIES_REQUIRED_FIELDS",
+          "success_source_event_ids": [
+            "40ecd720-27cc-4f80-b490-5f09a1aaa46f"
+          ],
+          "write_step_id": "BA-ec2546d6-9763-409a-aa01-790c97aedd1b"
+        }
+      ],
+      "match_kind": "INTENT",
+      "missing_reason": null,
+      "process_id": "BU17",
+      "required_included": true,
+      "required_logical_role": "INPUT_INFORMATION",
+      "required_step_id": "BU17-S03",
+      "source_event_ids": [
+        "e9fa9155-1948-4746-98e5-41152a59a93d",
+        "b08a99f0-d0d0-4021-b522-3c6571481232",
+        "dbee4962-6c32-4029-8af1-4bcf3d51df76",
+        "af179592-c4c4-493c-882f-a0c352317e52",
+        "c488f50d-767b-49b9-9e14-5e8dc406a646",
+        "0a81f206-f9a9-45ff-8c80-db83e8d2f560",
+        "15ed07da-a4f9-48e5-bf55-d204b1a1e79b",
+        "c1979f4c-645c-4fea-925d-03cb3b63f02b",
+        "848f73d6-860c-4cb1-b138-f953bfaa33ae"
+      ],
+      "source_node_ids": [
+        "PM-005-N002",
+        "PM-005-N004"
+      ]
+    },
+    {
+      "completion_source_event_ids": [],
+      "detected_id": "BA-ec2546d6-9763-409a-aa01-790c97aedd1b",
+      "detected_step": "저장",
+      "direct_match": true,
+      "ground_truth_step": "저장",
+      "input_completion_proof": [],
+      "match_kind": "INTENT",
+      "missing_reason": null,
+      "process_id": "BU17",
+      "required_included": true,
+      "required_logical_role": "SAVE_INFORMATION",
+      "required_step_id": "BU17-S04",
+      "source_event_ids": [
+        "e9fa9155-1948-4746-98e5-41152a59a93d",
+        "ec2546d6-9763-409a-aa01-790c97aedd1b",
+        "40ecd720-27cc-4f80-b490-5f09a1aaa46f",
+        "1c803c70-e33b-447d-be76-d79c9f6c6e09"
+      ],
+      "source_node_ids": [
+        "PM-005-N002",
+        "PM-005-N005"
+      ]
+    },
+    {
+      "completion_source_event_ids": [
+        "40ecd720-27cc-4f80-b490-5f09a1aaa46f"
+      ],
+      "detected_id": "BA-ec2546d6-9763-409a-aa01-790c97aedd1b",
+      "detected_step": "저장",
+      "direct_match": false,
+      "ground_truth_step": "종료",
+      "input_completion_proof": [],
+      "match_kind": "STATE_ATTRIBUTE",
+      "missing_reason": null,
+      "process_id": "BU17",
+      "required_included": true,
+      "required_logical_role": "END_WORKFLOW",
+      "required_step_id": "BU17-S05",
+      "source_event_ids": [
+        "e9fa9155-1948-4746-98e5-41152a59a93d",
+        "ec2546d6-9763-409a-aa01-790c97aedd1b",
+        "40ecd720-27cc-4f80-b490-5f09a1aaa46f",
+        "1c803c70-e33b-447d-be76-d79c9f6c6e09"
+      ],
+      "source_node_ids": [
+        "PM-005-N002",
+        "PM-005-N005"
+      ]
+    }
+  ],
+  "stats": {
+    "accuracy": 80.0,
+    "auxiliary_evidence_counted": false,
+    "completeness": 100.0,
+    "correctly_mapped": 4,
+    "defined_required": 5,
+    "evaluated_procedures": 5,
+    "formula": "sqrt(Accuracy * Completeness)",
+    "included_required": 5,
+    "matching_method": "M02_USER_CONFIRMED_V1",
+    "per_business_unit": [
+      {
+        "accuracy": 80.0,
+        "business_unit_id": "BU17",
+        "completeness": 100.0,
+        "generated_count": 5,
+        "included_required_count": 5,
+        "matched_count": 4,
+        "missing_count": 0,
+        "required_count": 5,
+        "score": 89.44271909999159,
+        "status": "COMPLETED",
+        "unmatched_count": 1
+      }
+    ],
+    "semantic_uncertainties": []
+  },
+  "summary": {
+    "accuracy": 80.0,
+    "business_unit_id": "BU17",
+    "completeness": 100.0,
+    "dataset": "m02_recovery_data_01",
+    "execution_id": "RECOVERY-E04",
+    "generated_count": 5,
+    "included_required_count": 5,
+    "matched_count": 4,
+    "missing": [],
+    "missing_count": 0,
+    "required_count": 5,
+    "score": 89.44271909999159,
+    "status": "COMPLETED",
+    "unmatched_count": 1,
+    "week_selection_status": null
+  }
+}

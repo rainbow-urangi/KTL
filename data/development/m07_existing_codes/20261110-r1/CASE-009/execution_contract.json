@@ -1,0 +1,136 @@
+{
+  "scenario_id": "CANON-SCN-b942446b030f547453a43c70",
+  "steps": [
+    {
+      "action": "navigate",
+      "checks": [
+        {
+          "expected": "/mypage/cards",
+          "kind": "url_path"
+        },
+        {
+          "expected": true,
+          "kind": "visible",
+          "target": {
+            "by": "css selector",
+            "value": ".business-card-page .business-card-table"
+          }
+        },
+        {
+          "expected": true,
+          "kind": "visible",
+          "target": {
+            "by": "css selector",
+            "value": ".business-card-table__title button"
+          }
+        }
+      ],
+      "order": 1,
+      "target": {
+        "url": "https://rainbowlab.ai.kr/mypage/cards"
+      }
+    },
+    {
+      "action": "click",
+      "checks": [
+        {
+          "expected": true,
+          "kind": "visible",
+          "target": {
+            "by": "css selector",
+            "value": ".business-card-detail-modal"
+          }
+        },
+        {
+          "kind": "text_equals_target",
+          "other_property": "text",
+          "other_target": {
+            "by": "css selector",
+            "value": ".business-card-page .business-card-table tbody tr:first-child > td:nth-child(3)"
+          },
+          "property": "text",
+          "target": {
+            "by": "css selector",
+            "value": ".business-card-detail-modal__body > section.business-card-detail-modal__section:first-child > .business-card-detail-modal__grid > div:first-child > span"
+          }
+        },
+        {
+          "kind": "nonempty",
+          "property": "text",
+          "target": {
+            "by": "css selector",
+            "value": ".business-card-detail-modal__body > section.business-card-detail-modal__section:first-child > .business-card-detail-modal__grid > div:first-child > span"
+          }
+        }
+      ],
+      "order": 2,
+      "target": {
+        "by": "css selector",
+        "value": "section.mypage-content > div.work-report-page.business-card-page > table.business-card-table > tbody > tr:nth-of-type(1) > td.business-card-table__title:nth-of-type(2)"
+      }
+    },
+    {
+      "action": "verify",
+      "checks": [
+        {
+          "expected": true,
+          "kind": "visible",
+          "target": {
+            "by": "css selector",
+            "value": ".business-card-detail-modal"
+          }
+        }
+      ],
+      "order": 3,
+      "target": {
+        "by": "css selector",
+        "value": ".business-card-detail-modal"
+      }
+    },
+    {
+      "action": "click",
+      "checks": [
+        {
+          "expected": false,
+          "kind": "visible",
+          "target": {
+            "by": "css selector",
+            "value": ".business-card-detail-modal"
+          }
+        },
+        {
+          "expected": true,
+          "kind": "visible",
+          "target": {
+            "by": "css selector",
+            "value": ".business-card-page .business-card-table"
+          }
+        }
+      ],
+      "order": 4,
+      "target": {
+        "by": "css selector",
+        "value": "div.mypage-layout > section.mypage-content > div.work-report-detail-modal:nth-of-type(2) > div.work-report-detail-modal__panel.business-card-detail-modal > div.work-report-detail-modal__head:nth-of-type(1) > button.work-report-detail-modal__close"
+      }
+    },
+    {
+      "action": "verify",
+      "checks": [
+        {
+          "expected": false,
+          "kind": "visible",
+          "target": {
+            "by": "css selector",
+            "value": ".business-card-detail-modal"
+          }
+        }
+      ],
+      "order": 5,
+      "target": {
+        "by": "css selector",
+        "value": ".business-card-detail-modal"
+      }
+    }
+  ],
+  "version": 1
+}

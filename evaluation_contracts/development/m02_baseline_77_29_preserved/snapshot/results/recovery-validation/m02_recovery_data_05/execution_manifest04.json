@@ -1,0 +1,13 @@
+[
+  {
+    "business_unit_id": "BU03",
+    "end_event_id": "a237faed-2a74-47b4-9eba-c8b11a7d3ee6",
+    "end_raw_id": 90980,
+    "execution_id": "04-BU03",
+    "menu_reentry_observed": true,
+    "session_id": "30125937-e337-4123-bee2-2987b3d53be8",
+    "source": "RAW_ONLY chronological lifecycle; one execution each identified by explicit menu and popup lifecycle; no model/GT prediction",
+    "start_event_id": "9745dad1-ad62-4077-aa6a-dec488dc715e",
+    "start_raw_id": 90960
+  }
+]

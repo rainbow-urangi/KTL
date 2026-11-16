@@ -1,0 +1,72 @@
+{
+  "created_at_utc": "2026-11-11T14:04:51.230911+00:00",
+  "status": "DOCUMENTATION_AND_NONFROZEN_CONTRACT_SYNC",
+  "authorization_basis": "Parent authorized a general transparent preprediction raw-context plus traceable explicit user-confirmation principle, with actual two-event provenance and no classifier exceptions.",
+  "modified": [
+    {
+      "path": "evaluation_contracts/m05_user20.json",
+      "before": {
+        "path": "docs/agents/m05_attested_contract_sync_20261111/before/evaluation_contracts/m05_user20.json",
+        "sha256": "89318f33fb23ed146e4ec58c68d802f817e893c0b2811db03636edc8e241e1d2"
+      },
+      "after": {
+        "path": "evaluation_contracts/m05_user20.json",
+        "sha256": "568e50fd652ee4d1bec7aad32472c17a11940ce472da184d3925bf94293b83e7"
+      }
+    },
+    {
+      "path": "R&D_COMPLIANCE.md",
+      "before": {
+        "path": "docs/agents/m05_attested_contract_sync_20261111/before/R&D_COMPLIANCE.md",
+        "sha256": "85495438ebc89fb6e6b37fed5092e61dd393e2792d4acc92e6ccf7500702799b"
+      },
+      "after": {
+        "path": "R&D_COMPLIANCE.md",
+        "sha256": "328b136f7f7f11dad7d497d730ea618697e6f8c18a2f36f193689ff0be50c200"
+      }
+    },
+    {
+      "path": "docs/agents/m05_full_context_implementation/README.md",
+      "before": {
+        "path": "docs/agents/m05_attested_contract_sync_20261111/before/docs/agents/m05_full_context_implementation/README.md",
+        "sha256": "b743ace6d71a222e1266d4eac72ffaaef0d8552b3f68c7f4cbc2bc75ce4a091d"
+      },
+      "after": {
+        "path": "docs/agents/m05_full_context_implementation/README.md",
+        "sha256": "01f03d16e74bfdea2f25fb37c1c6a4f1c10e163a618014c6d2bfff49588e5546"
+      }
+    }
+  ],
+  "source_lock_unchanged": {
+    "path": "docs/agents/m05_raw03_attested_label_lock_20261111/target_label_lock.json",
+    "sha256": "ad553f26834c14995ae31b38b4a884f4875585e0a81b0dd168507e652810b156"
+  },
+  "source_labels_unchanged": {
+    "path": "docs/agents/m05_raw03_attested_label_lock_20261111/target_labels20.csv",
+    "sha256": "88f48576253211e47f8a39a857734e031d30a9bdbcf4da619e58fdd11cf3ceea"
+  },
+  "engine_freeze_sha256": "23fde29b22c23976ccf02760f58b2c2490f3e5b054c385193fc7c463f5f00d10",
+  "engine_freeze_validation": "PASS",
+  "protected_preparation_snapshot_note": "The earlier protected_before/after.json records are intentionally immutable snapshots of the preparation time. One protected document, R&D_COMPLIANCE.md, changed afterward as documented here; remaining128 protected source files still match.",
+  "protected_snapshot_expected_post_sync_differences": [
+    {
+      "path": "R&D_COMPLIANCE.md",
+      "before_sha256": "85495438ebc89fb6e6b37fed5092e61dd393e2792d4acc92e6ccf7500702799b",
+      "after_sha256": "328b136f7f7f11dad7d497d730ea618697e6f8c18a2f36f193689ff0be50c200"
+    }
+  ],
+  "prediction_executions": 0,
+  "scoring_executions": 0,
+  "runtime_gate_after_sync": "PRIOR_USE_DECLARATIONS_REQUIRED",
+  "unchanged": [
+    "All original raw files",
+    "All original label-lock artifacts",
+    "Prepared bundle/manifest",
+    "Engine adapter/rules/normalizer/version/active configuration/freeze",
+    "Category definitions and all twenty labels",
+    "Held-out/history/access/independent-approval gates"
+  ],
+  "backend_changed": false,
+  "full_backend_tests": "NOT_RUN_DOCUMENTATION_AND_NONFROZEN_CONTRACT_ONLY",
+  "independent_review": "PENDING"
+}

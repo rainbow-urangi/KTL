@@ -1,0 +1,28 @@
+{
+  "created_at_utc": "2026-11-11T14:06:13.373381+00:00",
+  "regression": {
+    "command": "PYTHONDONTWRITEBYTECODE=1 python3 -m unittest discover -s tests -v",
+    "status": "PASS",
+    "tests": 419,
+    "elapsed_seconds": 20.449,
+    "log": {
+      "path": "docs/agents/m05_attested_contract_sync_20261111/full_regression.log",
+      "sha256": "c43486a0cef2c31eca5e95f1948f69f884314d7ed7adf276403218338696c1de"
+    },
+    "fixture_scope": "Synthetic regression fixtures only, never official or real held-out evidence."
+  },
+  "bundle_artifacts_unchanged": 42,
+  "previous_protected_files_unchanged": 128,
+  "intentionally_changed_previous_protected_document": "R&D_COMPLIANCE.md",
+  "post_sync_document_hashes_match": true,
+  "freeze_sha256": "23fde29b22c23976ccf02760f58b2c2490f3e5b054c385193fc7c463f5f00d10",
+  "freeze_validation": "PASS",
+  "execution_readiness": "BLOCKED",
+  "validator_error": "PRIOR_USE_DECLARATIONS_REQUIRED",
+  "real_raw_prediction_executions": 0,
+  "real_raw_scoring_executions": 0,
+  "real_raw_attempt_claims": 0,
+  "label_source_files_and_locked_labels_unchanged": true,
+  "independent_approval_created": false,
+  "note": "This post-test record supersedes the initial change-time NOT_RUN test status only; original change manifest is retained unchanged."
+}

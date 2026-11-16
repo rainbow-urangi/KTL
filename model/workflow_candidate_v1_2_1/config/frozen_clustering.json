@@ -1,0 +1,10 @@
+{
+  "distance_threshold": 0.25,
+  "n_clusters": null,
+  "affinity": "cosine",
+  "linkage": "average",
+  "selection_on_inference": false,
+  "single_workflow_label": 0,
+  "degenerate_metric_policy": "null when K is 1 or N; never replace labels to improve validity",
+  "unseen_assignment_policy": "transductive clustering at fixed threshold; no nearest-centroid assignment/rejection"
+}

@@ -1,0 +1,59 @@
+{
+  "compression": "ADJACENT_SAME_EXPLICIT_INTERACTION_COMPLETE_ID_NAME_TYPE_SELECTOR_LABEL_INPUT_ONLY",
+  "http": "EVIDENCE_ONLY_NO_RECENT_ACTION_CAUSAL_PROMOTION",
+  "lexicon": {
+    "CONFIRM": [
+      "확인",
+      "confirm",
+      "ok"
+    ],
+    "DETAIL_OPEN": [
+      "상세",
+      "상세 보기",
+      "details"
+    ],
+    "POPUP_CLOSE": [
+      "닫기",
+      "close",
+      "취소",
+      "cancel"
+    ],
+    "QUERY": [
+      "조회",
+      "검색",
+      "search",
+      "query"
+    ],
+    "REGISTER": [
+      "등록",
+      "register",
+      "추가",
+      "add"
+    ],
+    "RESULT_CHECK": [
+      "결과 확인",
+      "check result"
+    ],
+    "SAVE": [
+      "저장",
+      "save"
+    ],
+    "SELECT": [
+      "선택",
+      "select"
+    ],
+    "UPDATE": [
+      "수정",
+      "update",
+      "변경 적용"
+    ],
+    "VIEW": [
+      "보기",
+      "view"
+    ]
+  },
+  "missing": "UNRESOLVED_RETAINED",
+  "sidecars": "ALLOWLISTED_LEDGER_NO_COMPLETION_INFERENCE",
+  "split": "ONE_RAW_EVENT_ATOM_BEFORE_ANY_MERGE",
+  "version": "business-process-serializer-4-semantic-2"
+}

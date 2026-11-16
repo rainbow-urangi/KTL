@@ -1,0 +1,43 @@
+{
+  "result": {
+    "status": "COMPLETE",
+    "run_mode": "DEVELOPMENT",
+    "official_pass": null,
+    "total": 20,
+    "REMOVE": 10,
+    "KEEP": 10,
+    "TP": 7,
+    "FP": 0,
+    "FN": 3,
+    "TN": 10,
+    "precision": 1.0,
+    "recall": 0.7,
+    "f1": 0.8235294117647058,
+    "target": 0.79,
+    "passed": true,
+    "full_event_count": 417,
+    "target_event_count": 20,
+    "context_event_count": 397,
+    "run_id": "538f253c49816ede31831e052e8e42519c9c26768e130e096f925f0474e0a7bf",
+    "csv_recalculation": "PASS",
+    "engine_status": "CANDIDATE_PENDING_INDEPENDENT_VERIFICATION"
+  },
+  "reload_result_equal": true,
+  "csv_bytes_equal": true,
+  "csv_sha256": "7def6d910c6f374d98b7383c9489d7b6b51178dc9a2fedba7687351a624351ff",
+  "recalculation": {
+    "status": "PASS",
+    "run_mode": "DEVELOPMENT",
+    "official_pass": null,
+    "TP": 7,
+    "FP": 0,
+    "FN": 3,
+    "TN": 10,
+    "precision": 1.0,
+    "recall": 0.7,
+    "f1": 0.8235294117647058,
+    "passed": true
+  },
+  "browser_click_test": "NOT_RUN",
+  "web_url": "http://127.0.0.1:8769"
+}

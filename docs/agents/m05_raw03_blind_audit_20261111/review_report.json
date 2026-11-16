@@ -1,0 +1,52 @@
+{
+  "status": "BLOCKED_ADDITIONAL_REMOVE_EVIDENCE_REQUIRED",
+  "created_at_utc": "2026-11-11T13:40:53.691514+00:00",
+  "contract": {
+    "mode": "DEVELOPMENT",
+    "total": 20,
+    "KEEP": 10,
+    "REMOVE": 10,
+    "category_quotas": null
+  },
+  "result": {
+    "raw03_events_reviewed": 67,
+    "new_confirmed_remove": 0,
+    "preserved_keep": 10,
+    "preserved_remove": 8,
+    "preserved_total": 18,
+    "missing_objective_remove": 2,
+    "target20_lock_created": false,
+    "preserved_previous_csv_byte_identical": true,
+    "new_predictions": 0,
+    "scores_generated": false
+  },
+  "held_out": {
+    "status": "SUPPORTED_WITHIN_AVAILABLE_SOURCE_HISTORY_NOT_CERTIFIED",
+    "held_out_field": "blank",
+    "history_files_checked": 17,
+    "complete_training_development_nonuse_certified": false,
+    "engine_feature_content_nonoverlap_check": "NOT_PERFORMED_BY_BLIND_LABELER",
+    "outside_or_deleted_history_certified": false
+  },
+  "blindness": {
+    "engine_code_read": false,
+    "adapter_code_read": false,
+    "prediction_files_read": false,
+    "engine_or_adapter_executed": false,
+    "prediction_based_selection": false
+  },
+  "limitations": [
+    "수집 의도와 raw 값/선택 상태 증거를 구분했다.",
+    "change event 시간은 입력 시작 시간이 아니다.",
+    "click value=null은 빈 문자열 또는 값 불변 증거가 아니다.",
+    "저장 성공은 확인되지만 모든 재클릭의 무의미함을 증명하지 않는다.",
+    "raw03은 신규 session이지만 같은 site/install/tab의 연속 사용으로 독립 업무 객체라고 주장하지 않는다.",
+    "학습/개발 이력 completeness와 실제 model feature-content 미중복은 별도 검증이 필요하다."
+  ],
+  "next_evidence": "현재 raw에서 두 건 확정은 불가하다. 녹화나 전후 value/selection을 직접 기록한 동시 증거가 있으면 해당 event ID와 대조한다. 없으면 새 폼의 빈 필드에서 최초 focus, 추가 클릭, paste 직전 value='' 및 selection 0..0, 실제 입력/저장까지 온전한 새 수집을 수행하고 독립 검토한다. 선행 paste 뒤 재클릭이나 여러 필드 사이 focus 전환은 피한다. 원본에 누락 증거를 사후 삽입하지 않는다.",
+  "tests": {
+    "raw_and_hash_audit": "PASS",
+    "backend_or_engine_changed": false,
+    "backend_full_unit_tests": "NOT_RUN: documentation/source-only audit, no backend/evaluation implementation change."
+  }
+}

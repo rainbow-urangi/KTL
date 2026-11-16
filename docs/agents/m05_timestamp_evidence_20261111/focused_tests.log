@@ -1,0 +1,40 @@
+test_authority_cannot_escape_bundle (test_m05_timestamp_evidence.TimestampBundleTests) ... ok
+test_authority_requires_identity_binding_and_substantive_record (test_m05_timestamp_evidence.TimestampBundleTests) ... ok
+test_authority_supports_no_payload_and_requires_hash_verified_sources (test_m05_timestamp_evidence.TimestampBundleTests) ... ok
+test_collection_timezone_alone_never_authorizes_naive_rows (test_m05_timestamp_evidence.TimestampBundleTests) ... ok
+test_complete_sequence_keeps_frozen_features_and_raw_bytes (test_m05_timestamp_evidence.TimestampBundleTests) ... ok
+test_no_sources_or_authority_fails (test_m05_timestamp_evidence.TimestampBundleTests) ... ok
+test_policy_hash_and_exact_raw_binding_required (test_m05_timestamp_evidence.TimestampBundleTests) ... ok
+test_policy_schema_paths_and_timezone_conflicts_fail (test_m05_timestamp_evidence.TimestampBundleTests) ... ok
+test_postfreeze_is_still_checked_on_resolved_utc (test_m05_timestamp_evidence.TimestampBundleTests) ... ok
+test_session_and_task_use_resolved_utc_and_still_enforce_bounds (test_m05_timestamp_evidence.TimestampBundleTests) ... ok
+test_timestamp_conflict_blocks_before_adapter_or_score (test_m05_timestamp_evidence.TimestampBundleTests) ... ok
+test_arbitrary_decimal_precision_never_rounds_away (test_m05_timestamp_evidence.TimestampResolutionTests) ... ok
+test_authority_without_payload (test_m05_timestamp_evidence.TimestampResolutionTests) ... ok
+test_aware_offset_must_match_declared_exporter_timezone (test_m05_timestamp_evidence.TimestampResolutionTests) ... ok
+test_aware_raw_cannot_override_conflicting_payload (test_m05_timestamp_evidence.TimestampResolutionTests) ... ok
+test_aware_without_policy_is_unchanged (test_m05_timestamp_evidence.TimestampResolutionTests) ... ok
+test_decimal_comma_is_lossless_and_runtime_independent (test_m05_timestamp_evidence.TimestampResolutionTests) ... ok
+test_dst_gap_and_ambiguous_fold_fail_without_utc (test_m05_timestamp_evidence.TimestampResolutionTests) ... ok
+test_epoch_only_and_iso_only_are_supported (test_m05_timestamp_evidence.TimestampResolutionTests) ... ok
+test_epoch_units_and_precision (test_m05_timestamp_evidence.TimestampResolutionTests) ... ok
+test_export_offset_or_calendar_mismatch_fails (test_m05_timestamp_evidence.TimestampResolutionTests) ... ok
+test_json_decimal_precision_is_also_exact (test_m05_timestamp_evidence.TimestampResolutionTests) ... ok
+test_malformed_explicit_offsets_never_normalize (test_m05_timestamp_evidence.TimestampResolutionTests) ... ok
+test_missing_invalid_duplicate_json_and_missing_configured_field_fail (test_m05_timestamp_evidence.TimestampResolutionTests) ... ok
+test_naive_payload_never_inherits_export_timezone (test_m05_timestamp_evidence.TimestampResolutionTests) ... ok
+test_naive_without_policy_fails_closed (test_m05_timestamp_evidence.TimestampResolutionTests) ... ok
+test_non_korean_zone_and_fixed_offset_are_generic (test_m05_timestamp_evidence.TimestampResolutionTests) ... ok
+test_payload_identity_must_match_event_and_session (test_m05_timestamp_evidence.TimestampResolutionTests) ... ok
+test_payload_iso_submicrosecond_precision_never_truncates (test_m05_timestamp_evidence.TimestampResolutionTests) ... ok
+test_payload_sources_must_all_agree (test_m05_timestamp_evidence.TimestampResolutionTests) ... ok
+test_payload_utc_epoch_and_naive_kst_reconcile_without_mutation (test_m05_timestamp_evidence.TimestampResolutionTests) ... ok
+test_raw_iso_submicrosecond_precision_never_truncates (test_m05_timestamp_evidence.TimestampResolutionTests) ... ok
+test_timezone_abbreviation_unknown_or_invalid_offset_fails (test_m05_timestamp_evidence.TimestampResolutionTests) ... ok
+test_unsupported_offset_precision_and_short_time_fail (test_m05_timestamp_evidence.TimestampResolutionTests) ... ok
+test_utc_payload_disambiguates_dst_fold (test_m05_timestamp_evidence.TimestampResolutionTests) ... ok
+
+----------------------------------------------------------------------
+Ran 35 tests in 0.074s
+
+OK

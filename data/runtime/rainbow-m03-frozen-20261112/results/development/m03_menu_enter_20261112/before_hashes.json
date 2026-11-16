@@ -1,0 +1,13 @@
+{
+  "backend/m03_real_generator.py": "cdb9e03002923e9166f515c09059efcc459a4a29c85b19a2e84ea71c94cbe52b",
+  "tests/test_m03_real_generator.py": "5cefb88c59480a9f124e07af8487c93fc2ecc5ba2f3c663f1f2b55bf431ec533",
+  "backend/config.json": "3f7a3eb480642af96eaa0acbd03da3ce94398cc775aaa643ea0fb3cd3eb7b703",
+  "backend/m03_integration.py": "07e15880ce4af9d35acc5e0a7a236be0e3ffc513068c54890430341fa99b819e",
+  "backend/evaluators.py": "16f17a9d1cc13b884ec847ffba2a32d1ef59d388f8fb162be36d30cbbeaf57d7",
+  "backend/server.py": "c1a49bd52de17fd193ad5a719206f7c6d1085835b95d7a9a62c325cec23d1712",
+  "backend/external_results.py": "d8ef8adbcdf66e523962fbf801e78c21b77b37d28db903a9270b644ddd476f40",
+  "evaluation_contracts/m03-scenario.schema.json": "4ed1caada4bb194de2a95ac4954e6aa7b86479646f8cfa601fa3c4d4277de101",
+  "results/development/m03_current_semantics_20261109/business_steps.json": "86b1e77c8ca4ec365806d7d145d99ffa802bc097347b3db16ed9b3f600503f39",
+  "docs/agents/m03_final_10_candidate_20261112/M03_FINAL_10_CANDIDATE.json": "c3351712b13e482389b5b3c55238a107f48ced502fd1d6f7053c3f3753c5545a",
+  "tests/test_integration_sandbox.py": "1cef9ebbd0fd5fd02bba476ac18c333d73544fea46feabd12fd1cb45515ddb74"
+}

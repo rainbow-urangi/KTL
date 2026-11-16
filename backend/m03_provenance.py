@@ -3,10 +3,12 @@ import hashlib
 import json
 import re
 import uuid
+from copy import deepcopy
 from datetime import datetime, timezone
 from pathlib import Path
 
 from .evaluators import EvaluationError, require
+from .api_validation import require_string_enum
 from .m03_reference import MAX_REFERENCE_BYTES, _safe_path, _timestamp
 
 
@@ -148,22 +150,66 @@ def fail_generation(root, receipt):
         output.write(encoded(failed))
 
 
+def _observed_snapshot(root, config):
+    """main의 고정 관측 snapshot을 그대로 결박한다. canonical manifest는 만들지 않는다."""
+    from .m03_integration import _no_truth, _project_path
+    root = Path(root).resolve()
+    binding = config.get('m03_real_generator')
+    require(isinstance(binding, dict), 'm03_real_generator must be an object')
+    _no_truth(binding)
+    path = _project_path(root, binding.get('snapshot_path'))
+    expected = binding.get('snapshot_sha256')
+    require(isinstance(expected, str) and re.fullmatch(r'[a-fA-F0-9]{64}', expected),
+            'Observed M03 snapshot SHA-256 required')
+    try:
+        with path.open('rb') as source:
+            raw = source.read(32 * 1024 * 1024 + 1)
+    except OSError:
+        raise EvaluationError('Observed M03 process snapshot is not available', 'NOT_READY') from None
+    require(0 < len(raw) <= 32 * 1024 * 1024, 'Observed M03 snapshot maximum 32 MiB')
+    actual = hashlib.sha256(raw).hexdigest()
+    require(actual == expected.lower(), 'Observed M03 snapshot SHA-256 mismatch')
+    try:
+        value = json.loads(raw.decode('utf-8-sig'))
+    except (ValueError, UnicodeError, RecursionError):
+        raise EvaluationError('Observed M03 snapshot must be UTF-8 JSON', 'ERROR') from None
+    require(isinstance(value, dict), 'Observed M03 process snapshot must be an object')
+    _no_truth(value)
+    relative = path.relative_to(root).as_posix()
+    return dict(kind='OBSERVED_PROCESS_SNAPSHOT', snapshot_path=relative, snapshot_sha256=actual,
+                files=[dict(path=relative, sha256=actual)])
+
+
 def generate_recorded(root, config, payload):
-    from .m03_integration import _real_input, generate, nonempty
+    from .m03_integration import _file_sha, _project_path, _real_input, generate, nonempty, uses_observed_generator
     require(isinstance(payload, dict) and set(payload) <= {
         'business_unit_id', 'workflow_id', 'run_mode', 'generator_mode', 'dataset_id'}, 'Unsupported generation request field')
     require(all(nonempty(payload.get(key)) for key in ('business_unit_id', 'workflow_id')), 'M03 generation business/workflow IDs required')
     mode = payload.get('run_mode', 'DEVELOPMENT')
     engine = payload.get('generator_mode', 'MOCK')
-    require(isinstance(mode, str) and mode in {'DEVELOPMENT', 'REFERENCE', 'OFFICIAL'}, 'Invalid generation mode')
-    require(isinstance(engine, str) and engine in {'MOCK', 'REAL'}, 'Invalid generator mode')
+    require_string_enum(mode, {'DEVELOPMENT', 'REFERENCE', 'OFFICIAL'}, 'run_mode', 'Invalid generation mode')
+    require_string_enum(engine, {'MOCK', 'REAL'}, 'generator_mode', 'Invalid generator mode')
     require(mode != 'OFFICIAL' or (engine == 'REAL' and nonempty(payload.get('dataset_id'))),
             'Official M03 generation requires REAL and a registered dataset_id')
-    verified_real_input = _real_input(Path(root).resolve(), config) if engine == 'REAL' else None
-    receipt = begin_generation(root, config, payload, verified_real_input[1] if verified_real_input is not None else None)
+    observed = uses_observed_generator(config, payload)
+    adapters = config.get('adapters', {})
+    legacy_adapter = (engine == 'REAL' and 'm03' not in config and config.get('m03_real_generator') is None
+                      and isinstance(adapters, dict) and bool(adapters.get('scenario_generation')))
+    require(not legacy_adapter or mode != 'OFFICIAL',
+            'Legacy ID-only adapters do not provide verified official M03 inputs')
+    generation_config = deepcopy(config) if observed else config
+    verified_real_input = (_real_input(Path(root).resolve(), generation_config)
+                           if engine == 'REAL' and not observed and not legacy_adapter else None)
+    analysis_input = (_observed_snapshot(root, generation_config) if observed else
+                      verified_real_input[1] if verified_real_input is not None else None)
+    receipt = begin_generation(root, generation_config, payload, analysis_input)
     try:
-        result = generate(root, config, {key: value for key, value in payload.items() if key != 'dataset_id'},
+        result = generate(root, generation_config, {key: value for key, value in payload.items() if key != 'dataset_id'},
                           verified_real_input=verified_real_input)
+        if observed:
+            path = _project_path(Path(root).resolve(), analysis_input['snapshot_path'])
+            require(_file_sha(path) == result.get('source_snapshot_sha256') == analysis_input['snapshot_sha256'],
+                    'Observed M03 original snapshot changed during generation')
         if mode == 'OFFICIAL':
             require(result.get('official') is not False and result.get('data_class') not in {'DEVELOPMENT', 'REFERENCE'},
                     'Development generator output cannot become official M03 evidence')

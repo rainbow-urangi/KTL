@@ -1,0 +1,17 @@
+{
+  "run_mode": "DEVELOPMENT",
+  "model_version": "workflow_candidate_v1_2_1",
+  "files": {
+    "predictions.json": {
+      "sha256": "96a5cffd393ea47f478f27c7fda0e4a58b2dc00d6e409d8475e2385b22dbcc1a",
+      "source_path": "/Users/sooeunkim/Documents/Codex/2026-11-03/task-5/MODEL-VAL-01/predictions.json",
+      "row_order": "persisted predictions.workflows order"
+    },
+    "workflow_embeddings.npy": {
+      "sha256": "2c0e08051831498effbac58830bb8de3037dd1d779ae45eca18cb6144c352179",
+      "source_path": "/Users/sooeunkim/Documents/Codex/2026-11-03/task-5/MODEL-VAL-01/unseen_workflow_embeddings.npy",
+      "row_order": "persisted predictions.workflows order"
+    }
+  },
+  "notice": "Immutable copies of persisted validation output; not OFFICIAL; no inference/reclustering"
+}

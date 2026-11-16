@@ -1,0 +1,19 @@
+{
+  "rule_version": "session-context-cleaning-v2",
+  "baseline_rules_path": "/Users/sooeunkim/workspace/RainbowKTL/evaluation_contracts/development/m05_baseline_adapter_candidate/rules.json",
+  "scope": "DEVELOPMENT_CANDIDATE",
+  "dependencies": [
+    {
+      "path": "/Users/sooeunkim/workspace/RainbowKTL/backend/m05_baseline_adapter.py",
+      "sha256": "e66c97b4a8a93f529f3778ed2c6f11202c65b1d53179d7d3c9d018e787e62d21"
+    },
+    {
+      "path": "/Users/sooeunkim/workspace/RainbowKTL/evaluation_contracts/development/m05_baseline_adapter_candidate/rules.json",
+      "sha256": "4209905e8112c92c79450d935030e4e80c5334f4212584c45ace5f5b6103d4c3"
+    }
+  ],
+  "max_focus_gap_seconds": 2,
+  "max_nav_observation_gap_seconds": 10,
+  "unknown_input_state": "KEEP unless explicit empty pre-paste evidence",
+  "engine_type": "deterministic_generic_rules"
+}

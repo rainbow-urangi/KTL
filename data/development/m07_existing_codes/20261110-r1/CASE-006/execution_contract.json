@@ -1,0 +1,310 @@
+{
+  "scenario_id": "CANON-SCN-3894c7897747735bcb6fa7b8",
+  "steps": [
+    {
+      "action": "navigate",
+      "checks": [
+        {
+          "expected": "/mypage/work/weekly",
+          "kind": "url_path"
+        },
+        {
+          "expected": true,
+          "kind": "visible",
+          "target": {
+            "by": "css selector",
+            "value": ".work-report-page .work-report-table"
+          }
+        },
+        {
+          "expected": true,
+          "kind": "visible",
+          "target": {
+            "by": "css selector",
+            "value": ".work-report-table__title button"
+          }
+        }
+      ],
+      "order": 1,
+      "target": {
+        "url": "https://rainbowlab.ai.kr/mypage/work/weekly"
+      }
+    },
+    {
+      "action": "click",
+      "checks": [
+        {
+          "expected": true,
+          "kind": "visible",
+          "target": {
+            "by": "css selector",
+            "value": ".work-report-form-modal"
+          }
+        },
+        {
+          "expected": "2026.11.10 (화)",
+          "kind": "text_contains",
+          "target": {
+            "by": "css selector",
+            "value": ".work-report-form-modal__date-button"
+          }
+        }
+      ],
+      "order": 2,
+      "target": {
+        "by": "css selector",
+        "value": "div.mypage-layout > section.mypage-content > div.work-report-page > div.work-report-page__bottom:nth-of-type(2) > div.work-report-page__footer:nth-of-type(2) > button.work-report-page__register"
+      }
+    },
+    {
+      "action": "verify",
+      "checks": [
+        {
+          "expected": true,
+          "kind": "visible",
+          "target": {
+            "by": "css selector",
+            "value": ".work-report-form-modal"
+          }
+        }
+      ],
+      "order": 3,
+      "target": {
+        "by": "css selector",
+        "value": ".work-report-form-modal"
+      }
+    },
+    {
+      "action": "click",
+      "checks": [
+        {
+          "expected": true,
+          "kind": "visible",
+          "target": {
+            "by": "css selector",
+            "value": ".work-report-form-modal__date-picker"
+          }
+        }
+      ],
+      "order": 4,
+      "target": {
+        "by": "css selector",
+        "value": "section.mypage-content > div.work-report-form-modal:nth-of-type(2) > div.work-report-form-modal__panel > div.work-report-form-modal__meta:nth-of-type(2) > div.work-report-form-modal__date > button.work-report-form-modal__date-button"
+      }
+    },
+    {
+      "action": "verify",
+      "checks": [
+        {
+          "expected": true,
+          "kind": "visible",
+          "target": {
+            "by": "css selector",
+            "value": ".work-report-form-modal__date-picker"
+          }
+        }
+      ],
+      "order": 5,
+      "target": {
+        "by": "css selector",
+        "value": ".work-report-form-modal__date-picker"
+      }
+    },
+    {
+      "action": "click",
+      "checks": [
+        {
+          "expected": false,
+          "kind": "visible",
+          "target": {
+            "by": "css selector",
+            "value": ".work-report-form-modal__date-picker"
+          }
+        },
+        {
+          "expected": true,
+          "kind": "visible",
+          "target": {
+            "by": "css selector",
+            "value": ".work-report-form-modal"
+          }
+        },
+        {
+          "expected": "2026.11.09 (월)",
+          "kind": "text_contains",
+          "target": {
+            "by": "css selector",
+            "value": ".work-report-form-modal__date-button"
+          }
+        }
+      ],
+      "order": 6,
+      "target": {
+        "by": "css selector",
+        "value": ".work-date-calendar__day[aria-label=\"2026-11-09\"]"
+      }
+    },
+    {
+      "action": "verify",
+      "checks": [
+        {
+          "expected": false,
+          "kind": "visible",
+          "target": {
+            "by": "css selector",
+            "value": ".work-report-form-modal__date-picker"
+          }
+        }
+      ],
+      "order": 7,
+      "target": {
+        "by": "css selector",
+        "value": ".work-report-form-modal__date-picker"
+      }
+    },
+    {
+      "action": "input",
+      "checks": [
+        {
+          "expected": "KTL-7C91-CU06-TITLE-P2-GPT-20261110-R1",
+          "kind": "value",
+          "target": {
+            "by": "css selector",
+            "value": "#daily-report-create-title-input"
+          }
+        }
+      ],
+      "order": 8,
+      "target": {
+        "by": "css selector",
+        "value": "#daily-report-create-title-input"
+      }
+    },
+    {
+      "action": "input",
+      "checks": [
+        {
+          "expected": "KTL-7C91-CU06 new report content-P2-GPT-20261110-R1",
+          "kind": "value",
+          "target": {
+            "by": "css selector",
+            "value": "#daily-report-create-content-input"
+          }
+        }
+      ],
+      "order": 9,
+      "target": {
+        "by": "css selector",
+        "value": "#daily-report-create-content-input"
+      }
+    },
+    {
+      "action": "click",
+      "checks": [
+        {
+          "expected": false,
+          "kind": "visible",
+          "target": {
+            "by": "css selector",
+            "value": ".work-report-form-modal"
+          }
+        },
+        {
+          "expected": true,
+          "kind": "visible",
+          "target": {
+            "by": "css selector",
+            "value": ".work-report-message-modal__panel"
+          }
+        },
+        {
+          "expected": "저장되었습니다.",
+          "kind": "text_contains",
+          "target": {
+            "by": "css selector",
+            "value": ".work-report-message-modal__panel"
+          }
+        }
+      ],
+      "order": 10,
+      "target": {
+        "by": "css selector",
+        "value": "div.mypage-layout > section.mypage-content > div.work-report-form-modal:nth-of-type(2) > div.work-report-form-modal__panel > div.work-report-form-modal__footer:nth-of-type(4) > button.work-report-form-modal__submit"
+      }
+    },
+    {
+      "action": "verify",
+      "checks": [
+        {
+          "expected": true,
+          "kind": "visible",
+          "target": {
+            "by": "css selector",
+            "value": ".work-report-message-modal__panel"
+          }
+        }
+      ],
+      "order": 11,
+      "target": {
+        "by": "css selector",
+        "value": ".work-report-message-modal__panel"
+      }
+    },
+    {
+      "action": "verify",
+      "checks": [
+        {
+          "expected": false,
+          "kind": "visible",
+          "target": {
+            "by": "css selector",
+            "value": ".work-report-form-modal"
+          }
+        }
+      ],
+      "order": 12,
+      "target": {
+        "by": "css selector",
+        "value": ".work-report-form-modal"
+      }
+    },
+    {
+      "action": "navigate",
+      "checks": [
+        {
+          "expected": "/mypage/work/weekly",
+          "kind": "url_path"
+        },
+        {
+          "expected": true,
+          "kind": "visible",
+          "target": {
+            "by": "css selector",
+            "value": ".work-report-page .work-report-table"
+          }
+        },
+        {
+          "expected": true,
+          "kind": "visible",
+          "target": {
+            "by": "css selector",
+            "value": ".work-report-table__title button"
+          }
+        },
+        {
+          "expected": "KTL-7C91-CU06-TITLE-P2-GPT-20261110-R1",
+          "kind": "text_contains",
+          "target": {
+            "by": "css selector",
+            "value": ".work-report-page .work-report-table"
+          }
+        }
+      ],
+      "order": 13,
+      "target": {
+        "url": "https://rainbowlab.ai.kr/mypage/work/weekly"
+      }
+    }
+  ],
+  "version": 1
+}

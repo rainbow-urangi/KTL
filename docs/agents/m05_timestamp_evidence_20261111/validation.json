@@ -1,0 +1,201 @@
+{
+  "status": "TIMESTAMP_DIAGNOSTIC_PASS_NOT_EVALUATION_APPROVAL",
+  "created_at_utc": "2026-11-11T12:55:28.511609+00:00",
+  "raw_diagnostics": [
+    {
+      "path": "data/evaluation/m05_heldout_raw_01/events.csv",
+      "sha256": "8a797dadcd8341b39e1ce96487eaaafe8995a62dabce3d027495c0f34382b8b4",
+      "row_count": 203,
+      "timestamp_sources": [
+        "locators_json.event_context.event_time",
+        "locators_json.analysis.event_ts_ms"
+      ],
+      "event_and_session_payload_ids_match": true,
+      "all_timestamp_sources_agree": true,
+      "timezone_cross_checked": "Asia/Seoul",
+      "first_utc": "2026-11-11T12:09:46.818000+00:00",
+      "last_utc": "2026-11-11T12:12:16.348000+00:00",
+      "all_after_freeze": true,
+      "frozen_normalization_feature_sha256": "4b476787f17cba2172003cbe477815043ebe8cb3f16727c976134f9bc61c2823",
+      "raw_and_engine_ts_unmodified": true
+    },
+    {
+      "path": "data/evaluation/m05_heldout_raw_02/events.csv",
+      "sha256": "06a86358ada46c3b04c905c018af6004624348a214e210047633da4e28773b50",
+      "row_count": 147,
+      "timestamp_sources": [
+        "locators_json.event_context.event_time",
+        "locators_json.analysis.event_ts_ms"
+      ],
+      "event_and_session_payload_ids_match": true,
+      "all_timestamp_sources_agree": true,
+      "timezone_cross_checked": "Asia/Seoul",
+      "first_utc": "2026-11-11T12:36:45.064000+00:00",
+      "last_utc": "2026-11-11T12:38:29.307000+00:00",
+      "all_after_freeze": true,
+      "frozen_normalization_feature_sha256": "112850f0f45281d46146f495531b3902fe8e88fa4d209098c2cde35a17018461",
+      "raw_and_engine_ts_unmodified": true
+    }
+  ],
+  "integrity_checks": [
+    {
+      "path": "/Users/sooeunkim/workspace/RainbowKTL/evaluation_contracts/development/m05_baseline_frozen_v1/freeze.json",
+      "before_sha256": "23fde29b22c23976ccf02760f58b2c2490f3e5b054c385193fc7c463f5f00d10",
+      "after_sha256": "23fde29b22c23976ccf02760f58b2c2490f3e5b054c385193fc7c463f5f00d10",
+      "unchanged": true
+    },
+    {
+      "path": "/Users/sooeunkim/workspace/RainbowKTL/backend/m05_baseline_adapter.py",
+      "before_sha256": "e66c97b4a8a93f529f3778ed2c6f11202c65b1d53179d7d3c9d018e787e62d21",
+      "after_sha256": "e66c97b4a8a93f529f3778ed2c6f11202c65b1d53179d7d3c9d018e787e62d21",
+      "unchanged": true
+    },
+    {
+      "path": "/Users/sooeunkim/workspace/RainbowKTL/tests/test_m05_baseline_adapter.py",
+      "before_sha256": "86d127710bc05175b429a5f7c35feb39cd6b365189bd26f6f174c4c45f8397d8",
+      "after_sha256": "86d127710bc05175b429a5f7c35feb39cd6b365189bd26f6f174c4c45f8397d8",
+      "unchanged": true
+    },
+    {
+      "path": "/Users/sooeunkim/workspace/RainbowKTL/scripts/validate_m05_baseline_adapter.py",
+      "before_sha256": "f0e1bbef0589280d4e63748f3c898f52b90acfaae88c97f9899366195a4be26f",
+      "after_sha256": "f0e1bbef0589280d4e63748f3c898f52b90acfaae88c97f9899366195a4be26f",
+      "unchanged": true
+    },
+    {
+      "path": "/Users/sooeunkim/workspace/RainbowKTL/evaluation_contracts/development/m05_baseline_adapter_candidate/engine.json",
+      "before_sha256": "7ede6de445bb29735c0ef62abe69bc09faaa8e367f9352341a53aec36529eb82",
+      "after_sha256": "7ede6de445bb29735c0ef62abe69bc09faaa8e367f9352341a53aec36529eb82",
+      "unchanged": true
+    },
+    {
+      "path": "/Users/sooeunkim/workspace/RainbowKTL/evaluation_contracts/development/m05_baseline_adapter_candidate/rules.json",
+      "before_sha256": "4209905e8112c92c79450d935030e4e80c5334f4212584c45ace5f5b6103d4c3",
+      "after_sha256": "4209905e8112c92c79450d935030e4e80c5334f4212584c45ace5f5b6103d4c3",
+      "unchanged": true
+    },
+    {
+      "path": "/Users/sooeunkim/workspace/RainbowKTL/evaluation_contracts/development/m05_baseline_adapter_candidate/dataset_original.py",
+      "before_sha256": "fcefa464a7e21ef72d1d5e2bd31eac10b88337434032a0f0aa3e0a77f9250efe",
+      "after_sha256": "fcefa464a7e21ef72d1d5e2bd31eac10b88337434032a0f0aa3e0a77f9250efe",
+      "unchanged": true
+    },
+    {
+      "path": "/Users/sooeunkim/workspace/RainbowKTL/results/development/m05_baseline_adapter_candidate/regression.log",
+      "before_sha256": "6dd936d9848e4bbf4539717f6580eb28767ae73f132a5f1db40e011983d81762",
+      "after_sha256": "6dd936d9848e4bbf4539717f6580eb28767ae73f132a5f1db40e011983d81762",
+      "unchanged": true
+    },
+    {
+      "path": "/Users/sooeunkim/workspace/RainbowKTL/results/development/m05_baseline_adapter_candidate/current_site_dev_02_predictions.csv",
+      "before_sha256": "afd22e0d940773335c074e92022f305a9487be0ad492c1ad2c14ee03177fc68d",
+      "after_sha256": "afd22e0d940773335c074e92022f305a9487be0ad492c1ad2c14ee03177fc68d",
+      "unchanged": true
+    },
+    {
+      "path": "/Users/sooeunkim/workspace/RainbowKTL/results/development/m05_baseline_adapter_candidate/functional_validation.json",
+      "before_sha256": "73f126eebb13cb7dadbf58b16768dfa644771d1ebdd5940009c33d223f560319",
+      "after_sha256": "73f126eebb13cb7dadbf58b16768dfa644771d1ebdd5940009c33d223f560319",
+      "unchanged": true
+    },
+    {
+      "path": "/Users/sooeunkim/workspace/RainbowKTL/results/development/m05_baseline_adapter_candidate/README.md",
+      "before_sha256": "4d182aa6bf395ad7750857c7b3084af9e9797486753c71b48c24294dc781cc93",
+      "after_sha256": "4d182aa6bf395ad7750857c7b3084af9e9797486753c71b48c24294dc781cc93",
+      "unchanged": true
+    },
+    {
+      "path": "/Users/sooeunkim/workspace/RainbowKTL/results/development/m05_baseline_adapter_candidate/current_site_dev_01_predictions.csv",
+      "before_sha256": "038b12fee09a70b8b3804e047a889883b8ba6b6fc2f9d6324829cd99fa1abfe1",
+      "after_sha256": "038b12fee09a70b8b3804e047a889883b8ba6b6fc2f9d6324829cd99fa1abfe1",
+      "unchanged": true
+    },
+    {
+      "path": "/Users/sooeunkim/workspace/AI-model/dataset.py",
+      "before_sha256": "fcefa464a7e21ef72d1d5e2bd31eac10b88337434032a0f0aa3e0a77f9250efe",
+      "after_sha256": "fcefa464a7e21ef72d1d5e2bd31eac10b88337434032a0f0aa3e0a77f9250efe",
+      "unchanged": true
+    },
+    {
+      "path": "/Users/sooeunkim/workspace/AI-model/adapters/csv_adapter.py",
+      "before_sha256": "82e9195691adaa71731da7f6becfc5067e1d2ea562c9a0531627ff85953e6891",
+      "after_sha256": "82e9195691adaa71731da7f6becfc5067e1d2ea562c9a0531627ff85953e6891",
+      "unchanged": true
+    },
+    {
+      "path": "/Users/sooeunkim/workspace/AI-model/adapters/base_adapter.py",
+      "before_sha256": "e06147f375aa3ab3c0c07aa3b2c5787029fb6cba0cddb841844b1eee67981f03",
+      "after_sha256": "e06147f375aa3ab3c0c07aa3b2c5787029fb6cba0cddb841844b1eee67981f03",
+      "unchanged": true
+    },
+    {
+      "path": "/Users/sooeunkim/workspace/AI-model/vocab.py",
+      "before_sha256": "a2a31f251feeacb39e6b85f2a6fe09cd314a127ad5c246a31af1ef2fb6cb6959",
+      "after_sha256": "a2a31f251feeacb39e6b85f2a6fe09cd314a127ad5c246a31af1ef2fb6cb6959",
+      "unchanged": true
+    },
+    {
+      "path": "/Users/sooeunkim/workspace/RainbowKTL/backend/m05_heldout.py",
+      "before_sha256": "a5b1d7828b59130530420449f230737da9b720437cf806aadc0b039578e337af",
+      "after_sha256": "a5b1d7828b59130530420449f230737da9b720437cf806aadc0b039578e337af",
+      "unchanged": true
+    },
+    {
+      "path": "/Users/sooeunkim/workspace/RainbowKTL/backend/evaluators.py",
+      "before_sha256": "16f17a9d1cc13b884ec847ffba2a32d1ef59d388f8fb162be36d30cbbeaf57d7",
+      "after_sha256": "16f17a9d1cc13b884ec847ffba2a32d1ef59d388f8fb162be36d30cbbeaf57d7",
+      "unchanged": true
+    },
+    {
+      "path": "/Users/sooeunkim/workspace/RainbowKTL/evaluation_contracts/m05_engine.json",
+      "before_sha256": "7ede6de445bb29735c0ef62abe69bc09faaa8e367f9352341a53aec36529eb82",
+      "after_sha256": "7ede6de445bb29735c0ef62abe69bc09faaa8e367f9352341a53aec36529eb82",
+      "unchanged": true
+    },
+    {
+      "path": "/Users/sooeunkim/workspace/RainbowKTL/data/evaluation/m05_heldout_raw_01/events.csv",
+      "before_sha256": "8a797dadcd8341b39e1ce96487eaaafe8995a62dabce3d027495c0f34382b8b4",
+      "after_sha256": "8a797dadcd8341b39e1ce96487eaaafe8995a62dabce3d027495c0f34382b8b4",
+      "unchanged": true
+    },
+    {
+      "path": "/Users/sooeunkim/workspace/RainbowKTL/data/evaluation/m05_heldout_raw_01/sessions.csv",
+      "before_sha256": "247856007334e9237085077b950e127b6720f9f98db5cdeaab5876e7299fac62",
+      "after_sha256": "247856007334e9237085077b950e127b6720f9f98db5cdeaab5876e7299fac62",
+      "unchanged": true
+    },
+    {
+      "path": "/Users/sooeunkim/workspace/RainbowKTL/data/evaluation/m05_heldout_raw_01/tasks.csv",
+      "before_sha256": "f8c82493004d429d5ebd2f824275f3d617b716172a77bcb283d9cce8c6747924",
+      "after_sha256": "f8c82493004d429d5ebd2f824275f3d617b716172a77bcb283d9cce8c6747924",
+      "unchanged": true
+    },
+    {
+      "path": "/Users/sooeunkim/workspace/RainbowKTL/data/evaluation/m05_heldout_raw_02/events.csv",
+      "before_sha256": "06a86358ada46c3b04c905c018af6004624348a214e210047633da4e28773b50",
+      "after_sha256": "06a86358ada46c3b04c905c018af6004624348a214e210047633da4e28773b50",
+      "unchanged": true
+    },
+    {
+      "path": "/Users/sooeunkim/workspace/RainbowKTL/data/evaluation/m05_heldout_raw_02/sessions.csv",
+      "before_sha256": "d7f16a298060dbae1aecd2876e63f9f2e706234d901d8a74c1ba5da6a6ba9a00",
+      "after_sha256": "d7f16a298060dbae1aecd2876e63f9f2e706234d901d8a74c1ba5da6a6ba9a00",
+      "unchanged": true
+    },
+    {
+      "path": "/Users/sooeunkim/workspace/RainbowKTL/data/evaluation/m05_heldout_raw_02/tasks.csv",
+      "before_sha256": "656c9c0c640095acda82e391e47d1a1e9e3fd30ca4f41c7c5ca40a62881a9536",
+      "after_sha256": "656c9c0c640095acda82e391e47d1a1e9e3fd30ca4f41c7c5ca40a62881a9536",
+      "unchanged": true
+    }
+  ],
+  "frozen_artifact_validation": "PASS",
+  "prediction_runs": 0,
+  "labels_read": false,
+  "f1": null,
+  "limitations": [
+    "No held-out bundle, collection/authority claim or independent approval was created.",
+    "Actual readiness still requires full collection/history/blind-label evidence and independent review."
+  ],
+  "resolver_sha256": "5c71cf1f048b4d8e6c2bb0eeb9617983ca438888e86729dde7f3a7bfda838678"
+}

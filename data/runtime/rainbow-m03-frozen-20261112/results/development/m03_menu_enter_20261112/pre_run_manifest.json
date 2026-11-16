@@ -1,0 +1,21 @@
+{
+  "started_at": "2026-11-12T08:25:59.225209+00:00",
+  "candidate_sha256": "c3351712b13e482389b5b3c55238a107f48ced502fd1d6f7053c3f3753c5545a",
+  "protected_sha256": {
+    "results/development/m03_current_semantics_20261109/business_steps.json": "86b1e77c8ca4ec365806d7d145d99ffa802bc097347b3db16ed9b3f600503f39",
+    "data/development/current_site_unseen_validation_v1/validation_execution_manifest.csv": "a7b8a1d2d291cfe7bb7822c6891d085d067261e63d183ebbf62332ed32f71b8c",
+    "data/development/current_site_unseen_validation_v1/events.csv": "01a1aa94e5a1df4edddbb86cc8f5be0a538cd157dd11533b5bf82af1a461d746",
+    "backend/config.json": "3f7a3eb480642af96eaa0acbd03da3ce94398cc775aaa643ea0fb3cd3eb7b703",
+    "backend/m03_real_generator.py": "dd52a52e0ca98a9f4c94ed32d62d1e6c3eb9dc9d8b97b3f48b519d9ff21a7914",
+    "backend/m03_integration.py": "07e15880ce4af9d35acc5e0a7a236be0e3ffc513068c54890430341fa99b819e",
+    "evaluation_contracts/m03-scenario.schema.json": "4ed1caada4bb194de2a95ac4954e6aa7b86479646f8cfa601fa3c4d4277de101",
+    "backend/evaluators.py": "16f17a9d1cc13b884ec847ffba2a32d1ef59d388f8fb162be36d30cbbeaf57d7",
+    "backend/external_results.py": "d8ef8adbcdf66e523962fbf801e78c21b77b37d28db903a9270b644ddd476f40"
+  },
+  "run_mode": "DEVELOPMENT",
+  "single_generation_batch": true,
+  "limitations": [
+    "DEVELOPMENT-only REAL generator; cannot call this official-ready.",
+    "BU01/BU12 completion boundary ambiguous; BU03 workflow mixes BU02/BU03."
+  ]
+}

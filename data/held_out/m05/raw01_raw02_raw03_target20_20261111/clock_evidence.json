@@ -1,0 +1,99 @@
+{
+  "dataset_id": "raw01_raw02_raw03_target20_20261111",
+  "findings": "For every one of 417 events, raw event/session identity and all three authoritative event-time fields must agree exactly, and reproduce the CSV wall time in Asia/Seoul. Raw bytes and frozen features.ts are unchanged. Receipt time and file mtime are not event-time evidence.",
+  "timestamp_policy": {
+    "schema_version": "m05-timestamp-evidence-v1",
+    "timestamp_column": "event_time",
+    "timezone": "Asia/Seoul",
+    "raw_files": [
+      {
+        "path": "data/held_out/m05/raw01_raw02_raw03_target20_20261111/raw/raw_01/events.csv",
+        "sha256": "8a797dadcd8341b39e1ce96487eaaafe8995a62dabce3d027495c0f34382b8b4"
+      },
+      {
+        "path": "data/held_out/m05/raw01_raw02_raw03_target20_20261111/raw/raw_02/events.csv",
+        "sha256": "06a86358ada46c3b04c905c018af6004624348a214e210047633da4e28773b50"
+      },
+      {
+        "path": "data/held_out/m05/raw01_raw02_raw03_target20_20261111/raw/raw_03/events.csv",
+        "sha256": "c7b699fb540a2f7f67b5b218dbfd0df53b41fe8d4ccac3922b73a7842d1057f8"
+      }
+    ],
+    "payload_sources": [
+      {
+        "column": "locators_json",
+        "event_id_path": [
+          "event_context",
+          "event_id"
+        ],
+        "session_id_path": [
+          "session",
+          "page_session_id"
+        ],
+        "timestamps": [
+          {
+            "path": [
+              "event_context",
+              "event_time"
+            ],
+            "format": "iso8601"
+          },
+          {
+            "path": [
+              "analysis",
+              "event_ts_ms"
+            ],
+            "format": "unix_ms"
+          },
+          {
+            "path": [
+              "raw_payload",
+              "event_context",
+              "event_time"
+            ],
+            "format": "iso8601"
+          }
+        ]
+      }
+    ]
+  },
+  "source_bindings": [
+    {
+      "path": "data/evaluation/m05_heldout_raw_01/events.csv",
+      "sha256": "8a797dadcd8341b39e1ce96487eaaafe8995a62dabce3d027495c0f34382b8b4"
+    },
+    {
+      "path": "data/evaluation/m05_heldout_raw_01/sessions.csv",
+      "sha256": "247856007334e9237085077b950e127b6720f9f98db5cdeaab5876e7299fac62"
+    },
+    {
+      "path": "data/evaluation/m05_heldout_raw_01/tasks.csv",
+      "sha256": "f8c82493004d429d5ebd2f824275f3d617b716172a77bcb283d9cce8c6747924"
+    },
+    {
+      "path": "data/evaluation/m05_heldout_raw_02/events.csv",
+      "sha256": "06a86358ada46c3b04c905c018af6004624348a214e210047633da4e28773b50"
+    },
+    {
+      "path": "data/evaluation/m05_heldout_raw_02/sessions.csv",
+      "sha256": "d7f16a298060dbae1aecd2876e63f9f2e706234d901d8a74c1ba5da6a6ba9a00"
+    },
+    {
+      "path": "data/evaluation/m05_heldout_raw_02/tasks.csv",
+      "sha256": "656c9c0c640095acda82e391e47d1a1e9e3fd30ca4f41c7c5ca40a62881a9536"
+    },
+    {
+      "path": "data/evaluation/m05_heldout_raw_03/events.csv",
+      "sha256": "c7b699fb540a2f7f67b5b218dbfd0df53b41fe8d4ccac3922b73a7842d1057f8"
+    },
+    {
+      "path": "data/evaluation/m05_heldout_raw_03/sessions.csv",
+      "sha256": "d8bfc3c7ecad5082c72979eaa0f247baf5da2d594d5cc6db140d9c7bdf68d5fc"
+    },
+    {
+      "path": "data/evaluation/m05_heldout_raw_03/tasks.csv",
+      "sha256": "f1113a5093b6520ecc083de3ef45721989082f5f9b7a973e89df8a3433ee117c"
+    }
+  ],
+  "coverage": "Complete supplied 417 rows; server-side export authority independently unverified."
+}

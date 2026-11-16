@@ -1,0 +1,100 @@
+--- before/evaluation_contracts/m05_user20.json
++++ after/evaluation_contracts/m05_user20.json
+@@ -16,7 +16,7 @@
+   "implementation": "backend/m05_full_context.py",
+   "web": "backend/m05_readiness_web.py",
+   "legacy_main_web_m05": "STALE_DO_NOT_USE",
+-  "actual_status": "BLOCKED_INDEPENDENT_HELDOUT_AND_LABEL_EVIDENCE",
++  "actual_status": "LABEL_CONTENT_LOCKED_FULL_CONTEXT_PREPARED_EVALUATION_BLOCKED",
+   "allowed_remove_categories": [
+     "duplicate",
+     "noise",
+@@ -25,8 +25,37 @@
+   ],
+   "remove_category_quota": null,
+   "remove_category_role": "EVIDENCE_METADATA_ONLY",
+-  "category_assignment_basis": "OBJECTIVELY_SUPPORTED_BY_RAW_BEFORE_PREDICTION",
++  "category_assignment_basis": "RAW_CONTEXT_WITH_TRACEABLE_EXPLICIT_USER_CONFIRMATION_WHEN_NEEDED_BEFORE_PREDICTION",
+   "scoring": "BINARY_REMOVE_KEEP_F1",
+   "prediction_based_target_or_label_changes_allowed": false,
+-  "legacy_target_only_m05": "STALE_DO_NOT_USE"
++  "legacy_target_only_m05": "STALE_DO_NOT_USE",
++  "category_evidence_requirements": [
++    "Assign categories before prediction using raw context and, when raw alone does not establish intent or state, traceable explicit user confirmation.",
++    "Keep raw observations and retrospective user recollection separate. Do not insert unrecorded values, selections, cursor positions, or inferred histories into raw evidence.",
++    "Bind the question, answer, source artifact, affected events and remaining uncertainty in provenance. Traceability does not turn recollection into directly recorded telemetry.",
++    "Do not change locked targets, binary labels, categories or judgments after prediction. This evidence principle changes no category definitions, quotas, counts, thresholds or scoring logic.",
++    "Label support does not establish held-out status, complete history, prediction/access-log coverage, independent full-context approval or KTL acceptance."
++  ],
++  "current_locked_label_provenance": {
++    "target_labels": {
++      "path": "docs/agents/m05_raw03_attested_label_lock_20261111/target_labels20.csv",
++      "sha256": "88f48576253211e47f8a39a857734e031d30a9bdbcf4da619e58fdd11cf3ceea"
++    },
++    "source_lock": {
++      "path": "docs/agents/m05_raw03_attested_label_lock_20261111/target_label_lock.json",
++      "sha256": "ad553f26834c14995ae31b38b4a884f4875585e0a81b0dd168507e652810b156"
++    },
++    "user_confirmation": {
++      "path": "docs/agents/m05_raw03_attested_label_lock_20261111/user_attestation.json",
++      "sha256": "51ac6de99be373248d62a56df1e12379b5cee602181e491335d391f770ed035c"
++    },
++    "raw_context_plus_explicit_user_confirmation_event_ids": [
++      "2acf909a-1edc-4e9e-b576-e78d2a317d4e",
++      "faa9bcd5-3d41-4159-8678-3893c7f25914"
++    ],
++    "evidence_class": "RAW_CONTEXT_PLUS_DIRECT_USER_RECOLLECTION",
++    "role": "Provenance of the two labels already locked under the general evidence principle; not event-specific classifier exceptions or new category decisions.",
++    "retained_uncertainty": "Click value and selection are absent in raw. Whether earlier paste30 failed or was deleted and its exact course remain UNKNOWN.",
++    "held_out_and_independent_approval": "BLOCKED_PENDING_REQUIRED_EVIDENCE"
++  }
+ }
+--- before/R&D_COMPLIANCE.md
++++ after/R&D_COMPLIANCE.md
+@@ -95,10 +95,19 @@
+ 
+ ## M05 사용자 결정 20건 계약 (2026-11-11 갱신) — 최신 운영 기준
+ 
+-사용자 직접 결정으로 총20건(REMOVE10/KEEP10), 학습·DEVELOPMENT tuning 미사용 held-out, 1회 일괄 평가, F1≥0.79를 적용한다. REMOVE category는 실제 raw에서 객관적으로 확인 가능한 duplicate/noise/repeated_action/irrelevant_action 중 하나로 기록하며, category별 고정 quota나 4종 모두의 포함 의무는 없다. remove_category는 evidence/설명용 metadata이며 평가 대상은 binary REMOVE/KEEP F1이다. prediction 결과를 보고 target이나 label을 변경하지 않는다. 기존 본문/구형 evaluator의 200/REMOVE100/KEEP100 및 각 category25는 **STALE REQUIREMENT / 역사 기록**이다. FINAL PDF는 수정하지 않았으며 사용자 결정은 KTL 승인 증거가 아니다. 공식 성적서 수용 확인은 별도다.
++사용자 직접 결정으로 총20건(REMOVE10/KEEP10), 학습·DEVELOPMENT tuning 미사용 held-out, 1회 일괄 평가, F1≥0.79를 적용한다. REMOVE category는 prediction 전 raw 문맥과 필요시 추적 가능한 명시적 사용자 확인을 근거로 duplicate/noise/repeated_action/irrelevant_action 중 하나로 기록하며, category별 고정 quota나 4종 모두의 포함 의무는 없다. remove_category는 evidence/설명용 metadata이며 평가 대상은 binary REMOVE/KEEP F1이다. prediction 결과를 보고 target이나 label을 변경하지 않는다. 기존 본문/구형 evaluator의 200/REMOVE100/KEEP100 및 각 category25는 **STALE REQUIREMENT / 역사 기록**이다. FINAL PDF는 수정하지 않았으며 사용자 결정은 KTL 승인 증거가 아니다. 공식 성적서 수용 확인은 별도다.
+ 
+-현재 M05 구현은 `backend/m05_full_context.py`, 별도 웹 `python3 -m backend.m05_readiness_web` (localhost:8768). 동결 정제 엔진은 그대로 유지하며 전체 raw sequence를 1회 처리한 후 사전 잠금 target20만 평가한다. M02 frozen dependency인 기존 server/evaluator/config/frontend 파일은 변경하지 않았다. 따라서 기존 main web의 구형 M05 경로는 stale, 사용 금지이며 별도 화면이 현재20건 경로다. 실제 target20의 독립 blind label lock 및 완전한 held-out 감사·승인이 대기 중이므로 측정 BLOCKED이고 score/confusion/Precision/Recall/F1은 미산출이다. 임시 합성 fixture는 테스트 전용이며 실측 evidence가 아니다.
++현재 M05 구현은 `backend/m05_full_context.py`, 별도 웹 `python3 -m backend.m05_readiness_web` (localhost:8768). 동결 정제 엔진은 그대로 유지하며 전체 raw sequence를 1회 처리한 후 사전 잠금 target20만 평가한다. M02 frozen dependency인 기존 server/evaluator/config/frontend 파일은 변경하지 않았다. 따라서 기존 main web의 구형 M05 경로는 stale, 사용 금지이며 별도 화면이 현재20건 경로다. 실제 target20의 label 내용·원본 lock 무결성은 독립 검증되었고 전체417행 bundle 준비도 별도 검증되었다. 완전한 held-out 이력, 실제 prediction 실행·열람 로그 coverage, 평가 스키마상 label 출처 메타데이터, 별도 full-context 승인은 미완료이므로 측정 BLOCKED이고 score/confusion/Precision/Recall/F1은 미산출이다. 임시 합성 fixture는 테스트 전용이며 실측 evidence가 아니다.
+ 
+ 평가 데이터는 `data/held_out/m05/<dataset>/`에 분리한다. 각 event의 event_id/expected_label/remove_category/held_out/features, dataset SHA-256, training 및 development 이력 inventory SHA-256, event ID+feature content hash 비중복 검증, 이력 completeness reviewer/감사 근거를 요구한다. 선언만으로 held-out 증명하지 않는다. 모델에는 id/features만 전달한다. 중앙 evaluator가 raw prediction으로 TP/FP/FN/TN 및 P/R/F1을 계산한다. evidence CSV는 event_id, expected_label, predicted_label, remove_category, classification, model_version/model_sha256, dataset_sha256을 포함한다.
+ 
+-TODO: 실제 held-out20건과 전체 사용 이력 감사/정제 engine artifact+adapter+version/hash 확보 → 별도 Independent Verification → 실데이터 1회 측정 → 실제 브라우저 실행/결과/CSV 다운로드 검증. 모델 tuning 금지. M02 77.29% freeze와 M06/M03 상태는 유지.
++TODO: 잠금 target20 및 전체417행 준비 bundle의 완전한 사용 이력·실행/열람 로그·출처 메타데이터 확보 → 정확한 binding에 대한 별도 Independent Verification/승인 → 실데이터 1회 측정 → 실제 브라우저 실행/결과/CSV 다운로드 검증. 모델 tuning 금지. M02 77.29% freeze와 M06/M03 상태는 유지.
++
++
++### M05 prediction 전 label 근거의 구분 (2026-11-11)
++
++raw만으로 사용자 의도나 당시 상태가 확정되지 않는 경우, prediction 전에 질문·답변과 출처를 추적할 수 있는 명시적 사용자 확인을 raw 문맥과 함께 사용한다. 이는 일반적인 label 증거 원칙이며 특정 event에 대한 분류 예외나 category 정의 변경이 아니다. raw 관측과 사후 회고를 분리하고, raw에 없는 값·selection·cursor 상태를 원래 계측된 사실로 보충하지 않는다. 질문/답변, 관련 event와 source artifact/hash, 남은 불확실성을 provenance에 보관한다.
++
++현재 적용 이력은 사전 잠금된 raw03 제목 #26 및 내용 #37의 두 event이며, 기존 docs/agents/m05_raw03_attested_label_lock_20261111/ 및 evaluation_contracts/m05_user20.json의 provenance에 연결되어 있다. 기존20개 label/category/rationale, 원본 raw 및 lock hash를 바꾸지 않는다. 두 label은 RAW_CONTEXT_PLUS_DIRECT_USER_RECOLLECTION이며 raw-only 증거라고 표기하지 않는다. 선행 paste30의 미반영/삭제 경과는 UNKNOWN을 유지한다.
++
++이 근거 원칙은 held-out 미사용 이력, 수집/내보내기 완전성, 실제 prediction 실행·열람 로그 및 별도 full-context 승인 gate를 완화하지 않는다. 사용자 확인이나 DEVELOPMENT 계약 변경은 KTL 수용 승인이 아니다. 이번 문서/계약 동기화 내역은 docs/agents/m05_attested_contract_sync_20261111/에 원본 lock과 분리하여 보존한다.
+--- before/docs/agents/m05_full_context_implementation/README.md
++++ after/docs/agents/m05_full_context_implementation/README.md
+@@ -2,7 +2,7 @@
+ 
+ Implementation supports full raw inference followed by scoring **only twenty independently locked targets**. It does not establish that a new real dataset, independent labels, or a valid held-out approval exists. No real new raw inference or F1 measurement was run while implementing this change.
+ 
+-The 2026-11-11 user decision keeps exactly KEEP10/REMOVE10 and removes all per-category quotas. Each REMOVE has one objectively raw-supported category from duplicate, noise, repeated_action, or irrelevant_action; a category may occur zero to ten times. KEEP10 has no category. remove_category is evidence/explanatory metadata, independently labeled before prediction; binary REMOVE vs KEEP determines confusion, regardless of engine reason/category alignment. Targets or labels must never be changed after viewing predictions. Earlier preparation and audit snapshots remain historical records, not current category requirements.
++The 2026-11-11 user decision keeps exactly KEEP10/REMOVE10 and removes all per-category quotas. Each REMOVE has one category from duplicate, noise, repeated_action, or irrelevant_action supported before prediction by raw context and, when needed, traceable explicit user confirmation; a category may occur zero to ten times. KEEP10 has no category. remove_category is evidence/explanatory metadata, independently labeled before prediction; binary REMOVE vs KEEP determines confusion, regardless of engine reason/category alignment. Targets or labels must never be changed after viewing predictions. Earlier preparation and audit snapshots remain historical records, not current category requirements.
+ 
+ ## Entry points
+ 
+@@ -85,3 +85,12 @@
+ Run the read-only independent checker on a future completed authorized run with `python3 scripts/recalculate_m05_full_context_csv.py <run_directory>`.
+ 
+ This implementation does not execute against a real new raw bundle, create real target labels, or claim a measured F1. Actual collector provenance, independent label locking/approval, real browser measurement and real CSV evidence remain pending until valid inputs and authorization exist.
++
++
++## Traceable label evidence clarification (2026-11-11)
++
++Raw observations and retrospective user recollection must remain distinct. Where raw alone does not establish intent or state, explicit user confirmation recorded before prediction may support the label together with raw context. Preserve the question/answer, source/hash bindings, affected event IDs and unresolved uncertainty. Never manufacture raw values or alter targets/categories after seeing predictions. This is a general evidence principle, not an event-specific classifier exception or a category-definition change.
++
++The current source lock preserves twenty labels unchanged. Two raw03 labels, event 2acf909a-1edc-4e9e-b576-e78d2a317d4e (#26) and faa9bcd5-3d41-4159-8678-3893c7f25914 (#37), already use RAW_CONTEXT_PLUS_DIRECT_USER_RECOLLECTION. Their provenance remains in docs/agents/m05_raw03_attested_label_lock_20261111/ and is linked from evaluation_contracts/m05_user20.json. The earlier paste30 course remains UNKNOWN; missing click value/selection fields stay missing.
++
++The prepared 417-row bundle is data/held_out/m05/raw01_raw02_raw03_target20_20261111/. Independent preparation verification is separate from execution approval. Source-history completeness, real execution/access coverage, attributable schema metadata, and independent full-context registry approval remain unresolved. The validator is still BLOCKED, no prediction or score was run, and original source/lock/engine hashes are unchanged. This clarification does not relax any gate or claim KTL acceptance.

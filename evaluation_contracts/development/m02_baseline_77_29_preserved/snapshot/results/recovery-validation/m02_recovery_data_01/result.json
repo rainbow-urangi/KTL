@@ -1,0 +1,161 @@
+{
+  "status": "COMPLETED_PENDING_INDEPENDENT_VERIFICATION",
+  "score": 45.133546692422,
+  "sample_count": 5,
+  "dataset_id": "m02_recovery_data_01",
+  "source_type": "DEVELOPMENT",
+  "details": {
+    "accuracy": 36.666666666666664,
+    "completeness": 55.55555555555556,
+    "correctly_mapped": 11,
+    "evaluated_procedures": 30,
+    "included_required": 15,
+    "defined_required": 27,
+    "formula": "sqrt(Accuracy * Completeness)",
+    "auxiliary_evidence_counted": false,
+    "matching_method": "M02_USER_CONFIRMED_V1",
+    "per_business_unit": [
+      {
+        "business_unit_id": "BU03",
+        "generated_count": 11,
+        "required_count": 5,
+        "matched_count": 1,
+        "included_required_count": 1,
+        "unmatched_count": 10,
+        "missing_count": 4,
+        "accuracy": 9.090909090909092,
+        "completeness": 20.0,
+        "score": 13.483997249264842,
+        "status": "COMPLETED_WITH_MISSING_EVIDENCE"
+      },
+      {
+        "business_unit_id": "BU07",
+        "generated_count": 5,
+        "required_count": 6,
+        "matched_count": 2,
+        "included_required_count": 4,
+        "unmatched_count": 3,
+        "missing_count": 2,
+        "accuracy": 40.0,
+        "completeness": 66.66666666666667,
+        "score": 51.63977794943223,
+        "status": "COMPLETED_WITH_MISSING_EVIDENCE"
+      },
+      {
+        "business_unit_id": "BU09",
+        "generated_count": 5,
+        "required_count": 6,
+        "matched_count": 2,
+        "included_required_count": 3,
+        "unmatched_count": 3,
+        "missing_count": 3,
+        "accuracy": 40.0,
+        "completeness": 50.0,
+        "score": 44.721359549995796,
+        "status": "COMPLETED_WITH_MISSING_EVIDENCE"
+      },
+      {
+        "business_unit_id": "BU17",
+        "generated_count": 5,
+        "required_count": 5,
+        "matched_count": 3,
+        "included_required_count": 3,
+        "unmatched_count": 2,
+        "missing_count": 2,
+        "accuracy": 60.0,
+        "completeness": 60.0,
+        "score": 60.0,
+        "status": "COMPLETED_WITH_MISSING_EVIDENCE"
+      },
+      {
+        "business_unit_id": "BU20",
+        "generated_count": 4,
+        "required_count": 5,
+        "matched_count": 3,
+        "included_required_count": 4,
+        "unmatched_count": 1,
+        "missing_count": 1,
+        "accuracy": 75.0,
+        "completeness": 80.0,
+        "score": 77.45966692414834,
+        "status": "COMPLETED_WITH_MISSING_EVIDENCE"
+      }
+    ],
+    "semantic_uncertainties": [
+      {
+        "process_id": "BU03",
+        "required_step_id": "BU03-S01",
+        "reason": "UNRESOLVED_OR_MIXED_INTENT",
+        "treatment": "MISSING_NOT_GUESSED_SUCCESS"
+      },
+      {
+        "process_id": "BU03",
+        "required_step_id": "BU03-S02",
+        "reason": "UNRESOLVED_OR_MIXED_INTENT",
+        "treatment": "MISSING_NOT_GUESSED_SUCCESS"
+      },
+      {
+        "process_id": "BU03",
+        "required_step_id": "BU03-S03",
+        "reason": "MISSING_OR_DIFFERENT_DIRECT_CONTEXT|UNRESOLVED_OR_MIXED_INTENT",
+        "treatment": "MISSING_NOT_GUESSED_SUCCESS"
+      },
+      {
+        "process_id": "BU03",
+        "required_step_id": "BU03-S05",
+        "reason": "MISSING_MATCHED_WRITE_OR_DIRECT_COMPLETION_STATE",
+        "treatment": "MISSING_NOT_GUESSED_SUCCESS"
+      },
+      {
+        "process_id": "BU07",
+        "required_step_id": "BU07-S01",
+        "reason": "UNRESOLVED_OR_MIXED_INTENT",
+        "treatment": "MISSING_NOT_GUESSED_SUCCESS"
+      },
+      {
+        "process_id": "BU07",
+        "required_step_id": "BU07-S02",
+        "reason": "MISSING_OR_DIFFERENT_DIRECT_CONTEXT|UNRESOLVED_OR_MIXED_INTENT",
+        "treatment": "MISSING_NOT_GUESSED_SUCCESS"
+      },
+      {
+        "process_id": "BU09",
+        "required_step_id": "BU09-S01",
+        "reason": "UNRESOLVED_OR_MIXED_INTENT",
+        "treatment": "MISSING_NOT_GUESSED_SUCCESS"
+      },
+      {
+        "process_id": "BU09",
+        "required_step_id": "BU09-S02",
+        "reason": "MISSING_OR_DIFFERENT_DIRECT_CONTEXT|UNRESOLVED_OR_MIXED_INTENT",
+        "treatment": "MISSING_NOT_GUESSED_SUCCESS"
+      },
+      {
+        "process_id": "BU09",
+        "required_step_id": "BU09-S03",
+        "reason": "UNRESOLVED_OR_MIXED_INTENT",
+        "treatment": "MISSING_NOT_GUESSED_SUCCESS"
+      },
+      {
+        "process_id": "BU17",
+        "required_step_id": "BU17-S01",
+        "reason": "UNRESOLVED_OR_MIXED_INTENT",
+        "treatment": "MISSING_NOT_GUESSED_SUCCESS"
+      },
+      {
+        "process_id": "BU17",
+        "required_step_id": "BU17-S05",
+        "reason": "MISSING_MATCHED_WRITE_OR_DIRECT_COMPLETION_STATE",
+        "treatment": "MISSING_NOT_GUESSED_SUCCESS"
+      },
+      {
+        "process_id": "BU20",
+        "required_step_id": "BU20-S01",
+        "reason": "UNRESOLVED_OR_MIXED_INTENT",
+        "treatment": "MISSING_NOT_GUESSED_SUCCESS"
+      }
+    ]
+  },
+  "target": 75,
+  "target_met": false
+}

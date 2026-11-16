@@ -417,7 +417,22 @@ class M04Manager:
         self._prepared_files(value, path.parent, raw)
         self._m01_files(value, path.parent)
         self._cu02_files(value, path.parent)
+        self._m03_compilation_files(value, path.parent)
         return value, raw
+
+    def _m03_compilation_files(self, metadata, folder):
+        if metadata.get('source_kind') != 'M03_COMPILED_SCRIPT':
+            return {}
+        raw = self._safe(folder / 'm03_compilation.json').read_bytes()
+        require(_sha(raw) == metadata.get('m03_compilation_sha256'), 'M03 compilation evidence SHA-256 mismatch')
+        proof = json.loads(raw)
+        require(proof.get('version') == 1 and proof.get('generated_by_llm') is False
+                and metadata.get('generated_by_llm') is False
+                and all(proof.get(key) == metadata.get(key) for key in
+                        ('scenario_id', 'source_m03_run_id', 'source_scenario_sha256',
+                         'execution_scenario_sha256', 'execution_contract_sha256', 'compiler_version'))
+                and proof.get('code_sha256') == metadata.get('sha256'), 'M03 compilation provenance mismatch')
+        return {'m03_compilation.json': raw}
 
     def _cu02_files(self, metadata, folder):
         if metadata.get('source_kind') != 'CU02_SCHEDULE_REGISTRATION':
@@ -554,6 +569,119 @@ class M04Manager:
         from .cu02 import workflow
         return workflow(self.root)
 
+    def _m03_source(self, run_id, scenario_id, checksum=None):
+        from ..m03_management import scenario_state
+        require(isinstance(run_id, str) and re.fullmatch(r'DEV-M03-\d{8}T\d{6}-[a-f0-9]{12}', run_id),
+                'M03 실행 ID를 확인하세요.')
+        require(isinstance(scenario_id, str) and 0 < len(scenario_id.strip()) <= 256, 'M03 시나리오 ID를 확인하세요.')
+        state = scenario_state(self.root, run_id, self.session)
+        matches = [row for row in state['scenarios'] if row.get('scenario_id') == scenario_id]
+        require(len(matches) == 1, '현재 M03 실행에 해당 시나리오가 없거나 삭제됐습니다.')
+        source = matches[0]
+        if checksum is not None:
+            require(isinstance(checksum, str) and re.fullmatch(r'[a-f0-9]{64}', checksum)
+                    and checksum == _sha(_encoded(source)), '선택한 M03 원본 SHA-256이 변경됐습니다.')
+        return source
+
+    def _m03_inputs(self, run_id, source, parameters):
+        from ..m03_integration import validate_scenario_result
+        from . import m03_bindings, m03_schedule_binding
+        # This exact, reviewed failed source has a separate execution remediation.
+        # Preserve the M03 failure and every unresolved observation. A changed or
+        # unrelated failed scenario cannot enter this path, nor can it hide an
+        # explicit execution revision supplied by the user.
+        if m03_schedule_binding.accepts(source):
+            require(execution_contexts._read(self.root, run_id, source) is None,
+                    'BU03에 저장된 실행 조건이 있습니다. 기존 개정본을 먼저 확인하세요.')
+            try:
+                return m03_schedule_binding.prepare(self.root, source, parameters)
+            except ValueError as exc:
+                raise EvaluationError(str(exc), 'NOT_READY') from None
+        require(validate_scenario_result(source)['success'], '생성 실패 또는 단계가 불완전한 M03 시나리오는 실행할 수 없습니다.')
+        require(isinstance(parameters, dict), '시나리오 실행 입력값 객체가 필요합니다.')
+        # An explicit saved execution revision always takes priority. Never use a
+        # default binding to conceal an invalid or changed user revision.
+        record = execution_contexts._read(self.root, run_id, source)
+        actions = {step.get('action') for step in source['steps']}
+        from .checks import _ACTIONS
+        if record is not None or actions <= _ACTIONS:
+            require(not parameters, '저장된 실행 조건의 입력값은 실행 조건 화면에서 변경하세요.')
+            prepared = execution_contexts.resolve(self.root, run_id, source, self.config_provider())
+            prepared.update(binding_version='EXPLICIT_EXECUTION_CONTEXT', parameters={},
+                            source_mapping=prepared.get('execution_plan', {}).get('source_mapping',
+                                [dict(source_order=step['order'], execution_orders=[step['order']])
+                                 for step in source['steps']]))
+            return prepared
+        try:
+            return dict(m03_bindings.prepare(source, parameters), revision_id=None)
+        except ValueError as exc:
+            # A reviewed binding rejection is not a malformed HTTP JSON body.
+            raise EvaluationError(str(exc), 'NOT_READY') from None
+
+    def m03_scenarios(self, run_id=None):
+        from ..m03_management import list_runs, scenario_state
+        from . import m03_bindings, scenario_compiler
+        runs = list_runs(self.root, self.session)['runs']
+        if run_id is None and runs:
+            run_id = runs[0]['run_id']
+        require(run_id is None or any(row['run_id'] == run_id for row in runs), '현재 서버 세션의 M03 실행을 선택하세요.')
+        rows = []
+        for source in scenario_state(self.root, run_id, self.session)['scenarios'] if run_id else []:
+            descriptor = dict(ready=False, status='NOT_READY', message='', parameters=[])
+            try:
+                descriptor.update(m03_bindings.describe(source))
+                record = execution_contexts._read(self.root, run_id, source)
+                from .checks import _ACTIONS
+                if record is not None or {step.get('action') for step in source.get('steps', [])} <= _ACTIONS:
+                    descriptor.update(ready=True, parameters=[], binding_ready=False, blockers=[], requires_login=False)
+                parameters = {field['name']: field.get('default', '') for field in descriptor.get('parameters', [])}
+                missing = any(field.get('required') and not parameters[field['name']].strip()
+                              for field in descriptor.get('parameters', []))
+                if descriptor.get('binding_ready') and missing:
+                    descriptor.update(ready=True, status='NEEDS_INPUT',
+                                      message='추가 설정에서 실행 입력값을 지정하세요.')
+                else:
+                    prepared = self._m03_inputs(run_id, source, parameters)
+                    scenario_compiler.compile_code(prepared['scenario'], prepared['contract'])
+                    urls = [prepared['scenario'].get('start_url', '')] + [step['target'].get('url', '') for step in prepared['contract']['steps']]
+                    descriptor.update(ready=True, status='READY', message='Selenium 코드 준비 가능', blockers=[],
+                                      requires_login=any(url.startswith('https://rainbowlab.ai.kr/') for url in urls))
+            except (EvaluationError, ValueError) as exc:
+                descriptor.update(ready=False, status='NOT_READY', message=str(exc))
+            rows.append(dict(descriptor, m03_run_id=run_id, scenario_id=source['scenario_id'],
+                             source_scenario_sha256=_sha(_encoded(source)),
+                             scenario_name=source.get('scenario_name') or descriptor.get('name') or source.get('business_unit_id'),
+                             business_unit_id=source.get('business_unit_id'), workflow_id=source.get('workflow_id'),
+                             writes_business_data=descriptor.get('writes_business_data') is True
+                                or any(step.get('action') in {'SAVE', 'submit'} for step in source.get('steps', [])),
+                             source_status=source.get('status', 'SUCCESS'), source_step_count=len(source.get('steps', []))))
+        from .cu02 import login_configured
+        return dict(run_mode='DEVELOPMENT', m03_run_id=run_id, runs=runs, scenarios=rows,
+                    readiness=dict(self._readiness(), login_configured=login_configured(self.root)),
+                    generated_by_llm=False)
+
+    def prepare_m03(self, payload):
+        from . import scenario_compiler
+        require(isinstance(payload, dict) and set(payload) ==
+                {'m03_run_id', 'scenario_id', 'source_scenario_sha256', 'parameters'}, 'M03 원본 ID·SHA와 실행 입력값만 지정하세요.')
+        source = self._m03_source(payload['m03_run_id'], payload['scenario_id'], payload['source_scenario_sha256'])
+        prepared = self._m03_inputs(payload['m03_run_id'], source, payload['parameters'])
+        if not prepared.get('execution_plan'):
+            # Freeze the same normalized execution contract that _fixed_execution
+            # injects later. The separate original M03 snapshot stays unchanged.
+            prepared['scenario'] = dict(prepared['scenario'], execution_contract=deepcopy(prepared['contract']))
+        code = scenario_compiler.compile_code(prepared['scenario'], prepared['contract'])
+        prepared.update(source=source, code=code, compiler_version=scenario_compiler.VERSION)
+        response = self.register(dict(filename='m03-' + hashlib.sha256(source['scenario_id'].encode()).hexdigest()[:16] + '.py',
+                                      python_base64=base64.b64encode(code.encode('utf-8')).decode('ascii'),
+                                      scenario_id=source['scenario_id'],
+                                      scenario_name=source.get('scenario_name') or prepared['scenario'].get('scenario_name') or source.get('business_unit_id') or source['scenario_id'],
+                                      m03_run_id=payload['m03_run_id'], require_business_steps=True), _m03=prepared)
+        # Like scripts(), this readiness follows the independent fixed-input check.
+        metadata, _ = self._script(response['script']['script_id'])
+        self._fixed_execution(metadata, self.script_directory / metadata['script_id'])
+        return dict(script=dict(metadata, execution_ready=True), generated_by_llm=False)
+
     def prepare_cu02(self, payload):
         from .cu02 import prepare, login_configured
         if not login_configured(self.root):
@@ -591,7 +719,7 @@ class M04Manager:
                 run_lock.close()
                 raise
 
-    def register(self, payload, *, _m01=None, _cu02=None):
+    def register(self, payload, *, _m01=None, _cu02=None, _m03=None):
         require(isinstance(payload, dict), 'JSON object required')
         require(payload.get('run_mode', 'DEVELOPMENT') == 'DEVELOPMENT', 'M04 runner supports DEVELOPMENT only')
         strict_requested = payload.get('require_business_steps', False)
@@ -661,6 +789,20 @@ class M04Manager:
             details = source.get('details') if isinstance(source.get('details'), dict) else {}
             synthetic = (source.get('synthetic') is True or details.get('synthetic') is True
                          or snapshot.get('synthetic') is True or snapshot.get('generator_mode') == 'MOCK')
+        if _m03 is not None:
+            from .scenario_compiler import compile_code
+            require(_m01 is None and _cu02 is None and source_id is not None
+                    and payload.get('source_m07_generation_id') is None
+                    and _m03['source'] == snapshot
+                    and _m03['scenario'].get('scenario_id') == scenario_id,
+                    'M03 컴파일 원본과 실행 시나리오 연결이 다릅니다.')
+            require(compile_code(_m03['scenario'], _m03['contract']).encode('utf-8') == raw,
+                    'M03 컴파일 코드와 고정 원본이 다릅니다.')
+            execution_scenario, contract = deepcopy(_m03['scenario']), deepcopy(_m03['contract'])
+            require(self._execution_contract(dict(execution_scenario, execution_contract=contract)) == contract,
+                    'M03 컴파일 실행 계약이 다릅니다.')
+            context_revision = _m03.get('revision_id')
+            execution_plan = _m03.get('execution_plan')
         generation_id = payload.get('source_m07_generation_id')
         if generation_id is not None:
             require(isinstance(generation_id, str) and re.fullmatch(r'M07-GEN-[a-f0-9]{32}', generation_id), 'Invalid M07 generation ID')
@@ -726,6 +868,11 @@ class M04Manager:
             metadata.update(source_kind='CU02_SCHEDULE_REGISTRATION', workflow_id='CU02', generated_by_llm=False,
                             browser=_cu02['parameters']['browser'],
                             source_cu02_files={name: _sha(content) for name, content in _cu02['source_files'].items()})
+        if _m03 is not None:
+            metadata.update(source_kind='M03_COMPILED_SCRIPT', code_source='SCENARIO_COMPILER',
+                            generated_by_llm=False, scripts_manually_modified=False,
+                            workflow_id=snapshot.get('workflow_id'), business_unit_id=snapshot.get('business_unit_id'),
+                            compiler_version=_m03['compiler_version'])
         uses_steps = any(isinstance(node, ast.ImportFrom) and node.module == 'ktl_runtime'
                          and any(alias.name == 'business_step' for alias in node.names) for node in ast.walk(tree))
         metadata['business_step_required'] = strict_requested or uses_steps or bool(llm_source and llm_source.get('business_step_required'))
@@ -787,6 +934,16 @@ class M04Manager:
             if execution_plan is not None:
                 self._write(directory / 'execution_plan.json', execution_plan)
                 metadata['execution_plan_sha256'] = _sha((directory / 'execution_plan.json').read_bytes())
+        if _m03 is not None:
+            proof = dict(version=1, generated_by_llm=False, compiler_version=_m03['compiler_version'],
+                         binding_version=_m03['binding_version'], parameters=_m03['parameters'],
+                         source_mapping=_m03['source_mapping'], code_sha256=metadata['sha256'],
+                         **{key: metadata[key] for key in ('scenario_id', 'source_m03_run_id',
+                              'source_scenario_sha256', 'execution_scenario_sha256', 'execution_contract_sha256')})
+            proof.update({key: _m03[key] for key in ('source_fingerprint', 'dom_evidence_sha256', 'notice',
+                                                  'remediation_provenance') if key in _m03})
+            self._write(directory / 'm03_compilation.json', proof)
+            metadata['m03_compilation_sha256'] = _sha((directory / 'm03_compilation.json').read_bytes())
         self._write(directory / 'script.json', metadata)
         for name, content in llm_files.items():
             with (directory / name).open('xb') as output:
@@ -907,6 +1064,7 @@ class M04Manager:
                             output.write(content)
                     sources = dict(self._m01_files(metadata, self.script_directory / metadata['script_id']),
                                    **self._cu02_files(metadata, self.script_directory / metadata['script_id']))
+                    sources.update(self._m03_compilation_files(metadata, self.script_directory / metadata['script_id']))
                     for name, content in sources.items():
                         with (case_dir / name).open('xb') as output:
                             output.write(content)
@@ -941,6 +1099,10 @@ class M04Manager:
                     if metadata.get('source_kind') == 'CU02_SCHEDULE_REGISTRATION':
                         cases[-1].update({key: metadata[key] for key in
                             ('source_kind', 'workflow_id', 'browser', 'source_cu02_files')})
+                    if metadata.get('source_kind') == 'M03_COMPILED_SCRIPT':
+                        cases[-1].update({key: metadata[key] for key in
+                            ('workflow_id', 'business_unit_id', 'compiler_version',
+                             'm03_compilation_sha256', 'scripts_manually_modified')})
                     if _cu02_evaluation is not None:
                         cases[-1].update(cu02_evaluation_id=_cu02_evaluation['evaluation_id'], cu02_case_number=index)
                     if visible:
@@ -1044,6 +1206,7 @@ class M04Manager:
         self._prepared_files(case, script.parent, script.read_bytes())
         self._m01_files(case, script.parent)
         self._cu02_files(case, script.parent)
+        self._m03_compilation_files(case, script.parent)
         runner = self._safe(self.root / 'backend/m04/runner.py')
         require(runner.is_file(), 'M04 runner not configured')
         case.update(status='RUNNING', started_at=_now())
@@ -1289,7 +1452,8 @@ class M04Manager:
             require(_sha(source.read_bytes()) == case['sha256'], 'Execution snapshot SHA-256 mismatch')
             self._prepared_files(case, source.parent, source.read_bytes())
             source_files[case['case_id']] = dict(self._m01_files(case, source.parent),
-                                                **self._cu02_files(case, source.parent))
+                                                **self._cu02_files(case, source.parent),
+                                                **self._m03_compilation_files(case, source.parent))
             if case.get('execution_plan_sha256'):
                 require(_sha(self._safe(source.parent / 'execution_plan.json').read_bytes()) == case['execution_plan_sha256'],
                         'Execution plan snapshot SHA-256 mismatch')

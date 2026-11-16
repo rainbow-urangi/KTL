@@ -1,0 +1,7 @@
+{
+  "freeze_record_sha256": "23fde29b22c23976ccf02760f58b2c2490f3e5b054c385193fc7c463f5f00d10",
+  "independent_verification_path": "results/development/m05_baseline_adapter_candidate/independent_verification.json",
+  "independent_verification_sha256": "4e0add180ee7e6be3e438aa9e3a775217b9a31a2ecb2e0eee6e9a590f84a4e34",
+  "candidate_manifest_sha256": "983f691f30b665df30e93af3f82e7c092646c5df6bb763b650654caa31f62828",
+  "note": "Verifier persisted its previously delivered native PASS report after freeze.json creation. Additive binding; original freeze record unchanged."
+}

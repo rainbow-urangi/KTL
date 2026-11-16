@@ -1,0 +1,47 @@
+{
+  "verdict": "PASS",
+  "snapshot_manifest_sha256": "9ac54d36753d1a78c767bab54280203ba332062ec2d46b8e3ff0d93734c89a72",
+  "generic_contract_check": "PASS",
+  "gt_leakage_check": "PASS",
+  "provenance_check": "PASS",
+  "regression_check": "PASS",
+  "verified_by": "independent_verify_recovery_rules",
+  "verified_at": "2026-11-08T10:38:11.201533+00:00",
+  "regression": {
+    "backend_tests": 320,
+    "frontend_dom_checks": 24
+  },
+  "independent_checks": [
+    "Prior success acknowledgement role/page/intervening-input counterexamples rejected",
+    "Dialog cross-page and future-popup counterexamples rejected",
+    "Popup close/reopen/lifecycle regression tests passed",
+    "Injected BU/GT/prediction labels do not change generic abstraction",
+    "All 143 manifest dependency hashes match",
+    "Only authorized abstraction/server/frontend files differ from prior 127-dependency freeze",
+    "Raw ledger and each attached evidence atom equal original allowlisted raw atom",
+    "No fabricated source IDs; raw disposition complete; generation deterministic",
+    "DEVELOPMENT-only catalog/routing and fail-closed gate/freeze tested"
+  ],
+  "score_computed": false,
+  "limits": [
+    "Real web measurement and downloaded evidence must be checked after post-PASS freeze",
+    "This is DEVELOPMENT implementation verification, not official KTL approval"
+  ],
+  "raw_evidence_missing": [
+    {
+      "business_unit_id": "BU03",
+      "item": "MENU_CLICK",
+      "status": "RAW_EVIDENCE_MISSING"
+    },
+    {
+      "business_unit_id": "BU03",
+      "item": "EXPLICIT_SUCCESS_UI",
+      "status": "RAW_EVIDENCE_MISSING"
+    },
+    {
+      "business_unit_id": "BU09",
+      "item": "TARGET_WEEK_SELECTION",
+      "status": "RAW_EVIDENCE_MISSING"
+    }
+  ]
+}

@@ -1,0 +1,22 @@
+{
+  "verdict": "PASS",
+  "snapshot_manifest_sha256": "1c607d663d8ff63e4709a569be471f33ddc61d51dda61798a3cbf58ce849aa8f",
+  "gt_leakage_check": "PASS",
+  "provenance_check": "PASS",
+  "generic_contract_check": "PASS",
+  "verifier": "independent /root/verify_m02_contract",
+  "verified_at": "2026-11-08T09:48:14.305781+00:00",
+  "scope": "DEVELOPMENT user-confirmed comparison contract only; no official KTL approval",
+  "tests": {
+    "full_regression": "304/304 PASS",
+    "previous_defects": "Menu alias symmetry and existing menu context preservation independently reproduced as fixed",
+    "additional_synthetic_checks": "Cancellation, unresolved intent, registration boundary, non-causal success rejected; arbitrary BU identity invariance"
+  },
+  "preservation": "All frozen manifest dependency hashes verified; prepare changes only required_input_proof attributes and does not mutate input or provenance",
+  "actual_development_score_computed": false,
+  "limitations": [
+    "CLI path only; web unchanged",
+    "Existing scoped denominator retained; no new official scope adjudication",
+    "User intent confirmation is not new raw evidence"
+  ]
+}

@@ -1,0 +1,88 @@
+{
+  "action_rules": [
+    {
+      "action": "SELECT",
+      "id": "GT-A01",
+      "scope": "logical selection intention only",
+      "source_condition": "procedure ends with explicit 선택"
+    },
+    {
+      "action": "INPUT",
+      "id": "GT-A02",
+      "scope": "logical input intention only; no invented fields",
+      "source_condition": "procedure ends with explicit 입력"
+    },
+    {
+      "action": "SAVE",
+      "id": "GT-A03",
+      "scope": "explicit save intention; no HTTP claim",
+      "source_condition": "procedure is exactly 저장"
+    },
+    {
+      "action": "RESULT_CHECK",
+      "id": "GT-A04",
+      "scope": "explicit completion-result inspection intention; no passive outcome accepted as direct evidence",
+      "source_condition": "procedure is exactly 완료 확인"
+    },
+    {
+      "action": "REGISTER",
+      "id": "GT-A05",
+      "scope": "post-input registration intention only; no endpoint or UI mechanism claim",
+      "source_condition": "procedure is exactly 등록, prior procedure explicitly inputs information, no later input procedure"
+    },
+    {
+      "action": null,
+      "id": "GT-U01",
+      "reason": "PAGE_ENTER vs MENU_ENTER not specified",
+      "source_condition": "standalone first screen/menu name without verb"
+    },
+    {
+      "action": null,
+      "id": "GT-U02",
+      "reason": "registration initiation/form entry vs completed register action not specified",
+      "source_condition": "등록 precedes input and save"
+    },
+    {
+      "action": null,
+      "id": "GT-U03",
+      "reason": "task termination vs popup close/navigation/other explicit operation not specified",
+      "source_condition": "procedure is exactly 종료"
+    },
+    {
+      "action": null,
+      "id": "GT-U99",
+      "reason": "insufficient explicit source semantics",
+      "source_condition": "otherwise"
+    }
+  ],
+  "input_policy": "TD04_ORIGINAL_TEXT_AND_GENERIC_TAXONOMY_ONLY",
+  "never_inputs": [
+    "generated maps",
+    "raw events",
+    "provenance logs",
+    "model output",
+    "match results",
+    "scores"
+  ],
+  "readiness_policy": "Any unresolved typed screen/action blocks full executable schema. Partial review is NOT an evaluation input.",
+  "screen_policy": "Logical workflow names do not establish page_path/page_title/menu_path/popup_title. Require original explicit typed identifiers; never infer from generated or raw evidence.",
+  "target_policy": "Preserve original label, step ID/order and aliases exactly. Do not strip object words or add output-compatible aliases.",
+  "taxonomy": [
+    "PAGE_ENTER",
+    "MENU_ENTER",
+    "QUERY",
+    "VIEW",
+    "DETAIL_OPEN",
+    "SELECT",
+    "INPUT",
+    "SAVE",
+    "REGISTER",
+    "UPDATE",
+    "CONFIRM",
+    "RESULT_CHECK",
+    "POPUP_OPEN",
+    "POPUP_CLOSE",
+    "UNRESOLVED"
+  ],
+  "version": "td04-gt-only-annotation-1"
+}

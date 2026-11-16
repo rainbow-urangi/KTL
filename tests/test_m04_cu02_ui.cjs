@@ -4,10 +4,19 @@ const fs=require('node:fs'),path=require('node:path'),vm=require('node:vm'),asse
 const source=fs.readFileSync(path.resolve(__dirname,'../frontend/m04.js'),'utf8');
 const SERVER='SERVER-'+'f'.repeat(32),SCRIPT='a'.repeat(32),OTHER='b'.repeat(32),EXEC='M04-RUN-'+'c'.repeat(32);
 const RESULT='DEV-M04-20261113T120000-'+'d'.repeat(12),HASH='e'.repeat(64);
+const M03='DEV-M03-20261113T120000-'+'7'.repeat(12);
 const EVALUATION='CU02-EVAL-'+'9'.repeat(32);
 const clone=value=>JSON.parse(JSON.stringify(value));
 const deferred=()=>{let resolve;const promise=new Promise(done=>resolve=done);return {promise,resolve};};
 const settle=async()=>{for(let i=0;i<18;i++) await new Promise(done=>setImmediate(done));};
+function detailAncestors(html,id) {
+  const offset=html.indexOf(`id="${id}"`);assert.notEqual(offset,-1,'missing DOM contract '+id);
+  const stack=[];
+  for(const match of html.slice(0,offset).matchAll(/<\/?details\b[^>]*>/gi)) {
+    if(/^<\//.test(match[0]))stack.pop();else stack.push(match[0]);
+  }
+  return stack;
+}
 function workflow(login=true) {return {workflow_id:'CU02',name:'일정 등록',run_mode:'DEVELOPMENT',
   steps:['일정관리','날짜 선택','일정 입력','등록','종료'],target_url:'https://rainbowlab.ai.kr/mypage/schedule',login_configured:login,
   defaults:{date:'2026-11-13',title:'KTL CU02 synthetic',description:'Synthetic schedule only',browser:'edge'}};}
@@ -15,6 +24,8 @@ function script(id=SCRIPT) {return {script_id:id,filename:'cu02-schedule.py',wor
   sha256:HASH,business_step_required:true,execution_ready:true,generated_by_llm:false,source_kind:'CU02_SCHEDULE_REGISTRATION'};}
 function job(status='RUNNING',id=EXEC) {return {execution_id:id,status,cases:[],logs:[],result:status==='COMPLETED'?{score:100}:null,
   counts:{total_execution_count:1,successful_execution_count:status==='COMPLETED'?1:0}};}
+function singleJob(scriptId=SCRIPT,status='RUNNING') {return {...job(status),cases:[{case_id:'CASE-001',script_id:scriptId,
+  scenario_id:script(scriptId).scenario_id,status:status==='COMPLETED'?'PASS':'PENDING'}]};}
 function batchJob(status='RUNNING',statuses=[]) {
   const cases=Array.from({length:10},(_unused,index)=>({case_id:'CASE-'+String(index+1).padStart(3,'0'),script_id:(index+1).toString(16).padStart(32,'0'),
     cu02_evaluation_id:EVALUATION,cu02_case_number:index+1,status:statuses[index]||'PENDING'}));
@@ -23,10 +34,11 @@ function batchJob(status='RUNNING',statuses=[]) {
     cases:cases.map(row=>({case_id:row.case_id,script_id:row.script_id,case_number:row.cu02_case_number,expected:{date:'2026-11-13',title:'Synthetic item '+row.cu02_case_number,description:'Synthetic expected contents',browser:'edge'}}))},
     result:status==='COMPLETED'?{score:passed*10,run_id:RESULT}:null,counts:{total_execution_count:10,successful_execution_count:passed}};
 }
-function harness({login=true,initialScripts=[],jobs=[]}={}) {
+function harness({login=true,initialScripts=[],jobs=[],query='',boundScenario=false}={}) {
   const calls=[],elements=new Map(),timers=new Map();let timerId=0;
-  const state={workflow:workflow(login),scripts:clone(initialScripts),jobs:clone(jobs),overrides:new Map(),prepareReply:null,evaluationReply:null};
-  const location={pathname:'/metrics/m04',search:'?mode=DEVELOPMENT'};
+  const state={workflow:workflow(login),scripts:clone(initialScripts),jobs:clone(jobs),overrides:new Map(),prepareReply:null,evaluationReply:null,
+    executionCreateReply:null,readiness:{selenium:true,chrome:true,edge:true}};
+  const location={pathname:'/metrics/m04',search:'?mode=DEVELOPMENT'+query};
   const element=id=>{if(!elements.has(id)) elements.set(id,{innerHTML:'',textContent:'',value:'',disabled:false,checked:false,files:[],dataset:{},listeners:{},
     addEventListener(name,fn){this.listeners[name]=fn;}});return elements.get(id);};
   const response=(data,status=200,session=SERVER)=>({ok:status>=200&&status<300,status,headers:{get:()=>session},json:async()=>clone(data)});
@@ -39,6 +51,7 @@ function harness({login=true,initialScripts=[],jobs=[]}={}) {
     history:{replaceState(_a,_b,url){location.search=url.slice(url.indexOf('?'));}},document:{querySelector:element},app:element('#app'),banner:()=>'',link:value=>value,labels:{M04:'M04'},
     esc:value=>String(value??'').replace(/[&<>"']/g,char=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[char])),score:value=>value==null?'—':value+'%',
     catalog:{server_session_id:SERVER,metrics:[]},ktlDropQuery(keys){const query=new URLSearchParams(location.search);keys.forEach(key=>query.delete(key));location.search='?'+query;},
+    m03ResultPath:(id,name='result.json')=>`/api/evaluations/m03/runs/${id}/${name}`,
     ktlCheckServerSession(reply){if(reply.headers.get()!==SERVER){const error=new Error('synthetic server session changed');error.status='SESSION_EXPIRED';throw error;}},
     fetch:async(url,options)=>{
       const payload=options?.body?JSON.parse(options.body):undefined;calls.push({url,method:options?.method||'GET',payload});
@@ -54,14 +67,17 @@ function harness({login=true,initialScripts=[],jobs=[]}={}) {
         if(state.evaluationReply) return state.evaluationReply(payload,data);
         state.jobs.unshift(execution);state.scripts.unshift(...execution.cases.map(row=>script(row.script_id)));return response(data,201);
       }
-      if(url==='/api/development/m04/scripts') return response({run_mode:'DEVELOPMENT',scripts:state.scripts,readiness:{selenium:true,chrome:true,edge:true}});
+      if(url==='/api/development/m04/scripts') return response({run_mode:'DEVELOPMENT',scripts:state.scripts,readiness:state.readiness});
       if(url==='/api/development/m04/executions') {
-        if(payload){const next=job();state.jobs.unshift(next);return response({execution:next},202);}
+        if(payload){const next=singleJob(payload.script_ids[0]);if(state.executionCreateReply)return state.executionCreateReply(payload,next);state.jobs.unshift(next);return response({execution:next},202);}
         return response({executions:state.jobs});
       }
       if(url==='/api/development/m04/executions/'+EXEC) return response({execution:state.jobs.find(row=>row.execution_id===EXEC)});
       if(url.startsWith('/api/development/m04/executions/')) return response({execution:state.jobs.find(row=>url.endsWith(row.execution_id))});
-      if(url==='/api/development/m03/runs') return response({runs:[]});
+      if(url==='/api/development/m03/runs') return response({runs:boundScenario?[{run_id:M03}]:[]});
+      if(url.startsWith('/api/development/m04/m03-scenarios')) return response({run_mode:'DEVELOPMENT',m03_run_id:null,runs:[],scenarios:[],readiness:{selenium:true,chrome:true,login_configured:login}});
+      if(url===`/api/evaluations/m03/runs/${M03}/result.json`)return response({metric_id:'M03',run_mode:'DEVELOPMENT',run_id:M03});
+      if(url===`/api/evaluations/m03/runs/${M03}/received_payload.json`)return response({scenarios:[{scenario_id:'SYNTHETIC-LOCKED',scenario_name:'Synthetic locked source',steps:[]}]});
       if(url==='/api/development/m07/context') return response({run_mode:'DEVELOPMENT',scenarios:[],readiness:{configured:false}});
       if(url==='/api/development/m07/generations') return response({generations:[]});
       if(url==='/api/development/m01/csv') return response({datasets:[]});
@@ -72,11 +88,167 @@ function harness({login=true,initialScripts=[],jobs=[]}={}) {
   vm.runInContext(source,context);context.renderM04({metric_id:'M04',target:90});
   const evaluate=code=>vm.runInContext(code,context);
   return {context,state,calls,element,response,location,timers,evaluate,
+    quick:()=>element('#m04-cu02-quick-start').listeners.click(),
     input(field,value){element('#m04-cu02-'+field).value=value;element('#m04-cu02-'+field).listeners[field==='browser'?'change':'input']({target:{value}});},
     posts:route=>calls.filter(call=>call.url===route&&call.method==='POST'),
     async poll(){const id=evaluate('m04PollTimer'),timer=timers.get(id);assert.ok(timer,'active runner must keep polling');timers.delete(id);await timer.fn();}};
 }
 const tests=[];const test=(name,run)=>tests.push({name,run});
+test('CU02 quick run stays available in closed optional settings without file selection and entry remains GET only',async()=>{
+  const h=harness();await settle();
+  assert.equal(h.evaluate('m04View.selected.size'),0);assert.equal(h.element('#m04-cu02-quick-start').disabled,false);
+  assert.equal(h.element('#m04-start').disabled,true);
+  const settings=detailAncestors(h.element('#app').innerHTML,'m04-cu02-quick-start').find(tag=>tag.includes('id="m04-code-preparation"'));
+  assert.ok(settings);assert.doesNotMatch(settings,/\sopen(?:\s|=|>)/);
+  assert.equal(h.element('#m04-quick-start').disabled,true,'primary M03 action has no source in this CU02-only fixture');
+  assert.ok(h.calls.every(call=>call.method==='GET'));
+});
+test('one quick click prepares and runs only the new script once in a visible browser',async()=>{
+  const h=harness({initialScripts:[script(OTHER)]});await settle();
+  h.evaluate(`m04View.selected.add('${OTHER}');m04View.visibleBrowser=false`);
+  await h.quick();
+  assert.equal(h.posts('/api/development/m04/cu02/scripts').length,1);
+  assert.equal(h.posts('/api/development/m04/executions').length,1);
+  assert.deepEqual(h.posts('/api/development/m04/executions')[0].payload,{script_ids:[SCRIPT],visible_browser:true,action_delay_ms:1500,keep_open_seconds:15});
+  assert.ok(h.calls.findIndex(call=>call.url==='/api/development/m04/cu02/scripts')<h.calls.findIndex(call=>call.url==='/api/development/m04/executions'&&call.method==='POST'));
+  assert.deepEqual(clone(h.evaluate('[...m04View.selected]')),[SCRIPT]);
+  assert.equal(h.evaluate('m04View.execution.cases.length'),1);assert.equal(h.evaluate('m04View.execution.counts.total_execution_count'),1);
+  assert.equal(h.element('#m04-result').hidden,true);assert.equal(h.element('#m04-live-progress').hidden,false);
+  assert.equal(h.posts('/api/development/m04/cu02/evaluations').length,0);assert.equal(h.posts('/api/development/m07/generations').length,0);
+});
+test('raw registration without readiness runs only after the exact stored GET row verifies execution_ready true',async()=>{
+  const h=harness();await settle();let rawRegistration;
+  h.state.prepareReply=(_payload,data)=>{h.state.scripts.unshift(clone(data.script));delete data.script.execution_ready;rawRegistration=clone(data.script);return h.response(data,201);};
+  await h.quick();
+  assert.equal(Object.hasOwn(rawRegistration,'execution_ready'),false);
+  assert.equal(h.posts('/api/development/m04/cu02/scripts').length,1);
+  assert.equal(h.posts('/api/development/m04/executions').length,1);
+  assert.deepEqual(h.posts('/api/development/m04/executions')[0].payload.script_ids,[SCRIPT]);
+  assert.equal(h.evaluate('m04View.scripts.find(row=>row.script_id==='+JSON.stringify(SCRIPT)+').execution_ready'),true);
+});
+test('quick run holds the mutation guard through preparation and execution request without a double-click gap',async()=>{
+  const h=harness();await settle();const prepare=deferred(),execute=deferred();let prepared,execution;
+  h.state.prepareReply=(_payload,data)=>{prepared=data;return prepare.promise;};
+  h.state.executionCreateReply=(_payload,data)=>{execution=data;return execute.promise;};
+  const first=h.quick();await h.quick();await h.context.prepareM04Cu02();await h.context.evaluateM04Cu02();await h.context.startM04();
+  assert.equal(h.posts('/api/development/m04/cu02/scripts').length,1);assert.equal(h.posts('/api/development/m04/executions').length,0);
+  assert.equal(h.evaluate('m04View.busy'),true);assert.equal(h.element('#m04-cu02-quick-start').disabled,true);
+  h.state.scripts.unshift(prepared.script);prepare.resolve(h.response(prepared,201));await settle();
+  assert.equal(h.posts('/api/development/m04/executions').length,1);assert.equal(h.evaluate('m04View.busy'),true);
+  await h.quick();await h.context.startM04();assert.equal(h.posts('/api/development/m04/executions').length,1);
+  h.state.jobs.unshift(execution);execute.resolve(h.response({execution},202));await first;
+  assert.equal(h.element('#m04-cu02-quick-start').disabled,true,'accepted active execution still blocks a second run');
+});
+test('failed or malformed preparation never executes a previously selected script',async()=>{
+  for(const variant of ['http','hash','kind','generated','not-ready','reused-id']) {
+    const h=harness({initialScripts:[script(OTHER)]});await settle();h.evaluate(`m04View.selected.add('${OTHER}')`);
+    h.state.prepareReply=(_payload,data)=>{
+      if(variant==='http')return h.response({error:'Synthetic preparation rejected'},503);
+      if(variant==='hash')data.script.sha256='bad';
+      if(variant==='kind')data.script.source_kind='OTHER';
+      if(variant==='generated')data.script.generated_by_llm=true;
+      if(variant==='not-ready')data.script.execution_ready=false;
+      if(variant==='reused-id')data.script=script(OTHER);
+      h.state.scripts.unshift(data.script);return h.response(data,201);
+    };
+    await h.quick();assert.equal(h.posts('/api/development/m04/executions').length,0,variant);
+    assert.equal(h.evaluate('m04View.execution'),null);assert.equal(h.element('#m04-result').hidden,true);
+    assert.ok(h.element('#m04-status').textContent.length>0);assert.equal(h.evaluate('m04View.busy'),false);
+  }
+});
+test('quick preparation requires an exact fresh stored script and refreshed browser readiness',async()=>{
+  for(const variant of ['http','missing','hash','scenario','kind','workflow','generated','required','ready','ready-false','runtime']) {
+    const h=harness({initialScripts:[script(OTHER)]});await settle();h.evaluate(`m04View.selected.add('${OTHER}')`);
+    h.state.overrides.set('/api/development/m04/scripts',()=>{
+      if(variant==='http')return h.response({error:'Synthetic list unavailable'},503);
+      const scripts=clone(h.state.scripts),row=scripts.find(value=>value.script_id===SCRIPT);
+      if(variant==='missing')scripts.splice(scripts.indexOf(row),1);
+      if(variant==='hash')row.sha256='0'.repeat(64);
+      if(variant==='scenario')row.scenario_id='CU02-SCHEDULE-'+'2'.repeat(12);
+      if(variant==='kind')row.source_kind='OTHER';
+      if(variant==='workflow')row.workflow_id='CU03';
+      if(variant==='generated')row.generated_by_llm=true;
+      if(variant==='required')row.business_step_required=false;
+      if(variant==='ready')delete row.execution_ready;
+      if(variant==='ready-false')row.execution_ready=false;
+      return h.response({run_mode:'DEVELOPMENT',scripts,readiness:variant==='runtime'?{selenium:false,chrome:false,edge:false}:h.state.readiness});
+    });
+    await h.quick();assert.equal(h.posts('/api/development/m04/cu02/scripts').length,1);
+    assert.equal(h.posts('/api/development/m04/executions').length,0,variant);assert.equal(h.evaluate('m04View.execution'),null);
+  }
+});
+test('page retirement navigation and server-session changes during preparation prevent the execution POST',async()=>{
+  for(const variant of ['page','navigation','session']) {
+    const h=harness();await settle();const gate=deferred();let prepared;
+    h.state.prepareReply=(_payload,data)=>{prepared=data;return gate.promise;};const first=h.quick();
+    if(variant==='page'){h.context.renderM04({metric_id:'M04',target:90});await settle();}
+    if(variant==='navigation')h.location.pathname='/metrics/m03';
+    h.state.scripts.unshift(prepared.script);gate.resolve(h.response(prepared,201,variant==='session'?'SERVER-changed':SERVER));await first;
+    assert.equal(h.posts('/api/development/m04/executions').length,0,variant);assert.equal(h.evaluate('m04View.execution'),null);
+  }
+});
+test('a new active runner or preparation discovered after prepare blocks the chained execution',async()=>{
+  for(const variant of ['runner','prep']) {
+    const h=harness();await settle();const gate=deferred();let prepared;
+    h.state.prepareReply=(_payload,data)=>{prepared=data;return gate.promise;};const first=h.quick();
+    h.evaluate(variant==='runner'?`m04View.executions=[{execution_id:'${EXEC}',status:'RUNNING'}]`:'m04View.preparation.busy=true');
+    h.state.scripts.unshift(prepared.script);gate.resolve(h.response(prepared,201));await first;
+    assert.equal(h.posts('/api/development/m04/executions').length,0,variant);
+  }
+});
+test('execution rejection preserves prepared code without a score automatic retry or a second prepare',async()=>{
+  const h=harness();await settle();h.state.executionCreateReply=()=>h.response({error:'Synthetic execution rejected'},422);
+  await h.quick();await settle();
+  assert.equal(h.posts('/api/development/m04/cu02/scripts').length,1);assert.equal(h.posts('/api/development/m04/executions').length,1);
+  assert.equal(h.evaluate('m04View.execution'),null);assert.equal(h.element('#m04-result').hidden,true);
+  assert.match(h.element('#m04-status').textContent,/Synthetic execution rejected/);
+  assert.equal(h.evaluate(`m04View.scripts.some(row=>row.script_id==='${SCRIPT}')`),true);
+  assert.ok(!h.element('#m04-result').innerHTML.includes('0%'));
+});
+test('malformed or foreign single-execution responses cannot become an accepted quick run',async()=>{
+  for(const variant of ['zero','two','foreign','identity','session']) {
+    const h=harness();await settle();h.state.executionCreateReply=(_payload,data)=>{
+      if(variant==='zero')data.cases=[];
+      if(variant==='two')data.cases.push({...data.cases[0],case_id:'CASE-002'});
+      if(variant==='foreign')data.cases[0].script_id=OTHER;
+      if(variant==='identity')data.execution_id='bad';
+      return h.response({execution:data},202,variant==='session'?'SERVER-changed':SERVER);
+    };
+    await h.quick();assert.equal(h.posts('/api/development/m04/executions').length,1);
+    assert.equal(h.evaluate('m04View.execution'),null,variant);assert.equal(h.element('#m04-result').hidden,true);
+  }
+});
+test('quick run preconditions remain explicit and an M03 deep link never silently runs CU02',async()=>{
+  for(const variant of ['login','date','browser','loading','runner','prep','locked']) {
+    const h=harness({login:variant!=='login',query:variant==='locked'?'&m03_run_id='+M03+'&scenario_id=SYNTHETIC-LOCKED':'',boundScenario:variant==='locked'});await settle();
+    if(variant==='date')h.input('date','2026-02-30');
+    if(variant==='browser')h.evaluate('m04View.readiness={selenium:true,chrome:true,edge:false}');
+    if(variant==='loading')h.evaluate('m04View.preparation.loading=true');
+    if(variant==='runner')h.evaluate(`m04View.executions=[{execution_id:'${EXEC}',status:'RUNNING'}]`);
+    if(variant==='prep')h.evaluate('m04View.preparation.busy=true');
+    h.context.paintM04();assert.equal(h.element('#m04-cu02-quick-start').disabled,true,variant);
+    if(variant==='locked'){
+      assert.equal(h.evaluate('m04View.locked'),true);
+      const settings=detailAncestors(h.element('#app').innerHTML,'m04-cu02-quick-start').find(tag=>tag.includes('id="m04-code-preparation"'));
+      assert.doesNotMatch(settings,/\sopen(?:\s|=|>)/,'a deep link must not open optional execution tools automatically');
+    }
+    assert.ok(h.evaluate('m04QuickRunBlockReason()').length>0);await h.quick();
+    assert.equal(h.posts('/api/development/m04/cu02/scripts').length,0,variant);assert.equal(h.posts('/api/development/m04/executions').length,0);
+  }
+});
+test('repeated explicit quick runs refresh default titles but preserve custom titles exactly',async()=>{
+  for(const custom of [false,true]) {
+    const h=harness();await settle();if(custom)h.input('title','Synthetic custom title');let sequence=0;
+    h.state.prepareReply=(_payload,data)=>{data.script=script(sequence++?OTHER:SCRIPT);h.state.scripts.unshift(data.script);return h.response(data,201);};
+    h.state.executionCreateReply=(_payload,data)=>{data.execution_id='M04-RUN-'+String(sequence).repeat(32);h.state.jobs.unshift(data);return h.response({execution:data},202);};
+    await h.quick();const completed={...clone(h.evaluate('m04View.execution')),status:'COMPLETED',result:{score:100},counts:{total_execution_count:1,successful_execution_count:1}};
+    h.context.acceptM04Execution(completed);await h.quick();
+    const titles=h.posts('/api/development/m04/cu02/scripts').map(call=>call.payload.title);
+    assert.equal(titles.length,2);if(custom)assert.deepEqual(titles,['Synthetic custom title','Synthetic custom title']);
+    else{assert.notEqual(titles[0],h.state.workflow.defaults.title);assert.notEqual(titles[0],titles[1]);}
+    assert.deepEqual(h.posts('/api/development/m04/executions').map(call=>call.payload.script_ids),[[SCRIPT],[OTHER]]);
+  }
+});
 test('CU02 defaults come from the server and remain ready without GPT configuration or M03 input',async()=>{
   const h=harness();await settle();
   assert.equal(h.element('#m04-cu02-date').value,'2026-11-13');assert.equal(h.element('#m04-cu02-title').value,'KTL CU02 synthetic');
@@ -102,7 +274,7 @@ test('prepare preserves entered content, refreshes scripts, removes M03 scope an
   assert.equal(h.posts('/api/development/m04/executions').length,0);assert.equal(h.posts('/api/development/m07/generations').length,0);
   assert.match(h.element('#m04-cu02-status').textContent,/선택 스크립트 실행/);
   await h.context.prepareM04Cu02();assert.equal(h.posts('/api/development/m04/cu02/scripts').length,1);
-  await h.context.startM04();assert.deepEqual(h.posts('/api/development/m04/executions')[0].payload,{script_ids:[SCRIPT],visible_browser:true,action_delay_ms:700,keep_open_seconds:15});
+  await h.context.startM04();assert.deepEqual(h.posts('/api/development/m04/executions')[0].payload,{script_ids:[SCRIPT],visible_browser:true,action_delay_ms:1500,keep_open_seconds:15});
 });
 test('Edge-only readiness enables the existing execution action and an explicit browser selection is preserved',async()=>{
   const h=harness();await settle();h.input('browser','chrome');
@@ -178,11 +350,13 @@ test('one CU02 evaluation click requests ten executions once and immediately tra
   assert.match(h.element('#app').innerHTML,/일정 10건을 실제 등록/);assert.match(h.element('#app').innerHTML,/제목·내용이 비었는지/);
   h.input('title','  Synthetic batch  ');h.input('description','  Synthetic expected\ncontents  ');
   await h.context.evaluateM04Cu02();
-  assert.deepEqual(h.posts('/api/development/m04/cu02/evaluations')[0].payload,{date:'2026-11-13',title:'Synthetic batch',description:'Synthetic expected\ncontents',browser:'edge',visible_browser:true,action_delay_ms:700,keep_open_seconds:15});
+  assert.deepEqual(h.posts('/api/development/m04/cu02/evaluations')[0].payload,{date:'2026-11-13',title:'Synthetic batch',description:'Synthetic expected\ncontents',browser:'edge',visible_browser:true,action_delay_ms:1500,keep_open_seconds:15});
   assert.equal(h.posts('/api/development/m04/cu02/evaluations').length,1);assert.equal(h.posts('/api/development/m04/executions').length,0);
   assert.equal(h.posts('/api/development/m04/cu02/scripts').length,0);assert.equal(h.posts('/api/development/m07/generations').length,0);
   assert.equal(h.evaluate('m04View.execution.cases.length'),10);assert.equal(h.evaluate('m04View.selected.size'),10);
-  assert.match(h.element('#m04-result').innerHTML,/집계 중/);assert.doesNotMatch(h.element('#m04-result').innerHTML,/개발 목표 달성/);
+  assert.equal(h.element('#m04-result').hidden,true);assert.doesNotMatch(h.element('#m04-result').innerHTML,/large-score">\d/);
+  assert.equal(h.element('#m04-live-progress').hidden,false);
+  assert.match(h.element('#m04-result-notes').innerHTML,/집계 중/);assert.doesNotMatch(h.element('#m04-result-notes').innerHTML,/개발 목표 달성/);
   assert.equal(h.element('#m04-cu02-evaluate').disabled,true);assert.equal(h.element('#m04-cu02-prepare').disabled,true);
   assert.ok(h.timers.has(h.evaluate('m04PollTimer')));
 });
@@ -208,7 +382,9 @@ test('ten item results retain errors and skipped cases and only completed matchi
   for(const passed of [8,9,10]) {
     const statuses=Array.from({length:10},(_unused,index)=>index<passed?'PASS':index===9?'ERROR':'SKIPPED');
     const h=harness({jobs:[batchJob('COMPLETED',statuses)]});await settle();
-    const html=h.element('#m04-result').innerHTML;
+    assert.equal(h.element('#m04-result').hidden,false);
+    assert.match(h.element('#m04-result').innerHTML,new RegExp(passed*10+'%'));
+    const html=h.element('#m04-result-notes').innerHTML;
     assert.match(html,new RegExp('최종 성공률 '+passed*10+'%'));
     assert.match(html,passed>=9?/개발 목표 달성/:/개발 목표 미달/);
     assert.match(html,new RegExp('실패·오류·미실행</label><strong>'+String(10-passed)+'건'));
@@ -216,16 +392,17 @@ test('ten item results retain errors and skipped cases and only completed matchi
   }
   for(const mutate of [record=>record.result.score=100,record=>record.counts.total_execution_count=9,record=>record.cases[0].cu02_evaluation_id='bad']) {
     const record=batchJob('COMPLETED',Array.from({length:10},(_unused,index)=>index===9?'FAIL':'PASS'));mutate(record);
-    const h=harness({jobs:[record]});await settle();const html=h.element('#m04-result').innerHTML;
+    const h=harness({jobs:[record]});await settle();const html=h.element('#m04-result-notes').innerHTML;
     assert.doesNotMatch(html,/개발 목표 달성/);assert.match(html,/판정.*확인|연결을 확인/);
   }
 });
 test('batch progress distinguishes pending from failure and does not expose a premature final score',async()=>{
   const h=harness({jobs:[batchJob('RUNNING',['PASS','FAIL','RUNNING'])]});await settle();
-  const html=h.element('#m04-result').innerHTML;
+  const html=h.element('#m04-result-notes').innerHTML;
   assert.match(html,/성공<\/label><strong>1건/);assert.match(html,/실패·오류·미실행<\/label><strong>1건/);
   assert.match(html,/실행 중<\/label><strong>1건/);assert.match(html,/대기·확인 필요<\/label><strong>7건/);
   assert.doesNotMatch(html,/최종 성공률|개발 목표 달성/);
+  assert.equal(h.element('#m04-result').hidden,true);assert.equal(h.element('#m04-live-progress').hidden,false);
 });
 test('case expected values are escaped and before/after comparison comes from recorded business steps',async()=>{
   const record=batchJob('RUNNING',['PASS','FAIL']);
@@ -270,17 +447,73 @@ test('retired pages and changed server sessions cannot accept a pending batch re
     assert.equal(h.evaluate('m04View.execution'),null);assert.equal(h.posts('/api/development/m04/cu02/evaluations').length,1);
   }
 });
-test('code preparation is collapsed and existing preparation actions stay inside it before fixed-code execution',async()=>{
+test('two primary panels keep the M03 runner while fixed scripts helpers and evidence stay collapsed',async()=>{
   const h=harness();await settle();const html=h.element('#app').innerHTML;
-  assert.match(html,/<details id="m04-code-preparation" class="m04-code-preparation">/);
-  const start=html.indexOf('<details id="m04-code-preparation"'),execution=html.indexOf('<h2 class="m04-execute-heading">');
-  for(const id of ['m04-cu02-panel','m04-m01-panel','m04-web-prepare','m04-register','m04-file']) {
-    assert.ok(html.indexOf('id="'+id+'"')>start);assert.ok(html.indexOf('id="'+id+'"')<execution);
+  assert.match(html,/<div class="simple-evaluation m04-simple m04-meeting-simple">/);
+  assert.doesNotMatch(html,/mode-switch|id="m04-input-mode"|고급 기능 · 외부 Python 파일 등록/);
+  assert.match(html,/<button\b[^>]*id="m04-register"[^>]*>스크립트 불러오기<\/button>/);
+  assert.match(html,/<details\b[^>]*id="m04-code-preparation"[^>]*>\s*<summary>추가 설정<\/summary>/);
+  assert.match(html,/<details\b[^>]*id="m04-execution-details"[^>]*>\s*<summary>실행 상세<\/summary>/);
+  for(const id of ['m04-quick-panel','m04-m03-scenario','m04-m03-parameters','m04-quick-start','m04-quick-reason','m04-cancel','m04-status','m04-live-progress','m04-result','m04-result-empty']) {
+    assert.deepEqual(detailAncestors(html,id),[],id+' must remain in the short primary flow');
   }
-  assert.ok(html.indexOf('id="m04-start"')>execution);
+  for(const [parent,ids] of [['m04-code-preparation',['m04-m03-run','m04-fixed-panel','m04-register','m04-file','m04-scripts','m04-start','m04-visible-browser','m04-cu02-panel','m04-cu02-quick-start','m04-m01-panel','m04-web-prepare','m04-scenario','m04-scenario-source','m04-ready']],
+                           ['m04-execution-details',['m04-history','m04-business-progress','m04-cases','m04-logs','m04-result-notes','m04-downloads']]]) {
+    for(const id of ids) {
+      const ancestors=detailAncestors(html,id),container=ancestors.find(tag=>tag.includes(`id="${parent}"`));
+      assert.ok(container,id+' must remain under '+parent);assert.doesNotMatch(container,/\sopen(?:\s|=|>)/);
+    }
+  }
+  assert.ok(html.indexOf('id="m04-register"')<html.indexOf('id="m04-scripts"'));
+  assert.ok(html.indexOf('id="m04-scripts"')<html.indexOf('id="m04-start"'));
+  assert.ok(html.indexOf('id="m04-quick-start"')<html.indexOf('id="m04-result"'),'M03 runner stays in the primary input flow');
+  assert.ok(html.indexOf('id="m04-result"')<html.indexOf('id="m04-register"'),'fixed script tools stay outside the primary input and result flow');
+  assert.ok(html.indexOf('id="m04-result"')<html.indexOf('id="m04-downloads"'));
+  assert.equal(h.element('#m04-result').hidden,true);assert.equal(h.element('#m04-result').innerHTML,'');
+  assert.equal(h.element('#m04-result-empty').hidden,false);assert.match(html,/현재 측정 결과/);assert.match(html,/목표 ≥ 90%/);
+  assert.equal(h.element('#m04-live-progress').hidden,true);
+  assert.equal(h.element('#m04-register').disabled,true,'missing independent scenario cannot be bypassed by upload');
+  assert.equal(h.element('#m04-registration-guidance').hidden,false);
+  assert.equal(h.element('#m04-open-settings').hidden,false);
+  assert.match(h.element('#m04-scenario').innerHTML,/등록 기준.*필요/);
+  assert.match(h.element('#m04-scenario-source').innerHTML,/실행 시나리오 준비 대기/);
+  assert.equal(h.element('#m04-start').disabled,true);
+  assert.equal(h.element('#m04-cu02-quick-start').disabled,false,'ready CU02 does not need a manual file or selection');
+  assert.equal(h.element('#m04-quick-start').disabled,true,'primary M03 action does not silently use the CU02 example');
+  assert.match(h.element('#m04-scripts').innerHTML,/스크립트.*없|등록.*없/);
+  assert.ok(h.element('#m04-quick-reason').textContent.trim(),'disabled primary actions must explain the unmet condition');
   assert.match(html,/개발용 전체 업무 10회 반복 · 확인 항목 10개와 구분/);
   assert.match(html,/공식 평가 1건의 단위는 제시기준서/);
   assert.ok(h.calls.every(call=>call.method==='GET'),'opening the page must not run code or GPT');
+});
+test('unselected unavailable-runtime and active-execution states explain why the manual run action is disabled',async()=>{
+  for(const variant of ['unselected','runtime','active']) {
+    const h=harness({initialScripts:[script()],jobs:variant==='active'?[job()]:[]});await settle();
+    if(variant!=='unselected')h.evaluate(`m04View.selected.add('${SCRIPT}')`);
+    if(variant==='runtime')h.evaluate('m04View.readiness={selenium:false,chrome:false,edge:false}');
+    h.context.paintM04();assert.equal(h.element('#m04-start').disabled,true);
+    const reason=h.element('#m04-blocked-reason').textContent;
+    assert.match(reason,variant==='unselected'?/선택/:variant==='runtime'?/Selenium|브라우저|환경/:/실행|진행|처리|작업 중/);
+    await h.context.startM04();assert.equal(h.posts('/api/development/m04/executions').length,0);
+    assert.equal(h.posts('/api/development/m07/generations').length,0);
+  }
+});
+
+test('partial selection and ten fixed scripts keep distinct scope and require an explicit visible execution click',async()=>{
+  const scripts=Array.from({length:10},(_unused,index)=>script((index+1).toString(16).padStart(32,'0')));
+  for(const count of [1,9,10]) {
+    const h=harness({initialScripts:scripts});await settle();
+    for(const row of scripts.slice(0,count))h.element('#m04-scripts').listeners.change({target:{dataset:{scriptId:row.script_id},checked:true}});
+    const summary=h.element('#m04-selection-summary').textContent;
+    assert.match(summary,new RegExp('선택한 '+count+'건을 각각 한 번 실행'));
+    assert.equal(h.evaluate('m04View.selected.size'),count);
+    assert.equal(h.element('#m04-start').disabled,false);
+    assert.equal(h.posts('/api/development/m04/executions').length,0);
+    await h.context.startM04();
+    assert.deepEqual(h.posts('/api/development/m04/executions')[0].payload,{
+      script_ids:scripts.slice(0,count).map(row=>row.script_id),visible_browser:true,action_delay_ms:1500,keep_open_seconds:15});
+    assert.equal(h.posts('/api/development/m07/generations').length,0);
+  }
 });
 test('planned steps and checks retain their denominator through pending and failed stages',async()=>{
   const h=harness();await settle();
@@ -330,14 +563,18 @@ test('result keeps code provenance and an observed replay warning even on PASS',
   const record={...job('COMPLETED'),cases:[{status:'PASS',case_id:'CASE-001',source_kind:'M01_OBSERVED_REPLAY',required_step_count:2,expected_check_count:1,step_evidence_mode:'BUSINESS_STEPS',steps:[]}],result:{score:100}};
   h.context.syntheticJob=record;h.evaluate('m04View.execution=syntheticJob;m04View.resultSource="execution";paintM04Execution()');
   assert.match(h.element('#m04-cases').innerHTML,/독립적인 업무 정답 통과로 해석하지 않습니다/);
-  assert.match(h.element('#m04-result').innerHTML,/100%/);assert.match(h.element('#m04-result').innerHTML,/공식 시험성적 아님/);
+  assert.match(h.element('#m04-result').innerHTML,/100%/);assert.match(h.element('#m04-result-notes').innerHTML,/공식 시험성적 아님/);
   assert.match(h.element('#m04-progress-label').textContent,/스크립트 1\/1건 완료/);
 });
-test('business checks and current before-after captures open by default while raw traces stay collapsed',async()=>{
+test('business checks and before-after captures stay collapsed while failure summary remains visible',async()=>{
   const h=harness();await settle();h.context.syntheticRow={execution_id:EXEC,case_id:'CASE-001',step_evidence_mode:'BUSINESS_STEPS',required_step_count:5,
+    failed_step:2,failure_selector:'#synthetic-failed',
     steps:[{sequence:1,action:'navigate',target:'synthetic screen',status:'PASS'}],action_logs:[{sequence:1,action:'GET',status:'PASS'}]};
-  const html=h.evaluate('m04StepDetails(syntheticRow)');assert.match(html,/<details class="m04-business-steps" open>/);
-  assert.match(html,/<details class="m04-screenshots" open>/);assert.match(html,/<details class="m04-traces">/);
+  const html=h.evaluate('m04StepDetails(syntheticRow)');assert.match(html,/<details class="m04-business-steps">/);
+  assert.match(html,/<details class="m04-screenshots">/);assert.match(html,/<details class="m04-traces">/);
+  assert.doesNotMatch(html,/<details\b[^>]*\bopen(?:\s|>)/);
+  const summary=html.slice(0,html.indexOf('<details'));
+  assert.match(summary,/성공 단계 1 \/ 5/);assert.match(summary,/실패 단계: 2/);assert.match(summary,/실패 선택자: <code>#synthetic-failed<\/code>/);
   assert.match(html,/성공 단계 1 \/ 5/);assert.match(html,/관측값 미보관/);assert.match(html,/캡처되지 않음/);
 });
 test('external result view clears local business and check progress',async()=>{

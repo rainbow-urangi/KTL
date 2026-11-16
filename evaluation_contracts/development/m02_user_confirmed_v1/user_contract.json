@@ -1,0 +1,47 @@
+{
+  "contract": "M02_USER_CONFIRMED_V1",
+  "source_message_id": "Sentinel_e373f8d92bf08191ba5045efd67aef84",
+  "run_mode": "DEVELOPMENT",
+  "start": "MENU_CLICK_REQUIRED",
+  "screen_alias_groups": [
+    [
+      "일일업무",
+      "일일보고"
+    ],
+    [
+      "주간업무",
+      "주간보고"
+    ]
+  ],
+  "mandatory_fields": {
+    "일정": [
+      "날짜",
+      "제목",
+      "내용"
+    ],
+    "보고서": [
+      "날짜",
+      "제목",
+      "내용"
+    ],
+    "거래처": {
+      "all_except": [
+        "기타",
+        "파일"
+      ]
+    },
+    "자산": {
+      "all_except": [
+        "기타",
+        "파일"
+      ]
+    }
+  },
+  "test_data_fields_required": true,
+  "registration_success_proves_required_fields": true,
+  "test_prefix": "시험용 가상 데이터; 특정 값/객체 제한 아님",
+  "provenance": "USER_INTENT_ONLY_NOT_NEW_RAW_OBSERVATION",
+  "scope": "NO_BU_RULES_NO_NEW_EVENTS_NO_TUNING",
+  "input_proof": "EXISTING_DIRECT_INPUT_SAME_EXPLICIT_FORM_AS_CAUSALLY_PROVEN_SUCCESSFUL_COMMIT",
+  "start_proof": "EXISTING_MENU_ENTER_ONLY_NO_PAGE_STATE_SUBSTITUTION"
+}

@@ -1,0 +1,156 @@
+{
+  "request": {
+    "business_unit_id": "BU07",
+    "workflow_id": "WF-0007",
+    "generator_mode": "REAL",
+    "run_mode": "DEVELOPMENT"
+  },
+  "http_status": 200,
+  "response": {
+    "business_unit_id": "BU07",
+    "workflow_id": "WF-0007",
+    "scenario_id": "REAL-SCN-003422561dfeca485a13",
+    "status": "SUCCESS",
+    "steps": [
+      {
+        "order": 1,
+        "action": "REGISTER",
+        "target": "등록",
+        "source_step_id": "BA-ea48ae0b-8f2b-4325-b53b-390be82d559c",
+        "source_event_ids": [
+          "ea48ae0b-8f2b-4325-b53b-390be82d559c",
+          "a260425f-1c62-43a6-80fe-498117c296d1"
+        ],
+        "source_node_ids": [
+          "PM-010-N001",
+          "PM-010-N002"
+        ],
+        "page_context": "/mypage/work/daily",
+        "fields": [],
+        "http_evidence": [],
+        "completion_evidence": [],
+        "serializer_rule_id": "BA-VALIDATED-FORM-OPENER"
+      },
+      {
+        "order": 2,
+        "action": "INPUT",
+        "target": "일일업무",
+        "source_step_id": "BA-f0359bd8-b302-4948-a07f-919ac3db6590",
+        "source_event_ids": [
+          "a260425f-1c62-43a6-80fe-498117c296d1",
+          "f0359bd8-b302-4948-a07f-919ac3db6590",
+          "9dd9dd91-a8e9-410c-b423-4f54c21f5853",
+          "ec29cdfb-39fc-47af-a3b7-8d28beaeaa5b"
+        ],
+        "source_node_ids": [
+          "PM-010-N002",
+          "PM-010-N004"
+        ],
+        "page_context": "/mypage/work/daily",
+        "fields": [
+          {
+            "label": "제목",
+            "id": "daily-report-create-title-input",
+            "name": null,
+            "value_type": "text",
+            "selector": "#daily-report-create-title-input",
+            "source_event_id": "f0359bd8-b302-4948-a07f-919ac3db6590",
+            "source_node_ids": [
+              "PM-010-N004"
+            ]
+          },
+          {
+            "label": "내용",
+            "id": "daily-report-create-content-input",
+            "name": null,
+            "value_type": null,
+            "selector": "#daily-report-create-content-input",
+            "source_event_id": "9dd9dd91-a8e9-410c-b423-4f54c21f5853",
+            "source_node_ids": [
+              "PM-010-N004"
+            ]
+          },
+          {
+            "label": "내용",
+            "id": "daily-report-create-content-input",
+            "name": null,
+            "value_type": null,
+            "selector": "#daily-report-create-content-input",
+            "source_event_id": "ec29cdfb-39fc-47af-a3b7-8d28beaeaa5b",
+            "source_node_ids": [
+              "PM-010-N004"
+            ]
+          }
+        ],
+        "http_evidence": [],
+        "completion_evidence": [],
+        "serializer_rule_id": "BA-INPUT-FORM"
+      },
+      {
+        "order": 3,
+        "action": "SAVE",
+        "target": "저장",
+        "source_step_id": "BA-73768b2d-82e0-4dbb-927f-0a244348bd2f",
+        "source_event_ids": [
+          "a260425f-1c62-43a6-80fe-498117c296d1",
+          "73768b2d-82e0-4dbb-927f-0a244348bd2f",
+          "ea57e1e5-48a0-4684-9538-363017278329",
+          "2284d595-b731-4da3-b579-6524d6e234ec",
+          "47531a7d-d70a-4024-ba69-8ff1084b9fd0"
+        ],
+        "source_node_ids": [
+          "PM-010-N002",
+          "PM-010-N005"
+        ],
+        "page_context": "/mypage/work/daily",
+        "fields": [],
+        "http_evidence": [],
+        "completion_evidence": [
+          {
+            "source_event_id": "ea57e1e5-48a0-4684-9538-363017278329",
+            "raw_order": 86,
+            "kind": "SUCCESS_POPUP",
+            "message": "일일업무가 저장되었습니다. 목록에서 등록한 게시물을 확인할 수 있습니다.",
+            "causal_rule": "EXPLICIT_CAUSAL_ID"
+          },
+          {
+            "source_event_id": "2284d595-b731-4da3-b579-6524d6e234ec",
+            "raw_order": 88,
+            "kind": "UI_OUTCOME",
+            "message": "일일업무가 저장되었습니다.목록에서 등록한 게시물을 확인할 수 있습니다.",
+            "causal_rule": "EXPLICIT_CAUSAL_ID"
+          }
+        ],
+        "serializer_rule_id": "BA-LINKED-SUCCESS-ACK"
+      },
+      {
+        "order": 4,
+        "action": "CONFIRM",
+        "target": "확인",
+        "source_step_id": "BA-ab76eee2-0912-49c0-8211-3e9761acc377",
+        "source_event_ids": [
+          "ab76eee2-0912-49c0-8211-3e9761acc377"
+        ],
+        "source_node_ids": [
+          "PM-010-N005"
+        ],
+        "page_context": "/mypage/work/daily",
+        "fields": [],
+        "http_evidence": [],
+        "completion_evidence": [],
+        "serializer_rule_id": "BA-DIRECT-INTENT"
+      }
+    ],
+    "issues": [],
+    "generator_version": "m03-observed-business-steps-v1.1-menu-enter",
+    "source_process_id": "PM-010",
+    "source_snapshot_sha256": "86b1e77c8ca4ec365806d7d145d99ffa802bc097347b3db16ed9b3f600503f39",
+    "readiness_only": true,
+    "run_mode": "DEVELOPMENT",
+    "generator_mode": "REAL",
+    "synthetic": false,
+    "official_pass": null
+  },
+  "started_at": "2026-11-12T08:25:59.288549+00:00",
+  "completed_at": "2026-11-12T08:25:59.301093+00:00"
+}

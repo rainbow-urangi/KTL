@@ -1,0 +1,62 @@
+{
+  "request": {
+    "business_unit_id": "BU13",
+    "workflow_id": "WF-0013",
+    "generator_mode": "REAL",
+    "run_mode": "DEVELOPMENT"
+  },
+  "http_status": 200,
+  "response": {
+    "business_unit_id": "BU13",
+    "workflow_id": "WF-0013",
+    "scenario_id": "REAL-SCN-f7bd4515a23487463468",
+    "status": "SUCCESS",
+    "steps": [
+      {
+        "order": 1,
+        "action": "DETAIL_OPEN",
+        "target": "이름",
+        "source_step_id": "BA-350db9a3-0762-41b4-9dc2-bdca346223df",
+        "source_event_ids": [
+          "350db9a3-0762-41b4-9dc2-bdca346223df"
+        ],
+        "source_node_ids": [
+          "PM-012-N001"
+        ],
+        "page_context": "/mypage/cards",
+        "fields": [],
+        "http_evidence": [],
+        "completion_evidence": [],
+        "serializer_rule_id": "BA-DIRECT-INTENT"
+      },
+      {
+        "order": 2,
+        "action": "CONFIRM",
+        "target": "확인",
+        "source_step_id": "BA-56401850-4851-4c07-b837-834e92c0cd13",
+        "source_event_ids": [
+          "56401850-4851-4c07-b837-834e92c0cd13"
+        ],
+        "source_node_ids": [
+          "PM-012-N004"
+        ],
+        "page_context": "/mypage/cards",
+        "fields": [],
+        "http_evidence": [],
+        "completion_evidence": [],
+        "serializer_rule_id": "BA-DIRECT-INTENT"
+      }
+    ],
+    "issues": [],
+    "generator_version": "m03-observed-business-steps-v1.1-menu-enter",
+    "source_process_id": "PM-012",
+    "source_snapshot_sha256": "86b1e77c8ca4ec365806d7d145d99ffa802bc097347b3db16ed9b3f600503f39",
+    "readiness_only": true,
+    "run_mode": "DEVELOPMENT",
+    "generator_mode": "REAL",
+    "synthetic": false,
+    "official_pass": null
+  },
+  "started_at": "2026-11-12T08:25:59.332469+00:00",
+  "completed_at": "2026-11-12T08:25:59.345211+00:00"
+}

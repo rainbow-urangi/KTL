@@ -1,0 +1,9 @@
+{
+  "backend/m02_main_web.py": "14b2f0a69ddfc6e1d5260870c031493d81945ca4130f11d1320becbb95acd709",
+  "backend/server.py": "c1a49bd52de17fd193ad5a719206f7c6d1085835b95d7a9a62c325cec23d1712",
+  "backend/measurement_ui.py": "457cab1aa95636adc87b0922bfb2a005c1f410137188f601cbe56780dde4fd85",
+  "frontend/app.js": "f7b3b123feb1ed5231d165e8b3f71c3d0490dc0876708417aa0ddff10c664236",
+  "tests/test_m02_main_web.py": "fb9beedbebf4518a659bf5da8e38a6359a9f0e7f8ffb049e32adddf36ff29d19",
+  "tests/test_measurement_ui.py": "4ebe862fb1de036e7b97b5b321fb2ad7e67d84ccbb7b5c4d817b82ce32dece21",
+  "tests/test_frontend.cjs": "5127584f725b2ad48eed1eb97adbf3596260c9e8be81c38733dabce44d62ce7c"
+}

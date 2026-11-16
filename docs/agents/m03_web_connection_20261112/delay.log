@@ -1,0 +1,1 @@
+PASS: M02 30s monotonic minimum, immediate POST, duplicate guard, evidence reveal, slow/fast API, error immediate, M05/M06 no delay, route/BFCache/reset/stale race, configuration 0/custom/invalid; synthetic only

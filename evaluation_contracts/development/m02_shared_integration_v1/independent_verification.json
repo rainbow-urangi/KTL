@@ -1,0 +1,17 @@
+{
+  "verdict": "PASS",
+  "snapshot_manifest_sha256": "e6b289eb0a5d5e08091f982390ba909f43c1165f3d2f7ec9c723df42c13e13c1",
+  "gt_leakage_check": "PASS",
+  "scope_check": "PASS",
+  "direct_comparison_contract": "BUSINESS_INTENT_STATE_V1",
+  "native_submit_recovery_check": "PASS",
+  "shared_web_integration_check": "PASS",
+  "m02_m06_m03_regression_check": "PASS",
+  "verification_stage": "SHARED_DEVELOPMENT_INTEGRATION_PRECOMPARISON",
+  "actual_score_computed": false,
+  "m03_real_execution_ready": false,
+  "remaining_definition_items": 17,
+  "remaining_raw_evidence_gaps": 3,
+  "report_path": "/Users/sooeunkim/Documents/Codex/2026-11-05/task-4/TRACK_A_SHARED_INTEGRATION_INDEPENDENT_VERIFICATION.txt",
+  "report_sha256": "06f228899741fddb4611cc527bd4253f9ac0b3cf1b2102a701b1bffd18b9ed2d"
+}

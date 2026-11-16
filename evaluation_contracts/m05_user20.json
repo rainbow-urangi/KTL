@@ -1,0 +1,61 @@
+{
+  "authority": "USER_DECISION_2026_11_11",
+  "ktl_confirmation": false,
+  "total_event_count": 20,
+  "REMOVE": 10,
+  "KEEP": 10,
+  "target": 0.79,
+  "mode": "DEVELOPMENT",
+  "single_batch": true,
+  "stale_requirements": [
+    200,
+    "REMOVE 100",
+    "KEEP 100"
+  ],
+  "held_out_proof_required": true,
+  "implementation": "backend/m05_full_context.py",
+  "web": "backend/m05_readiness_web.py",
+  "legacy_main_web_m05": "STALE_DO_NOT_USE",
+  "actual_status": "LABEL_CONTENT_LOCKED_FULL_CONTEXT_PREPARED_EVALUATION_BLOCKED",
+  "allowed_remove_categories": [
+    "duplicate",
+    "noise",
+    "repeated_action",
+    "irrelevant_action"
+  ],
+  "remove_category_quota": null,
+  "remove_category_role": "EVIDENCE_METADATA_ONLY",
+  "category_assignment_basis": "RAW_CONTEXT_WITH_TRACEABLE_EXPLICIT_USER_CONFIRMATION_WHEN_NEEDED_BEFORE_PREDICTION",
+  "scoring": "BINARY_REMOVE_KEEP_F1",
+  "prediction_based_target_or_label_changes_allowed": false,
+  "legacy_target_only_m05": "STALE_DO_NOT_USE",
+  "category_evidence_requirements": [
+    "Assign categories before prediction using raw context and, when raw alone does not establish intent or state, traceable explicit user confirmation.",
+    "Keep raw observations and retrospective user recollection separate. Do not insert unrecorded values, selections, cursor positions, or inferred histories into raw evidence.",
+    "Bind the question, answer, source artifact, affected events and remaining uncertainty in provenance. Traceability does not turn recollection into directly recorded telemetry.",
+    "Do not change locked targets, binary labels, categories or judgments after prediction. This evidence principle changes no category definitions, quotas, counts, thresholds or scoring logic.",
+    "Label support does not establish held-out status, complete history, prediction/access-log coverage, independent full-context approval or KTL acceptance."
+  ],
+  "current_locked_label_provenance": {
+    "target_labels": {
+      "path": "docs/agents/m05_raw03_attested_label_lock_20261111/target_labels20.csv",
+      "sha256": "88f48576253211e47f8a39a857734e031d30a9bdbcf4da619e58fdd11cf3ceea"
+    },
+    "source_lock": {
+      "path": "docs/agents/m05_raw03_attested_label_lock_20261111/target_label_lock.json",
+      "sha256": "ad553f26834c14995ae31b38b4a884f4875585e0a81b0dd168507e652810b156"
+    },
+    "user_confirmation": {
+      "path": "docs/agents/m05_raw03_attested_label_lock_20261111/user_attestation.json",
+      "sha256": "51ac6de99be373248d62a56df1e12379b5cee602181e491335d391f770ed035c"
+    },
+    "raw_context_plus_explicit_user_confirmation_event_ids": [
+      "2acf909a-1edc-4e9e-b576-e78d2a317d4e",
+      "faa9bcd5-3d41-4159-8678-3893c7f25914"
+    ],
+    "evidence_class": "RAW_CONTEXT_PLUS_DIRECT_USER_RECOLLECTION",
+    "role": "Provenance of the two labels already locked under the general evidence principle; not event-specific classifier exceptions or new category decisions.",
+    "retained_uncertainty": "Click value and selection are absent in raw. Whether earlier paste30 failed or was deleted and its exact course remain UNKNOWN.",
+    "held_out_and_independent_approval": "BLOCKED_PENDING_REQUIRED_EVIDENCE"
+  }
+}

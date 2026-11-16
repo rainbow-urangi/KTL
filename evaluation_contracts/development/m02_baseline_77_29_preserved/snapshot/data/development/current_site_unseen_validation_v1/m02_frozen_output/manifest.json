@@ -1,0 +1,67 @@
+{
+  "version": "1.0",
+  "dataset_id": "v1_2_1_unseen_m02_development",
+  "run_mode": "DEVELOPMENT",
+  "model_version": "workflow_candidate_v1_2_1",
+  "official": false,
+  "business_unit_count": 20,
+  "business_unit_ids": [
+    "BU01",
+    "BU02",
+    "BU03",
+    "BU04",
+    "BU05",
+    "BU06",
+    "BU07",
+    "BU08",
+    "BU09",
+    "BU10",
+    "BU11",
+    "BU12",
+    "BU13",
+    "BU14",
+    "BU15",
+    "BU16",
+    "BU17",
+    "BU18",
+    "BU19",
+    "BU20"
+  ],
+  "user_confirmed_execution_count": 20,
+  "generation_completed_before_evaluation": true,
+  "prediction_sha256": "96a5cffd393ea47f478f27c7fda0e4a58b2dc00d6e409d8475e2385b22dbcc1a",
+  "model_manifest_path": "model/workflow_candidate_v1_2_1/VALIDATION_CANDIDATE_MANIFEST.json",
+  "model_manifest_sha256": "b9c69f7088f7d6abd5e0e21b569e69be50b099265bc8e9dd99eda07042bd0504",
+  "raw_input": {
+    "path": "data/development/current_site_unseen_validation_v1/events.csv",
+    "sha256": "01a1aa94e5a1df4edddbb86cc8f5be0a538cd157dd11533b5bf82af1a461d746"
+  },
+  "files": {
+    "process_models.json": {
+      "path": "data/development/current_site_unseen_validation_v1/m02_frozen_output/process_models.json",
+      "sha256": "5cd98d5c3375cc90c68d2de736e87dcd56543f526057f930f8fa62e05ea325b3"
+    },
+    "process_nodes.json": {
+      "path": "data/development/current_site_unseen_validation_v1/m02_frozen_output/process_nodes.json",
+      "sha256": "f0f0d5f5852f615255028775fef54e08eecdfb02b4818d7c25380d17ff4f48a7"
+    }
+  },
+  "td04_path": "evaluation_contracts/development/m02_td04_v1.json",
+  "td04_sha256": "19922ea39a42c756e9f951cee85ce5b4c6dae0db2d0d31591ad2a2ef636d6578",
+  "process_identity_mapping": {
+    "BU03": "PM-020",
+    "BU07": "PM-010",
+    "BU09": "PM-019",
+    "BU17": "PM-007",
+    "BU20": "PM-002"
+  },
+  "identity_mapping_basis": "Evaluation-only raw save anchor event membership; no label similarity, no best-instance selection, no GT input to inference. All unpaired maps and all canonical occurrences remain denominator. BU17 trailing PM-008 retained unpaired.",
+  "identity_anchor_events": {
+    "BU03": "9e9f49cc-f917-45be-b7bf-8819fb05e0c1",
+    "BU07": "ccf16d00-8848-48dc-81dc-7ceff66cf468",
+    "BU09": "59bb5733-db55-4f34-9389-3e916c8c13e3",
+    "BU17": "704cd525-4b10-41a8-8b26-04377a7a30b5",
+    "BU20": "18ee2708-05d3-4ec8-849f-fa731542072f"
+  },
+  "representation": "Persisted canonical_node_sequence, every occurrence; 21 maps including non-GT and login preamble, no post-hoc compression/filtering. Graph nodes and canonical occurrences are disclosed separately."
+}

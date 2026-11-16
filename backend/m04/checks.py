@@ -15,9 +15,24 @@ from urllib.parse import parse_qs, urlsplit
 
 VERSION = 1
 _ACTIONS = {'open', 'navigate', 'click', 'input', 'type', 'clear', 'submit',
-            'select', 'back', 'forward', 'refresh', 'verify'}
+            'select', 'back', 'forward', 'refresh', 'verify', 'fill_empty'}
 _KINDS = {'visible', 'focus', 'value', 'text_equals', 'text_contains', 'url_path',
-          'count', 'text_count', 'cards_search', 'cards_state', 'text_equals_target', 'nonempty', 'native_submit_response'}
+          'count', 'text_count', 'cards_search', 'cards_state', 'text_equals_target', 'nonempty', 'native_submit_response', 'fill_empty'}
+_FILL_EMPTY_READ_SCRIPT = r"""const items=[...document.querySelectorAll(arguments[0])];
+if(items.length!==1)return {valid:false};
+const e=items[0], tag=String(e.tagName||'').toLowerCase();
+const attr=name=>String(e.getAttribute(name)||'');
+const type=String(e.type||'text').toLowerCase();
+const safe=(tag==='textarea'||(tag==='input'&&['text','email','tel','url','search'].includes(type))) &&
+  !/password|passwd|pwd|secret|token|auth|cookie|login[\W_]*id|user[\W_]*name|비밀번호|비번|아이디/i.test(attr('id')+' '+attr('name')) &&
+  !attr('autocomplete').toLowerCase().split(/\s+/).some(v=>['username','current-password','new-password','one-time-code'].includes(v));
+let visible=!!e.getClientRects().length;
+for(let node=e;node;node=node.parentElement){
+  const style=getComputedStyle(node);
+  if(['hidden','collapse'].includes(style.visibility)||Number(style.opacity)===0)visible=false;
+}
+const valid=safe&&visible&&!e.disabled&&!e.readOnly&&typeof e.value==='string';
+return valid?{valid:true,value:e.value}:{valid:false};"""
 _RELATIONAL_CHECK_SCRIPT = r"""const qa=s=>[...document.querySelectorAll(s)];
 const shown=e=>!!e && e.getClientRects().length>0 && getComputedStyle(e).visibility!=='hidden';
 const attr=(e,name)=>String(e.getAttribute(name)||'');
@@ -67,7 +82,8 @@ _PERSONAL_OBSERVATION = re.compile(r'[\w.+-]+@[\w.-]+\.[A-Za-z]{2,}|(?<!\d)(?:\+
 _COMPARISON_MODES = dict(visible='VISIBILITY', focus='FOCUS', value='EXACT', text_equals='EXACT',
                          text_contains='CONTAINS', count='COUNT', text_count='TEXT_COUNT', url_path='PATH_EXACT',
                          nonempty='NONEMPTY', text_equals_target='RELATIONAL', cards_search='API_AND_DOM',
-                         cards_state='DOM_AND_PRIOR_API', native_submit_response='NATIVE_SUBMIT_WINDOW')
+                         cards_state='DOM_AND_PRIOR_API', native_submit_response='NATIVE_SUBMIT_WINDOW',
+                         fill_empty='EMPTY_INPUT_OR_PRESERVED_VALUE')
 
 
 def _observed_url(match):
@@ -99,6 +115,8 @@ def _observation_value(value):
 
 def _expected_observation(condition):
     kind = condition['kind']
+    if kind == 'fill_empty':
+        return dict(empty_input_filled=True, populated_input_preserved=True)
     if kind == 'native_submit_response':
         return dict(method=condition['method'], path=condition['api_path'],
                     http_status=condition['expected_status'], loading_finished=True,
@@ -215,6 +233,15 @@ def _condition(value, target, sensitive=False):
     _require(isinstance(value, dict) and isinstance(value.get('kind'), str) and value['kind'] in _KINDS,
              '지원하는 typed condition이 필요합니다: ' + ', '.join(sorted(_KINDS)))
     kind = value['kind']
+    if kind == 'fill_empty':
+        _require(set(value) == {'kind', 'target', 'expected'}
+                 and isinstance(value.get('expected'), str) and bool(value['expected'].strip()),
+                 'fill_empty에는 명시적인 target과 비어 있지 않은 시험 입력값이 필요합니다.')
+        result = dict(kind=kind, target=_locator(value['target']), expected=value['expected'])
+        _require(not (sensitive or _auth_target(target) or _auth_target(result['target'])),
+                 'fill_empty에는 인증 입력을 사용할 수 없습니다.')
+        _safe_literal(result['expected'])
+        return result
     if kind == 'text_count':
         _require(set(value) == {'kind', 'target', 'expected', 'count'}
                  and isinstance(value.get('expected'), str) and len(value['expected']) <= 2000
@@ -393,6 +420,7 @@ def prepare_contract(scenario, config=None):
     definitions = contract.get('steps')
     _require(isinstance(definitions, list) and len(definitions) == len(steps), '실행 계약은 모든 시나리오 단계를 포함해야 합니다.')
     result = dict(version=VERSION, scenario_id=scenario['scenario_id'], steps=[])
+    fill_empty_targets = {}
     for index, (step, definition) in enumerate(zip(steps, definitions), 1):
         _require(isinstance(definition, dict) and set(definition) == {'order', 'action', 'target', 'checks'}
                  and type(definition.get('order')) is int and definition['order'] == index
@@ -403,6 +431,17 @@ def prepare_contract(scenario, config=None):
         values = definition['checks']
         _require(isinstance(values, list) and bool(values), '단계 ' + str(index) + '의 typed condition이 없습니다.')
         conditions = [_condition(value, target, sensitive=_auth_target(step['target'])) for value in values]
+        conditional = [value for value in conditions if value['kind'] == 'fill_empty']
+        if step['action'] == 'fill_empty':
+            _require(len(conditional) == 1 and conditional[0]['target'] == target
+                     and step.get('value') == conditional[0]['expected']
+                     and target['value'] not in fill_empty_targets,
+                     'fill_empty 단계에는 같은 target/value의 단일 조건과 중복 없는 입력 대상이 필요합니다.')
+            fill_empty_targets[target['value']] = conditional[0]['expected']
+        else:
+            _require(not conditional or (step['action'] == 'verify' and all(
+                fill_empty_targets.get(value['target']['value']) == value['expected'] for value in conditional)),
+                'fill_empty 재검사는 앞서 선언한 같은 입력 대상과 시험값에만 사용할 수 있습니다.')
         native = [value for value in conditions if value['kind'] == 'native_submit_response']
         _require(not native or (step['action'] == 'submit' and len(native) == 1
                  and not any(value['kind'] == 'cards_search' for value in conditions)),
@@ -554,6 +593,9 @@ class RuntimeChecks:
         self.network = None
         self.summaries = {}
         self._cards_observation = None
+        # Existing personal values stay private for the duration of this run.
+        self._fill_empty_snapshots = {}
+        self._fill_empty_error = None
 
     def _raw(self, driver, name, params=None):
         return self.raw_execute(driver, name, params or {}).get('value')
@@ -570,6 +612,26 @@ class RuntimeChecks:
         except Exception:
             return False
 
+    def _read_fill_empty(self, driver, selector):
+        result = self._js(driver, _FILL_EMPTY_READ_SCRIPT, selector)
+        if not isinstance(result, dict) or result.get('valid') is not True or not isinstance(result.get('value'), str):
+            return None
+        return result['value']
+
+    def _fill_empty_condition(self, driver, condition, observation):
+        snapshot = self._fill_empty_snapshots.get(condition['target']['value'])
+        current = self._read_fill_empty(driver, condition['target']['value'])
+        valid = (snapshot is not None and snapshot['driver'] is driver and current is not None
+                 and snapshot['expected'] == condition['expected'] and not snapshot.get('blocked'))
+        initial_empty = snapshot['empty'] if snapshot is not None else None
+        passed = bool(valid and current == (condition['expected'] if initial_empty else snapshot['value'])
+                      and (snapshot['input_performed'] if initial_empty else not snapshot['input_performed']))
+        observed = dict(target_valid=current is not None, initial_empty=initial_empty,
+                        empty_input_filled=passed if initial_empty is True else None,
+                        populated_input_preserved=passed if initial_empty is False else None,
+                        input_performed=snapshot['input_performed'] if snapshot is not None else None)
+        return dict(passed=passed, observed=observed, observation_status='RECORDED') if observation else passed
+
     def _drain(self, driver):
         try:
             entries = self._raw(driver, 'getLog', {'type': 'performance'})
@@ -585,6 +647,20 @@ class RuntimeChecks:
         self.driver = drivers[-1] if drivers else None
         self.target_action = False
         self.network = None
+        self._fill_empty_error = None
+        if self.current['action'] == 'fill_empty':
+            selector = self.current['target']['value']
+            self._fill_empty_snapshots.pop(selector, None)
+            try:
+                value = self._read_fill_empty(self.driver, selector) if self.driver else None
+                if value is None:
+                    raise ValueError('Invalid conditional input target')
+                condition = next(item for item in self.current['checks'] if item['kind'] == 'fill_empty')
+                self._fill_empty_snapshots[selector] = dict(value=value, empty=value == '',
+                    driver=self.driver, expected=condition['expected'], input_performed=False,
+                    focus_clicked=False, blocked=False)
+            except Exception:
+                self._fill_empty_error = '조건부 입력 대상의 안전한 초기 상태를 확인하지 못했습니다.'
         conditions = [value for value in self.current['checks'] if value['kind'] == 'cards_search']
         native = [value for value in self.current['checks'] if value['kind'] == 'native_submit_response']
         if native:
@@ -599,12 +675,44 @@ class RuntimeChecks:
     def before_command(self, driver, name, params):
         if not self.current:
             return
+        if self.current['action'] == 'fill_empty' and name in {
+                'get', 'goBack', 'goForward', 'refresh', 'clickElement', 'clearElement',
+                'submitElement', 'sendKeysToElement'}:
+            selector = self.current['target']['value']
+            snapshot = self._fill_empty_snapshots.get(selector)
+            try:
+                text = params.get('text')
+                values = params.get('value')
+                if text is None and isinstance(values, list) and all(isinstance(value, str) for value in values):
+                    text = ''.join(values)
+                valid = (name in {'clickElement', 'sendKeysToElement'}
+                         and snapshot is not None and snapshot['driver'] is driver
+                         and snapshot['empty'] and not snapshot['input_performed'] and not snapshot['blocked']
+                         and self._matches(driver, params.get('id'), selector)
+                         and self._read_fill_empty(driver, selector) == '')
+                if name == 'clickElement':
+                    valid = valid and not snapshot['focus_clicked']
+                else:
+                    valid = (valid and text == snapshot['expected'] and (values is None
+                             or isinstance(values, list) and ''.join(values) == snapshot['expected']))
+            except Exception:
+                valid = False
+            if not valid:
+                if snapshot is not None:
+                    snapshot['blocked'] = True
+                self._fill_empty_error = '현재 빈 입력란에 대한 단일 시험값 입력만 허용합니다.'
+                raise RuntimeError(self._fill_empty_error)
+            if name == 'clickElement':
+                snapshot['focus_clicked'] = True
+            else:
+                snapshot['input_performed'] = True
         action = {'get': 'open', 'clickElement': 'click', 'sendKeysToElement': 'input',
                   'clearElement': 'clear', 'submitElement': 'submit', 'goBack': 'back',
                   'goForward': 'forward', 'refresh': 'refresh'}.get(name)
         allowed = {'open': {'open'}, 'navigate': {'open'}, 'click': {'click'}, 'input': {'input'},
                    'type': {'input'}, 'clear': {'clear', 'input'}, 'submit': {'submit', 'click'},
-                   'select': {'click', 'input'}, 'back': {'back'}, 'forward': {'forward'}, 'refresh': {'refresh'}}
+                   'select': {'click', 'input'}, 'back': {'back'}, 'forward': {'forward'}, 'refresh': {'refresh'},
+                   'fill_empty': {'input'}}
         if action not in allowed.get(self.current['action'], set()):
             return
         target = self.current['target']
@@ -687,6 +795,8 @@ class RuntimeChecks:
 
     def _simple(self, driver, condition, observation=False):
         kind = condition['kind']
+        if kind == 'fill_empty':
+            return self._fill_empty_condition(driver, condition, observation)
         if kind in {'text_equals_target', 'nonempty'}:
             result = self._js(driver, _RELATIONAL_CHECK_SCRIPT, condition['target']['value'], condition['property'],
                               condition.get('other_target', {}).get('value'), condition.get('other_property'), kind, observation)
@@ -833,7 +943,14 @@ empty:qa(arguments[5]).some(e=>visible(e) && arguments[6].some(t=>e.innerText.in
         try:
             if driver is None or self.raw_execute is None:
                 return False, '독립 실행 검사에 브라우저 세션이 없습니다.', evidence
-            if definition['action'] != 'verify' and not self.target_action:
+            if definition['action'] == 'fill_empty' and self._fill_empty_error:
+                return False, self._fill_empty_error, evidence
+            preserved_noop = False
+            if definition['action'] == 'fill_empty':
+                snapshot = self._fill_empty_snapshots.get(definition['target']['value'])
+                preserved_noop = bool(snapshot is not None and not snapshot['empty']
+                                      and not snapshot['input_performed'] and not snapshot['blocked'])
+            if definition['action'] != 'verify' and not self.target_action and not preserved_noop:
                 return False, '계약 target에 대응하는 실제 브라우저 동작이 없습니다.', evidence
             for index, condition in enumerate(definition['checks'], 1):
                 passed = False

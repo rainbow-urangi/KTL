@@ -1,0 +1,25 @@
+{
+  "status": "READY_FOR_MANUAL_VERIFICATION",
+  "protected_file_count": 1328,
+  "protected_changed": [],
+  "M05_stored_score": 0.8235294117647058,
+  "M05_stored_run_id": "DEV-M05-20261112T060820-7cf4bef18b74",
+  "browser_interactions": 0,
+  "real_measurement_POSTs": 0,
+  "M02_measurement": false,
+  "checks": [
+    "node syntax PASS",
+    "32 route DOM presentations PASS",
+    "explicit synthetic POST server response PASS",
+    "refresh/new page session/back-forward/BFCache/reentry PASS",
+    "failed/malformed/rejected POST PASS",
+    "double-submit guard PASS",
+    "stale POST ignored PASS",
+    "readonly API/CSV 2 tests PASS; execution hooks forbidden"
+  ],
+  "changed_code": [
+    "frontend/app.js",
+    "tests/test_frontend.cjs",
+    "tests/test_measurement_ui.py"
+  ]
+}

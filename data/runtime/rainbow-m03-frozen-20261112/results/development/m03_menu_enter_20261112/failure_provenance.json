@@ -1,0 +1,2445 @@
+[
+  {
+    "business_unit_id": "BU01",
+    "issues": []
+  },
+  {
+    "business_unit_id": "BU03",
+    "issues": [
+      {
+        "issue": {
+          "order": 3,
+          "source_step_id": "BA-b8ed42f9-d2aa-40bc-8ba6-c6bee5756314",
+          "reason": "UNRESOLVED_OR_UNSUPPORTED_OBSERVED_STEP"
+        },
+        "source": {
+          "generated_step_id": "BA-b8ed42f9-d2aa-40bc-8ba6-c6bee5756314",
+          "process_id": "PM-020",
+          "workflow_id": "WF-0003",
+          "action_type": "UNRESOLVED",
+          "intent_phase": "UNKNOWN",
+          "target": "3 오늘",
+          "target_field_label": "3 오늘",
+          "business_object": "",
+          "menu_page": "/mypage/schedule",
+          "page_title": "Rainbow",
+          "menu": {
+            "selected_label": "일정 관리",
+            "path_text": "마이페이지 메뉴 > 일정 관리",
+            "selected_path_text": "마이페이지 메뉴 > 일정 관리",
+            "parser": "sidebar_active_dom",
+            "source": "nav"
+          },
+          "business_context": "일정 관리",
+          "popup_title": "업무 내용",
+          "form_identity": null,
+          "fields": [],
+          "source_event_ids": [
+            "b8ed42f9-d2aa-40bc-8ba6-c6bee5756314"
+          ],
+          "intent_source_event_ids": [
+            "b8ed42f9-d2aa-40bc-8ba6-c6bee5756314"
+          ],
+          "source_node_ids": [
+            "PM-020-N007"
+          ],
+          "evidence": [
+            {
+              "event_id": "b8ed42f9-d2aa-40bc-8ba6-c6bee5756314",
+              "session_id": "3092dc5b-94d3-4878-a0af-c7877fdedcd0",
+              "event_time": "2026-11-03 14:09:44.354",
+              "event": {
+                "interaction_id": "3092dc5b-94d3-4878-a0af-c7877fdedcd0:click:26",
+                "action": "click",
+                "event_sequence": 26,
+                "event_time": "2026-11-03T05:09:44.354Z",
+                "event_id": "b8ed42f9-d2aa-40bc-8ba6-c6bee5756314",
+                "related_interaction_id": null,
+                "related_event_id": null,
+                "parent_event_id": null,
+                "cause_event_id": null,
+                "correlation_id": null,
+                "active_popup_id": "popup:3092dc5b-94d3-4878-a0af-c7877fdedcd0:1",
+                "active_parent_popup_id": null
+              },
+              "page_title": "Rainbow",
+              "page_path": "/mypage/schedule",
+              "element_text": "17",
+              "associated_label": "3 오늘",
+              "selector": "div.mypage-layout > section.mypage-content > div.schedule-page:nth-of-type(1) > section.monthly-calendar > div.monthly-calendar__grid:nth-of-type(2) > div.monthly-calendar__cell:nth-of-type(17)",
+              "tag": "div",
+              "input": {},
+              "popup": {
+                "active_popup_id": "popup:3092dc5b-94d3-4878-a0af-c7877fdedcd0:1",
+                "active_popup_title": "업무 내용",
+                "active_parent_popup_id": null,
+                "target_popup": {}
+              },
+              "menu": {
+                "selected_label": "일정 관리",
+                "path_text": "마이페이지 메뉴 > 일정 관리",
+                "selected_path_text": "마이페이지 메뉴 > 일정 관리",
+                "parser": "sidebar_active_dom",
+                "source": "nav"
+              },
+              "ui_outcome": {},
+              "api": {},
+              "http_method": "",
+              "http_endpoint_raw": "",
+              "http_status": "",
+              "http_relationship_strategy": "",
+              "form": {},
+              "input_form": {},
+              "input_key": {},
+              "input_detected": false,
+              "popup_containment": {
+                "is_inside_popup": false,
+                "active_popup_id": "popup:3092dc5b-94d3-4878-a0af-c7877fdedcd0:1"
+              },
+              "element_role": "",
+              "grid": {
+                "detected": true,
+                "grid_selector": "main.mypage > div.mypage-layout > section.mypage-content > div.schedule-page:nth-of-type(1) > section.monthly-calendar > div.monthly-calendar__grid:nth-of-type(2)",
+                "grid_type": "grid",
+                "grid_role": "data_grid",
+                "cell_value": "17"
+              },
+              "popup_stack": [
+                {
+                  "popup_id": "popup:3092dc5b-94d3-4878-a0af-c7877fdedcd0:1",
+                  "opened_at": "2026-11-03T05:09:43.028Z",
+                  "opened_by_event_id": "cffa3461-7afe-4643-9b47-9c009ecd4b68",
+                  "opened_by_interaction_id": "3092dc5b-94d3-4878-a0af-c7877fdedcd0:click:22"
+                }
+              ]
+            }
+          ],
+          "http_evidence": [],
+          "completion_evidence": [],
+          "serializer_rule_id": "BA-DIRECT-INTENT",
+          "resolution_status": "UNRESOLVED",
+          "source_process_ids": [
+            "PM-020"
+          ],
+          "step_order": 3,
+          "evidence_roles": {
+            "b8ed42f9-d2aa-40bc-8ba6-c6bee5756314": "DIRECT_USER_INTENT"
+          },
+          "intent_order": 25,
+          "last_intent_order": 25
+        }
+      },
+      {
+        "issue": {
+          "order": 4,
+          "source_step_id": "BA-964aacdd-1977-47ee-9d1f-f026b74433bb",
+          "reason": "UNRESOLVED_OR_UNSUPPORTED_OBSERVED_STEP"
+        },
+        "source": {
+          "generated_step_id": "BA-964aacdd-1977-47ee-9d1f-f026b74433bb",
+          "process_id": "PM-020",
+          "workflow_id": "WF-0003",
+          "action_type": "UNRESOLVED",
+          "intent_phase": "UNKNOWN",
+          "target": "",
+          "target_field_label": "",
+          "business_object": "",
+          "menu_page": "/mypage/schedule",
+          "page_title": "Rainbow",
+          "menu": {
+            "selected_label": "일정 관리",
+            "path_text": "마이페이지 메뉴 > 일정 관리",
+            "selected_path_text": "마이페이지 메뉴 > 일정 관리",
+            "parser": "sidebar_active_dom",
+            "source": "nav"
+          },
+          "business_context": "일정 관리",
+          "popup_title": "업무 내용",
+          "form_identity": null,
+          "fields": [],
+          "source_event_ids": [
+            "964aacdd-1977-47ee-9d1f-f026b74433bb"
+          ],
+          "intent_source_event_ids": [
+            "964aacdd-1977-47ee-9d1f-f026b74433bb"
+          ],
+          "source_node_ids": [
+            "PM-020-N008"
+          ],
+          "evidence": [
+            {
+              "event_id": "964aacdd-1977-47ee-9d1f-f026b74433bb",
+              "session_id": "3092dc5b-94d3-4878-a0af-c7877fdedcd0",
+              "event_time": "2026-11-03 14:09:44.361",
+              "event": {
+                "interaction_id": "3092dc5b-94d3-4878-a0af-c7877fdedcd0:submit:27",
+                "action": "submit",
+                "event_sequence": 27,
+                "event_time": "2026-11-03T05:09:44.361Z",
+                "event_id": "964aacdd-1977-47ee-9d1f-f026b74433bb",
+                "related_interaction_id": "3092dc5b-94d3-4878-a0af-c7877fdedcd0:click:26",
+                "related_event_id": null,
+                "parent_event_id": null,
+                "cause_event_id": null,
+                "correlation_id": null,
+                "active_popup_id": "popup:3092dc5b-94d3-4878-a0af-c7877fdedcd0:1",
+                "active_parent_popup_id": null
+              },
+              "page_title": "Rainbow",
+              "page_path": "/mypage/schedule",
+              "element_text": null,
+              "associated_label": null,
+              "selector": "div > main.mypage > div.mypage-layout > section.mypage-content > div.schedule-modal:nth-of-type(2) > form.schedule-modal__panel",
+              "tag": "form",
+              "input": {
+                "id": "",
+                "name": null,
+                "type": null,
+                "associated_label": null
+              },
+              "popup": {
+                "active_popup_id": "popup:3092dc5b-94d3-4878-a0af-c7877fdedcd0:1",
+                "active_popup_title": "업무 내용",
+                "active_parent_popup_id": null,
+                "target_popup": {}
+              },
+              "menu": {
+                "selected_label": "일정 관리",
+                "path_text": "마이페이지 메뉴 > 일정 관리",
+                "selected_path_text": "마이페이지 메뉴 > 일정 관리",
+                "parser": "sidebar_active_dom",
+                "source": "nav"
+              },
+              "ui_outcome": {},
+              "api": {},
+              "http_method": "",
+              "http_endpoint_raw": "",
+              "http_status": "",
+              "http_relationship_strategy": "",
+              "form": {},
+              "input_form": {},
+              "input_key": {
+                "key": null,
+                "code": null
+              },
+              "input_detected": true,
+              "popup_containment": {
+                "is_inside_popup": true,
+                "active_popup_id": "popup:3092dc5b-94d3-4878-a0af-c7877fdedcd0:1"
+              },
+              "element_role": "",
+              "grid": {},
+              "popup_stack": [
+                {
+                  "popup_id": "popup:3092dc5b-94d3-4878-a0af-c7877fdedcd0:1",
+                  "opened_at": "2026-11-03T05:09:43.028Z",
+                  "opened_by_event_id": "cffa3461-7afe-4643-9b47-9c009ecd4b68",
+                  "opened_by_interaction_id": "3092dc5b-94d3-4878-a0af-c7877fdedcd0:click:22"
+                }
+              ],
+              "native_submit": {
+                "form_id": null,
+                "form_name": null,
+                "submitter_text": "확인",
+                "submitter_selector": "div.mypage-layout > section.mypage-content > div.schedule-modal:nth-of-type(2) > form.schedule-modal__panel > div.schedule-modal__actions:nth-of-type(3) > button:nth-of-type(1)",
+                "source_path": "locators_json.raw_payload",
+                "relation_context": {
+                  "related_event_id": "b8ed42f9-d2aa-40bc-8ba6-c6bee5756314",
+                  "related_interaction_id": "3092dc5b-94d3-4878-a0af-c7877fdedcd0:click:26",
+                  "related_strategy": "submit_recent_action_fallback",
+                  "related_action": "click"
+                }
+              }
+            }
+          ],
+          "http_evidence": [],
+          "completion_evidence": [],
+          "serializer_rule_id": "BA-DIRECT-INTENT",
+          "resolution_status": "UNRESOLVED",
+          "source_process_ids": [
+            "PM-020"
+          ],
+          "step_order": 4,
+          "evidence_roles": {
+            "964aacdd-1977-47ee-9d1f-f026b74433bb": "DIRECT_USER_INTENT"
+          },
+          "intent_order": 26,
+          "last_intent_order": 26
+        }
+      },
+      {
+        "issue": {
+          "order": 5,
+          "source_step_id": "BA-ab2f8807-4fee-4ef3-898a-105bf12f28dd",
+          "reason": "UNRESOLVED_OR_UNSUPPORTED_OBSERVED_STEP"
+        },
+        "source": {
+          "generated_step_id": "BA-ab2f8807-4fee-4ef3-898a-105bf12f28dd",
+          "process_id": "PM-020",
+          "workflow_id": "WF-0003",
+          "action_type": "SELECT",
+          "intent_phase": "UNKNOWN",
+          "target": "5 레인보우 정기미팅_1014_03",
+          "target_field_label": "5 레인보우 정기미팅_1014_03",
+          "business_object": "",
+          "menu_page": "/mypage/schedule",
+          "page_title": "Rainbow",
+          "menu": {
+            "selected_label": "일정 관리",
+            "path_text": "마이페이지 메뉴 > 일정 관리",
+            "selected_path_text": "마이페이지 메뉴 > 일정 관리",
+            "parser": "sidebar_active_dom",
+            "source": "nav"
+          },
+          "business_context": "일정 관리",
+          "popup_title": "",
+          "form_identity": null,
+          "fields": [],
+          "source_event_ids": [
+            "ab2f8807-4fee-4ef3-898a-105bf12f28dd",
+            "96c375c7-73e8-4ac9-bbe7-d09ac7c1de2d"
+          ],
+          "intent_source_event_ids": [
+            "ab2f8807-4fee-4ef3-898a-105bf12f28dd"
+          ],
+          "source_node_ids": [
+            "PM-020-N006",
+            "PM-020-N007"
+          ],
+          "evidence": [
+            {
+              "event_id": "ab2f8807-4fee-4ef3-898a-105bf12f28dd",
+              "session_id": "3092dc5b-94d3-4878-a0af-c7877fdedcd0",
+              "event_time": "2026-11-03 14:09:51.505",
+              "event": {
+                "interaction_id": "3092dc5b-94d3-4878-a0af-c7877fdedcd0:click:31",
+                "action": "click",
+                "event_sequence": 31,
+                "event_time": "2026-11-03T05:09:51.505Z",
+                "event_id": "ab2f8807-4fee-4ef3-898a-105bf12f28dd",
+                "related_interaction_id": null,
+                "related_event_id": null,
+                "parent_event_id": null,
+                "cause_event_id": null,
+                "correlation_id": null,
+                "active_popup_id": null,
+                "active_parent_popup_id": null
+              },
+              "page_title": "Rainbow",
+              "page_path": "/mypage/schedule",
+              "element_text": "12",
+              "associated_label": "5 레인보우 정기미팅_1014_03",
+              "selector": "div.mypage-layout > section.mypage-content > div.schedule-page > section.monthly-calendar > div.monthly-calendar__grid:nth-of-type(2) > div.monthly-calendar__cell:nth-of-type(12)",
+              "tag": "div",
+              "input": {},
+              "popup": {
+                "target_popup": {}
+              },
+              "menu": {
+                "selected_label": "일정 관리",
+                "path_text": "마이페이지 메뉴 > 일정 관리",
+                "selected_path_text": "마이페이지 메뉴 > 일정 관리",
+                "parser": "sidebar_active_dom",
+                "source": "nav"
+              },
+              "ui_outcome": {},
+              "api": {},
+              "http_method": "",
+              "http_endpoint_raw": "",
+              "http_status": "",
+              "http_relationship_strategy": "",
+              "form": {},
+              "input_form": {},
+              "input_key": {},
+              "input_detected": false,
+              "popup_containment": {},
+              "element_role": "",
+              "grid": {
+                "detected": true,
+                "grid_selector": "main.mypage > div.mypage-layout > section.mypage-content > div.schedule-page > section.monthly-calendar > div.monthly-calendar__grid:nth-of-type(2)",
+                "grid_type": "grid",
+                "grid_role": "data_grid",
+                "cell_value": "12"
+              },
+              "popup_stack": []
+            },
+            {
+              "event_id": "96c375c7-73e8-4ac9-bbe7-d09ac7c1de2d",
+              "session_id": "3092dc5b-94d3-4878-a0af-c7877fdedcd0",
+              "event_time": "2026-11-03 14:09:51.594",
+              "event": {
+                "interaction_id": "3092dc5b-94d3-4878-a0af-c7877fdedcd0:popup_open:32",
+                "action": "popup_open",
+                "event_sequence": 32,
+                "event_time": "2026-11-03T05:09:51.594Z",
+                "event_id": "96c375c7-73e8-4ac9-bbe7-d09ac7c1de2d",
+                "related_interaction_id": "3092dc5b-94d3-4878-a0af-c7877fdedcd0:click:31",
+                "related_event_id": "ab2f8807-4fee-4ef3-898a-105bf12f28dd",
+                "parent_event_id": "ab2f8807-4fee-4ef3-898a-105bf12f28dd",
+                "cause_event_id": "ab2f8807-4fee-4ef3-898a-105bf12f28dd",
+                "correlation_id": null,
+                "active_popup_id": "popup:3092dc5b-94d3-4878-a0af-c7877fdedcd0:2",
+                "active_parent_popup_id": null
+              },
+              "page_title": "Rainbow",
+              "page_path": "/mypage/schedule",
+              "element_text": "업무 등록",
+              "associated_label": null,
+              "selector": "body > div > main.mypage > div.mypage-layout > section.mypage-content > div.schedule-modal:nth-of-type(2)",
+              "tag": "div",
+              "input": {},
+              "popup": {
+                "active_popup_id": "popup:3092dc5b-94d3-4878-a0af-c7877fdedcd0:2",
+                "active_popup_title": "업무 등록",
+                "lifecycle_action": "open",
+                "active_parent_popup_id": null,
+                "opener_event_id": "ab2f8807-4fee-4ef3-898a-105bf12f28dd",
+                "opener_interaction_id": "3092dc5b-94d3-4878-a0af-c7877fdedcd0:click:31",
+                "closer_event_id": null,
+                "closer_interaction_id": null,
+                "target_popup": {
+                  "popup_id": "popup:3092dc5b-94d3-4878-a0af-c7877fdedcd0:2",
+                  "title": "업무 등록",
+                  "role": "dialog",
+                  "parent_popup_id": null,
+                  "opened_by_event_id": "ab2f8807-4fee-4ef3-898a-105bf12f28dd",
+                  "opened_by_interaction_id": "3092dc5b-94d3-4878-a0af-c7877fdedcd0:click:31",
+                  "opened_at": "2026-11-03T05:09:51.593Z",
+                  "selector_css": "body > div > main.mypage > div.mypage-layout > section.mypage-content > div.schedule-modal:nth-of-type(2)",
+                  "selector_xpath": "/html[1]/body[1]/div[1]/main[1]/div[1]/section[1]/div[2]",
+                  "tag": "div",
+                  "source_action": "click"
+                }
+              },
+              "menu": {},
+              "ui_outcome": {},
+              "api": {},
+              "http_method": "",
+              "http_endpoint_raw": "",
+              "http_status": "",
+              "http_relationship_strategy": "",
+              "form": {},
+              "input_form": {},
+              "input_key": {},
+              "input_detected": false,
+              "popup_containment": {
+                "is_inside_popup": true,
+                "active_popup_id": "popup:3092dc5b-94d3-4878-a0af-c7877fdedcd0:2"
+              },
+              "element_role": "",
+              "grid": {},
+              "popup_stack": [
+                {
+                  "popup_id": "popup:3092dc5b-94d3-4878-a0af-c7877fdedcd0:2",
+                  "opened_at": "2026-11-03T05:09:51.593Z",
+                  "opened_by_event_id": "ab2f8807-4fee-4ef3-898a-105bf12f28dd",
+                  "opened_by_interaction_id": "3092dc5b-94d3-4878-a0af-c7877fdedcd0:click:31"
+                }
+              ]
+            }
+          ],
+          "http_evidence": [],
+          "completion_evidence": [],
+          "serializer_rule_id": "BA-CALENDAR-CELL-CREATE-OPENER",
+          "resolution_status": "RESOLVED",
+          "source_process_ids": [
+            "PM-020"
+          ],
+          "step_order": 5,
+          "evidence_roles": {
+            "ab2f8807-4fee-4ef3-898a-105bf12f28dd": "DIRECT_USER_INTENT",
+            "96c375c7-73e8-4ac9-bbe7-d09ac7c1de2d": "DIRECT_CALENDAR_CREATE_POPUP"
+          },
+          "selection_kind": "CALENDAR_CELL",
+          "selected_cell_text": "12",
+          "selected_date": null,
+          "selection_provenance": {
+            "click_source_event_id": "ab2f8807-4fee-4ef3-898a-105bf12f28dd",
+            "popup_source_event_id": "96c375c7-73e8-4ac9-bbe7-d09ac7c1de2d",
+            "raw_calendar_selector": "main.mypage > div.mypage-layout > section.mypage-content > div.schedule-page > section.monthly-calendar > div.monthly-calendar__grid:nth-of-type(2)",
+            "raw_cell_text": "12",
+            "date_inferred": false
+          },
+          "intent_order": 30,
+          "last_intent_order": 30
+        }
+      },
+      {
+        "issue": {
+          "order": 6,
+          "source_step_id": "BA-c35b4b88-2257-40f4-ac0e-770136ce0e02",
+          "reason": "UNRESOLVED_OR_UNSUPPORTED_OBSERVED_STEP"
+        },
+        "source": {
+          "generated_step_id": "BA-c35b4b88-2257-40f4-ac0e-770136ce0e02",
+          "process_id": "PM-020",
+          "workflow_id": "WF-0003",
+          "action_type": "UNRESOLVED",
+          "intent_phase": "UNKNOWN",
+          "target": "4",
+          "target_field_label": "4",
+          "business_object": "",
+          "menu_page": "/mypage/schedule",
+          "page_title": "Rainbow",
+          "menu": {
+            "selected_label": "일정 관리",
+            "path_text": "마이페이지 메뉴 > 일정 관리",
+            "selected_path_text": "마이페이지 메뉴 > 일정 관리",
+            "parser": "sidebar_active_dom",
+            "source": "nav"
+          },
+          "business_context": "일정 관리",
+          "popup_title": "업무 등록",
+          "form_identity": [
+            "3092dc5b-94d3-4878-a0af-c7877fdedcd0",
+            "/mypage/schedule",
+            "FORM_POPUP",
+            "popup:3092dc5b-94d3-4878-a0af-c7877fdedcd0:2",
+            "body > div > main.mypage > div.mypage-layout > section.mypage-content > div.schedule-modal:nth-of-type(2)",
+            "업무 등록"
+          ],
+          "fields": [],
+          "source_event_ids": [
+            "96c375c7-73e8-4ac9-bbe7-d09ac7c1de2d",
+            "c35b4b88-2257-40f4-ac0e-770136ce0e02"
+          ],
+          "intent_source_event_ids": [
+            "c35b4b88-2257-40f4-ac0e-770136ce0e02"
+          ],
+          "source_node_ids": [
+            "PM-020-N006",
+            "PM-020-N007"
+          ],
+          "evidence": [
+            {
+              "event_id": "96c375c7-73e8-4ac9-bbe7-d09ac7c1de2d",
+              "session_id": "3092dc5b-94d3-4878-a0af-c7877fdedcd0",
+              "event_time": "2026-11-03 14:09:51.594",
+              "event": {
+                "interaction_id": "3092dc5b-94d3-4878-a0af-c7877fdedcd0:popup_open:32",
+                "action": "popup_open",
+                "event_sequence": 32,
+                "event_time": "2026-11-03T05:09:51.594Z",
+                "event_id": "96c375c7-73e8-4ac9-bbe7-d09ac7c1de2d",
+                "related_interaction_id": "3092dc5b-94d3-4878-a0af-c7877fdedcd0:click:31",
+                "related_event_id": "ab2f8807-4fee-4ef3-898a-105bf12f28dd",
+                "parent_event_id": "ab2f8807-4fee-4ef3-898a-105bf12f28dd",
+                "cause_event_id": "ab2f8807-4fee-4ef3-898a-105bf12f28dd",
+                "correlation_id": null,
+                "active_popup_id": "popup:3092dc5b-94d3-4878-a0af-c7877fdedcd0:2",
+                "active_parent_popup_id": null
+              },
+              "page_title": "Rainbow",
+              "page_path": "/mypage/schedule",
+              "element_text": "업무 등록",
+              "associated_label": null,
+              "selector": "body > div > main.mypage > div.mypage-layout > section.mypage-content > div.schedule-modal:nth-of-type(2)",
+              "tag": "div",
+              "input": {},
+              "popup": {
+                "active_popup_id": "popup:3092dc5b-94d3-4878-a0af-c7877fdedcd0:2",
+                "active_popup_title": "업무 등록",
+                "lifecycle_action": "open",
+                "active_parent_popup_id": null,
+                "opener_event_id": "ab2f8807-4fee-4ef3-898a-105bf12f28dd",
+                "opener_interaction_id": "3092dc5b-94d3-4878-a0af-c7877fdedcd0:click:31",
+                "closer_event_id": null,
+                "closer_interaction_id": null,
+                "target_popup": {
+                  "popup_id": "popup:3092dc5b-94d3-4878-a0af-c7877fdedcd0:2",
+                  "title": "업무 등록",
+                  "role": "dialog",
+                  "parent_popup_id": null,
+                  "opened_by_event_id": "ab2f8807-4fee-4ef3-898a-105bf12f28dd",
+                  "opened_by_interaction_id": "3092dc5b-94d3-4878-a0af-c7877fdedcd0:click:31",
+                  "opened_at": "2026-11-03T05:09:51.593Z",
+                  "selector_css": "body > div > main.mypage > div.mypage-layout > section.mypage-content > div.schedule-modal:nth-of-type(2)",
+                  "selector_xpath": "/html[1]/body[1]/div[1]/main[1]/div[1]/section[1]/div[2]",
+                  "tag": "div",
+                  "source_action": "click"
+                }
+              },
+              "menu": {},
+              "ui_outcome": {},
+              "api": {},
+              "http_method": "",
+              "http_endpoint_raw": "",
+              "http_status": "",
+              "http_relationship_strategy": "",
+              "form": {},
+              "input_form": {},
+              "input_key": {},
+              "input_detected": false,
+              "popup_containment": {
+                "is_inside_popup": true,
+                "active_popup_id": "popup:3092dc5b-94d3-4878-a0af-c7877fdedcd0:2"
+              },
+              "element_role": "",
+              "grid": {},
+              "popup_stack": [
+                {
+                  "popup_id": "popup:3092dc5b-94d3-4878-a0af-c7877fdedcd0:2",
+                  "opened_at": "2026-11-03T05:09:51.593Z",
+                  "opened_by_event_id": "ab2f8807-4fee-4ef3-898a-105bf12f28dd",
+                  "opened_by_interaction_id": "3092dc5b-94d3-4878-a0af-c7877fdedcd0:click:31"
+                }
+              ]
+            },
+            {
+              "event_id": "c35b4b88-2257-40f4-ac0e-770136ce0e02",
+              "session_id": "3092dc5b-94d3-4878-a0af-c7877fdedcd0",
+              "event_time": "2026-11-03 14:09:53.149",
+              "event": {
+                "interaction_id": "3092dc5b-94d3-4878-a0af-c7877fdedcd0:click:34",
+                "action": "click",
+                "event_sequence": 34,
+                "event_time": "2026-11-03T05:09:53.149Z",
+                "event_id": "c35b4b88-2257-40f4-ac0e-770136ce0e02",
+                "related_interaction_id": null,
+                "related_event_id": null,
+                "parent_event_id": null,
+                "cause_event_id": null,
+                "correlation_id": null,
+                "active_popup_id": "popup:3092dc5b-94d3-4878-a0af-c7877fdedcd0:2",
+                "active_parent_popup_id": null
+              },
+              "page_title": "Rainbow",
+              "page_path": "/mypage/schedule",
+              "element_text": "11",
+              "associated_label": "4",
+              "selector": "div.mypage-layout > section.mypage-content > div.schedule-page:nth-of-type(1) > section.monthly-calendar > div.monthly-calendar__grid:nth-of-type(2) > div.monthly-calendar__cell:nth-of-type(11)",
+              "tag": "div",
+              "input": {},
+              "popup": {
+                "active_popup_id": "popup:3092dc5b-94d3-4878-a0af-c7877fdedcd0:2",
+                "active_popup_title": "업무 등록",
+                "active_parent_popup_id": null,
+                "target_popup": {}
+              },
+              "menu": {
+                "selected_label": "일정 관리",
+                "path_text": "마이페이지 메뉴 > 일정 관리",
+                "selected_path_text": "마이페이지 메뉴 > 일정 관리",
+                "parser": "sidebar_active_dom",
+                "source": "nav"
+              },
+              "ui_outcome": {},
+              "api": {},
+              "http_method": "",
+              "http_endpoint_raw": "",
+              "http_status": "",
+              "http_relationship_strategy": "",
+              "form": {},
+              "input_form": {},
+              "input_key": {},
+              "input_detected": false,
+              "popup_containment": {
+                "is_inside_popup": false,
+                "active_popup_id": "popup:3092dc5b-94d3-4878-a0af-c7877fdedcd0:2"
+              },
+              "element_role": "",
+              "grid": {
+                "detected": true,
+                "grid_selector": "main.mypage > div.mypage-layout > section.mypage-content > div.schedule-page:nth-of-type(1) > section.monthly-calendar > div.monthly-calendar__grid:nth-of-type(2)",
+                "grid_type": "grid",
+                "grid_role": "data_grid",
+                "cell_value": "11"
+              },
+              "popup_stack": [
+                {
+                  "popup_id": "popup:3092dc5b-94d3-4878-a0af-c7877fdedcd0:2",
+                  "opened_at": "2026-11-03T05:09:51.593Z",
+                  "opened_by_event_id": "ab2f8807-4fee-4ef3-898a-105bf12f28dd",
+                  "opened_by_interaction_id": "3092dc5b-94d3-4878-a0af-c7877fdedcd0:click:31"
+                }
+              ]
+            }
+          ],
+          "http_evidence": [],
+          "completion_evidence": [],
+          "serializer_rule_id": "BA-DIRECT-INTENT",
+          "resolution_status": "UNRESOLVED",
+          "source_process_ids": [
+            "PM-020"
+          ],
+          "step_order": 6,
+          "evidence_roles": {
+            "c35b4b88-2257-40f4-ac0e-770136ce0e02": "DIRECT_USER_INTENT",
+            "96c375c7-73e8-4ac9-bbe7-d09ac7c1de2d": "LIVE_FORM_CONTEXT"
+          },
+          "form_lifecycle_provenance": {
+            "rule_id": "BA-LIVE-FORM-OPENING",
+            "opening_source_event_id": "96c375c7-73e8-4ac9-bbe7-d09ac7c1de2d"
+          },
+          "context_provenance": [
+            {
+              "rule_id": "BA-VALIDATED-OPENER-MENU",
+              "opener_source_event_id": "ab2f8807-4fee-4ef3-898a-105bf12f28dd",
+              "popup_source_event_id": "96c375c7-73e8-4ac9-bbe7-d09ac7c1de2d",
+              "raw_menu": {
+                "selected_label": "일정 관리",
+                "path_text": "마이페이지 메뉴 > 일정 관리",
+                "selected_path_text": "마이페이지 메뉴 > 일정 관리",
+                "parser": "sidebar_active_dom",
+                "source": "nav"
+              },
+              "page_path": "/mypage/schedule"
+            }
+          ],
+          "form_detection_evidence": [
+            {
+              "source_event_id": "ce6ba3d6-0e7d-4a76-aba9-c439dec592c6",
+              "rule_id": "BA-DIALOG-DESCENDANT-INPUT",
+              "raw_selector": "#schedule-title"
+            },
+            {
+              "source_event_id": "e9765f07-e848-4741-9548-635595e6ba8d",
+              "rule_id": "BA-DIALOG-DESCENDANT-INPUT",
+              "raw_selector": "#schedule-description"
+            },
+            {
+              "source_event_id": "5d55b008-468e-42fa-a273-cd7c2b20ade4",
+              "rule_id": "BA-DIALOG-DESCENDANT-INPUT",
+              "raw_selector": "#schedule-description"
+            }
+          ],
+          "intent_order": 33,
+          "last_intent_order": 33
+        }
+      },
+      {
+        "issue": {
+          "order": 8,
+          "source_step_id": "BA-fdfbfa98-394d-476a-88e6-e9a0d1113cd8",
+          "reason": "UNRESOLVED_OR_UNSUPPORTED_OBSERVED_STEP"
+        },
+        "source": {
+          "generated_step_id": "BA-fdfbfa98-394d-476a-88e6-e9a0d1113cd8",
+          "process_id": "PM-020",
+          "workflow_id": "WF-0003",
+          "action_type": "UNRESOLVED",
+          "intent_phase": "UNKNOWN",
+          "target": "4",
+          "target_field_label": "4",
+          "business_object": "",
+          "menu_page": "/mypage/schedule",
+          "page_title": "Rainbow",
+          "menu": {
+            "selected_label": "일정 관리",
+            "path_text": "마이페이지 메뉴 > 일정 관리",
+            "selected_path_text": "마이페이지 메뉴 > 일정 관리",
+            "parser": "sidebar_active_dom",
+            "source": "nav"
+          },
+          "business_context": "일정 관리",
+          "popup_title": "업무 등록",
+          "form_identity": [
+            "3092dc5b-94d3-4878-a0af-c7877fdedcd0",
+            "/mypage/schedule",
+            "FORM_POPUP",
+            "popup:3092dc5b-94d3-4878-a0af-c7877fdedcd0:2",
+            "body > div > main.mypage > div.mypage-layout > section.mypage-content > div.schedule-modal:nth-of-type(2)",
+            "업무 등록"
+          ],
+          "fields": [],
+          "source_event_ids": [
+            "96c375c7-73e8-4ac9-bbe7-d09ac7c1de2d",
+            "fdfbfa98-394d-476a-88e6-e9a0d1113cd8"
+          ],
+          "intent_source_event_ids": [
+            "fdfbfa98-394d-476a-88e6-e9a0d1113cd8"
+          ],
+          "source_node_ids": [
+            "PM-020-N006",
+            "PM-020-N007"
+          ],
+          "evidence": [
+            {
+              "event_id": "96c375c7-73e8-4ac9-bbe7-d09ac7c1de2d",
+              "session_id": "3092dc5b-94d3-4878-a0af-c7877fdedcd0",
+              "event_time": "2026-11-03 14:09:51.594",
+              "event": {
+                "interaction_id": "3092dc5b-94d3-4878-a0af-c7877fdedcd0:popup_open:32",
+                "action": "popup_open",
+                "event_sequence": 32,
+                "event_time": "2026-11-03T05:09:51.594Z",
+                "event_id": "96c375c7-73e8-4ac9-bbe7-d09ac7c1de2d",
+                "related_interaction_id": "3092dc5b-94d3-4878-a0af-c7877fdedcd0:click:31",
+                "related_event_id": "ab2f8807-4fee-4ef3-898a-105bf12f28dd",
+                "parent_event_id": "ab2f8807-4fee-4ef3-898a-105bf12f28dd",
+                "cause_event_id": "ab2f8807-4fee-4ef3-898a-105bf12f28dd",
+                "correlation_id": null,
+                "active_popup_id": "popup:3092dc5b-94d3-4878-a0af-c7877fdedcd0:2",
+                "active_parent_popup_id": null
+              },
+              "page_title": "Rainbow",
+              "page_path": "/mypage/schedule",
+              "element_text": "업무 등록",
+              "associated_label": null,
+              "selector": "body > div > main.mypage > div.mypage-layout > section.mypage-content > div.schedule-modal:nth-of-type(2)",
+              "tag": "div",
+              "input": {},
+              "popup": {
+                "active_popup_id": "popup:3092dc5b-94d3-4878-a0af-c7877fdedcd0:2",
+                "active_popup_title": "업무 등록",
+                "lifecycle_action": "open",
+                "active_parent_popup_id": null,
+                "opener_event_id": "ab2f8807-4fee-4ef3-898a-105bf12f28dd",
+                "opener_interaction_id": "3092dc5b-94d3-4878-a0af-c7877fdedcd0:click:31",
+                "closer_event_id": null,
+                "closer_interaction_id": null,
+                "target_popup": {
+                  "popup_id": "popup:3092dc5b-94d3-4878-a0af-c7877fdedcd0:2",
+                  "title": "업무 등록",
+                  "role": "dialog",
+                  "parent_popup_id": null,
+                  "opened_by_event_id": "ab2f8807-4fee-4ef3-898a-105bf12f28dd",
+                  "opened_by_interaction_id": "3092dc5b-94d3-4878-a0af-c7877fdedcd0:click:31",
+                  "opened_at": "2026-11-03T05:09:51.593Z",
+                  "selector_css": "body > div > main.mypage > div.mypage-layout > section.mypage-content > div.schedule-modal:nth-of-type(2)",
+                  "selector_xpath": "/html[1]/body[1]/div[1]/main[1]/div[1]/section[1]/div[2]",
+                  "tag": "div",
+                  "source_action": "click"
+                }
+              },
+              "menu": {},
+              "ui_outcome": {},
+              "api": {},
+              "http_method": "",
+              "http_endpoint_raw": "",
+              "http_status": "",
+              "http_relationship_strategy": "",
+              "form": {},
+              "input_form": {},
+              "input_key": {},
+              "input_detected": false,
+              "popup_containment": {
+                "is_inside_popup": true,
+                "active_popup_id": "popup:3092dc5b-94d3-4878-a0af-c7877fdedcd0:2"
+              },
+              "element_role": "",
+              "grid": {},
+              "popup_stack": [
+                {
+                  "popup_id": "popup:3092dc5b-94d3-4878-a0af-c7877fdedcd0:2",
+                  "opened_at": "2026-11-03T05:09:51.593Z",
+                  "opened_by_event_id": "ab2f8807-4fee-4ef3-898a-105bf12f28dd",
+                  "opened_by_interaction_id": "3092dc5b-94d3-4878-a0af-c7877fdedcd0:click:31"
+                }
+              ]
+            },
+            {
+              "event_id": "fdfbfa98-394d-476a-88e6-e9a0d1113cd8",
+              "session_id": "3092dc5b-94d3-4878-a0af-c7877fdedcd0",
+              "event_time": "2026-11-03 14:10:00.602",
+              "event": {
+                "interaction_id": "3092dc5b-94d3-4878-a0af-c7877fdedcd0:click:36",
+                "action": "click",
+                "event_sequence": 36,
+                "event_time": "2026-11-03T05:10:00.602Z",
+                "event_id": "fdfbfa98-394d-476a-88e6-e9a0d1113cd8",
+                "related_interaction_id": null,
+                "related_event_id": null,
+                "parent_event_id": null,
+                "cause_event_id": null,
+                "correlation_id": null,
+                "active_popup_id": "popup:3092dc5b-94d3-4878-a0af-c7877fdedcd0:2",
+                "active_parent_popup_id": null
+              },
+              "page_title": "Rainbow",
+              "page_path": "/mypage/schedule",
+              "element_text": "25",
+              "associated_label": "4",
+              "selector": "div.mypage-layout > section.mypage-content > div.schedule-page:nth-of-type(1) > section.monthly-calendar > div.monthly-calendar__grid:nth-of-type(2) > div.monthly-calendar__cell:nth-of-type(25)",
+              "tag": "div",
+              "input": {},
+              "popup": {
+                "active_popup_id": "popup:3092dc5b-94d3-4878-a0af-c7877fdedcd0:2",
+                "active_popup_title": "업무 등록",
+                "active_parent_popup_id": null,
+                "target_popup": {}
+              },
+              "menu": {
+                "selected_label": "일정 관리",
+                "path_text": "마이페이지 메뉴 > 일정 관리",
+                "selected_path_text": "마이페이지 메뉴 > 일정 관리",
+                "parser": "sidebar_active_dom",
+                "source": "nav"
+              },
+              "ui_outcome": {},
+              "api": {},
+              "http_method": "",
+              "http_endpoint_raw": "",
+              "http_status": "",
+              "http_relationship_strategy": "",
+              "form": {},
+              "input_form": {},
+              "input_key": {},
+              "input_detected": false,
+              "popup_containment": {
+                "is_inside_popup": false,
+                "active_popup_id": "popup:3092dc5b-94d3-4878-a0af-c7877fdedcd0:2"
+              },
+              "element_role": "",
+              "grid": {
+                "detected": true,
+                "grid_selector": "main.mypage > div.mypage-layout > section.mypage-content > div.schedule-page:nth-of-type(1) > section.monthly-calendar > div.monthly-calendar__grid:nth-of-type(2)",
+                "grid_type": "grid",
+                "grid_role": "data_grid",
+                "cell_value": "25"
+              },
+              "popup_stack": [
+                {
+                  "popup_id": "popup:3092dc5b-94d3-4878-a0af-c7877fdedcd0:2",
+                  "opened_at": "2026-11-03T05:09:51.593Z",
+                  "opened_by_event_id": "ab2f8807-4fee-4ef3-898a-105bf12f28dd",
+                  "opened_by_interaction_id": "3092dc5b-94d3-4878-a0af-c7877fdedcd0:click:31"
+                }
+              ]
+            }
+          ],
+          "http_evidence": [],
+          "completion_evidence": [],
+          "serializer_rule_id": "BA-DIRECT-INTENT",
+          "resolution_status": "UNRESOLVED",
+          "source_process_ids": [
+            "PM-020"
+          ],
+          "step_order": 8,
+          "evidence_roles": {
+            "fdfbfa98-394d-476a-88e6-e9a0d1113cd8": "DIRECT_USER_INTENT",
+            "96c375c7-73e8-4ac9-bbe7-d09ac7c1de2d": "LIVE_FORM_CONTEXT"
+          },
+          "form_lifecycle_provenance": {
+            "rule_id": "BA-LIVE-FORM-OPENING",
+            "opening_source_event_id": "96c375c7-73e8-4ac9-bbe7-d09ac7c1de2d"
+          },
+          "context_provenance": [
+            {
+              "rule_id": "BA-VALIDATED-OPENER-MENU",
+              "opener_source_event_id": "ab2f8807-4fee-4ef3-898a-105bf12f28dd",
+              "popup_source_event_id": "96c375c7-73e8-4ac9-bbe7-d09ac7c1de2d",
+              "raw_menu": {
+                "selected_label": "일정 관리",
+                "path_text": "마이페이지 메뉴 > 일정 관리",
+                "selected_path_text": "마이페이지 메뉴 > 일정 관리",
+                "parser": "sidebar_active_dom",
+                "source": "nav"
+              },
+              "page_path": "/mypage/schedule"
+            }
+          ],
+          "form_detection_evidence": [
+            {
+              "source_event_id": "ce6ba3d6-0e7d-4a76-aba9-c439dec592c6",
+              "rule_id": "BA-DIALOG-DESCENDANT-INPUT",
+              "raw_selector": "#schedule-title"
+            },
+            {
+              "source_event_id": "e9765f07-e848-4741-9548-635595e6ba8d",
+              "rule_id": "BA-DIALOG-DESCENDANT-INPUT",
+              "raw_selector": "#schedule-description"
+            },
+            {
+              "source_event_id": "5d55b008-468e-42fa-a273-cd7c2b20ade4",
+              "rule_id": "BA-DIALOG-DESCENDANT-INPUT",
+              "raw_selector": "#schedule-description"
+            }
+          ],
+          "intent_order": 35,
+          "last_intent_order": 35
+        }
+      },
+      {
+        "issue": {
+          "order": 9,
+          "source_step_id": "BA-cc5c965f-bb67-45fd-bec6-50be2ed20824",
+          "reason": "UNRESOLVED_OR_UNSUPPORTED_OBSERVED_STEP"
+        },
+        "source": {
+          "generated_step_id": "BA-cc5c965f-bb67-45fd-bec6-50be2ed20824",
+          "process_id": "PM-020",
+          "workflow_id": "WF-0003",
+          "action_type": "UNRESOLVED",
+          "intent_phase": "UNKNOWN",
+          "target": "4",
+          "target_field_label": "4",
+          "business_object": "",
+          "menu_page": "/mypage/schedule",
+          "page_title": "Rainbow",
+          "menu": {
+            "selected_label": "일정 관리",
+            "path_text": "마이페이지 메뉴 > 일정 관리",
+            "selected_path_text": "마이페이지 메뉴 > 일정 관리",
+            "parser": "sidebar_active_dom",
+            "source": "nav"
+          },
+          "business_context": "일정 관리",
+          "popup_title": "업무 등록",
+          "form_identity": [
+            "3092dc5b-94d3-4878-a0af-c7877fdedcd0",
+            "/mypage/schedule",
+            "FORM_POPUP",
+            "popup:3092dc5b-94d3-4878-a0af-c7877fdedcd0:2",
+            "body > div > main.mypage > div.mypage-layout > section.mypage-content > div.schedule-modal:nth-of-type(2)",
+            "업무 등록"
+          ],
+          "fields": [],
+          "source_event_ids": [
+            "96c375c7-73e8-4ac9-bbe7-d09ac7c1de2d",
+            "cc5c965f-bb67-45fd-bec6-50be2ed20824"
+          ],
+          "intent_source_event_ids": [
+            "cc5c965f-bb67-45fd-bec6-50be2ed20824"
+          ],
+          "source_node_ids": [
+            "PM-020-N006",
+            "PM-020-N007"
+          ],
+          "evidence": [
+            {
+              "event_id": "96c375c7-73e8-4ac9-bbe7-d09ac7c1de2d",
+              "session_id": "3092dc5b-94d3-4878-a0af-c7877fdedcd0",
+              "event_time": "2026-11-03 14:09:51.594",
+              "event": {
+                "interaction_id": "3092dc5b-94d3-4878-a0af-c7877fdedcd0:popup_open:32",
+                "action": "popup_open",
+                "event_sequence": 32,
+                "event_time": "2026-11-03T05:09:51.594Z",
+                "event_id": "96c375c7-73e8-4ac9-bbe7-d09ac7c1de2d",
+                "related_interaction_id": "3092dc5b-94d3-4878-a0af-c7877fdedcd0:click:31",
+                "related_event_id": "ab2f8807-4fee-4ef3-898a-105bf12f28dd",
+                "parent_event_id": "ab2f8807-4fee-4ef3-898a-105bf12f28dd",
+                "cause_event_id": "ab2f8807-4fee-4ef3-898a-105bf12f28dd",
+                "correlation_id": null,
+                "active_popup_id": "popup:3092dc5b-94d3-4878-a0af-c7877fdedcd0:2",
+                "active_parent_popup_id": null
+              },
+              "page_title": "Rainbow",
+              "page_path": "/mypage/schedule",
+              "element_text": "업무 등록",
+              "associated_label": null,
+              "selector": "body > div > main.mypage > div.mypage-layout > section.mypage-content > div.schedule-modal:nth-of-type(2)",
+              "tag": "div",
+              "input": {},
+              "popup": {
+                "active_popup_id": "popup:3092dc5b-94d3-4878-a0af-c7877fdedcd0:2",
+                "active_popup_title": "업무 등록",
+                "lifecycle_action": "open",
+                "active_parent_popup_id": null,
+                "opener_event_id": "ab2f8807-4fee-4ef3-898a-105bf12f28dd",
+                "opener_interaction_id": "3092dc5b-94d3-4878-a0af-c7877fdedcd0:click:31",
+                "closer_event_id": null,
+                "closer_interaction_id": null,
+                "target_popup": {
+                  "popup_id": "popup:3092dc5b-94d3-4878-a0af-c7877fdedcd0:2",
+                  "title": "업무 등록",
+                  "role": "dialog",
+                  "parent_popup_id": null,
+                  "opened_by_event_id": "ab2f8807-4fee-4ef3-898a-105bf12f28dd",
+                  "opened_by_interaction_id": "3092dc5b-94d3-4878-a0af-c7877fdedcd0:click:31",
+                  "opened_at": "2026-11-03T05:09:51.593Z",
+                  "selector_css": "body > div > main.mypage > div.mypage-layout > section.mypage-content > div.schedule-modal:nth-of-type(2)",
+                  "selector_xpath": "/html[1]/body[1]/div[1]/main[1]/div[1]/section[1]/div[2]",
+                  "tag": "div",
+                  "source_action": "click"
+                }
+              },
+              "menu": {},
+              "ui_outcome": {},
+              "api": {},
+              "http_method": "",
+              "http_endpoint_raw": "",
+              "http_status": "",
+              "http_relationship_strategy": "",
+              "form": {},
+              "input_form": {},
+              "input_key": {},
+              "input_detected": false,
+              "popup_containment": {
+                "is_inside_popup": true,
+                "active_popup_id": "popup:3092dc5b-94d3-4878-a0af-c7877fdedcd0:2"
+              },
+              "element_role": "",
+              "grid": {},
+              "popup_stack": [
+                {
+                  "popup_id": "popup:3092dc5b-94d3-4878-a0af-c7877fdedcd0:2",
+                  "opened_at": "2026-11-03T05:09:51.593Z",
+                  "opened_by_event_id": "ab2f8807-4fee-4ef3-898a-105bf12f28dd",
+                  "opened_by_interaction_id": "3092dc5b-94d3-4878-a0af-c7877fdedcd0:click:31"
+                }
+              ]
+            },
+            {
+              "event_id": "cc5c965f-bb67-45fd-bec6-50be2ed20824",
+              "session_id": "3092dc5b-94d3-4878-a0af-c7877fdedcd0",
+              "event_time": "2026-11-03 14:10:01.305",
+              "event": {
+                "interaction_id": "3092dc5b-94d3-4878-a0af-c7877fdedcd0:click:37",
+                "action": "click",
+                "event_sequence": 37,
+                "event_time": "2026-11-03T05:10:01.305Z",
+                "event_id": "cc5c965f-bb67-45fd-bec6-50be2ed20824",
+                "related_interaction_id": null,
+                "related_event_id": null,
+                "parent_event_id": null,
+                "cause_event_id": null,
+                "correlation_id": null,
+                "active_popup_id": "popup:3092dc5b-94d3-4878-a0af-c7877fdedcd0:2",
+                "active_parent_popup_id": null
+              },
+              "page_title": "Rainbow",
+              "page_path": "/mypage/schedule",
+              "element_text": "18",
+              "associated_label": "4",
+              "selector": "div.mypage-layout > section.mypage-content > div.schedule-page:nth-of-type(1) > section.monthly-calendar > div.monthly-calendar__grid:nth-of-type(2) > div.monthly-calendar__cell:nth-of-type(18)",
+              "tag": "div",
+              "input": {},
+              "popup": {
+                "active_popup_id": "popup:3092dc5b-94d3-4878-a0af-c7877fdedcd0:2",
+                "active_popup_title": "업무 등록",
+                "active_parent_popup_id": null,
+                "target_popup": {}
+              },
+              "menu": {
+                "selected_label": "일정 관리",
+                "path_text": "마이페이지 메뉴 > 일정 관리",
+                "selected_path_text": "마이페이지 메뉴 > 일정 관리",
+                "parser": "sidebar_active_dom",
+                "source": "nav"
+              },
+              "ui_outcome": {},
+              "api": {},
+              "http_method": "",
+              "http_endpoint_raw": "",
+              "http_status": "",
+              "http_relationship_strategy": "",
+              "form": {},
+              "input_form": {},
+              "input_key": {},
+              "input_detected": false,
+              "popup_containment": {
+                "is_inside_popup": false,
+                "active_popup_id": "popup:3092dc5b-94d3-4878-a0af-c7877fdedcd0:2"
+              },
+              "element_role": "",
+              "grid": {
+                "detected": true,
+                "grid_selector": "main.mypage > div.mypage-layout > section.mypage-content > div.schedule-page:nth-of-type(1) > section.monthly-calendar > div.monthly-calendar__grid:nth-of-type(2)",
+                "grid_type": "grid",
+                "grid_role": "data_grid",
+                "cell_value": "18"
+              },
+              "popup_stack": [
+                {
+                  "popup_id": "popup:3092dc5b-94d3-4878-a0af-c7877fdedcd0:2",
+                  "opened_at": "2026-11-03T05:09:51.593Z",
+                  "opened_by_event_id": "ab2f8807-4fee-4ef3-898a-105bf12f28dd",
+                  "opened_by_interaction_id": "3092dc5b-94d3-4878-a0af-c7877fdedcd0:click:31"
+                }
+              ]
+            }
+          ],
+          "http_evidence": [],
+          "completion_evidence": [],
+          "serializer_rule_id": "BA-DIRECT-INTENT",
+          "resolution_status": "UNRESOLVED",
+          "source_process_ids": [
+            "PM-020"
+          ],
+          "step_order": 9,
+          "evidence_roles": {
+            "cc5c965f-bb67-45fd-bec6-50be2ed20824": "DIRECT_USER_INTENT",
+            "96c375c7-73e8-4ac9-bbe7-d09ac7c1de2d": "LIVE_FORM_CONTEXT"
+          },
+          "form_lifecycle_provenance": {
+            "rule_id": "BA-LIVE-FORM-OPENING",
+            "opening_source_event_id": "96c375c7-73e8-4ac9-bbe7-d09ac7c1de2d"
+          },
+          "context_provenance": [
+            {
+              "rule_id": "BA-VALIDATED-OPENER-MENU",
+              "opener_source_event_id": "ab2f8807-4fee-4ef3-898a-105bf12f28dd",
+              "popup_source_event_id": "96c375c7-73e8-4ac9-bbe7-d09ac7c1de2d",
+              "raw_menu": {
+                "selected_label": "일정 관리",
+                "path_text": "마이페이지 메뉴 > 일정 관리",
+                "selected_path_text": "마이페이지 메뉴 > 일정 관리",
+                "parser": "sidebar_active_dom",
+                "source": "nav"
+              },
+              "page_path": "/mypage/schedule"
+            }
+          ],
+          "form_detection_evidence": [
+            {
+              "source_event_id": "ce6ba3d6-0e7d-4a76-aba9-c439dec592c6",
+              "rule_id": "BA-DIALOG-DESCENDANT-INPUT",
+              "raw_selector": "#schedule-title"
+            },
+            {
+              "source_event_id": "e9765f07-e848-4741-9548-635595e6ba8d",
+              "rule_id": "BA-DIALOG-DESCENDANT-INPUT",
+              "raw_selector": "#schedule-description"
+            },
+            {
+              "source_event_id": "5d55b008-468e-42fa-a273-cd7c2b20ade4",
+              "rule_id": "BA-DIALOG-DESCENDANT-INPUT",
+              "raw_selector": "#schedule-description"
+            }
+          ],
+          "intent_order": 36,
+          "last_intent_order": 36
+        }
+      },
+      {
+        "issue": {
+          "order": 10,
+          "source_step_id": "BA-7a257ad4-760a-4225-bf50-b610345ae818",
+          "reason": "UNRESOLVED_OR_UNSUPPORTED_OBSERVED_STEP"
+        },
+        "source": {
+          "generated_step_id": "BA-7a257ad4-760a-4225-bf50-b610345ae818",
+          "process_id": "PM-020",
+          "workflow_id": "WF-0003",
+          "action_type": "UNRESOLVED",
+          "intent_phase": "UNKNOWN",
+          "target": "3 오늘",
+          "target_field_label": "3 오늘",
+          "business_object": "",
+          "menu_page": "/mypage/schedule",
+          "page_title": "Rainbow",
+          "menu": {
+            "selected_label": "일정 관리",
+            "path_text": "마이페이지 메뉴 > 일정 관리",
+            "selected_path_text": "마이페이지 메뉴 > 일정 관리",
+            "parser": "sidebar_active_dom",
+            "source": "nav"
+          },
+          "business_context": "일정 관리",
+          "popup_title": "업무 등록",
+          "form_identity": [
+            "3092dc5b-94d3-4878-a0af-c7877fdedcd0",
+            "/mypage/schedule",
+            "FORM_POPUP",
+            "popup:3092dc5b-94d3-4878-a0af-c7877fdedcd0:2",
+            "body > div > main.mypage > div.mypage-layout > section.mypage-content > div.schedule-modal:nth-of-type(2)",
+            "업무 등록"
+          ],
+          "fields": [],
+          "source_event_ids": [
+            "96c375c7-73e8-4ac9-bbe7-d09ac7c1de2d",
+            "7a257ad4-760a-4225-bf50-b610345ae818"
+          ],
+          "intent_source_event_ids": [
+            "7a257ad4-760a-4225-bf50-b610345ae818"
+          ],
+          "source_node_ids": [
+            "PM-020-N006",
+            "PM-020-N007"
+          ],
+          "evidence": [
+            {
+              "event_id": "96c375c7-73e8-4ac9-bbe7-d09ac7c1de2d",
+              "session_id": "3092dc5b-94d3-4878-a0af-c7877fdedcd0",
+              "event_time": "2026-11-03 14:09:51.594",
+              "event": {
+                "interaction_id": "3092dc5b-94d3-4878-a0af-c7877fdedcd0:popup_open:32",
+                "action": "popup_open",
+                "event_sequence": 32,
+                "event_time": "2026-11-03T05:09:51.594Z",
+                "event_id": "96c375c7-73e8-4ac9-bbe7-d09ac7c1de2d",
+                "related_interaction_id": "3092dc5b-94d3-4878-a0af-c7877fdedcd0:click:31",
+                "related_event_id": "ab2f8807-4fee-4ef3-898a-105bf12f28dd",
+                "parent_event_id": "ab2f8807-4fee-4ef3-898a-105bf12f28dd",
+                "cause_event_id": "ab2f8807-4fee-4ef3-898a-105bf12f28dd",
+                "correlation_id": null,
+                "active_popup_id": "popup:3092dc5b-94d3-4878-a0af-c7877fdedcd0:2",
+                "active_parent_popup_id": null
+              },
+              "page_title": "Rainbow",
+              "page_path": "/mypage/schedule",
+              "element_text": "업무 등록",
+              "associated_label": null,
+              "selector": "body > div > main.mypage > div.mypage-layout > section.mypage-content > div.schedule-modal:nth-of-type(2)",
+              "tag": "div",
+              "input": {},
+              "popup": {
+                "active_popup_id": "popup:3092dc5b-94d3-4878-a0af-c7877fdedcd0:2",
+                "active_popup_title": "업무 등록",
+                "lifecycle_action": "open",
+                "active_parent_popup_id": null,
+                "opener_event_id": "ab2f8807-4fee-4ef3-898a-105bf12f28dd",
+                "opener_interaction_id": "3092dc5b-94d3-4878-a0af-c7877fdedcd0:click:31",
+                "closer_event_id": null,
+                "closer_interaction_id": null,
+                "target_popup": {
+                  "popup_id": "popup:3092dc5b-94d3-4878-a0af-c7877fdedcd0:2",
+                  "title": "업무 등록",
+                  "role": "dialog",
+                  "parent_popup_id": null,
+                  "opened_by_event_id": "ab2f8807-4fee-4ef3-898a-105bf12f28dd",
+                  "opened_by_interaction_id": "3092dc5b-94d3-4878-a0af-c7877fdedcd0:click:31",
+                  "opened_at": "2026-11-03T05:09:51.593Z",
+                  "selector_css": "body > div > main.mypage > div.mypage-layout > section.mypage-content > div.schedule-modal:nth-of-type(2)",
+                  "selector_xpath": "/html[1]/body[1]/div[1]/main[1]/div[1]/section[1]/div[2]",
+                  "tag": "div",
+                  "source_action": "click"
+                }
+              },
+              "menu": {},
+              "ui_outcome": {},
+              "api": {},
+              "http_method": "",
+              "http_endpoint_raw": "",
+              "http_status": "",
+              "http_relationship_strategy": "",
+              "form": {},
+              "input_form": {},
+              "input_key": {},
+              "input_detected": false,
+              "popup_containment": {
+                "is_inside_popup": true,
+                "active_popup_id": "popup:3092dc5b-94d3-4878-a0af-c7877fdedcd0:2"
+              },
+              "element_role": "",
+              "grid": {},
+              "popup_stack": [
+                {
+                  "popup_id": "popup:3092dc5b-94d3-4878-a0af-c7877fdedcd0:2",
+                  "opened_at": "2026-11-03T05:09:51.593Z",
+                  "opened_by_event_id": "ab2f8807-4fee-4ef3-898a-105bf12f28dd",
+                  "opened_by_interaction_id": "3092dc5b-94d3-4878-a0af-c7877fdedcd0:click:31"
+                }
+              ]
+            },
+            {
+              "event_id": "7a257ad4-760a-4225-bf50-b610345ae818",
+              "session_id": "3092dc5b-94d3-4878-a0af-c7877fdedcd0",
+              "event_time": "2026-11-03 14:10:01.882",
+              "event": {
+                "interaction_id": "3092dc5b-94d3-4878-a0af-c7877fdedcd0:click:38",
+                "action": "click",
+                "event_sequence": 38,
+                "event_time": "2026-11-03T05:10:01.882Z",
+                "event_id": "7a257ad4-760a-4225-bf50-b610345ae818",
+                "related_interaction_id": null,
+                "related_event_id": null,
+                "parent_event_id": null,
+                "cause_event_id": null,
+                "correlation_id": null,
+                "active_popup_id": "popup:3092dc5b-94d3-4878-a0af-c7877fdedcd0:2",
+                "active_parent_popup_id": null
+              },
+              "page_title": "Rainbow",
+              "page_path": "/mypage/schedule",
+              "element_text": "10",
+              "associated_label": "3 오늘",
+              "selector": "div.mypage-layout > section.mypage-content > div.schedule-page:nth-of-type(1) > section.monthly-calendar > div.monthly-calendar__grid:nth-of-type(2) > div.monthly-calendar__cell:nth-of-type(10)",
+              "tag": "div",
+              "input": {},
+              "popup": {
+                "active_popup_id": "popup:3092dc5b-94d3-4878-a0af-c7877fdedcd0:2",
+                "active_popup_title": "업무 등록",
+                "active_parent_popup_id": null,
+                "target_popup": {}
+              },
+              "menu": {
+                "selected_label": "일정 관리",
+                "path_text": "마이페이지 메뉴 > 일정 관리",
+                "selected_path_text": "마이페이지 메뉴 > 일정 관리",
+                "parser": "sidebar_active_dom",
+                "source": "nav"
+              },
+              "ui_outcome": {},
+              "api": {},
+              "http_method": "",
+              "http_endpoint_raw": "",
+              "http_status": "",
+              "http_relationship_strategy": "",
+              "form": {},
+              "input_form": {},
+              "input_key": {},
+              "input_detected": false,
+              "popup_containment": {
+                "is_inside_popup": false,
+                "active_popup_id": "popup:3092dc5b-94d3-4878-a0af-c7877fdedcd0:2"
+              },
+              "element_role": "",
+              "grid": {
+                "detected": true,
+                "grid_selector": "main.mypage > div.mypage-layout > section.mypage-content > div.schedule-page:nth-of-type(1) > section.monthly-calendar > div.monthly-calendar__grid:nth-of-type(2)",
+                "grid_type": "grid",
+                "grid_role": "data_grid",
+                "cell_value": "10"
+              },
+              "popup_stack": [
+                {
+                  "popup_id": "popup:3092dc5b-94d3-4878-a0af-c7877fdedcd0:2",
+                  "opened_at": "2026-11-03T05:09:51.593Z",
+                  "opened_by_event_id": "ab2f8807-4fee-4ef3-898a-105bf12f28dd",
+                  "opened_by_interaction_id": "3092dc5b-94d3-4878-a0af-c7877fdedcd0:click:31"
+                }
+              ]
+            }
+          ],
+          "http_evidence": [],
+          "completion_evidence": [],
+          "serializer_rule_id": "BA-DIRECT-INTENT",
+          "resolution_status": "UNRESOLVED",
+          "source_process_ids": [
+            "PM-020"
+          ],
+          "step_order": 10,
+          "evidence_roles": {
+            "7a257ad4-760a-4225-bf50-b610345ae818": "DIRECT_USER_INTENT",
+            "96c375c7-73e8-4ac9-bbe7-d09ac7c1de2d": "LIVE_FORM_CONTEXT"
+          },
+          "form_lifecycle_provenance": {
+            "rule_id": "BA-LIVE-FORM-OPENING",
+            "opening_source_event_id": "96c375c7-73e8-4ac9-bbe7-d09ac7c1de2d"
+          },
+          "context_provenance": [
+            {
+              "rule_id": "BA-VALIDATED-OPENER-MENU",
+              "opener_source_event_id": "ab2f8807-4fee-4ef3-898a-105bf12f28dd",
+              "popup_source_event_id": "96c375c7-73e8-4ac9-bbe7-d09ac7c1de2d",
+              "raw_menu": {
+                "selected_label": "일정 관리",
+                "path_text": "마이페이지 메뉴 > 일정 관리",
+                "selected_path_text": "마이페이지 메뉴 > 일정 관리",
+                "parser": "sidebar_active_dom",
+                "source": "nav"
+              },
+              "page_path": "/mypage/schedule"
+            }
+          ],
+          "form_detection_evidence": [
+            {
+              "source_event_id": "ce6ba3d6-0e7d-4a76-aba9-c439dec592c6",
+              "rule_id": "BA-DIALOG-DESCENDANT-INPUT",
+              "raw_selector": "#schedule-title"
+            },
+            {
+              "source_event_id": "e9765f07-e848-4741-9548-635595e6ba8d",
+              "rule_id": "BA-DIALOG-DESCENDANT-INPUT",
+              "raw_selector": "#schedule-description"
+            },
+            {
+              "source_event_id": "5d55b008-468e-42fa-a273-cd7c2b20ade4",
+              "rule_id": "BA-DIALOG-DESCENDANT-INPUT",
+              "raw_selector": "#schedule-description"
+            }
+          ],
+          "intent_order": 37,
+          "last_intent_order": 37
+        }
+      },
+      {
+        "issue": {
+          "order": 11,
+          "source_step_id": "BA-da23380d-3521-4f5b-b563-1053ec1988ad",
+          "reason": "UNRESOLVED_OR_UNSUPPORTED_OBSERVED_STEP"
+        },
+        "source": {
+          "generated_step_id": "BA-da23380d-3521-4f5b-b563-1053ec1988ad",
+          "process_id": "PM-020",
+          "workflow_id": "WF-0003",
+          "action_type": "UNRESOLVED",
+          "intent_phase": "UNKNOWN",
+          "target": "3 오늘",
+          "target_field_label": "3 오늘",
+          "business_object": "",
+          "menu_page": "/mypage/schedule",
+          "page_title": "Rainbow",
+          "menu": {
+            "selected_label": "일정 관리",
+            "path_text": "마이페이지 메뉴 > 일정 관리",
+            "selected_path_text": "마이페이지 메뉴 > 일정 관리",
+            "parser": "sidebar_active_dom",
+            "source": "nav"
+          },
+          "business_context": "일정 관리",
+          "popup_title": "업무 등록",
+          "form_identity": [
+            "3092dc5b-94d3-4878-a0af-c7877fdedcd0",
+            "/mypage/schedule",
+            "FORM_POPUP",
+            "popup:3092dc5b-94d3-4878-a0af-c7877fdedcd0:2",
+            "body > div > main.mypage > div.mypage-layout > section.mypage-content > div.schedule-modal:nth-of-type(2)",
+            "업무 등록"
+          ],
+          "fields": [],
+          "source_event_ids": [
+            "96c375c7-73e8-4ac9-bbe7-d09ac7c1de2d",
+            "da23380d-3521-4f5b-b563-1053ec1988ad"
+          ],
+          "intent_source_event_ids": [
+            "da23380d-3521-4f5b-b563-1053ec1988ad"
+          ],
+          "source_node_ids": [
+            "PM-020-N006",
+            "PM-020-N007"
+          ],
+          "evidence": [
+            {
+              "event_id": "96c375c7-73e8-4ac9-bbe7-d09ac7c1de2d",
+              "session_id": "3092dc5b-94d3-4878-a0af-c7877fdedcd0",
+              "event_time": "2026-11-03 14:09:51.594",
+              "event": {
+                "interaction_id": "3092dc5b-94d3-4878-a0af-c7877fdedcd0:popup_open:32",
+                "action": "popup_open",
+                "event_sequence": 32,
+                "event_time": "2026-11-03T05:09:51.594Z",
+                "event_id": "96c375c7-73e8-4ac9-bbe7-d09ac7c1de2d",
+                "related_interaction_id": "3092dc5b-94d3-4878-a0af-c7877fdedcd0:click:31",
+                "related_event_id": "ab2f8807-4fee-4ef3-898a-105bf12f28dd",
+                "parent_event_id": "ab2f8807-4fee-4ef3-898a-105bf12f28dd",
+                "cause_event_id": "ab2f8807-4fee-4ef3-898a-105bf12f28dd",
+                "correlation_id": null,
+                "active_popup_id": "popup:3092dc5b-94d3-4878-a0af-c7877fdedcd0:2",
+                "active_parent_popup_id": null
+              },
+              "page_title": "Rainbow",
+              "page_path": "/mypage/schedule",
+              "element_text": "업무 등록",
+              "associated_label": null,
+              "selector": "body > div > main.mypage > div.mypage-layout > section.mypage-content > div.schedule-modal:nth-of-type(2)",
+              "tag": "div",
+              "input": {},
+              "popup": {
+                "active_popup_id": "popup:3092dc5b-94d3-4878-a0af-c7877fdedcd0:2",
+                "active_popup_title": "업무 등록",
+                "lifecycle_action": "open",
+                "active_parent_popup_id": null,
+                "opener_event_id": "ab2f8807-4fee-4ef3-898a-105bf12f28dd",
+                "opener_interaction_id": "3092dc5b-94d3-4878-a0af-c7877fdedcd0:click:31",
+                "closer_event_id": null,
+                "closer_interaction_id": null,
+                "target_popup": {
+                  "popup_id": "popup:3092dc5b-94d3-4878-a0af-c7877fdedcd0:2",
+                  "title": "업무 등록",
+                  "role": "dialog",
+                  "parent_popup_id": null,
+                  "opened_by_event_id": "ab2f8807-4fee-4ef3-898a-105bf12f28dd",
+                  "opened_by_interaction_id": "3092dc5b-94d3-4878-a0af-c7877fdedcd0:click:31",
+                  "opened_at": "2026-11-03T05:09:51.593Z",
+                  "selector_css": "body > div > main.mypage > div.mypage-layout > section.mypage-content > div.schedule-modal:nth-of-type(2)",
+                  "selector_xpath": "/html[1]/body[1]/div[1]/main[1]/div[1]/section[1]/div[2]",
+                  "tag": "div",
+                  "source_action": "click"
+                }
+              },
+              "menu": {},
+              "ui_outcome": {},
+              "api": {},
+              "http_method": "",
+              "http_endpoint_raw": "",
+              "http_status": "",
+              "http_relationship_strategy": "",
+              "form": {},
+              "input_form": {},
+              "input_key": {},
+              "input_detected": false,
+              "popup_containment": {
+                "is_inside_popup": true,
+                "active_popup_id": "popup:3092dc5b-94d3-4878-a0af-c7877fdedcd0:2"
+              },
+              "element_role": "",
+              "grid": {},
+              "popup_stack": [
+                {
+                  "popup_id": "popup:3092dc5b-94d3-4878-a0af-c7877fdedcd0:2",
+                  "opened_at": "2026-11-03T05:09:51.593Z",
+                  "opened_by_event_id": "ab2f8807-4fee-4ef3-898a-105bf12f28dd",
+                  "opened_by_interaction_id": "3092dc5b-94d3-4878-a0af-c7877fdedcd0:click:31"
+                }
+              ]
+            },
+            {
+              "event_id": "da23380d-3521-4f5b-b563-1053ec1988ad",
+              "session_id": "3092dc5b-94d3-4878-a0af-c7877fdedcd0",
+              "event_time": "2026-11-03 14:10:02.050",
+              "event": {
+                "interaction_id": "3092dc5b-94d3-4878-a0af-c7877fdedcd0:click:39",
+                "action": "click",
+                "event_sequence": 39,
+                "event_time": "2026-11-03T05:10:02.050Z",
+                "event_id": "da23380d-3521-4f5b-b563-1053ec1988ad",
+                "related_interaction_id": null,
+                "related_event_id": null,
+                "parent_event_id": null,
+                "cause_event_id": null,
+                "correlation_id": null,
+                "active_popup_id": "popup:3092dc5b-94d3-4878-a0af-c7877fdedcd0:2",
+                "active_parent_popup_id": null
+              },
+              "page_title": "Rainbow",
+              "page_path": "/mypage/schedule",
+              "element_text": "10",
+              "associated_label": "3 오늘",
+              "selector": "div.mypage-layout > section.mypage-content > div.schedule-page:nth-of-type(1) > section.monthly-calendar > div.monthly-calendar__grid:nth-of-type(2) > div.monthly-calendar__cell:nth-of-type(10)",
+              "tag": "div",
+              "input": {},
+              "popup": {
+                "active_popup_id": "popup:3092dc5b-94d3-4878-a0af-c7877fdedcd0:2",
+                "active_popup_title": "업무 등록",
+                "active_parent_popup_id": null,
+                "target_popup": {}
+              },
+              "menu": {
+                "selected_label": "일정 관리",
+                "path_text": "마이페이지 메뉴 > 일정 관리",
+                "selected_path_text": "마이페이지 메뉴 > 일정 관리",
+                "parser": "sidebar_active_dom",
+                "source": "nav"
+              },
+              "ui_outcome": {},
+              "api": {},
+              "http_method": "",
+              "http_endpoint_raw": "",
+              "http_status": "",
+              "http_relationship_strategy": "",
+              "form": {},
+              "input_form": {},
+              "input_key": {},
+              "input_detected": false,
+              "popup_containment": {
+                "is_inside_popup": false,
+                "active_popup_id": "popup:3092dc5b-94d3-4878-a0af-c7877fdedcd0:2"
+              },
+              "element_role": "",
+              "grid": {
+                "detected": true,
+                "grid_selector": "main.mypage > div.mypage-layout > section.mypage-content > div.schedule-page:nth-of-type(1) > section.monthly-calendar > div.monthly-calendar__grid:nth-of-type(2)",
+                "grid_type": "grid",
+                "grid_role": "data_grid",
+                "cell_value": "10"
+              },
+              "popup_stack": [
+                {
+                  "popup_id": "popup:3092dc5b-94d3-4878-a0af-c7877fdedcd0:2",
+                  "opened_at": "2026-11-03T05:09:51.593Z",
+                  "opened_by_event_id": "ab2f8807-4fee-4ef3-898a-105bf12f28dd",
+                  "opened_by_interaction_id": "3092dc5b-94d3-4878-a0af-c7877fdedcd0:click:31"
+                }
+              ]
+            }
+          ],
+          "http_evidence": [],
+          "completion_evidence": [],
+          "serializer_rule_id": "BA-DIRECT-INTENT",
+          "resolution_status": "UNRESOLVED",
+          "source_process_ids": [
+            "PM-020"
+          ],
+          "step_order": 11,
+          "evidence_roles": {
+            "da23380d-3521-4f5b-b563-1053ec1988ad": "DIRECT_USER_INTENT",
+            "96c375c7-73e8-4ac9-bbe7-d09ac7c1de2d": "LIVE_FORM_CONTEXT"
+          },
+          "form_lifecycle_provenance": {
+            "rule_id": "BA-LIVE-FORM-OPENING",
+            "opening_source_event_id": "96c375c7-73e8-4ac9-bbe7-d09ac7c1de2d"
+          },
+          "context_provenance": [
+            {
+              "rule_id": "BA-VALIDATED-OPENER-MENU",
+              "opener_source_event_id": "ab2f8807-4fee-4ef3-898a-105bf12f28dd",
+              "popup_source_event_id": "96c375c7-73e8-4ac9-bbe7-d09ac7c1de2d",
+              "raw_menu": {
+                "selected_label": "일정 관리",
+                "path_text": "마이페이지 메뉴 > 일정 관리",
+                "selected_path_text": "마이페이지 메뉴 > 일정 관리",
+                "parser": "sidebar_active_dom",
+                "source": "nav"
+              },
+              "page_path": "/mypage/schedule"
+            }
+          ],
+          "form_detection_evidence": [
+            {
+              "source_event_id": "ce6ba3d6-0e7d-4a76-aba9-c439dec592c6",
+              "rule_id": "BA-DIALOG-DESCENDANT-INPUT",
+              "raw_selector": "#schedule-title"
+            },
+            {
+              "source_event_id": "e9765f07-e848-4741-9548-635595e6ba8d",
+              "rule_id": "BA-DIALOG-DESCENDANT-INPUT",
+              "raw_selector": "#schedule-description"
+            },
+            {
+              "source_event_id": "5d55b008-468e-42fa-a273-cd7c2b20ade4",
+              "rule_id": "BA-DIALOG-DESCENDANT-INPUT",
+              "raw_selector": "#schedule-description"
+            }
+          ],
+          "intent_order": 38,
+          "last_intent_order": 38
+        }
+      },
+      {
+        "issue": {
+          "order": 12,
+          "source_step_id": "BA-ddc68f94-5574-4a9a-b172-6db26232487e",
+          "reason": "UNRESOLVED_OR_UNSUPPORTED_OBSERVED_STEP"
+        },
+        "source": {
+          "generated_step_id": "BA-ddc68f94-5574-4a9a-b172-6db26232487e",
+          "process_id": "PM-020",
+          "workflow_id": "WF-0003",
+          "action_type": "UNRESOLVED",
+          "intent_phase": "UNKNOWN",
+          "target": "3 오늘",
+          "target_field_label": "3 오늘",
+          "business_object": "",
+          "menu_page": "/mypage/schedule",
+          "page_title": "Rainbow",
+          "menu": {
+            "selected_label": "일정 관리",
+            "path_text": "마이페이지 메뉴 > 일정 관리",
+            "selected_path_text": "마이페이지 메뉴 > 일정 관리",
+            "parser": "sidebar_active_dom",
+            "source": "nav"
+          },
+          "business_context": "일정 관리",
+          "popup_title": "업무 등록",
+          "form_identity": [
+            "3092dc5b-94d3-4878-a0af-c7877fdedcd0",
+            "/mypage/schedule",
+            "FORM_POPUP",
+            "popup:3092dc5b-94d3-4878-a0af-c7877fdedcd0:2",
+            "body > div > main.mypage > div.mypage-layout > section.mypage-content > div.schedule-modal:nth-of-type(2)",
+            "업무 등록"
+          ],
+          "fields": [],
+          "source_event_ids": [
+            "96c375c7-73e8-4ac9-bbe7-d09ac7c1de2d",
+            "ddc68f94-5574-4a9a-b172-6db26232487e"
+          ],
+          "intent_source_event_ids": [
+            "ddc68f94-5574-4a9a-b172-6db26232487e"
+          ],
+          "source_node_ids": [
+            "PM-020-N006",
+            "PM-020-N007"
+          ],
+          "evidence": [
+            {
+              "event_id": "96c375c7-73e8-4ac9-bbe7-d09ac7c1de2d",
+              "session_id": "3092dc5b-94d3-4878-a0af-c7877fdedcd0",
+              "event_time": "2026-11-03 14:09:51.594",
+              "event": {
+                "interaction_id": "3092dc5b-94d3-4878-a0af-c7877fdedcd0:popup_open:32",
+                "action": "popup_open",
+                "event_sequence": 32,
+                "event_time": "2026-11-03T05:09:51.594Z",
+                "event_id": "96c375c7-73e8-4ac9-bbe7-d09ac7c1de2d",
+                "related_interaction_id": "3092dc5b-94d3-4878-a0af-c7877fdedcd0:click:31",
+                "related_event_id": "ab2f8807-4fee-4ef3-898a-105bf12f28dd",
+                "parent_event_id": "ab2f8807-4fee-4ef3-898a-105bf12f28dd",
+                "cause_event_id": "ab2f8807-4fee-4ef3-898a-105bf12f28dd",
+                "correlation_id": null,
+                "active_popup_id": "popup:3092dc5b-94d3-4878-a0af-c7877fdedcd0:2",
+                "active_parent_popup_id": null
+              },
+              "page_title": "Rainbow",
+              "page_path": "/mypage/schedule",
+              "element_text": "업무 등록",
+              "associated_label": null,
+              "selector": "body > div > main.mypage > div.mypage-layout > section.mypage-content > div.schedule-modal:nth-of-type(2)",
+              "tag": "div",
+              "input": {},
+              "popup": {
+                "active_popup_id": "popup:3092dc5b-94d3-4878-a0af-c7877fdedcd0:2",
+                "active_popup_title": "업무 등록",
+                "lifecycle_action": "open",
+                "active_parent_popup_id": null,
+                "opener_event_id": "ab2f8807-4fee-4ef3-898a-105bf12f28dd",
+                "opener_interaction_id": "3092dc5b-94d3-4878-a0af-c7877fdedcd0:click:31",
+                "closer_event_id": null,
+                "closer_interaction_id": null,
+                "target_popup": {
+                  "popup_id": "popup:3092dc5b-94d3-4878-a0af-c7877fdedcd0:2",
+                  "title": "업무 등록",
+                  "role": "dialog",
+                  "parent_popup_id": null,
+                  "opened_by_event_id": "ab2f8807-4fee-4ef3-898a-105bf12f28dd",
+                  "opened_by_interaction_id": "3092dc5b-94d3-4878-a0af-c7877fdedcd0:click:31",
+                  "opened_at": "2026-11-03T05:09:51.593Z",
+                  "selector_css": "body > div > main.mypage > div.mypage-layout > section.mypage-content > div.schedule-modal:nth-of-type(2)",
+                  "selector_xpath": "/html[1]/body[1]/div[1]/main[1]/div[1]/section[1]/div[2]",
+                  "tag": "div",
+                  "source_action": "click"
+                }
+              },
+              "menu": {},
+              "ui_outcome": {},
+              "api": {},
+              "http_method": "",
+              "http_endpoint_raw": "",
+              "http_status": "",
+              "http_relationship_strategy": "",
+              "form": {},
+              "input_form": {},
+              "input_key": {},
+              "input_detected": false,
+              "popup_containment": {
+                "is_inside_popup": true,
+                "active_popup_id": "popup:3092dc5b-94d3-4878-a0af-c7877fdedcd0:2"
+              },
+              "element_role": "",
+              "grid": {},
+              "popup_stack": [
+                {
+                  "popup_id": "popup:3092dc5b-94d3-4878-a0af-c7877fdedcd0:2",
+                  "opened_at": "2026-11-03T05:09:51.593Z",
+                  "opened_by_event_id": "ab2f8807-4fee-4ef3-898a-105bf12f28dd",
+                  "opened_by_interaction_id": "3092dc5b-94d3-4878-a0af-c7877fdedcd0:click:31"
+                }
+              ]
+            },
+            {
+              "event_id": "ddc68f94-5574-4a9a-b172-6db26232487e",
+              "session_id": "3092dc5b-94d3-4878-a0af-c7877fdedcd0",
+              "event_time": "2026-11-03 14:10:02.215",
+              "event": {
+                "interaction_id": "3092dc5b-94d3-4878-a0af-c7877fdedcd0:click:40",
+                "action": "click",
+                "event_sequence": 40,
+                "event_time": "2026-11-03T05:10:02.215Z",
+                "event_id": "ddc68f94-5574-4a9a-b172-6db26232487e",
+                "related_interaction_id": null,
+                "related_event_id": null,
+                "parent_event_id": null,
+                "cause_event_id": null,
+                "correlation_id": null,
+                "active_popup_id": "popup:3092dc5b-94d3-4878-a0af-c7877fdedcd0:2",
+                "active_parent_popup_id": null
+              },
+              "page_title": "Rainbow",
+              "page_path": "/mypage/schedule",
+              "element_text": "10",
+              "associated_label": "3 오늘",
+              "selector": "div.mypage-layout > section.mypage-content > div.schedule-page:nth-of-type(1) > section.monthly-calendar > div.monthly-calendar__grid:nth-of-type(2) > div.monthly-calendar__cell:nth-of-type(10)",
+              "tag": "div",
+              "input": {},
+              "popup": {
+                "active_popup_id": "popup:3092dc5b-94d3-4878-a0af-c7877fdedcd0:2",
+                "active_popup_title": "업무 등록",
+                "active_parent_popup_id": null,
+                "target_popup": {}
+              },
+              "menu": {
+                "selected_label": "일정 관리",
+                "path_text": "마이페이지 메뉴 > 일정 관리",
+                "selected_path_text": "마이페이지 메뉴 > 일정 관리",
+                "parser": "sidebar_active_dom",
+                "source": "nav"
+              },
+              "ui_outcome": {},
+              "api": {},
+              "http_method": "",
+              "http_endpoint_raw": "",
+              "http_status": "",
+              "http_relationship_strategy": "",
+              "form": {},
+              "input_form": {},
+              "input_key": {},
+              "input_detected": false,
+              "popup_containment": {
+                "is_inside_popup": false,
+                "active_popup_id": "popup:3092dc5b-94d3-4878-a0af-c7877fdedcd0:2"
+              },
+              "element_role": "",
+              "grid": {
+                "detected": true,
+                "grid_selector": "main.mypage > div.mypage-layout > section.mypage-content > div.schedule-page:nth-of-type(1) > section.monthly-calendar > div.monthly-calendar__grid:nth-of-type(2)",
+                "grid_type": "grid",
+                "grid_role": "data_grid",
+                "cell_value": "10"
+              },
+              "popup_stack": [
+                {
+                  "popup_id": "popup:3092dc5b-94d3-4878-a0af-c7877fdedcd0:2",
+                  "opened_at": "2026-11-03T05:09:51.593Z",
+                  "opened_by_event_id": "ab2f8807-4fee-4ef3-898a-105bf12f28dd",
+                  "opened_by_interaction_id": "3092dc5b-94d3-4878-a0af-c7877fdedcd0:click:31"
+                }
+              ]
+            }
+          ],
+          "http_evidence": [],
+          "completion_evidence": [],
+          "serializer_rule_id": "BA-DIRECT-INTENT",
+          "resolution_status": "UNRESOLVED",
+          "source_process_ids": [
+            "PM-020"
+          ],
+          "step_order": 12,
+          "evidence_roles": {
+            "ddc68f94-5574-4a9a-b172-6db26232487e": "DIRECT_USER_INTENT",
+            "96c375c7-73e8-4ac9-bbe7-d09ac7c1de2d": "LIVE_FORM_CONTEXT"
+          },
+          "form_lifecycle_provenance": {
+            "rule_id": "BA-LIVE-FORM-OPENING",
+            "opening_source_event_id": "96c375c7-73e8-4ac9-bbe7-d09ac7c1de2d"
+          },
+          "context_provenance": [
+            {
+              "rule_id": "BA-VALIDATED-OPENER-MENU",
+              "opener_source_event_id": "ab2f8807-4fee-4ef3-898a-105bf12f28dd",
+              "popup_source_event_id": "96c375c7-73e8-4ac9-bbe7-d09ac7c1de2d",
+              "raw_menu": {
+                "selected_label": "일정 관리",
+                "path_text": "마이페이지 메뉴 > 일정 관리",
+                "selected_path_text": "마이페이지 메뉴 > 일정 관리",
+                "parser": "sidebar_active_dom",
+                "source": "nav"
+              },
+              "page_path": "/mypage/schedule"
+            }
+          ],
+          "form_detection_evidence": [
+            {
+              "source_event_id": "ce6ba3d6-0e7d-4a76-aba9-c439dec592c6",
+              "rule_id": "BA-DIALOG-DESCENDANT-INPUT",
+              "raw_selector": "#schedule-title"
+            },
+            {
+              "source_event_id": "e9765f07-e848-4741-9548-635595e6ba8d",
+              "rule_id": "BA-DIALOG-DESCENDANT-INPUT",
+              "raw_selector": "#schedule-description"
+            },
+            {
+              "source_event_id": "5d55b008-468e-42fa-a273-cd7c2b20ade4",
+              "rule_id": "BA-DIALOG-DESCENDANT-INPUT",
+              "raw_selector": "#schedule-description"
+            }
+          ],
+          "intent_order": 39,
+          "last_intent_order": 39
+        }
+      },
+      {
+        "issue": {
+          "order": 13,
+          "source_step_id": "BA-da221db9-4c86-4284-a9a1-e15ef77f4bc0",
+          "reason": "UNRESOLVED_OR_UNSUPPORTED_OBSERVED_STEP"
+        },
+        "source": {
+          "generated_step_id": "BA-da221db9-4c86-4284-a9a1-e15ef77f4bc0",
+          "process_id": "PM-020",
+          "workflow_id": "WF-0003",
+          "action_type": "UNRESOLVED",
+          "intent_phase": "UNKNOWN",
+          "target": "3 오늘",
+          "target_field_label": "3 오늘",
+          "business_object": "",
+          "menu_page": "/mypage/schedule",
+          "page_title": "Rainbow",
+          "menu": {
+            "selected_label": "일정 관리",
+            "path_text": "마이페이지 메뉴 > 일정 관리",
+            "selected_path_text": "마이페이지 메뉴 > 일정 관리",
+            "parser": "sidebar_active_dom",
+            "source": "nav"
+          },
+          "business_context": "일정 관리",
+          "popup_title": "업무 등록",
+          "form_identity": [
+            "3092dc5b-94d3-4878-a0af-c7877fdedcd0",
+            "/mypage/schedule",
+            "FORM_POPUP",
+            "popup:3092dc5b-94d3-4878-a0af-c7877fdedcd0:2",
+            "body > div > main.mypage > div.mypage-layout > section.mypage-content > div.schedule-modal:nth-of-type(2)",
+            "업무 등록"
+          ],
+          "fields": [],
+          "source_event_ids": [
+            "96c375c7-73e8-4ac9-bbe7-d09ac7c1de2d",
+            "da221db9-4c86-4284-a9a1-e15ef77f4bc0"
+          ],
+          "intent_source_event_ids": [
+            "da221db9-4c86-4284-a9a1-e15ef77f4bc0"
+          ],
+          "source_node_ids": [
+            "PM-020-N006",
+            "PM-020-N007"
+          ],
+          "evidence": [
+            {
+              "event_id": "96c375c7-73e8-4ac9-bbe7-d09ac7c1de2d",
+              "session_id": "3092dc5b-94d3-4878-a0af-c7877fdedcd0",
+              "event_time": "2026-11-03 14:09:51.594",
+              "event": {
+                "interaction_id": "3092dc5b-94d3-4878-a0af-c7877fdedcd0:popup_open:32",
+                "action": "popup_open",
+                "event_sequence": 32,
+                "event_time": "2026-11-03T05:09:51.594Z",
+                "event_id": "96c375c7-73e8-4ac9-bbe7-d09ac7c1de2d",
+                "related_interaction_id": "3092dc5b-94d3-4878-a0af-c7877fdedcd0:click:31",
+                "related_event_id": "ab2f8807-4fee-4ef3-898a-105bf12f28dd",
+                "parent_event_id": "ab2f8807-4fee-4ef3-898a-105bf12f28dd",
+                "cause_event_id": "ab2f8807-4fee-4ef3-898a-105bf12f28dd",
+                "correlation_id": null,
+                "active_popup_id": "popup:3092dc5b-94d3-4878-a0af-c7877fdedcd0:2",
+                "active_parent_popup_id": null
+              },
+              "page_title": "Rainbow",
+              "page_path": "/mypage/schedule",
+              "element_text": "업무 등록",
+              "associated_label": null,
+              "selector": "body > div > main.mypage > div.mypage-layout > section.mypage-content > div.schedule-modal:nth-of-type(2)",
+              "tag": "div",
+              "input": {},
+              "popup": {
+                "active_popup_id": "popup:3092dc5b-94d3-4878-a0af-c7877fdedcd0:2",
+                "active_popup_title": "업무 등록",
+                "lifecycle_action": "open",
+                "active_parent_popup_id": null,
+                "opener_event_id": "ab2f8807-4fee-4ef3-898a-105bf12f28dd",
+                "opener_interaction_id": "3092dc5b-94d3-4878-a0af-c7877fdedcd0:click:31",
+                "closer_event_id": null,
+                "closer_interaction_id": null,
+                "target_popup": {
+                  "popup_id": "popup:3092dc5b-94d3-4878-a0af-c7877fdedcd0:2",
+                  "title": "업무 등록",
+                  "role": "dialog",
+                  "parent_popup_id": null,
+                  "opened_by_event_id": "ab2f8807-4fee-4ef3-898a-105bf12f28dd",
+                  "opened_by_interaction_id": "3092dc5b-94d3-4878-a0af-c7877fdedcd0:click:31",
+                  "opened_at": "2026-11-03T05:09:51.593Z",
+                  "selector_css": "body > div > main.mypage > div.mypage-layout > section.mypage-content > div.schedule-modal:nth-of-type(2)",
+                  "selector_xpath": "/html[1]/body[1]/div[1]/main[1]/div[1]/section[1]/div[2]",
+                  "tag": "div",
+                  "source_action": "click"
+                }
+              },
+              "menu": {},
+              "ui_outcome": {},
+              "api": {},
+              "http_method": "",
+              "http_endpoint_raw": "",
+              "http_status": "",
+              "http_relationship_strategy": "",
+              "form": {},
+              "input_form": {},
+              "input_key": {},
+              "input_detected": false,
+              "popup_containment": {
+                "is_inside_popup": true,
+                "active_popup_id": "popup:3092dc5b-94d3-4878-a0af-c7877fdedcd0:2"
+              },
+              "element_role": "",
+              "grid": {},
+              "popup_stack": [
+                {
+                  "popup_id": "popup:3092dc5b-94d3-4878-a0af-c7877fdedcd0:2",
+                  "opened_at": "2026-11-03T05:09:51.593Z",
+                  "opened_by_event_id": "ab2f8807-4fee-4ef3-898a-105bf12f28dd",
+                  "opened_by_interaction_id": "3092dc5b-94d3-4878-a0af-c7877fdedcd0:click:31"
+                }
+              ]
+            },
+            {
+              "event_id": "da221db9-4c86-4284-a9a1-e15ef77f4bc0",
+              "session_id": "3092dc5b-94d3-4878-a0af-c7877fdedcd0",
+              "event_time": "2026-11-03 14:10:02.982",
+              "event": {
+                "interaction_id": "3092dc5b-94d3-4878-a0af-c7877fdedcd0:click:41",
+                "action": "click",
+                "event_sequence": 41,
+                "event_time": "2026-11-03T05:10:02.982Z",
+                "event_id": "da221db9-4c86-4284-a9a1-e15ef77f4bc0",
+                "related_interaction_id": null,
+                "related_event_id": null,
+                "parent_event_id": null,
+                "cause_event_id": null,
+                "correlation_id": null,
+                "active_popup_id": "popup:3092dc5b-94d3-4878-a0af-c7877fdedcd0:2",
+                "active_parent_popup_id": null
+              },
+              "page_title": "Rainbow",
+              "page_path": "/mypage/schedule",
+              "element_text": "17",
+              "associated_label": "3 오늘",
+              "selector": "div.mypage-layout > section.mypage-content > div.schedule-page:nth-of-type(1) > section.monthly-calendar > div.monthly-calendar__grid:nth-of-type(2) > div.monthly-calendar__cell:nth-of-type(17)",
+              "tag": "div",
+              "input": {},
+              "popup": {
+                "active_popup_id": "popup:3092dc5b-94d3-4878-a0af-c7877fdedcd0:2",
+                "active_popup_title": "업무 등록",
+                "active_parent_popup_id": null,
+                "target_popup": {}
+              },
+              "menu": {
+                "selected_label": "일정 관리",
+                "path_text": "마이페이지 메뉴 > 일정 관리",
+                "selected_path_text": "마이페이지 메뉴 > 일정 관리",
+                "parser": "sidebar_active_dom",
+                "source": "nav"
+              },
+              "ui_outcome": {},
+              "api": {},
+              "http_method": "",
+              "http_endpoint_raw": "",
+              "http_status": "",
+              "http_relationship_strategy": "",
+              "form": {},
+              "input_form": {},
+              "input_key": {},
+              "input_detected": false,
+              "popup_containment": {
+                "is_inside_popup": false,
+                "active_popup_id": "popup:3092dc5b-94d3-4878-a0af-c7877fdedcd0:2"
+              },
+              "element_role": "",
+              "grid": {
+                "detected": true,
+                "grid_selector": "main.mypage > div.mypage-layout > section.mypage-content > div.schedule-page:nth-of-type(1) > section.monthly-calendar > div.monthly-calendar__grid:nth-of-type(2)",
+                "grid_type": "grid",
+                "grid_role": "data_grid",
+                "cell_value": "17"
+              },
+              "popup_stack": [
+                {
+                  "popup_id": "popup:3092dc5b-94d3-4878-a0af-c7877fdedcd0:2",
+                  "opened_at": "2026-11-03T05:09:51.593Z",
+                  "opened_by_event_id": "ab2f8807-4fee-4ef3-898a-105bf12f28dd",
+                  "opened_by_interaction_id": "3092dc5b-94d3-4878-a0af-c7877fdedcd0:click:31"
+                }
+              ]
+            }
+          ],
+          "http_evidence": [],
+          "completion_evidence": [],
+          "serializer_rule_id": "BA-DIRECT-INTENT",
+          "resolution_status": "UNRESOLVED",
+          "source_process_ids": [
+            "PM-020"
+          ],
+          "step_order": 13,
+          "evidence_roles": {
+            "da221db9-4c86-4284-a9a1-e15ef77f4bc0": "DIRECT_USER_INTENT",
+            "96c375c7-73e8-4ac9-bbe7-d09ac7c1de2d": "LIVE_FORM_CONTEXT"
+          },
+          "form_lifecycle_provenance": {
+            "rule_id": "BA-LIVE-FORM-OPENING",
+            "opening_source_event_id": "96c375c7-73e8-4ac9-bbe7-d09ac7c1de2d"
+          },
+          "context_provenance": [
+            {
+              "rule_id": "BA-VALIDATED-OPENER-MENU",
+              "opener_source_event_id": "ab2f8807-4fee-4ef3-898a-105bf12f28dd",
+              "popup_source_event_id": "96c375c7-73e8-4ac9-bbe7-d09ac7c1de2d",
+              "raw_menu": {
+                "selected_label": "일정 관리",
+                "path_text": "마이페이지 메뉴 > 일정 관리",
+                "selected_path_text": "마이페이지 메뉴 > 일정 관리",
+                "parser": "sidebar_active_dom",
+                "source": "nav"
+              },
+              "page_path": "/mypage/schedule"
+            }
+          ],
+          "form_detection_evidence": [
+            {
+              "source_event_id": "ce6ba3d6-0e7d-4a76-aba9-c439dec592c6",
+              "rule_id": "BA-DIALOG-DESCENDANT-INPUT",
+              "raw_selector": "#schedule-title"
+            },
+            {
+              "source_event_id": "e9765f07-e848-4741-9548-635595e6ba8d",
+              "rule_id": "BA-DIALOG-DESCENDANT-INPUT",
+              "raw_selector": "#schedule-description"
+            },
+            {
+              "source_event_id": "5d55b008-468e-42fa-a273-cd7c2b20ade4",
+              "rule_id": "BA-DIALOG-DESCENDANT-INPUT",
+              "raw_selector": "#schedule-description"
+            }
+          ],
+          "intent_order": 40,
+          "last_intent_order": 40
+        }
+      },
+      {
+        "issue": {
+          "order": 15,
+          "source_step_id": "BA-492d6a89-4871-4c45-945f-cccd3d7b4f8c",
+          "reason": "UNRESOLVED_OR_UNSUPPORTED_OBSERVED_STEP"
+        },
+        "source": {
+          "generated_step_id": "BA-492d6a89-4871-4c45-945f-cccd3d7b4f8c",
+          "process_id": "PM-020",
+          "workflow_id": "WF-0003",
+          "action_type": "UNRESOLVED",
+          "intent_phase": "UNKNOWN",
+          "target": "4",
+          "target_field_label": "4",
+          "business_object": "",
+          "menu_page": "/mypage/schedule",
+          "page_title": "Rainbow",
+          "menu": {
+            "selected_label": "일정 관리",
+            "path_text": "마이페이지 메뉴 > 일정 관리",
+            "selected_path_text": "마이페이지 메뉴 > 일정 관리",
+            "parser": "sidebar_active_dom",
+            "source": "nav"
+          },
+          "business_context": "일정 관리",
+          "popup_title": "업무 등록",
+          "form_identity": [
+            "3092dc5b-94d3-4878-a0af-c7877fdedcd0",
+            "/mypage/schedule",
+            "FORM_POPUP",
+            "popup:3092dc5b-94d3-4878-a0af-c7877fdedcd0:2",
+            "body > div > main.mypage > div.mypage-layout > section.mypage-content > div.schedule-modal:nth-of-type(2)",
+            "업무 등록"
+          ],
+          "fields": [],
+          "source_event_ids": [
+            "96c375c7-73e8-4ac9-bbe7-d09ac7c1de2d",
+            "492d6a89-4871-4c45-945f-cccd3d7b4f8c"
+          ],
+          "intent_source_event_ids": [
+            "492d6a89-4871-4c45-945f-cccd3d7b4f8c"
+          ],
+          "source_node_ids": [
+            "PM-020-N006",
+            "PM-020-N007"
+          ],
+          "evidence": [
+            {
+              "event_id": "96c375c7-73e8-4ac9-bbe7-d09ac7c1de2d",
+              "session_id": "3092dc5b-94d3-4878-a0af-c7877fdedcd0",
+              "event_time": "2026-11-03 14:09:51.594",
+              "event": {
+                "interaction_id": "3092dc5b-94d3-4878-a0af-c7877fdedcd0:popup_open:32",
+                "action": "popup_open",
+                "event_sequence": 32,
+                "event_time": "2026-11-03T05:09:51.594Z",
+                "event_id": "96c375c7-73e8-4ac9-bbe7-d09ac7c1de2d",
+                "related_interaction_id": "3092dc5b-94d3-4878-a0af-c7877fdedcd0:click:31",
+                "related_event_id": "ab2f8807-4fee-4ef3-898a-105bf12f28dd",
+                "parent_event_id": "ab2f8807-4fee-4ef3-898a-105bf12f28dd",
+                "cause_event_id": "ab2f8807-4fee-4ef3-898a-105bf12f28dd",
+                "correlation_id": null,
+                "active_popup_id": "popup:3092dc5b-94d3-4878-a0af-c7877fdedcd0:2",
+                "active_parent_popup_id": null
+              },
+              "page_title": "Rainbow",
+              "page_path": "/mypage/schedule",
+              "element_text": "업무 등록",
+              "associated_label": null,
+              "selector": "body > div > main.mypage > div.mypage-layout > section.mypage-content > div.schedule-modal:nth-of-type(2)",
+              "tag": "div",
+              "input": {},
+              "popup": {
+                "active_popup_id": "popup:3092dc5b-94d3-4878-a0af-c7877fdedcd0:2",
+                "active_popup_title": "업무 등록",
+                "lifecycle_action": "open",
+                "active_parent_popup_id": null,
+                "opener_event_id": "ab2f8807-4fee-4ef3-898a-105bf12f28dd",
+                "opener_interaction_id": "3092dc5b-94d3-4878-a0af-c7877fdedcd0:click:31",
+                "closer_event_id": null,
+                "closer_interaction_id": null,
+                "target_popup": {
+                  "popup_id": "popup:3092dc5b-94d3-4878-a0af-c7877fdedcd0:2",
+                  "title": "업무 등록",
+                  "role": "dialog",
+                  "parent_popup_id": null,
+                  "opened_by_event_id": "ab2f8807-4fee-4ef3-898a-105bf12f28dd",
+                  "opened_by_interaction_id": "3092dc5b-94d3-4878-a0af-c7877fdedcd0:click:31",
+                  "opened_at": "2026-11-03T05:09:51.593Z",
+                  "selector_css": "body > div > main.mypage > div.mypage-layout > section.mypage-content > div.schedule-modal:nth-of-type(2)",
+                  "selector_xpath": "/html[1]/body[1]/div[1]/main[1]/div[1]/section[1]/div[2]",
+                  "tag": "div",
+                  "source_action": "click"
+                }
+              },
+              "menu": {},
+              "ui_outcome": {},
+              "api": {},
+              "http_method": "",
+              "http_endpoint_raw": "",
+              "http_status": "",
+              "http_relationship_strategy": "",
+              "form": {},
+              "input_form": {},
+              "input_key": {},
+              "input_detected": false,
+              "popup_containment": {
+                "is_inside_popup": true,
+                "active_popup_id": "popup:3092dc5b-94d3-4878-a0af-c7877fdedcd0:2"
+              },
+              "element_role": "",
+              "grid": {},
+              "popup_stack": [
+                {
+                  "popup_id": "popup:3092dc5b-94d3-4878-a0af-c7877fdedcd0:2",
+                  "opened_at": "2026-11-03T05:09:51.593Z",
+                  "opened_by_event_id": "ab2f8807-4fee-4ef3-898a-105bf12f28dd",
+                  "opened_by_interaction_id": "3092dc5b-94d3-4878-a0af-c7877fdedcd0:click:31"
+                }
+              ]
+            },
+            {
+              "event_id": "492d6a89-4871-4c45-945f-cccd3d7b4f8c",
+              "session_id": "3092dc5b-94d3-4878-a0af-c7877fdedcd0",
+              "event_time": "2026-11-03 14:10:06.589",
+              "event": {
+                "interaction_id": "3092dc5b-94d3-4878-a0af-c7877fdedcd0:click:44",
+                "action": "click",
+                "event_sequence": 44,
+                "event_time": "2026-11-03T05:10:06.589Z",
+                "event_id": "492d6a89-4871-4c45-945f-cccd3d7b4f8c",
+                "related_interaction_id": null,
+                "related_event_id": null,
+                "parent_event_id": null,
+                "cause_event_id": null,
+                "correlation_id": null,
+                "active_popup_id": "popup:3092dc5b-94d3-4878-a0af-c7877fdedcd0:2",
+                "active_parent_popup_id": null
+              },
+              "page_title": "Rainbow",
+              "page_path": "/mypage/schedule",
+              "element_text": "25",
+              "associated_label": "4",
+              "selector": "div.mypage-layout > section.mypage-content > div.schedule-page:nth-of-type(1) > section.monthly-calendar > div.monthly-calendar__grid:nth-of-type(2) > div.monthly-calendar__cell:nth-of-type(25)",
+              "tag": "div",
+              "input": {},
+              "popup": {
+                "active_popup_id": "popup:3092dc5b-94d3-4878-a0af-c7877fdedcd0:2",
+                "active_popup_title": "업무 등록",
+                "active_parent_popup_id": null,
+                "target_popup": {}
+              },
+              "menu": {
+                "selected_label": "일정 관리",
+                "path_text": "마이페이지 메뉴 > 일정 관리",
+                "selected_path_text": "마이페이지 메뉴 > 일정 관리",
+                "parser": "sidebar_active_dom",
+                "source": "nav"
+              },
+              "ui_outcome": {},
+              "api": {},
+              "http_method": "",
+              "http_endpoint_raw": "",
+              "http_status": "",
+              "http_relationship_strategy": "",
+              "form": {},
+              "input_form": {},
+              "input_key": {},
+              "input_detected": false,
+              "popup_containment": {
+                "is_inside_popup": false,
+                "active_popup_id": "popup:3092dc5b-94d3-4878-a0af-c7877fdedcd0:2"
+              },
+              "element_role": "",
+              "grid": {
+                "detected": true,
+                "grid_selector": "main.mypage > div.mypage-layout > section.mypage-content > div.schedule-page:nth-of-type(1) > section.monthly-calendar > div.monthly-calendar__grid:nth-of-type(2)",
+                "grid_type": "grid",
+                "grid_role": "data_grid",
+                "cell_value": "25"
+              },
+              "popup_stack": [
+                {
+                  "popup_id": "popup:3092dc5b-94d3-4878-a0af-c7877fdedcd0:2",
+                  "opened_at": "2026-11-03T05:09:51.593Z",
+                  "opened_by_event_id": "ab2f8807-4fee-4ef3-898a-105bf12f28dd",
+                  "opened_by_interaction_id": "3092dc5b-94d3-4878-a0af-c7877fdedcd0:click:31"
+                }
+              ]
+            }
+          ],
+          "http_evidence": [],
+          "completion_evidence": [],
+          "serializer_rule_id": "BA-DIRECT-INTENT",
+          "resolution_status": "UNRESOLVED",
+          "source_process_ids": [
+            "PM-020"
+          ],
+          "step_order": 15,
+          "evidence_roles": {
+            "492d6a89-4871-4c45-945f-cccd3d7b4f8c": "DIRECT_USER_INTENT",
+            "96c375c7-73e8-4ac9-bbe7-d09ac7c1de2d": "LIVE_FORM_CONTEXT"
+          },
+          "form_lifecycle_provenance": {
+            "rule_id": "BA-LIVE-FORM-OPENING",
+            "opening_source_event_id": "96c375c7-73e8-4ac9-bbe7-d09ac7c1de2d"
+          },
+          "context_provenance": [
+            {
+              "rule_id": "BA-VALIDATED-OPENER-MENU",
+              "opener_source_event_id": "ab2f8807-4fee-4ef3-898a-105bf12f28dd",
+              "popup_source_event_id": "96c375c7-73e8-4ac9-bbe7-d09ac7c1de2d",
+              "raw_menu": {
+                "selected_label": "일정 관리",
+                "path_text": "마이페이지 메뉴 > 일정 관리",
+                "selected_path_text": "마이페이지 메뉴 > 일정 관리",
+                "parser": "sidebar_active_dom",
+                "source": "nav"
+              },
+              "page_path": "/mypage/schedule"
+            }
+          ],
+          "form_detection_evidence": [
+            {
+              "source_event_id": "ce6ba3d6-0e7d-4a76-aba9-c439dec592c6",
+              "rule_id": "BA-DIALOG-DESCENDANT-INPUT",
+              "raw_selector": "#schedule-title"
+            },
+            {
+              "source_event_id": "e9765f07-e848-4741-9548-635595e6ba8d",
+              "rule_id": "BA-DIALOG-DESCENDANT-INPUT",
+              "raw_selector": "#schedule-description"
+            },
+            {
+              "source_event_id": "5d55b008-468e-42fa-a273-cd7c2b20ade4",
+              "rule_id": "BA-DIALOG-DESCENDANT-INPUT",
+              "raw_selector": "#schedule-description"
+            }
+          ],
+          "intent_order": 43,
+          "last_intent_order": 43
+        }
+      }
+    ]
+  },
+  {
+    "business_unit_id": "BU05",
+    "issues": []
+  },
+  {
+    "business_unit_id": "BU07",
+    "issues": []
+  },
+  {
+    "business_unit_id": "BU09",
+    "issues": []
+  },
+  {
+    "business_unit_id": "BU12",
+    "issues": []
+  },
+  {
+    "business_unit_id": "BU13",
+    "issues": []
+  },
+  {
+    "business_unit_id": "BU14",
+    "issues": []
+  },
+  {
+    "business_unit_id": "BU17",
+    "issues": []
+  },
+  {
+    "business_unit_id": "BU20",
+    "issues": []
+  }
+]

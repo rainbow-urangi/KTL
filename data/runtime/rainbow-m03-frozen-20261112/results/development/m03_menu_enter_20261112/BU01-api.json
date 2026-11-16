@@ -1,0 +1,62 @@
+{
+  "request": {
+    "business_unit_id": "BU01",
+    "workflow_id": "WF-0002",
+    "generator_mode": "REAL",
+    "run_mode": "DEVELOPMENT"
+  },
+  "http_status": 200,
+  "response": {
+    "business_unit_id": "BU01",
+    "workflow_id": "WF-0002",
+    "scenario_id": "REAL-SCN-63d098c2b7f618dd2fbb",
+    "status": "SUCCESS",
+    "steps": [
+      {
+        "order": 1,
+        "action": "NAVIGATE",
+        "target": "일반 정보",
+        "source_step_id": "BA-cfd2f406-f9c4-4e4e-9350-722bf77a856f",
+        "source_event_ids": [
+          "cfd2f406-f9c4-4e4e-9350-722bf77a856f"
+        ],
+        "source_node_ids": [
+          "PM-015-N001"
+        ],
+        "page_context": "/mypage",
+        "fields": [],
+        "http_evidence": [],
+        "completion_evidence": [],
+        "serializer_rule_id": "BA-DIRECT-INTENT"
+      },
+      {
+        "order": 2,
+        "action": "NAVIGATE",
+        "target": "개인정보",
+        "source_step_id": "BA-532eacb3-8c78-49f8-a574-7bf091a4e7d5",
+        "source_event_ids": [
+          "532eacb3-8c78-49f8-a574-7bf091a4e7d5"
+        ],
+        "source_node_ids": [
+          "PM-015-N001"
+        ],
+        "page_context": "/mypage",
+        "fields": [],
+        "http_evidence": [],
+        "completion_evidence": [],
+        "serializer_rule_id": "BA-TREE-MENU"
+      }
+    ],
+    "issues": [],
+    "generator_version": "m03-observed-business-steps-v1.1-menu-enter",
+    "source_process_id": "PM-015",
+    "source_snapshot_sha256": "86b1e77c8ca4ec365806d7d145d99ffa802bc097347b3db16ed9b3f600503f39",
+    "readiness_only": true,
+    "run_mode": "DEVELOPMENT",
+    "generator_mode": "REAL",
+    "synthetic": false,
+    "official_pass": null
+  },
+  "started_at": "2026-11-12T08:25:59.240445+00:00",
+  "completed_at": "2026-11-12T08:25:59.260105+00:00"
+}

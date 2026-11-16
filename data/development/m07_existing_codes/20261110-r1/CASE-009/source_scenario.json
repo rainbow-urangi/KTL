@@ -1,0 +1,297 @@
+{
+  "business_unit_id": "CU09",
+  "canonical_kind": "CAPTURE_OBSERVED_SEQUENCE",
+  "capture_policy_sha256": "d7860cf84321a53554055bfbe3f438114ff52376b30ec6f54d5f99d100457786",
+  "data_class": "DEVELOPMENT",
+  "generated_by_llm": false,
+  "generation_method": "DETERMINISTIC_CANONICAL_ADAPTER",
+  "generator_mode": "REAL",
+  "model_inference_during_generation": false,
+  "official": false,
+  "official_pass": null,
+  "origin_generation_id": "M03-GEN-2a010dba85984203bcf1985fcb4e4a39",
+  "run_mode": "DEVELOPMENT",
+  "scenario_id": "CANON-SCN-b942446b030f547453a43c70",
+  "source_canonical_instance_id": "CAPTURE-WF-c3da8391109c",
+  "source_canonical_schema": "workflow-canonical-1.2",
+  "source_capture_manifest_sha256": "e39003d92d04ee2f84f58e3840b7dd42820c4a96f11c76f92fd9ec4c45f2d259",
+  "source_csv_sha256": "2e219715c638260520708992fe9f0c783fa94cb0f26a732f1c198456225a6ce9",
+  "source_files_sha256": {
+    "data/evaluation/cu10-repair-input/CU09/canonical_workflows.json": "bc85e7626957014dd0934081c09a6352b05379026425c0f703f6b79d42502443",
+    "data/evaluation/cu10-repair-input/CU09/process_models.csv": "fe23a96f47e9896ee80e1f7447692ed2d2ddbd1075b41fa54247dad285cb1d17"
+  },
+  "source_module": "canonical-procedure-adapter",
+  "source_process_model_id": "CAPTURE-PM-c3da8391109c",
+  "source_process_model_ids": [
+    "PM-001"
+  ],
+  "source_session_ids": [
+    "43756382-8154-4275-aedb-088540f5e929"
+  ],
+  "source_version": "canonical-to-m03-v2-occurrences",
+  "source_workflow_ids": [
+    "WF-0001",
+    "WF-0002"
+  ],
+  "status": "SUCCESS",
+  "steps": [
+    {
+      "action": "page_entry",
+      "evidence": [
+        "ab1e37ef-afbd-425c-9187-3c9c6fc300f8"
+      ],
+      "http_method": "",
+      "id": "PM-001-N001",
+      "node_id": "PM-001-N001",
+      "occurrence_id": "OCC-0001",
+      "order": 1,
+      "source_csv_rows": [
+        3
+      ],
+      "source_process_model_id": "PM-001",
+      "source_session_id": "43756382-8154-4275-aedb-088540f5e929",
+      "source_workflow_id": "WF-0001",
+      "target": "{\"normalized_endpoint\":\"\",\"page_path\":\"/mypage/cards\",\"role\":\"html\"}",
+      "target_details": {
+        "normalized_endpoint": "",
+        "page_path": "/mypage/cards",
+        "role": "html"
+      }
+    },
+    {
+      "action": "api_confirmation",
+      "evidence": [
+        "2a4851d4-6e17-472d-8681-bb4c26d4a5b2",
+        "4584fdd3-c1a1-4021-9c96-ae35f8211677"
+      ],
+      "http_method": "GET",
+      "id": "PM-001-N002",
+      "node_id": "PM-001-N002",
+      "occurrence_id": "OCC-0002",
+      "order": 2,
+      "source_csv_rows": [
+        4,
+        5
+      ],
+      "source_process_model_id": "PM-001",
+      "source_session_id": "43756382-8154-4275-aedb-088540f5e929",
+      "source_workflow_id": "WF-0001",
+      "target": "{\"normalized_endpoint\":\"/api/auth/me\",\"page_path\":\"/mypage/cards\",\"role\":\"/api/auth/me\"}",
+      "target_details": {
+        "normalized_endpoint": "/api/auth/me",
+        "page_path": "/mypage/cards",
+        "role": "/api/auth/me"
+      }
+    },
+    {
+      "action": "api_confirmation",
+      "evidence": [
+        "6a1b7560-302c-4fe4-ace6-adb4c91d7021"
+      ],
+      "http_method": "GET",
+      "id": "PM-001-N003",
+      "node_id": "PM-001-N003",
+      "occurrence_id": "OCC-0003",
+      "order": 3,
+      "source_csv_rows": [
+        6
+      ],
+      "source_process_model_id": "PM-001",
+      "source_session_id": "43756382-8154-4275-aedb-088540f5e929",
+      "source_workflow_id": "WF-0001",
+      "target": "{\"normalized_endpoint\":\"/api/business-cards\",\"page_path\":\"/mypage/cards\",\"role\":\"/api/business-cards\"}",
+      "target_details": {
+        "normalized_endpoint": "/api/business-cards",
+        "page_path": "/mypage/cards",
+        "role": "/api/business-cards"
+      }
+    },
+    {
+      "action": "api_confirmation",
+      "evidence": [
+        "3301694e-f54e-4471-9998-d96934b493be"
+      ],
+      "http_method": "GET",
+      "id": "PM-001-N002",
+      "node_id": "PM-001-N002",
+      "occurrence_id": "OCC-0004",
+      "order": 4,
+      "source_csv_rows": [
+        7
+      ],
+      "source_process_model_id": "PM-001",
+      "source_session_id": "43756382-8154-4275-aedb-088540f5e929",
+      "source_workflow_id": "WF-0001",
+      "target": "{\"normalized_endpoint\":\"/api/auth/me\",\"page_path\":\"/mypage/cards\",\"role\":\"/api/auth/me\"}",
+      "target_details": {
+        "normalized_endpoint": "/api/auth/me",
+        "page_path": "/mypage/cards",
+        "role": "/api/auth/me"
+      }
+    },
+    {
+      "action": "api_confirmation",
+      "evidence": [
+        "15b96430-b8d4-4c3f-9b5c-c0f633ef6bd0"
+      ],
+      "http_method": "GET",
+      "id": "PM-001-N003",
+      "node_id": "PM-001-N003",
+      "occurrence_id": "OCC-0005",
+      "order": 5,
+      "source_csv_rows": [
+        8
+      ],
+      "source_process_model_id": "PM-001",
+      "source_session_id": "43756382-8154-4275-aedb-088540f5e929",
+      "source_workflow_id": "WF-0001",
+      "target": "{\"normalized_endpoint\":\"/api/business-cards\",\"page_path\":\"/mypage/cards\",\"role\":\"/api/business-cards\"}",
+      "target_details": {
+        "normalized_endpoint": "/api/business-cards",
+        "page_path": "/mypage/cards",
+        "role": "/api/business-cards"
+      }
+    },
+    {
+      "action": "api_confirmation",
+      "evidence": [
+        "7acf7b65-b6fb-4451-a09d-56aebdc75e2e"
+      ],
+      "http_method": "GET",
+      "id": "PM-001-N002",
+      "node_id": "PM-001-N002",
+      "occurrence_id": "OCC-0006",
+      "order": 6,
+      "source_csv_rows": [
+        9
+      ],
+      "source_process_model_id": "PM-001",
+      "source_session_id": "43756382-8154-4275-aedb-088540f5e929",
+      "source_workflow_id": "WF-0001",
+      "target": "{\"normalized_endpoint\":\"/api/auth/me\",\"page_path\":\"/mypage/cards\",\"role\":\"/api/auth/me\"}",
+      "target_details": {
+        "normalized_endpoint": "/api/auth/me",
+        "page_path": "/mypage/cards",
+        "role": "/api/auth/me"
+      }
+    },
+    {
+      "action": "selection",
+      "evidence": [
+        "e749795e-8874-4710-bcfa-55ef86c9c543"
+      ],
+      "http_method": "",
+      "id": "PM-001-N004",
+      "node_id": "PM-001-N004",
+      "occurrence_id": "OCC-0007",
+      "order": 7,
+      "source_csv_rows": [
+        10
+      ],
+      "source_process_model_id": "PM-001",
+      "source_session_id": "43756382-8154-4275-aedb-088540f5e929",
+      "source_workflow_id": "WF-0002",
+      "target": "{\"normalized_endpoint\":\"\",\"page_path\":\"/mypage/cards\",\"role\":\"item\"}",
+      "target_details": {
+        "normalized_endpoint": "",
+        "page_path": "/mypage/cards",
+        "role": "item"
+      }
+    },
+    {
+      "action": "api_confirmation",
+      "evidence": [
+        "88265850-4851-42c7-8725-a66523524bf1"
+      ],
+      "http_method": "GET",
+      "id": "PM-001-N005",
+      "node_id": "PM-001-N005",
+      "occurrence_id": "OCC-0008",
+      "order": 8,
+      "source_csv_rows": [
+        11
+      ],
+      "source_process_model_id": "PM-001",
+      "source_session_id": "43756382-8154-4275-aedb-088540f5e929",
+      "source_workflow_id": "WF-0002",
+      "target": "{\"normalized_endpoint\":\"/api/business-cards/:id\",\"page_path\":\"/mypage/cards\",\"role\":\"/api/business-cards/:id\"}",
+      "target_details": {
+        "normalized_endpoint": "/api/business-cards/:id",
+        "page_path": "/mypage/cards",
+        "role": "/api/business-cards/:id"
+      }
+    },
+    {
+      "action": "detail_open",
+      "evidence": [
+        "e668909e-174e-49cc-ab03-0f2879ea1f6c"
+      ],
+      "http_method": "",
+      "id": "PM-001-N006",
+      "node_id": "PM-001-N006",
+      "occurrence_id": "OCC-0009",
+      "order": 9,
+      "source_csv_rows": [
+        12
+      ],
+      "source_process_model_id": "PM-001",
+      "source_session_id": "43756382-8154-4275-aedb-088540f5e929",
+      "source_workflow_id": "WF-0002",
+      "target": "{\"normalized_endpoint\":\"\",\"page_path\":\"/mypage/cards\",\"role\":\"dialog_control\"}",
+      "target_details": {
+        "normalized_endpoint": "",
+        "page_path": "/mypage/cards",
+        "role": "dialog_control"
+      }
+    },
+    {
+      "action": "selection",
+      "evidence": [
+        "5653575f-0048-4ff5-944e-a3534139c4f4"
+      ],
+      "http_method": "",
+      "id": "PM-001-N007",
+      "node_id": "PM-001-N007",
+      "occurrence_id": "OCC-0010",
+      "order": 10,
+      "source_csv_rows": [
+        13
+      ],
+      "source_process_model_id": "PM-001",
+      "source_session_id": "43756382-8154-4275-aedb-088540f5e929",
+      "source_workflow_id": "WF-0002",
+      "target": "{\"normalized_endpoint\":\"\",\"page_path\":\"/mypage/cards\",\"role\":\"dialog_control\"}",
+      "target_details": {
+        "normalized_endpoint": "",
+        "page_path": "/mypage/cards",
+        "role": "dialog_control"
+      }
+    },
+    {
+      "action": "detail_close",
+      "evidence": [
+        "041ad8b1-3d81-4b4a-8e01-a8ac308c9514"
+      ],
+      "http_method": "",
+      "id": "PM-001-N008",
+      "node_id": "PM-001-N008",
+      "occurrence_id": "OCC-0011",
+      "order": 11,
+      "source_csv_rows": [
+        14
+      ],
+      "source_process_model_id": "PM-001",
+      "source_session_id": "43756382-8154-4275-aedb-088540f5e929",
+      "source_workflow_id": "WF-0002",
+      "target": "{\"normalized_endpoint\":\"\",\"page_path\":\"/mypage/cards\",\"role\":\"dialog_control\"}",
+      "target_details": {
+        "normalized_endpoint": "",
+        "page_path": "/mypage/cards",
+        "role": "dialog_control"
+      }
+    }
+  ],
+  "synthetic": false,
+  "target_representation": "COMPACT_SORTED_JSON_TARGET_V1",
+  "workflow_id": "CAPTURE-WF-c3da8391109c"
+}

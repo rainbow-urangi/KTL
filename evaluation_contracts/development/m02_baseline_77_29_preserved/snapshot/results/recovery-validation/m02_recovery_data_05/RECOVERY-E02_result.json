@@ -1,0 +1,203 @@
+{
+  "evidence": [
+    {
+      "completion_source_event_ids": [],
+      "detected_id": "BA-fa9290fa-4fd0-4820-8dd5-beee1743da29",
+      "detected_step": "일일보고",
+      "direct_match": true,
+      "ground_truth_step": "일일보고",
+      "input_completion_proof": [],
+      "match_kind": "INTENT",
+      "missing_reason": null,
+      "process_id": "BU07",
+      "required_included": true,
+      "required_logical_role": "ENTER_CONTEXT",
+      "required_step_id": "BU07-S01",
+      "source_event_ids": [
+        "fa9290fa-4fd0-4820-8dd5-beee1743da29"
+      ],
+      "source_node_ids": [
+        "PM-007-N001"
+      ]
+    },
+    {
+      "completion_source_event_ids": [],
+      "detected_id": "BA-4740f429-eebd-46a5-9714-7788bdd53cb3",
+      "detected_step": "등록",
+      "direct_match": true,
+      "ground_truth_step": "등록",
+      "input_completion_proof": [],
+      "match_kind": "INTENT",
+      "missing_reason": null,
+      "process_id": "BU07",
+      "required_included": true,
+      "required_logical_role": "INITIATE_REGISTRATION",
+      "required_step_id": "BU07-S02",
+      "source_event_ids": [
+        "4740f429-eebd-46a5-9714-7788bdd53cb3",
+        "a1a89b09-b14d-44a7-a4a3-7f5967b3d966"
+      ],
+      "source_node_ids": [
+        "PM-007-N005",
+        "PM-007-N006"
+      ]
+    },
+    {
+      "completion_source_event_ids": [],
+      "detected_id": "BA-eb6b1c04-2792-4fef-87f1-1d55f0ae87d7",
+      "detected_step": "일일업무",
+      "direct_match": true,
+      "ground_truth_step": "내용 입력",
+      "input_completion_proof": [
+        {
+          "rule": "OWNER_CONFIRMED_SUCCESS_IMPLIES_REQUIRED_FIELDS",
+          "success_source_event_ids": [
+            "d6eae1a3-1c4a-4b76-8ca8-b6b1792d837b",
+            "b0ebb232-4cae-488c-ab90-ef1d38ff766b"
+          ],
+          "write_step_id": "BA-de3e75b6-7163-40b7-8952-8be7c5ea709a"
+        }
+      ],
+      "match_kind": "INTENT",
+      "missing_reason": null,
+      "process_id": "BU07",
+      "required_included": true,
+      "required_logical_role": "INPUT_INFORMATION",
+      "required_step_id": "BU07-S03",
+      "source_event_ids": [
+        "a1a89b09-b14d-44a7-a4a3-7f5967b3d966",
+        "eb6b1c04-2792-4fef-87f1-1d55f0ae87d7",
+        "c74d45fe-3e22-46e6-9940-aa605d4adb49",
+        "a910e4db-c09b-4ee5-af7d-fff8807bc97f",
+        "0af86b08-8a38-4cae-bcb3-c15d3bbf744b"
+      ],
+      "source_node_ids": [
+        "PM-007-N006",
+        "PM-007-N008"
+      ]
+    },
+    {
+      "completion_source_event_ids": [],
+      "detected_id": "BA-de3e75b6-7163-40b7-8952-8be7c5ea709a",
+      "detected_step": "저장",
+      "direct_match": true,
+      "ground_truth_step": "저장",
+      "input_completion_proof": [],
+      "match_kind": "INTENT",
+      "missing_reason": null,
+      "process_id": "BU07",
+      "required_included": true,
+      "required_logical_role": "SAVE_INFORMATION",
+      "required_step_id": "BU07-S04",
+      "source_event_ids": [
+        "a1a89b09-b14d-44a7-a4a3-7f5967b3d966",
+        "de3e75b6-7163-40b7-8952-8be7c5ea709a",
+        "d6eae1a3-1c4a-4b76-8ca8-b6b1792d837b",
+        "b0ebb232-4cae-488c-ab90-ef1d38ff766b",
+        "c791820a-674a-4355-b074-f6c3d2be309c"
+      ],
+      "source_node_ids": [
+        "PM-007-N006",
+        "PM-007-N009"
+      ]
+    },
+    {
+      "completion_source_event_ids": [
+        "d6eae1a3-1c4a-4b76-8ca8-b6b1792d837b"
+      ],
+      "detected_id": "BA-de3e75b6-7163-40b7-8952-8be7c5ea709a",
+      "detected_step": "저장",
+      "direct_match": false,
+      "ground_truth_step": "완료 확인",
+      "input_completion_proof": [],
+      "match_kind": "STATE_ATTRIBUTE",
+      "missing_reason": null,
+      "process_id": "BU07",
+      "required_included": true,
+      "required_logical_role": "INSPECT_COMPLETION",
+      "required_step_id": "BU07-S05",
+      "source_event_ids": [
+        "a1a89b09-b14d-44a7-a4a3-7f5967b3d966",
+        "de3e75b6-7163-40b7-8952-8be7c5ea709a",
+        "d6eae1a3-1c4a-4b76-8ca8-b6b1792d837b",
+        "b0ebb232-4cae-488c-ab90-ef1d38ff766b",
+        "c791820a-674a-4355-b074-f6c3d2be309c"
+      ],
+      "source_node_ids": [
+        "PM-007-N006",
+        "PM-007-N009"
+      ]
+    },
+    {
+      "completion_source_event_ids": [
+        "d6eae1a3-1c4a-4b76-8ca8-b6b1792d837b"
+      ],
+      "detected_id": "BA-de3e75b6-7163-40b7-8952-8be7c5ea709a",
+      "detected_step": "저장",
+      "direct_match": false,
+      "ground_truth_step": "종료",
+      "input_completion_proof": [],
+      "match_kind": "STATE_ATTRIBUTE",
+      "missing_reason": null,
+      "process_id": "BU07",
+      "required_included": true,
+      "required_logical_role": "END_WORKFLOW",
+      "required_step_id": "BU07-S06",
+      "source_event_ids": [
+        "a1a89b09-b14d-44a7-a4a3-7f5967b3d966",
+        "de3e75b6-7163-40b7-8952-8be7c5ea709a",
+        "d6eae1a3-1c4a-4b76-8ca8-b6b1792d837b",
+        "b0ebb232-4cae-488c-ab90-ef1d38ff766b",
+        "c791820a-674a-4355-b074-f6c3d2be309c"
+      ],
+      "source_node_ids": [
+        "PM-007-N006",
+        "PM-007-N009"
+      ]
+    }
+  ],
+  "stats": {
+    "accuracy": 80.0,
+    "auxiliary_evidence_counted": false,
+    "completeness": 100.0,
+    "correctly_mapped": 4,
+    "defined_required": 6,
+    "evaluated_procedures": 5,
+    "formula": "sqrt(Accuracy * Completeness)",
+    "included_required": 6,
+    "matching_method": "M02_USER_CONFIRMED_V1",
+    "per_business_unit": [
+      {
+        "accuracy": 80.0,
+        "business_unit_id": "BU07",
+        "completeness": 100.0,
+        "generated_count": 5,
+        "included_required_count": 6,
+        "matched_count": 4,
+        "missing_count": 0,
+        "required_count": 6,
+        "score": 89.44271909999159,
+        "status": "COMPLETED",
+        "unmatched_count": 1
+      }
+    ],
+    "semantic_uncertainties": []
+  },
+  "summary": {
+    "accuracy": 80.0,
+    "business_unit_id": "BU07",
+    "completeness": 100.0,
+    "dataset": "m02_recovery_data_01",
+    "execution_id": "RECOVERY-E02",
+    "generated_count": 5,
+    "included_required_count": 6,
+    "matched_count": 4,
+    "missing": [],
+    "missing_count": 0,
+    "required_count": 6,
+    "score": 89.44271909999159,
+    "status": "COMPLETED",
+    "unmatched_count": 1,
+    "week_selection_status": null
+  }
+}

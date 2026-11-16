@@ -5,6 +5,7 @@ import csv
 from copy import deepcopy
 from pathlib import Path
 from .evaluators import require, call_adapter, EvaluationError
+from .api_validation import require_string_enum
 
 
 # 확정된 개발용 업무 정의
@@ -292,13 +293,26 @@ def evaluate_scenarios(payload, reference=None, expected_business_units=None):
     return 100*successful/total if ready else None,total,details,evidence
 
 
+def uses_observed_generator(config, payload):
+    """명시한 canonical/HTTP 업무와 dataset은 유지하고 main snapshot만 별도 선택한다."""
+    if (not isinstance(payload, dict) or payload.get('run_mode', 'DEVELOPMENT') != 'DEVELOPMENT'
+            or payload.get('generator_mode', 'MOCK') != 'REAL' or 'dataset_id' in payload
+            or config.get('m03_real_generator') is None):
+        return False
+    settings = config.get('m03', {})
+    units = settings.get('business_units', []) if isinstance(settings, dict) else []
+    return not (isinstance(units, list) and any(isinstance(unit, dict)
+                and all(unit.get(key) == payload.get(key) for key in ('business_unit_id', 'workflow_id'))
+                for unit in units))
+
+
 def generate(root,config,payload,*,verified_real_input=None):
     require(isinstance(payload,dict),'JSON object required')
     require(set(payload)<= {'business_unit_id','workflow_id','run_mode','generator_mode'},'Unsupported generation request field')
     for k in ('business_unit_id','workflow_id'):require(nonempty(payload.get(k)),'Required field: '+k)
     mode=payload.get('run_mode','DEVELOPMENT');engine=payload.get('generator_mode','MOCK')
-    require(mode in {'REFERENCE','DEVELOPMENT','OFFICIAL'},'Invalid run_mode')
-    require(engine in {'MOCK','REAL'},'generator_mode must be MOCK or REAL')
+    require_string_enum(mode, {'REFERENCE','DEVELOPMENT','OFFICIAL'}, 'run_mode', 'Invalid run_mode')
+    require_string_enum(engine, {'MOCK','REAL'}, 'generator_mode', 'generator_mode must be MOCK or REAL')
     if engine=='MOCK':
         require(mode!='OFFICIAL','Mock generation cannot be OFFICIAL')
         identity=hashlib.sha256((payload['business_unit_id']+'\0'+payload['workflow_id']).encode()).hexdigest()[:12]
@@ -322,28 +336,43 @@ def generate(root,config,payload,*,verified_real_input=None):
                     dict(order=7,action='click',target='명함 검색 버튼',expected_result='전체 명함 목록 조회'),
                     dict(order=8,action='verify',target='명함 목록 화면',expected_result=definition['end_condition'])])
     else:
-        adapter_input={k:payload[k] for k in ('business_unit_id','workflow_id')}
-        definitions,verified=(_real_input(Path(root).resolve(),config)
-                              if verified_real_input is None else verified_real_input)
-        definition=next((row for row in definitions if all(row[key]==payload[key] for key in ('business_unit_id','workflow_id'))),None)
-        require(definition is not None,'Generation request does not match configured M03 business definitions')
-        adapter_input.update(business_definition=definition,analysis_input=verified)
         proof=None
-        if config['m03'].get('transport','SUBPROCESS')=='HTTP':
-            from .m03_http import call_http
-            result,proof=call_http(root,config,adapter_input)
+        feature_input = verified_real_input is not None or 'm03' in config
+        observed_input = verified_real_input is None and uses_observed_generator(config, payload)
+        if observed_input:
+            from .m03_real_generator import generate_observed
+            result=generate_observed(root,config,payload)
+            feature_input=False
+        elif feature_input:
+            adapter_input={k:payload[k] for k in ('business_unit_id','workflow_id')}
+            definitions,verified=(_real_input(Path(root).resolve(),config)
+                                  if verified_real_input is None else verified_real_input)
+            definition=next((row for row in definitions if all(row[key]==payload[key] for key in ('business_unit_id','workflow_id'))),None)
+            require(definition is not None,'Generation request does not match configured M03 business definitions')
+            adapter_input.update(business_definition=definition,analysis_input=verified)
+            if config['m03'].get('transport','SUBPROCESS')=='HTTP':
+                from .m03_http import call_http
+                result,proof=call_http(root,config,adapter_input)
+            else:
+                result=call_adapter(config,'scenario_generation',adapter_input,root)
         else:
-            result=call_adapter(config,'scenario_generation',adapter_input,root)
+            # Preserve main's configured ID-only adapter contract when no
+            # feature analysis-input contract was configured.
+            result=call_adapter(config,'scenario_generation',{k:payload[k] for k in ('business_unit_id','workflow_id')},root)
         try:
+            require(isinstance(result,dict),'Invalid generation response')
+            require_string_enum(result.get('status'), {'SUCCESS','FAILED'}, 'status', 'Invalid generation response')
             require(result.get('synthetic') is not True and result.get('generator_mode')!='MOCK','REAL generator returned synthetic Mock evidence')
             require(result.get('business_unit_id')==payload['business_unit_id'] and result.get('workflow_id')==payload['workflow_id'],'Generator identity mismatch')
             require(result.get('status') in {'SUCCESS','FAILED'} and nonempty(result.get('scenario_id')) and isinstance(result.get('steps'),list),'Invalid generation response')
             if result['status']=='SUCCESS':require(validate_scenario_result(result)['success'],'Generator returned an invalid successful scenario')
+            if observed_input:result.update(official=False, data_class='DEVELOPMENT')
         except EvaluationError as exc:
             if proof is not None:raise EvaluationError(str(exc)+' 근거 ID: '+proof['attempt_id'],exc.status) from None
             raise
-        result.setdefault('source_module',config['m03']['source_module'])
-        result.setdefault('source_version',config['m03']['source_version'])
+        if feature_input:
+            result.setdefault('source_module',config['m03']['source_module'])
+            result.setdefault('source_version',config['m03']['source_version'])
         if proof is not None:result['transport_evidence']=proof
     # 생성 응답의 실행 모드 구분
     result.update(run_mode=mode,generator_mode=engine,synthetic=engine=='MOCK',official_pass=None)

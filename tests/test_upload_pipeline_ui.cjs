@@ -27,7 +27,7 @@ function resultFixture(){return {metric_id:'M03',run_id:RUN,run_mode:'DEVELOPMEN
   details:{evaluation_status:'NOT_READY',successful_scenario_count:null,total_scenario_count:1,
     success_policy:'STRUCTURE_AND_REFERENCE_ORDER',rows:[{business_unit_id:UNIT,success:null,reference_available:false}],
     external_details:{synthetic:false}}};}
-function harness({search='?mode=DEVELOPMENT',pathname='/metrics/m03'}={}) {
+function harness({search='?mode=DEVELOPMENT&view=api',pathname='/metrics/m03'}={}) {
   const elements=new Map(),calls=[],state={session:SESSION,storageReads:0};
   function element(key) {
     if(!elements.has(key))elements.set(key,{innerHTML:'',textContent:'',value:'',checked:false,disabled:false,hidden:false,
@@ -71,7 +71,7 @@ function test(name,run){tests.push({name,run});}
 function assertReadOnly(h){assert.ok(h.calls.every(call=>!call.options?.method),'restoration must use GET only');}
 
 test('retired CSV/analysis query and session storage never propagate into links or catalog requests',async()=>{
-  const h=harness({search:'?mode=DEVELOPMENT&csv_dataset_id='+'a'.repeat(32)+'&analysis_id=UPLOAD-ANALYSIS-'+'b'.repeat(32)});
+  const h=harness({search:'?mode=DEVELOPMENT&view=api&csv_dataset_id='+'a'.repeat(32)+'&analysis_id=UPLOAD-ANALYSIS-'+'b'.repeat(32)});
   h.evaluate('render=()=>{}');await h.evaluate('load()');
   assert.equal(h.calls.length,1);assert.equal(h.calls[0].url,'/api/evaluations?mode=DEVELOPMENT');
   for(const id of ['m01','m02','m03','m04','m05','m06','m07'])assert.equal(h.evaluate("link('/metrics/"+id+"')"),'/metrics/'+id+'?mode=DEVELOPMENT');
@@ -95,14 +95,28 @@ test('generic execution remains the original bodyless run and never starts uploa
   const a=source.indexOf('async function run(id) {'),b=source.indexOf('async function load()',a);
   assert.equal(hash(source.slice(a,b).trim().replace(/\r\n/g,'\n')),'6581292b0e53fb493a2cf8269901c123a45c8c5b4db9a4371cfd09b80117c745');
 });
-test('both immutable M01 criteria and the original score renderer are preserved',()=>{
+test('immutable M01 criteria and score values survive folded result metadata',()=>{
   for(const [name,expected] of [['M01_BU14_PRESET','703ecc02c62a8db6d6694677f80bae785d5095fb55dade63b9fa398f9a9ee9bf'],
     ['M01_CU02_PRESET','ac8c2f246d42a6d0eabcf903e3fb0b4caff83369341cf600773f5c6eef5a9aa7']]) {
     const value=JSON.parse(source.split('const '+name+' = ')[1].split(/;\r?\n/)[0]);
     assert.equal(hash(JSON.stringify({scenario_name:value.scenario_name,scenario_version:value.scenario_version,expected_events:value.expected_events})),expected);
   }
-  const a=source.indexOf('function renderM01ComparisonResult('),b=source.indexOf('async function loadM01Verification(',a);
-  assert.equal(hash(source.slice(a,b).trim()),'d799ed5a8872207ff1b3e0585284ca3c8465e743b93faaa7cc714263bdafe251');
+  const a=source.indexOf('function renderM01ComparisonResult('),b=source.indexOf("document.querySelector('#comparison-result').innerHTML",a);
+  assert.equal(hash(source.slice(a,b).trim().replace(/\r\n/g,'\n')),'2cb4ec4baab5c637033a02801e68bc87f4f75f44e5b2094217fc31d6acb0978a');
+  const h=harness({pathname:'/metrics/m01'});
+  h.context.m01Result={comparison_id:'1'.repeat(32),scenario_name:'SYNTHETIC',scenario_version:'fixture-v1',
+    summary:{matched_count:4,expected_count:8,missing_count:4,extra_event_count:18,duplicate_event_rows:0},
+    measurement:{collection_accuracy:69.54545,c1:50,c2:1.51515,c3:75,target:65,threshold_met:true,
+      formula:'0.5*C1 + 0.3*(100-C2) + 0.2*C3'},rows:[],capture_scope:{notice:'SYNTHETIC scope'}};
+  h.context.m01Selection={dataset_id:'a'.repeat(32),truth_id:'b'.repeat(32),session_id:'__all__'};
+  h.evaluate('loadM01Verification=()=>{};renderM01ComparisonResult(m01Result,m01Selection)');
+  const html=h.element('#comparison-result').innerHTML,fold=html.indexOf('<details>');
+  assert.ok(fold>0);
+  for(const value of ['69.55%','50.00%','1.52%','75.00%','기준 충족 (개발)',`/comparisons/${'1'.repeat(32)}/evidence.csv`])
+    assert.ok(html.slice(0,fold).includes(value),value);
+  for(const value of ['fixture-v1','SYNTHETIC scope','0.5*C1','comparison-verification','a'.repeat(32),'b'.repeat(32)])
+    assert.ok(html.slice(fold).includes(value),value);
+  assert.equal(h.calls.length,0);
 });
 test('M03 entry reads context connection and history without generation or model work',async()=>{
   const h=harness();await h.evaluate('prepareM03(null,1,null)');

@@ -53,14 +53,14 @@ function harness(options={}) {
   const context=vm.createContext({URLSearchParams,URL,TextEncoder,TextDecoder,AbortController,crypto:webcrypto,console,Date,Number,Set,Map,
     location:{pathname:'/metrics/m07',search:'?mode=DEVELOPMENT'},history:{replaceState(){}},catalog:{server_session_id:'SERVER-'+'f'.repeat(32)},
     document:{title:'',querySelector:node},app:node('#app'),labels:{M07:'LLM 코드 유효성 및 정확성'},esc,
-    score:value=>value==null?'—':Number(value).toFixed(2)+'%',banner:()=>'<p>DEVELOPMENT</p>',link:value=>value,
+    score:value=>value==null?'—':Number(value).toFixed(2)+'%',banner:()=>'<p data-test-mode-banner>DEVELOPMENT</p>',link:value=>value,
     setTimeout(callback,delay){const id=++nextTimer;timers.set(id,{callback,delay});return id;},clearTimeout(id){timers.delete(id);},
     fetch:async(url,init={})=>{
       const call={url,method:init.method||'GET',body:init.body?JSON.parse(init.body):null};calls.push(call);
       if(options.fetch){const result=await options.fetch(call);if(result!==undefined)return response(result);}
       if(url==='/api/development/m07/workflows')return response(clone(options.catalog||fixture));
       if(url==='/api/development/m07/meeting-context')return response(clone(options.meetingContext||meetingContext));
-      if(url==='/api/development/m07/meeting-generations')return response({generation:meetingJob(call.body.items)});
+      if(url==='/api/development/m07/meeting-generations')return response({generation:{...meetingJob(call.body.items),auto_validate:true}});
       if(url==='/api/development/m07/context')return response({run_mode:'DEVELOPMENT',scenarios:[],readiness:{configured:false,selenium:true,chrome:true},target_url:'https://example.invalid'});
       if(url==='/api/development/m07/generations')return response({generations:[]});
       if(url==='/api/development/m07/workflows/prepare') {
@@ -92,8 +92,8 @@ test('default entry shows the twenty input LLM meeting flow and keeps prepared w
   assert.match(h.node('#m07-workflows').innerHTML,/CU01/);assert.match(h.node('#m07-workflows').innerHTML,/CU02/);
   assert.match(h.node('#m07-workflows').innerHTML,/原本確認|원본 확인 필요/);
   assert.equal(h.node('#m07-workflow-prepare').disabled,false);assert.equal(h.node('#m07-generate').disabled,true);
-  assert.equal(h.posts().length,0);assert.match(h.node('#app').innerHTML,/Chrome/);assert.match(h.node('#m07-result').innerHTML,/실행 결과가 이곳/);
-  assert.equal((h.node('#m07-cases').innerHTML.match(/data-m07-result-row=/g)||[]).length,20);assert.match(h.node('#m07-meeting-ready').textContent,/GPT 루나.*업무 PC 연결 필요/);
+  assert.equal(h.posts().length,0);assert.match(h.node('#m07-meeting-environment').textContent,/Chrome/);assert.match(h.node('#m07-result').innerHTML,/아직 이번 세션에서 검증하지 않았습니다/);
+  assert.equal((h.node('#m07-cases').innerHTML.match(/data-m07-result-row=/g)||[]).length,0);assert.match(h.node('#m07-meeting-ready').textContent,/GPT 루나.*업무 PC 연결 필요/);
   assert.match(h.node('#app').innerHTML,/<details id="m07-auxiliary"[^>]*>\s*<summary>M03 연결/);
 });
 test('one preparation request saves prepared provenance and previews exact hashed code without running it',async()=>{
@@ -277,13 +277,16 @@ function completedMeeting(passed=16) {
     syntax_target_percent:80,syntax_target_met:passed>=16,integrated_reference_target_percent:80,integrated_reference_target_met:passed>=16});
   job.result={score:100,run_id:job.generation_id};return job;
 }
-test('twenty structured inputs produce one explicit batch request and never trigger validation automatically',async()=>{
+test('twenty structured inputs produce one automatic validation batch request without a second frontend POST',async()=>{
   const h=harness({meetingContext:configuredMeeting()});await h.start();assert.equal(setMeetingInput(h),true);
+  assert.equal((h.node('#m07-cases').innerHTML.match(/data-m07-result-row=/g)||[]).length,20);
+  assert.equal(h.node('#m07-case-results').hidden,true,'input preparation must not expose an empty result table');
   assert.equal(h.node('#m07-meeting-generate').disabled,false);assert.equal(h.posts().length,0);
   await h.evaluate('startM07Meeting()');assert.equal(h.posts('/api/development/m07/meeting-generations').length,1);
-  assert.deepEqual(h.posts('/api/development/m07/meeting-generations')[0].body,{items:meetingItems()});
+  assert.deepEqual(h.posts('/api/development/m07/meeting-generations')[0].body,{items:meetingItems(),auto_validate:true});
   assert.equal(h.posts().filter(row=>row.url.endsWith('/validate')).length,0);assert.equal(h.posts('/api/development/m07/workflows/prepare').length,0);
   assert.equal(h.evaluate('m07View.generation.meeting_protocol'),true);assert.equal((h.node('#m07-cases').innerHTML.match(/data-m07-result-row=/g)||[]).length,20);
+  assert.equal(h.node('#m07-case-results').hidden,false,'results become visible after a generation job exists');
   assert.match(h.node('#m07-result').innerHTML,/문법 통과율|완료되면/);
 });
 test('meeting input count, duplicate identity, duplicate content and missing execution conditions are rejected',async()=>{
@@ -299,7 +302,7 @@ test('meeting input count, duplicate identity, duplicate content and missing exe
 test('missing actual model configuration blocks LLM generation with an explicit work computer connection notice',async()=>{
   const h=harness();await h.start();assert.equal(setMeetingInput(h),true);await h.evaluate('startM07Meeting()');
   assert.equal(h.node('#m07-meeting-generate').disabled,true);assert.equal(h.posts().length,0);
-  assert.match(h.node('#m07-meeting-ready').textContent,/GPT 루나.*업무 PC 연결 필요/);assert.match(h.node('#m07-status').textContent,/실제 LLM API 키와 모델/);
+  assert.match(h.node('#m07-meeting-ready').textContent,/GPT 루나.*업무 PC 연결 필요/);assert.match(h.node('#m07-status').textContent,/LLM 연결 상태/);assert.match(h.node('#m07-meeting-issue').textContent,/실제 LLM 연결 설정이 필요/);
   assert.ok(!h.node('#m07-result').innerHTML.includes('100.00%'));
 });
 test('changing the textarea after confirmation invalidates the batch and oversized files cannot reuse old confirmation',async()=>{
@@ -310,29 +313,48 @@ test('changing the textarea after confirmation invalidates the batch and oversiz
   assert.equal(h.evaluate('m07View.meeting.items.length'),0);assert.equal(h.node('#m07-meeting-generate').disabled,true);assert.match(h.node('#m07-meeting-status').textContent,/256 KiB/);
 });
 test('a reviewed draft is loaded only by an explicit request and never generates code or claims a completed trial',async()=>{
-  const h=harness({meetingContext:configuredMeeting(),fetch:async call=>{if(call.url.endsWith('/meeting-input-draft'))return {draft:true,description:'SYNTHETIC 검토용 초안 · 시험 입력 확정 아님',items:meetingItems()};}});
+  let failReload=false;
+  const h=harness({meetingContext:configuredMeeting(),fetch:async call=>{if(call.url.endsWith('/meeting-input-draft')){if(failReload)throw new Error('SYNTHETIC 초안 불러오기 실패');return {draft:true,description:'SYNTHETIC 검토용 초안 · 시험 입력 확정 아님',items:meetingItems()};}}});
   await h.start();assert.equal(h.calls.filter(row=>row.url.endsWith('/meeting-input-draft')).length,0);
   await h.evaluate('loadM07MeetingDraft()');assert.equal(h.evaluate('m07View.meeting.items.length'),20);
-  assert.match(h.node('#m07-meeting-status').textContent,/검토용 초안.*시험 입력 확정 아님/);assert.equal(h.posts().length,0);assert.equal(h.evaluate('m07View.generation'),null);
+  assert.match(h.node('#m07-meeting-status').textContent,/불러왔습니다.*검증 실행/);
+  assert.match(h.node('#m07-meeting-message-detail').textContent,/SYNTHETIC 검토용 초안.*시험 입력 확정 아님/);assert.equal(h.posts().length,0);assert.equal(h.evaluate('m07View.generation'),null);
+  failReload=true;await h.evaluate('loadM07MeetingDraft()');assert.equal(h.evaluate('m07View.meeting.items.length'),20);
+  assert.match(h.node('#m07-meeting-status').textContent,/SYNTHETIC 초안 불러오기 실패/,'a valid prior batch must not mask a later loading error');
 });
 test('duplicate generation clicks make only one request and prepared provenance cannot replace a meeting result',async()=>{
   let release;const wait=new Promise(resolve=>release=resolve);
-  const h=harness({meetingContext:configuredMeeting(),fetch:async call=>{if(call.url.endsWith('/meeting-generations')){await wait;return {generation:preparedJob(['CU01'])};}}});
+  const h=harness({meetingContext:configuredMeeting(),fetch:async call=>{if(call.url.endsWith('/meeting-generations')){await wait;return {generation:{...preparedJob(['CU01']),auto_validate:true}};}}});
   await h.start();setMeetingInput(h);const pending=h.evaluate('startM07Meeting()');await tick();await h.evaluate('startM07Meeting()');
   assert.equal(h.posts('/api/development/m07/meeting-generations').length,1);release();await pending;
   assert.equal(h.evaluate('m07View.generation'),null);assert.match(h.node('#m07-status').textContent,/출처/);
 });
 test('meeting generation response identities must match all twenty submitted inputs',async()=>{
-  const job=meetingJob();job.cases[19].scenario_id='DIFFERENT-INPUT';
+  const job={...meetingJob(),auto_validate:true};job.cases[19].scenario_id='DIFFERENT-INPUT';
   const h=harness({meetingContext:configuredMeeting(),fetch:async call=>{if(call.url.endsWith('/meeting-generations'))return {generation:job};}});
   await h.start();setMeetingInput(h);await h.evaluate('startM07Meeting()');assert.equal(h.evaluate('m07View.generation'),null);assert.match(h.node('#m07-status').textContent,/입력과 출처/);
 });
 test('completed meeting score is fixed at sixteen of twenty and fifteen passes fails the eighty percent target',async()=>{
   for(const [passed,expected,verdict]of [[16,'80.00%','기준 충족'],[15,'75.00%','기준 미달']]){
     const h=harness({meetingContext:configuredMeeting()});await h.start();h.context.syntheticJob=completedMeeting(passed);h.evaluate('acceptM07Generation(syntheticJob)');
-    assert.match(h.node('#m07-result').innerHTML,new RegExp('data-m07-overview="syntax">'+expected));assert.match(h.node('#m07-result').innerHTML,new RegExp(verdict));
-    assert.match(h.node('#m07-result').innerHTML,/실패도 분모 20건에 포함/);assert.equal((h.node('#m07-cases').innerHTML.match(/data-m07-result-row=/g)||[]).length,20);
+    assert.match(h.node('#m07-result').innerHTML,new RegExp('class="large-score"[^>]*data-m07-overview="integrated">'+expected));assert.match(h.node('#m07-result').innerHTML,new RegExp(verdict));
+    assert.match(h.node('#m07-result').innerHTML,/실패와 미시도도 등록 수 분모에 포함/);assert.match(h.node('#m07-result').innerHTML,/data-m07-summary="registered_count">20</);assert.equal((h.node('#m07-cases').innerHTML.match(/data-m07-result-row=/g)||[]).length,20);
     assert.ok(!h.node('#m07-export').innerHTML.includes('M04에 고정 등록'));assert.equal(h.node('#m07-cases').innerHTML.includes('data-m07-export'),false);
+  }
+});
+test('syntax success alone cannot replace the integrated primary score or verdict at the eighty percent boundary',async()=>{
+  for(const [passed,expected,verdict]of [[15,'75.00%','기준 미달'],[16,'80.00%','기준 충족']]) {
+    const h=harness();await h.start();const job=completedMeeting(passed);
+    job.cases.forEach(row=>row.syntax_status='PASS');job.counts.syntax_pass_count=20;
+    Object.assign(job.measurement,{syntax_pass_count:20,syntax_percent:100,syntax_target_met:true});
+    const before=JSON.stringify(job);h.context.syntheticJob=job;h.evaluate('acceptM07Generation(syntheticJob)');
+    const html=h.node('#m07-result').innerHTML,primary=html.split('<details')[0];
+    assert.match(primary,new RegExp('class="large-score"[^>]*data-m07-overview="integrated">'+expected));
+    assert.match(primary,new RegExp(verdict));assert.ok(!primary.includes('100.00%'));
+    assert.match(html,/data-m07-overview="syntax">100.00%/);
+    assert.ok(html.indexOf('data-m07-overview="syntax"')>html.indexOf('<details'),'syntax rate belongs to measurement details');
+    assert.ok(html.indexOf('data-m07-overview="browser"')>html.indexOf('<details'),'browser rate belongs to measurement details');
+    assert.equal(JSON.stringify(job),before,'presentation must not rewrite the stored LLM result');assert.equal(h.posts().length,0);
   }
 });
 test('generation failures remain in the twenty case denominator and syntax PASS alone cannot produce a final PASS',async()=>{
@@ -361,6 +383,29 @@ test('actual meeting code uses exact hash verification and separate validation w
   await bad.start();bad.context.syntheticJob=meetingJob(meetingItems(),'GENERATED');bad.evaluate('acceptM07Generation(syntheticJob)');await bad.evaluate("readM07Code('CASE-001')");
   assert.equal(bad.evaluate('m07View.codeProof.size'),0);assert.equal(bad.evaluate('m07View.code.size'),0);assert.match(bad.node('#m07-status').textContent,/실제 LLM 생성 원본.*SHA-256/);
 });
+test('meeting results show one table and fetch only the explicitly selected code detail',async()=>{
+  const h=harness({meetingContext:configuredMeeting()});await h.start();h.context.syntheticJob=meetingJob(meetingItems(),'GENERATED');h.evaluate('acceptM07Generation(syntheticJob)');
+  assert.equal((h.node('#m07-cases').innerHTML.match(/data-m07-result-row=/g)||[]).length,20);
+  assert.equal((h.node('#m07-cases').innerHTML.match(/data-m07-case=/g)||[]).length,0);assert.equal(h.calls.filter(row=>/\/codes\//.test(row.url)).length,0);
+  await h.evaluate("readM07Code('CASE-001')");
+  assert.equal((h.node('#m07-cases').innerHTML.match(/data-m07-case=/g)||[]).length,1);assert.match(h.node('#m07-cases').innerHTML,/data-m07-case="CASE-001"/);
+  assert.equal(h.calls.filter(row=>/\/codes\//.test(row.url)).length,1);assert.equal(h.evaluate("m07View.codeProof.has('CASE-001')"),true);
+  await h.evaluate("readM07Code('CASE-002')");
+  assert.equal((h.node('#m07-cases').innerHTML.match(/data-m07-case=/g)||[]).length,1);assert.ok(!h.node('#m07-cases').innerHTML.includes('data-m07-case="CASE-001"'));
+  assert.match(h.node('#m07-cases').innerHTML,/data-m07-case="CASE-002"/);assert.equal(h.calls.filter(row=>/\/codes\//.test(row.url)).length,2);
+  await h.evaluate("readM07Code('CASE-002')");assert.equal((h.node('#m07-cases').innerHTML.match(/data-m07-case=/g)||[]).length,0);
+  assert.equal(h.posts().length,0,'inspection never generates, validates or fixes an execution selection');
+});
+test('generation failures without code expose escaped errors on demand without any code fetch or execution',async()=>{
+  const h=harness({meetingContext:configuredMeeting()});await h.start();const job=meetingJob(meetingItems(),'GENERATED');
+  Object.assign(job.cases[19],{generation_status:'FAIL',syntax_status:'SKIPPED',execution_status:'SKIPPED',final_status:'FAIL',error:'SYNTHETIC <img src=x onerror=bad>'});delete job.cases[19].code_sha256;
+  h.context.syntheticJob=job;h.evaluate('acceptM07Generation(syntheticJob)');assert.match(h.node('#m07-cases').innerHTML,/data-m07-details="CASE-020"[^>]*>오류 보기/);
+  assert.equal((h.node('#m07-cases').innerHTML.match(/data-m07-case=/g)||[]).length,0);
+  const target={closest:selector=>selector==='[data-m07-details]'?{dataset:{m07Details:'CASE-020'}}:null};h.node('#m07-cases').listeners.click({target});
+  assert.equal((h.node('#m07-cases').innerHTML.match(/data-m07-case=/g)||[]).length,1);assert.match(h.node('#m07-cases').innerHTML,/SYNTHETIC &lt;img src=x onerror=bad&gt;/);
+  assert.ok(!h.node('#m07-cases').innerHTML.includes('<img'));assert.equal(h.calls.filter(row=>/\/codes\//.test(row.url)).length,0);assert.equal(h.posts().length,0);
+  h.node('#m07-cases').listeners.click({target});assert.equal((h.node('#m07-cases').innerHTML.match(/data-m07-case=/g)||[]).length,0);
+});
 test('late file or batch replies cannot modify a retired page and all twenty table labels remain escaped',async()=>{
   let release;const wait=new Promise(resolve=>release=resolve);const h=harness({meetingContext:configuredMeeting()});await h.start();
   const pending=h.node('#m07-meeting-file').listeners.change({target:{files:[{size:1,text:async()=>{await wait;return JSON.stringify(meetingItems());}}]}});
@@ -378,7 +423,7 @@ test('explicit two batch policy permits ten scenarios to be reused as twenty uni
   const payload=repeatedMeeting(),h=harness({meetingContext:configuredMeeting()});await h.start();
   assert.equal(setMeetingInput(h,payload.items),false);
   assert.equal(setMeetingInput(h,payload.items,payload.trial_policy),true);
-  await h.evaluate('startM07Meeting()');assert.deepEqual(h.posts('/api/development/m07/meeting-generations')[0].body,payload);
+  await h.evaluate('startM07Meeting()');assert.deepEqual(h.posts('/api/development/m07/meeting-generations')[0].body,{...payload,auto_validate:true});
   assert.equal(h.evaluate('m07View.generation.cases.length'),20);assert.equal(h.posts().filter(row=>row.url.endsWith('/validate')).length,0);
   assert.match(h.node('#app').innerHTML,/입력 20건은 업무 20종을 뜻하지 않습니다/);
 });
@@ -402,10 +447,10 @@ test('explicit policy survives reviewed draft loading but textarea edits discard
   const payload=repeatedMeeting(),h=harness({meetingContext:configuredMeeting(),fetch:async call=>{if(call.url.endsWith('/meeting-input-draft'))return {draft:true,...payload};}});
   await h.start();await h.evaluate('loadM07MeetingDraft()');assert.deepEqual(JSON.parse(h.node('#m07-meeting-input').value),payload);
   assert.equal(h.evaluate('m07View.meeting.trialPolicy.batches.length'),2);assert.equal(h.posts().length,0);
-  h.node('#m07-meeting-input').listeners.input();assert.equal(h.evaluate('m07View.meeting.trialPolicy'),undefined);assert.equal(h.node('#m07-meeting-generate').disabled,true);
+  h.node('#m07-meeting-input').value='{}';h.node('#m07-meeting-input').listeners.input();assert.equal(h.evaluate('m07View.meeting.trialPolicy'),undefined);assert.equal(h.node('#m07-meeting-generate').disabled,true);
 });
 test('matching scenario ids cannot hide a reordered input identity in the generation response',async()=>{
-  const payload=repeatedMeeting(),job=meetingJob(payload.items);job.cases[10].input_id=payload.items[0].input_id;
+  const payload=repeatedMeeting(),job={...meetingJob(payload.items),auto_validate:true};job.cases[10].input_id=payload.items[0].input_id;
   const h=harness({meetingContext:configuredMeeting(),fetch:async call=>{if(call.url.endsWith('/meeting-generations'))return {generation:job};}});
   await h.start();setMeetingInput(h,payload.items,payload.trial_policy);await h.evaluate('startM07Meeting()');
   assert.equal(h.evaluate('m07View.generation'),null);assert.match(h.node('#m07-status').textContent,/입력과 출처/);
@@ -415,7 +460,9 @@ test('registered syntax and integrated rates and actual browser success use dist
   Object.assign(job.measurement,{both_pass_count:10,execution_pass_count:10,browser_started_count:12,integrated_percent:50,browser_percent:100*10/12,integrated_reference_target_met:false});
   h.context.syntheticJob=job;h.evaluate('acceptM07Generation(syntheticJob)');const html=h.node('#m07-result').innerHTML;
   assert.match(html,/data-m07-overview="syntax">80.00%/);assert.match(html,/data-m07-overview="integrated">50.00%/);assert.match(html,/data-m07-overview="browser">83.33%/);
-  assert.match(html,/문법 기준 충족/);assert.match(html,/공식 통합 계약 \(개발 참고\)/);assert.match(html,/공식 문법·실행 통합 계약 80%/);
+  assert.ok(html.indexOf('data-m07-overview="browser"')>html.indexOf('<details'),'browser denominator detail remains accessible outside the primary two rates');
+  const primary=html.split('<details')[0];assert.match(primary,/기준 미달/);assert.ok(!primary.includes('문법 기준 충족'));
+  assert.match(primary,/class="large-score"[^>]*data-m07-overview="integrated">50.00%/);assert.match(html,/문법·실행 모두 통과한 비율 80% 이상/);
   assert.match(html,/문법률 = 문법 통과 \/ 등록 요청 수/);assert.match(html,/브라우저 성공률 = 실행 통과 \/ 실제 브라우저 시작 12건/);
   // Different synthetic server values demonstrate that presentation does not recreate percentages from local case counts.
   assert.equal(h.evaluate('m07Measurement(m07View.generation,m07View.generation.counts).integrated_percent'),50);
@@ -445,5 +492,86 @@ test('ten registered inputs with three actual attempts two generated and seven u
   for(const [key,value] of Object.entries({registered_count:10,provider_http_attempt_count:3,not_attempted_count:7,generated_code_count:2}))assert.match(html,new RegExp('data-m07-summary="'+key+'">'+value+'<'));
   for(const rate of ['syntax','integrated','browser'])assert.match(html,new RegExp('data-m07-overview="'+rate+'">—<'));
   assert.ok(!html.includes('100.00%'));assert.equal(JSON.stringify(job),before);assert.equal(h.posts().length,0);
+});
+// Inspect disclosure boundaries without opening a browser or contacting a provider.
+function disclosuresFor(html,id) {
+  const stack=[],voidTags=new Set(['input','br','hr','img','meta','link','wbr','source']);
+  for(const match of html.matchAll(/<\/?([a-z][a-z0-9]*)\b[^>]*>/gi)) {
+    const tag=match[1].toLowerCase(),text=match[0];
+    if(text.startsWith('</')) {const at=stack.map(node=>node.tag).lastIndexOf(tag);if(at>=0)stack.splice(at);continue;}
+    const node={tag,id:text.match(/\bid="([^"]+)"/)?.[1],open:/\sopen(?:\s|>)/.test(text)};
+    if(node.id===id)return stack.filter(node=>node.tag==='details');
+    if(!voidTags.has(tag)&&!text.endsWith('/>'))stack.push(node);
+  }
+  assert.fail('Missing rendered element '+id);
+}
+test('simple primary flow exposes a single verification action while legacy validation and advanced inputs stay available',async()=>{
+  const h=harness();await h.start();const html=h.node('#app').innerHTML;
+  assert.match(html,/<div class="simple-evaluation m07-simple">/);
+  assert.ok(!html.includes('data-test-mode-banner'));assert.ok(!html.includes('m07-source-tabs'));assert.ok(!html.includes('id="m07-mode-'));
+  assert.match(html,/<details id="m07-auxiliary"[^>]*\shidden[^>]*>/);assert.equal(h.node('#m07-cancel').hidden,true,'idle page omits the stop control');
+  for(const id of ['m07-input-panel','m07-results-panel'])assert.match(html,new RegExp('<section id="'+id+'"'),'input and results remain the two primary panels');
+  assert.ok(!html.includes('<section id="m07-result"'),'summary and per-code results share one panel');
+  assert.equal(h.node('#m07-case-results').hidden,true,'idle view omits the result table and repeated placeholders');
+  const ids=[...html.matchAll(/\bid="([^"]+)"/g)].map(match=>match[1]);assert.equal(ids.length,new Set(ids).size,'DOM IDs must remain unique');
+  for(const id of ['m07-meeting-file','m07-meeting-draft','m07-meeting-generate','m07-validate','m07-meeting-status','m07-meeting-issue','m07-meeting-provider','m07-status','m07-result'])assert.equal(disclosuresFor(html,id).length,0,id+' must be immediately accessible');
+  for(const id of ['m07-meeting-input','m07-meeting-check','m07-meeting-schema','m07-meeting-ready','m07-meeting-environment','m07-input-source','m07-workflows','m07-scenarios','m07-downloads','m07-history','m07-logs']) {
+    const parents=disclosuresFor(html,id);assert.ok(parents.length>0,id+' must remain in supporting details');assert.ok(parents.every(parent=>!parent.open),id+' must start closed');
+  }
+  assert.match(html,/id="m07-meeting-draft"[^>]*>시험 입력 불러오기</);assert.match(html,/id="m07-meeting-generate"[^>]*>검증 실행</);assert.match(html,/id="m07-validate"[^>]*>생성 코드 검증</);
+  assert.equal(h.node('#m07-validate').hidden,true,'default meeting does not require a second validation button');
+  assert.match(html,/<span id="m07-meeting-count"[^>]*class="[^"]*m07-count-display/);
+  assert.match(fs.readFileSync('frontend/m07.css','utf8'),/\.m07-simple \.m07-count-display\s*\{\s*display:\s*none\s*!important\s*;/,'count labels are hidden without changing their underlying values');
+  assert.ok(disclosuresFor(html,'m07-meeting-message-detail').some(parent=>!parent.open),'original count and draft explanation remain in closed input details');
+  const order=['m07-meeting-file','m07-meeting-draft','m07-meeting-generate','m07-validate','m07-result','m07-cases','m07-downloads','m07-auxiliary'].map(id=>html.indexOf('id="'+id+'"'));
+  assert.deepEqual([...order].sort((a,b)=>a-b),order);assert.equal(h.posts().length,0);
+});
+test('file selection confirms twenty inputs and one verification action delegates generation and validation to the server',async()=>{
+  const h=harness({meetingContext:configuredMeeting(),fetch:async call=>{if(call.url.endsWith('/meeting-generations'))return {generation:{...meetingJob(call.body.items,'GENERATED'),auto_validate:true}};}});
+  await h.start();await h.node('#m07-meeting-file').listeners.change({target:{files:[{size:1024,text:async()=>JSON.stringify({items:meetingItems()})}]}});
+  assert.equal(h.evaluate('m07View.meeting.items.length'),20);assert.equal(h.node('#m07-meeting-generate').disabled,false);assert.equal(h.posts().length,0);
+  assert.match(h.node('#m07-meeting-status').textContent,/검증 실행/);assert.match(h.node('#m07-meeting-message-detail').textContent,/20건/);
+  await h.node('#m07-meeting-generate').listeners.click();assert.equal(h.posts('/api/development/m07/meeting-generations').length,1);
+  assert.equal(h.posts().filter(call=>call.url.endsWith('/validate')).length,0);assert.equal(h.node('#m07-validate').hidden,true);
+  assert.equal(h.node('#m07-evidence-panel').hidden,false);assert.equal(h.evaluate('m07View.expandedCases.size'),0,'generated code details remain closed until selected');
+  assert.equal(h.posts().filter(call=>call.url.endsWith('/validate')).length,0);
+  assert.equal(h.posts('/api/development/m07/meeting-generations').length,1);assert.equal(h.posts('/api/development/m07/workflows/prepare').length,0);
+});
+test('test input loading retains accurate draft provenance and a GET cannot generate or validate code',async()=>{
+  const h=harness({meetingContext:configuredMeeting(),fetch:async call=>{if(call.url.endsWith('/meeting-input-draft'))return {draft:true,description:'SYNTHETIC 검토용 초안',items:meetingItems()};}});
+  await h.start();assert.match(h.node('#app').innerHTML,/id="m07-meeting-draft"[^>]*>시험 입력 불러오기</);
+  await h.node('#m07-meeting-draft').listeners.click();assert.equal(h.calls.filter(call=>call.url.endsWith('/meeting-input-draft')).length,1);
+  assert.equal(h.posts().length,0);assert.equal(h.evaluate('m07View.generation'),null);assert.match(h.node('#m07-meeting-status').textContent,/불러왔습니다.*검증 실행/);
+  assert.match(h.node('#m07-meeting-message-detail').textContent,/SYNTHETIC 검토용 초안/);
+  assert.equal(h.node('#m07-evidence-panel').hidden,true);
+});
+test('auxiliary selector preserves M03 and prepared modes without a top level tab or an automatic request',async()=>{
+  const h=harness();await h.start();
+  for(const mode of ['llm','prepared','meeting']) {
+    h.node('#m07-input-source').listeners.change({target:{value:mode}});
+    assert.equal(h.evaluate('m07View.mode'),mode);assert.equal(h.node('#m07-input-source').value,mode);
+    assert.equal(h.node('#m07-meeting-panel').hidden,mode!=='meeting');assert.equal(h.node('#m07-llm-panel').hidden,mode!=='llm');assert.equal(h.node('#m07-workflow-panel').hidden,mode!=='prepared');
+  }
+  assert.equal(h.posts().length,0);assert.equal(h.context.location.search,'?mode=DEVELOPMENT');
+});
+test('collapsed connection details do not hide configuration errors or HTTP429 blockers and existing codes still validate',async()=>{
+  const missing=harness();await missing.start();assert.match(missing.node('#m07-meeting-issue').textContent,/실제 LLM 연결 설정이 필요/);
+  const h=harness({meetingContext:configuredMeeting()});await h.start();h.context.syntheticJob=meetingJob(meetingItems(),'GENERATED');
+  h.evaluate("acceptM07Generation(syntheticJob);m07AcceptProvider({blocked:true,http_status:429,error_type:'tokens',error_code:'rate_limit_exceeded',next_eligible_at:'2028-02-29T00:00:00Z'});paintM07()");
+  assert.match(h.node('#m07-meeting-provider').innerHTML,/HTTP429/);assert.match(h.node('#m07-meeting-provider').innerHTML,/자동 재시도는 하지 않습니다/);
+  assert.equal(h.node('#m07-meeting-generate').disabled,true);assert.equal(h.node('#m07-validate').disabled,false);
+  await h.node('#m07-validate').listeners.click();assert.equal(h.posts().filter(call=>call.url.endsWith('/validate')).length,1);assert.equal(h.posts('/api/development/m07/meeting-generations').length,0);
+});
+test('partial samples remain pending and exact counts and safe downloads stay available in supporting details',async()=>{
+  const h=harness();await h.start();const job=meetingJob(meetingItems(),'GENERATED');
+  Object.assign(job.measurement,{provider_http_attempt_count:3,not_attempted_count:17,generated_code_count:2});
+  h.context.syntheticJob=job;h.evaluate('acceptM07Generation(syntheticJob)');const html=h.node('#m07-result').innerHTML;
+  const pending=html.match(/<p class="notice" data-m07-pending>[^<]+<\/p>/)?.[0];assert.ok(pending);
+  assert.match(pending,/NOT_READY/);
+  for(const [key,count] of Object.entries({registered_count:20,provider_http_attempt_count:3,generated_code_count:2,not_attempted_count:17}))assert.match(html,new RegExp('data-m07-summary="'+key+'">'+count+'<'));
+  assert.ok(html.indexOf('data-m07-pending')<html.indexOf('측정 기준 및 세부 집계'));assert.ok(!html.includes('100.00%'));
+  assert.equal(h.node('#m07-evidence-panel').hidden,false);
+  for(const filename of ['report.json','code.zip','steps.csv','log.jsonl','screenshots.zip'])assert.ok(h.node('#m07-downloads').innerHTML.includes('/'+job.generation_id+'/artifacts/'+filename));
+  assert.equal(h.posts().length,0);
 });
 (async()=>{for(const [name,run]of tests){await run();console.log('PASS '+name);}console.log(tests.length+' M07 meeting and prepared workflow UI groups passed');})().catch(error=>{console.error(error);process.exitCode=1;});

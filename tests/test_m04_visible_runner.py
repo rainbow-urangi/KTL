@@ -172,6 +172,23 @@ class VisibleRunnerTests(unittest.TestCase):
         self.assertFalse(terminal['browser_presentation']['visible_browser'])
         self.assertIn('quit', calls)
 
+    def test_execute_passes_visible_mode_to_capture_observer_without_claiming_physical_visibility(self):
+        original = runner.Observer
+        observed = []
+
+        class CaptureObserver(original):
+            def __init__(self, *args, **kwargs):
+                super().__init__(*args, **kwargs)
+                observed.append(self.visible_browser)
+
+        with patch.object(runner, 'Observer', CaptureObserver):
+            for visible in (False, True):
+                code, terminal, _, _, _ = self.execute_fake(visible=visible)
+                self.assertEqual(code, 0)
+                self.assertEqual(terminal['browser_presentation']['visible_browser'], visible)
+                self.assertIs(terminal['browser_presentation']['physical_visibility_verified'], False)
+        self.assertEqual(observed, [False, True])
+
     def test_visible_mode_paces_native_action_not_reads_and_holds_only_once(self):
         code, terminal, calls, sleeps, sessions = self.execute_fake()
         self.assertEqual(code, 0)

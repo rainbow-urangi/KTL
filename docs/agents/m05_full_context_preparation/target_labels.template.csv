@@ -1,0 +1,1 @@
+event_id,expected_label,remove_category,held_out,source_dataset,source_session_id,source_case_id,source_file,source_file_sha256,raw_sequence_index,csv_record_number,raw_event_timestamp,label_rationale,labeler,labeled_at_utc

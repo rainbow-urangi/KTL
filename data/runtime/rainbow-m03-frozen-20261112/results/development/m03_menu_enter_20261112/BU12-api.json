@@ -1,0 +1,45 @@
+{
+  "request": {
+    "business_unit_id": "BU12",
+    "workflow_id": "WF-0012",
+    "generator_mode": "REAL",
+    "run_mode": "DEVELOPMENT"
+  },
+  "http_status": 200,
+  "response": {
+    "business_unit_id": "BU12",
+    "workflow_id": "WF-0012",
+    "scenario_id": "REAL-SCN-c4376abd2564435bf39c",
+    "status": "SUCCESS",
+    "steps": [
+      {
+        "order": 1,
+        "action": "NAVIGATE",
+        "target": "명함 관리",
+        "source_step_id": "BA-2951eb0d-2ebc-49d0-b710-38d7ed3ca1b1",
+        "source_event_ids": [
+          "2951eb0d-2ebc-49d0-b710-38d7ed3ca1b1"
+        ],
+        "source_node_ids": [
+          "PM-017-N001"
+        ],
+        "page_context": "/mypage/work/monthly",
+        "fields": [],
+        "http_evidence": [],
+        "completion_evidence": [],
+        "serializer_rule_id": "BA-TREE-MENU"
+      }
+    ],
+    "issues": [],
+    "generator_version": "m03-observed-business-steps-v1.1-menu-enter",
+    "source_process_id": "PM-017",
+    "source_snapshot_sha256": "86b1e77c8ca4ec365806d7d145d99ffa802bc097347b3db16ed9b3f600503f39",
+    "readiness_only": true,
+    "run_mode": "DEVELOPMENT",
+    "generator_mode": "REAL",
+    "synthetic": false,
+    "official_pass": null
+  },
+  "started_at": "2026-11-12T08:25:59.315462+00:00",
+  "completed_at": "2026-11-12T08:25:59.331946+00:00"
+}

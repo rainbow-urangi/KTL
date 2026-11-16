@@ -1,0 +1,325 @@
+{
+  "status": "RAW_VALID_TARGET20_BLOCKED",
+  "raws": [
+    {
+      "dataset": "m05_heldout_raw_01",
+      "status": "RAW_STRUCTURALLY_VALID",
+      "files": {
+        "events.csv": {
+          "sha256": "8a797dadcd8341b39e1ce96487eaaafe8995a62dabce3d027495c0f34382b8b4",
+          "records": 203,
+          "columns": [
+            "id",
+            "event_id",
+            "session_id",
+            "task_id",
+            "workflow_index",
+            "step_duration_ms",
+            "workflow_key",
+            "workflow_outcome",
+            "event_time",
+            "event_type",
+            "page_url",
+            "target_selector",
+            "locators_json",
+            "data_testid",
+            "element_tag",
+            "selector_xpath",
+            "interaction_type",
+            "input_data",
+            "api_path",
+            "api_method",
+            "api_status_code",
+            "page_title",
+            "element_text",
+            "associated_label",
+            "api_latency_ms"
+          ]
+        },
+        "tasks.csv": {
+          "sha256": "f8c82493004d429d5ebd2f824275f3d617b716172a77bcb283d9cce8c6747924",
+          "records": 152,
+          "columns": [
+            "id",
+            "session_id",
+            "task_name",
+            "status",
+            "start_time",
+            "end_time",
+            "duration_ms",
+            "step_id"
+          ]
+        },
+        "sessions.csv": {
+          "sha256": "247856007334e9237085077b950e127b6720f9f98db5cdeaab5876e7299fac62",
+          "records": 1,
+          "columns": [
+            "id",
+            "user_id",
+            "tenant_id",
+            "start_time",
+            "end_time",
+            "user_agent",
+            "browser_id",
+            "viewport_size",
+            "viewport_width",
+            "viewport_height",
+            "ip_address"
+          ]
+        }
+      },
+      "issues": [],
+      "session_ids": [
+        "a901242f-3b9f-472d-ac88-5ba8215ca827"
+      ],
+      "sequence_contiguous": true,
+      "source_sequence_range": [
+        1,
+        203
+      ],
+      "unique_interaction_ids": true,
+      "unique_request_ids": true,
+      "interaction_types": {
+        "collector_boot": 1,
+        "page_view": 1,
+        "change": 28,
+        "click": 64,
+        "submit": 2,
+        "route_change": 8,
+        "api_transaction": 31,
+        "screen_change": 8,
+        "popup_open": 15,
+        "popup_structure": 14,
+        "paste": 12,
+        "popup_close": 15,
+        "ui_outcome": 3,
+        "page_close": 1
+      },
+      "first_event_kst": "2026-11-11T21:09:46.818000+09:00",
+      "last_event_kst": "2026-11-11T21:12:16.348000+09:00",
+      "first_received_utc": "2026-11-11T12:09:51.346000+00:00",
+      "last_received_utc": "2026-11-11T12:12:18.940000+00:00",
+      "all_after_freeze_reference": true,
+      "source_order_timestamp_backtracks": [
+        {
+          "previous_source_position": 51,
+          "source_position": 52,
+          "delta_ms": -6.0
+        },
+        {
+          "previous_source_position": 81,
+          "source_position": 82,
+          "delta_ms": -6.0
+        },
+        {
+          "previous_source_position": 110,
+          "source_position": 111,
+          "delta_ms": -4.0
+        }
+      ]
+    },
+    {
+      "dataset": "m05_heldout_raw_02",
+      "status": "RAW_STRUCTURALLY_VALID",
+      "files": {
+        "events.csv": {
+          "sha256": "06a86358ada46c3b04c905c018af6004624348a214e210047633da4e28773b50",
+          "records": 147,
+          "columns": [
+            "id",
+            "event_id",
+            "session_id",
+            "task_id",
+            "workflow_index",
+            "step_duration_ms",
+            "workflow_key",
+            "workflow_outcome",
+            "event_time",
+            "event_type",
+            "page_url",
+            "target_selector",
+            "locators_json",
+            "data_testid",
+            "element_tag",
+            "selector_xpath",
+            "interaction_type",
+            "input_data",
+            "api_path",
+            "api_method",
+            "api_status_code",
+            "page_title",
+            "element_text",
+            "associated_label",
+            "api_latency_ms"
+          ]
+        },
+        "tasks.csv": {
+          "sha256": "656c9c0c640095acda82e391e47d1a1e9e3fd30ca4f41c7c5ca40a62881a9536",
+          "records": 104,
+          "columns": [
+            "id",
+            "session_id",
+            "task_name",
+            "status",
+            "start_time",
+            "end_time",
+            "duration_ms",
+            "step_id"
+          ]
+        },
+        "sessions.csv": {
+          "sha256": "d7f16a298060dbae1aecd2876e63f9f2e706234d901d8a74c1ba5da6a6ba9a00",
+          "records": 1,
+          "columns": [
+            "id",
+            "user_id",
+            "tenant_id",
+            "start_time",
+            "end_time",
+            "user_agent",
+            "browser_id",
+            "viewport_size",
+            "viewport_width",
+            "viewport_height",
+            "ip_address"
+          ]
+        }
+      },
+      "issues": [],
+      "session_ids": [
+        "44e0ee56-29e0-4993-af4c-520b93e26cd2"
+      ],
+      "sequence_contiguous": true,
+      "source_sequence_range": [
+        1,
+        147
+      ],
+      "unique_interaction_ids": true,
+      "unique_request_ids": true,
+      "interaction_types": {
+        "collector_boot": 1,
+        "page_view": 1,
+        "change": 6,
+        "click": 45,
+        "submit": 5,
+        "route_change": 9,
+        "api_transaction": 31,
+        "screen_change": 12,
+        "page_close": 2,
+        "popup_open": 11,
+        "popup_structure": 8,
+        "popup_close": 11,
+        "paste": 4,
+        "ui_outcome": 1
+      },
+      "first_event_kst": "2026-11-11T21:36:45.064000+09:00",
+      "last_event_kst": "2026-11-11T21:38:29.307000+09:00",
+      "first_received_utc": "2026-11-11T12:36:49.076000+00:00",
+      "last_received_utc": "2026-11-11T12:38:31.453000+00:00",
+      "all_after_freeze_reference": true,
+      "source_order_timestamp_backtracks": [
+        {
+          "previous_source_position": 141,
+          "source_position": 142,
+          "delta_ms": -9.0
+        }
+      ]
+    }
+  ],
+  "combined": {
+    "events": 350,
+    "unique_event_ids": 350,
+    "session_count": 2,
+    "cross_raw_event_id_unique": true,
+    "canonical_distinct_rows": 350,
+    "id_excluded_raw_distinct_rows": 350
+  },
+  "history": {
+    "inventory_sha256": "8e7c59cffafc825f7ac28336e2ae47df1d03ad98786328d7cf7afde0e715a645",
+    "files": 15,
+    "event_row_count": 34553,
+    "overlap_counts": {
+      "event_id_overlap": 0,
+      "session_id_overlap": 0,
+      "canonical_row_overlap": 0,
+      "id_excluded_raw_content_overlap": 0
+    },
+    "complete_historical_nonuse_certified": false,
+    "inference_feature_hash_check": "NOT_PERFORMED_BY_BLIND_LABELER"
+  },
+  "engine_freeze_reference": {
+    "kst": "2026-11-09T10:56:51+09:00",
+    "authority": "Prior audit parent-supplied cutoff. Blind labeler did not open engine manifest/code."
+  },
+  "collection_intent_evidence": {
+    "status": "POST_COLLECTION_USER_RECOLLECTION_BEFORE_PREDICTION",
+    "latest_user_correction": "m05_heldout_raw_02 수집 당시 별도 메모 파일은 작성하지 않았습니다.",
+    "pre_collection_memo_exists": false,
+    "intended_counts": {
+      "duplicate": 3,
+      "additional_noise": "about 2 or more",
+      "irrelevant_action": 2,
+      "repeated_action": "prefer existing raw01 candidates"
+    },
+    "event_id_mapping_supplied": false,
+    "assessment": "Retrospective intent is evidence of the intended collection exercise, not proof of category identity for a specific event. Actual event semantics were independently reconsidered. Ambiguous events remain unselected.",
+    "supersedes_previous_memo_claim": true
+  },
+  "candidates": {
+    "preserved_raw01_rows": 13,
+    "added_raw02_rows": 1,
+    "labels": {
+      "KEEP": 10,
+      "REMOVE": 4
+    },
+    "remove_categories": {
+      "noise": 2,
+      "repeated_action": 2
+    },
+    "unfilled_requested_categories": {
+      "duplicate": 3,
+      "noise": 1,
+      "repeated_action": 0,
+      "irrelevant_action": 2
+    },
+    "held_out_fields": "blank until nonuse evidence is complete",
+    "target_lock_created": false
+  },
+  "integrity": {
+    "raw_files_unchanged": true,
+    "previous_audit_files_unchanged": true,
+    "raw_sha256": {
+      "data/evaluation/m05_heldout_raw_01/events.csv": "8a797dadcd8341b39e1ce96487eaaafe8995a62dabce3d027495c0f34382b8b4",
+      "data/evaluation/m05_heldout_raw_01/sessions.csv": "247856007334e9237085077b950e127b6720f9f98db5cdeaab5876e7299fac62",
+      "data/evaluation/m05_heldout_raw_01/tasks.csv": "f8c82493004d429d5ebd2f824275f3d617b716172a77bcb283d9cce8c6747924",
+      "data/evaluation/m05_heldout_raw_02/events.csv": "06a86358ada46c3b04c905c018af6004624348a214e210047633da4e28773b50",
+      "data/evaluation/m05_heldout_raw_02/sessions.csv": "d7f16a298060dbae1aecd2876e63f9f2e706234d901d8a74c1ba5da6a6ba9a00",
+      "data/evaluation/m05_heldout_raw_02/tasks.csv": "656c9c0c640095acda82e391e47d1a1e9e3fd30ca4f41c7c5ca40a62881a9536"
+    },
+    "previous_audit_sha256": {
+      "docs/agents/m05_raw_blind_audit_20261111/README.md": "0c869f380a7339eac517b82e7f6ca44482a0c0de8ac09503d926de163d5418c8",
+      "docs/agents/m05_raw_blind_audit_20261111/ambiguous_candidates_NOT_GT.json": "d13e1d43643465627b002003fe1aee623acf94182986f6b10c10a51f150d496c",
+      "docs/agents/m05_raw_blind_audit_20261111/audit_snapshot_pre_prediction.json": "cd153ce555b711da0060b5c11bfedf6773e041bae5a1968f94b6acd91d26c936",
+      "docs/agents/m05_raw_blind_audit_20261111/history_inventory.json": "ca193b25f99cec0ee5af6b0040ee73c20b09b7a40e36d1594bfa2885ffd21140",
+      "docs/agents/m05_raw_blind_audit_20261111/partial_label_candidates_NOT_FOR_EVALUATION.csv": "23cdcfdf6596fa35f5aaf314fdd5ca6251daca32bfeca4af7d852f120223f47c",
+      "docs/agents/m05_raw_blind_audit_20261111/raw_validation.json": "04c72918c97d3fd7b5570e493d443ef5ba39712ee9f2c88147708218a97aeb24",
+      "docs/agents/m05_raw_blind_audit_20261111/validate_raw.py": "23e33fbb4203f82f6f071d855d93280e641ecbe144ac6615d842b884e57163ed",
+      "docs/agents/m05_raw_blind_audit_20261111/write_blind_review.py": "8c9baeead17feb84acac934aab04fe5760b43ca4478f5b8b80f18c68e591abc2"
+    }
+  },
+  "blindness": {
+    "model_code_read": false,
+    "adapter_code_read": false,
+    "prediction_files_read": false,
+    "model_or_adapter_executed": false,
+    "engine_prediction_generated": false,
+    "raw_session_semantics_reviewed": true
+  },
+  "limitations": [
+    "Raw timestamps are later than frozen cutoff but cannot alone certify complete training/development nonuse.",
+    "Latest user correction confirms no separate pre-collection memo. Only post-collection recollection before cleaning prediction is available; no event IDs/category mapping were supplied.",
+    "Shared install_id/tab and workflow continuity across raw sessions are retained; no synthetic boundary or reorder was introduced.",
+    "Source-order API timestamps may go backward; preserve original record order."
+  ],
+  "created_at_utc": "2026-11-11T12:46:55.654586+00:00"
+}

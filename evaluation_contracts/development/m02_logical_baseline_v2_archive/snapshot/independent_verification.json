@@ -1,0 +1,16 @@
+{
+  "verdict": "PASS",
+  "snapshot_manifest_sha256": "322ea5277b597e01068643a2e1667b6899b8c3e6b8f46730c79b1f17ce71d86a",
+  "gt_leakage_check": "PASS",
+  "scope_check": "PASS",
+  "direct_comparison_contract": "ACTION_SCREEN_TARGET_ORDER_V2",
+  "verification_stage": "IMPLEMENTATION_PRECOMPARISON",
+  "actual_gt_schema_verified": false,
+  "actual_score_computed": false,
+  "report_path": "/Users/sooeunkim/Documents/Codex/2026-11-05/task-4/M02_SEMANTIC_V4_REVERIFICATION.txt",
+  "report_sha256": "fbc2c899c65416aaae194814e5f316226cc44998f73c05009e80b715ddbf22a2",
+  "coverage_disclosures": {
+    "unassigned_steps": 14,
+    "unclaimed_raw_events": 42
+  }
+}

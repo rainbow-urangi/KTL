@@ -1,0 +1,175 @@
+{
+  "evidence": [
+    {
+      "completion_source_event_ids": [],
+      "detected_id": "BA-8c58f682-b205-4a26-b20b-8c98690d1332",
+      "detected_step": "자산 관리",
+      "direct_match": true,
+      "ground_truth_step": "자산관리",
+      "input_completion_proof": [],
+      "match_kind": "INTENT",
+      "missing_reason": null,
+      "process_id": "BU20",
+      "required_included": true,
+      "required_logical_role": "ENTER_CONTEXT",
+      "required_step_id": "BU20-S01",
+      "source_event_ids": [
+        "8c58f682-b205-4a26-b20b-8c98690d1332"
+      ],
+      "source_node_ids": [
+        "PM-002-N001"
+      ]
+    },
+    {
+      "completion_source_event_ids": [],
+      "detected_id": "BA-1ba723c8-d5f9-413b-b97b-785c4cb57da6",
+      "detected_step": "등록",
+      "direct_match": true,
+      "ground_truth_step": "등록",
+      "input_completion_proof": [],
+      "match_kind": "INTENT",
+      "missing_reason": null,
+      "process_id": "BU20",
+      "required_included": true,
+      "required_logical_role": "INITIATE_REGISTRATION",
+      "required_step_id": "BU20-S02",
+      "source_event_ids": [
+        "1ba723c8-d5f9-413b-b97b-785c4cb57da6",
+        "0d438cd7-7376-44ef-83c6-66fd13a67441"
+      ],
+      "source_node_ids": [
+        "PM-001-N001",
+        "PM-001-N002"
+      ]
+    },
+    {
+      "completion_source_event_ids": [],
+      "detected_id": "BA-979eeb38-3653-4ca7-8b2c-5c332d763c1f",
+      "detected_step": "자산 정보",
+      "direct_match": true,
+      "ground_truth_step": "테스트 자산 정보 입력",
+      "input_completion_proof": [
+        {
+          "rule": "OWNER_CONFIRMED_SUCCESS_IMPLIES_REQUIRED_FIELDS",
+          "success_source_event_ids": [
+            "ea8f0f14-1b79-44de-88c6-8e44f7c55ba1"
+          ],
+          "write_step_id": "BA-0c8d1959-efb7-4642-b07a-f9f72abcb2f8"
+        }
+      ],
+      "match_kind": "INTENT",
+      "missing_reason": null,
+      "process_id": "BU20",
+      "required_included": true,
+      "required_logical_role": "INPUT_INFORMATION",
+      "required_step_id": "BU20-S03",
+      "source_event_ids": [
+        "0d438cd7-7376-44ef-83c6-66fd13a67441",
+        "979eeb38-3653-4ca7-8b2c-5c332d763c1f",
+        "96ed338f-3daa-4441-b03c-fa475c4edaa6",
+        "a81eac33-844c-443a-9b70-1f4eb1403211",
+        "76654159-6116-437d-9647-190f7cb7195f",
+        "8f143632-1995-4feb-868b-2ec9fdca897b",
+        "77178151-4ad2-4694-b1cd-98d56e18449d"
+      ],
+      "source_node_ids": [
+        "PM-001-N002",
+        "PM-001-N004"
+      ]
+    },
+    {
+      "completion_source_event_ids": [],
+      "detected_id": "BA-0c8d1959-efb7-4642-b07a-f9f72abcb2f8",
+      "detected_step": "저장",
+      "direct_match": true,
+      "ground_truth_step": "저장",
+      "input_completion_proof": [],
+      "match_kind": "INTENT",
+      "missing_reason": null,
+      "process_id": "BU20",
+      "required_included": true,
+      "required_logical_role": "SAVE_INFORMATION",
+      "required_step_id": "BU20-S04",
+      "source_event_ids": [
+        "0d438cd7-7376-44ef-83c6-66fd13a67441",
+        "0c8d1959-efb7-4642-b07a-f9f72abcb2f8",
+        "ea8f0f14-1b79-44de-88c6-8e44f7c55ba1",
+        "81d5d054-1d95-4c68-8fe0-c439f0e6e781"
+      ],
+      "source_node_ids": [
+        "PM-001-N002",
+        "PM-001-N005"
+      ]
+    },
+    {
+      "completion_source_event_ids": [
+        "ea8f0f14-1b79-44de-88c6-8e44f7c55ba1"
+      ],
+      "detected_id": "BA-0c8d1959-efb7-4642-b07a-f9f72abcb2f8",
+      "detected_step": "저장",
+      "direct_match": false,
+      "ground_truth_step": "종료",
+      "input_completion_proof": [],
+      "match_kind": "STATE_ATTRIBUTE",
+      "missing_reason": null,
+      "process_id": "BU20",
+      "required_included": true,
+      "required_logical_role": "END_WORKFLOW",
+      "required_step_id": "BU20-S05",
+      "source_event_ids": [
+        "0d438cd7-7376-44ef-83c6-66fd13a67441",
+        "0c8d1959-efb7-4642-b07a-f9f72abcb2f8",
+        "ea8f0f14-1b79-44de-88c6-8e44f7c55ba1",
+        "81d5d054-1d95-4c68-8fe0-c439f0e6e781"
+      ],
+      "source_node_ids": [
+        "PM-001-N002",
+        "PM-001-N005"
+      ]
+    }
+  ],
+  "stats": {
+    "accuracy": 100.0,
+    "auxiliary_evidence_counted": false,
+    "completeness": 100.0,
+    "correctly_mapped": 4,
+    "defined_required": 5,
+    "evaluated_procedures": 4,
+    "formula": "sqrt(Accuracy * Completeness)",
+    "included_required": 5,
+    "matching_method": "M02_USER_CONFIRMED_V1",
+    "per_business_unit": [
+      {
+        "accuracy": 100.0,
+        "business_unit_id": "BU20",
+        "completeness": 100.0,
+        "generated_count": 4,
+        "included_required_count": 5,
+        "matched_count": 4,
+        "missing_count": 0,
+        "required_count": 5,
+        "score": 100.0,
+        "status": "COMPLETED",
+        "unmatched_count": 0
+      }
+    ],
+    "semantic_uncertainties": []
+  },
+  "summary": {
+    "accuracy": 100.0,
+    "business_unit_id": "BU20",
+    "completeness": 100.0,
+    "dataset": "m02_recovery_data_01",
+    "execution_id": "RECOVERY-E05",
+    "generated_count": 4,
+    "included_required_count": 5,
+    "matched_count": 4,
+    "missing": [],
+    "missing_count": 0,
+    "required_count": 5,
+    "score": 100.0,
+    "status": "COMPLETED",
+    "unmatched_count": 0,
+    "week_selection_status": null
+  }
+}

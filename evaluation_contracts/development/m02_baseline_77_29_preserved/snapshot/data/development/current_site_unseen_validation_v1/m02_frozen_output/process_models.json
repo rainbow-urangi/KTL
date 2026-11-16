@@ -1,0 +1,388 @@
+[
+  {
+    "process_model_id": "PM-001",
+    "cluster_id": 0,
+    "instance_count": 2,
+    "canonical_instance_id": "WF-0010",
+    "canonical_policy": "cosine medoid observed procedure; variants retained in graph",
+    "mode": "DEVELOPMENT",
+    "canonical_node_sequence": [
+      "PM-001-N010",
+      "PM-001-N011",
+      "PM-001-N012",
+      "PM-001-N013",
+      "PM-001-N014",
+      "PM-001-N015",
+      "PM-001-N016",
+      "PM-001-N017",
+      "PM-001-N018"
+    ]
+  },
+  {
+    "process_model_id": "PM-002",
+    "cluster_id": 1,
+    "instance_count": 1,
+    "canonical_instance_id": "WF-0022",
+    "canonical_policy": "cosine medoid observed procedure; variants retained in graph",
+    "mode": "DEVELOPMENT",
+    "canonical_node_sequence": [
+      "PM-002-N001",
+      "PM-002-N002",
+      "PM-002-N003",
+      "PM-002-N004",
+      "PM-002-N003",
+      "PM-002-N004",
+      "PM-002-N003",
+      "PM-002-N004",
+      "PM-002-N003",
+      "PM-002-N004",
+      "PM-002-N005",
+      "PM-002-N006",
+      "PM-002-N007",
+      "PM-002-N002",
+      "PM-002-N008",
+      "PM-002-N005",
+      "PM-002-N008"
+    ]
+  },
+  {
+    "process_model_id": "PM-003",
+    "cluster_id": 2,
+    "instance_count": 1,
+    "canonical_instance_id": "WF-0020",
+    "canonical_policy": "cosine medoid observed procedure; variants retained in graph",
+    "mode": "DEVELOPMENT",
+    "canonical_node_sequence": [
+      "PM-003-N001",
+      "PM-003-N002",
+      "PM-003-N003",
+      "PM-003-N004"
+    ]
+  },
+  {
+    "process_model_id": "PM-004",
+    "cluster_id": 3,
+    "instance_count": 1,
+    "canonical_instance_id": "WF-0021",
+    "canonical_policy": "cosine medoid observed procedure; variants retained in graph",
+    "mode": "DEVELOPMENT",
+    "canonical_node_sequence": [
+      "PM-004-N001",
+      "PM-004-N002",
+      "PM-004-N003",
+      "PM-004-N004",
+      "PM-004-N005"
+    ]
+  },
+  {
+    "process_model_id": "PM-005",
+    "cluster_id": 4,
+    "instance_count": 1,
+    "canonical_instance_id": "WF-0015",
+    "canonical_policy": "cosine medoid observed procedure; variants retained in graph",
+    "mode": "DEVELOPMENT",
+    "canonical_node_sequence": [
+      "PM-005-N001",
+      "PM-005-N002"
+    ]
+  },
+  {
+    "process_model_id": "PM-006",
+    "cluster_id": 5,
+    "instance_count": 1,
+    "canonical_instance_id": "WF-0017",
+    "canonical_policy": "cosine medoid observed procedure; variants retained in graph",
+    "mode": "DEVELOPMENT",
+    "canonical_node_sequence": [
+      "PM-006-N001",
+      "PM-006-N002",
+      "PM-006-N003",
+      "PM-006-N004",
+      "PM-006-N005"
+    ]
+  },
+  {
+    "process_model_id": "PM-007",
+    "cluster_id": 6,
+    "instance_count": 1,
+    "canonical_instance_id": "WF-0018",
+    "canonical_policy": "cosine medoid observed procedure; variants retained in graph",
+    "mode": "DEVELOPMENT",
+    "canonical_node_sequence": [
+      "PM-007-N001",
+      "PM-007-N002",
+      "PM-007-N003",
+      "PM-007-N004",
+      "PM-007-N003",
+      "PM-007-N004",
+      "PM-007-N003",
+      "PM-007-N004",
+      "PM-007-N003",
+      "PM-007-N004",
+      "PM-007-N005",
+      "PM-007-N006",
+      "PM-007-N007",
+      "PM-007-N002",
+      "PM-007-N008"
+    ]
+  },
+  {
+    "process_model_id": "PM-008",
+    "cluster_id": 7,
+    "instance_count": 1,
+    "canonical_instance_id": "WF-0019",
+    "canonical_policy": "cosine medoid observed procedure; variants retained in graph",
+    "mode": "DEVELOPMENT",
+    "canonical_node_sequence": [
+      "PM-008-N001",
+      "PM-008-N002"
+    ]
+  },
+  {
+    "process_model_id": "PM-009",
+    "cluster_id": 8,
+    "instance_count": 1,
+    "canonical_instance_id": "WF-0011",
+    "canonical_policy": "cosine medoid observed procedure; variants retained in graph",
+    "mode": "DEVELOPMENT",
+    "canonical_node_sequence": [
+      "PM-009-N001",
+      "PM-009-N002",
+      "PM-009-N003",
+      "PM-009-N004",
+      "PM-009-N003",
+      "PM-009-N004",
+      "PM-009-N003",
+      "PM-009-N004",
+      "PM-009-N005",
+      "PM-009-N006",
+      "PM-009-N002",
+      "PM-009-N007",
+      "PM-009-N008",
+      "PM-009-N005",
+      "PM-009-N007"
+    ]
+  },
+  {
+    "process_model_id": "PM-010",
+    "cluster_id": 9,
+    "instance_count": 1,
+    "canonical_instance_id": "WF-0007",
+    "canonical_policy": "cosine medoid observed procedure; variants retained in graph",
+    "mode": "DEVELOPMENT",
+    "canonical_node_sequence": [
+      "PM-010-N001",
+      "PM-010-N002",
+      "PM-010-N003",
+      "PM-010-N004",
+      "PM-010-N003",
+      "PM-010-N004",
+      "PM-010-N005",
+      "PM-010-N006",
+      "PM-010-N002",
+      "PM-010-N007",
+      "PM-010-N008",
+      "PM-010-N005",
+      "PM-010-N007"
+    ]
+  },
+  {
+    "process_model_id": "PM-011",
+    "cluster_id": 10,
+    "instance_count": 1,
+    "canonical_instance_id": "WF-0004",
+    "canonical_policy": "cosine medoid observed procedure; variants retained in graph",
+    "mode": "DEVELOPMENT",
+    "canonical_node_sequence": [
+      "PM-011-N001",
+      "PM-011-N002",
+      "PM-011-N003",
+      "PM-011-N004"
+    ]
+  },
+  {
+    "process_model_id": "PM-012",
+    "cluster_id": 11,
+    "instance_count": 1,
+    "canonical_instance_id": "WF-0013",
+    "canonical_policy": "cosine medoid observed procedure; variants retained in graph",
+    "mode": "DEVELOPMENT",
+    "canonical_node_sequence": [
+      "PM-012-N001",
+      "PM-012-N002",
+      "PM-012-N003",
+      "PM-012-N004",
+      "PM-012-N005"
+    ]
+  },
+  {
+    "process_model_id": "PM-013",
+    "cluster_id": 12,
+    "instance_count": 1,
+    "canonical_instance_id": "WF-0014",
+    "canonical_policy": "cosine medoid observed procedure; variants retained in graph",
+    "mode": "DEVELOPMENT",
+    "canonical_node_sequence": [
+      "PM-013-N001",
+      "PM-013-N002",
+      "PM-013-N003",
+      "PM-013-N004",
+      "PM-013-N003",
+      "PM-013-N004",
+      "PM-013-N003",
+      "PM-013-N004",
+      "PM-013-N005",
+      "PM-013-N006",
+      "PM-013-N007",
+      "PM-013-N002",
+      "PM-013-N008"
+    ]
+  },
+  {
+    "process_model_id": "PM-014",
+    "cluster_id": 13,
+    "instance_count": 1,
+    "canonical_instance_id": "WF-0001",
+    "canonical_policy": "cosine medoid observed procedure; variants retained in graph",
+    "mode": "DEVELOPMENT",
+    "canonical_node_sequence": [
+      "PM-014-N001",
+      "PM-014-N002",
+      "PM-014-N003",
+      "PM-014-N004",
+      "PM-014-N005",
+      "PM-014-N006",
+      "PM-014-N007"
+    ]
+  },
+  {
+    "process_model_id": "PM-015",
+    "cluster_id": 14,
+    "instance_count": 1,
+    "canonical_instance_id": "WF-0002",
+    "canonical_policy": "cosine medoid observed procedure; variants retained in graph",
+    "mode": "DEVELOPMENT",
+    "canonical_node_sequence": [
+      "PM-015-N001",
+      "PM-015-N002",
+      "PM-015-N003"
+    ]
+  },
+  {
+    "process_model_id": "PM-016",
+    "cluster_id": 15,
+    "instance_count": 1,
+    "canonical_instance_id": "WF-0016",
+    "canonical_policy": "cosine medoid observed procedure; variants retained in graph",
+    "mode": "DEVELOPMENT",
+    "canonical_node_sequence": [
+      "PM-016-N001",
+      "PM-016-N002",
+      "PM-016-N003",
+      "PM-016-N004"
+    ]
+  },
+  {
+    "process_model_id": "PM-017",
+    "cluster_id": 16,
+    "instance_count": 1,
+    "canonical_instance_id": "WF-0012",
+    "canonical_policy": "cosine medoid observed procedure; variants retained in graph",
+    "mode": "DEVELOPMENT",
+    "canonical_node_sequence": [
+      "PM-017-N001",
+      "PM-017-N002",
+      "PM-017-N003",
+      "PM-017-N004"
+    ]
+  },
+  {
+    "process_model_id": "PM-018",
+    "cluster_id": 17,
+    "instance_count": 1,
+    "canonical_instance_id": "WF-0006",
+    "canonical_policy": "cosine medoid observed procedure; variants retained in graph",
+    "mode": "DEVELOPMENT",
+    "canonical_node_sequence": [
+      "PM-018-N001",
+      "PM-018-N002",
+      "PM-018-N003",
+      "PM-018-N004",
+      "PM-018-N005",
+      "PM-018-N006",
+      "PM-018-N007",
+      "PM-018-N008",
+      "PM-018-N009"
+    ]
+  },
+  {
+    "process_model_id": "PM-019",
+    "cluster_id": 18,
+    "instance_count": 1,
+    "canonical_instance_id": "WF-0009",
+    "canonical_policy": "cosine medoid observed procedure; variants retained in graph",
+    "mode": "DEVELOPMENT",
+    "canonical_node_sequence": [
+      "PM-019-N001",
+      "PM-019-N002",
+      "PM-019-N003",
+      "PM-019-N004",
+      "PM-019-N003",
+      "PM-019-N004",
+      "PM-019-N005",
+      "PM-019-N006",
+      "PM-019-N002",
+      "PM-019-N007",
+      "PM-019-N008",
+      "PM-019-N005",
+      "PM-019-N007"
+    ]
+  },
+  {
+    "process_model_id": "PM-020",
+    "cluster_id": 19,
+    "instance_count": 1,
+    "canonical_instance_id": "WF-0003",
+    "canonical_policy": "cosine medoid observed procedure; variants retained in graph",
+    "mode": "DEVELOPMENT",
+    "canonical_node_sequence": [
+      "PM-020-N001",
+      "PM-020-N002",
+      "PM-020-N003",
+      "PM-020-N004",
+      "PM-020-N005",
+      "PM-020-N006",
+      "PM-020-N007",
+      "PM-020-N008",
+      "PM-020-N009",
+      "PM-020-N004",
+      "PM-020-N010",
+      "PM-020-N007",
+      "PM-020-N006",
+      "PM-020-N007",
+      "PM-020-N011",
+      "PM-020-N007",
+      "PM-020-N011",
+      "PM-020-N007",
+      "PM-020-N008",
+      "PM-020-N012",
+      "PM-020-N004",
+      "PM-020-N010"
+    ]
+  },
+  {
+    "process_model_id": "PM-021",
+    "cluster_id": 20,
+    "instance_count": 1,
+    "canonical_instance_id": "WF-0005",
+    "canonical_policy": "cosine medoid observed procedure; variants retained in graph",
+    "mode": "DEVELOPMENT",
+    "canonical_node_sequence": [
+      "PM-021-N001",
+      "PM-021-N002",
+      "PM-021-N003",
+      "PM-021-N004",
+      "PM-021-N005"
+    ]
+  }
+]

@@ -7,6 +7,14 @@ const KEY='ktl.m01.replay-source.v1',EID='M04-RUN-'+'1'.repeat(32);
 const clone=value=>JSON.parse(JSON.stringify(value));
 const deferred=()=>{let resolve;const promise=new Promise(done=>resolve=done);return {promise,resolve};};
 const settle=async()=>{for(let i=0;i<16;i++)await new Promise(done=>setImmediate(done));};
+function detailAncestors(html,id) {
+  const offset=html.indexOf(`id="${id}"`);assert.notEqual(offset,-1,'missing DOM contract '+id);
+  const stack=[];
+  for(const match of html.slice(0,offset).matchAll(/<\/?details\b[^>]*>/gi)) {
+    if(/^<\//.test(match[0]))stack.pop();else stack.push(match[0]);
+  }
+  return stack;
+}
 function contextFor(dataset=A,missing=true){return {dataset_id:dataset,filename:'synthetic.csv',source_sha256:SHA,
   session_id:null,event_count:6,steps:[{kind:'execute',action:'navigate'},{kind:'execute',action:'input'},{kind:'reference'}],
   missing_inputs:missing?[{name:'value_row_2',row:2,target:'#synthetic-title',input_control_type:'text',reason:'New test value required'}]:[],
@@ -33,6 +41,7 @@ function harness({stored=null}={}) {
       if(url==='/api/development/m04/scripts')return response({run_mode:'DEVELOPMENT',scripts:[],readiness:{selenium:true,chrome:true}});
       if(url==='/api/development/m04/executions')return response(payload?{execution:{execution_id:EID,status:'RUNNING',cases:[],logs:[]}}:{executions:[]});
       if(url==='/api/development/m03/runs')return response({runs:[]});
+      if(url.startsWith('/api/development/m04/m03-scenarios'))return response({run_mode:'DEVELOPMENT',m03_run_id:null,runs:[],scenarios:[],readiness:{selenium:true,chrome:true,login_configured:false}});
       if(url==='/api/development/m07/context')return response({run_mode:'DEVELOPMENT',scenarios:[],readiness:{configured:false}});
       if(url==='/api/development/m07/generations')return response({generations:[]});
       if(url==='/api/development/m01/csv')return response({datasets:[A,B].map(id=>({dataset_id:id,filename:'synthetic.csv',summary:{event_count:6}}))});
@@ -62,6 +71,22 @@ test('entry restores only a current-session comparison with read-only APIs and n
   assert.equal(h.evaluate('m04View.m01.context.dataset_id'),A);assert.equal(h.evaluate('m04View.m01.scope.comparison_id'),COMPARE);
   assert.ok(h.calls.every(call=>!call.options?.method));assert.equal(h.evaluate('m04View.selected.size'),0);
   assert.match(h.element('#m04-m01-status').textContent,/6개 이벤트 · 실행·확인 2단계/);
+});
+test('restored M01 scope stays in closed optional settings and opening it never imports or executes',async()=>{
+  const h=harness({stored:{comparison_id:COMPARE,server_session_id:SERVER}});await settle();const html=h.element('#app').innerHTML;
+  assert.deepEqual(detailAncestors(html,'m04-quick-start'),[]);
+  for(const id of ['m04-fixed-panel','m04-start','m04-m01-panel','m04-m01-dataset','m04-m01-fields','m04-m01-import']) {
+    const parent=detailAncestors(html,id).find(tag=>tag.includes('id="m04-code-preparation"'));
+    assert.ok(parent,id+' must remain under optional settings');assert.doesNotMatch(parent,/\sopen(?:\s|=|>)/);
+  }
+  assert.equal(h.element('#m04-result').hidden,true);assert.equal(h.element('#m04-result').innerHTML,'');
+  assert.equal(h.element('#m04-live-progress').hidden,true);
+  h.element('#m04-code-preparation').open=true; // Native details opening precedes its optional helper button.
+  const before=h.calls.length;h.element('#m04-open-settings').listeners.click();
+  assert.equal(h.element('#m04-code-preparation').open,true);
+  assert.equal(h.calls.length,before,'opening settings must not make an API request');
+  assert.equal(h.evaluate('m04View.m01.scope.comparison_id'),COMPARE);
+  assert.ok(h.calls.every(call=>!call.options?.method));
 });
 test('no saved scope or a stale server session keeps explicit empty selection instead of choosing latest upload',async()=>{
   for(const stored of [null,{comparison_id:COMPARE,server_session_id:'SERVER-'+'0'.repeat(32)}]) {
@@ -137,7 +162,7 @@ test('visible execution is default while unchecking sends exactly the original e
     assert.equal(h.element('#m04-visible-browser').checked,true);
     if(!visible)h.element('#m04-visible-browser').listeners.change({target:{checked:false}});
     await h.context.startM04();const posted=h.posts('/api/development/m04/executions');assert.equal(posted.length,1);
-    assert.deepEqual(posted[0].payload,{script_ids:[SCRIPT],...(visible?{visible_browser:true,action_delay_ms:700,keep_open_seconds:15}:{})});
+    assert.deepEqual(posted[0].payload,{script_ids:[SCRIPT],...(visible?{visible_browser:true,action_delay_ms:1500,keep_open_seconds:15}:{})});
   }
 });
 (async()=>{for(const item of tests){await item.run();console.log('PASS '+item.name);}console.log(tests.length+' M04 M01 replay UI groups passed');})().catch(error=>{console.error(error);process.exitCode=1;});
