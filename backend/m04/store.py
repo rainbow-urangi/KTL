@@ -1108,7 +1108,7 @@ class M04Manager:
                     if visible:
                         cases[-1].update(visible_browser=True, action_delay_ms=delay, keep_open_seconds=hold)
                 artifacts = [dict(name=name, url=f'/api/development/m04/executions/{execution_id}/artifacts/{name}')
-                             for name in ('report.json', 'log.jsonl', 'steps.csv', 'scripts.zip', 'screenshots.zip')]
+                             for name in ('report.json', 'log.jsonl', 'steps.csv', 'scripts.zip', 'screenshots.zip', 'ktl-evidence.csv')]
                 job = dict(execution_id=execution_id, status='QUEUED', started_at=_now(), completed_at=None,
                            run_mode='DEVELOPMENT', cases=cases, logs=[], result=None, error=None, artifacts=artifacts,
                            counts=dict(total_execution_count=len(cases), successful_execution_count=0, failed_execution_count=0))
@@ -1571,7 +1571,10 @@ class M04Manager:
 
     def artifact(self, execution_id, name):
         job = self._job(execution_id)
-        require(name in {'report.json', 'log.jsonl', 'steps.csv', 'execution.json', 'logs.json', 'scripts.zip', 'screenshots.zip'}, 'Unknown M04 artifact')
+        require(name in {'report.json', 'log.jsonl', 'steps.csv', 'execution.json', 'logs.json', 'scripts.zip', 'screenshots.zip', 'ktl-evidence.csv'}, 'Unknown M04 artifact')
+        if name == 'ktl-evidence.csv':
+            from .ktl_export import export_ktl_evidence
+            return export_ktl_evidence(job), 'text/csv; charset=utf-8'
         if name == 'screenshots.zip':
             buffer = io.BytesIO()
             with zipfile.ZipFile(buffer, 'w', zipfile.ZIP_DEFLATED) as archive:

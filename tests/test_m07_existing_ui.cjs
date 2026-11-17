@@ -16,7 +16,7 @@ function fixture(){return {code_source:'EXISTING_LLM',source_generation_id:'SYNT
       code,code_sha256:sha(code),expected_syntax_status:'PASS',problem:{scenario_id,steps:[{order:1,action:'click',target:'#synthetic-'+index,expected_result:'Synthetic expected'}]},
       expected_results:[{order:1,action:'click',target:{by:'css selector',value:'#synthetic-'+index},checks:[{kind:'visible',expected:true}]}]};
   })};}
-function checked(data,passed=10){return {...clone(data),result:{status:'COMPLETED',score:passed*10,sample_count:10,syntax_pass_count:passed,syntax_fail_count:10-passed,official_pass:null,
+function checked(data,passed=10){return {...clone(data),result:{run_id:'M07-CHECK-'+'c'.repeat(32),status:'COMPLETED',score:passed*10,sample_count:10,syntax_pass_count:passed,syntax_fail_count:10-passed,official_pass:null,
   source_generation_id:data.source_generation_id,source_manifest_sha256:data.source_manifest_sha256,checked_at:'2026-11-13T12:00:00+09:00',
   cases:data.cases.map((row,index)=>({case_id:row.case_id,scenario_id:row.scenario_id,workflow_id:row.workflow_id,code_sha256:row.code_sha256,
     syntax_status:index<passed?'PASS':'FAIL',expected_syntax_status:'PASS',matches_expected:index<passed,error:index<passed?null:'Synthetic <img src=x onerror=x> syntax failure'}))}};}
@@ -90,6 +90,26 @@ test('refresh is GET only and restores an actual saved result instead of checkin
   const h=harness({data:checked(fixture(),8)});await settle();assert.match(h.node('#m07-existing-result').innerHTML,/80.00%/);
   await h.click('#m07-existing-refresh');assert.equal(h.posts().length,0);assert.equal(h.calls.length,2);
   assert.equal(h.node('#m07-existing-refresh').disabled,false);assert.equal(h.node('#m07-existing-status').textContent,'');assert.equal(h.node('#m07-existing-status').hidden,true);
+});
+test('readable CSV download appears only for a saved result and is pinned to the displayed check ID',async()=>{
+  const h=harness();await settle();assert.doesNotMatch(h.node('#m07-existing-result').innerHTML,/ktl-evidence\.csv/);
+  await h.click('#m07-existing-validate');
+  const first=ENDPOINT+'/checks/M07-CHECK-'+'c'.repeat(32)+'/ktl-evidence.csv';
+  assert.ok(h.node('#m07-existing-result').innerHTML.includes('href="'+first+'" download>KTL 검증 CSV 다운로드</a>'));
+  assert.equal(h.posts().length,1);assert.equal(h.calls.length,2);
+  h.state.data=checked(fixture(),8);h.state.data.result.run_id='M07-CHECK-'+'d'.repeat(32);
+  await h.click('#m07-existing-refresh');
+  assert.ok(h.node('#m07-existing-result').innerHTML.includes(ENDPOINT+'/checks/M07-CHECK-'+'d'.repeat(32)+'/ktl-evidence.csv'));
+  assert.ok(!h.node('#m07-existing-result').innerHTML.includes(first));assert.equal(h.posts().length,1);
+  assert.equal(h.calls.length,3);assert.match(h.node('#m07-existing-result').innerHTML,/80.00%/);
+});
+test('legacy results without a check ID and malformed IDs cannot create a download URL',async()=>{
+  for(const identity of [undefined,'latest','M07-CHECK-<script>','M07-CHECK-'+'A'.repeat(32)]){
+    const data=checked(fixture(),8);data.result.run_id=identity;const h=harness({data});await settle();
+    assert.match(h.node('#m07-existing-result').innerHTML,/80.00%/);
+    assert.doesNotMatch(h.node('#m07-existing-result').innerHTML,/ktl-evidence\.csv|KTL 검증 CSV 다운로드/);
+    assert.equal(h.posts().length,0);
+  }
 });
 test('expected FAIL is displayed from the source and a missing SCENARIO_ID declaration is not a syntax failure',async()=>{
   const data=fixture();data.cases[0].expected_syntax_status='FAIL';

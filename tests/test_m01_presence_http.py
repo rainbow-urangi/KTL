@@ -80,6 +80,12 @@ class M01PresenceHTTPTests(unittest.TestCase):
             self.assertIn('text/csv', headers['Content-Type'])
             self.assertEqual(len(list(csv.DictReader(io.StringIO(event_rows.decode('utf-8-sig'))))),
                              result['summary']['expected_count'])
+            _, readable, readable_headers = self.request(path + '/ktl-evidence.csv')
+            self.assertTrue(readable.startswith(b'\xef\xbb\xbf'))
+            self.assertIn('M01-ktl-evidence.csv', readable_headers['Content-Disposition'])
+            report_rows = list(csv.DictReader(io.StringIO(readable.decode('utf-8-sig'))))
+            self.assertEqual(sum(row['구분'] == '이벤트' for row in report_rows),
+                             result['summary']['expected_count'])
 
     def test_changed_catalog_is_rejected_before_comparisons_are_saved(self):
         uploaded = self.upload()

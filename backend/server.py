@@ -394,6 +394,16 @@ def make_handler(service):
                         return self.reply(200, service.existing_m07().context())
                     except (EvaluationError, OSError, ValueError, UnicodeError) as exc:
                         return self.reply(422, {'status': 'ERROR', 'error': str(exc)})
+                existing_csv = re.fullmatch(r'/api/development/m07/existing-codes/checks/(M07-CHECK-[a-f0-9]{32})/ktl-evidence\.csv', path)
+                if existing_csv:
+                    try:
+                        raw = service.existing_m07().ktl_evidence(existing_csv[1])
+                        return self.reply(200, raw, 'text/csv; charset=utf-8', 'M07-ktl-evidence.csv')
+                    except EvaluationError as exc:
+                        return self.reply(404 if exc.status in {'NOT_FOUND', 'NOT_READY'} else 422,
+                                          {'status': exc.status, 'error': str(exc)})
+                    except (OSError, ValueError, UnicodeError):
+                        return self.reply(422, {'status': 'ERROR', 'error': '문법 검사 근거를 읽을 수 없습니다.'})
                 if path.startswith('/api/development/m07/'):
                     manager = service.m07()
                     if path == '/api/development/m07/meeting-context':
@@ -464,7 +474,7 @@ def make_handler(service):
                         execution = re.fullmatch(r'/api/development/m04/executions/(M04-RUN-[0-9a-f]{32})', path)
                         if execution:
                             return self.reply(200, manager.read(execution[1]))
-                        artifact = re.fullmatch(r'/api/development/m04/executions/(M04-RUN-[0-9a-f]{32})/artifacts/([a-z.]+)', path)
+                        artifact = re.fullmatch(r'/api/development/m04/executions/(M04-RUN-[0-9a-f]{32})/artifacts/([a-z.-]+)', path)
                         if artifact:
                             raw, content_type = manager.artifact(artifact[1], artifact[2])
                             return self.reply(200, raw, content_type, artifact[2])
@@ -536,12 +546,14 @@ def make_handler(service):
                                           {"status": exc.status, "error": str(exc)})
                     except OSError:
                         return self.reply(500, {"status": "ERROR", "error": "Unable to read development expected events"})
-                comparison_match = re.fullmatch(r"/api/development/m01/comparisons/([0-9a-f]{32})(/evidence.csv|/event-results.csv|/verification)?", path)
+                comparison_match = re.fullmatch(r"/api/development/m01/comparisons/([0-9a-f]{32})(/evidence.csv|/ktl-evidence.csv|/event-results.csv|/verification)?", path)
                 if comparison_match:
                     try:
                         store = M01ComparisonStore(service.root, session=service.session)
                         if comparison_match[2] == "/evidence.csv":
                             return self.reply(200, store.evidence(comparison_match[1]), "text/csv; charset=utf-8", True)
+                        if comparison_match[2] == "/ktl-evidence.csv":
+                            return self.reply(200, store.ktl_evidence(comparison_match[1]), "text/csv; charset=utf-8", 'M01-ktl-evidence.csv')
                         if comparison_match[2] == "/event-results.csv":
                             return self.reply(200, store.event_results(comparison_match[1]), "text/csv; charset=utf-8", 'event-results.csv')
                         if comparison_match[2] == "/verification":

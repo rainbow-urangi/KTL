@@ -14,7 +14,7 @@ const m04Active=token=>token===m04RequestNumber&&/^\/metrics\/m04\/?$/i.test(loc
 const m04Running=job=>['QUEUED','RUNNING'].includes(job?.status);
 const m04CaseName=status=>m04Names[status]||String(status||'대기');
 function m04Artifact(id,name) {
-  return m04ExecutionId(id)&&['report.json','log.jsonl','steps.csv','scripts.zip','screenshots.zip'].includes(name)?`/api/development/m04/executions/${id}/artifacts/${name}`:null;
+  return m04ExecutionId(id)&&['report.json','log.jsonl','steps.csv','scripts.zip','screenshots.zip','ktl-evidence.csv'].includes(name)?`/api/development/m04/executions/${id}/artifacts/${name}`:null;
 }
 function m04ResultArtifact(id,name='result.json') {
   return m04ResultId(id)&&['result.json','evidence.csv','run_manifest.json','received_payload.json'].includes(name)?`/api/evaluations/m04/runs/${id}/${name}`:null;
@@ -86,7 +86,7 @@ function renderM04(metric) {
       <button id="m04-cancel" class="m04-secondary" type="button" disabled hidden>실행 중단</button><p id="m04-status" role="status"></p>
       <div id="m04-live-progress" hidden><div id="m04-progress-label" class="subtitle"></div><progress id="m04-progress" max="1" value="0" aria-label="스크립트 실행 진행률"></progress></div>
     </section>
-    <section class="result-panel m04-panel"><div class="panel-heading"><h2>현재 측정 결과</h2><span class="m04-target">목표 ≥ ${score(metric.target,'M04')}</span><button class="download" type="button" disabled title="Evidence CSV 다운로드 연결 준비 중">Evidence CSV 다운로드</button></div><p id="m04-result-empty" class="empty">실행 후 테스트별 PASS/FAIL과 성공률을 표시합니다.</p><div id="m04-result" hidden></div></section>
+    <section class="result-panel m04-panel"><div class="panel-heading"><h2>현재 측정 결과</h2><span class="m04-target">목표 ≥ ${score(metric.target,'M04')}</span><span id="m04-evidence-csv"><button class="download" type="button" disabled>Evidence CSV 다운로드</button></span></div><p id="m04-result-empty" class="empty">실행 후 테스트별 PASS/FAIL과 성공률을 표시합니다.</p><div id="m04-result" hidden></div></section>
     <details id="m04-code-preparation" class="m04-code-preparation m04-secondary-details"><summary>추가 설정</summary>
       <label id="m04-m03-run-label">M03 생성 이력<select id="m04-m03-run" aria-label="실행할 M03 생성 이력"></select></label>
       <div id="m04-fixed-panel"><h2>스크립트 직접 등록 · 보조 기능</h2><div class="m04-upload-row"><button id="m04-register" type="button" disabled>스크립트 불러오기</button><input id="m04-file" type="file" accept=".py" hidden><span id="m04-selected-count" class="m04-selected-count">0건</span></div><p id="m04-selection-summary" class="subtitle" role="status">파일을 한 개씩 불러올 수 있습니다.</p><div id="m04-scripts"></div><div class="m04-run-actions"><button id="m04-start" type="button" disabled>실행</button><label class="m04-visible-option"><input id="m04-visible-browser" type="checkbox" checked>새 창으로 실행</label></div><p id="m04-blocked-reason" class="subtitle" role="status">준비된 Selenium.py를 불러오세요.</p><div id="m04-registration-guidance" class="m04-criteria-row"><button id="m04-open-settings" class="m04-text-button" type="button">파일 등록 기준 준비</button></div></div>
@@ -901,9 +901,14 @@ function m04ThresholdBadge(result,total) {
   if(total!==10) return '<span class="badge neutral">부분 검증</span>';
   return `<span class="badge ${result.threshold_met?'pass':'fail'}">${result.threshold_met?'기준 충족':'기준 미달'}</span>`;
 }
+function paintM04EvidenceDownload(url) {
+  const target=document.querySelector('#m04-evidence-csv');
+  if(target) target.innerHTML=url?`<a class="download" href="${esc(url)}" download>Evidence CSV 다운로드</a>`:'<button class="download" type="button" disabled>Evidence CSV 다운로드</button>';
+}
 function paintM04Execution() {
   if(m04View.resultSource==='external') {paintM04Result();return;}
   const job=m04View.execution,cases=Array.isArray(job?.cases)?job.cases:[],result=job?.status==='COMPLETED'?job.result:null,counts=job?.counts||{};
+  paintM04EvidenceDownload(job&&!m04Running(job)?m04Artifact(job.execution_id,'ktl-evidence.csv'):null);
   const done=cases.filter(row=>!['PENDING','RUNNING'].includes(row.status)).length;
   document.querySelector('#m04-progress').max=Math.max(1,cases.length);document.querySelector('#m04-progress').value=done;
   document.querySelector('#m04-progress-label').textContent=job?`스크립트 ${done}/${cases.length}건 완료 · ${m04CaseName(job.status)}${job.error?' · '+job.error:''}`:'';
@@ -917,7 +922,7 @@ function paintM04Execution() {
   document.querySelector('#m04-result-notes').innerHTML=job?`<p class="subtitle">정상 완료 테스트 수 / 전체 자동 실행 테스트 수 × 100 · 실패는 분모에 포함합니다.</p>${m04Cu02Summary(job,cases,result)}${result?`<p class="run-meta">${esc(result.run_id)} · DEVELOPMENT · 공식 시험성적 아님</p>`:'<p class="subtitle">실행과 평가가 완료되면 성공률을 표시합니다.</p>'}`:'';
   document.querySelector('#m04-cases').innerHTML=cases.length?`<p class="run-meta">실행 ID: ${esc(job.execution_id)}</p><div class="m04-execution-cases">${cases.map(row=>`<article class="m04-execution-case"><div class="panel-heading"><div><h3>${esc(row.script_name||row.script_id)}</h3><p class="run-meta">${esc(row.case_id)} · ${esc(row.scenario_id)}</p></div><span class="badge ${row.status==='PASS'?'pass':['FAIL','ERROR','TIMEOUT'].includes(row.status)?'fail':'neutral'}">${esc(m04CaseName(row.status))}</span></div>${m04CaseSource(row)}<p class="run-meta">시작: ${esc(row.started_at||'미시작')} · 종료: ${esc(row.completed_at||'—')} · 소요: ${row.duration_ms==null?'—':esc(row.duration_ms)+' ms'} · 반환 코드: ${esc(row.returncode??'—')}</p>${row.error_message||row.error?`<p class="notice">${esc(row.error_message||row.error)}</p>`:''}${m04Cu02Expectation(row,job.cu02_evaluation)}${m04StepDetails(row)}</article>`).join('')}</div>`:'<p class="empty">실행하면 스크립트별 상태와 업무 단계가 표시됩니다.</p>';
   document.querySelector('#m04-logs').textContent=Array.isArray(job?.logs)&&job.logs.length?job.logs.map(row=>`${row.time||''}${row.case_id?' ['+row.case_id+']':''} ${row.message||''}`).join('\n'):'실행 로그가 없습니다.';
-  document.querySelector('#m04-downloads').innerHTML=job?['report.json','log.jsonl','steps.csv','scripts.zip','screenshots.zip'].map((name,index)=>`<a class="download" href="${m04Artifact(job.execution_id,name)}" download>${['실행 보고서','전체 로그','단계 기록 CSV','고정 스크립트 원본','마스킹된 실행 화면'][index]} ↓</a>`).join(''):'';
+  document.querySelector('#m04-downloads').innerHTML=job?['report.json','log.jsonl','steps.csv','scripts.zip','screenshots.zip','ktl-evidence.csv'].map((name,index)=>`<a class="download" href="${m04Artifact(job.execution_id,name)}" download>${['실행 보고서','전체 로그','단계 기록 CSV','고정 스크립트 원본','마스킹된 실행 화면','KTL 제출용 CSV'][index]} ↓</a>`).join(''):'';
   document.querySelector('#m04-downloads').hidden=!job||m04Running(job);
 }
 function m04ExecutionScope(total) {
@@ -950,6 +955,7 @@ function m04Cu02Expectation(row,evaluation) {
 }
 function paintM04Result() {
   const saved=m04View.externalResult,result=saved?.result,raw=saved?.payload,counts=raw?.counts||{},cases=Array.isArray(raw?.cases)?raw.cases:[];
+  paintM04EvidenceDownload(result?m04ResultArtifact(result.run_id,'evidence.csv'):null);
   const provided=value=>value==null?'미제공':typeof value==='object'?JSON.stringify(value,null,2):String(value);
   const logs=raw?.details?.logs??raw?.evidence?.logs;
   document.querySelector('#m04-progress').max=1;document.querySelector('#m04-progress').value=result?1:0;

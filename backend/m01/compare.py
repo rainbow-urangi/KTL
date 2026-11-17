@@ -424,6 +424,12 @@ class M01ComparisonStore:
         self.read(comparison_id)
         return (self.directory / comparison_id / "evidence.csv").read_bytes()
 
+    def ktl_evidence(self, comparison_id):
+        from .ktl_export import export_ktl_evidence
+        result = self.read(comparison_id)
+        original = (self.directory / comparison_id / "evidence.csv").read_bytes()
+        return export_ktl_evidence(result, original)
+
     def event_results(self, comparison_id):
         # 필수 이벤트별 제출용 비교 결과
         result = self.read(comparison_id)

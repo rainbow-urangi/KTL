@@ -98,6 +98,23 @@ class ExistingCodeCheck:
                         source_manifest_sha256=self.manifest_sha256, required_count=10, target=80,
                         new_generation=False, gpt_request_count=0, cases=cases, result=self._last(cases))
 
+    def ktl_evidence(self, run_id):
+        """Export one preserved syntax result without generating, checking or executing code."""
+        with self.lock:
+            require(isinstance(run_id, str) and re.fullmatch(r'M07-CHECK-[a-f0-9]{32}', run_id),
+                    '보관 문법검사 ID 형식이 다릅니다.')
+            path = self._safe(self.root / 'data/development/m07_existing_checks' / (run_id + '.json'))
+            if not path.is_file():
+                raise EvaluationError('내보낼 보관 문법검사 결과가 없습니다.', 'NOT_READY')
+            raw = path.read_bytes()
+            require(len(raw) <= 131072, '보관 문법검사 결과의 크기가 다릅니다.')
+            result = _json(raw)
+            manifest, cases = self._load()
+            from .ktl_export import existing_ktl_csv
+            return existing_ktl_csv(result, cases, run_id=run_id,
+                                    manifest_sha256=self.manifest_sha256,
+                                    source_generation_id=manifest['source_generation_id'])
+
     def validate(self):
         with self.lock:
             manifest, cases = self._load()

@@ -340,7 +340,8 @@ test('M01 input and result renderers retain their exact existing design and cont
     ['function renderM01Csv(','async function loadM01ProdStatus(','3006407f8ac8bfe0d9446c6f6bd17ad86c6a5a6eafd197bb1b64e06de9a87d49'],
     ['function renderM01ComparisonResult(','async function loadM01Verification(','31aa05f055a85a2bb9f73d80058161fb5d5dcad229f70751add67bec3f1b3666']]){
     const start=source.indexOf(startMarker),end=source.indexOf(endMarker,start);
-    assert.equal(createHash('sha256').update(source.slice(start,end).replace(/\r\n/g,'\n').trim()).digest('hex'),expected);
+    const unchangedDesign=source.slice(start,end).replace("/${measurement?'ktl-evidence.csv':'evidence.csv'}",'/evidence.csv');
+    assert.equal(createHash('sha256').update(unchangedDesign.replace(/\r\n/g,'\n').trim()).digest('hex'),expected);
   }
   const html=h.element('#app').innerHTML,ids=[...html.matchAll(/\bid="([^"]+)"/g)].map(match=>match[1]);
   const expectedIds=['m01-input-panel','m01-dataset-name','m01-event-count','m01-ready-status','m01-open-upload','csv-file','csv-status',
@@ -351,6 +352,7 @@ test('M01 input and result renderers retain their exact existing design and cont
   assert.ok(html.includes('class="simple-evaluation"'));assert.ok(!html.includes('mode-switch'));
   assert.ok(html.indexOf('id="csv-dataset"')<html.indexOf('id="m01-input-cards"'));
   await h.choose();await settle();const result=h.element('#comparison-result').innerHTML,details=result.indexOf('<details>');
+  assert.ok(result.includes('/ktl-evidence.csv'));
   for(const id of ['collection-accuracy','comparison-match-rate','comparison-field-missing','comparison-type-coverage'])
     assert.ok(result.includes('id="'+id+'"'));
   assert.ok(result.indexOf('id="collection-accuracy"')<details);

@@ -116,6 +116,15 @@ async function test(name,fn){await fn();results.push(name);console.log('PASS '+n
   });
   await test('download URLs are fixed local stored evidence, not payload-provided URLs',async()=>{
     const h=harness();await settle();const html=h.element('#m04-downloads').innerHTML;
+    assert.ok(h.element('#m04-evidence-csv').innerHTML.includes(h.context.m04ResultArtifact(RUN,'evidence.csv')));
+    assert.ok(!h.element('#m04-evidence-csv').innerHTML.includes('invalid.example'));
+    const readable=h.context.m04Artifact(EXECUTION,'ktl-evidence.csv');
+    assert.equal(readable,`/api/development/m04/executions/${EXECUTION}/artifacts/ktl-evidence.csv`);
+    h.context.paintM04EvidenceDownload(readable);
+    assert.ok(h.element('#m04-evidence-csv').innerHTML.includes(readable));
+    h.context.paintM04EvidenceDownload(null);
+    assert.match(h.element('#m04-evidence-csv').innerHTML,/disabled/);
+    assert.ok(!h.element('#m04-evidence-csv').innerHTML.includes('href='));
     for(const name of ['result.json','evidence.csv','received_payload.json','run_manifest.json'])assert.ok(html.includes(`/api/evaluations/m04/runs/${RUN}/${name}`));
     assert.ok(!html.includes('invalid.example'));assert.equal(h.context.m04ResultArtifact('../bad','evidence.csv'),null);
     assert.equal(h.context.m04ResultArtifact(RUN,'../secret'),null);h.noMutations();

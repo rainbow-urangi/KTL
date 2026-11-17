@@ -627,7 +627,7 @@ function renderM01ComparisonResult(result,selected) {
   const scenarioVersion=result.scenario_version||truth?.scenario_version||'legacy';
   const pct=value=>value==null||!Number.isFinite(Number(value))?'확인 불가':`${Number(value).toFixed(2)}%`;
   const rows=result.rows.map(row=>({sequence:row.sequence,expected_event_id:row.expected_event_id,matched_event_id:row.matched_event_id,status:row.status,reason:row.reason}));
-  const evidence=`/api/development/m01/comparisons/${encodeURIComponent(result.comparison_id)}/evidence.csv`;
+  const evidence=`/api/development/m01/comparisons/${encodeURIComponent(result.comparison_id)}/${measurement?'ktl-evidence.csv':'evidence.csv'}`;
   const grid=measurement
     ?`<div class="result-grid"><div><label>최종 수집정확도</label><strong class="large-score" id="collection-accuracy">${esc(pct(measurement.collection_accuracy))}</strong></div><div><label>C1 필수 이벤트 수집률</label><strong id="comparison-match-rate">${esc(pct(measurement.c1))}</strong></div><div><label>C2 필수 필드 누락률</label><strong id="comparison-field-missing">${esc(pct(measurement.c2))}</strong></div><div><label>C3 유형 커버리지</label><strong id="comparison-type-coverage">${esc(pct(measurement.c3))}</strong></div></div>`
     :`<div class="result-grid"><div><label>정답 이벤트 일치율</label><strong class="large-score" id="comparison-match-rate">${esc(pct(summary.match_rate))}</strong></div><div><label>일치 / 기대 이벤트</label><strong>${esc(summary.matched_count)} / ${esc(summary.expected_count)}</strong></div><div><label>누락 이벤트</label><strong>${esc(summary.missing_count)}</strong></div><div><label>실행 상태</label><span class="badge neutral">이전 비교 결과</span></div></div>`;
